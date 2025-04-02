@@ -1,40 +1,45 @@
-/* Base Reset & Body */
+/* General resets */
 body {
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
-  background: #fff;
+  background-color: #fff;
   color: #111;
   text-align: center;
 }
 
 /* Header */
-.topbar {
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
 }
 
-.topbar img {
-  height: 48px;
+.logo {
+  height: 60px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
 }
 
 .nav-link {
-  margin-left: 1.5rem;
-  text-decoration: none;
-  color: #3366ff;
+  font-size: 1.1rem;
   font-weight: 500;
-  font-size: 1rem;
+  color: #3366ff;
+  text-decoration: none;
 }
 
 .nav-link:hover {
   text-decoration: underline;
 }
 
-/* Hero Section */
+/* Hero section */
 .hero {
-  margin-top: 5rem;
+  margin-top: 6rem;
+  margin-bottom: 3rem;
   padding: 0 1rem;
 }
 
@@ -44,74 +49,85 @@ body {
   margin-bottom: 1rem;
 }
 
-.subhead {
-  font-size: 1.25rem;
-  color: #666;
-  margin-bottom: 2rem;
+.hero .subhead {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 3rem;
 }
 
-.actions {
+/* Buttons */
+.button-group {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  margin-bottom: 3rem;
 }
 
-.btn {
-  background-color: #3366ff;
-  color: white;
+.button {
+  display: inline-block;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-weight: 600;
-  border: none;
   border-radius: 6px;
+  border: none;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
   text-decoration: none;
 }
 
-.btn.secondary {
+.button:hover {
+  text-decoration: none;
+}
+
+.button-primary {
+  background-color: #3366ff;
+  color: white;
+}
+
+.button-primary:hover {
+  background-color: #254edb;
+}
+
+.button-secondary {
   background-color: #eee;
   color: #333;
 }
 
-/* Footer */
-.footer {
-  margin-top: 4rem;
-  padding: 2rem 1rem;
-  font-size: 0.9rem;
-  color: #777;
+.button-secondary:hover {
+  background-color: #ddd;
 }
 
-.footer a {
+/* Footer */
+footer {
+  padding: 2rem 1rem;
+  font-size: 0.875rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+footer a {
   color: #3366ff;
   text-decoration: none;
 }
 
-.footer a:hover {
+footer a:hover {
   text-decoration: underline;
 }
 
 /* --- PRICING PAGE STYLES --- */
 
-.pricing-logo {
-  display: block;
-  margin: 2rem auto 1rem;
-  height: 64px;
-}
-
-.pricing-header {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  color: #111;
+.profile-logo {
+  height: 72px;
+  width: auto;
 }
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2rem;
   max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  margin: 2rem auto 4rem;
+  padding: 0 1rem;
 }
 
 .pricing-card {
@@ -120,6 +136,7 @@ body {
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
 }
 
 .pricing-card h3 {
@@ -135,7 +152,7 @@ body {
 
 .pricing-card .details {
   font-size: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   opacity: 0.9;
 }
 
