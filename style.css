@@ -1,32 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aquamark.io</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="top-bar">
-    <img src="logo.png" alt="Aquamark logo" class="logo">
-    <nav class="nav-links">
-      <a href="#pricing">Pricing</a>
-      <a href="#check-balance">Check Balance</a>
-    </nav>
-  </header>
+/* Reset & base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <main class="hero">
-    <h1>Watermark Any File, Instantly</h1>
-    <p class="subhead">The fastest and most affordable way to watermark your documents</p>
-    <div class="cta-buttons">
-      <a href="#upload" class="btn">Upload Documents</a>
-      <a href="#api" class="btn">Use API</a>
-    </div>
-  </main>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  padding: 2rem;
+  line-height: 1.6;
+}
 
-  <footer class="footer">
-    <p class="disclaimer">Disclaimer: Aquamark.io is a watermark overlay utility. We do not assume liability for how documents are used after processing.</p>
-    <p class="footer-note">© 2025 Aquamark.io – San Francisco – <a href="mailto:heyaqua@gmail.com">Email us</a> for feature requests</p>
-  </footer>
-</body>
-</html>
+a {
+  color: #3366ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.logo {
+  height: 32px;
+}
+
+.topbar nav a {
+  margin-left: 1.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  margin: 6rem auto;
+  max-width: 700px;
+}
+
+.hero h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+.subhead {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  background-color: #3366ff;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #254edb;
+}
+
+.btn.secondary {
+  background-color: #e5e5e5;
+  color: #1a1a1a;
+}
+
+.btn.secondary:hover {
+  background-color: #d4d4d4;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 6rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.footer a {
+  color: #3366ff;
+}
