@@ -8,7 +8,7 @@ body {
   text-align: center;
 }
 
-/* Header section */
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -36,7 +36,7 @@ header img {
   text-decoration: underline;
 }
 
-/* Hero section */
+/* Hero */
 .hero {
   margin-top: 4rem;
   margin-bottom: 3rem;
@@ -62,7 +62,8 @@ header img {
   margin-bottom: 3rem;
 }
 
-button, .button {
+.button {
+  display: inline-block;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   border-radius: 6px;
@@ -70,15 +71,21 @@ button, .button {
   cursor: pointer;
   font-weight: 500;
   transition: background-color 0.2s ease;
+  text-decoration: none;
 }
 
+.button:hover {
+  text-decoration: none;
+}
+
+/* Specific button styles */
 .button-primary {
   background-color: #3366ff;
   color: white;
 }
 
 .button-primary:hover {
-  background-color: #264dcd;
+  background-color: #254edb;
 }
 
 .button-secondary {
@@ -97,10 +104,12 @@ footer {
   color: #555;
   line-height: 1.4;
 }
+
 footer a {
   color: #3366ff;
   text-decoration: none;
 }
+
 footer a:hover {
   text-decoration: underline;
 }
