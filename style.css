@@ -1,147 +1,79 @@
-/* General resets */
+/* Global Styles */
 body {
-  font-family: 'Inter', sans-serif;
   margin: 0;
-  padding: 0;
+  font-family: "Inter", sans-serif;
   background-color: #fff;
   color: #111;
   text-align: center;
-}
-
-/* Header */
-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   padding: 2rem;
 }
 
-.logo {
-  height: 80px;
+/* Pricing Logo */
+.pricing-logo {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  height: 48px;
 }
 
-/* Hero section */
-.hero {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  padding: 0 1rem;
-}
-
-.hero h1 {
-  font-size: 3.25rem;
+/* Header */
+.pricing-header h1 {
+  font-size: 3rem;
   font-weight: 700;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
-.hero .subhead {
+.pricing-header p {
   font-size: 1.5rem;
   color: #555;
   margin-bottom: 3rem;
 }
 
-/* Buttons */
-.button-group {
+/* Pricing Tiers */
+.pricing-tiers {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+  flex-wrap: wrap;
 }
 
-.button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
+.pricing-tier {
+  background-color: #335dff;
+  color: #fff;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  flex: 1;
+  min-width: 280px;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-tier h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.pricing-tier p {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
   font-weight: 500;
-  transition: background-color 0.2s ease;
-  text-decoration: none;
-}
-
-.button:hover {
-  text-decoration: none;
-}
-
-.button-primary {
-  background-color: #3366ff;
-  color: white;
-}
-
-.button-primary:hover {
-  background-color: #254edb;
-}
-
-.button-secondary {
-  background-color: #eee;
-  color: #333;
-}
-
-.button-secondary:hover {
-  background-color: #ddd;
 }
 
 /* Footer */
-footer {
-  padding: 2rem 1rem;
-  font-size: 0.875rem;
-  color: #555;
-  line-height: 1.4;
+.footer {
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #666;
 }
 
-footer a {
-  color: #3366ff;
+.footer a {
+  color: #335dff;
   text-decoration: none;
 }
 
-footer a:hover {
+.footer a:hover {
   text-decoration: underline;
-}
-
-/* Pricing Page Styles */
-.profile-logo {
-  height: 80px;
-  width: auto;
-  margin-bottom: 2rem;
-  float: right;
-  margin-right: 2rem;
-}
-
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  max-width: 960px;
-  margin: 3rem auto;
-  padding: 0 1rem;
-}
-
-.pricing-card {
-  background-color: #3366ff;
-  color: white;
-  padding: 3rem 2rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.pricing-card .price {
-  font-size: 2.75rem;
-  font-weight: 700;
-  margin: 1rem 0;
-}
-
-.pricing-card .details {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-  opacity: 0.95;
-}
-
-.pricing-card .tagline {
-  font-size: 1.1rem;
-  font-weight: 500;
-  opacity: 0.95;
 }
