@@ -16,8 +16,8 @@ header {
   padding: 1.5rem 2rem;
 }
 
-header img {
-  height: 40px;
+.logo {
+  height: 80px;
 }
 
 .nav-links {
@@ -36,44 +36,36 @@ header img {
   text-decoration: underline;
 }
 
-.theme-toggle {
-  font-size: 1.1rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #3366ff;
-}
-
 /* Hero */
 .hero {
-  margin-top: 4rem;
+  margin-top: 6rem;
   margin-bottom: 3rem;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
+  font-size: 5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .hero p {
-  font-size: 1.125rem;
+  font-size: 1.75rem;
   color: #555;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 /* Buttons */
 .button-group {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  gap: 1.2rem;
+  margin-bottom: 4rem;
 }
 
 .button {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  padding: 0.9rem 1.75rem;
+  font-size: 1.1rem;
   border-radius: 6px;
   border: none;
   cursor: pointer;
@@ -119,37 +111,4 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
-}
-
-/* === Dark Mode === */
-body.dark {
-  background-color: #111;
-  color: #eee;
-}
-
-body.dark .nav-link,
-body.dark footer a {
-  color: #66aaff;
-}
-
-body.dark .hero p {
-  color: #aaa;
-}
-
-body.dark .button-primary {
-  background-color: #66aaff;
-  color: #000;
-}
-
-body.dark .button-primary:hover {
-  background-color: #5599dd;
-}
-
-body.dark .button-secondary {
-  background-color: #333;
-  color: #eee;
-}
-
-body.dark .button-secondary:hover {
-  background-color: #444;
 }
