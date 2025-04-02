@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Credit Balance | Aquamark.io</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <h1>Check Your Credit Balance</h1>
+    <p>Enter your AQUA code to see how many watermarking credits you have left.</p>
+  </header>
+
+  <section class="check-credit-form">
+    <form id="creditCheckForm">
+      <input type="text" id="codeInput" name="code" placeholder="Enter your AQUA code" required>
+      <button type="submit">Check Balance</button>
+    </form>
+    <div id="result" class="result-box"></div>
+  </section>
+
+  <footer>
+    <p>Need help? Email <a href="mailto:heyaqua@gmail.com">heyaqua@gmail.com</a></p>
+    <p>&copy; 2025 Aquamark.io</p>
+  </footer>
+
+  <script>
+    document.getElementById('creditCheckForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const code = document.getElementById('codeInput').value.trim();
+      const resultBox = document.getElementById('result');
+      resultBox.textContent = 'Checking...';
+
+      try {
+        const response = await fetch('https://your-n8n-webhook-url-here', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ code })
+        });
+
+        const data = await response.json();
+        resultBox.textContent = data.message || 'No response received.';
+      } catch (error) {
+        resultBox.textContent = 'There was an error checking your code. Please try again later.';
+      }
+    });
+  </script>
+</body>
+</html>
