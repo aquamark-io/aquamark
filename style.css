@@ -36,6 +36,14 @@ header img {
   text-decoration: underline;
 }
 
+.theme-toggle {
+  font-size: 1.1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3366ff;
+}
+
 /* Hero */
 .hero {
   margin-top: 4rem;
@@ -78,7 +86,6 @@ header img {
   text-decoration: none;
 }
 
-/* Specific button styles */
 .button-primary {
   background-color: #3366ff;
   color: white;
@@ -112,4 +119,37 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+/* === Dark Mode === */
+body.dark {
+  background-color: #111;
+  color: #eee;
+}
+
+body.dark .nav-link,
+body.dark footer a {
+  color: #66aaff;
+}
+
+body.dark .hero p {
+  color: #aaa;
+}
+
+body.dark .button-primary {
+  background-color: #66aaff;
+  color: #000;
+}
+
+body.dark .button-primary:hover {
+  background-color: #5599dd;
+}
+
+body.dark .button-secondary {
+  background-color: #333;
+  color: #eee;
+}
+
+body.dark .button-secondary:hover {
+  background-color: #444;
 }
