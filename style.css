@@ -1,118 +1,34 @@
-/* === Base Styling === */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top-nav">
+    <div class="logo">
+      <img src="/logo.png" alt="Aquamark logo" height="32" />
+    </div>
+    <nav class="nav-links">
+      <a href="#pricing">Pricing</a>
+      <a href="#check">Check Balance</a>
+    </nav>
+  </header>
 
-body {
-  font-family: system-ui, sans-serif;
-  background: #fff;
-  color: #111;
-  padding: 2rem;
-  transition: background 0.3s, color 0.3s;
-}
+  <main class="hero">
+    <h1>Watermark Any File, Instantly</h1>
+    <p class="sub">The fastest and most affordable way to watermark your documents</p>
+    <div class="actions">
+      <a href="#" class="btn">Upload Documents</a>
+      <a href="#" class="btn secondary">Use API</a>
+    </div>
+  </main>
 
-body.dark {
-  background: #111;
-  color: #eee;
-}
-
-/* === Header === */
-.site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid #eee;
-}
-
-.site-header .logo {
-  width: 120px;
-}
-
-.site-header .right a,
-.site-header .right button {
-  margin-left: 1rem;
-  font-size: 0.95rem;
-  color: inherit;
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-/* === Main Content === */
-.homepage {
-  text-align: center;
-  padding: 4rem 1rem;
-}
-
-.homepage h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.subheader {
-  font-size: 1.1rem;
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-body.dark .subheader {
-  color: #aaa;
-}
-
-.cta-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.cta-buttons .button {
-  padding: 0.75rem 1.5rem;
-  background: #000;
-  color: #fff;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s;
-}
-
-.cta-buttons .button:hover {
-  background: #333;
-}
-
-body.dark .cta-buttons .button {
-  background: #fff;
-  color: #000;
-}
-
-body.dark .cta-buttons .button:hover {
-  background: #ddd;
-}
-
-/* === Footer === */
-.site-footer {
-  display: flex;
-  flex-direction: column;
-  font-size: 0.85rem;
-  color: #666;
-  border-top: 1px solid #eee;
-  margin-top: 4rem;
-  padding-top: 2rem;
-  gap: 1rem;
-}
-
-.site-footer a {
-  color: #666;
-  text-decoration: underline;
-}
-
-body.dark .site-footer,
-body.dark .site-footer a {
-  color: #aaa;
-  border-color: #333;
-}
+  <footer>
+    <p class="disclaimer">Disclaimer: Aquamark.io is a watermark overlay utility. We do not assume liability for how documents are used after processing.</p>
+    <p class="meta">© 2025 Aquamark.io • San Francisco • <a href="mailto:heyaqua@gmail.com">Email us</a></p>
+  </footer>
+</body>
+</html>
