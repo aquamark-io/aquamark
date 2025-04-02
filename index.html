@@ -12,12 +12,13 @@
     <nav class="nav-links">
       <a class="nav-link" href="#">Pricing</a>
       <a class="nav-link" href="#">Check Balance</a>
+      <button id="toggle-theme" class="theme-toggle">🌓</button>
     </nav>
   </header>
 
   <main class="hero">
     <h1>Watermark Any File, Instantly</h1>
-    <p>The fastest and most affordable way to watermark your files</p>
+    <p>The fastest and most affordable way to watermark your documents</p>
     <div class="button-group">
       <a href="/upload.html" class="button button-primary">Upload Documents</a>
       <a href="/api.html" class="button button-secondary">Use API</a>
@@ -25,8 +26,15 @@
   </main>
 
   <footer>
-    <p>Need a feature? <a href="mailto:heyaqua@gmail.com">Email us</a></p>
+    <p>Need a feature? <a href="mailto:heyaquamark@gmail.com">Email us</a></p>
     <p>© 2025 Aquamark.io · San Francisco, CA</p>
   </footer>
+
+  <script>
+    const toggle = document.getElementById('toggle-theme');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  </script>
 </body>
 </html>
