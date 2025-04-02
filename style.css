@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquamark.io</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="top-nav">
-    <div class="logo">
-      <img src="/logo.png" alt="Aquamark logo" height="32" />
-    </div>
+  <header class="top-bar">
+    <img src="logo.png" alt="Aquamark logo" class="logo">
     <nav class="nav-links">
       <a href="#pricing">Pricing</a>
-      <a href="#check">Check Balance</a>
+      <a href="#check-balance">Check Balance</a>
     </nav>
   </header>
 
   <main class="hero">
     <h1>Watermark Any File, Instantly</h1>
-    <p class="sub">The fastest and most affordable way to watermark your documents</p>
-    <div class="actions">
-      <a href="#" class="btn">Upload Documents</a>
-      <a href="#" class="btn secondary">Use API</a>
+    <p class="subhead">The fastest and most affordable way to watermark your documents</p>
+    <div class="cta-buttons">
+      <a href="#upload" class="btn">Upload Documents</a>
+      <a href="#api" class="btn">Use API</a>
     </div>
   </main>
 
-  <footer>
+  <footer class="footer">
     <p class="disclaimer">Disclaimer: Aquamark.io is a watermark overlay utility. We do not assume liability for how documents are used after processing.</p>
-    <p class="meta">© 2025 Aquamark.io • San Francisco • <a href="mailto:heyaqua@gmail.com">Email us</a></p>
+    <p class="footer-note">© 2025 Aquamark.io – San Francisco – <a href="mailto:heyaqua@gmail.com">Email us</a> for feature requests</p>
   </footer>
 </body>
 </html>
