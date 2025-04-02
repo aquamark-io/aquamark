@@ -1,146 +1,118 @@
-/* Reset and Base */
+/* === Base Styling === */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Helvetica Neue', sans-serif;
-  background: #ffffff;
+  font-family: system-ui, sans-serif;
+  background: #fff;
   color: #111;
-  line-height: 1.6;
   padding: 2rem;
+  transition: background 0.3s, color 0.3s;
 }
 
-h1, h2, h3 {
-  font-weight: 600;
-  color: #0d0d0d;
+body.dark {
+  background: #111;
+  color: #eee;
 }
 
-/* Header */
-.hero {
+/* === Header === */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.site-header .logo {
+  width: 120px;
+}
+
+.site-header .right a,
+.site-header .right button {
+  margin-left: 1rem;
+  font-size: 0.95rem;
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* === Main Content === */
+.homepage {
   text-align: center;
-  padding: 4rem 2rem 2rem;
-  background: #f9f9f9;
+  padding: 4rem 1rem;
 }
 
-.logo {
-  width: 80px;
+.homepage h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
   margin-bottom: 1rem;
 }
 
 .subheader {
-  color: #555;
-  margin: 1rem 0 2rem;
   font-size: 1.1rem;
-}
-
-.cta-buttons a {
-  display: inline-block;
-  margin: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: #3366ff;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: background 0.2s ease-in-out;
-}
-
-.cta-buttons a:hover {
-  background: #224bcc;
-}
-
-/* How It Works */
-.how-it-works {
-  padding: 3rem 1rem;
-  text-align: center;
-}
-
-.how-it-works ol {
-  list-style: decimal inside;
-  max-width: 600px;
-  margin: 1rem auto 0;
-  color: #333;
-  text-align: left;
-}
-
-/* Features */
-.features {
-  padding: 3rem 1rem;
-  background: #f2f6ff;
-  text-align: center;
-}
-
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 2rem auto 0;
-}
-
-.feature-grid div h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-}
-
-.feature-grid div p {
-  color: #444;
-  font-size: 0.95rem;
-}
-
-/* Pricing */
-.pricing {
-  padding: 3rem 1rem;
-  text-align: center;
-}
-
-.pricing-tiers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  max-width: 900px;
-  margin: 2rem auto 0;
-}
-
-.pricing-tiers div {
-  border: 1px solid #e3e3e3;
-  padding: 1.5rem;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.03);
-}
-
-.pricing-tiers h3 {
-  color: #3366ff;
-  margin-bottom: 0.5rem;
-}
-
-/* Terms */
-.terms {
-  padding: 2rem 1rem;
-  font-size: 0.85rem;
   color: #666;
-  background: #fafafa;
-  text-align: center;
+  margin-bottom: 2rem;
 }
 
-/* Footer */
-footer {
-  padding: 1.5rem;
-  font-size: 0.9rem;
-  text-align: center;
+body.dark .subheader {
+  color: #aaa;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cta-buttons .button {
+  padding: 0.75rem 1.5rem;
   background: #000;
   color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
 }
 
-footer a {
-  color: #66aaff;
+.cta-buttons .button:hover {
+  background: #333;
+}
+
+body.dark .cta-buttons .button {
+  background: #fff;
+  color: #000;
+}
+
+body.dark .cta-buttons .button:hover {
+  background: #ddd;
+}
+
+/* === Footer === */
+.site-footer {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #666;
+  border-top: 1px solid #eee;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  gap: 1rem;
+}
+
+.site-footer a {
+  color: #666;
   text-decoration: underline;
 }
 
-footer a:hover {
-  text-decoration: none;
+body.dark .site-footer,
+body.dark .site-footer a {
+  color: #aaa;
+  border-color: #333;
 }
