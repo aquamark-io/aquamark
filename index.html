@@ -118,6 +118,108 @@
       font-weight: 600;
     }
 
+    .section {
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .step-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    .step-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .step-desc {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .pricing {
+      background-color: #f5f7ff;
+    }
+
+    .pricing-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .pricing-box {
+      background-color: #3366ff;
+      color: white;
+      padding: 48px 32px;
+      border-radius: 16px;
+      width: 280px;
+    }
+
+    .pricing-box h3 {
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .pricing-box .price {
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .pricing-box p {
+      margin: 12px 0;
+    }
+
+    .reviews-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .review {
+      background-color: #f9f9f9;
+      padding: 32px;
+      border-radius: 12px;
+      max-width: 300px;
+      text-align: left;
+    }
+
+    .review p {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .review .name {
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
     footer {
       text-align: center;
       padding: 48px 20px 20px;
@@ -128,7 +230,6 @@
 </head>
 <body>
 
-  <!-- Promo Banner -->
   <div class="banner">
     🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
   </div>
@@ -154,12 +255,75 @@
     </div>
   </section>
 
-  <!-- Stats Banner -->
   <section class="stats">
     <div class="stats-row">
       <div class="stat-item">91% Reduction in Backdooring</div>
       <div class="stat-item">4.76/5 <span style="color:#f5b300;">⭐</span> Rating</div>
       <div class="stat-item">100,000+ Docs Watermarked</div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="section">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">📂</div>
+        <div class="step-title">Upload Docs or Use API</div>
+        <div class="step-desc">Choose manual upload or integrate with your workflow using our simple API.</div>
+      </div>
+      <div class="step">
+        <div class="step-icon">🖼️</div>
+        <div class="step-title">Add Your Watermark</div>
+        <div class="step-desc">Upload your logo or image. We’ll stamp it across every page.</div>
+      </div>
+      <div class="step">
+        <div class="step-icon">📥</div>
+        <div class="step-title">Download & Send</div>
+        <div class="step-desc">Your watermarked files are ready instantly. No storage, no nonsense.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section pricing">
+    <h2>Priced like a tool, not a service.</h2>
+    <p style="font-size: 18px; color: #555; margin-bottom: 60px;">No subscriptions. Pay as you go, like it should be.</p>
+    <div class="pricing-grid">
+      <div class="pricing-box">
+        <h3>Starter</h3>
+        <div class="price">$25</div>
+        <p>1,000 pages</p>
+        <p>$0.025/page</p>
+      </div>
+      <div class="pricing-box">
+        <h3>Team</h3>
+        <div class="price">$250</div>
+        <p>10,000 pages</p>
+        <p>$0.025/page</p>
+      </div>
+      <div class="pricing-box">
+        <h3>Enterprise</h3>
+        <div class="price">$500</div>
+        <p>100,000 pages</p>
+        <p>$0.005/page</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>What Brokers Are Saying</h2>
+    <div class="reviews-grid">
+      <div class="review">
+        <p>“We used to get ripped off constantly. Now our files are protected and we’re funding more deals.”</p>
+        <p class="name">– Alex G., Funding Manager</p>
+      </div>
+      <div class="review">
+        <p>“Aquamark is a no-brainer. Upload, watermark, send. Took 30 seconds.”</p>
+        <p class="name">– Jess T., Independent Broker</p>
+      </div>
+      <div class="review">
+        <p>“We rolled it out across our team in one day. No training needed. Clients love the extra security.”</p>
+        <p class="name">– Marcus D., Lending Ops Lead</p>
+      </div>
     </div>
   </section>
 
