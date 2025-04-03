@@ -8,6 +8,8 @@ body {
 a {
   text-decoration: none;
   color: #3366ff;
+  font-weight: bold;
+  font-size: 17px;
 }
 
 .topbar {
@@ -18,17 +20,7 @@ a {
 }
 
 .logo-large {
-  height: 72px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 24px;
-}
-
-.nav-link {
-  font-size: 18px;
-  font-weight: 500;
+  height: 71px;
 }
 
 .hero {
@@ -37,13 +29,13 @@ a {
 }
 
 .hero h1 {
-  font-size: 60px; /* was 48px, increased by 12 */
+  font-size: 70px;
   font-weight: bold;
   margin-bottom: 16px;
 }
 
 .hero .subhead {
-  font-size: 25px; /* was 22px, increased by 3 */
+  font-size: 25px;
   color: #555;
   margin-bottom: 48px;
 }
