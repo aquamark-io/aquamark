@@ -18,17 +18,17 @@ a {
 }
 
 .logo-large {
-  height: 69px; /* reduced from 71 */
+  height: 67px; /* reduced again by 2pts */
 }
 
 .nav-links {
   display: flex;
-  gap: 24px; /* adds space between pricing and check balance */
+  gap: 24px;
 }
 
 .nav-link {
-  font-weight: normal; /* unbolded */
-  font-size: 16px; /* reduced by 1pt */
+  font-weight: normal;
+  font-size: 16px;
 }
 
 .hero {
@@ -37,7 +37,7 @@ a {
 }
 
 .hero h1 {
-  font-size: 80px; /* increased again */
+  font-size: 77px; /* reduced by 3pts */
   font-weight: bold;
   margin-bottom: 16px;
 }
