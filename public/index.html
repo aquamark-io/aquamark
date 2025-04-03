@@ -17,7 +17,7 @@
       }
 
       .banner {
-        background-color: #a78bfa; /* violet-400 */
+        background-color: #a78bfa;
         color: #111;
         text-align: center;
         padding: 14px 20px;
@@ -25,10 +25,14 @@
         font-weight: 500;
       }
 
+      .banner span {
+        font-size: 17px;
+      }
+
       .banner a {
-        color: #111;
+        color: #3366ff;
         text-decoration: underline;
-        font-weight: bold;
+        font-weight: 400;
       }
 
       .topbar {
@@ -39,7 +43,7 @@
       }
 
       .logo {
-        height: 40px;
+        height: 42px;
       }
 
       .nav-links {
@@ -95,12 +99,96 @@
         background-color: #f3f4f6;
         color: #333;
       }
+
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        padding: 48px 20px;
+        font-size: 18px;
+        font-weight: 500;
+        color: #444;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+      }
+
+      .stats span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .star {
+        color: #facc15;
+        font-size: 18px;
+      }
+
+      .section {
+        padding: 80px 20px;
+        text-align: center;
+      }
+
+      .section h2 {
+        font-size: 36px;
+        margin-bottom: 24px;
+      }
+
+      .section p {
+        font-size: 20px;
+        color: #555;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      .pricing-grid {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-top: 48px;
+      }
+
+      .pricing-tier {
+        background: #3366ff;
+        color: #fff;
+        border-radius: 16px;
+        padding: 40px 32px;
+        min-width: 240px;
+        max-width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .pricing-tier h3 {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+
+      .pricing-tier .price {
+        font-size: 36px;
+        font-weight: bold;
+        margin: 12px 0;
+      }
+
+      .pricing-tier p {
+        font-size: 18px;
+        margin: 6px 0;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 32px 20px;
+        font-size: 14px;
+        color: #777;
+        border-top: 1px solid #eee;
+        margin-top: 80px;
+      }
     </style>
   </head>
 
   <body>
     <div class="banner">
-      🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
+      <span>🎉</span> All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
     </div>
 
     <header class="topbar">
@@ -114,16 +202,67 @@
       </nav>
     </header>
 
-    <main class="hero">
-      <h1>Stop Backdooring. Start Funding.</h1>
-      <p class="subhead">
-        Protect your submissions. Instant watermarking built for MCA brokers.
-      </p>
-      <div class="cta-buttons">
-        <button class="btn primary">Try for Free</button>
-        <button class="btn secondary">Upload Docs</button>
-        <button class="btn secondary">Use API</button>
-      </div>
+    <main>
+      <section class="hero">
+        <h1>Stop Backdooring. Start Funding.</h1>
+        <p class="subhead">
+          Protect your submissions. Instant watermarking built for MCA brokers.
+        </p>
+        <div class="cta-buttons">
+          <button class="btn primary">Try for Free</button>
+          <button class="btn secondary">Upload Docs</button>
+          <button class="btn secondary">Use API</button>
+        </div>
+      </section>
+
+      <section class="stats">
+        <span>🔒 91% reduction in backdooring</span>
+        <span><span class="star">★</span> 4.76 rating</span>
+        <span>💸 1,200+ deals protected</span>
+      </section>
+
+      <section class="section" id="how">
+        <h2>How It Works</h2>
+        <p>Upload your watermark image once, and we’ll stamp it on every page of your documents automatically. No setup. No hassle.</p>
+      </section>
+
+      <section class="section" id="pricing">
+        <h2>Pricing</h2>
+        <p>Pay-as-you-go pricing. No subscriptions. No commitments.</p>
+        <div class="pricing-grid">
+          <div class="pricing-tier">
+            <h3>Drip</h3>
+            <div class="price">$25</div>
+            <p>1,000 pages</p>
+            <p>$0.025/page</p>
+            <p>Riding solo</p>
+          </div>
+          <div class="pricing-tier">
+            <h3>Stream</h3>
+            <div class="price">$250</div>
+            <p>10,000 pages</p>
+            <p>$0.025/page</p>
+            <p>For small teams</p>
+          </div>
+          <div class="pricing-tier">
+            <h3>Tsunami</h3>
+            <div class="price">$500</div>
+            <p>100,000 pages</p>
+            <p>$0.005/page</p>
+            <p>For scale</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reviews">
+        <h2>What Brokers Are Saying</h2>
+        <p>“Backdooring used to cost me thousands. Aquamark made it stop in days.”</p>
+        <p>“I watermark every file now. Takes 2 seconds and protects every deal.”</p>
+      </section>
     </main>
+
+    <footer class="footer">
+      <p>© 2025 Aquamark.io · San Francisco, CA · <a href="mailto:heyaquamark@gmail.com">Contact Us</a></p>
+    </footer>
   </body>
 </html>
