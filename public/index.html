@@ -1,268 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aquamark</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
-        color: #111;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #111;
+    }
 
-      .banner {
-        background-color: #d8b4fe;
-        color: #111;
-        text-align: center;
-        padding: 14px 20px;
-        font-size: 16px;
-        font-weight: 500;
-      }
+    .banner {
+      background-color: #ede7ff;
+      color: #111;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: 500;
+    }
 
-      .banner span {
-        font-size: 17px;
-      }
+    .banner a {
+      color: #2c45ff;
+      text-decoration: underline;
+      font-weight: 400;
+      margin-left: 4px;
+    }
 
-      .banner a {
-        color: #254eda;
-        text-decoration: underline;
-        font-weight: 400;
-      }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+    }
 
-      .topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 24px 40px;
-      }
+    .logo {
+      height: 42px;
+    }
 
-      .logo {
-        height: 42px;
-      }
+    nav a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: #111;
+      font-weight: 500;
+      font-size: 15px;
+    }
 
-      .nav-links {
-        display: flex;
-        gap: 24px;
-        font-size: 16px;
-      }
+    .hero {
+      text-align: center;
+      padding: 100px 20px 80px;
+    }
 
-      .nav-links a {
-        color: #111;
-        text-decoration: none;
-        font-weight: 500;
-      }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
 
-      .hero {
-        text-align: center;
-        padding: 100px 20px 80px;
+    .hero p {
+      font-size: 19px;
+      color: #444;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-buttons a {
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background-color: #3c5fff;
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: #f5f5f5;
+      color: #111;
+    }
+
+    .stats-banner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 80px;
+      padding: 60px 20px;
+      background-color: #f9f9ff;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+
+    .stats-banner .stat {
+      text-align: center;
+    }
+
+    .stats-banner .stat h2 {
+      font-size: 36px;
+      margin: 0;
+      color: #111;
+    }
+
+    .stats-banner .stat p {
+      margin-top: 8px;
+      font-size: 16px;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
       }
 
       .hero h1 {
-        font-size: 59px;
-        font-weight: 700;
-        margin-bottom: 24px;
-      }
-
-      .hero .subhead {
-        font-size: 25px;
-        color: #444;
-        margin-bottom: 48px;
-      }
-
-      .cta-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 16px;
-      }
-
-      .btn {
-        padding: 14px 28px;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-      }
-
-      .btn.primary {
-        background-color: #3b5fff;
-        color: #fff;
-      }
-
-      .btn.secondary {
-        background-color: #f3f4f6;
-        color: #333;
-      }
-
-      .stats {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        padding: 48px 20px;
-        font-size: 18px;
-        font-weight: 500;
-        color: #444;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-      }
-
-      .stats span {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .star {
-        color: #facc15;
-        font-size: 18px;
-      }
-
-      .section {
-        padding: 80px 20px;
-        text-align: center;
-      }
-
-      .section h2 {
         font-size: 36px;
-        margin-bottom: 24px;
       }
 
-      .section p {
-        font-size: 20px;
-        color: #555;
-        max-width: 680px;
-        margin: 0 auto;
-      }
-
-      .pricing-grid {
-        display: flex;
-        justify-content: center;
+      .stats-banner {
+        flex-direction: column;
         gap: 40px;
-        flex-wrap: wrap;
-        margin-top: 48px;
       }
+    }
+  </style>
+</head>
+<body>
 
-      .pricing-tier {
-        background: #3366ff;
-        color: #fff;
-        border-radius: 16px;
-        padding: 40px 32px;
-        min-width: 240px;
-        max-width: 280px;
-        text-align: center;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      }
+  <div class="banner">
+    🎉 All new accounts get <strong>5 free credits.</strong>
+    <a href="#">Sign up now</a>
+  </div>
 
-      .pricing-tier h3 {
-        font-size: 28px;
-        margin-bottom: 12px;
-      }
+  <header>
+    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+    <nav>
+      <a href="#">How It Works</a>
+      <a href="#">Pricing</a>
+      <a href="#">Upload Docs</a>
+      <a href="#">Use API</a>
+      <a href="#">Sign In</a>
+    </nav>
+  </header>
 
-      .pricing-tier .price {
-        font-size: 36px;
-        font-weight: bold;
-        margin: 12px 0;
-      }
-
-      .pricing-tier p {
-        font-size: 18px;
-        margin: 6px 0;
-      }
-
-      .footer {
-        text-align: center;
-        padding: 32px 20px;
-        font-size: 14px;
-        color: #777;
-        border-top: 1px solid #eee;
-        margin-top: 80px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="banner">
-      <span>🎉</span> All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
+  <section class="hero">
+    <h1>Stop Backdooring. Start Funding.</h1>
+    <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
+    <div class="hero-buttons">
+      <a href="#" class="btn-primary">Try for Free</a>
+      <a href="#" class="btn-secondary">Upload Docs</a>
+      <a href="#" class="btn-secondary">Use API</a>
     </div>
+  </section>
 
-    <header class="topbar">
-<img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-      <nav class="nav-links">
-        <a href="#how">How It Works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#upload">Upload Docs</a>
-        <a href="#api">Use API</a>
-        <a href="#signin">Sign In</a>
-      </nav>
-    </header>
+  <section class="stats-banner">
+    <div class="stat">
+      <h2>1200+</h2>
+      <p>Deals Protected</p>
+    </div>
+    <div class="stat">
+      <h2>⭐ 4.76</h2>
+      <p>Average Rating</p>
+    </div>
+    <div class="stat">
+      <h2>1M+</h2>
+      <p>Files Watermarked</p>
+    </div>
+  </section>
 
-    <main>
-      <section class="hero">
-        <h1>Stop Backdooring. Start Funding.</h1>
-        <p class="subhead">
-          Protect your submissions. Instant watermarking built for MCA brokers.
-        </p>
-        <div class="cta-buttons">
-          <button class="btn primary">Try for Free</button>
-          <button class="btn secondary">Upload Docs</button>
-          <button class="btn secondary">Use API</button>
-        </div>
-      </section>
-
-      <section class="stats">
-        <span>🔒 91% reduction in backdooring</span>
-        <span><span class="star">★</span> 4.76 rating</span>
-        <span>💸 1,200+ deals protected</span>
-      </section>
-
-      <section class="section" id="how">
-        <h2>How It Works</h2>
-        <p>Upload your watermark image once, and we’ll stamp it on every page of your documents automatically. No setup. No hassle.</p>
-      </section>
-
-      <section class="section" id="pricing">
-        <h2>Pricing</h2>
-        <p>Pay-as-you-go pricing. No subscriptions. No commitments.</p>
-        <div class="pricing-grid">
-          <div class="pricing-tier">
-            <h3>Drip</h3>
-            <div class="price">$25</div>
-            <p>1,000 pages</p>
-            <p>$0.025/page</p>
-            <p>Riding solo</p>
-          </div>
-          <div class="pricing-tier">
-            <h3>Stream</h3>
-            <div class="price">$250</div>
-            <p>10,000 pages</p>
-            <p>$0.025/page</p>
-            <p>For small teams</p>
-          </div>
-          <div class="pricing-tier">
-            <h3>Tsunami</h3>
-            <div class="price">$500</div>
-            <p>100,000 pages</p>
-            <p>$0.005/page</p>
-            <p>For scale</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="reviews">
-        <h2>What Brokers Are Saying</h2>
-        <p>“Backdooring used to cost me thousands. Aquamark made it stop in days.”</p>
-        <p>“I watermark every file now. Takes 2 seconds and protects every deal.”</p>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <p>© 2025 Aquamark.io · San Francisco, CA · <a href="mailto:heyaquamark@gmail.com">Contact Us</a></p>
-    </footer>
-  </body>
+</body>
 </html>
