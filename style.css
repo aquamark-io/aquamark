@@ -8,8 +8,6 @@ body {
 a {
   text-decoration: none;
   color: #3366ff;
-  font-weight: bold;
-  font-size: 17px;
 }
 
 .topbar {
@@ -20,7 +18,17 @@ a {
 }
 
 .logo-large {
-  height: 71px;
+  height: 69px; /* reduced from 71 */
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px; /* adds space between pricing and check balance */
+}
+
+.nav-link {
+  font-weight: normal; /* unbolded */
+  font-size: 16px; /* reduced by 1pt */
 }
 
 .hero {
@@ -29,7 +37,7 @@ a {
 }
 
 .hero h1 {
-  font-size: 70px;
+  font-size: 80px; /* increased again */
   font-weight: bold;
   margin-bottom: 16px;
 }
