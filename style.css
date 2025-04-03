@@ -8,27 +8,18 @@ body {
 a {
   text-decoration: none;
   color: #3366ff;
+  font-size: 17px;
 }
 
 .topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 24px 32px;
 }
 
 .logo-large {
-  height: 67px; /* reduced again by 2pts */
-}
-
-.nav-links {
-  display: flex;
-  gap: 24px;
-}
-
-.nav-link {
-  font-weight: normal;
-  font-size: 16px;
+  height: 69px;
 }
 
 .hero {
@@ -37,7 +28,7 @@ a {
 }
 
 .hero h1 {
-  font-size: 77px; /* reduced by 3pts */
+  font-size: 67px;
   font-weight: bold;
   margin-bottom: 16px;
 }
@@ -139,4 +130,21 @@ a {
   margin-top: 32px;
   font-size: 20px;
   font-weight: 500;
+}
+
+.forgot-code {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.forgot-code input {
+  padding: 12px 18px;
+  font-size: 16px;
+  width: 280px;
+  max-width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 12px;
 }
