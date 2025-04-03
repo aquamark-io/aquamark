@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aquamark</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -44,9 +44,9 @@
       }
 
       nav a {
-        margin-left: 24px;
+        margin-left: 20px;
         text-decoration: none;
-        color: #444;
+        color: #888;
         font-size: 15px;
       }
 
@@ -56,13 +56,13 @@
       }
 
       .hero h1 {
-        font-size: 48px;
+        font-size: 53px;
         font-weight: 700;
         margin-bottom: 20px;
       }
 
       .hero p {
-        font-size: 20px;
+        font-size: 23px;
         color: #555;
         margin-bottom: 40px;
       }
@@ -88,7 +88,7 @@
 
       .stats {
         background-color: #f8f7fc;
-        padding: 40px 20px;
+        padding: 30px 20px;
         display: flex;
         justify-content: center;
         gap: 60px;
@@ -130,74 +130,60 @@
       }
 
       .how-it-works {
-        background-color: #eef1ff;
-        padding: 80px 20px;
+        background-color: #ffffff;
+        padding: 80px 20px 60px;
         text-align: center;
       }
 
       .how-it-works h2 {
-        font-size: 36px;
-        font-weight: 700;
-        margin-bottom: 20px;
+        font-size: 40px;
+        font-family: 'Archivo Black', sans-serif;
+        font-weight: 400;
+        margin-bottom: 60px;
+      }
+
+      .how-it-works h2 .blue {
+        color: #3b5bfd;
       }
 
       .how-it-works-steps {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 60px;
-        margin-top: 40px;
+        gap: 100px;
       }
 
       .step {
         max-width: 220px;
+        text-align: center;
+      }
+
+      .step img {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 20px;
       }
 
       .step-title {
         font-size: 18px;
         font-weight: 600;
-        margin-top: 16px;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
 
       .step-desc {
         font-size: 14px;
         color: #666;
       }
-
-      .step-icon {
-        background-color: white;
-        border-radius: 16px;
-        padding: 18px;
-        height: 48px;
-        width: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      }
-
-      img.step-svg {
-        height: 24px;
-        width: 24px;
-      }
     </style>
   </head>
   <body>
-    <!-- Banner -->
     <div class="banner">
       🎉 All new accounts get <strong>5 free credits</strong>.
       <a href="#">Sign up now</a>
     </div>
 
-    <!-- Header -->
     <header>
-      <img
-        src="logo-full-black-blue.png"
-        alt="Aquamark Logo"
-        class="logo"
-      />
+      <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
       <nav>
         <a href="#">How It Works</a>
         <a href="#">Pricing</a>
@@ -207,7 +193,6 @@
       </nav>
     </header>
 
-    <!-- Hero -->
     <section class="hero">
       <h1>Stop Backdooring. Start Funding.</h1>
       <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
@@ -218,60 +203,50 @@
       </div>
     </section>
 
-    <!-- Stats Banner -->
     <section class="stats">
       <div class="stat-item">
         <div class="stat-icon">
-          <img src="protect.svg" alt="Protected" class="step-svg" />
+          <img src="protect.svg" alt="Protected" />
         </div>
         <div class="stat-number">2,100+</div>
         <div class="stat-label">Deals Protected</div>
       </div>
       <div class="stat-item">
         <div class="stat-icon">
-          <img src="star.svg" alt="Rating" class="step-svg" />
+          <img src="star.svg" alt="Rating" />
         </div>
         <div class="stat-number">4.76</div>
         <div class="stat-label">User Rating</div>
       </div>
       <div class="stat-item">
         <div class="stat-icon">
-          <img src="document.svg" alt="Watermarked" class="step-svg" />
+          <img src="document.svg" alt="Watermarked" />
         </div>
         <div class="stat-number">1M+</div>
         <div class="stat-label">Files Watermarked</div>
       </div>
     </section>
 
-    <!-- How It Works -->
     <section class="how-it-works">
-      <h2>How It Works</h2>
+      <h2><span class="black">How </span><span class="blue">Aquamark</span><span class="black"> Works</span></h2>
       <div class="how-it-works-steps">
         <div class="step">
-          <div class="step-icon">
-            <img src="star.svg" alt="Step 1" class="step-svg" />
-          </div>
+          <img src="one.svg" alt="Step 1" />
           <div class="step-title">Create Account</div>
           <div class="step-desc">Start free. Get 5 credits.</div>
         </div>
         <div class="step">
-          <div class="step-icon">
-            <img src="protect.svg" alt="Step 2" class="step-svg" />
-          </div>
+          <img src="two.svg" alt="Step 2" />
           <div class="step-title">Upload Logo</div>
           <div class="step-desc">Add once. Apply forever.</div>
         </div>
         <div class="step">
-          <div class="step-icon">
-            <img src="document.svg" alt="Step 3" class="step-svg" />
-          </div>
+          <img src="three.svg" alt="Step 3" />
           <div class="step-title">Drop Files</div>
           <div class="step-desc">Upload or use the API.</div>
         </div>
         <div class="step">
-          <div class="step-icon">
-            <img src="star.svg" alt="Step 4" class="step-svg" />
-          </div>
+          <img src="four.svg" alt="Step 4" />
           <div class="step-title">Download Instantly</div>
           <div class="step-desc">Stamped. Secured. Done.</div>
         </div>
