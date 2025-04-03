@@ -1,142 +1,32 @@
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  background-color: #fff;
-  color: #111;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aquamark</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <img src="logo.png" alt="Aquamark logo" class="logo-large" />
+    <nav class="nav-links">
+      <a class="nav-link" href="/pricing.html">Pricing</a>
+      <a class="nav-link" href="/check-credits.html">Check Balance</a>
+    </nav>
+  </header>
 
-a {
-  text-decoration: none;
-  color: #3366ff;
-}
+  <main class="hero">
+    <h1>Watermark Any File, Instantly</h1>
+    <p class="subhead">The fastest and most affordable way to watermark your files.</p>
+    <div class="actions">
+      <a href="/upload.html" class="btn">Upload Documents</a>
+      <a href="/api.html" class="btn secondary">Use API</a>
+    </div>
+  </main>
 
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 32px;
-}
-
-.logo-large {
-  height: 72px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 24px;
-}
-
-.nav-link {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.hero h1 {
-  font-size: 60px; /* was 48px, increased by 12 */
-  font-weight: bold;
-  margin-bottom: 16px;
-}
-
-.hero .subhead {
-  font-size: 25px; /* was 22px, increased by 3 */
-  color: #555;
-  margin-bottom: 48px;
-}
-
-.actions {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 32px;
-}
-
-.btn {
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  background-color: #3366ff;
-  color: white;
-  border-radius: 6px;
-  display: inline-block;
-  text-align: center;
-  border: none;
-  cursor: pointer;
-}
-
-.btn.secondary {
-  background-color: #eee;
-  color: #333;
-}
-
-.footer {
-  text-align: center;
-  padding: 32px 20px;
-  font-size: 14px;
-  color: #777;
-}
-
-/* Pricing Section */
-.pricing-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-
-.pricing-tier {
-  background-color: #3366ff;
-  color: #fff;
-  padding: 60px 40px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  min-width: 240px;
-  max-width: 280px;
-  text-align: center;
-  flex: 1;
-}
-
-.pricing-tier h2 {
-  font-size: 42px;
-  margin-bottom: 16px;
-}
-
-.pricing-tier .price {
-  font-size: 40px;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-.pricing-tier p {
-  font-size: 26px;
-  margin: 6px 0;
-}
-
-/* Check Balance Page */
-.balance-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-top: 32px;
-}
-
-.balance-form input {
-  padding: 14px 20px;
-  font-size: 18px;
-  width: 280px;
-  max-width: 100%;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  text-align: center;
-}
-
-#balance-result {
-  margin-top: 32px;
-  font-size: 20px;
-  font-weight: 500;
-}
+  <footer class="footer">
+    <p>Need a feature? <a href="mailto:heyaquamark@gmail.com">Email us</a></p>
+    <p>© 2025 Aquamark.io · San Francisco, CA</p>
+  </footer>
+</body>
+</html>
