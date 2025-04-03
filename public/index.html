@@ -12,87 +12,116 @@
       background-color: #ffffff;
       color: #111;
     }
+
     .banner {
-      background-color: #f0e8ff;
+      background-color: #f2eafa;
       color: #111;
       text-align: center;
       padding: 12px 20px;
       font-size: 16px;
       font-weight: 500;
     }
+
     .banner a {
-      color: #2a4bd7;
+      color: #0045d4;
       font-weight: normal;
       text-decoration: underline;
     }
-    .topbar {
+
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
+      padding: 20px 40px;
     }
+
     .logo {
-      height: 42px;
+      height: 36px;
     }
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      font-size: 14px;
+
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: #555;
       font-weight: 500;
     }
+
     .hero {
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 100px 20px 60px;
     }
+
     .hero h1 {
-      font-size: 48px;
+      font-size: 52px;
+      font-weight: 700;
       margin-bottom: 20px;
     }
+
     .hero p {
-      font-size: 20px;
-      color: #555;
-      margin-bottom: 32px;
+      font-size: 22px;
+      color: #444;
+      margin-bottom: 40px;
     }
+
     .hero .btn {
-      padding: 14px 24px;
+      padding: 14px 26px;
       font-size: 16px;
       font-weight: 600;
       border-radius: 8px;
       border: none;
       cursor: pointer;
-      margin: 0 8px;
+      margin: 0 10px;
     }
+
     .btn-primary {
-      background-color: #3e63dd;
-      color: white;
+      background-color: #3a5eff;
+      color: #fff;
     }
+
     .btn-secondary {
-      background-color: #f5f5f5;
+      background-color: #f2f2f2;
       color: #111;
     }
+
     .stats-banner {
+      background-color: #f9f9ff;
       display: flex;
       justify-content: center;
-      gap: 60px;
-      padding: 60px 20px;
-      background-color: #f9f9ff;
+      padding: 80px 20px;
+      gap: 80px;
     }
-    .stat {
+
+    .stat-item {
       text-align: center;
-      max-width: 200px;
+      max-width: 180px;
     }
-    .stat img {
-      width: 48px;
-      margin-bottom: 12px;
+
+    .stat-icon {
+      background-color: #fbe4e4;
+      border-radius: 16px;
+      padding: 20px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
     }
-    .stat .number {
-      font-size: 24px;
+
+    .stat-icon img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .stat-number {
+      font-size: 28px;
       font-weight: 700;
       margin-bottom: 6px;
     }
-    .stat .label {
-      font-size: 14px;
-      color: #555;
+
+    .stat-label {
+      font-size: 16px;
+      color: #666;
     }
   </style>
 </head>
@@ -100,39 +129,49 @@
   <div class="banner">
     🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
   </div>
-  <header class="topbar">
+
+  <header>
     <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <nav class="nav-links">
-      <a href="#">How It Works</a>
-      <a href="#">Pricing</a>
-      <a href="#">Upload Docs</a>
-      <a href="#">Use API</a>
-      <a href="#">Sign In</a>
+    <nav>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#upload">Upload Docs</a>
+      <a href="#api">Use API</a>
+      <a href="#signin">Sign In</a>
     </nav>
   </header>
-  <main class="hero">
+
+  <section class="hero">
     <h1>Stop Backdooring. Start Funding.</h1>
     <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
     <button class="btn btn-primary">Try for Free</button>
     <button class="btn btn-secondary">Upload Docs</button>
     <button class="btn btn-secondary">Use API</button>
-  </main>
+  </section>
+
   <section class="stats-banner">
-    <div class="stat">
-      <img src="protect.svg" alt="Protected Icon" />
-      <div class="number">2,100+</div>
-      <div class="label">Deals Protected</div>
+    <div class="stat-item">
+      <div class="stat-icon" style="background-color: #ffe4e4;">
+        <img src="protect.svg" alt="Protect Icon">
+      </div>
+      <div class="stat-number">2,100+</div>
+      <div class="stat-label">Deals Protected</div>
     </div>
-    <div class="stat">
-      <img src="star.svg" alt="Star Rating Icon" />
-      <div class="number">4.76</div>
-      <div class="label">User Rating</div>
+    <div class="stat-item">
+      <div class="stat-icon" style="background-color: #fff5cc;">
+        <img src="star.svg" alt="Star Icon">
+      </div>
+      <div class="stat-number">4.76</div>
+      <div class="stat-label">User Rating</div>
     </div>
-    <div class="stat">
-      <img src="document.svg" alt="Documents Icon" />
-      <div class="number">1M+</div>
-      <div class="label">Files Watermarked</div>
+    <div class="stat-item">
+      <div class="stat-icon" style="background-color: #eae4ff;">
+        <img src="document.svg" alt="Document Icon">
+      </div>
+      <div class="stat-number">1M+</div>
+      <div class="stat-label">Files Watermarked</div>
     </div>
   </section>
+
 </body>
 </html>
