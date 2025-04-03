@@ -18,7 +18,7 @@ a {
 }
 
 .logo-large {
-  height: 67px;
+  height: 65px;
 }
 
 .nav-links {
@@ -32,11 +32,11 @@ a {
 
 .hero {
   text-align: center;
-  padding: 60px 20px;
+  padding: 80px 20px;
 }
 
 .hero h1 {
-  font-size: 67px;
+  font-size: 64px;
   font-weight: bold;
   margin-bottom: 16px;
 }
@@ -138,4 +138,15 @@ a {
   margin-top: 32px;
   font-size: 20px;
   font-weight: 500;
+}
+
+.forgot-code-section {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.forgot-text {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 12px;
 }
