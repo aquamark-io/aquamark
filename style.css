@@ -150,3 +150,43 @@ a {
   color: #333;
   margin: 8px 0 12px 0;
 }
+
+/* Upload Page Sections */
+.upload-section {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.upload-section h2 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+#watermarkImage,
+#documents {
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+
+#documentList,
+#downloadLinks {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #333;
+}
+
+#watermarkPreview img {
+  max-width: 200px;
+  margin-top: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Aqua Code Balance Display */
+.credit-display {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #3366ff;
+}
