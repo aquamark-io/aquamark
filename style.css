@@ -8,18 +8,26 @@ body {
 a {
   text-decoration: none;
   color: #3366ff;
-  font-size: 17px;
 }
 
 .topbar {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 24px 32px;
 }
 
 .logo-large {
-  height: 69px;
+  height: 67px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  font-size: 17px;
 }
 
 .hero {
@@ -130,21 +138,4 @@ a {
   margin-top: 32px;
   font-size: 20px;
   font-weight: 500;
-}
-
-.forgot-code {
-  margin-top: 48px;
-  text-align: center;
-}
-
-.forgot-code input {
-  padding: 12px 18px;
-  font-size: 16px;
-  width: 280px;
-  max-width: 100%;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  text-align: center;
-  margin-top: 8px;
-  margin-bottom: 12px;
 }
