@@ -12,7 +12,7 @@
   </header>
 
   <main class="hero">
-    <h1>Check your credit balance</h1>
+    <h1 style="margin-bottom: 40px;">Check your credit balance.</h1>
 
     <form class="balance-form">
       <input type="text" id="aquaCode" name="aquaCode" placeholder="Enter your Aqua Code" required />
@@ -21,10 +21,13 @@
 
     <div id="balance-result"></div>
 
-    <form class="balance-form" style="margin-top: 48px;">
-      <input type="email" id="recoveryEmail" name="recoveryEmail" placeholder="Forgot your code? Enter your email" required />
-      <button type="submit" class="btn secondary">Recover Code</button>
-    </form>
+    <div class="forgot-code-section">
+      <p class="forgot-text">Forgot your code?</p>
+      <form class="balance-form">
+        <input type="email" id="recoveryEmail" name="recoveryEmail" placeholder="Enter your email" required />
+        <button type="submit" class="btn secondary">Recover Code</button>
+      </form>
+    </div>
   </main>
 
   <footer class="footer">
