@@ -1,52 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Check Credit Balance | Aquamark.io</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check Balance - Aquamark</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="hero">
-    <h1>Check Your Credit Balance</h1>
-    <p>Enter your AQUA code to see how many watermarking credits you have left.</p>
+  <!-- Topbar with logo -->
+  <header class="topbar">
+    <img src="profile-photo.png" alt="Aquamark logo" class="logo-large" />
   </header>
 
-  <section class="check-credit-form">
-    <form id="creditCheckForm">
-      <input type="text" id="codeInput" name="code" placeholder="Enter your AQUA code" required>
-      <button type="submit">Check Balance</button>
+  <!-- Hero Section -->
+  <main class="hero">
+    <h1>Check your credit balance</h1>
+
+    <form class="balance-form">
+      <input type="text" id="aquaCode" name="aquaCode" placeholder="Enter your Aqua Code" required />
+      <button type="submit" class="btn">Check Balance</button>
     </form>
-    <div id="result" class="result-box"></div>
-  </section>
 
-  <footer>
-    <p>Need help? Email <a href="mailto:heyaqua@gmail.com">heyaqua@gmail.com</a></p>
-    <p>&copy; 2025 Aquamark.io</p>
+    <div id="balance-result"></div>
+  </main>
+
+  <footer class="footer">
+    <p>Need a feature? <a href="mailto:heyaquamark@gmail.com">Email us</a></p>
+    <p>© 2025 Aquamark.io · San Francisco, CA</p>
   </footer>
-
-  <script>
-    document.getElementById('creditCheckForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const code = document.getElementById('codeInput').value.trim();
-      const resultBox = document.getElementById('result');
-      resultBox.textContent = 'Checking...';
-
-      try {
-        const response = await fetch('https://your-n8n-webhook-url-here', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ code })
-        });
-
-        const data = await response.json();
-        resultBox.textContent = data.message || 'No response received.';
-      } catch (error) {
-        resultBox.textContent = 'There was an error checking your code. Please try again later.';
-      }
-    });
-  </script>
 </body>
 </html>
