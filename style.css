@@ -54,6 +54,8 @@ a {
   border-radius: 6px;
   display: inline-block;
   text-align: center;
+  border: none;
+  cursor: pointer;
 }
 
 .btn.secondary {
@@ -102,4 +104,29 @@ a {
 .pricing-tier p {
   font-size: 22px;
   margin: 6px 0;
+}
+
+/* Check Balance Page */
+.balance-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.balance-form input {
+  padding: 14px 20px;
+  font-size: 18px;
+  width: 280px;
+  max-width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+}
+
+#balance-result {
+  margin-top: 32px;
+  font-size: 20px;
+  font-weight: 500;
 }
