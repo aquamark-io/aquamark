@@ -12,140 +12,97 @@
       background-color: #ffffff;
       color: #111;
     }
-
     .banner {
-      background-color: #ede7ff;
+      background-color: #f0e8ff;
       color: #111;
       text-align: center;
       padding: 12px 20px;
       font-size: 16px;
       font-weight: 500;
     }
-
     .banner a {
-      color: #2c45ff;
+      color: #2a4bd7;
+      font-weight: normal;
       text-decoration: underline;
-      font-weight: 400;
-      margin-left: 4px;
     }
-
-    header {
+    .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 48px;
+      padding: 20px;
     }
-
     .logo {
       height: 42px;
     }
-
-    nav a {
-      margin-left: 24px;
-      text-decoration: none;
-      color: #111;
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
       font-weight: 500;
-      font-size: 15px;
     }
-
     .hero {
       text-align: center;
-      padding: 100px 20px 80px;
+      padding: 80px 20px 40px;
     }
-
     .hero h1 {
       font-size: 48px;
-      font-weight: 700;
       margin-bottom: 20px;
     }
-
     .hero p {
-      font-size: 19px;
-      color: #444;
-      max-width: 700px;
-      margin: 0 auto 40px;
+      font-size: 20px;
+      color: #555;
+      margin-bottom: 32px;
     }
-
-    .hero-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .hero-buttons a {
-      padding: 12px 24px;
-      border-radius: 6px;
+    .hero .btn {
+      padding: 14px 24px;
+      font-size: 16px;
       font-weight: 600;
-      text-decoration: none;
-      font-size: 15px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      margin: 0 8px;
     }
-
     .btn-primary {
-      background-color: #3c5fff;
+      background-color: #3e63dd;
       color: white;
     }
-
     .btn-secondary {
       background-color: #f5f5f5;
       color: #111;
     }
-
     .stats-banner {
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: 80px;
+      gap: 60px;
       padding: 60px 20px;
       background-color: #f9f9ff;
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
     }
-
-    .stats-banner .stat {
+    .stat {
       text-align: center;
+      max-width: 200px;
     }
-
-    .stats-banner .stat h2 {
-      font-size: 36px;
-      margin: 0;
-      color: #111;
+    .stat img {
+      width: 48px;
+      margin-bottom: 12px;
     }
-
-    .stats-banner .stat p {
-      margin-top: 8px;
-      font-size: 16px;
-      color: #666;
+    .stat .number {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      .hero h1 {
-        font-size: 36px;
-      }
-
-      .stats-banner {
-        flex-direction: column;
-        gap: 40px;
-      }
+    .stat .label {
+      font-size: 14px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-
   <div class="banner">
-    🎉 All new accounts get <strong>5 free credits.</strong>
-    <a href="#">Sign up now</a>
+    🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
   </div>
-
-  <header>
+  <header class="topbar">
     <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <nav>
+    <nav class="nav-links">
       <a href="#">How It Works</a>
       <a href="#">Pricing</a>
       <a href="#">Upload Docs</a>
@@ -153,31 +110,29 @@
       <a href="#">Sign In</a>
     </nav>
   </header>
-
-  <section class="hero">
+  <main class="hero">
     <h1>Stop Backdooring. Start Funding.</h1>
     <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
-    <div class="hero-buttons">
-      <a href="#" class="btn-primary">Try for Free</a>
-      <a href="#" class="btn-secondary">Upload Docs</a>
-      <a href="#" class="btn-secondary">Use API</a>
-    </div>
-  </section>
-
+    <button class="btn btn-primary">Try for Free</button>
+    <button class="btn btn-secondary">Upload Docs</button>
+    <button class="btn btn-secondary">Use API</button>
+  </main>
   <section class="stats-banner">
     <div class="stat">
-      <h2>1200+</h2>
-      <p>Deals Protected</p>
+      <img src="protect.svg" alt="Protected Icon" />
+      <div class="number">2,100+</div>
+      <div class="label">Deals Protected</div>
     </div>
     <div class="stat">
-      <h2>⭐ 4.76</h2>
-      <p>Average Rating</p>
+      <img src="star.svg" alt="Star Rating Icon" />
+      <div class="number">4.76</div>
+      <div class="label">User Rating</div>
     </div>
     <div class="stat">
-      <h2>1M+</h2>
-      <p>Files Watermarked</p>
+      <img src="document.svg" alt="Documents Icon" />
+      <div class="number">1M+</div>
+      <div class="label">Files Watermarked</div>
     </div>
   </section>
-
 </body>
 </html>
