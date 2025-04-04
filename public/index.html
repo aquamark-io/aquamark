@@ -206,6 +206,44 @@
       font-size: 18px;
       margin: 8px 0;
     }
+
+    .reviews {
+      background-color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .reviews h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .review-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .review {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 340px;
+      font-size: 16px;
+      line-height: 1.6;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .review span {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
+    }
   </style>
 </head>
 
@@ -297,6 +335,24 @@
         <div class="price">$500</div>
         <p>100,000 pages</p>
         <p>$0.005/page</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <h2>What Users Are Saying</h2>
+    <div class="review-grid">
+      <div class="review">
+        “Aquamark instantly solved our backdooring problem. Now our files are protected without thinking about it.”
+        <span>— James L., Broker</span>
+      </div>
+      <div class="review">
+        “It’s the simplest tool in our stack. Upload, watermark, send. The UI is clean and fast.”
+        <span>— Marissa H., Submissions Manager</span>
+      </div>
+      <div class="review">
+        “We watermark hundreds of files a day. The API saved us hours every week.”
+        <span>— Danny P., Dev Lead at LendingHub</span>
       </div>
     </div>
   </section>
