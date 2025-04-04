@@ -1,6 +1,6 @@
-<!-- FULL FIXED HTML FOR AQUAMARK HOMEPAGE -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -212,6 +212,22 @@
       width: 100%;
     }
 
+    @media (max-width: 768px) {
+      .built-container {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .built-text,
+      .built-image {
+        max-width: 100%;
+      }
+
+      .built-text p {
+        max-width: 100%;
+      }
+    }
+
     .reviews {
       background: linear-gradient(to right, #eef2ff, #fdf2ff);
       text-align: center;
@@ -224,14 +240,40 @@
       margin-bottom: 20px;
     }
 
+    .review-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .review {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 340px;
+      font-size: 16px;
+      line-height: 1.6;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .review span {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
+    }
+
     .pricing {
       background-color: #f9f9f9;
-      padding: 60px 20px;
+      padding: 80px 20px;
       text-align: center;
     }
 
     .pricing h2 {
-      font-size: 56px;
+      font-size: 46px;
       font-weight: 800;
       margin-bottom: 20px;
     }
@@ -250,22 +292,13 @@
     }
 
     .tier {
+      background-color: #3366ff;
+      color: #fff;
       padding: 60px 40px;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       width: 280px;
       text-align: center;
-    }
-
-    .tier.starter,
-    .tier.pro {
-      background-color: #fff;
-      color: #000;
-    }
-
-    .tier.enterprise {
-      background-color: #A4D3FC8C;
-      color: #000;
     }
 
     .tier h3 {
@@ -284,8 +317,8 @@
       margin: 8px 0;
     }
 
-    .tier .btn {
-      margin-top: 30px;
+    .pricing .cta {
+      margin-top: 60px;
     }
 
     .faq {
@@ -328,60 +361,178 @@
     }
   </style>
 </head>
+
 <body>
+  <div class="banner">
+    🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
+  </div>
 
-  <!-- banner + topbar + hero omitted for brevity -->
-  
-  <section class="pricing" id="pricing">
-    <h2>Simple Pricing</h2>
-    <p>A la carte pricing, no subscriptions, no commitments</p>
-    <div class="tiers">
-      <div class="tier starter">
-        <h3>Drip</h3>
-        <div class="price">$25</div>
-        <p>1,000 pages</p>
-        <p>$0.025/page</p>
-        <p>Riding solo</p>
-        <button class="btn secondary" onclick="location.href='#create-account'">Create an Account</button>
+  <header class="topbar">
+    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+    <nav class="nav-links">
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#upload">Upload Docs</a>
+      <a href="#api">Use API</a>
+      <a href="#signin">Sign In</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <h1>Stop Backdooring. Start Funding.</h1>
+    <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
+    <button class="btn primary">Try for Free</button>
+    <button class="btn secondary">Upload Docs</button>
+    <button class="btn secondary">Use API</button>
+  </main>
+
+  <section class="stats">
+    <div class="stat">
+      <img src="protect.svg" alt="Protect Icon" />
+      <h3>2,100+</h3>
+      <p>Deals Protected</p>
+    </div>
+    <div class="stat">
+      <img src="star.svg" alt="Star Icon" />
+      <h3>4.76</h3>
+      <p>User Rating</p>
+    </div>
+    <div class="stat">
+      <img src="document.svg" alt="Document Icon" />
+      <h3>1M+</h3>
+      <p>Pages Watermarked</p>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how">
+    <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
+    <div class="steps">
+      <div class="step">
+        <img src="one.svg" alt="Step One" />
+        <h4>Create Account</h4>
+        <p>Start free in seconds.</p>
       </div>
-      <div class="tier enterprise">
-        <h3>Stream</h3>
-        <div class="price">$250</div>
-        <p>10,000 pages</p>
-        <p>$0.025/page</p>
-        <p>For small teams</p>
-        <button class="btn primary" onclick="location.href='#create-account'">Create an Account</button>
+      <div class="step">
+        <img src="two.svg" alt="Step Two" />
+        <h4>Upload Logo</h4>
+        <p>Add once. Apply forever.</p>
       </div>
-      <div class="tier pro">
-        <h3>Tsunami</h3>
-        <div class="price">$500</div>
-        <p>100,000 pages</p>
-        <p>$0.005/page</p>
-        <p>For scale</p>
-        <button class="btn secondary" onclick="location.href='#create-account'">Create an Account</button>
+      <div class="step">
+        <img src="three.svg" alt="Step Three" />
+        <h4>Drop Files</h4>
+        <p>Upload or use the API.</p>
+      </div>
+      <div class="step">
+        <img src="four.svg" alt="Step Four" />
+        <h4>Download Instantly</h4>
+        <p>Stamped. Secured. Done.</p>
       </div>
     </div>
   </section>
 
-  <section class="faq">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-item">
-      <h4>Do my credits expire?</h4>
-      <p>Nope. Your credits never expire. Use them whenever you need.</p>
-    </div>
-    <div class="faq-item">
-      <h4>What file types are supported?</h4>
-      <p>You can upload JPG, PNG, PDF, and DOC files. Watermarking applies per page.</p>
-    </div>
-    <div class="faq-item">
-      <h4>Can I use my own logo?</h4>
-      <p>Yes! You upload it once and reuse it across any documents or API calls.</p>
+  <section class="built-for-mca">
+    <div class="built-container">
+      <div class="built-text">
+        <h2>Built for <span class="blue">MCA Brokers</span></h2>
+        <p>From submission to funding, Aquamark protects your pipeline. Whether you're sending files manually or via API, we’ve got you covered. Join the movement to end the backdooring industry once and for all.</p>
+        <button class="btn">Start for Free</button>
+      </div>
+      <div class="built-image">
+        <img src="built-for-mca.jpg" alt="Built for MCA" />
+      </div>
     </div>
   </section>
+
+<!-- START OF REPLACEMENT FOR: <section class="reviews" id="reviews"> to </section class="faq"> -->
+
+<section class="reviews" id="reviews" style="padding: 60px 20px;">
+  <h2 style="text-align: center; font-size: 36px; font-weight: 800; margin-bottom: 40px;">
+    Straight From the Source
+  </h2>
+  <div class="review-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 18px; line-height: 1.6; margin: 0;">
+        “Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">James, ISO</span>
+    </div>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 21px; line-height: 1.6; margin: 0;">
+        “Simple tool. Upload, watermark, send. The UI is clean and fast.”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Eric, Account Executive</span>
+    </div>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 21px; line-height: 1.6; margin: 0;">
+        “We watermark hundreds of pages a day. The API saves us hours!”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Diana, Funding Manager</span>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <h2>Priced like a tool, not a service.</h2>
+  <p>No subscriptions. Pay as you go, like it should be.</p>
+  <div class="tiers">
+    <div class="tier">
+      <h3>Starter</h3>
+      <div class="price">$25</div>
+      <p>1,000 pages</p>
+      <p>$0.025/page</p>
+      <p>“Riding solo”</p>
+    </div>
+    <div class="tier">
+      <h3>Team</h3>
+      <div class="price">$250</div>
+      <p>10,000 pages</p>
+      <p>$0.025/page</p>
+      <p>“For small teams”</p>
+    </div>
+    <div class="tier">
+      <h3>Enterprise</h3>
+      <div class="price">$500</div>
+      <p>100,000 pages</p>
+      <p>$0.005/page</p>
+      <p>“For scale”</p>
+    </div>
+  </div>
+  <div class="cta">
+    <button class="btn primary">Start Free</button>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item">
+    <h4>Do my credits expire?</h4>
+    <p>Nope.</p>
+  </div>
+  <div class="faq-item">
+    <h4>Are my files secure?</h4>
+    <p>Yes! Once you download your watermarked file, it is deleted from the database forever.</p>
+  </div>
+  <div class="faq-item">
+    <h4>What kind of files can I watermark?</h4>
+    <p>jpg, png, pdf, doc (more formats coming soon)</p>
+  </div>
+  <div class="faq-item">
+    <h4>Do I need an account?</h4>
+    <p>Yes. It's free and takes less than 1 minute to set up. Your account will be used to manage your credits, watermark documents manually, or access our API documents.</p>
+  </div>
+  <div class="faq-item">
+    <h4>Have other questions?</h4>
+    <p>Send us an email at <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
+  </div>
+</section>
 
   <footer class="footer">
     &copy; 2025 Aquamark. All rights reserved. <br />
     San Francisco, CA · <a href="#" style="color:#111">Privacy</a> · <a href="#" style="color:#111">Terms</a>
   </footer>
 </body>
+
 </html>
