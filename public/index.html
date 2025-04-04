@@ -155,6 +155,57 @@
       color: #666;
       line-height: 1.5;
     }
+
+    .pricing {
+      background-color: #f9f9f9;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .pricing h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .pricing p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 50px;
+    }
+
+    .tiers {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .tier {
+      background-color: #3366ff;
+      color: #fff;
+      padding: 60px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      width: 280px;
+      text-align: center;
+    }
+
+    .tier h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .tier .price {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .tier p {
+      font-size: 18px;
+      margin: 8px 0;
+    }
   </style>
 </head>
 
@@ -221,6 +272,31 @@
         <img src="four.svg" alt="Step Four" />
         <h4>Download Instantly</h4>
         <p>Stamped. Secured. Done.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <h2>Priced like a tool, not a service.</h2>
+    <p>No subscriptions. Pay as you go, like it should be.</p>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Starter</h3>
+        <div class="price">$25</div>
+        <p>1,000 pages</p>
+        <p>$0.025/page</p>
+      </div>
+      <div class="tier">
+        <h3>Team</h3>
+        <div class="price">$250</div>
+        <p>10,000 pages</p>
+        <p>$0.025/page</p>
+      </div>
+      <div class="tier">
+        <h3>Enterprise</h3>
+        <div class="price">$500</div>
+        <p>100,000 pages</p>
+        <p>$0.005/page</p>
       </div>
     </div>
   </section>
