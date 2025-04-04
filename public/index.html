@@ -1,256 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aquamark</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
-        color: #111;
-      }
 
-      .banner {
-        background-color: #f2eaff;
-        color: #111;
-        text-align: center;
-        padding: 12px 20px;
-        font-size: 16px;
-        font-weight: 500;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #111;
+    }
 
-      .banner a {
-        color: #2b3cff;
-        font-weight: 400;
-        text-decoration: underline;
-        margin-left: 4px;
-      }
+    .banner {
+      background-color: #e9d8fd;
+      color: #111;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 500;
+    }
 
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 24px 48px;
-      }
+    .banner a {
+      color: #1e40af;
+      text-decoration: underline;
+      font-weight: 400;
+    }
 
-      .logo {
-        height: 36px;
-      }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+    }
 
-      nav a {
-        margin-left: 20px;
-        text-decoration: none;
-        color: #888;
-        font-size: 15px;
-      }
+    .logo {
+      height: 28px;
+    }
 
-      .hero {
-        text-align: center;
-        padding: 100px 20px 60px;
-      }
+    nav a {
+      color: #666;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+    }
 
-      .hero h1 {
-        font-size: 53px;
-        font-weight: 700;
-        margin-bottom: 20px;
-      }
+    nav a:hover {
+      text-decoration: underline;
+    }
 
-      .hero p {
-        font-size: 23px;
-        color: #555;
-        margin-bottom: 40px;
-      }
+    .hero {
+      text-align: center;
+      padding: 80px 20px 40px;
+    }
 
-      .cta-buttons button {
-        font-size: 16px;
-        padding: 12px 24px;
-        border-radius: 8px;
-        border: none;
-        margin: 0 10px;
-        cursor: pointer;
-      }
+    .hero h1 {
+      font-size: 46px;
+      margin-bottom: 20px;
+    }
 
-      .cta-buttons .primary {
-        background-color: #3b5bfd;
-        color: white;
-      }
+    .hero p {
+      font-size: 19px;
+      color: #555;
+    }
 
-      .cta-buttons .secondary {
-        background-color: #f3f3f3;
-        color: #111;
-      }
+    .cta-buttons {
+      margin-top: 30px;
+    }
 
-      .stats {
-        background-color: #f8f7fc;
-        padding: 30px 20px;
-        display: flex;
-        justify-content: center;
-        gap: 60px;
-      }
+    .cta-buttons button {
+      padding: 12px 24px;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
 
-      .stat-item {
-        text-align: center;
-      }
+    .primary-btn {
+      background-color: #3f51f7;
+      color: #fff;
+    }
 
-      .stat-icon {
-        background-color: #fef2f2;
-        padding: 18px;
-        border-radius: 12px;
-        margin-bottom: 16px;
-        height: 48px;
-        width: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .secondary-btn {
+      background-color: #f4f4f4;
+    }
 
-      .stat-item:nth-child(2) .stat-icon {
-        background-color: #fefce8;
-      }
+    .stats {
+      background-color: #f9f8ff;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+    }
 
-      .stat-item:nth-child(3) .stat-icon {
-        background-color: #f3f0ff;
-      }
+    .stat-item {
+      text-align: center;
+      max-width: 180px;
+    }
 
-      .stat-number {
-        font-size: 22px;
-        font-weight: 700;
-        margin-bottom: 6px;
-      }
+    .stat-item img {
+      height: 40px;
+      margin-bottom: 15px;
+    }
 
-      .stat-label {
-        font-size: 14px;
-        color: #666;
-      }
+    .stat-item .value {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
 
-      .how-it-works {
-        background-color: #ffffff;
-        padding: 80px 20px 60px;
-        text-align: center;
-      }
+    .stat-item .label {
+      color: #666;
+      font-size: 14px;
+    }
 
-      .how-it-works h2 {
-        font-size: 40px;
-        font-family: 'Archivo Black', sans-serif;
-        font-weight: 400;
-        margin-bottom: 60px;
-      }
+    .how-section {
+      background: #ffffff;
+      padding: 80px 20px;
+      text-align: center;
+    }
 
-      .how-it-works h2 .blue {
-        color: #3b5bfd;
-      }
+    .how-section h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
 
-      .how-it-works-steps {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 100px;
-      }
+    .how-section h2 span {
+      color: #3f51f7;
+    }
 
-      .step {
-        max-width: 220px;
-        text-align: center;
-      }
+    .steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 50px;
+      margin-top: 40px;
+    }
 
-      .step img {
-        width: 48px;
-        height: 48px;
-        margin-bottom: 20px;
-      }
+    .step {
+      width: 200px;
+      text-align: center;
+    }
 
-      .step-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 6px;
-      }
+    .step img {
+      height: 60px;
+      margin-bottom: 20px;
+    }
 
-      .step-desc {
-        font-size: 14px;
-        color: #666;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="banner">
-      🎉 All new accounts get <strong>5 free credits</strong>.
-      <a href="#">Sign up now</a>
+    .step h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
+  </div>
+
+  <header>
+    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+    <nav>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#upload">Upload Docs</a>
+      <a href="#api">Use API</a>
+      <a href="#login">Sign In</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Stop Backdooring. Start Funding.</h1>
+    <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
+    <div class="cta-buttons">
+      <button class="primary-btn">Try for Free</button>
+      <button class="secondary-btn">Upload Docs</button>
+      <button class="secondary-btn">Use API</button>
     </div>
+  </section>
 
-    <header>
-      <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-      <nav>
-        <a href="#">How It Works</a>
-        <a href="#">Pricing</a>
-        <a href="#">Upload Docs</a>
-        <a href="#">Use API</a>
-        <a href="#">Sign In</a>
-      </nav>
-    </header>
+  <section class="stats">
+    <div class="stat-item">
+      <img src="protect.svg" alt="Deals Protected" />
+      <div class="value">2,100+</div>
+      <div class="label">Deals Protected</div>
+    </div>
+    <div class="stat-item">
+      <img src="star.svg" alt="Rating" />
+      <div class="value">4.76</div>
+      <div class="label">User Rating</div>
+    </div>
+    <div class="stat-item">
+      <img src="document.svg" alt="Files" />
+      <div class="value">1M+</div>
+      <div class="label">Files Watermarked</div>
+    </div>
+  </section>
 
-    <section class="hero">
-      <h1>Stop Backdooring. Start Funding.</h1>
-      <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
-      <div class="cta-buttons">
-        <button class="primary">Try for Free</button>
-        <button class="secondary">Upload Docs</button>
-        <button class="secondary">Use API</button>
+  <section class="how-section" id="how">
+    <h2>How <span>Aquamark</span> Works</h2>
+    <div class="steps">
+      <div class="step">
+        <img src="one.svg" alt="Step 1" />
+        <h3>Create Account</h3>
+        <p>Start free. Get 5 credits.</p>
       </div>
-    </section>
+      <div class="step">
+        <img src="two.svg" alt="Step 2" />
+        <h3>Upload Logo</h3>
+        <p>Add once. Apply forever.</p>
+      </div>
+      <div class="step">
+        <img src="three.svg" alt="Step 3" />
+        <h3>Drop Files</h3>
+        <p>Upload or use the API.</p>
+      </div>
+      <div class="step">
+        <img src="four.svg" alt="Step 4" />
+        <h3>Download Instantly</h3>
+        <p>Stamped. Secured. Done.</p>
+      </div>
+    </div>
+  </section>
+</body>
 
-    <section class="stats">
-      <div class="stat-item">
-        <div class="stat-icon">
-          <img src="protect.svg" alt="Protected" />
-        </div>
-        <div class="stat-number">2,100+</div>
-        <div class="stat-label">Deals Protected</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-icon">
-          <img src="star.svg" alt="Rating" />
-        </div>
-        <div class="stat-number">4.76</div>
-        <div class="stat-label">User Rating</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-icon">
-          <img src="document.svg" alt="Watermarked" />
-        </div>
-        <div class="stat-number">1M+</div>
-        <div class="stat-label">Files Watermarked</div>
-      </div>
-    </section>
-
-    <section class="how-it-works">
-      <h2><span class="black">How </span><span class="blue">Aquamark</span><span class="black"> Works</span></h2>
-      <div class="how-it-works-steps">
-        <div class="step">
-          <img src="one.svg" alt="Step 1" />
-          <div class="step-title">Create Account</div>
-          <div class="step-desc">Start free. Get 5 credits.</div>
-        </div>
-        <div class="step">
-          <img src="two.svg" alt="Step 2" />
-          <div class="step-title">Upload Logo</div>
-          <div class="step-desc">Add once. Apply forever.</div>
-        </div>
-        <div class="step">
-          <img src="three.svg" alt="Step 3" />
-          <div class="step-title">Drop Files</div>
-          <div class="step-desc">Upload or use the API.</div>
-        </div>
-        <div class="step">
-          <img src="four.svg" alt="Step 4" />
-          <div class="step-title">Download Instantly</div>
-          <div class="step-desc">Stamped. Secured. Done.</div>
-        </div>
-      </div>
-    </section>
-  </body>
 </html>
