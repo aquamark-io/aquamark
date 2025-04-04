@@ -207,71 +207,93 @@
       margin: 8px 0;
     }
 
-    .mca-section {
-      background-color: #ffffff;
-      padding: 100px 40px;
+    .pricing .cta {
+      margin-top: 60px;
     }
 
-    .mca-container {
+    .built-for-mca {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
       justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-      gap: 40px;
+      align-items: center;
+      gap: 60px;
+      padding: 100px 60px;
+      background-color: #fff;
     }
 
-    .mca-text {
-      flex: 1 1 480px;
+    .built-text {
+      max-width: 50%;
     }
 
-    .mca-text h2 {
+    .built-text h2 {
       font-size: 40px;
       font-weight: 800;
       margin-bottom: 20px;
     }
 
-    .mca-text .fade {
-      color: #111;
-      opacity: 0.7;
-    }
-
-    .mca-text .blue {
-      color: #3e5eff;
-    }
-
-    .mca-text p {
+    .built-text p {
       font-size: 18px;
-      color: #444;
+      color: #555;
       line-height: 1.6;
       margin-bottom: 30px;
-      max-width: 500px;
     }
 
-    .mca-text .btn {
-      padding: 14px 28px;
+    .built-text .btn {
+      background-color: #3e5eff;
+      color: #fff;
+      padding: 14px 24px;
       font-size: 16px;
       font-weight: 600;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
     }
 
-    .mca-image {
-      flex: 1 1 400px;
-      text-align: center;
+    .built-image img {
+      max-width: 480px;
+      width: 100%;
     }
 
-    .mca-image img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 16px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+    .reviews {
+      background-color: #fff;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .reviews h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .review-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .review {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 340px;
+      font-size: 16px;
+      line-height: 1.6;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .review span {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
     }
 
     .faq {
+      padding: 80px 20px;
       background-color: #f9f9f9;
-      padding: 100px 20px;
       text-align: center;
     }
 
@@ -282,28 +304,30 @@
     }
 
     .faq-item {
-      max-width: 700px;
+      max-width: 600px;
       margin: 0 auto 30px;
       text-align: left;
     }
 
     .faq-item h4 {
       font-size: 18px;
-      margin-bottom: 10px;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     .faq-item p {
       font-size: 16px;
       color: #555;
-      margin: 0;
+      line-height: 1.6;
     }
 
     .footer {
-      background-color: #ffffff;
+      background-color: #3e5eff;
+      color: #fff;
       text-align: center;
       padding: 40px 20px;
       font-size: 14px;
-      color: #aaa;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -398,21 +422,36 @@
         <p>$0.005/page</p>
       </div>
     </div>
+    <div class="cta">
+      <button class="btn primary">Start Free</button>
+    </div>
   </section>
 
-  <section class="mca-section">
-    <div class="mca-container">
-      <div class="mca-text">
-        <h2><span class="fade">Built for</span> <span class="blue">MCA Brokers</span></h2>
-        <p>
-          Aquamark was designed with brokers in mind. Instantly watermark sensitive files, protect your submissions,
-          and streamline your funding process. Whether you're working alone or at scale, Aquamark helps you move fast
-          and stay protected.
-        </p>
-        <button class="btn primary">Create Free Account</button>
+  <section class="built-for-mca">
+    <div class="built-text">
+      <h2>Built for MCA Brokers</h2>
+      <p>From submission to funding, Aquamark protects your pipeline and speeds up your process. Whether you're sending files manually or via API, we’ve got you covered.</p>
+      <button class="btn">Create Free Account</button>
+    </div>
+    <div class="built-image">
+      <img src="undraw_data-trends_kv5v.svg" alt="Built for MCA Image" />
+    </div>
+  </section>
+
+  <section class="reviews">
+    <h2>Don't Take Our Word for It</h2>
+    <div class="review-grid">
+      <div class="review">
+        “Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit. ”
+        <span>James, ISO</span>
       </div>
-      <div class="mca-image">
-        <img src="profile-photo.png" alt="MCA Brokers Illustration" />
+      <div class="review">
+        “Simple tool. Upload, watermark, send. The UI is clean and fast.”
+        <span>Eric, Account Executive </span>
+      </div>
+      <div class="review">
+        “We watermark hundreds of pages a day. The API saves us hours!”
+        <span>Diana, Funding Manager </span>
       </div>
     </div>
   </section>
@@ -421,7 +460,7 @@
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
       <h4>Do my credits expire?</h4>
-      <p>Nope</p>
+      <p>Nope.</p>
     </div>
     <div class="faq-item">
       <h4>Are my files secure?</h4>
@@ -433,17 +472,17 @@
     </div>
     <div class="faq-item">
       <h4>Do I need an account?</h4>
-      <p>Yes. It's free and takes less than 1 minute to set up. Your account will be used to manage your credits,
-        watermark documents manually, or access our API documents.</p>
+      <p>Yes. It's free and takes less than 1 minute to set up. Your account will be used to manage your credits, watermark documents manually, or access our API documents.</p>
     </div>
     <div class="faq-item">
       <h4>Have other questions?</h4>
-      <p>Send us an email at heyaquamark@gmail.com</p>
+      <p>Send us an email at <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
     </div>
   </section>
 
   <footer class="footer">
-    &copy; 2025 Aquamark. All rights reserved.
+    &copy; 2025 Aquamark. All rights reserved. <br />
+    San Francisco, CA
   </footer>
 </body>
 
