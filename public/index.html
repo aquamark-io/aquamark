@@ -114,11 +114,11 @@
     .how-it-works {
       background-color: #ffffff;
       text-align: center;
-      padding: 80px 20px;
+      padding: 60px 20px;
     }
 
     .how-it-works h2 {
-      font-size: 36px;
+      font-size: 41px;
       font-weight: 800;
       margin-bottom: 20px;
     }
@@ -156,20 +156,101 @@
       line-height: 1.5;
     }
 
-    .pricing {
-      background-color: #f9f9f9;
-      padding: 100px 20px;
-      text-align: center;
+    .built-for-mca {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 60px;
+      padding: 80px 60px;
+      background-color: #fff;
     }
 
-    .pricing h2 {
+    .built-text {
+      max-width: 50%;
+    }
+
+    .built-text h2 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .built-text p {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      max-width: 480px;
+    }
+
+    .built-text .btn {
+      border: 2px solid #3e5eff;
+      background-color: transparent;
+      color: #3e5eff;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .built-image img {
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .reviews {
+      background: linear-gradient(to right, #eef2ff, #fdf2ff);
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .reviews h2 {
       font-size: 36px;
       font-weight: 800;
       margin-bottom: 20px;
     }
 
+    .review-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .review {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 340px;
+      font-size: 16px;
+      line-height: 1.6;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .review span {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .pricing {
+      background-color: #f9f9f9;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .pricing h2 {
+      font-size: 46px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
     .pricing p {
-      font-size: 18px;
+      font-size: 21px;
       color: #555;
       margin-bottom: 50px;
     }
@@ -211,86 +292,6 @@
       margin-top: 60px;
     }
 
-    .built-for-mca {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 60px;
-      padding: 100px 60px;
-      background-color: #fff;
-    }
-
-    .built-text {
-      max-width: 50%;
-    }
-
-    .built-text h2 {
-      font-size: 40px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .built-text p {
-      font-size: 18px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 30px;
-    }
-
-    .built-text .btn {
-      background-color: #3e5eff;
-      color: #fff;
-      padding: 14px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .built-image img {
-      max-width: 480px;
-      width: 100%;
-    }
-
-    .reviews {
-      background-color: #fff;
-      text-align: center;
-      padding: 100px 20px;
-    }
-
-    .reviews h2 {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .review-grid {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin-top: 40px;
-    }
-
-    .review {
-      background: #f7f7f7;
-      border-radius: 12px;
-      padding: 32px;
-      max-width: 340px;
-      font-size: 16px;
-      line-height: 1.6;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .review span {
-      display: block;
-      margin-top: 16px;
-      font-weight: bold;
-      font-size: 15px;
-      color: #333;
-    }
-
     .faq {
       padding: 80px 20px;
       background-color: #f9f9f9;
@@ -322,8 +323,8 @@
     }
 
     .footer {
-      background-color: #3e5eff;
-      color: #fff;
+      background-color: #f3e8ff;
+      color: #111;
       text-align: center;
       padding: 40px 20px;
       font-size: 14px;
@@ -374,7 +375,7 @@
   </section>
 
   <section class="how-it-works" id="how">
-    <h2><span class="black">How</span> <span class="blue">Aquamark</span> <span class="black">Works</span></h2>
+    <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
     <div class="steps">
       <div class="step">
         <img src="one.svg" alt="Step One" />
@@ -395,6 +396,35 @@
         <img src="four.svg" alt="Step Four" />
         <h4>Download Instantly</h4>
         <p>Stamped. Secured. Done.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="built-for-mca">
+    <div class="built-text">
+      <h2>Built for <span class="blue">MCA Brokers</span></h2>
+      <p>From submission to funding, Aquamark protects your pipeline. Whether you're sending files manually or via API, we’ve got you covered. Join the movement to end the backdooring industry once and for all.</p>
+      <button class="btn">Start for Free</button>
+    </div>
+    <div class="built-image">
+      <img src="built-for-mca.jpg" alt="Built for MCA" />
+    </div>
+  </section>
+
+  <section class="reviews">
+    <h2>Straight From the Source</h2>
+    <div class="review-grid">
+      <div class="review">
+        “Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”
+        <span>James, ISO</span>
+      </div>
+      <div class="review">
+        “Simple tool. Upload, watermark, send. The UI is clean and fast.”
+        <span>Eric, Account Executive</span>
+      </div>
+      <div class="review">
+        “We watermark hundreds of pages a day. The API saves us hours!”
+        <span>Diana, Funding Manager</span>
       </div>
     </div>
   </section>
@@ -427,35 +457,6 @@
     </div>
   </section>
 
-  <section class="built-for-mca">
-    <div class="built-text">
-      <h2>Built for MCA Brokers</h2>
-      <p>From submission to funding, Aquamark protects your pipeline and speeds up your process. Whether you're sending files manually or via API, we’ve got you covered.</p>
-      <button class="btn">Create Free Account</button>
-    </div>
-    <div class="built-image">
-      <img src="undraw_data-trends_kv5v.svg" alt="Built for MCA Image" />
-    </div>
-  </section>
-
-  <section class="reviews">
-    <h2>Don't Take Our Word for It</h2>
-    <div class="review-grid">
-      <div class="review">
-        “Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit. ”
-        <span>James, ISO</span>
-      </div>
-      <div class="review">
-        “Simple tool. Upload, watermark, send. The UI is clean and fast.”
-        <span>Eric, Account Executive </span>
-      </div>
-      <div class="review">
-        “We watermark hundreds of pages a day. The API saves us hours!”
-        <span>Diana, Funding Manager </span>
-      </div>
-    </div>
-  </section>
-
   <section class="faq">
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
@@ -482,7 +483,7 @@
 
   <footer class="footer">
     &copy; 2025 Aquamark. All rights reserved. <br />
-    San Francisco, CA
+    San Francisco, CA · <a href="#" style="color:#111">Privacy</a> · <a href="#" style="color:#111">Terms</a>
   </footer>
 </body>
 
