@@ -1,3 +1,4 @@
+<!-- FULL UPDATED HTML FOR AQUAMARK HOMEPAGE -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -292,13 +293,22 @@
     }
 
     .tier {
-      background-color: #3366ff;
-      color: #fff;
       padding: 60px 40px;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       width: 280px;
       text-align: center;
+    }
+
+    .tier.starter,
+    .tier.pro {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .tier.enterprise {
+      background-color: rgba(173, 216, 230, 0.95);
+      color: #000;
     }
 
     .tier h3 {
@@ -317,8 +327,8 @@
       margin: 8px 0;
     }
 
-    .pricing .cta {
-      margin-top: 60px;
+    .tier .btn {
+      margin-top: 30px;
     }
 
     .faq {
@@ -443,91 +453,36 @@
     </div>
   </section>
 
-<!-- START OF REPLACEMENT FOR: <section class="reviews" id="reviews"> to </section class="faq"> -->
-
-<section class="reviews" id="reviews" style="padding: 60px 20px;">
-  <h2 style="text-align: center; font-size: 36px; font-weight: 800; margin-bottom: 40px;">
-    Straight From the Source
-  </h2>
-  <div class="review-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
-    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
-      <p style="font-size: 18px; line-height: 1.6; margin: 0;">
-        “Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”
-      </p>
-      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">James, ISO</span>
+  <section class="pricing" id="pricing">
+    <h2>Simple Pricing</h2>
+    <p>A la carte pricing, no subscriptions, no commitments</p>
+    <div class="tiers">
+      <div class="tier starter">
+        <h3>Drip</h3>
+        <div class="price">$25</div>
+        <p>1,000 pages</p>
+        <p>$0.025/page</p>
+        <p>Riding solo</p>
+        <button class="btn secondary" onclick="location.href='#create-account'">Create an Account</button>
+      </div>
+      <div class="tier enterprise">
+        <h3>Stream</h3>
+        <div class="price">$250</div>
+        <p>10,000 pages</p>
+        <p>$0.025/page</p>
+        <p>For small teams</p>
+        <button class="btn primary" onclick="location.href='#create-account'">Create an Account</button>
+      </div>
+      <div class="tier pro">
+        <h3>Tsunami</h3>
+        <div class="price">$500</div>
+        <p>100,000 pages</p>
+        <p>$0.005/page</p>
+        <p>For scale</p>
+        <button class="btn secondary" onclick="location.href='#create-account'">Create an Account</button>
+      </div>
     </div>
-    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
-      <p style="font-size: 21px; line-height: 1.6; margin: 0;">
-        “Simple tool. Upload, watermark, send. The UI is clean and fast.”
-      </p>
-      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Eric, Account Executive</span>
-    </div>
-    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
-      <p style="font-size: 21px; line-height: 1.6; margin: 0;">
-        “We watermark hundreds of pages a day. The API saves us hours!”
-      </p>
-      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Diana, Funding Manager</span>
-    </div>
-  </div>
-</section>
-
-<section class="pricing" id="pricing">
-  <h2>Priced like a tool, not a service.</h2>
-  <p>No subscriptions. Pay as you go, like it should be.</p>
-  <div class="tiers">
-    <div class="tier">
-      <h3>Starter</h3>
-      <div class="price">$25</div>
-      <p>1,000 pages</p>
-      <p>$0.025/page</p>
-      <p>“Riding solo”</p>
-    </div>
-    <div class="tier">
-      <h3>Team</h3>
-      <div class="price">$250</div>
-      <p>10,000 pages</p>
-      <p>$0.025/page</p>
-      <p>“For small teams”</p>
-    </div>
-    <div class="tier">
-      <h3>Enterprise</h3>
-      <div class="price">$500</div>
-      <p>100,000 pages</p>
-      <p>$0.005/page</p>
-      <p>“For scale”</p>
-    </div>
-  </div>
-  <div class="cta">
-    <button class="btn primary">Start Free</button>
-  </div>
-</section>
-
-<section class="faq" id="faq">
-  <h2>Frequently Asked Questions</h2>
-  <div class="faq-item">
-    <h4>Do my credits expire?</h4>
-    <p>Nope.</p>
-  </div>
-  <div class="faq-item">
-    <h4>Are my files secure?</h4>
-    <p>Yes! Once you download your watermarked file, it is deleted from the database forever.</p>
-  </div>
-  <div class="faq-item">
-    <h4>What kind of files can I watermark?</h4>
-    <p>jpg, png, pdf, doc (more formats coming soon)</p>
-  </div>
-  <div class="faq-item">
-    <h4>Do I need an account?</h4>
-    <p>Yes. It's free and takes less than 1 minute to set up. Your account will be used to manage your credits, watermark documents manually, or access our API documents.</p>
-  </div>
-  <div class="faq-item">
-    <h4>Have other questions?</h4>
-    <p>Send us an email at <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
-  </div>
-</section>
+  </section>
 
   <footer class="footer">
     &copy; 2025 Aquamark. All rights reserved. <br />
