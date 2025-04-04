@@ -53,13 +53,13 @@
     }
 
     .hero h1 {
-      font-size: 53px;
+      font-size: 48px;
       font-weight: 800;
       margin-bottom: 20px;
     }
 
     .hero p {
-      font-size: 23px;
+      font-size: 20px;
       color: #555;
       margin-bottom: 40px;
     }
@@ -207,48 +207,72 @@
       margin: 8px 0;
     }
 
-    .reviews {
-      background-color: #fff;
-      text-align: center;
-      padding: 100px 20px;
+    .mca-section {
+      background-color: #ffffff;
+      padding: 100px 40px;
     }
 
-    .reviews h2 {
-      font-size: 36px;
+    .mca-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 40px;
+    }
+
+    .mca-text {
+      flex: 1 1 480px;
+    }
+
+    .mca-text h2 {
+      font-size: 40px;
       font-weight: 800;
       margin-bottom: 20px;
     }
 
-    .review-grid {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin-top: 40px;
+    .mca-text .fade {
+      color: #111;
+      opacity: 0.7;
     }
 
-    .review {
-      background: #f7f7f7;
-      border-radius: 12px;
-      padding: 32px;
-      max-width: 340px;
-      font-size: 16px;
+    .mca-text .blue {
+      color: #3e5eff;
+    }
+
+    .mca-text p {
+      font-size: 18px;
+      color: #444;
       line-height: 1.6;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      max-width: 500px;
     }
 
-    .review span {
-      display: block;
-      margin-top: 16px;
-      font-weight: bold;
-      font-size: 15px;
-      color: #333;
+    .mca-text .btn {
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .mca-image {
+      flex: 1 1 400px;
+      text-align: center;
+    }
+
+    .mca-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
     }
 
     .faq {
-      background-color: #ffffff;
-      text-align: center;
+      background-color: #f9f9f9;
       padding: 100px 20px;
+      text-align: center;
     }
 
     .faq h2 {
@@ -258,39 +282,28 @@
     }
 
     .faq-item {
-      max-width: 600px;
-      margin: 0 auto 32px;
+      max-width: 700px;
+      margin: 0 auto 30px;
       text-align: left;
     }
 
     .faq-item h4 {
       font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .faq-item p {
       font-size: 16px;
       color: #555;
+      margin: 0;
     }
 
     .footer {
-      background-color: #f9f9f9;
-      padding: 40px 20px;
+      background-color: #ffffff;
       text-align: center;
+      padding: 40px 20px;
       font-size: 14px;
-      color: #666;
-      margin-top: 60px;
-    }
-
-    .footer-logo {
-      height: 32px;
-      margin-bottom: 16px;
-    }
-
-    .footer a {
-      color: #3366ff;
-      text-decoration: underline;
+      color: #aaa;
     }
   </style>
 </head>
@@ -299,7 +312,6 @@
   <div class="banner">
     🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
   </div>
-
   <header class="topbar">
     <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
     <nav class="nav-links">
@@ -388,20 +400,19 @@
     </div>
   </section>
 
-  <section class="reviews">
-    <h2>Don't Take Our Word for It</h2>
-    <div class="review-grid">
-      <div class="review">
-        “Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”
-        <span>James, ISO</span>
+  <section class="mca-section">
+    <div class="mca-container">
+      <div class="mca-text">
+        <h2><span class="fade">Built for</span> <span class="blue">MCA Brokers</span></h2>
+        <p>
+          Aquamark was designed with brokers in mind. Instantly watermark sensitive files, protect your submissions,
+          and streamline your funding process. Whether you're working alone or at scale, Aquamark helps you move fast
+          and stay protected.
+        </p>
+        <button class="btn primary">Create Free Account</button>
       </div>
-      <div class="review">
-        “Simple tool. Upload, watermark, send. The UI is clean and fast.”
-        <span>Eric, Account Executive</span>
-      </div>
-      <div class="review">
-        “We watermark hundreds of pages a day. The API saves us hours!”
-        <span>Diana, Funding Manager</span>
+      <div class="mca-image">
+        <img src="profile-photo.png" alt="MCA Brokers Illustration" />
       </div>
     </div>
   </section>
@@ -410,7 +421,7 @@
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
       <h4>Do my credits expire?</h4>
-      <p>Nope.</p>
+      <p>Nope</p>
     </div>
     <div class="faq-item">
       <h4>Are my files secure?</h4>
@@ -422,22 +433,18 @@
     </div>
     <div class="faq-item">
       <h4>Do I need an account?</h4>
-      <p>Yes. It's free and takes less than 1 minute to set up. Your account will be used to manage your credits, watermark documents manually, or access our API documents.</p>
+      <p>Yes. It's free and takes less than 1 minute to set up. Your account will be used to manage your credits,
+        watermark documents manually, or access our API documents.</p>
     </div>
     <div class="faq-item">
       <h4>Have other questions?</h4>
-      <p>Send us an email to <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
+      <p>Send us an email at heyaquamark@gmail.com</p>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="footer-content">
-      <img src="logo-icon-black-blue.png" alt="Aquamark Logo" class="footer-logo" />
-      <p>© 2025 Aquamark.io · San Francisco, CA</p>
-      <p>Need something? <a href="mailto:heyaquamark@gmail.com">Email us</a></p>
-    </div>
+    &copy; 2025 Aquamark. All rights reserved.
   </footer>
-
 </body>
 
 </html>
