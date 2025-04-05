@@ -21,7 +21,6 @@
       padding: 12px 20px;
       font-size: 16px;
       font-weight: 500;
-      line-height: 1.4;
     }
 
     .banner a {
@@ -41,16 +40,6 @@
       height: 38px;
     }
 
-    #nav-toggle {
-      display: none;
-      cursor: pointer;
-      font-size: 22px;
-    }
-
-    .nav-links {
-      display: flex;
-    }
-
     .nav-links a {
       margin-left: 25px;
       text-decoration: none;
@@ -59,7 +48,6 @@
     }
 
     .hero {
-      margin-top: 20px;
       text-align: center;
       padding: 120px 20px 80px;
     }
@@ -188,6 +176,31 @@
       flex: 1;
     }
 
+    .built-text h2 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .built-text p {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      max-width: 480px;
+    }
+
+    .built-text .btn {
+      border: 2px solid #3e5eff;
+      background-color: transparent;
+      color: #3e5eff;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
     .built-image {
       flex: 1;
       max-width: 500px;
@@ -199,78 +212,143 @@
       width: 100%;
     }
 
+    @media (max-width: 768px) {
+      .built-container {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .built-text,
+      .built-image {
+        max-width: 100%;
+      }
+
+      .built-text p {
+        max-width: 100%;
+      }
+    }
+
     .reviews {
-      padding: 60px 20px;
+      background: linear-gradient(to right, #eef2ff, #fdf2ff);
       text-align: center;
-      background-color: #f9f9ff;
+      padding: 100px 20px;
+    }
+
+    .reviews h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
     }
 
     .review-grid {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 40px;
       margin-top: 40px;
     }
 
     .review {
-      max-width: 300px;
       background: #fff;
-      border: 1px solid #eee;
-      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      padding: 32px;
+      max-width: 340px;
+      font-size: 16px;
+      line-height: 1.6;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
     }
 
     .review span {
       display: block;
-      margin-top: 15px;
-      font-weight: 600;
-      color: #555;
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
     }
 
     .pricing {
-      padding: 60px 20px;
+      background-color: #f9f9f9;
+      padding: 80px 20px;
       text-align: center;
-      background-color: #fff;
+    }
+
+    .pricing h2 {
+      font-size: 46px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .pricing p {
+      font-size: 21px;
+      color: #555;
+      margin-bottom: 50px;
     }
 
     .tiers {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 30px;
-      margin-top: 40px;
+      gap: 40px;
     }
 
     .tier {
+      background-color: #3366ff;
+      color: #fff;
+      padding: 60px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       width: 280px;
-      padding: 30px;
-      border-radius: 12px;
       text-align: center;
     }
 
+    .tier h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .tier .price {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .tier p {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+
+    .pricing .cta {
+      margin-top: 60px;
+    }
+
     .faq {
-      padding: 60px 20px;
-      background-color: #ffffff;
+      padding: 80px 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .faq h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 40px;
     }
 
     .faq-item {
       max-width: 600px;
-      margin: 20px auto;
+      margin: 0 auto 30px;
       text-align: left;
     }
 
     .faq-item h4 {
-      margin-bottom: 6px;
-      font-weight: 700;
       font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     .faq-item p {
+      font-size: 16px;
       color: #555;
       line-height: 1.6;
-      font-size: 15px;
     }
 
     .footer {
@@ -281,66 +359,17 @@
       font-size: 14px;
       line-height: 1.6;
     }
-
-    @media (max-width: 768px) {
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-      }
-
-      #nav-toggle {
-        display: block;
-      }
-
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-        margin-top: 10px;
-      }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
-
-      .hero .btn {
-        display: block;
-        width: 90%;
-        margin: 10px auto;
-      }
-
-      .built-container {
-        flex-direction: column-reverse;
-        text-align: center;
-      }
-
-      .built-text,
-      .built-image {
-        max-width: 100%;
-      }
-    }
   </style>
 </head>
 
 <body>
   <div class="banner">
-    🎉 All new accounts get <strong>5 free credits</strong>.<br><a href="#">Sign up now</a>
+    🎉 All new accounts get <strong>5 free credits</strong>. <a href="#">Sign up now</a>
   </div>
 
   <header class="topbar">
-    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <div id="nav-toggle">☰</div>
-    <nav class="nav-links" id="mobile-menu">
+    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+    <nav class="nav-links">
       <a href="#how">How It Works</a>
       <a href="#pricing">Pricing</a>
       <a href="#upload">Upload Docs</a>
@@ -352,24 +381,24 @@
   <main class="hero">
     <h1>Stop Backdooring. Start Funding.</h1>
     <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
-    <button class="btn primary" id="upload">Try for Free</button>
+    <button class="btn primary">Try for Free</button>
     <button class="btn secondary">Upload Docs</button>
-    <button class="btn secondary" id="api">Use API</button>
+    <button class="btn secondary">Use API</button>
   </main>
 
   <section class="stats">
     <div class="stat">
-      <img src="/protect.svg" alt="Protect Icon" />
+      <img src="protect.svg" alt="Protect Icon" />
       <h3>2,100+</h3>
       <p>Deals Protected</p>
     </div>
     <div class="stat">
-      <img src="/star.svg" alt="Star Icon" />
+      <img src="star.svg" alt="Star Icon" />
       <h3>4.76</h3>
       <p>User Rating</p>
     </div>
     <div class="stat">
-      <img src="/document.svg" alt="Document Icon" />
+      <img src="document.svg" alt="Document Icon" />
       <h3>1M+</h3>
       <p>Pages Watermarked</p>
     </div>
@@ -379,22 +408,22 @@
     <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
     <div class="steps">
       <div class="step">
-        <img src="/one.svg" alt="Step One" />
+        <img src="one.svg" alt="Step One" />
         <h4>Create Account</h4>
         <p>Start free in seconds.</p>
       </div>
       <div class="step">
-        <img src="/two.svg" alt="Step Two" />
+        <img src="two.svg" alt="Step Two" />
         <h4>Upload Logo</h4>
         <p>Add once. Apply forever.</p>
       </div>
       <div class="step">
-        <img src="/three.svg" alt="Step Three" />
+        <img src="three.svg" alt="Step Three" />
         <h4>Drop Files</h4>
         <p>Upload or use the API.</p>
       </div>
       <div class="step">
-        <img src="/four.svg" alt="Step Four" />
+        <img src="four.svg" alt="Step Four" />
         <h4>Download Instantly</h4>
         <p>Stamped. Secured. Done.</p>
       </div>
@@ -409,112 +438,115 @@
         <button class="btn">Start for Free</button>
       </div>
       <div class="built-image">
-        <img src="/built-for-mca.jpg" alt="Built for MCA" />
+        <img src="built-for-mca.jpg" alt="Built for MCA" />
       </div>
     </div>
   </section>
 
-  <section class="reviews" id="reviews">
-    <h2>Straight From the Source</h2>
-    <div class="review-grid">
-      <div class="review">
-        <img src="/heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
-        <p>“Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”</p>
-        <span>James, ISO</span>
-      </div>
-      <div class="review">
-        <img src="/heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
-        <p>“Simple tool. Upload, watermark, send. The UI is clean and fast.”</p>
-        <span>Eric, Account Executive</span>
-      </div>
-      <div class="review">
-        <img src="/heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
-        <p>“We watermark hundreds of pages a day. The API saves us hours!”</p>
-        <span>Diana, Funding Manager</span>
-      </div>
-    </div>
-  </section>
+<!-- START OF REPLACEMENT FOR: <section class="reviews" id="reviews"> to </section class="faq"> -->
 
-  <section class="pricing" id="pricing">
-    <h2>Priced like a tool, not a service.</h2>
-    <p>No subscriptions. A la carte pricing like it should be.</p>
-    <div class="tiers">
-      <div class="tier" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-        <h3>Starter</h3>
-        <div class="price">$25</div>
-        <p>1,000 pages</p>
-        <p>$0.025/page</p>
-        <button class="btn primary" style="margin-top: 40px; background: #CFE9FF; color: #000;">Get Started</button>
-      </div>
-      <div class="tier" style="background: #CFE9FF; color: #000; position: relative;">
-        <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
-        <h3>Small Teams</h3>
-        <div class="price">$250</div>
-        <p>10,000 pages</p>
-        <p>$0.025/page</p>
-        <button class="btn primary" style="margin-top: 40px; background: #ffffff; color: #000;">Get Started</button>
-      </div>
-      <div class="tier" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-        <h3>Enterprise</h3>
-        <div class="price">$500</div>
-        <p>100,000 pages</p>
-        <p>$0.005/page</p>
-        <button class="btn primary" style="margin-top: 40px; background: #CFE9FF; color: #000;">Get Started</button>
-      </div>
+<section class="reviews" id="reviews" style="padding: 60px 20px;">
+  <h2 style="text-align: center; font-size: 36px; font-weight: 800; margin-bottom: 40px;">
+    Straight From the Source
+  </h2>
+  <div class="review-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 18px; line-height: 1.6; margin: 0;">
+        “Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">James, ISO</span>
     </div>
-  </section>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 21px; line-height: 1.6; margin: 0;">
+        “Simple tool. Upload, watermark, send. The UI is clean and fast.”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Eric, Account Executive</span>
+    </div>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 21px; line-height: 1.6; margin: 0;">
+        “We watermark hundreds of pages a day. The API saves us hours!”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Diana, Funding Manager</span>
+    </div>
+  </div>
+</section>
 
-  <section class="faq" id="faq">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-item">
-      <h4>Can I cancel anytime?</h4>
-      <p>Yep. You're billed month-to-month and can cancel whenever you want—no contracts, no catch.</p>
+<section class="pricing" id="pricing">
+  <h2 style="font-size: 66px;">Priced like a tool, not a service.</h2>
+  <p style="font-size: 25px;">No subscriptions. A la cart pricing like it should be.</p>
+  <div class="tiers">
+    <div class="tier starter" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+      <h3>Starter</h3>
+      <div class="price">$25</div>
+      <p>1,000 pages</p>
+      <p>$0.025/page</p>
+      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#CFE9FF; color:#000;" onclick="location.href='#create-account'">Get Started</button>
     </div>
-    <div class="faq-item">
-      <h4>Are my files secure?</h4>
-      <p>Once you download your watermarked file, it is deleted from our database forever.</p>
-    </div>
-    <div class="faq-item">
-      <h4>What kind of files can I watermark?</h4>
-      <p>jpg, png, pdf, doc (more formats coming soon)</p>
-    </div>
-    <div class="faq-item">
-      <h4>Do I need an account?</h4>
-      <p>Yes. It's free and takes seconds. Once set up, you can manage your plan, upload your watermark logo(s), access API docs, and manually watermark files.</p>
-    </div>
-    <div class="faq-item">
-      <h4>What if I go over my monthly pages?</h4>
-      <p>No problem. You can upgrade or downgrade your plan anytime to match your needs.</p>
-    </div>
-    <div class="faq-item">
-      <h4>Have other questions?</h4>
-      <p>Send us an email at <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <img src="/logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
-    <br />
-    &copy; 2025 Aquamark. All rights reserved. <br />
-    San Francisco, CA ·
-    <a href="#" style="color:#999; text-decoration:underline;">Privacy</a> ·
-    <a href="#" style="color:#999; text-decoration:underline;">Terms</a>
-  </footer>
+    <div class="tier enterprise" style="background: #CFE9FF; color: #000; position: relative;">
+      <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
+      <h3>Small Teams</h3>
+      <div class="price">$250</div>
+      <p style="color:#000;">10,000 pages</p>
+      <p style="color:#000;">$0.025/page</p>
+      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffffff; color:#000;" onclick="location.href='#create-account'">Get Started</button>
+    </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggle = document.getElementById("nav-toggle");
-      const menu = document.getElementById("mobile-menu");
-      toggle.addEventListener("click", () => {
-        menu.classList.toggle("open");
-      });
-      document.querySelectorAll(".nav-links a").forEach(link => {
-        link.addEventListener("click", () => {
-          menu.classList.remove("open");
-        });
-      });
-    });
-  </script>
+    <div class="tier pro" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+      <h3>Enterprise</h3>
+      <div class="price">$500</div>
+      <p>100,000 pages</p>
+      <p>$0.005/page</p>
+      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#CFE9FF; color:#000;" onclick="location.href='#create-account'">Get Started</button>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq" style="background:white;">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <h4>Can I cancel anytime?</h4>
+    <p>Yep. You're billed month-to-month and can cancel whenever you want—no contracts, no catch.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>Are my files secure?</h4>
+    <p>Once you download your watermarked file, it is deleted from our database forever.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>What kind of files can I watermark?</h4>
+    <p>jpg, png, pdf, doc (more formats coming soon)</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>Do I need an account?</h4>
+    <p>Yes. It's free and takes seconds. Once set up, you can manage your plan, upload your watermark logo(s), access API docs, and manually watermark files.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>What if I go over my monthly pages?</h4>
+    <p>No problem. You can upgrade or downgrade your plan anytime to match your needs.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>Have other questions?</h4>
+    <p>Send us an email at <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
+  </div>
+</section>
+
+<footer class="footer" style="color:#999; text-align:center;">
+  <img src="logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
+  <br />
+  &copy; 2025 Aquamark. All rights reserved. <br />
+  San Francisco, CA · 
+  <a href="#" style="color:#999; text-decoration:underline;">Privacy</a> · 
+  <a href="#" style="color:#999; text-decoration:underline;">Terms</a>
+</footer>
 </body>
 
 </html>
