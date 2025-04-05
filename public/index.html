@@ -199,6 +199,80 @@
       width: 100%;
     }
 
+    .reviews {
+      padding: 60px 20px;
+      text-align: center;
+      background-color: #f9f9ff;
+    }
+
+    .review-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .review {
+      max-width: 300px;
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .review span {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .pricing {
+      padding: 60px 20px;
+      text-align: center;
+      background-color: #fff;
+    }
+
+    .tiers {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .tier {
+      width: 280px;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .faq {
+      padding: 60px 20px;
+      background-color: #ffffff;
+    }
+
+    .faq-item {
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+    }
+
+    .faq-item h4 {
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .faq-item p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
     .footer {
       background-color: #f3e8ff;
       color: #111;
@@ -264,7 +338,7 @@
   </div>
 
   <header class="topbar">
-    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
     <div id="nav-toggle">☰</div>
     <nav class="nav-links" id="mobile-menu">
       <a href="#how">How It Works</a>
@@ -278,24 +352,24 @@
   <main class="hero">
     <h1>Stop Backdooring. Start Funding.</h1>
     <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
-    <button class="btn primary">Try for Free</button>
+    <button class="btn primary" id="upload">Try for Free</button>
     <button class="btn secondary">Upload Docs</button>
-    <button class="btn secondary">Use API</button>
+    <button class="btn secondary" id="api">Use API</button>
   </main>
 
   <section class="stats">
     <div class="stat">
-      <img src="protect.svg" alt="Protect Icon" />
+      <img src="/protect.svg" alt="Protect Icon" />
       <h3>2,100+</h3>
       <p>Deals Protected</p>
     </div>
     <div class="stat">
-      <img src="star.svg" alt="Star Icon" />
+      <img src="/star.svg" alt="Star Icon" />
       <h3>4.76</h3>
       <p>User Rating</p>
     </div>
     <div class="stat">
-      <img src="document.svg" alt="Document Icon" />
+      <img src="/document.svg" alt="Document Icon" />
       <h3>1M+</h3>
       <p>Pages Watermarked</p>
     </div>
@@ -305,22 +379,22 @@
     <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
     <div class="steps">
       <div class="step">
-        <img src="one.svg" alt="Step One" />
+        <img src="/one.svg" alt="Step One" />
         <h4>Create Account</h4>
         <p>Start free in seconds.</p>
       </div>
       <div class="step">
-        <img src="two.svg" alt="Step Two" />
+        <img src="/two.svg" alt="Step Two" />
         <h4>Upload Logo</h4>
         <p>Add once. Apply forever.</p>
       </div>
       <div class="step">
-        <img src="three.svg" alt="Step Three" />
+        <img src="/three.svg" alt="Step Three" />
         <h4>Drop Files</h4>
         <p>Upload or use the API.</p>
       </div>
       <div class="step">
-        <img src="four.svg" alt="Step Four" />
+        <img src="/four.svg" alt="Step Four" />
         <h4>Download Instantly</h4>
         <p>Stamped. Secured. Done.</p>
       </div>
@@ -335,7 +409,7 @@
         <button class="btn">Start for Free</button>
       </div>
       <div class="built-image">
-        <img src="built-for-mca.jpg" alt="Built for MCA" />
+        <img src="/built-for-mca.jpg" alt="Built for MCA" />
       </div>
     </div>
   </section>
@@ -344,17 +418,17 @@
     <h2>Straight From the Source</h2>
     <div class="review-grid">
       <div class="review">
-        <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
+        <img src="/heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
         <p>“Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”</p>
         <span>James, ISO</span>
       </div>
       <div class="review">
-        <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
+        <img src="/heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
         <p>“Simple tool. Upload, watermark, send. The UI is clean and fast.”</p>
         <span>Eric, Account Executive</span>
       </div>
       <div class="review">
-        <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
+        <img src="/heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
         <p>“We watermark hundreds of pages a day. The API saves us hours!”</p>
         <span>Diana, Funding Manager</span>
       </div>
@@ -419,7 +493,7 @@
   </section>
 
   <footer class="footer">
-    <img src="logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
+    <img src="/logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
     <br />
     &copy; 2025 Aquamark. All rights reserved. <br />
     San Francisco, CA ·
@@ -433,6 +507,11 @@
       const menu = document.getElementById("mobile-menu");
       toggle.addEventListener("click", () => {
         menu.classList.toggle("open");
+      });
+      document.querySelectorAll(".nav-links a").forEach(link => {
+        link.addEventListener("click", () => {
+          menu.classList.remove("open");
+        });
       });
     });
   </script>
