@@ -187,31 +187,6 @@
       max-width: 500px;
       flex: 1;
     }
-    
-    .built-text h2 {
-      font-size: 40px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .built-text p {
-      font-size: 18px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 30px;
-      max-width: 480px;
-    }
-
-    .built-text .btn {
-      border: 2px solid #3e5eff;
-      background-color: transparent;
-      color: #3e5eff;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-    }
 
     .built-image {
       flex: 1;
@@ -224,125 +199,6 @@
       width: 100%;
     }
 
-    .reviews {
-      background: linear-gradient(to right, #eef2ff, #fdf2ff);
-      text-align: center;
-      padding: 100px 20px;
-    }
-
-    .reviews h2 {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .review-grid {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin-top: 40px;
-    }
-
-    .review {
-      background: #fff;
-      border-radius: 12px;
-      padding: 32px;
-      max-width: 340px;
-      font-size: 16px;
-      line-height: 1.6;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .review span {
-      display: block;
-      margin-top: 16px;
-      font-weight: bold;
-      font-size: 15px;
-      color: #333;
-    }
-
-    .pricing {
-      background-color: #f9f9f9;
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    .pricing h2 {
-      font-size: 46px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .pricing p {
-      font-size: 21px;
-      color: #555;
-      margin-bottom: 50px;
-    }
-
-    .tiers {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
-
-    .tier {
-      background-color: #3366ff;
-      color: #fff;
-      padding: 60px 40px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      width: 280px;
-      text-align: center;
-    }
-
-    .tier h3 {
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .tier .price {
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .tier p {
-      font-size: 18px;
-      margin: 8px 0;
-    }
-
-    .faq {
-      padding: 80px 20px;
-      background-color: #f9f9f9;
-      text-align: center;
-    }
-
-    .faq h2 {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 40px;
-    }
-
-    .faq-item {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      text-align: left;
-    }
-
-    .faq-item h4 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .faq-item p {
-      font-size: 16px;
-      color: #555;
-      line-height: 1.6;
-    }
-
     .footer {
       background-color: #f3e8ff;
       color: #111;
@@ -352,7 +208,6 @@
       line-height: 1.6;
     }
 
-    /* Mobile Responsive */
     @media (max-width: 768px) {
       .topbar {
         flex-direction: column;
@@ -376,19 +231,12 @@
         display: flex;
       }
 
-      .banner {
-        font-size: 15px;
-        line-height: 1.4;
-      }
-
       .hero h1 {
         font-size: 32px;
-        margin-top: 0;
       }
 
       .hero p {
         font-size: 16px;
-        margin-top: 10px;
       }
 
       .hero .btn {
@@ -397,25 +245,17 @@
         margin: 10px auto;
       }
 
-      .stats {
-        flex-direction: column;
-        gap: 20px;
-        padding: 20px;
+      .built-container {
+        flex-direction: column-reverse;
+        text-align: center;
       }
 
-      .steps {
-        flex-direction: column;
-        gap: 40px;
+      .built-text,
+      .built-image {
+        max-width: 100%;
       }
-
-      .tiers {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .faq-item {
-        padding: 0 10px;
-      }
+    }
+  </style>
 </head>
 
 <body>
@@ -461,142 +301,141 @@
     </div>
   </section>
 
-<section class="how-it-works" id="how">
-  <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
-  <div class="steps">
-    <div class="step">
-      <img src="one.svg" alt="Step One" />
-      <h4>Create Account</h4>
-      <p>Start free in seconds.</p>
+  <section class="how-it-works" id="how">
+    <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
+    <div class="steps">
+      <div class="step">
+        <img src="one.svg" alt="Step One" />
+        <h4>Create Account</h4>
+        <p>Start free in seconds.</p>
+      </div>
+      <div class="step">
+        <img src="two.svg" alt="Step Two" />
+        <h4>Upload Logo</h4>
+        <p>Add once. Apply forever.</p>
+      </div>
+      <div class="step">
+        <img src="three.svg" alt="Step Three" />
+        <h4>Drop Files</h4>
+        <p>Upload or use the API.</p>
+      </div>
+      <div class="step">
+        <img src="four.svg" alt="Step Four" />
+        <h4>Download Instantly</h4>
+        <p>Stamped. Secured. Done.</p>
+      </div>
     </div>
-    <div class="step">
-      <img src="two.svg" alt="Step Two" />
-      <h4>Upload Logo</h4>
-      <p>Add once. Apply forever.</p>
-    </div>
-    <div class="step">
-      <img src="three.svg" alt="Step Three" />
-      <h4>Drop Files</h4>
-      <p>Upload or use the API.</p>
-    </div>
-    <div class="step">
-      <img src="four.svg" alt="Step Four" />
-      <h4>Download Instantly</h4>
-      <p>Stamped. Secured. Done.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="built-for-mca">
-  <div class="built-container">
-    <div class="built-text">
-      <h2>Built for <span class="blue">MCA Brokers</span></h2>
-      <p>From submission to funding, Aquamark protects your pipeline. Whether you're sending files manually or via API, we’ve got you covered. Join the movement to end the backdooring industry once and for all.</p>
-      <button class="btn">Start for Free</button>
+  <section class="built-for-mca">
+    <div class="built-container">
+      <div class="built-text">
+        <h2>Built for <span class="blue">MCA Brokers</span></h2>
+        <p>From submission to funding, Aquamark protects your pipeline. Whether you're sending files manually or via API, we’ve got you covered. Join the movement to end the backdooring industry once and for all.</p>
+        <button class="btn">Start for Free</button>
+      </div>
+      <div class="built-image">
+        <img src="built-for-mca.jpg" alt="Built for MCA" />
+      </div>
     </div>
-    <div class="built-image">
-      <img src="built-for-mca.jpg" alt="Built for MCA" />
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="reviews" id="reviews">
-  <h2>Straight From the Source</h2>
-  <div class="review-grid">
-    <div class="review">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
-      <p>“Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”</p>
-      <span>James, ISO</span>
+  <section class="reviews" id="reviews">
+    <h2>Straight From the Source</h2>
+    <div class="review-grid">
+      <div class="review">
+        <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
+        <p>“Solved our backdooring problems and no doubt helps sales conversions. And less customers complaining about their phone blowing up after we submit.”</p>
+        <span>James, ISO</span>
+      </div>
+      <div class="review">
+        <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
+        <p>“Simple tool. Upload, watermark, send. The UI is clean and fast.”</p>
+        <span>Eric, Account Executive</span>
+      </div>
+      <div class="review">
+        <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
+        <p>“We watermark hundreds of pages a day. The API saves us hours!”</p>
+        <span>Diana, Funding Manager</span>
+      </div>
     </div>
-    <div class="review">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
-      <p>“Simple tool. Upload, watermark, send. The UI is clean and fast.”</p>
-      <span>Eric, Account Executive</span>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <h2>Priced like a tool, not a service.</h2>
+    <p>No subscriptions. A la carte pricing like it should be.</p>
+    <div class="tiers">
+      <div class="tier" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+        <h3>Starter</h3>
+        <div class="price">$25</div>
+        <p>1,000 pages</p>
+        <p>$0.025/page</p>
+        <button class="btn primary" style="margin-top: 40px; background: #CFE9FF; color: #000;">Get Started</button>
+      </div>
+      <div class="tier" style="background: #CFE9FF; color: #000; position: relative;">
+        <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
+        <h3>Small Teams</h3>
+        <div class="price">$250</div>
+        <p>10,000 pages</p>
+        <p>$0.025/page</p>
+        <button class="btn primary" style="margin-top: 40px; background: #ffffff; color: #000;">Get Started</button>
+      </div>
+      <div class="tier" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+        <h3>Enterprise</h3>
+        <div class="price">$500</div>
+        <p>100,000 pages</p>
+        <p>$0.005/page</p>
+        <button class="btn primary" style="margin-top: 40px; background: #CFE9FF; color: #000;">Get Started</button>
+      </div>
     </div>
-    <div class="review">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px;" />
-      <p>“We watermark hundreds of pages a day. The API saves us hours!”</p>
-      <span>Diana, Funding Manager</span>
+  </section>
+
+  <section class="faq" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h4>Can I cancel anytime?</h4>
+      <p>Yep. You're billed month-to-month and can cancel whenever you want—no contracts, no catch.</p>
     </div>
-  </div>
-</section>
-
-<section class="pricing" id="pricing">
-  <h2>Priced like a tool, not a service.</h2>
-  <p>No subscriptions. A la carte pricing like it should be.</p>
-  <div class="tiers">
-    <div class="tier" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-      <h3>Starter</h3>
-      <div class="price">$25</div>
-      <p>1,000 pages</p>
-      <p>$0.025/page</p>
-      <button class="btn primary" style="margin-top: 40px; background: #CFE9FF; color: #000;">Get Started</button>
+    <div class="faq-item">
+      <h4>Are my files secure?</h4>
+      <p>Once you download your watermarked file, it is deleted from our database forever.</p>
     </div>
-    <div class="tier" style="background: #CFE9FF; color: #000; position: relative;">
-      <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
-      <h3>Small Teams</h3>
-      <div class="price">$250</div>
-      <p>10,000 pages</p>
-      <p>$0.025/page</p>
-      <button class="btn primary" style="margin-top: 40px; background: #ffffff; color: #000;">Get Started</button>
+    <div class="faq-item">
+      <h4>What kind of files can I watermark?</h4>
+      <p>jpg, png, pdf, doc (more formats coming soon)</p>
     </div>
-    <div class="tier" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-      <h3>Enterprise</h3>
-      <div class="price">$500</div>
-      <p>100,000 pages</p>
-      <p>$0.005/page</p>
-      <button class="btn primary" style="margin-top: 40px; background: #CFE9FF; color: #000;">Get Started</button>
+    <div class="faq-item">
+      <h4>Do I need an account?</h4>
+      <p>Yes. It's free and takes seconds. Once set up, you can manage your plan, upload your watermark logo(s), access API docs, and manually watermark files.</p>
     </div>
-  </div>
-</section>
+    <div class="faq-item">
+      <h4>What if I go over my monthly pages?</h4>
+      <p>No problem. You can upgrade or downgrade your plan anytime to match your needs.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Have other questions?</h4>
+      <p>Send us an email at <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
+    </div>
+  </section>
 
-<section class="faq" id="faq">
-  <h2>Frequently Asked Questions</h2>
-  <div class="faq-item">
-    <h4>Can I cancel anytime?</h4>
-    <p>Yep. You're billed month-to-month and can cancel whenever you want—no contracts, no catch.</p>
-  </div>
-  <div class="faq-item">
-    <h4>Are my files secure?</h4>
-    <p>Once you download your watermarked file, it is deleted from our database forever.</p>
-  </div>
-  <div class="faq-item">
-    <h4>What kind of files can I watermark?</h4>
-    <p>jpg, png, pdf, doc (more formats coming soon)</p>
-  </div>
-  <div class="faq-item">
-    <h4>Do I need an account?</h4>
-    <p>Yes. It's free and takes seconds. Once set up, you can manage your plan, upload your watermark logo(s), access API docs, and manually watermark files.</p>
-  </div>
-  <div class="faq-item">
-    <h4>What if I go over my monthly pages?</h4>
-    <p>No problem. You can upgrade or downgrade your plan anytime to match your needs.</p>
-  </div>
-  <div class="faq-item">
-    <h4>Have other questions?</h4>
-    <p>Send us an email at <a href="mailto:heyaquamark@gmail.com">heyaquamark@gmail.com</a></p>
-  </div>
-</section>
-      
-      .built-container {
-        flex-direction: column-reverse;
-        text-align: center;
-      }
+  <footer class="footer">
+    <img src="logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
+    <br />
+    &copy; 2025 Aquamark. All rights reserved. <br />
+    San Francisco, CA ·
+    <a href="#" style="color:#999; text-decoration:underline;">Privacy</a> ·
+    <a href="#" style="color:#999; text-decoration:underline;">Terms</a>
+  </footer>
 
-      .built-text,
-      .built-image {
-        max-width: 100%;
-      }
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("nav-toggle");
+      const menu = document.getElementById("mobile-menu");
+      toggle.addEventListener("click", () => {
+        menu.classList.toggle("open");
+      });
+    });
+  </script>
+</body>
 
-      .built-text p {
-        max-width: 100%;
-      }
-
-      .footer {
-        font-size: 13px;
-        padding: 30px 10px;
-      }
-    }
-  </style>
-
-  
+</html>
