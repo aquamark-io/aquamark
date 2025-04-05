@@ -359,7 +359,63 @@
       font-size: 14px;
       line-height: 1.6;
     }
-  </style>
+  .footer {
+    background-color: #f3e8ff;
+    color: #111;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ✅ Paste this starting here */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 4px 0;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px 0;
+  }
+
+  .mobile-nav a {
+    margin: 10px 0;
+    text-decoration: none;
+    color: #666;
+    font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .topbar {
+      padding: 20px;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    .mobile-nav.active {
+      display: flex;
+    }
+  }
+</style>
+
 </head>
 
 <body>
@@ -369,15 +425,28 @@
   </div>
 
   <header class="topbar">
-    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <nav class="nav-links">
-      <a href="#how">How It Works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#upload">Upload Docs</a>
-      <a href="#api">Use API</a>
-      <a href="#signin">Sign In</a>
-    </nav>
-  </header>
+  <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+  <nav class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#upload">Upload Docs</a>
+    <a href="#api">Use API</a>
+    <a href="#signin">Sign In</a>
+  </nav>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileMenu">
+  <a href="#how">How It Works</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#upload">Upload Docs</a>
+  <a href="#api">Use API</a>
+  <a href="#signin">Sign In</a>
+</nav>
 
   <main class="hero">
     <h1>Stop Backdooring. Start Funding.</h1>
@@ -553,6 +622,13 @@
   <a href="#" style="color:#999; text-decoration:underline;">Privacy</a> · 
   <a href="#" style="color:#999; text-decoration:underline;">Terms</a>
 </footer>
-</body>
 
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('active');
+  }
+</script>
+  
+</body>
 </html>
