@@ -538,40 +538,34 @@
     </div>
   </section>
   
-<section style="background:white; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center; gap:60px;">
-  
-<section style="background:white; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center; gap:60px;">
+<section class="w-full bg-white py-16 px-6 md:px-12">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
 
-  <!-- Traditional watermark -->
-  <div style="flex:1; min-width:260px; max-width:400px; text-align:center; position:relative;">
-    <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); background-color:#3e5eff; color:#fff; padding:6px 12px; font-size:14px; font-weight:600; border-radius:999px;">
-      Example
-    </span>
-    <img src="/watermarked-bank-preview-bubble.png" alt="Bank statement preview"
-         style="max-width:100%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06); margin-top:20px;" />
+    <!-- Left Container -->
+    <div class="relative flex flex-col items-center text-center">
+      <div class="absolute -top-8 -left-8 w-24 h-24 bg-blue-100 rounded-full blur-2xl opacity-50"></div>
+      <div class="text-sm font-medium text-gray-500 mb-2">Sample Output</div>
+      <img src="/watermarked-sample-thumbnail.png" alt="Watermarked Sample" class="rounded-xl shadow-lg z-10 relative max-w-full" />
+    </div>
+
+    <!-- Middle Container -->
+    <div class="relative flex flex-col items-center text-center">
+      <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-200 rounded-full blur-2xl opacity-50"></div>
+      <div class="text-sm font-medium text-gray-500 mb-2">Bank Statement Style</div>
+      <img src="/checkered-style-bank-statement.png" alt="Checkered Bank Statement" class="rounded-xl shadow-lg z-10 relative max-w-full" />
+    </div>
+
+    <!-- Right Container -->
+    <div class="text-left">
+      <h2 class="text-2xl md:text-3xl font-bold leading-snug">
+        <span class="text-blue-600">Increase</span> Sales Conversions by <span class="text-blue-600">8%</span>*
+      </h2>
+      <p class="mt-4 text-gray-700 text-base md:text-lg">
+        Protecting your loan packages from resale has never been easier. ISO feedback suggests sales conversions increase within the first 60 days of watermarking.
+      </p>
+    </div>
+
   </div>
-
-<!-- Checkered watermark example -->
-<div style="flex:1; min-width:260px; max-width:400px; text-align:center; position:relative;">
-  <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); background-color:#3e5eff; color:#fff; padding:6px 12px; font-size:14px; font-weight:600; border-radius:999px;">
-    Example
-  </span>
-  <div style="background-color: #f4f6ff; padding:24px; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06); margin-top:20px;">
-    <img src="/checkered-style-bank-statement.png" alt="Checkered watermark preview"
-         style="width:100%; height:auto; border-radius:12px;" />
-  </div>
-</div>
-
-  <!-- Text content -->
-  <div style="flex:1; min-width:300px; max-width:580px;">
-    <h2 style="font-size:3.2rem; font-weight:700; margin-bottom:0.3em; line-height:1.2;">
-      <span style="color:#547CFF;">Increase</span> Sales Conversions<br>by <span style="color:#547CFF;">10%</span><sup>*</sup>
-    </h2>
-    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
-      Protecting your loan packages from resale has never been easier. Early feedback suggests sales conversions increase within the first 30 days of watermarking.
-    </p>
-  </div>
-
 </section>
 
 <section class="reviews" id="reviews" style="padding: 60px 20px;">
