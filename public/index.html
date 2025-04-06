@@ -538,18 +538,31 @@
     </div>
   </section>
   
-<section style="background:white; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:150px;">
-  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
+<section style="background:white; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center; gap:60px;">
+  
+  <!-- Left: Image + Example Tag -->
+  <div style="flex:1; min-width:300px; max-width:400px; text-align:center; position:relative;">
+    <span style="position:absolute; top:-20px; left:50%; transform:translateX(-50%); background-color:#3e5eff; color:#fff; padding:6px 12px; font-size:14px; font-weight:600; border-radius:999px;">
+      Example
+    </span>
     <img src="/watermarked-bank-preview-bubble.png" alt="Bank statement preview"
-         style="max-width:100%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);" />
+         style="max-width:100%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06); margin-top:20px;" />
   </div>
 
+  <!-- Right: Text + Room for 2nd preview -->
   <div style="flex:1; min-width:300px; max-width:500px;">
     <h2 style="font-size:3.2rem; font-weight:700; margin-bottom:0.3em;">
-      Auto-Adaptive <span style="color:#547CFF;">Water</span>marking
+      <span style="color:#547CFF;">Increase</span> Sales Conversions by <span style="color:#547CFF;">10%</span><sup>*</sup>
     </h2>
     <p style="font-size:1.2rem; color:#555; line-height:1.6;">
-Protecting your loan packages from resale has never been so easy. We watermark your files based on type for clean, professional results — bank statements, voided checks, driver’s licenses, tax returns, and more. </p>
+      Protecting your loan packages from resale has never been easier. Early feedback suggests sales conversions increase within the first 30 days of watermarking.
+    </p>
+
+    <!-- Optional: Future icon-based preview -->
+    <div style="margin-top:40px;">
+      <img src="/logo-icon-blue.png" alt="Icon-style watermark preview"
+           style="max-width:100%; border-radius:20px; box-shadow:0 6px 24px rgba(0,0,0,0.05);" />
+    </div>
   </div>
 </section>
 
