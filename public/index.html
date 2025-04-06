@@ -253,7 +253,28 @@
   max-width: 100%;
 }
     }
+{
+  .proof-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+  }
 
+  .proof-text {
+    max-width: 100% !important;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .proof-text h2 {
+    font-size: 32px;
+  }
+
+  .proof-text p {
+    font-size: 17px;
+  }
+}
+    
     .reviews {
       background: linear-gradient(to right, #eef2ff, #fdf2ff);
       text-align: center;
@@ -538,24 +559,26 @@
     </div>
   </section>
 
-<section class="proof-section" style="background: #f9f9ff; padding: 100px 20px;">
-  <div class="proof-container" style="display: flex; justify-content: center; align-items: center; max-width: 1200px; margin: 0 auto; gap: 60px; flex-wrap: wrap;">
+<section class="proof-section" style="background: #ffffff; padding: 100px 20px;">
+  <div class="proof-container" style="display: flex; justify-content: center; align-items: center; max-width: 1300px; margin: 0 auto; gap: 80px; flex-wrap: wrap;">
     
-    <!-- Left Image Container -->
-    <div class="proof-image" style="flex: 1; max-width: 300px; position: relative; height: 420px;">
-      <div style="background: #eef2ff; border-radius: 16px; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 0;"></div>
+    <!-- Left Image -->
+    <div class="proof-image" style="flex: 1; max-width: 270px; position: relative; height: 380px;">
+      <div style="background: #e6f0ff; border-radius: 20px; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 0;"></div>
       <img src="watermarked-sample-thumbnail.png" alt="Watermarked 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); position: relative; z-index: 1;" />
     </div>
 
-    <!-- Center Image Container -->
-    <div class="proof-image" style="flex: 1; max-width: 300px; position: relative; height: 420px;">
-      <div style="background: #fdf2ff; border-radius: 16px; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 0;"></div>
+    <!-- Center Image -->
+    <div class="proof-image" style="flex: 1; max-width: 270px; position: relative; height: 380px;">
+      <div style="background: #e6f0ff; border-radius: 20px; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 0;"></div>
       <img src="checkered-style-bank-statement.png" alt="Watermarked 2" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); position: relative; z-index: 1;" />
     </div>
 
-    <!-- Right Text Container -->
-    <div class="proof-text" style="flex: 1; max-width: 360px;">
-      <h2 style="font-size: 38px; font-weight: 800; margin-bottom: 20px;">Increase Sales Conversions by 8%*</h2>
+    <!-- Text Block -->
+    <div class="proof-text" style="flex: 1.2; max-width: 420px;">
+      <h2 style="font-size: 38px; font-weight: 800; margin-bottom: 20px; line-height: 1.3;">
+        <span style="color: #3e5eff;">Increase</span> Sales Conversions by <span style="color: #3e5eff;">8%*</span>
+      </h2>
       <p style="font-size: 18px; line-height: 1.6; color: #555;">
         Placeholder text for supporting proof section. This is where you'll explain how your watermarking solution prevents these types of documents from being stolen or backdoored. You can update this with stronger proof points later.
       </p>
