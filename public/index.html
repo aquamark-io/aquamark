@@ -213,6 +213,27 @@
       width: 100%;
     }
 
+@media (max-width: 768px) {
+  section[style*="gap:150px;"] {
+    flex-direction: column;
+    text-align: center;
+    gap: 60px !important;
+  }
+  
+  section[style*="gap:150px;"] > div {
+    max-width: 100% !important;
+  }
+
+  section[style*="gap:150px;"] h2 {
+    font-size: 2rem !important;
+  }
+
+  section[style*="gap:150px;"] p {
+    font-size: 1rem !important;
+  }
+}
+
+    
     @media (max-width: 780px) {
    .stats {
     flex-direction: column;
