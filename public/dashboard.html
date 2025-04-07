@@ -39,15 +39,20 @@
       height: 100vh;
     }
 
-    .sidebar a {
+    .sidebar a, .sidebar button {
       display: block;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
       color: #374151;
-      text-decoration: none;
+      text-align: left;
       margin-bottom: 1rem;
       font-weight: 500;
+      cursor: pointer;
     }
 
-    .sidebar a:hover {
+    .sidebar a:hover, .sidebar button:hover {
       color: #2563eb;
     }
 
@@ -64,7 +69,7 @@
     }
   </style>
 
-  <!-- Outseta Init -->
+  <!-- Outseta Script Config -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -89,7 +94,7 @@
       <a href="usage.html">Usage</a>
       <a href="watermark.html">Watermark</a>
       <a href="api.html">API</a>
-      <a href="#" id="logout-link">Log out</a>
+      <button id="logout-btn">Log out</button>
     </div>
 
     <div class="content">
@@ -99,10 +104,11 @@
 
   <div class="footer">© 2025 Aquamark. All rights reserved.</div>
 
-  <!-- Greeting & Logout -->
+  <!-- First Name Greeting + Log Out -->
   <script>
     window.Outseta = window.Outseta || {};
     Outseta.onReady = function () {
+      // Attempt immediate greeting
       if (Outseta.User && Outseta.User.current) {
         Outseta.User.current().then(function(user) {
           const firstName = user.FirstName || 'there';
@@ -110,21 +116,26 @@
         });
       }
 
-      // Logout handler
-      document.getElementById('logout-link').addEventListener('click', function (e) {
-        e.preventDefault();
-        Outseta.Auth.logout().then(() => {
-          window.location.href = "https://www.aquamark.io";
-        });
-      });
-    };
-  </script>
+      // Backup fetch after slight delay
+      setTimeout(() => {
+        if (document.getElementById('user-greeting').textContent === 'Hey there!') {
+          Outseta.User.current().then(function(user) {
+            const firstName = user.FirstName || 'there';
+            document.getElementById('user-greeting').textContent = `Hey, ${firstName}!`;
+          });
+        }
+      }, 1000);
 
-  <!-- Optional: remove access_token from URL -->
-  <script>
-    if (window.location.href.includes('access_token')) {
-      window.history.replaceState({}, document.title, '/dashboard.html');
-    }
+      // Log out handler
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+          Outseta.Auth.logout().then(() => {
+            window.location.href = 'https://www.aquamark.io';
+          });
+        });
+      }
+    };
   </script>
 </body>
 </html>
