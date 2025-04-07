@@ -62,23 +62,39 @@
       font-size: 0.875rem;
     }
 
+    /* Responsive mobile header */
     @media (max-width: 640px) {
-  .header {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    text-align: center;
-  }
+      .header {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: center;
+      }
 
-  .logo {
-    height: 40px;
-  }
+      .logo {
+        height: 40px;
+      }
 
-  .back-link {
-    font-size: 0.9rem;
-  }
-}
-    
+      .back-link {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Override button label: "Continue to checkout" → "Create Account" */
+    [data-testid="auth-register-submit"] span,
+    [data-testid="widget-submit-button"] span {
+      visibility: hidden;
+      position: relative;
+    }
+
+    [data-testid="auth-register-submit"] span::after,
+    [data-testid="widget-submit-button"] span::after {
+      content: "Create Account";
+      visibility: visible;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   </style>
 </head>
 <body>
@@ -104,5 +120,20 @@
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
 
+  <!-- JS to replace "Due now and at renewal" with "Due Now" -->
+  <script>
+    const observer = new MutationObserver(() => {
+      document.querySelectorAll('div').forEach(el => {
+        if (el.textContent === "Due now and at renewal") {
+          el.textContent = "Due Now";
+        }
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  </script>
 </body>
 </html>
