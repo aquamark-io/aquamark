@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | Aquamark</title>
+  <title>Log In | Aquamark</title>
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -12,8 +12,13 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
-<body>
-  <h1 style="text-align:center; margin-top:50px;">Log In</h1>
-  <div data-o-auth embed="login" style="max-width: 480px; margin: 40px auto;"></div>
+<body style="font-family: Inter, sans-serif; text-align: center; padding: 60px 20px;">
+
+  <h1>Log In</h1>
+
+  <!-- ✅ This is the missing part -->
+  <div data-o-auth="1" data-mode="embed" data-widget-mode="login"
+       style="max-width: 480px; margin: 40px auto;"></div>
+
 </body>
 </html>
