@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
-  <!-- ✅ Outseta Config (ONLY ONCE) -->
   <script>
     var o_options = {
       domain: "aquamark.outseta.com",
@@ -17,7 +15,6 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
   <style>
     body {
       margin: 0;
@@ -25,7 +22,6 @@
       background: #f9fafb;
       color: #111827;
     }
-
     .header {
       display: flex;
       justify-content: space-between;
@@ -34,17 +30,14 @@
       background-color: white;
       border-bottom: 1px solid #e5e7eb;
     }
-
     .logo {
       height: 48px;
     }
-
     .back-link {
       text-decoration: none;
       color: #3b82f6;
       font-weight: 500;
     }
-
     .container {
       max-width: 400px;
       margin: 4rem auto;
@@ -54,27 +47,22 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
       text-align: center;
     }
-
     h1 {
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
     }
-
     h2 {
       font-size: 1.25rem;
       font-weight: 600;
       margin-top: 0;
     }
-
     .footer {
       text-align: center;
       margin-top: 4rem;
       color: #6b7280;
       font-size: 0.875rem;
     }
-
-    /* Responsive mobile header */
     @media (max-width: 640px) {
       .header {
         flex-direction: column;
@@ -82,23 +70,18 @@
         gap: 0.5rem;
         text-align: center;
       }
-
       .logo {
         height: 40px;
       }
-
       .back-link {
         font-size: 0.9rem;
       }
     }
-
-    /* Override button label: "Continue to checkout" → "Create Account" */
     [data-testid="auth-register-submit"] span,
     [data-testid="widget-submit-button"] span {
       visibility: hidden;
       position: relative;
     }
-
     [data-testid="auth-register-submit"] span::after,
     [data-testid="widget-submit-button"] span::after {
       content: "Create Account";
@@ -140,7 +123,6 @@
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
 
-  <!-- ✅ Swap embed with confirmation after signup -->
   <script>
     window.Outseta = window.Outseta || {};
     Outseta.onReady = function () {
@@ -151,24 +133,19 @@
     };
   </script>
 
-  <!-- Button label and message text overrides -->
   <script>
     const observer = new MutationObserver(() => {
-      // Replace "Continue to checkout"
       document.querySelectorAll('button span').forEach(el => {
         if (el.textContent.trim() === "Continue to checkout") {
           el.textContent = "Create Account";
         }
       });
-
-      // Replace "Due now and at renewal"
       document.querySelectorAll('div').forEach(el => {
         if (el.textContent.trim() === "Due now and at renewal") {
           el.textContent = "Due Now";
         }
       });
     });
-
     observer.observe(document.body, {
       childList: true,
       subtree: true
