@@ -11,6 +11,7 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
   <style>
     body {
       font-family: Inter, sans-serif;
@@ -33,6 +34,10 @@
       border-radius: 12px;
       background: #f9f9ff;
     }
+    #uploadStatus {
+      margin-top: 12px;
+      font-size: 15px;
+    }
   </style>
 </head>
 <body>
@@ -45,12 +50,53 @@
   </div>
 
   <div class="dashboard-section">
-    <h2>Upload Documents</h2>
+    <h2>Upload Watermark Logo</h2>
     <div class="upload-box">
-      <p>Upload your bank statements, tax docs, or files here.</p>
-      <button onclick="alert('Upload coming soon')">Choose File</button>
+      <input type="file" id="logoUpload" accept="image/*" />
+      <br><br>
+      <button onclick="uploadLogo()">Upload Logo</button>
+      <p id="uploadStatus"></p>
     </div>
   </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
+
+    async function uploadLogo() {
+      const fileInput = document.getElementById('logoUpload');
+      const status = document.getElementById('uploadStatus');
+
+      if (!fileInput.files.length) {
+        status.textContent = 'Please select a logo file.';
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { data, error } = await supabase.storage
+        .from('logos')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (error) {
+        console.error('Upload error:', error.message);
+        status.textContent = `Error: ${error.message}`;
+      } else {
+        const { publicURL } = supabase.storage.from('logos').getPublicUrl(filePath);
+        console.log('Public logo URL:', publicURL);
+        status.textContent = `✅ Uploaded! Logo URL: ${publicURL}`;
+        // Optionally: store publicURL for later use
+      }
+    }
+  </script>
 
 </body>
 </html>
