@@ -106,6 +106,68 @@
         return;
       }
 
+async function processPDFs() {
+  const files = document.getElementById('pdfUpload').files;
+  const statusBox = document.getElementById('pdfStatus');
+  const logoURL = localStorage.getItem('aquamarkLogoURL');
+
+  if (!files.length) {
+    statusBox.textContent = 'Please select PDF files.';
+    return;
+  }
+
+  if (!logoURL) {
+    statusBox.textContent = 'Please upload your watermark logo first.';
+    return;
+  }
+
+  if (files.length > 6) {
+    statusBox.textContent = 'Limit is 6 PDFs at a time.';
+    return;
+  }
+
+  statusBox.innerHTML = '';
+
+  const logoBytes = await fetch(logoURL).then(res => res.arrayBuffer());
+  let totalPages = 0;
+
+  for (const file of files) {
+    const pdfBytes = await file.arrayBuffer();
+    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+    const logoImg = await pdfDoc.embedPng(logoBytes);
+    const logoDims = logoImg.scale(0.3);
+
+    const pages = pdfDoc.getPages();
+    totalPages += pages.length;
+
+    pages.forEach(page => {
+      const { width, height } = page.getSize();
+      page.drawImage(logoImg, {
+        x: (width / 2) - (logoDims.width / 2),
+        y: (height / 2) - (logoDims.height / 2),
+        width: logoDims.width,
+        height: logoDims.height,
+        opacity: 0.3
+      });
+    });
+
+    const finalPdf = await pdfDoc.save();
+    const blob = new Blob([finalPdf], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `watermarked-${file.name}`;
+    link.textContent = `⬇ Download ${file.name}`;
+    link.style.display = 'block';
+    link.style.marginTop = '10px';
+
+    statusBox.appendChild(link);
+  }
+
+  console.log(`Watermarked ${totalPages} pages`);
+}
+      
       const file = fileInput.files[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
