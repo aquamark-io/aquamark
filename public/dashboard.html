@@ -65,16 +65,17 @@
     <div data-o-profile="1" data-mode="embed"></div>
   </div>
 
-  <!-- Upload Watermark Logo -->
-  <div class="dashboard-section">
-    <h2>Upload Watermark Logo</h2>
-    <div class="upload-box">
-      <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()" />
-      <button onclick="uploadLogo()">Upload Logo</button>
-      <p id="uploadStatus"></p>
-      <img id="logoPreview" class="preview-img" style="display: none;" />
-    </div>
+<!-- Upload Watermark Logo -->
+<div class="dashboard-section">
+  <h2>Upload Watermark Logo</h2>
+  <div class="upload-box">
+    <input type="file" id="logoUpload" accept="image/*" />
+    <br />
+    <button onclick="uploadLogo()">Upload Logo</button>
+    <p id="uploadStatus"></p>
+    <img id="logoPreview" class="preview-img" style="display: none;" />
   </div>
+</div>
 
   <!-- Upload PDFs -->
   <div class="dashboard-section">
@@ -93,17 +94,22 @@
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
 );
     
-    // Load saved logo preview
-    window.addEventListener('DOMContentLoaded', () => {
-      const storedLogo = localStorage.getItem('aquamarkLogoURL');
-      const preview = document.getElementById('logoPreview');
-      if (storedLogo) {
-        preview.src = storedLogo;
-        preview.style.display = 'block';
-      }
-    });
+const supabase = supabase.createClient(
+  'https://dvzmnikrvkvgragzhrof.supabase.co',
+  'YOUR_ANON_KEY'
+);
 
-  async function uploadLogo() {
+// Load saved logo preview on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const storedLogo = localStorage.getItem('aquamarkLogoURL');
+  const preview = document.getElementById('logoPreview');
+  if (storedLogo) {
+    preview.src = storedLogo;
+    preview.style.display = 'block';
+  }
+});
+
+async function uploadLogo() {
   const fileInput = document.getElementById('logoUpload');
   const status = document.getElementById('uploadStatus');
   const preview = document.getElementById('logoPreview');
@@ -113,39 +119,34 @@
     return;
   }
 
-  const {
-    data: { user },
-    error: userError
-  } = await supabase.auth.getUser();
-
-  if (!user || userError) {
-    status.textContent = 'Error: User not authenticated.';
-    console.error('User error:', userError);
-    return;
-  }
-
   const file = fileInput.files[0];
   const fileExt = file.name.split('.').pop();
   const fileName = `${Date.now()}.${fileExt}`;
-  const filePath = `${user.id}/${fileName}`; // Upload inside a folder named after the user UID
+  const filePath = `${fileName}`;
 
-  const { data, error } = await supabase.storage
+  const { error: uploadError } = await supabase.storage
     .from('logos')
     .upload(filePath, file, {
       cacheControl: '3600',
       upsert: true
     });
 
-if (error) {
-  console.error('Upload error:', error.message);
-  status.textContent = `Error: ${error.message}`;
-} else {
-  const { data: publicUrlData } = supabase.storage.from('logos').getPublicUrl(filePath);
+  if (uploadError) {
+    console.error('Upload error:', uploadError.message);
+    status.textContent = `Error: ${uploadError.message}`;
+    return;
+  }
+
+  const { data: publicUrlData } = supabase.storage
+    .from('logos')
+    .getPublicUrl(filePath);
+
   const publicUrl = publicUrlData.publicUrl;
+
   localStorage.setItem('aquamarkLogoURL', publicUrl);
   preview.src = publicUrl;
   preview.style.display = 'block';
-  status.textContent = `✅ Uploaded and saved.`;
+  status.textContent = '✅ Uploaded and saved.';
 }
 
     async function processPDFs() {
