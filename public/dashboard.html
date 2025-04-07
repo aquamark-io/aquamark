@@ -89,12 +89,17 @@
 
     // Load saved logo on page load
     window.addEventListener('DOMContentLoaded', () => {
-      const storedLogo = localStorage.getItem('aquamarkLogoURL');
-      const preview = document.getElementById('logoPreview');
-      if (storedLogo) {
-        preview.src = storedLogo;
-        preview.style.display = 'block';
-      }
+   const preview = document.getElementById('logoPreview');
+if (storedLogo) {
+  preview.src = storedLogo;
+  preview.onload = () => {
+    preview.style.display = 'block';
+  };
+  preview.onerror = () => {
+    console.warn('⚠️ Failed to load stored logo image.');
+    preview.style.display = 'none';
+  };
+}
     });
 
     async function uploadLogo() {
