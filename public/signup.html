@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up – Aquamark</title>
-  <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -13,6 +12,7 @@
       background: #f9fafb;
       color: #111827;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
@@ -21,9 +21,11 @@
       background-color: white;
       border-bottom: 1px solid #e5e7eb;
     }
+
     .logo {
       height: 40px;
     }
+
     .container {
       max-width: 400px;
       margin: 4rem auto;
@@ -32,11 +34,13 @@
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
+
     h1 {
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
     }
+
     .footer {
       text-align: center;
       margin-top: 4rem;
@@ -60,18 +64,22 @@
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
 
-<script>
-  window.Outseta = window.Outseta || {};
-  window.Outseta.init({ subdomain: "aquamark" });
+  <!-- Load Outseta script -->
+  <script src="https://cdn.outseta.com/outseta.min.js"></script>
 
-  window.Outseta.onReady(function () {
-    window.Outseta.auth.renderSignUpForm({
-      container: "outseta-signup",
-      onSuccess: function () {
-        window.location.href = "/dashboard.html";
-      }
+  <!-- Initialize Outseta and render signup form -->
+  <script>
+    window.Outseta = window.Outseta || {};
+    window.Outseta.init({ subdomain: "aquamark" });
+
+    window.Outseta.onReady(function () {
+      window.Outseta.auth.renderSignUpForm({
+        container: "outseta-signup",
+        onSuccess: function () {
+          window.location.href = "/dashboard.html";
+        }
+      });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
