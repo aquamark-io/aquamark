@@ -34,6 +34,9 @@
       border-radius: 12px;
       background: #f9f9ff;
     }
+    .upload-box input {
+      margin-top: 10px;
+    }
     #uploadStatus {
       margin-top: 12px;
       font-size: 15px;
@@ -49,6 +52,7 @@
     <div data-o-profile="1" data-mode="embed"></div>
   </div>
 
+  <!-- Upload Watermark Logo -->
   <div class="dashboard-section">
     <h2>Upload Watermark Logo</h2>
     <div class="upload-box">
@@ -56,6 +60,16 @@
       <br><br>
       <button onclick="uploadLogo()">Upload Logo</button>
       <p id="uploadStatus"></p>
+    </div>
+  </div>
+
+  <!-- Upload PDFs -->
+  <div class="dashboard-section">
+    <h2>Upload Bank Statements (PDF)</h2>
+    <div class="upload-box">
+      <input type="file" id="pdfUpload" accept="application/pdf" multiple />
+      <p style="margin-top: 12px;">You can upload up to 6 PDF files at once.</p>
+      <button disabled>PDF upload & watermarking coming next</button>
     </div>
   </div>
 
@@ -93,7 +107,7 @@
         const { publicURL } = supabase.storage.from('logos').getPublicUrl(filePath);
         console.log('Public logo URL:', publicURL);
         status.textContent = `✅ Uploaded! Logo URL: ${publicURL}`;
-        // Optionally: store publicURL for later use
+        // Save for later use during PDF watermarking
       }
     }
   </script>
