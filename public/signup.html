@@ -60,18 +60,18 @@
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
 
-  <script>
-    window.Outseta = window.Outseta || {};
-    window.Outseta.init({ subdomain: "aquamark" });
+<script>
+  window.Outseta = window.Outseta || {};
+  window.Outseta.init({ subdomain: "aquamark" });
 
-    window.onload = function () {
-      window.Outseta.auth.renderSignUpForm({
-        container: "outseta-signup",
-        onSuccess: function () {
-          window.location.href = "/dashboard.html";
-        }
-      });
-    };
-  </script>
+  window.Outseta.onReady(function () {
+    window.Outseta.auth.renderSignUpForm({
+      container: "outseta-signup",
+      onSuccess: function () {
+        window.location.href = "/dashboard.html";
+      }
+    });
+  });
+</script>
 </body>
 </html>
