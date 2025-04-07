@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | Aquamark</title>
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
-  <!-- Outseta Quick Start -->
+  <!-- Outseta Quick Start (Only Once) -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
-      load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support',
+      load: 'auth,profile',
       redirect: {
         logout: 'https://www.aquamark.io'
       }
@@ -20,7 +16,6 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <!-- Style -->
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -71,49 +66,5 @@
       flex: 1;
       padding: 2rem;
     }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
   </style>
 </head>
-<body>
-  <div class="header">
-    <div class="greeting" id="user-greeting">Hey there!</div>
-  </div>
-
-  <div class="main">
-    <div class="sidebar">
-      <a href="dashboard.html">Profile</a>
-      <a href="logo.html">Logo</a>
-      <a href="usage.html">Usage</a>
-      <a href="watermark.html">Watermark</a>
-      <a href="api.html">API</a>
-      <a href="#o-logout-link">Log out</a>
-    </div>
-
-    <div class="content">
-      <div data-o-profile="1" data-mode="embed"></div>
-    </div>
-  </div>
-
-  <div class="footer">© 2025 Aquamark. All rights reserved.</div>
-
-  <!-- Greet user -->
-  <script>
-    window.Outseta = window.Outseta || {};
-    window.Outseta.onReady = function () {
-      if (Outseta && Outseta.User && Outseta.User.current) {
-        Outseta.User.current().then(function(user) {
-          const firstName = user.FirstName || 'there';
-          document.getElementById('user-greeting').textContent = `Hey, ${firstName}!`;
-        });
-      }
-    };
-  </script>
-</body>
-</html>
-
