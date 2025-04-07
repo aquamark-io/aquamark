@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -479,45 +478,45 @@
     domain: 'aquamark.outseta.com',
     load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support'
   };
-</script>
-<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-  
+<script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div class="banner">
-    🎉 All new accounts get <strong>5 free credits</strong>.
-    <div><a href="#">Sign up now</a></div>
+    🎉 New ISO sign ups <strong>daily</strong>! <a href="/signup.html">Join the Movement🔥</a>
   </div>
 
   <header class="topbar">
-  <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-<nav class="nav-links">
-  <a href="#how">How It Works</a>
-  <a href="#pricing">Pricing</a>
-  <button onclick="location.href='/login.html'" class="nav-btn">Sign In</button>
-</nav>
+    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+    <nav class="nav-links">
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <button onclick="location.href='/login.html'" class="nav-btn">Sign In</button>
+    </nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div><div></div><div></div>
+    </div>
+  </header>
 
-  <div class="hamburger" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-</header>
+  <nav class="mobile-nav" id="mobileMenu">
+    <a href="#how">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="/login.html">Sign In</a>
+  </nav>
 
-<nav class="mobile-nav" id="mobileMenu">
-  <a href="#how">How It Works</a>
-  <a href="#pricing">Pricing</a>
-  <a href="/login.html">Sign In</a>
-</nav>
-
-<main class="hero">
-  <h1>Stop Backdooring. Start Funding.</h1>
-  <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
-  <button class="btn primary" onclick="location.href='/signup.html'">Get Started</button>
-  <button class="btn secondary" onclick="location.href='/signup.html'">Upload Docs</button>
-  <button class="btn secondary" onclick="location.href='/signup.html'">Use API</button>
-</main>
+  <main class="hero">
+    <h1>Stop Backdooring. Start Funding.</h1>
+    <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
+    <button class="btn primary" onclick="location.href='/signup.html'">Start Now</button>
+    <button class="btn secondary" onclick="location.href='/signup.html'">Upload Docs</button>
+    <button class="btn secondary" onclick="location.href='/signup.html'">Use API</button>
+  </main>
 
   <section class="stats">
     <div class="stat">
