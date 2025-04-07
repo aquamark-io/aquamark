@@ -64,33 +64,21 @@
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
 
+  <!-- Load Outseta script -->
   <script src="https://cdn.outseta.com/outseta.min.js"></script>
+
+  <!-- Initialize Outseta and render signup form -->
   <script>
-    window.addEventListener("load", function () {
-      let attempts = 0;
-      const maxAttempts = 10;
+    window.Outseta = window.Outseta || {};
+    window.Outseta.init({ subdomain: "aquamark" });
 
-      function tryInitOutseta() {
-        if (window.Outseta && window.Outseta.init) {
-          window.Outseta.init({ subdomain: "aquamark" });
-
-          window.Outseta.onReady(function () {
-            window.Outseta.auth.renderSignUpForm({
-              container: "outseta-signup",
-              onSuccess: function () {
-                window.location.href = "/dashboard.html";
-              }
-            });
-          });
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          setTimeout(tryInitOutseta, 300);
-        } else {
-          console.error("Failed to initialize Outseta after multiple attempts");
+    window.Outseta.onReady(function () {
+      window.Outseta.auth.renderSignUpForm({
+        container: "outseta-signup",
+        onSuccess: function () {
+          window.location.href = "/dashboard.html";
         }
-      }
-
-      tryInitOutseta();
+      });
     });
   </script>
 </body>
