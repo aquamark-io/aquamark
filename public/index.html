@@ -448,8 +448,14 @@
       padding: 20px;
     }
 
-    .nav-links {
-      display: none;
+   .nav-links {
+  display: inline-block;
+  margin-left: 25px;
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+}
     }
 
     .hamburger {
@@ -481,11 +487,10 @@
   <header class="topbar">
   <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
   <nav class="nav-links">
-    <a href="#how">How It Works</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#upload">Upload Docs</a>
-    <a href="#api">Use API</a>
-    <a href="#signin">Sign In</a>
+  <a class="nav-links" href="#how">How It Works</a>
+<a class="nav-links" href="#pricing">Pricing</a>
+<a class="nav-links" href="https://aquamark.outseta.com/auth?widgetMode=register#o-anonymous">Sign Up</a>
+<a class="nav-links" href="https://aquamark.outseta.com/auth?widgetMode=login#o-anonymous">Log In</a>
   </nav>
   <div class="hamburger" onclick="toggleMenu()">
     <div></div>
@@ -495,10 +500,10 @@
 </header>
 
 <nav class="mobile-nav" id="mobileMenu">
-  <a href="#how">How It Works</a>
-  <a href="#pricing">Pricing</a>
-  <a class="nav-links" href="https://aquamark.outseta.com/auth?widgetMode=register#o-anonymous">Sign Up</a>
-  <a class="nav-links" href="https://aquamark.outseta.com/auth?widgetMode=login#o-anonymous">Log In</a>
+<a class="nav-links" href="#how">How It Works</a>
+<a class="nav-links" href="#pricing">Pricing</a>
+<a class="nav-links" href="https://aquamark.outseta.com/auth?widgetMode=register#o-anonymous">Sign Up</a>
+<a class="nav-links" href="https://aquamark.outseta.com/auth?widgetMode=login#o-anonymous">Log In</a>
 </nav>
 
   <main class="hero">
