@@ -6,7 +6,7 @@
   <title>Sign Up – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-  <!-- Outseta Config -->
+  <!-- ✅ Outseta Config (ONLY ONCE) -->
   <script>
     var o_options = {
       domain: "aquamark.outseta.com",
@@ -140,7 +140,7 @@
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
 
-  <!-- Swap widget for confirmation message after signup -->
+  <!-- ✅ Swap embed with confirmation after signup -->
   <script>
     window.Outseta = window.Outseta || {};
     Outseta.onReady = function () {
@@ -151,17 +151,17 @@
     };
   </script>
 
-  <!-- Button label and message overrides -->
+  <!-- Button label and message text overrides -->
   <script>
     const observer = new MutationObserver(() => {
-      // Replace "Continue to checkout" with "Create Account"
+      // Replace "Continue to checkout"
       document.querySelectorAll('button span').forEach(el => {
         if (el.textContent.trim() === "Continue to checkout") {
           el.textContent = "Create Account";
         }
       });
 
-      // Replace "Due now and at renewal" with "Due Now"
+      // Replace "Due now and at renewal"
       document.querySelectorAll('div').forEach(el => {
         if (el.textContent.trim() === "Due now and at renewal") {
           el.textContent = "Due Now";
