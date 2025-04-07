@@ -64,7 +64,7 @@
     }
   </style>
 
-  <!-- Outseta Embed Script (Single, clean) -->
+  <!-- Outseta Init -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -89,31 +89,38 @@
       <a href="usage.html">Usage</a>
       <a href="watermark.html">Watermark</a>
       <a href="api.html">API</a>
-      <a href="#o-logout-link">Log out</a>
+      <a href="#" id="logout-link">Log out</a>
     </div>
 
     <div class="content">
-      <!-- Outseta Profile Embed -->
       <div data-o-profile="1" data-mode="embed"></div>
     </div>
   </div>
 
   <div class="footer">© 2025 Aquamark. All rights reserved.</div>
 
-  <!-- Greeting logic -->
+  <!-- Greeting & Logout -->
   <script>
     window.Outseta = window.Outseta || {};
-    window.Outseta.onReady = function () {
-      if (Outseta && Outseta.User && Outseta.User.current) {
+    Outseta.onReady = function () {
+      if (Outseta.User && Outseta.User.current) {
         Outseta.User.current().then(function(user) {
           const firstName = user.FirstName || 'there';
           document.getElementById('user-greeting').textContent = `Hey, ${firstName}!`;
         });
       }
+
+      // Logout handler
+      document.getElementById('logout-link').addEventListener('click', function (e) {
+        e.preventDefault();
+        Outseta.Auth.logout().then(() => {
+          window.location.href = "https://www.aquamark.io";
+        });
+      });
     };
   </script>
 
-  <!-- Optional: Clean up access_token from URL after login -->
+  <!-- Optional: remove access_token from URL -->
   <script>
     if (window.location.href.includes('access_token')) {
       window.history.replaceState({}, document.title, '/dashboard.html');
