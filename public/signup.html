@@ -5,16 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <script>
-    var o_options = {
-      domain: "aquamark.outseta.com",
-      load: "auth,customForm,emaillist,leadCapture,nocode,profile,support",
-      redirect: {
-        logout: "https://www.aquamark.io"
-      }
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  
   <style>
     body {
       margin: 0;
@@ -128,13 +119,25 @@
 
     <div id="signup-confirmation" style="display: none;">
       <h2>🎉 You're almost there!</h2>
-      <p>We’ve sent a confirmation email. Click the link to finish setting your password and logging in.</p>
+      <p>Check your inbox to confirm your account and set your password.</p>
     </div>
   </main>
 
   <footer class="footer">
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
+
+  <!-- Load Outseta scripts AFTER body is rendered -->
+  <script>
+    var o_options = {
+      domain: "aquamark.outseta.com",
+      load: "auth,customForm,emaillist,leadCapture,nocode,profile,support",
+      redirect: {
+        logout: "https://www.aquamark.io"
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
   <script>
     window.Outseta = window.Outseta || {};
@@ -165,5 +168,6 @@
       subtree: true
     });
   </script>
+
 </body>
 </html>
