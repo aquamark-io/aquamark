@@ -1,135 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard | Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f9fafb;
-      margin: 0;
-      color: #111827;
-    }
-
-    .header {
-      padding: 1.5rem 2rem;
-      background-color: white;
-      border-bottom: 1px solid #e5e7eb;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .greeting {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .main {
-      display: flex;
-    }
-
-    .sidebar {
-      width: 220px;
-      background: #ffffff;
-      border-right: 1px solid #e5e7eb;
-      padding: 2rem 1rem;
-      height: 100vh;
-    }
-
-    .sidebar a,
-    .sidebar button {
-      display: block;
-      background: none;
-      border: none;
-      font: inherit;
-      text-align: left;
-      margin-bottom: 1rem;
-      font-weight: 500;
-      color: #374151;
-      cursor: pointer;
-      text-decoration: none; /* ← no underline */
-    }
-
-    .sidebar a:hover,
-    .sidebar button:hover {
-      color: #2563eb;
-    }
-
-    .content {
-      flex: 1;
-      padding: 2rem;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
-  </style>
-
-  <!-- Outseta SDK Config -->
+  <title>Clean Outseta Test</title>
   <script>
     var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support',
-      redirect: {
-        logout: 'https://www.aquamark.io'
-      }
+      domain: "aquamark.outseta.com",
+      load: "auth"
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
-
 <body>
-  <div class="header">
-    <div class="greeting" id="user-greeting">Hey there!</div>
+  <h1>Create account test</h1>
+  <div 
+    data-o-auth="1"
+    data-widget-mode="register"
+    data-mode="register"
+    style="max-width: 500px; margin: 0 auto;">
   </div>
-
-  <div class="main">
-    <div class="sidebar">
-      <a href="dashboard.html">Profile</a>
-      <a href="logo.html">Logo</a>
-      <a href="usage.html">Usage</a>
-      <a href="watermark.html">Watermark</a>
-      <a href="api.html">API</a>
-      <button id="logout-btn">Log out</button>
-    </div>
-
-    <div class="content">
-      <div data-o-profile="1" data-mode="embed"></div>
-    </div>
-  </div>
-
-  <div class="footer">© 2025 Aquamark. All rights reserved.</div>
-
-  <!-- Init logic for greeting + logout -->
-  <script>
-    window.Outseta = window.Outseta || {};
-    window.onload = function () {
-      Outseta.onReady = function () {
-        // Greet by first name
-        if (Outseta.User && Outseta.User.current) {
-          Outseta.User.current().then(function (user) {
-            const firstName = user.FirstName || 'there';
-            document.getElementById('user-greeting').textContent = `Hey, ${firstName}!`;
-          });
-        }
-
-        // Handle logout
-        const logoutBtn = document.getElementById('logout-btn');
-        if (logoutBtn) {
-          logoutBtn.addEventListener('click', function () {
-            Outseta.Auth.logout().then(() => {
-              window.location.href = 'https://www.aquamark.io';
-            });
-          });
-        }
-      };
-    };
-  </script>
 </body>
 </html>
