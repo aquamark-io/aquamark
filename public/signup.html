@@ -121,19 +121,27 @@
   </footer>
 
   <!-- JS to replace "Due now and at renewal" with "Due Now" -->
-  <script>
-    const observer = new MutationObserver(() => {
-      document.querySelectorAll('div').forEach(el => {
-        if (el.textContent === "Due now and at renewal") {
-          el.textContent = "Due Now";
-        }
-      });
+<script>
+  const observer = new MutationObserver(() => {
+    // Replace "Continue to checkout" button text
+    document.querySelectorAll('button span').forEach(el => {
+      if (el.textContent.trim() === "Continue to checkout") {
+        el.textContent = "Create Account";
+      }
     });
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
+    // Replace "Due now and at renewal"
+    document.querySelectorAll('div').forEach(el => {
+      if (el.textContent.trim() === "Due now and at renewal") {
+        el.textContent = "Due Now";
+      }
     });
-  </script>
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+</script>
 </body>
 </html>
