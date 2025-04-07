@@ -103,39 +103,51 @@
       }
     });
 
-    async function uploadLogo() {
-      const fileInput = document.getElementById('logoUpload');
-      const status = document.getElementById('uploadStatus');
-      const preview = document.getElementById('logoPreview');
+  async function uploadLogo() {
+  const fileInput = document.getElementById('logoUpload');
+  const status = document.getElementById('uploadStatus');
+  const preview = document.getElementById('logoPreview');
 
-      if (!fileInput.files.length) {
-        status.textContent = 'Please select a logo file.';
-        return;
-      }
+  if (!fileInput.files.length) {
+    status.textContent = 'Please select a logo file.';
+    return;
+  }
 
-      const file = fileInput.files[0];
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${fileName}`;
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
 
-      const { error } = await supabaseClient.storage
-        .from('logos')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: true
-        });
+  if (!user || userError) {
+    status.textContent = 'Error: User not authenticated.';
+    console.error('User error:', userError);
+    return;
+  }
 
-      if (error) {
-        console.error('Upload error:', error.message);
-        status.textContent = `Error: ${error.message}`;
-      } else {
-        const { publicURL } = supabaseClient.storage.from('logos').getPublicUrl(filePath);
-        localStorage.setItem('aquamarkLogoURL', publicURL);
-        preview.src = publicURL;
-        preview.style.display = 'block';
-        status.textContent = '✅ Uploaded and saved.';
-      }
-    }
+  const file = fileInput.files[0];
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${Date.now()}.${fileExt}`;
+  const filePath = `${user.id}/${fileName}`; // Upload inside a folder named after the user UID
+
+  const { data, error } = await supabase.storage
+    .from('logos')
+    .upload(filePath, file, {
+      cacheControl: '3600',
+      upsert: true
+    });
+
+  if (error) {
+    console.error('Upload error:', error.message);
+    status.textContent = `Error: ${error.message}`;
+  } else {
+    const { publicUrl } = supabase.storage.from('logos').getPublicUrl(filePath);
+    localStorage.setItem('aquamarkLogoURL', publicUrl);
+    preview.src = publicUrl;
+    preview.style.display = 'block';
+    status.textContent = `✅ Uploaded and saved.`;
+  }
+}
+
 
     async function processPDFs() {
       const files = document.getElementById('pdfUpload').files;
