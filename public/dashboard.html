@@ -135,18 +135,17 @@
       upsert: true
     });
 
-  if (error) {
-    console.error('Upload error:', error.message);
-    status.textContent = `Error: ${error.message}`;
-  } else {
-    const { publicUrl } = supabase.storage.from('logos').getPublicUrl(filePath);
-    localStorage.setItem('aquamarkLogoURL', publicUrl);
-    preview.src = publicUrl;
-    preview.style.display = 'block';
-    status.textContent = `✅ Uploaded and saved.`;
-  }
+if (error) {
+  console.error('Upload error:', error.message);
+  status.textContent = `Error: ${error.message}`;
+} else {
+  const { data: publicUrlData } = supabase.storage.from('logos').getPublicUrl(filePath);
+  const publicUrl = publicUrlData.publicUrl;
+  localStorage.setItem('aquamarkLogoURL', publicUrl);
+  preview.src = publicUrl;
+  preview.style.display = 'block';
+  status.textContent = `✅ Uploaded and saved.`;
 }
-
 
     async function processPDFs() {
       const files = document.getElementById('pdfUpload').files;
