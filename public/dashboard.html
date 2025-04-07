@@ -34,12 +34,18 @@
       border-radius: 12px;
       background: #f9f9ff;
     }
-    .upload-box input {
+    .upload-box input[type="file"] {
       margin-top: 10px;
     }
     #uploadStatus {
       margin-top: 12px;
       font-size: 15px;
+    }
+    .preview-img {
+      max-width: 200px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -47,6 +53,7 @@
 
   <h1>Welcome to Your Dashboard</h1>
 
+  <!-- Profile -->
   <div class="dashboard-section">
     <h2>Your Profile</h2>
     <div data-o-profile="1" data-mode="embed"></div>
@@ -56,10 +63,9 @@
   <div class="dashboard-section">
     <h2>Upload Watermark Logo</h2>
     <div class="upload-box">
-      <input type="file" id="logoUpload" accept="image/*" />
-      <br><br>
-      <button onclick="uploadLogo()">Upload Logo</button>
+      <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()" />
       <p id="uploadStatus"></p>
+      <img id="logoPreview" class="preview-img" style="display: none;" />
     </div>
   </div>
 
@@ -79,9 +85,20 @@
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
     );
 
+    // Load logo on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const storedLogo = localStorage.getItem('aquamarkLogoURL');
+      const preview = document.getElementById('logoPreview');
+      if (storedLogo) {
+        preview.src = storedLogo;
+        preview.style.display = 'block';
+      }
+    });
+
     async function uploadLogo() {
       const fileInput = document.getElementById('logoUpload');
       const status = document.getElementById('uploadStatus');
+      const preview = document.getElementById('logoPreview');
 
       if (!fileInput.files.length) {
         status.textContent = 'Please select a logo file.';
@@ -106,8 +123,10 @@
       } else {
         const { publicURL } = supabase.storage.from('logos').getPublicUrl(filePath);
         console.log('Public logo URL:', publicURL);
-        status.textContent = `✅ Uploaded! Logo URL: ${publicURL}`;
-        // Save for later use during PDF watermarking
+        localStorage.setItem('aquamarkLogoURL', publicURL);
+        preview.src = publicURL;
+        preview.style.display = 'block';
+        status.textContent = `✅ Uploaded and saved.`;
       }
     }
   </script>
