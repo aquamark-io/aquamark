@@ -40,46 +40,13 @@
       height: 38px;
     }
 
-/* DESKTOP NAVIGATION */
-.nav-links {
-  display: flex;
-  gap: 25px;
-}
+    .nav-links a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #666;
+      font-size: 15px;
+    }
 
-.nav-links a {
-  text-decoration: none;
-  color: #666;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-/* HAMBURGER ICON */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.hamburger div {
-  width: 25px;
-  height: 3px;
-  background-color: #333;
-  
-/* MOBILE NAVIGATION */
-.mobile-nav {
-  display: none;
-  flex-direction: column;
-  text-align: center;
-  background-color: #fff;
-  padding: 20px 0;
-}
-
-.mobile-nav a {
-  margin: 10px 0;
-  text-decoration: none;
-  color: #666;
-  font-size: 16px;
-}
     .hero {
       text-align: center;
       padding: 120px 20px 80px;
@@ -448,16 +415,56 @@
     line-height: 1.6;
   }
 
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
 
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 4px 0;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px 0;
+  }
+
+  .mobile-nav a {
+    margin: 10px 0;
+    text-decoration: none;
+    color: #666;
+    font-size: 16px;
+  }
 
   @media (max-width: 768px) {
     .topbar {
       padding: 20px;
     }
 
+   .nav-links {
+  display: inline-block;
+  margin-left: 25px;
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+}
     }
 
-  
+    .hamburger {
+      display: flex;
+    }
+
+    .mobile-nav.active {
+      display: flex;
+    }
   }
 </style>
 
@@ -692,3 +699,4 @@ Early ISO feedback suggests sales conversions rise by up to 8% in the first 60 d
   
 </body>
 </html>
+
