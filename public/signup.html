@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  
+
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support',
+      redirect: {
+        logout: 'https://www.aquamark.io'
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
   <style>
     body {
       margin: 0;
@@ -47,12 +58,6 @@
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
-    }
-
-    h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-top: 0;
     }
 
     .footer {
@@ -106,48 +111,18 @@
 
   <main class="container">
     <h1>Create your free account</h1>
-
-    <div id="signup-widget">
-      <div data-o-auth="1"
-           data-widget-mode="register"
-           data-plan-uid="yW1zoPmB"
-           data-plan-payment-term="month"
-           data-skip-plan-options="true"
-           data-mode="embed">
-      </div>
-    </div>
-
-    <div id="signup-confirmation" style="display: none;">
-      <h2>🎉 You're almost there!</h2>
-      <p>Check your inbox to confirm your account and set your password.</p>
+    <div data-o-auth="1"
+         data-widget-mode="register"
+         data-plan-uid="yW1zoPmB"
+         data-plan-payment-term="month"
+         data-skip-plan-options="true"
+         data-mode="embed">
     </div>
   </main>
 
   <footer class="footer">
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
-
-  <!-- Load Outseta scripts AFTER body is rendered -->
-  <script>
-    var o_options = {
-      domain: "aquamark.outseta.com",
-      load: "auth,customForm,emaillist,leadCapture,nocode,profile,support",
-      redirect: {
-        logout: "https://www.aquamark.io"
-      }
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
-  <script>
-    window.Outseta = window.Outseta || {};
-    Outseta.onReady = function () {
-      Outseta.Auth.Register.onSuccess(function () {
-        document.getElementById('signup-widget').style.display = 'none';
-        document.getElementById('signup-confirmation').style.display = 'block';
-      });
-    };
-  </script>
 
   <script>
     const observer = new MutationObserver(() => {
@@ -156,6 +131,7 @@
           el.textContent = "Create Account";
         }
       });
+
       document.querySelectorAll('div').forEach(el => {
         if (el.textContent.trim() === "Due now and at renewal") {
           el.textContent = "Due Now";
@@ -168,6 +144,5 @@
       subtree: true
     });
   </script>
-
 </body>
 </html>
