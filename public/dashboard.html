@@ -164,7 +164,7 @@
     });
   </script>
 
-<!-- ✅ Supabase Logo Upload + Watermark Preview -->
+<!-- ✅ Supabase Logo Upload + Watermark Preview (Flat Files, Overwrites Enabled) -->
 <script type="module">
   import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 
@@ -190,7 +190,7 @@
     });
   };
 
-  waitForEmail().then(async (userEmail) => {
+  waitForEmail().then(async () => {
     const storedLogo = localStorage.getItem("aquamark_logo_url");
     if (storedLogo) {
       previewImage.src = storedLogo;
@@ -204,11 +204,11 @@
       const file = e.target.files[0];
       if (!file) return;
 
-      const extension = file.name.split(".").pop();
-      const encodedEmail = encodeURIComponent(userEmail);
-      const filePath = `${encodedEmail}/logo.${extension}`;
+      const extension = file.name.split(".").pop().toLowerCase();
+      const filePath = `logo.${extension}`; // Flat filename, overwritten each time
 
-      console.log("Uploading to:", filePath);
+      // First delete existing file (in case it's a different extension)
+      await supabase.storage.from("logos").remove([filePath]);
 
       const { error: uploadError } = await supabase.storage
         .from("logos")
@@ -234,7 +234,6 @@
       }
 
       const url = publicData.publicUrl;
-
       console.log("Logo public URL:", url);
 
       localStorage.setItem("aquamark_logo_url", url);
@@ -248,7 +247,7 @@
   });
 </script>
 
-<!-- ✅ Apply watermark overlay to preview -->
+<!-- ✅ Watermark Overlay Handler -->
 <script>
   function applyTiledWatermark(imageUrl) {
     const overlay = document.getElementById("watermarkOverlay");
