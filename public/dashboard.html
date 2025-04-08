@@ -45,6 +45,12 @@
     .section.active {
       display: block;
     }
+    .preview-box {
+      max-width: 300px;
+      border: 1px solid #eee;
+      padding: 8px;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -68,7 +74,16 @@
 
     <div id="watermark" class="section">
       <h2>Watermark Your Files</h2>
-      <p>Upload your logo and PDF statements here.</p>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br/>
+        <input type="file" id="logoInput" accept="image/png, image/jpeg" />
+      </div>
+
+      <div id="logoPreviewContainer" style="display:none;">
+        <p style="font-weight: 600;">Preview:</p>
+        <img id="logoPreview" src="" alt="Your Logo" class="preview-box" />
+      </div>
     </div>
 
     <div id="usage" class="section">
@@ -104,17 +119,18 @@
     }
   </script>
 
-  <!-- ✅ JWT decoding (safe timing) -->
+  <!-- ✅ JWT decoding -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const token = new URLSearchParams(window.location.search).get('access_token');
+      window.aquamarkUserEmail = null;
 
       if (token) {
         const payload = JSON.parse(atob(token.split('.')[1]));
-
         const firstName = payload['given_name'] || 'there';
         const email = payload['email'];
         const plan = payload['outseta:planUid'];
+        window.aquamarkUserEmail = email;
 
         const planNames = {
           'yW1zoPmB': 'ISO Shops – Unlimited',
@@ -138,6 +154,72 @@
           </div>
         `;
       }
+    });
+  </script>
+
+  <!-- ✅ Supabase Logo Upload Script -->
+  <script type="module">
+    import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
+
+    const supabase = createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+    );
+
+    const logoInput = document.getElementById("logoInput");
+    const previewContainer = document.getElementById("logoPreviewContainer");
+    const previewImage = document.getElementById("logoPreview");
+
+    // Wait for userEmail to be available
+    const waitForEmail = () => {
+      return new Promise(resolve => {
+        const check = () => {
+          if (window.aquamarkUserEmail) {
+            resolve(window.aquamarkUserEmail);
+          } else {
+            setTimeout(check, 100);
+          }
+        };
+        check();
+      });
+    };
+
+    waitForEmail().then((userEmail) => {
+      const storedLogo = localStorage.getItem("aquamark_logo_url");
+      if (storedLogo) {
+        previewImage.src = storedLogo;
+        previewContainer.style.display = "block";
+      }
+
+      logoInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const extension = file.name.split(".").pop();
+        const filePath = `${userEmail}/logo.${extension}`;
+
+        const { error } = await supabase.storage
+          .from("logos")
+          .upload(filePath, file, {
+            upsert: true,
+            contentType: file.type,
+          });
+
+        if (error) {
+          alert("Upload failed: " + error.message);
+          return;
+        }
+
+        const { data: publicData } = supabase.storage
+          .from("logos")
+          .getPublicUrl(filePath);
+
+        const url = publicData.publicUrl;
+
+        localStorage.setItem("aquamark_logo_url", url);
+        previewImage.src = url;
+        previewContainer.style.display = "block";
+      });
     });
   </script>
 </body>
