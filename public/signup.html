@@ -22,61 +22,52 @@
       background-color: #f9fafb;
     }
 
-    .page {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-      min-height: 100vh;
-    }
-
-    .logo {
-      height: 48px;
-      margin-bottom: 2rem;
-    }
-
     .container {
-      width: 100%;
       max-width: 400px;
+      margin: 3rem auto;
       background: #fff;
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      text-align: center;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 1.5rem;
+    .logo {
+      height: 48px;
       margin-bottom: 1.5rem;
     }
 
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
     footer {
-      margin-top: 2rem;
+      text-align: center;
+      margin: 3rem 0 1rem;
       font-size: 0.875rem;
       color: #6b7280;
-      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="page">
+
+  <div class="container">
     <a href="/">
       <img src="/logo-full-black-blue.png" alt="Aquamark logo" class="logo" />
     </a>
-
-    <div class="container">
-      <h1>Create your free account</h1>
-      <div data-o-auth="1"
-           data-widget-mode="register"
-           data-plan-uid="yW1zoPmB"
-           data-skip-plan-options="true"
-           data-mode="embed">
-      </div>
+    <h1>Create your free account</h1>
+    <div data-o-auth="1"
+         data-widget-mode="register"
+         data-plan-uid="yW1zoPmB"
+         data-skip-plan-options="true"
+         data-mode="embed">
     </div>
-
-    <footer>
-      &copy; 2025 Aquamark. All rights reserved.
-    </footer>
   </div>
+
+  <footer>
+    &copy; 2025 Aquamark. All rights reserved.
+  </footer>
+
 </body>
 </html>
