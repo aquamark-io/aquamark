@@ -100,9 +100,15 @@
   <!-- Section switching logic -->
   <script>
     function showSection(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+  const section = document.getElementById(id);
+  section.classList.add('active');
+
+  // Force reload of Outseta profile embed when shown
+  if (id === 'profile' && typeof window.Outseta !== 'undefined') {
+    window.Outseta.render();
+  }
+}
   </script>
 
   <!-- JWT decoding for personalization -->
