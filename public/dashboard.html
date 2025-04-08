@@ -67,18 +67,21 @@
     </div>
   </main>
 
-  <script>
-    document.addEventListener("o:loaded", function () {
-      Outseta.auth.handleTokenRedirect();
-      Outseta.getUser().then(user => {
-        if (user) {
-          document.getElementById("protected-content").style.display = "block";
-        } else {
-          console.log("No user found. Redirecting to login.");
-          window.location.href = "/login.html";
-        }
-      });
+<script>
+  document.addEventListener("o:loaded", function () {
+    // This must run before checking if user is logged in
+    Outseta.auth.handleTokenRedirect();
+
+    Outseta.getUser().then(user => {
+      if (user) {
+        document.getElementById("protected-content").style.display = "block";
+      } else {
+        console.log("No user found. Redirecting to login.");
+        window.location.href = "/login.html";
+      }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
