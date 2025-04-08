@@ -15,23 +15,29 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <!-- Basic styling -->
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       background-color: #f9fafb;
-      color: #111827;
+    }
+
+    .page {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      padding: 2rem;
       min-height: 100vh;
     }
 
+    .logo {
+      height: 48px;
+      margin-bottom: 2rem;
+    }
+
     .container {
-      max-width: 400px;
       width: 100%;
+      max-width: 400px;
       background: #fff;
       padding: 2rem;
       border-radius: 12px;
@@ -53,24 +59,24 @@
   </style>
 </head>
 <body>
+  <div class="page">
+    <a href="/">
+      <img src="/logo-full-black-blue.png" alt="Aquamark logo" class="logo" />
+    </a>
 
-  <a href="/">
-    <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px; margin: 2rem auto; display: block;" />
-  </a>
-  
-  <div class="container">
-    <h1>Create your free account</h1>
-    <div data-o-auth="1"
-         data-widget-mode="register"
-         data-plan-uid="yW1zoPmB"
-         data-skip-plan-options="true"
-         data-mode="embed">
+    <div class="container">
+      <h1>Create your free account</h1>
+      <div data-o-auth="1"
+           data-widget-mode="register"
+           data-plan-uid="yW1zoPmB"
+           data-skip-plan-options="true"
+           data-mode="embed">
+      </div>
     </div>
+
+    <footer>
+      &copy; 2025 Aquamark. All rights reserved.
+    </footer>
   </div>
-
-  <footer>
-    &copy; 2025 Aquamark. All rights reserved.
-  </footer>
-
 </body>
 </html>
