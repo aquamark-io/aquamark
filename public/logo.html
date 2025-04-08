@@ -3,139 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload Logo – Aquamark</title>
+  <title>Logo Upload – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-  <script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,profile'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       background-color: #f9fafb;
       color: #111827;
-    }
-    .header {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      padding: 1rem 2rem;
-      background-color: white;
-      border-bottom: 1px solid #e5e7eb;
+      justify-content: center;
+      min-height: 100vh;
     }
-    .logo {
-      height: 48px;
-    }
-    .nav a {
-      margin-left: 1rem;
-      color: #3b82f6;
-      text-decoration: none;
-      font-weight: 500;
-    }
+
     .container {
+      width: 100%;
       max-width: 600px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      padding: 2rem;
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       text-align: center;
     }
-    .upload-btn {
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    input[type="file"] {
+      font-family: 'Inter', sans-serif;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 0.4rem;
+      background-color: #f3f4f6;
+      cursor: pointer;
+    }
+
+    button {
+      margin-top: 1rem;
       background-color: #3b82f6;
       color: white;
       border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
       border-radius: 8px;
+      padding: 0.6rem 1.5rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
       cursor: pointer;
-      margin-top: 1rem;
     }
-    .upload-btn:hover {
+
+    button:hover {
       background-color: #2563eb;
-    }
-    .preview {
-      max-width: 100%;
-      max-height: 160px;
-      margin-bottom: 1rem;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-    }
-    .status {
-      margin-top: 1rem;
-      color: #10b981;
     }
   </style>
 </head>
 <body>
-  <header class="header">
-    <a href="/">
-      <img src="/logo-full-black-blue.png" alt="Aquamark logo" class="logo" />
-    </a>
-    <nav class="nav">
-      <a href="/dashboard.html#profile">Profile</a>
-      <a href="/dashboard.html#logo">Logo</a>
-      <a href="/dashboard.html#usage">Usage</a>
-      <a href="/dashboard.html#watermark">Watermark</a>
-      <a href="/dashboard.html#api">API</a>
-      <a href="/#o-logout-link">Log out</a>
-    </nav>
-  </header>
+  <div class="container">
+    <h1>Upload your watermark logo</h1>
 
-  <main class="container">
-    <h2>Upload your watermark logo</h2>
-    <div id="logo-preview-section">
-      <p>Currently linked watermark logo:</p>
-      <img id="logo-preview" class="preview" src="" alt="No logo uploaded" />
-    </div>
+    <!-- Image preview placeholder -->
+    <img id="preview" src="" alt="" style="max-height: 100px; margin-bottom: 1rem; display: none;" />
 
     <input type="file" id="logoInput" accept="image/*" />
     <br />
-    <button class="upload-btn" onclick="uploadLogo()">Upload</button>
-    <div class="status" id="status"></div>
-  </main>
-
-  <script>
-    // Replace with your actual Supabase info
-    const supabaseUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-    async function getUserEmail() {
-      const user = await Outseta.getUser();
-      return user?.email || null;
-    }
-
-    async function loadLogo() {
-      const email = await getUserEmail();
-      if (!email) return;
-      const { data } = supabase.storage.from('logos').getPublicUrl(`${email}/logo.png`);
-      document.getElementById('logo-preview').src = data?.publicUrl || '';
-    }
-
-    async function uploadLogo() {
-      const file = document.getElementById('logoInput').files[0];
-      const email = await getUserEmail();
-      if (!file || !email) return;
-      
-      const filePath = `${email}/logo.png`;
-      const { error } = await supabase.storage.from('logos').upload(filePath, file, { upsert: true });
-      if (error) {
-        document.getElementById('status').innerText = 'Upload failed. Try again.';
-      } else {
-        document.getElementById('status').innerText = 'Logo uploaded successfully!';
-        loadLogo();
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', loadLogo);
-  </script>
-
-  <!-- Supabase JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <button id="uploadBtn">Upload</button>
+  </div>
 </body>
 </html>
