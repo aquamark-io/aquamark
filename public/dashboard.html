@@ -205,7 +205,8 @@
         if (!file) return;
 
         const extension = file.name.split(".").pop();
-        const filePath = `${userEmail}/logo.${extension}`;
+        const encodedEmail = encodeURIComponent(userEmail);
+        const filePath = `${encodedEmail}/logo.${extension}`;
 
         const { error } = await supabase.storage
           .from("logos")
