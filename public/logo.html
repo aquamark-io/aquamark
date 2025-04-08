@@ -1,6 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Logo – Aquamark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: white;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .logo {
+      height: 48px;
+    }
+    .nav a {
+      margin-left: 1rem;
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .upload-label {
+      background-color: #3b82f6;
+      color: white;
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    .upload-label:hover {
+      background-color: #2563eb;
+    }
+    .upload-button {
+      background-color: #111827;
+      color: white;
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .upload-button:hover {
+      background-color: #1f2937;
+    }
+  </style>
+</head>
 <body>
   <header class="header">
-    <a href="/"><img src="/logo-full-black-blue.png" class="logo" alt="Aquamark logo" /></a>
+    <a href="/">
+      <img src="/logo-full-black-blue.png" class="logo" alt="Aquamark logo" />
+    </a>
     <nav class="nav">
       <a href="/dashboard.html#profile">Profile</a>
       <a href="/logo.html">Logo</a>
@@ -13,11 +84,9 @@
 
   <main class="container">
     <h2>Upload your watermark logo</h2>
-    
     <label for="logoUpload" class="upload-label">Choose File</label>
     <input type="file" id="logoUpload" accept="image/*" hidden />
     <p id="fileName" style="margin-top: 0.5rem; font-size: 0.9rem; color: #374151;"></p>
-
     <button class="upload-button" onclick="uploadLogo()">Save Logo</button>
   </main>
 
@@ -41,42 +110,9 @@
         alert("Please choose a file first.");
         return;
       }
-
-      // TODO: replace with actual upload logic (e.g., Supabase storage upload)
       alert(`Pretending to upload: ${file.name}`);
+      // TODO: Replace with Supabase upload logic later
     }
   </script>
-
-  <style>
-    .upload-label {
-      background-color: #3b82f6;
-      color: white;
-      padding: 0.5rem 1.25rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background-color 0.2s;
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
-
-    .upload-label:hover {
-      background-color: #2563eb;
-    }
-
-    .upload-button {
-      background-color: #111827;
-      color: white;
-      padding: 0.5rem 1.25rem;
-      border-radius: 0.5rem;
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .upload-button:hover {
-      background-color: #1f2937;
-    }
-  </style>
 </body>
+</html>
