@@ -2,89 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Logo Upload – Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: white;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .logo {
-      height: 48px;
-    }
-    .nav a {
-      margin-left: 1rem;
-      color: #3b82f6;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .container {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-    .file-input {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      background-color: #f3f4f6;
-      font-family: 'Inter', sans-serif;
-    }
-    .button {
-      margin-top: 1.5rem;
-      background-color: #3b82f6;
-      color: white;
-      padding: 0.6rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      cursor: pointer;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In | Aquamark</title>
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support',
+      redirect: {
+        logout: 'https://www.aquamark.io'
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
-<body>
-  <header class="header">
-    <a href="/">
-      <img src="/logo-full-black-blue.png" alt="Aquamark logo" class="logo" />
-    </a>
-    <nav class="nav">
-      <a href="/dashboard.html#profile">Profile</a>
-      <a href="/dashboard.html#logo">Logo</a>
-      <a href="/dashboard.html#usage">Usage</a>
-      <a href="/dashboard.html#watermark">Watermark</a>
-      <a href="/dashboard.html#api">API</a>
-      <a href="/#o-logout-link">Log out</a>
-    </nav>
-  </header>
+<body style="font-family: Inter, sans-serif; padding: 100px 20px; text-align: center;">
 
-  <main class="container">
-    <h2>Upload your watermark logo</h2>
+  <div data-o-auth="1"
+       data-mode="embed"
+       data-widget-mode="login">
+  </div>
 
-    <!-- Hidden preview placeholder for Supabase logic later -->
-    <div id="logo-preview" style="display:none; margin: 1rem 0;">
-      <img src="" alt="Your watermark logo" style="max-width: 100%; height: auto;" />
-    </div>
-
-    <input type="file" id="fileInput" class="file-input" />
-    <br>
-    <button class="button">Upload</button>
-  </main>
 </body>
 </html>
