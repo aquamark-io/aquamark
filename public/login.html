@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Log In | Aquamark</title>
+
+  <!-- Load Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+
+  <!-- Outseta Auth Script -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -14,9 +19,23 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-</head>
-<body style="font-family: Inter, sans-serif; padding: 100px 20px; text-align: center;">
 
+  <!-- Simple page styling -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f9fafb;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login embed -->
   <div data-o-auth="1"
        data-mode="embed"
        data-widget-mode="login">
