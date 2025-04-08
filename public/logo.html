@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Logo Upload – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <style>
@@ -11,65 +11,80 @@
       font-family: 'Inter', sans-serif;
       background-color: #f9fafb;
       color: #111827;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
     }
-
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: white;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .logo {
+      height: 48px;
+    }
+    .nav a {
+      margin-left: 1rem;
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
     .container {
-      width: 100%;
       max-width: 600px;
-      background: #fff;
-      padding: 2.5rem;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
       text-align: center;
     }
-
-    h1 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    input[type="file"] {
-      font-family: 'Inter', sans-serif;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      padding: 0.4rem;
-      background-color: #f3f4f6;
-      cursor: pointer;
-    }
-
-    button {
+    .file-input {
       margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background-color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+    }
+    .button {
+      margin-top: 1.5rem;
       background-color: #3b82f6;
       color: white;
+      padding: 0.6rem 1.5rem;
       border: none;
       border-radius: 8px;
-      padding: 0.6rem 1.5rem;
-      font-size: 1rem;
       font-family: 'Inter', sans-serif;
+      font-weight: 500;
       cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #2563eb;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Upload your watermark logo</h1>
+  <header class="header">
+    <a href="/">
+      <img src="/logo-full-black-blue.png" alt="Aquamark logo" class="logo" />
+    </a>
+    <nav class="nav">
+      <a href="/dashboard.html#profile">Profile</a>
+      <a href="/dashboard.html#logo">Logo</a>
+      <a href="/dashboard.html#usage">Usage</a>
+      <a href="/dashboard.html#watermark">Watermark</a>
+      <a href="/dashboard.html#api">API</a>
+      <a href="/#o-logout-link">Log out</a>
+    </nav>
+  </header>
 
-    <!-- Image preview placeholder -->
-    <img id="preview" src="" alt="" style="max-height: 100px; margin-bottom: 1rem; display: none;" />
+  <main class="container">
+    <h2>Upload your watermark logo</h2>
 
-    <input type="file" id="logoInput" accept="image/*" />
-    <br />
-    <button id="uploadBtn">Upload</button>
-  </div>
+    <!-- Hidden preview placeholder for Supabase logic later -->
+    <div id="logo-preview" style="display:none; margin: 1rem 0;">
+      <img src="" alt="Your watermark logo" style="max-width: 100%; height: auto;" />
+    </div>
+
+    <input type="file" id="fileInput" class="file-input" />
+    <br>
+    <button class="button">Upload</button>
+  </main>
 </body>
 </html>
