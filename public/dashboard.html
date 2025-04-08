@@ -164,98 +164,108 @@
     });
   </script>
 
-  <!-- ✅ Supabase Logo Upload + Watermark Preview -->
-  <script type="module">
-    import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
+<!-- ✅ Supabase Logo Upload + Watermark Preview -->
+<script type="module">
+  import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 
-    const supabase = createClient(
-      "https://dvzmnikrvkvgragzhrof.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-    );
+  const supabase = createClient(
+    "https://dvzmnikrvkvgragzhrof.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+  );
 
-    const logoInput = document.getElementById("logoInput");
-    const previewContainer = document.getElementById("logoPreviewContainer");
-    const previewImage = document.getElementById("logoPreview");
+  const logoInput = document.getElementById("logoInput");
+  const previewContainer = document.getElementById("logoPreviewContainer");
+  const previewImage = document.getElementById("logoPreview");
 
-    const waitForEmail = () => {
-      return new Promise(resolve => {
-        const check = () => {
-          if (window.aquamarkUserEmail) {
-            resolve(window.aquamarkUserEmail);
-          } else {
-            setTimeout(check, 100);
-          }
-        };
-        check();
-      });
-    };
+  const waitForEmail = () => {
+    return new Promise(resolve => {
+      const check = () => {
+        if (window.aquamarkUserEmail) {
+          resolve(window.aquamarkUserEmail);
+        } else {
+          setTimeout(check, 100);
+        }
+      };
+      check();
+    });
+  };
 
-    waitForEmail().then((userEmail) => {
-      const storedLogo = localStorage.getItem("aquamark_logo_url");
-      if (storedLogo) {
-        previewImage.src = storedLogo;
-        previewContainer.style.display = "block";
-        document.dispatchEvent(new CustomEvent("aquamark:logoUploaded", {
-          detail: { url: storedLogo }
-        }));
+  waitForEmail().then(async (userEmail) => {
+    const storedLogo = localStorage.getItem("aquamark_logo_url");
+    if (storedLogo) {
+      previewImage.src = storedLogo;
+      previewContainer.style.display = "block";
+      document.dispatchEvent(new CustomEvent("aquamark:logoUploaded", {
+        detail: { url: storedLogo }
+      }));
+    }
+
+    logoInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const extension = file.name.split(".").pop();
+      const encodedEmail = encodeURIComponent(userEmail);
+      const filePath = `${encodedEmail}/logo.${extension}`;
+
+      console.log("Uploading to:", filePath);
+
+      const { error: uploadError } = await supabase.storage
+        .from("logos")
+        .upload(filePath, file, {
+          upsert: true,
+          contentType: file.type,
+        });
+
+      if (uploadError) {
+        console.error("Upload error:", uploadError.message);
+        alert("Upload failed: " + uploadError.message);
+        return;
       }
 
-      logoInput.addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+      const { data: publicData, error: publicUrlError } = supabase.storage
+        .from("logos")
+        .getPublicUrl(filePath);
 
-        const extension = file.name.split(".").pop();
-        const encodedEmail = encodeURIComponent(userEmail);
-        const filePath = `${encodedEmail}/logo.${extension}`;
+      if (publicUrlError || !publicData?.publicUrl) {
+        console.error("Public URL error:", publicUrlError);
+        alert("Failed to get public URL for uploaded logo.");
+        return;
+      }
 
-        const { error } = await supabase.storage
-          .from("logos")
-          .upload(filePath, file, {
-            upsert: true,
-            contentType: file.type,
-          });
+      const url = publicData.publicUrl;
 
-        if (error) {
-          alert("Upload failed: " + error.message);
-          return;
-        }
+      console.log("Logo public URL:", url);
 
-        const { data: publicData } = supabase.storage
-          .from("logos")
-          .getPublicUrl(filePath);
+      localStorage.setItem("aquamark_logo_url", url);
+      previewImage.src = url;
+      previewContainer.style.display = "block";
 
-        const url = publicData.publicUrl;
-
-        localStorage.setItem("aquamark_logo_url", url);
-        previewImage.src = url;
-        previewContainer.style.display = "block";
-
-        // Fire event for overlay preview
-        document.dispatchEvent(new CustomEvent("aquamark:logoUploaded", {
-          detail: { url }
-        }));
-      });
+      document.dispatchEvent(new CustomEvent("aquamark:logoUploaded", {
+        detail: { url }
+      }));
     });
-  </script>
+  });
+</script>
 
-  <!-- ✅ Apply watermark overlay to preview -->
-  <script>
-    function applyTiledWatermark(imageUrl) {
-      const overlay = document.getElementById("watermarkOverlay");
-      overlay.style.backgroundImage = `url('${imageUrl}')`;
-      overlay.style.backgroundRepeat = "repeat";
-      overlay.style.backgroundSize = "150px";
-      overlay.style.opacity = "0.1";
-    }
+<!-- ✅ Apply watermark overlay to preview -->
+<script>
+  function applyTiledWatermark(imageUrl) {
+    const overlay = document.getElementById("watermarkOverlay");
+    overlay.style.backgroundImage = `url('${imageUrl}')`;
+    overlay.style.backgroundRepeat = "repeat";
+    overlay.style.backgroundSize = "150px";
+    overlay.style.opacity = "0.1";
+  }
 
-    const savedLogo = localStorage.getItem("aquamark_logo_url");
-    if (savedLogo) {
-      applyTiledWatermark(savedLogo);
-    }
+  const savedLogo = localStorage.getItem("aquamark_logo_url");
+  if (savedLogo) {
+    applyTiledWatermark(savedLogo);
+  }
 
-    document.addEventListener("aquamark:logoUploaded", function (e) {
-      applyTiledWatermark(e.detail.url);
-    });
-  </script>
+  document.addEventListener("aquamark:logoUploaded", function (e) {
+    applyTiledWatermark(e.detail.url);
+  });
+</script>
 </body>
 </html>
