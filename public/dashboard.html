@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <script>
@@ -30,11 +30,8 @@
     .logo {
       height: 48px;
     }
-    .nav {
-      display: flex;
-      gap: 1rem;
-    }
     .nav a {
+      margin-left: 1rem;
       color: #3b82f6;
       text-decoration: none;
       font-weight: 500;
@@ -45,7 +42,7 @@
       padding: 2rem;
       background: white;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
   </style>
 </head>
@@ -55,29 +52,31 @@
       <img src="/logo-full-black-blue.png" alt="Aquamark logo" class="logo" />
     </a>
     <nav class="nav">
-      <a href="/profile.html">Profile</a>
-      <a href="/logo.html">Logo</a>
-      <a href="/usage.html">Usage</a>
-      <a href="/watermark.html">Watermark</a>
-      <a href="/api.html">API</a>
-      <a href="/#o-logout-link">Log out</a>
+      <a href="/dashboard.html#profile">Profile</a>
+      <a href="/dashboard.html#logo">Logo</a>
+      <a href="/dashboard.html#usage">Usage</a>
+      <a href="/dashboard.html#watermark">Watermark</a>
+      <a href="/dashboard.html#api">API</a>
+      <a href="/?o-logout-link">Log out</a>
     </nav>
   </header>
 
   <main class="container">
     <div id="protected-content" style="display:none;">
-      <h2>Welcome to your dashboard</h2>
-      <p>This is where your tools and settings will live.</p>
+      <div data-o-profile="1" data-mode="embed"></div>
     </div>
   </main>
 
   <script>
     document.addEventListener("o:loaded", function () {
+          // This must run before checking if user is logged in
       Outseta.auth.handleTokenRedirect();
+      
       Outseta.getUser().then(user => {
         if (user) {
           document.getElementById("protected-content").style.display = "block";
         } else {
+          console.log("No user found. Redirecting to login.");
           window.location.href = "/login.html";
         }
       });
