@@ -69,9 +69,14 @@
   <script>
     document.addEventListener("o:loaded", function () {
       Outseta.getUser().then(user => {
-        if (user) {
-          document.getElementById("protected-content").style.display = "block";
-        } else {
+        console.log("Logged-in user:", user);
+if (user) {
+  document.getElementById("protected-content").style.display = "block";
+} else {
+  console.log("No user found. Redirecting to login.");
+  window.location.href = "/login.html";
+}
+else {
           window.location.href = "/login.html";
         }
       });
