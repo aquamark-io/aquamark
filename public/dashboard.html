@@ -63,21 +63,20 @@
 
 <main class="container">
   <div id="protected-content" style="display:none;">
-    <div id="o-profile" data-o-embed="profile"></div>
+    <div data-o-profile="1" data-mode="embed"></div>
   </div>
 </main>
 
-  <script>
-    // Wait for Outseta to load and confirm login before showing profile
-    document.addEventListener("o:loaded", function () {
-      Outseta.getUser().then(user => {
-        if (user) {
-          document.getElementById("protected-content").style.display = "block";
-        } else {
-          window.location.href = "/login.html";
-        }
-      });
+<script>
+  document.addEventListener("o:loaded", function () {
+    Outseta.getUser().then(user => {
+      if (user) {
+        document.getElementById("protected-content").style.display = "block";
+      } else {
+        window.location.href = "/login.html";
+      }
     });
-  </script>
+  });
+</script>
 </body>
 </html>
