@@ -69,9 +69,7 @@
 
   <script>
     document.addEventListener("o:loaded", function () {
-          // This must run before checking if user is logged in
       Outseta.auth.handleTokenRedirect();
-      
       Outseta.getUser().then(user => {
         if (user) {
           document.getElementById("protected-content").style.display = "block";
