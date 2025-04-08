@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <script>
@@ -30,8 +30,11 @@
     .logo {
       height: 48px;
     }
+    .nav {
+      display: flex;
+      gap: 1rem;
+    }
     .nav a {
-      margin-left: 1rem;
       color: #3b82f6;
       text-decoration: none;
       font-weight: 500;
@@ -42,7 +45,7 @@
       padding: 2rem;
       background: white;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
   </style>
 </head>
@@ -63,7 +66,8 @@
 
   <main class="container">
     <div id="protected-content" style="display:none;">
-      <div data-o-profile="1" data-mode="embed"></div>
+      <h2>Welcome to your dashboard</h2>
+      <p>This is where your tools and settings will live.</p>
     </div>
   </main>
 
@@ -81,4 +85,3 @@
   </script>
 </body>
 </html>
-
