@@ -6,6 +6,7 @@
   <title>Sign Up – Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
 
+  <!-- Outseta Quick Start Script -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -14,13 +15,27 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
+  <!-- Basic styling -->
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       background-color: #f9fafb;
       color: #111827;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     footer {
@@ -29,25 +44,17 @@
       color: #6b7280;
       text-align: center;
     }
-
-    .container {
-      width: 100%;
-      max-width: 400px;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
   </style>
 </head>
 <body>
 
-  <a href="/">
-    <img src="/logo-full-black-blue.png" alt="Aquamark logo"
-         style="height: 48px; margin-top: 2rem; margin-bottom: 1rem;" />
-  </a>
-  
   <div class="container">
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <a href="/">
+        <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
+      </a>
+    </div>
+
     <div data-o-auth="1"
          data-widget-mode="register"
          data-plan-uid="yW1zoPmB"
