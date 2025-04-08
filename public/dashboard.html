@@ -11,7 +11,6 @@
       load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
     };
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
   <style>
     body {
       margin: 0;
@@ -61,22 +60,24 @@
     </nav>
   </header>
 
-<main class="container">
-  <div id="protected-content" style="display:none;">
-    <div data-o-profile="1" data-mode="embed"></div>
-  </div>
-</main>
+  <main class="container">
+    <div id="protected-content" style="display:none;">
+      <div data-o-profile="1" data-mode="embed"></div>
+    </div>
+  </main>
 
-<script>
-  document.addEventListener("o:loaded", function () {
-    Outseta.getUser().then(user => {
-      if (user) {
-        document.getElementById("protected-content").style.display = "block";
-      } else {
-        window.location.href = "/login.html";
-      }
+  <script>
+    document.addEventListener("o:loaded", function () {
+      Outseta.getUser().then(user => {
+        if (user) {
+          document.getElementById("protected-content").style.display = "block";
+        } else {
+          window.location.href = "/login.html";
+        }
+      });
     });
-  });
-</script>
+  </script>
+
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </body>
 </html>
