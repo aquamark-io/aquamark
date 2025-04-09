@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aquamark.io Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <title>Aquamark.io - Watermark Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -14,7 +13,6 @@
       color: #1e1e2f;
     }
 
-    /* Header */
     .aqua-header {
       display: flex;
       justify-content: space-between;
@@ -22,9 +20,6 @@
       padding: 1rem 2rem;
       background: white;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
 
     .aqua-logo {
@@ -36,14 +31,12 @@
       text-decoration: none;
       font-weight: 500;
       color: #333;
-      font-size: 0.95rem;
     }
 
     .aqua-nav a.active {
-      color: #2e6eff;
+      color: #007bff;
     }
 
-    /* Page Layout */
     .aqua-panel {
       max-width: 1700px;
       margin: 2rem auto;
@@ -55,31 +48,36 @@
       margin-bottom: 2rem;
     }
 
-    .aqua-top-row {
+    .aqua-dashboard {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
       gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .aqua-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      flex: 1;
+    }
+
+    .aqua-right-panel {
+      width: 500px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .aqua-card {
-      flex: 0 0 500px;
-      max-width: 500px;
-      min-height: 340px;
       background: white;
       border-radius: 16px;
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      min-height: 340px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-    }
-
-    .card-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      flex-grow: 1;
     }
 
     .upload-box {
@@ -89,7 +87,6 @@
       text-align: center;
       padding: 2rem 1rem;
       margin-bottom: 1rem;
-      cursor: pointer;
       color: #667;
       font-weight: 500;
     }
@@ -101,8 +98,8 @@
     .upload-disclaimer {
       font-size: 0.8rem;
       color: #999;
-      text-align: center;
       margin-bottom: 1rem;
+      text-align: center;
     }
 
     .aqua-btn {
@@ -110,13 +107,11 @@
       color: white;
       border: none;
       border-radius: 12px;
-      padding: 10px 24px;
+      padding: 12px 20px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      min-width: 140px;
-      max-width: 100%;
-      margin: 0 auto;
+      margin-top: 1rem;
       transition: background 0.2s ease;
     }
 
@@ -130,7 +125,6 @@
       align-items: center;
       height: 100%;
       overflow: hidden;
-      padding: 1rem;
       text-align: center;
     }
 
@@ -154,8 +148,7 @@
     .sample-preview img.statement-image,
     .sample-preview canvas#watermarkCanvas {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -167,25 +160,36 @@
       pointer-events: none;
     }
 
+    .progress-bar,
+    .download-console {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      min-height: 100px;
+    }
+
     @media (max-width: 1024px) {
-      .aqua-top-row {
+      .aqua-dashboard {
         flex-direction: column;
-        align-items: stretch;
       }
 
-      .aqua-card {
-        flex: 1 1 100%;
-        max-width: 100%;
+      .aqua-right-panel {
+        width: 100%;
+      }
+
+      .aqua-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-
 <body>
+
   <header class="aqua-header">
-    <img src="logo.png" alt="Aquamark.io" class="aqua-logo" />
+    <img src="https://aquamark.io/logo.png" alt="Aquamark.io Logo" class="aqua-logo">
     <nav class="aqua-nav">
-      <a href="#" class="active">Watermark</a>
+      <a href="#">Watermark</a>
       <a href="#">Usage</a>
       <a href="#">API</a>
       <a href="#">Log Out</a>
@@ -194,46 +198,62 @@
 
   <main class="aqua-panel">
     <h1>Watermark Panel</h1>
-    <div class="aqua-top-row">
-      <!-- Upload Logo -->
-      <div class="aqua-card">
-        <h2>Upload Logo</h2>
-        <div class="card-body">
+
+    <div class="aqua-dashboard">
+      <!-- Left 2x2 Grid -->
+      <div class="aqua-grid">
+        <!-- Upload Logo -->
+        <div class="aqua-card">
+          <h2>Upload Logo</h2>
           <label for="logoUpload" class="upload-box">
             <p>Drag & drop or click to upload</p>
-            <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+            <input type="file" id="logoUpload" accept="image/png, image/jpeg">
           </label>
           <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
         </div>
-      </div>
 
-      <!-- Upload PDF -->
-      <div class="aqua-card">
-        <h2>Upload Bank Statements</h2>
-        <div class="card-body">
-          <label for="pdfUpload" class="upload-box" id="pdfUploadBox">
+        <!-- Upload Bank Statements -->
+        <div class="aqua-card">
+          <h2>Upload Bank Statements</h2>
+          <label for="pdfUpload" class="upload-box">
             <p>Drag & drop or click to upload</p>
-            <input type="file" id="pdfUpload" accept="application/pdf" multiple />
+            <input type="file" id="pdfUpload" accept="application/pdf" multiple>
           </label>
           <div class="upload-disclaimer">PDF only, max 25MB</div>
           <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
         </div>
-      </div>
 
-      <!-- Stored Logo -->
-      <div class="aqua-card">
-        <h2>Stored Logo</h2>
-        <div class="stored-logo-container">
-          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo" />
+        <!-- Stored Logo -->
+        <div class="aqua-card">
+          <h2>Stored Logo</h2>
+          <div class="stored-logo-container">
+            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
+          </div>
+        </div>
+
+        <!-- Sample -->
+        <div class="aqua-card">
+          <h2>Sample</h2>
+          <div class="sample-preview small-preview">
+            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
+            <canvas id="watermarkCanvas"></canvas>
+          </div>
         </div>
       </div>
 
-      <!-- Sample Preview -->
-      <div class="aqua-card">
-        <h2>Sample</h2>
-        <div class="sample-preview small-preview">
-          <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
-          <canvas id="watermarkCanvas"></canvas>
+      <!-- Right Column -->
+      <div class="aqua-right-panel">
+        <div class="progress-bar">
+          <h3>Progress</h3>
+          <progress max="100" value="0" style="width: 100%; height: 20px;"></progress>
+        </div>
+
+        <div class="download-console">
+          <h3>Download Console</h3>
+          <ul>
+            <li>File1.pdf <button>Download</button></li>
+            <li>File2.pdf <button>Download</button></li>
+          </ul>
         </div>
       </div>
     </div>
