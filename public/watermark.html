@@ -111,12 +111,28 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      margin-top: 1rem;
       transition: background 0.2s ease;
     }
 
     .aqua-btn:hover {
       background-color: #1f54d9;
+    }
+
+    .upgrade-btn {
+      background-color: #28a745;
+      color: white;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 22px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .upgrade-btn:hover {
+      background-color: #218838;
     }
 
     .stored-logo-container {
@@ -166,7 +182,32 @@
       border-radius: 16px;
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-bar {
       min-height: 100px;
+    }
+
+    .download-console {
+      min-height: 400px;
+    }
+
+    .download-console ul {
+      padding-left: 1rem;
+    }
+
+    .download-console li {
+      margin-bottom: 0.75rem;
+    }
+
+    .download-console button {
+      margin-left: 0.5rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      font-size: 13px;
+      cursor: pointer;
     }
 
     @media (max-width: 1024px) {
@@ -244,7 +285,7 @@
       <!-- Right Column -->
       <div class="aqua-right-panel">
         <div class="progress-bar">
-          <h3>Progress</h3>
+          <h3>Watermark Status</h3>
           <progress max="100" value="0" style="width: 100%; height: 20px;"></progress>
         </div>
 
@@ -253,8 +294,14 @@
           <ul>
             <li>File1.pdf <button>Download</button></li>
             <li>File2.pdf <button>Download</button></li>
+            <li>File3.pdf <button>Download</button></li>
+            <li>File4.pdf <button>Download</button></li>
+            <li>File5.pdf <button>Download</button></li>
+            <li>File6.pdf <button>Download</button></li>
           </ul>
         </div>
+
+        <button class="upgrade-btn">Upgrade Plan</button>
       </div>
     </div>
   </main>
