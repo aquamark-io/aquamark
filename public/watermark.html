@@ -117,6 +117,20 @@
   background-color: #1f54d9;
 }
 
+    .upload-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.aqua-btn {
+  padding: 10px 24px;
+  font-size: 14px;
+  width: auto;
+  min-width: 140px;
+  max-width: 100%;
+  border-radius: 12px;
+}
     
     .logo-preview-container {
       background: #f9f9f9;
@@ -203,7 +217,9 @@
     <p>Drag & drop or click to upload</p>
     <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
   </label>
-  <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
+  <div class="upload-actions">
+    <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
+  </div>
 </div>
 
   <!-- Stored Logo Preview -->
