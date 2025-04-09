@@ -1,12 +1,10 @@
-<!-- ✅ AQUAMARK WATERMARK PANEL (FULL RESET) -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Watermark Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aquamark.io Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -16,6 +14,7 @@
       color: #1e1e2f;
     }
 
+    /* Header */
     .aqua-header {
       display: flex;
       justify-content: space-between;
@@ -23,24 +22,28 @@
       padding: 1rem 2rem;
       background: white;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .aqua-logo {
+      height: 28px;
     }
 
     .aqua-nav a {
-  margin-left: 1.5rem;
-  text-decoration: none;
-  font-weight: 500;
-  color: #333;
-  font-family: 'Inter', sans-serif;
-}
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #333;
+      font-size: 0.95rem;
+    }
 
-.aqua-nav a.active {
-  color: #007bff;
-}
+    .aqua-nav a.active {
+      color: #2e6eff;
+    }
 
-    .aqua-logo {
-  max-height: 40px; /* or tweak to fit your design */
-  height: auto;
-}
+    /* Page Layout */
     .aqua-panel {
       max-width: 1700px;
       margin: 2rem auto;
@@ -55,43 +58,43 @@
     .aqua-top-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      justify-content: flex-start;
+      gap: 2rem;
     }
 
-/* Reaffirm min-height on all cards */
-.aqua-card {
-  flex: 0 0 500px;
-  max-width: 500px;
-  min-height: 340px;
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-    
-    .card-body {
-      flex-grow: 1;
+    .aqua-card {
+      flex: 0 0 500px;
+      max-width: 500px;
+      min-height: 340px;
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
     }
 
-    .upload-box, #pdfUploadBox {
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+
+    .upload-box {
       border: 2px dashed #cce0f5;
       border-radius: 12px;
       background: #f8fbff;
       text-align: center;
       padding: 2rem 1rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
       color: #667;
       font-weight: 500;
-      cursor: pointer;
     }
 
-    .upload-box input[type="file"], #pdfUploadBox input[type="file"] {
+    .upload-box input[type="file"] {
       display: none;
     }
 
@@ -111,11 +114,10 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s ease;
-      width: auto;
       min-width: 140px;
       max-width: 100%;
-      align-self: center;
+      margin: 0 auto;
+      transition: background 0.2s ease;
     }
 
     .aqua-btn:hover {
@@ -128,6 +130,8 @@
       align-items: center;
       height: 100%;
       overflow: hidden;
+      padding: 1rem;
+      text-align: center;
     }
 
     .stored-logo-container img {
@@ -150,7 +154,8 @@
     .sample-preview img.statement-image,
     .sample-preview canvas#watermarkCanvas {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -165,15 +170,21 @@
     @media (max-width: 1024px) {
       .aqua-top-row {
         flex-direction: column;
+        align-items: stretch;
+      }
+
+      .aqua-card {
+        flex: 1 1 100%;
+        max-width: 100%;
       }
     }
   </style>
 </head>
+
 <body>
   <header class="aqua-header">
-    <img src="/logo-full-black-blue.png" class="aqua-logo" alt="Aquamark Logo" />
+    <img src="logo.png" alt="Aquamark.io" class="aqua-logo" />
     <nav class="aqua-nav">
-      <a href="#">Dashboard</a>
       <a href="#" class="active">Watermark</a>
       <a href="#">Usage</a>
       <a href="#">API</a>
@@ -183,7 +194,6 @@
 
   <main class="aqua-panel">
     <h1>Watermark Panel</h1>
-
     <div class="aqua-top-row">
       <!-- Upload Logo -->
       <div class="aqua-card">
@@ -193,8 +203,21 @@
             <p>Drag & drop or click to upload</p>
             <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
           </label>
+          <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
         </div>
-        <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
+      </div>
+
+      <!-- Upload PDF -->
+      <div class="aqua-card">
+        <h2>Upload Bank Statements</h2>
+        <div class="card-body">
+          <label for="pdfUpload" class="upload-box" id="pdfUploadBox">
+            <p>Drag & drop or click to upload</p>
+            <input type="file" id="pdfUpload" accept="application/pdf" multiple />
+          </label>
+          <div class="upload-disclaimer">PDF only, max 25MB</div>
+          <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
+        </div>
       </div>
 
       <!-- Stored Logo -->
@@ -209,23 +232,11 @@
       <div class="aqua-card">
         <h2>Sample</h2>
         <div class="sample-preview small-preview">
-          <img src="/statement.jpg" alt="Sample Statement" class="statement-image" />
+          <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
           <canvas id="watermarkCanvas"></canvas>
         </div>
       </div>
-     </div>
-     <!-- Upload PDF -->
-      <div class="aqua-card">
-        <h2>Upload Bank Statements</h2>
-        <div class="card-body">
-          <label for="pdfUpload" id="pdfUploadBox">
-            <p>Drag & drop or click to upload</p>
-            <input type="file" id="pdfUpload" accept="application/pdf" multiple />
-          </label>
-          <div class="upload-disclaimer">PDF only, max 25MB</div>
-        </div>
-        <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
-      </div>
+    </div>
   </main>
 </body>
 </html>
