@@ -44,15 +44,39 @@
       padding: 0 2rem;
     }
 
-    h1 {
+    h1.greeting {
       font-size: 1.8rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .aqua-layout {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .profile-container {
+      flex: 1 1 40%;
+      min-width: 300px;
+    }
+
+    .graphic-container {
+      flex: 1 1 50%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .graphic-container img {
+      max-width: 100%;
+      height: auto;
     }
 
     .aqua-cards {
       display: flex;
       flex-wrap: wrap;
       gap: 2rem;
+      margin-top: 2rem;
     }
 
     .aqua-card {
@@ -78,15 +102,33 @@
     .usage-subtext {
       color: #777;
       font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-bar-container {
+      background: #e9ecef;
+      height: 12px;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 34.8%; /* example for 348/1000 */
+      background-color: #2e6eff;
+      transition: width 0.3s ease;
     }
 
     @media (max-width: 900px) {
+      .aqua-layout,
       .aqua-cards {
         flex-direction: column;
       }
 
-      .aqua-card {
-        flex: 1 1 100%;
+      .graphic-container {
+        justify-content: center;
+        margin-top: 2rem;
       }
     }
   </style>
@@ -106,34 +148,48 @@
   </header>
 
   <main class="aqua-panel">
-    <h1>Welcome to your Dashboard</h1>
+    <h1 class="greeting">Welcome back, Christina 👋</h1>
 
-    <!-- Outseta Profile Embed -->
-    <div data-o-profile="1" data-mode="embed" style="margin-bottom: 2rem;"></div>
+    <div class="aqua-layout">
+      <!-- Profile -->
+      <div class="profile-container">
+        <div data-o-profile="1" data-mode="embed"></div>
+      </div>
 
-    <!-- Usage and API Cards -->
+      <!-- Illustration -->
+      <div class="graphic-container">
+        <img src="/dashboard-graphic.png" alt="Dashboard illustration" />
+      </div>
+    </div>
+
     <div class="aqua-cards">
+      <!-- Usage -->
       <div class="aqua-card">
         <h2>Usage</h2>
         <div class="usage-stat">348 / 1000 pages</div>
         <div class="usage-subtext">Pages watermarked this month</div>
+        <div class="progress-bar-container">
+          <div class="progress-fill"></div>
+        </div>
       </div>
 
+      <!-- API Instructions -->
       <div class="aqua-card">
         <h2>API Instructions</h2>
-        <p>Use your unique API key found in your profile to authenticate requests.</p>
-        <p><strong>POST</strong> your PDFs to:  
+        <p>Use your API key from your profile to authenticate.</p>
+        <p><strong>POST</strong> to:<br />
           <code>https://api.aquamark.io/watermark</code>
         </p>
-        <p>Include your API key in the header like so:  
+        <p><strong>Headers</strong>:<br />
           <code>Authorization: Bearer YOUR_API_KEY</code>
         </p>
-        <p>Responses will include a download link for each watermarked file.</p>
+        <p><strong>Response</strong>:<br />
+          Download link(s) for watermarked files.</p>
       </div>
     </div>
   </main>
 
-  <!-- Outseta JS -->
+  <!-- Outseta Script -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
