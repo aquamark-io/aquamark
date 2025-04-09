@@ -134,14 +134,18 @@
     
 .stored-logo-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 240px;
+  align-items: center;
+  height: 100%; /* ensures full vertical centering */
+  overflow: hidden; /* hides overflow */
+  padding: 1rem;
+  text-align: center;
 }
 
 .stored-logo-container img {
-  max-height: 400px;
+  max-height: 300px;   /* you can tweak this */
   max-width: 100%;
+  height: auto;
   object-fit: contain;
 }
 
