@@ -59,48 +59,63 @@
 
     .aqua-top-row {
       display: flex;
-      gap: 2rem;
       flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    /* Card Style */
     .aqua-card {
+      flex: 1 1 30%;
+      min-width: 280px;
       background: white;
       border-radius: 16px;
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      flex: 1 1 48%;
-      min-width: 320px;
     }
 
-    /* Upload preview style */
-    #logoPreviewContainer {
-      margin-top: 0.75rem;
+    .upload-box {
+      border: 2px dashed #cce0f5;
+      border-radius: 12px;
+      background: #f8fbff;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      color: #667;
+      font-weight: 500;
+    }
+
+    .upload-box input[type="file"] {
+      display: block;
+      margin: 0 auto 0.5rem;
+    }
+
+    .logo-preview-container {
+      background: #f9f9f9;
       border: 1px solid #eee;
       border-radius: 8px;
-      padding: 0.5rem;
+      padding: 1rem;
       text-align: center;
-      background: #f9f9f9;
     }
 
-    #logoPreview {
+    .logo-preview-container img {
       max-height: 120px;
       max-width: 100%;
       object-fit: contain;
     }
 
-    /* Sample Preview Container */
-    .preview-box .sample-preview {
+    .sample-preview.small-preview {
       position: relative;
       width: 100%;
-      padding-top: 141%; /* Keeps aspect ratio */
+      padding-top: 100%;
       background: #f9f9f9;
       border-radius: 8px;
       overflow: hidden;
       margin-top: 1rem;
     }
 
-    .statement-image {
+    .sample-preview img.statement-image,
+    .sample-preview canvas#watermarkCanvas {
       position: absolute;
       top: 0; left: 0;
       width: 100%;
@@ -109,13 +124,9 @@
       z-index: 1;
     }
 
-    #watermarkCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+    canvas#watermarkCanvas {
       z-index: 2;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -141,21 +152,28 @@
     <h1>Watermark Panel</h1>
 
     <div class="aqua-top-row">
-      <!-- Upload Section -->
-      <div class="aqua-card">
-        <h2>Upload your watermark logo</h2>
-        <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+      <!-- Upload Logo -->
+      <div class="aqua-card aqua-upload">
+        <h2>Upload Logo</h2>
+        <div class="upload-box">
+          <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+          <p>Drag & drop or click to upload</p>
+        </div>
         <button id="changeLogoBtn">Change Logo</button>
-        <p style="margin-top: 1rem; font-weight: 500;">Your uploaded logo:</p>
-        <div id="logoPreviewContainer">
-          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Your Logo" />
+      </div>
+
+      <!-- Stored Logo Preview -->
+      <div class="aqua-card">
+        <h2>Your Logo</h2>
+        <div class="logo-preview-container">
+          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Logo Preview" />
         </div>
       </div>
 
-      <!-- Preview Section -->
-      <div class="aqua-card preview-box">
-        <h2>See a Sample</h2>
-        <div class="sample-preview">
+      <!-- Sample Watermark Preview -->
+      <div class="aqua-card">
+        <h2>Sample Preview</h2>
+        <div class="sample-preview small-preview">
           <img src="/statement.jpg" alt="Sample Statement" class="statement-image" />
           <canvas id="watermarkCanvas"></canvas>
         </div>
@@ -163,17 +181,16 @@
     </div>
   </main>
 
-  <!-- JS Placeholder -->
+  <!-- JS Placeholder for Next Steps -->
   <script>
-    // (We'll add watermark drawing logic here soon)
     const logoInput = document.getElementById('logoUpload');
     const logoPreview = document.getElementById('logoPreview');
 
     if (logoInput) {
       logoInput.addEventListener('change', () => {
-        // Allow re-uploads of same file
+        // Reset the input so the same file can be uploaded again
         logoInput.value = '';
-        // Watermark logic to be added next
+        // Logic to update preview or Supabase upload will go here
       });
     }
   </script>
