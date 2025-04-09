@@ -66,17 +66,19 @@
   }
 
   .aqua-card {
-    flex: 0 0 500px;
-    max-width: 500px;
-    min-height: 340px;
-    background: white;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+  flex: 0 0 500px;
+  max-width: 500px;
+  min-height: 340px;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+
+  /* NEW: Push everything up except footer (button) */
+  align-items: stretch;
+}
 
   /* Upload Box (Shared) */
   .upload-box {
@@ -100,7 +102,7 @@
     color: #999;
     margin-bottom: 1rem;
     text-align: center;
-    margin-top: -0.25rem;
+    margin-top: 0.25rem;
   }
 
   .upload-actions {
@@ -258,17 +260,22 @@
   </div>
 
   <!-- Upload Bank Statements (now BELOW top row) -->
-  <div class="aqua-card aqua-upload" style="margin-top: 2rem;">
-    <h2>Upload Bank Statements</h2>
-    <label for="pdfUpload" class="upload-box">
+  <div class="aqua-card">
+  <h2>Upload Bank Statements</h2>
+
+  <div class="card-body">
+    <label for="pdfUpload" class="upload-box" id="pdfUploadBox">
       <p>Drag & drop or click to upload</p>
       <input type="file" id="pdfUpload" accept="application/pdf" multiple />
     </label>
     <p class="upload-disclaimer">PDF only, max 25MB</p>
-    <div class="upload-actions">
-      <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
-    </div>
   </div>
+
+  <div class="upload-actions">
+    <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
+  </div>
+</div>
+
 </main>
 
   <!-- JS Placeholder for Next Steps -->
