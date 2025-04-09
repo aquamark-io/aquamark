@@ -59,13 +59,24 @@
     <button id="processBtn" disabled>Process & Download</button>
     <div id="status"></div>
   </div>
-
+  
+   <div class="upload-section">
+  <h2>Optional: Upload Your Watermark Logo</h2>
+  <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+   </div>
+  
   <script>
     const pdfInput = document.getElementById('pdfUpload');
     const fileList = document.getElementById('fileList');
     const processBtn = document.getElementById('processBtn');
     const status = document.getElementById('status');
-
+    const logoInput = document.getElementById('logoUpload');
+if (logoInput) {
+  logoInput.addEventListener('click', () => {
+    logoInput.value = null; // fix: allows re-selecting same file to trigger upload
+  });
+}
+    
     let selectedFiles = [];
     const watermarkImageUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg'; // replace with .png if needed
 
@@ -101,8 +112,8 @@
         const xSpacing = wmWidth + 60;
         const ySpacing = wmHeight + 60;
 
-        for (let x = -wmWidth; x < width + wmWidth; x += xSpacing) {
-          for (let y = -wmHeight; y < height + wmHeight; y += ySpacing) {
+        for (let x = 0; x <= width - wmWidth; x += xSpacing) {
+  for (let y = 0; y <= height - wmHeight; y += ySpacing) {
             page.drawImage(watermarkImg, {
               x,
               y,
