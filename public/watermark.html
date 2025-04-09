@@ -8,230 +8,204 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8f9fb;
-      color: #1e1e2f;
-    }
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f8f9fb;
+    color: #1e1e2f;
+  }
 
-    /* Header */
-    .aqua-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: white;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+  /* Header */
+  .aqua-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-    .aqua-logo {
-      height: 28px;
-    }
+  .aqua-logo {
+    height: 28px;
+  }
 
-    .aqua-nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: 500;
-      color: #333;
-    }
+  .aqua-nav a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    color: #333;
+  }
 
-    .aqua-nav a.active {
-      color: #007bff;
-    }
+  .aqua-nav a.active {
+    color: #007bff;
+  }
 
-    /* Page Layout */
-.aqua-panel {
-  max-width: 1700px;
-  margin: 2rem auto;
-  padding: 0 2rem;
-}
+  /* Page Layout */
+  .aqua-panel {
+    max-width: 1700px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
 
-    .aqua-panel h1 {
-      font-size: 1.8rem;
-      margin-bottom: 2rem;
-    }
+  .aqua-panel h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
 
-.aqua-top-row {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  gap: 1.5rem;
-  overflow-x: auto;
-}
-
-.aqua-card {
-  flex: 0 0 500px;
-  max-width: 500px;
-  min-height: 340px;
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-    .upload-box {
-      border: 2px dashed #cce0f5;
-      border-radius: 12px;
-      background: #f8fbff;
-      text-align: center;
-      padding: 2rem 1rem;
-      margin-bottom: 1rem;
-      cursor: pointer;
-      color: #667;
-      font-weight: 500;
-    }
-
-    .upload-box input[type="file"] {
-      display: block;
-      margin: 0 auto 0.5rem;
-    }
-
-/* Hide file input but keep it clickable via label */
-.upload-box input[type="file"] {
-  display: none;
-}
-    
-.aqua-btn {
-  background-color: #2e6eff;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background 0.2s ease;
-}
-
-.aqua-btn:hover {
-  background-color: #1f54d9;
-}
-
-    .upload-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-.aqua-btn {
-  padding: 10px 24px;
-  font-size: 14px;
-  width: auto;
-  min-width: 140px;
-  max-width: 100%;
-  border-radius: 12px;
-}
-    
-.stored-logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* ensures full vertical centering */
-  overflow: hidden; /* hides overflow */
-  padding: 1rem;
-  text-align: center;
-}
-
-.stored-logo-container img {
-  max-height: 300px;   /* you can tweak this */
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
- .sample-preview.small-preview {
-  position: relative;
-  width: 100%;
-  height: 350px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 1rem;
-}
-
-    .sample-preview img.statement-image,
-    .sample-preview canvas#watermarkCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      z-index: 1;
-    }
-
-    canvas#watermarkCanvas {
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    #pdfUploadBox {
-  border: 2px dashed #cce0f5;
-  border-radius: 12px;
-  background: #f8fbff;
-  text-align: center;
-  padding: 2rem 1rem;
-  margin-bottom: 0.5rem;
-  position: relative;
-}
-
-#pdfUploadBox input[type="file"] {
-  display: block;
-  margin: 0 auto 0.5rem auto;
-}
-
-.upload-disclaimer {
-  font-size: 0.8rem;
-  color: #999;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-#startWatermarkBtn {
-  display: block;
-  margin: 0 auto;
-  background-color: #3366ff;
-  color: white;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-#startWatermarkBtn:hover {
-  background-color: #2c59db;
-}
-
-  
-    @media (max-width: 1024px) {
   .aqua-top-row {
-    flex-direction: column;
-    align-items: stretch;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 1.5rem;
+    overflow-x: auto;
   }
 
   .aqua-card {
-    flex: 1 1 100%;
+    flex: 0 0 500px;
+    max-width: 500px;
+    min-height: 340px;
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Upload Box (Shared) */
+  .upload-box {
+    border: 2px dashed #cce0f5;
+    border-radius: 12px;
+    background: #f8fbff;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    color: #667;
+    font-weight: 500;
+  }
+
+  .upload-box input[type="file"] {
+    display: none;
+  }
+
+  .upload-disclaimer {
+    font-size: 0.8rem;
+    color: #999;
+    margin-bottom: 1rem;
+    text-align: center;
+    margin-top: -0.25rem;
+  }
+
+  .upload-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  /* Buttons */
+  .aqua-btn {
+    background-color: #2e6eff;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    width: auto;
+    min-width: 140px;
     max-width: 100%;
   }
 
+  .aqua-btn:hover {
+    background-color: #1f54d9;
+  }
 
+  #startWatermarkBtn {
+    display: block;
+    margin: 0 auto;
+    background-color: #3366ff;
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
 
-}
-  </style>
+  #startWatermarkBtn:hover {
+    background-color: #2c59db;
+  }
+
+  /* Stored Logo */
+  .stored-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow: hidden;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .stored-logo-container img {
+    max-height: 300px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Sample Preview */
+  .sample-preview.small-preview {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+
+  .sample-preview img.statement-image,
+  .sample-preview canvas#watermarkCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+  }
+
+  canvas#watermarkCanvas {
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 1024px) {
+    .aqua-top-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .aqua-card {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  }
+</style>
 </head>
-
 <body>
 
   <!-- Branded Header -->
@@ -266,14 +240,16 @@
 </div>
 
 <!-- Upload Bank Statements -->
-<div class="aqua-card">
+<div class="aqua-card aqua-upload">
   <h2>Upload Bank Statements</h2>
-  <div class="upload-box" id="pdfUploadBox">
-    <input type="file" id="pdfUpload" accept="application/pdf" multiple />
+  <label for="pdfUpload" class="upload-box">
     <p>Drag & drop or click to upload</p>
-  </div>
+    <input type="file" id="pdfUpload" accept="application/pdf" multiple />
+  </label>
   <p class="upload-disclaimer">PDF only, max 25MB</p>
-  <button class="aqua-button" id="startWatermarkBtn">Start Watermark</button>
+  <div class="upload-actions">
+    <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
+  </div>
 </div>
  
   <!-- Stored Logo Preview -->
