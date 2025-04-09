@@ -43,6 +43,20 @@
       background: #cccccc;
       cursor: not-allowed;
     }
+    .logo-preview {
+      margin-top: 1rem;
+      max-width: 200px;
+      max-height: 100px;
+    }
+    .selected-logo {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    .selected-logo img {
+      max-height: 50px;
+      margin-right: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -54,16 +68,17 @@
     <ul class="file-list" id="fileList"></ul>
   </div>
 
+  <div class="upload-section">
+    <h2>Optional: Upload Your Watermark Logo</h2>
+    <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+    <div id="selectedLogo"></div>
+  </div>
+
   <div class="process-section">
     <h2>Step 2: Apply Watermark</h2>
     <button id="processBtn" disabled>Process & Download</button>
     <div id="status"></div>
   </div>
-  
-   <div class="upload-section">
-  <h2>Optional: Upload Your Watermark Logo</h2>
-  <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
-   </div>
   
   <script>
     const pdfInput = document.getElementById('pdfUpload');
@@ -71,14 +86,47 @@
     const processBtn = document.getElementById('processBtn');
     const status = document.getElementById('status');
     const logoInput = document.getElementById('logoUpload');
-if (logoInput) {
-  logoInput.addEventListener('change', () => {
-    logoInput.value = ''; // ensures same file re-triggers change
-  });
-}
+    const selectedLogoDiv = document.getElementById('selectedLogo');
     
     let selectedFiles = [];
-    const watermarkImageUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg'; // replace with .png if needed
+    let customLogoBytes = null;
+    const defaultWatermarkUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg';
+
+    // Fix for reselecting the same file
+    logoInput.addEventListener('change', async (event) => {
+      if (event.target.files.length > 0) {
+        const logoFile = event.target.files[0];
+        
+        // Store the logo file as bytes
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          customLogoBytes = new Uint8Array(e.target.result);
+          
+          // Show preview of selected logo
+          const logoPreview = document.createElement('div');
+          logoPreview.className = 'selected-logo';
+          
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(logoFile);
+          
+          const text = document.createElement('span');
+          text.textContent = logoFile.name;
+          
+          logoPreview.appendChild(img);
+          logoPreview.appendChild(text);
+          
+          selectedLogoDiv.innerHTML = '';
+          selectedLogoDiv.appendChild(logoPreview);
+        };
+        reader.readAsArrayBuffer(logoFile);
+      }
+      
+      // Reset the input to ensure change is triggered again
+      // We need to do this AFTER processing the file
+      setTimeout(() => {
+        event.target.value = '';
+      }, 100);
+    });
 
     pdfInput.addEventListener('change', (event) => {
       selectedFiles = Array.from(event.target.files).slice(0, 6);
@@ -94,13 +142,29 @@ if (logoInput) {
     });
 
     async function getWatermarkImageBytes(url) {
-      const res = await fetch(url);
-      return await res.arrayBuffer();
+      if (customLogoBytes) {
+        return customLogoBytes;
+      } else {
+        const res = await fetch(url);
+        return new Uint8Array(await res.arrayBuffer());
+      }
     }
 
     async function addTiledWatermark(pdfBytes, watermarkBytes) {
       const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
-      const watermarkImg = await pdfDoc.embedJpg(watermarkBytes);
+      
+      // Determine if we're working with JPG or PNG based on file signature
+      let watermarkImg;
+      // Check for PNG signature (first 8 bytes)
+      if (watermarkBytes[0] === 0x89 && 
+          watermarkBytes[1] === 0x50 && 
+          watermarkBytes[2] === 0x4E && 
+          watermarkBytes[3] === 0x47) {
+        watermarkImg = await pdfDoc.embedPng(watermarkBytes);
+      } else {
+        // Assume JPG otherwise
+        watermarkImg = await pdfDoc.embedJpg(watermarkBytes);
+      }
 
       const wmWidth = watermarkImg.width / 4;
       const wmHeight = watermarkImg.height / 4;
@@ -112,10 +176,9 @@ if (logoInput) {
         const xSpacing = wmWidth + 60;
         const ySpacing = wmHeight + 60;
 
-  const diagonalBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
-for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
-  for (let y = diagonalBuffer; y < height - diagonalBuffer; y += ySpacing) {
-
+        const diagonalBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
+        for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
+          for (let y = diagonalBuffer; y < height - diagonalBuffer; y += ySpacing) {
             page.drawImage(watermarkImg, {
               x,
               y,
@@ -126,6 +189,7 @@ for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
             });
           }
         }
+      }
 
       return await pdfDoc.save();
     }
@@ -134,27 +198,34 @@ for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
       status.textContent = 'Processing...';
       processBtn.disabled = true;
 
-      const watermarkBytes = await getWatermarkImageBytes(watermarkImageUrl);
+      const watermarkBytes = await getWatermarkImageBytes(defaultWatermarkUrl);
 
-      for (const file of selectedFiles) {
-        const arrayBuffer = await file.arrayBuffer();
-        const watermarkedPdf = await addTiledWatermark(arrayBuffer, watermarkBytes);
+      try {
+        for (const file of selectedFiles) {
+          const arrayBuffer = await file.arrayBuffer();
+          const watermarkedPdf = await addTiledWatermark(arrayBuffer, watermarkBytes);
 
-        const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
+          const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
+          const url = URL.createObjectURL(blob);
 
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'watermarked-' + file.name;
-        a.textContent = 'Download ' + file.name;
-        a.style.display = 'block';
-        status.appendChild(a);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'watermarked-' + file.name;
+          a.textContent = 'Download ' + file.name;
+          a.style.display = 'block';
+          status.appendChild(a);
 
-        // Clean up URL after a few seconds
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
+          // Clean up URL after a few seconds
+          setTimeout(() => URL.revokeObjectURL(url), 10000);
+        }
+
+        status.insertAdjacentHTML('beforeend', '<p>✅ All files processed.</p>');
+      } catch (error) {
+        status.innerHTML = `<p>❌ Error: ${error.message}</p>`;
+        console.error(error);
+      } finally {
+        processBtn.disabled = false;
       }
-
-      status.insertAdjacentHTML('beforeend', '<p>✅ All files processed.</p>');
     });
   </script>
 </body>
