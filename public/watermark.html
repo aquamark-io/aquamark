@@ -16,7 +16,7 @@
     h1 {
       color: #1e1e2f;
     }
-    .upload-section, .process-section, .preview-section {
+    .upload-section, .process-section {
       margin-top: 2rem;
       background: white;
       padding: 1.5rem;
@@ -43,61 +43,6 @@
       background: #cccccc;
       cursor: not-allowed;
     }
-    .logo-preview {
-      margin-top: 1rem;
-      max-width: 200px;
-      max-height: 100px;
-    }
-    .selected-logo {
-      margin-top: 1rem;
-      display: flex;
-      align-items: center;
-    }
-    .selected-logo img {
-      max-height: 50px;
-      margin-right: 1rem;
-    }
-    .preview-container {
-      position: relative;
-      margin-top: 1rem;
-      max-width: 100%;
-      overflow: hidden;
-      border: 1px solid #e0e0e0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .statement-image {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-    .watermark-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-    .options-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .option-group {
-      margin-right: 2rem;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-    input[type="range"] {
-      width: 200px;
-    }
-    .input-group {
-      margin-bottom: 1rem;
-    }
   </style>
 </head>
 <body>
@@ -109,53 +54,16 @@
     <ul class="file-list" id="fileList"></ul>
   </div>
 
-  <div class="upload-section">
-    <h2>Optional: Upload Your Watermark Logo</h2>
-    <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
-    <div id="selectedLogo"></div>
-  </div>
-
-  <div class="preview-section">
-    <h2>See a sample:</h2>
-    <div class="options-container">
-      <div class="option-group">
-        <div class="input-group">
-          <label for="watermarkSize">Watermark Size:</label>
-          <input type="range" id="watermarkSize" min="20" max="200" value="80">
-          <span id="sizeValue">80px</span>
-        </div>
-        <div class="input-group">
-          <label for="watermarkOpacity">Opacity:</label>
-          <input type="range" id="watermarkOpacity" min="5" max="30" value="15">
-          <span id="opacityValue">15%</span>
-        </div>
-      </div>
-      <div class="option-group">
-        <div class="input-group">
-          <label for="watermarkSpacing">Spacing:</label>
-          <input type="range" id="watermarkSpacing" min="20" max="200" value="100">
-          <span id="spacingValue">100px</span>
-        </div>
-        <div class="input-group">
-          <label for="watermarkPattern">Pattern:</label>
-          <select id="watermarkPattern">
-            <option value="diagonal">Diagonal</option>
-            <option value="straight">Straight Grid</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="preview-container" id="previewContainer">
-      <img src="https://path-to-sample-bank-statement.jpg" alt="Sample Bank Statement" class="statement-image" id="sampleImage">
-      <div class="watermark-overlay" id="watermarkOverlay"></div>
-    </div>
-  </div>
-
   <div class="process-section">
     <h2>Step 2: Apply Watermark</h2>
     <button id="processBtn" disabled>Process & Download</button>
     <div id="status"></div>
   </div>
+  
+   <div class="upload-section">
+  <h2>Optional: Upload Your Watermark Logo</h2>
+  <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+   </div>
   
   <script>
     const pdfInput = document.getElementById('pdfUpload');
@@ -163,178 +71,14 @@
     const processBtn = document.getElementById('processBtn');
     const status = document.getElementById('status');
     const logoInput = document.getElementById('logoUpload');
-    const selectedLogoDiv = document.getElementById('selectedLogo');
-    const watermarkOverlay = document.getElementById('watermarkOverlay');
-    const previewContainer = document.getElementById('previewContainer');
-    const sampleImage = document.getElementById('sampleImage');
-    
-    // Watermark options controls
-    const watermarkSizeSlider = document.getElementById('watermarkSize');
-    const watermarkOpacitySlider = document.getElementById('watermarkOpacity');
-    const watermarkSpacingSlider = document.getElementById('watermarkSpacing');
-    const watermarkPatternSelect = document.getElementById('watermarkPattern');
-    const sizeValueSpan = document.getElementById('sizeValue');
-    const opacityValueSpan = document.getElementById('opacityValue');
-    const spacingValueSpan = document.getElementById('spacingValue');
-    
-    // Set sample image source - replace with your actual sample image path
-    sampleImage.src = "https://path-to-sample-bank-statement.jpg";
+if (logoInput) {
+  logoInput.addEventListener('change', () => {
+    logoInput.value = ''; // ensures same file re-triggers change
+  });
+}
     
     let selectedFiles = [];
-    let customLogo = null;
-    let customLogoBytes = null;
-    const defaultWatermarkUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg';
-    
-    // Initially load default logo for preview
-    loadDefaultLogo();
-    
-    async function loadDefaultLogo() {
-      try {
-        const response = await fetch(defaultWatermarkUrl);
-        const blob = await response.blob();
-        customLogo = URL.createObjectURL(blob);
-        updateWatermarkPreview();
-      } catch (error) {
-        console.error("Error loading default logo:", error);
-      }
-    }
-    
-    // Fix for reselecting the same file
-    logoInput.addEventListener('change', async (event) => {
-      if (event.target.files.length > 0) {
-        const logoFile = event.target.files[0];
-        
-        // Store the logo file as bytes
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          customLogoBytes = new Uint8Array(e.target.result);
-          
-          // Create object URL for preview
-          customLogo = URL.createObjectURL(logoFile);
-          
-          // Show preview of selected logo
-          const logoPreview = document.createElement('div');
-          logoPreview.className = 'selected-logo';
-          
-          const img = document.createElement('img');
-          img.src = customLogo;
-          
-          const text = document.createElement('span');
-          text.textContent = logoFile.name;
-          
-          logoPreview.appendChild(img);
-          logoPreview.appendChild(text);
-          
-          selectedLogoDiv.innerHTML = '';
-          selectedLogoDiv.appendChild(logoPreview);
-          
-          // Update the watermark preview with new logo
-          updateWatermarkPreview();
-        };
-        reader.readAsArrayBuffer(logoFile);
-      }
-      
-      // Reset the input to ensure change is triggered again
-      setTimeout(() => {
-        event.target.value = '';
-      }, 100);
-    });
-
-    // Update watermark preview when options change
-    watermarkSizeSlider.addEventListener('input', function() {
-      sizeValueSpan.textContent = this.value + 'px';
-      updateWatermarkPreview();
-    });
-    
-    watermarkOpacitySlider.addEventListener('input', function() {
-      opacityValueSpan.textContent = this.value + '%';
-      updateWatermarkPreview();
-    });
-    
-    watermarkSpacingSlider.addEventListener('input', function() {
-      spacingValueSpan.textContent = this.value + 'px';
-      updateWatermarkPreview();
-    });
-    
-    watermarkPatternSelect.addEventListener('change', updateWatermarkPreview);
-
-    function updateWatermarkPreview() {
-      if (!customLogo) return;
-      
-      const size = parseInt(watermarkSizeSlider.value);
-      const opacity = parseInt(watermarkOpacitySlider.value) / 100;
-      const spacing = parseInt(watermarkSpacingSlider.value);
-      const pattern = watermarkPatternSelect.value;
-      
-      // Clear previous watermarks
-      watermarkOverlay.innerHTML = '';
-      
-      // Get container dimensions
-      const containerWidth = previewContainer.offsetWidth;
-      const containerHeight = sampleImage.offsetHeight;
-      
-      // Create watermark grid
-      if (pattern === 'diagonal') {
-        createDiagonalWatermarks(containerWidth, containerHeight, size, opacity, spacing);
-      } else {
-        createStraightWatermarks(containerWidth, containerHeight, size, opacity, spacing);
-      }
-    }
-    
-    function createDiagonalWatermarks(width, height, size, opacity, spacing) {
-      // Calculate how many watermarks we need
-      const cols = Math.ceil(width / spacing) + 1;
-      const rows = Math.ceil(height / spacing) + 1;
-      
-      for (let row = -1; row < rows; row++) {
-        for (let col = -1; col < cols; col++) {
-          const x = col * spacing;
-          const y = row * spacing;
-          
-          const img = document.createElement('img');
-          img.src = customLogo;
-          img.style.position = 'absolute';
-          img.style.width = `${size}px`;
-          img.style.height = 'auto';
-          img.style.left = `${x}px`;
-          img.style.top = `${y}px`;
-          img.style.opacity = opacity;
-          img.style.transform = 'rotate(-45deg)';
-          img.style.transformOrigin = 'center center';
-          
-          watermarkOverlay.appendChild(img);
-        }
-      }
-    }
-    
-    function createStraightWatermarks(width, height, size, opacity, spacing) {
-      // Calculate how many watermarks we need
-      const cols = Math.ceil(width / spacing) + 1;
-      const rows = Math.ceil(height / spacing) + 1;
-      
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          const x = col * spacing;
-          const y = row * spacing;
-          
-          const img = document.createElement('img');
-          img.src = customLogo;
-          img.style.position = 'absolute';
-          img.style.width = `${size}px`;
-          img.style.height = 'auto';
-          img.style.left = `${x}px`;
-          img.style.top = `${y}px`;
-          img.style.opacity = opacity;
-          
-          watermarkOverlay.appendChild(img);
-        }
-      }
-    }
-
-    // Update preview when sample image loads
-    sampleImage.onload = function() {
-      updateWatermarkPreview();
-    };
+    const watermarkImageUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg'; // replace with .png if needed
 
     pdfInput.addEventListener('change', (event) => {
       selectedFiles = Array.from(event.target.files).slice(0, 6);
@@ -350,88 +94,38 @@
     });
 
     async function getWatermarkImageBytes(url) {
-      if (customLogoBytes) {
-        return customLogoBytes;
-      } else {
-        const res = await fetch(url);
-        return new Uint8Array(await res.arrayBuffer());
-      }
+      const res = await fetch(url);
+      return await res.arrayBuffer();
     }
 
     async function addTiledWatermark(pdfBytes, watermarkBytes) {
       const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
-      
-      // Determine if we're working with JPG or PNG based on file signature
-      let watermarkImg;
-      // Check for PNG signature (first 8 bytes)
-      if (watermarkBytes[0] === 0x89 && 
-          watermarkBytes[1] === 0x50 && 
-          watermarkBytes[2] === 0x4E && 
-          watermarkBytes[3] === 0x47) {
-        watermarkImg = await pdfDoc.embedPng(watermarkBytes);
-      } else {
-        // Assume JPG otherwise
-        watermarkImg = await pdfDoc.embedJpg(watermarkBytes);
-      }
+      const watermarkImg = await pdfDoc.embedJpg(watermarkBytes);
 
-      // Get current watermark settings from UI
-      const size = parseInt(watermarkSizeSlider.value);
-      const opacity = parseInt(watermarkOpacitySlider.value) / 100;
-      const spacing = parseInt(watermarkSpacingSlider.value);
-      const pattern = watermarkPatternSelect.value;
-
-      // Calculate watermark size while maintaining aspect ratio
-      const aspectRatio = watermarkImg.width / watermarkImg.height;
-      const wmWidth = size;
-      const wmHeight = size / aspectRatio;
+      const wmWidth = watermarkImg.width / 4;
+      const wmHeight = watermarkImg.height / 4;
 
       const pages = pdfDoc.getPages();
       for (const page of pages) {
         const { width, height } = page.getSize();
 
-        // Calculate watermark placement based on pattern
-        if (pattern === 'diagonal') {
-          // Diagonal pattern
-          const xSpacing = spacing;
-          const ySpacing = spacing;
-          
-          // Calculate needed rows and columns to cover page with offset to ensure full coverage
-          const cols = Math.ceil(width / xSpacing) + 2;
-          const rows = Math.ceil(height / ySpacing) + 2;
-          
-          for (let col = -1; col < cols; col++) {
-            for (let row = -1; row < rows; row++) {
-              const x = col * xSpacing;
-              const y = row * ySpacing;
-              
-              page.drawImage(watermarkImg, {
-                x,
-                y,
-                width: wmWidth,
-                height: wmHeight,
-                rotate: PDFLib.degrees(-45),
-                opacity,
-              });
-            }
-          }
-        } else {
-          // Straight pattern
-          const xSpacing = spacing;
-          const ySpacing = spacing;
-          
-          for (let x = 0; x < width; x += xSpacing) {
-            for (let y = 0; y < height; y += ySpacing) {
-              page.drawImage(watermarkImg, {
-                x,
-                y,
-                width: wmWidth,
-                height: wmHeight,
-                opacity,
-              });
-            }
+        const xSpacing = wmWidth + 60;
+        const ySpacing = wmHeight + 60;
+
+  const diagonalBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
+for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
+  for (let y = diagonalBuffer; y < height - diagonalBuffer; y += ySpacing) {
+
+            page.drawImage(watermarkImg, {
+              x,
+              y,
+              width: wmWidth,
+              height: wmHeight,
+              rotate: PDFLib.degrees(-45),
+              opacity: 0.15,
+            });
           }
         }
-      }
 
       return await pdfDoc.save();
     }
@@ -439,36 +133,28 @@
     processBtn.addEventListener('click', async () => {
       status.textContent = 'Processing...';
       processBtn.disabled = true;
-      status.innerHTML = '';
 
-      const watermarkBytes = await getWatermarkImageBytes(defaultWatermarkUrl);
+      const watermarkBytes = await getWatermarkImageBytes(watermarkImageUrl);
 
-      try {
-        for (const file of selectedFiles) {
-          const arrayBuffer = await file.arrayBuffer();
-          const watermarkedPdf = await addTiledWatermark(arrayBuffer, watermarkBytes);
+      for (const file of selectedFiles) {
+        const arrayBuffer = await file.arrayBuffer();
+        const watermarkedPdf = await addTiledWatermark(arrayBuffer, watermarkBytes);
 
-          const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
-          const url = URL.createObjectURL(blob);
+        const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
 
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'watermarked-' + file.name;
-          a.textContent = 'Download ' + file.name;
-          a.style.display = 'block';
-          status.appendChild(a);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'watermarked-' + file.name;
+        a.textContent = 'Download ' + file.name;
+        a.style.display = 'block';
+        status.appendChild(a);
 
-          // Clean up URL after a few seconds
-          setTimeout(() => URL.revokeObjectURL(url), 10000);
-        }
-
-        status.insertAdjacentHTML('beforeend', '<p>✅ All files processed.</p>');
-      } catch (error) {
-        status.innerHTML = `<p>❌ Error: ${error.message}</p>`;
-        console.error(error);
-      } finally {
-        processBtn.disabled = false;
+        // Clean up URL after a few seconds
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
       }
+
+      status.insertAdjacentHTML('beforeend', '<p>✅ All files processed.</p>');
     });
   </script>
 </body>
