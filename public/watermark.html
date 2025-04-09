@@ -43,6 +43,33 @@
       background: #cccccc;
       cursor: not-allowed;
     }
+    /* New container for the sample preview */
+    .sample-container {
+      margin-top: 2rem;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative; 
+      width: 100%;
+      max-width: 800px; /* Or set to the desired width */
+      height: auto;
+    }
+    .sample-container img {
+      width: 100%;
+      display: block;
+    }
+    /* Placeholder overlay to demonstrate watermark positioning */
+    .watermark-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* For demo, we use a background pattern. Replace with dynamic watermarking later */
+      background-image: linear-gradient(90deg, rgba(255,0,0,0.15) 25%, transparent 25%, transparent 50%, rgba(255,0,0,0.15) 50%, rgba(255,0,0,0.15) 75%, transparent 75%, transparent);
+      background-size: 80px 80px; /* Adjust pattern size */
+      pointer-events: none; /* Ensures the overlay doesn’t interfere with image interactions */
+    }
   </style>
 </head>
 <body>
@@ -59,37 +86,49 @@
     <button id="processBtn" disabled>Process & Download</button>
     <div id="status"></div>
   </div>
-  
-   <div class="upload-section">
-  <h2>Optional: Upload Your Watermark Logo</h2>
-  <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
-   </div>
-  
+
+  <div class="upload-section">
+    <h2>Optional: Upload Your Watermark Logo</h2>
+    <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+  </div>
+
+  <!-- New Sample Preview Section -->
+  <div class="upload-section">
+    <h2>See a Sample</h2>
+    <div class="sample-container">
+      <!-- Bank statement sample image -->
+      <img src="public/statement.jpg" alt="Bank Statement Sample">
+      <!-- Watermark overlay placeholder -->
+      <div class="watermark-overlay"></div>
+    </div>
+  </div>
+
   <script>
     const pdfInput = document.getElementById('pdfUpload');
     const fileList = document.getElementById('fileList');
     const processBtn = document.getElementById('processBtn');
     const status = document.getElementById('status');
     const logoInput = document.getElementById('logoUpload');
-if (logoInput) {
-  logoInput.addEventListener('change', () => {
-    logoInput.value = ''; // ensures same file re-triggers change
-  });
-}
-    
+
+    if (logoInput) {
+      logoInput.addEventListener('change', () => {
+        // clear the file input value so that re-uploading the same file triggers the change event
+        logoInput.value = '';
+        // For now, logo refresh logic can be added here later.
+      });
+    }
+
     let selectedFiles = [];
     const watermarkImageUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg'; // replace with .png if needed
 
     pdfInput.addEventListener('change', (event) => {
       selectedFiles = Array.from(event.target.files).slice(0, 6);
       fileList.innerHTML = '';
-
       selectedFiles.forEach(file => {
         const li = document.createElement('li');
         li.textContent = file.name;
         fileList.appendChild(li);
       });
-
       processBtn.disabled = selectedFiles.length === 0;
     });
 
@@ -101,21 +140,16 @@ if (logoInput) {
     async function addTiledWatermark(pdfBytes, watermarkBytes) {
       const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
       const watermarkImg = await pdfDoc.embedJpg(watermarkBytes);
-
       const wmWidth = watermarkImg.width / 4;
       const wmHeight = watermarkImg.height / 4;
-
       const pages = pdfDoc.getPages();
       for (const page of pages) {
         const { width, height } = page.getSize();
-
         const xSpacing = wmWidth + 60;
         const ySpacing = wmHeight + 60;
-
-  const diagonalBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
-for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
-  for (let y = diagonalBuffer; y < height - diagonalBuffer; y += ySpacing) {
-
+        const diagonalBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
+        for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
+          for (let y = diagonalBuffer; y < height - diagonalBuffer; y += ySpacing) {
             page.drawImage(watermarkImg, {
               x,
               y,
@@ -126,34 +160,27 @@ for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
             });
           }
         }
-
+      }
       return await pdfDoc.save();
     }
 
     processBtn.addEventListener('click', async () => {
       status.textContent = 'Processing...';
       processBtn.disabled = true;
-
       const watermarkBytes = await getWatermarkImageBytes(watermarkImageUrl);
-
       for (const file of selectedFiles) {
         const arrayBuffer = await file.arrayBuffer();
         const watermarkedPdf = await addTiledWatermark(arrayBuffer, watermarkBytes);
-
         const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
-
         const a = document.createElement('a');
         a.href = url;
         a.download = 'watermarked-' + file.name;
         a.textContent = 'Download ' + file.name;
         a.style.display = 'block';
         status.appendChild(a);
-
-        // Clean up URL after a few seconds
         setTimeout(() => URL.revokeObjectURL(url), 10000);
       }
-
       status.insertAdjacentHTML('beforeend', '<p>✅ All files processed.</p>');
     });
   </script>
