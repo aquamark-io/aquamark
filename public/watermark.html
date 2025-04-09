@@ -70,6 +70,29 @@
       background-size: 80px 80px; /* Adjust pattern size */
       pointer-events: none; /* Ensures the overlay doesn’t interfere with image interactions */
     }
+    .sample-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 1rem 0;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.statement-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#watermarkCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
   </style>
 </head>
 <body>
@@ -184,5 +207,11 @@
       status.insertAdjacentHTML('beforeend', '<p>✅ All files processed.</p>');
     });
   </script>
+  <!-- Sample Watermarked Preview -->
+<h2>See a sample:</h2>
+<div class="sample-container">
+  <img src="/statement.jpg" alt="Sample Statement" class="statement-image" />
+  <canvas id="watermarkCanvas"></canvas>
+</div>
 </body>
 </html>
