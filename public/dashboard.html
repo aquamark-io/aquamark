@@ -1,54 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Aquamark - Watermark Upload Preview</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark Dashboard</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 32px;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #111;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid #eee;
+    }
+    header img {
+      height: 32px;
+    }
+    nav a {
+      margin-left: 24px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+    }
+    .section {
+      padding: 40px;
+    }
+    #watermark {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    input[type="file"] {
+      margin-top: 8px;
+    }
+    button {
+      margin-top: 8px;
+      padding: 6px 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #logoPreview {
+      max-width: 300px;
+      border: 1px solid #eee;
+      padding: 8px;
+    }
+    .sample-wrapper {
+      position: relative;
+      max-width: 600px;
+      border: 1px solid #ccc;
+    }
+    .sample-wrapper img {
+      width: 100%;
+      display: block;
     }
     #watermarkOverlay {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background-repeat: repeat;
-      background-size: 150px;
-      opacity: 0.1;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
+      background-repeat: repeat;
+      background-size: 120px;
+      opacity: 0.1;
+      transform: rotate(-20deg);
+      background-position: 0 0;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
+  <header>
+    <img src="/logo.svg" alt="Aquamark Logo" />
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#">Logo</a>
+      <a href="#">Watermark</a>
+      <a href="#">API</a>
+      <a href="#">Log Out</a>
+    </nav>
+  </header>
 
-  <h2>Watermark Your Files</h2>
-
-  <!-- Upload Section -->
-  <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
+  <div class="section" id="watermark">
+    <!-- Upload Section -->
     <div style="flex: 1; min-width: 280px;">
       <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br />
       <input type="file" id="logoInput" accept="image/png, image/jpeg" />
-      <button id="changeLogoButton" style="margin-top: 8px;">Change Logo</button>
+      <button id="changeLogoButton">Change Logo</button>
 
       <div id="logoPreviewContainer" style="display:none; margin-top: 16px;">
         <p style="font-weight: 600;">Your uploaded logo:</p>
-        <img id="logoPreview" src="" alt="Your Logo" style="max-width: 300px; border: 1px solid #eee; padding: 8px;" />
+        <img id="logoPreview" src="" alt="Your Logo" />
       </div>
     </div>
 
     <!-- Sample Preview Section -->
     <div style="flex: 1; min-width: 300px;">
       <p style="font-weight: 600; margin-bottom: 8px;">See a sample:</p>
-      <div style="position: relative; width: 100%; max-width: 600px; border: 1px solid #ccc;">
-        <img id="statementImage" src="/statement.jpg" alt="Sample Statement" style="width: 100%; display: block;" />
+      <div class="sample-wrapper">
+        <img id="statementImage" src="/statement.jpg" alt="Sample Statement" />
         <div id="watermarkOverlay"></div>
       </div>
     </div>
   </div>
 
-  <!-- Supabase + Upload + Overlay Handler -->
+  <!-- ✅ Supabase Upload + Overlay Logic -->
   <script type="module">
     import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 
@@ -63,22 +128,25 @@
     const previewImage = document.getElementById("logoPreview");
     const overlay = document.getElementById("watermarkOverlay");
 
-    // Load from localStorage on page load
-    const savedLogo = localStorage.getItem("aquamark_logo_url");
-    if (savedLogo) {
-      previewImage.src = savedLogo;
-      previewContainer.style.display = "block";
-      overlay.style.backgroundImage = `url('${savedLogo}')`;
-    }
+    const applyWatermark = (url) => {
+      overlay.style.backgroundImage = `url('${url}')`;
+      overlay.style.backgroundRepeat = "repeat";
+      overlay.style.backgroundSize = "120px";
+      overlay.style.opacity = "0.1";
+      overlay.style.transform = "rotate(-20deg)";
+    };
 
     changeLogoButton.addEventListener("click", async () => {
       const file = logoInput.files[0];
-      if (!file) return alert("Please choose a logo first.");
+      if (!file) {
+        alert("Please select a file first.");
+        return;
+      }
 
-      const extension = file.name.split(".").pop().toLowerCase();
+      const extension = file.name.split('.').pop().toLowerCase();
       const filePath = `logo.${extension}`;
 
-      await supabase.storage.from("logos").remove([filePath]);
+      await supabase.storage.from("logos").remove(["logo.png", "logo.jpg", "logo.jpeg"]);
 
       const { error: uploadError } = await supabase.storage
         .from("logos")
@@ -89,7 +157,7 @@
 
       if (uploadError) {
         console.error("Upload error:", uploadError.message);
-        alert("Upload failed: " + uploadError.message);
+        alert("Upload failed.");
         return;
       }
 
@@ -104,14 +172,18 @@
       }
 
       const url = publicData.publicUrl;
-
       localStorage.setItem("aquamark_logo_url", url);
       previewImage.src = url;
       previewContainer.style.display = "block";
-      overlay.style.backgroundImage = `url('${url}')`;
-
-      console.log("New logo uploaded and applied.");
+      applyWatermark(url);
     });
+
+    const savedLogo = localStorage.getItem("aquamark_logo_url");
+    if (savedLogo) {
+      previewImage.src = savedLogo;
+      previewContainer.style.display = "block";
+      applyWatermark(savedLogo);
+    }
   </script>
 </body>
 </html>
