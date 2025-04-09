@@ -18,7 +18,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background: white;
+      background: #f3e8ff;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
 
@@ -188,25 +188,35 @@
       min-height: 100px;
     }
 
+    .progress-bar h2,
+    .download-console h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
     .download-console {
       min-height: 400px;
     }
 
     .download-console ul {
-      padding-left: 1rem;
+      padding-left: 0;
+      list-style-type: none;
+      margin: 0;
     }
 
     .download-console li {
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .download-console button {
-      margin-left: 0.5rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: #f0f0f0;
-      border: 1px solid #ccc;
-      font-size: 13px;
+    .download-icon {
+      width: 20px;
+      height: 20px;
       cursor: pointer;
     }
 
@@ -230,7 +240,7 @@
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark.io" class="aqua-logo" />
     <nav class="aqua-nav">
-      <a href="#">Watermark</a>
+      <a href="#" class="active">Watermark</a>
       <a href="#">Usage</a>
       <a href="#">API</a>
       <a href="#">Log Out</a>
@@ -292,12 +302,12 @@
         <div class="download-console">
           <h2>Download Console</h2>
           <ul>
-            <li>File1.pdf <button>Download</button></li>
-            <li>File2.pdf <button>Download</button></li>
-            <li>File3.pdf <button>Download</button></li>
-            <li>File4.pdf <button>Download</button></li>
-            <li>File5.pdf <button>Download</button></li>
-            <li>File6.pdf <button>Download</button></li>
+            <li>File1.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File2.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File3.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File4.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File5.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File6.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
           </ul>
         </div>
 
@@ -305,5 +315,6 @@
       </div>
     </div>
   </main>
+
 </body>
 </html>
