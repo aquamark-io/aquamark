@@ -72,8 +72,9 @@
         
         <!-- Upload Section -->
         <div style="flex: 1; min-width: 280px;">
-          <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br/>
-          <input type="file" id="logoInput" accept="image/png, image/jpeg" />
+         <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br />
+         <input type="file" id="logoInput" accept="image/png, image/jpeg" />
+         <button id="changeLogoButton" style="margin-top: 8px;">Change Logo</button>
           
           <div id="logoPreviewContainer" style="display:none; margin-top: 16px;">
             <p style="font-weight: 600;">Your uploaded logo:</p>
@@ -164,7 +165,7 @@
     });
   </script>
 
-<!-- ✅ Supabase Logo Upload + Watermark Preview (Flat Files, Overwrites Enabled) -->
+<!-- ✅ Supabase Logo Upload + Watermark Preview + Watermark Overlay Handler -->
 <script type="module">
   import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 
@@ -174,96 +175,74 @@
   );
 
   const logoInput = document.getElementById("logoInput");
+  const changeLogoButton = document.getElementById("changeLogoButton");
   const previewContainer = document.getElementById("logoPreviewContainer");
   const previewImage = document.getElementById("logoPreview");
+  const overlay = document.getElementById("watermarkOverlay");
 
-  const waitForEmail = () => {
-    return new Promise(resolve => {
-      const check = () => {
-        if (window.aquamarkUserEmail) {
-          resolve(window.aquamarkUserEmail);
-        } else {
-          setTimeout(check, 100);
-        }
-      };
-      check();
-    });
-  };
-
-  waitForEmail().then(async () => {
-    const storedLogo = localStorage.getItem("aquamark_logo_url");
-    if (storedLogo) {
-      previewImage.src = storedLogo;
-      previewContainer.style.display = "block";
-      document.dispatchEvent(new CustomEvent("aquamark:logoUploaded", {
-        detail: { url: storedLogo }
-      }));
-    }
-
-    logoInput.addEventListener("change", async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const extension = file.name.split(".").pop().toLowerCase();
-      const filePath = `logo.${extension}`; // Flat filename, overwritten each time
-
-      // First delete existing file (in case it's a different extension)
-      await supabase.storage.from("logos").remove([filePath]);
-
-      const { error: uploadError } = await supabase.storage
-        .from("logos")
-        .upload(filePath, file, {
-          upsert: true,
-          contentType: file.type,
-        });
-
-      if (uploadError) {
-        console.error("Upload error:", uploadError.message);
-        alert("Upload failed: " + uploadError.message);
-        return;
-      }
-
-      const { data: publicData, error: publicUrlError } = supabase.storage
-        .from("logos")
-        .getPublicUrl(filePath);
-
-      if (publicUrlError || !publicData?.publicUrl) {
-        console.error("Public URL error:", publicUrlError);
-        alert("Failed to get public URL for uploaded logo.");
-        return;
-      }
-
-      const url = publicData.publicUrl;
-      console.log("Logo public URL:", url);
-
-      localStorage.setItem("aquamark_logo_url", url);
-      previewImage.src = url;
-      previewContainer.style.display = "block";
-
-      document.dispatchEvent(new CustomEvent("aquamark:logoUploaded", {
-        detail: { url }
-      }));
-    });
-  });
-</script>
-
-<!-- ✅ Watermark Overlay Handler -->
-<script>
-  function applyTiledWatermark(imageUrl) {
-    const overlay = document.getElementById("watermarkOverlay");
+  const applyWatermark = (imageUrl) => {
     overlay.style.backgroundImage = `url('${imageUrl}')`;
     overlay.style.backgroundRepeat = "repeat";
-    overlay.style.backgroundSize = "150px";
-    overlay.style.opacity = "0.1";
+    overlay.style.backgroundSize = "120px"; // tweak this as needed
+    overlay.style.backgroundPosition = "0 0";
+    overlay.style.opacity = "0.08";
+    overlay.style.transform = "rotate(-10deg)";
+  };
+
+  const updatePreview = (url) => {
+    localStorage.setItem("aquamark_logo_url", url);
+    previewImage.src = url;
+    previewContainer.style.display = "block";
+    applyWatermark(url);
+  };
+
+  // Auto-load previously uploaded logo
+  const storedLogo = localStorage.getItem("aquamark_logo_url");
+  if (storedLogo) {
+    updatePreview(storedLogo);
   }
 
-  const savedLogo = localStorage.getItem("aquamark_logo_url");
-  if (savedLogo) {
-    applyTiledWatermark(savedLogo);
-  }
+  // Trigger file input when "Change Logo" button is clicked
+  changeLogoButton.addEventListener("click", () => {
+    logoInput.click();
+  });
 
-  document.addEventListener("aquamark:logoUploaded", function (e) {
-    applyTiledWatermark(e.detail.url);
+  // Upload file when user selects one
+  logoInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const extension = file.name.split(".").pop().toLowerCase();
+    const filePath = `logo.${extension}`;
+
+    // Delete all known logo types just in case
+    const possiblePaths = ["logo.png", "logo.jpg", "logo.jpeg"];
+    await supabase.storage.from("logos").remove(possiblePaths);
+
+    const { error: uploadError } = await supabase.storage
+      .from("logos")
+      .upload(filePath, file, {
+        upsert: true,
+        contentType: file.type,
+      });
+
+    if (uploadError) {
+      console.error("Upload error:", uploadError.message);
+      alert("Upload failed: " + uploadError.message);
+      return;
+    }
+
+    const { data, error: publicUrlError } = supabase.storage
+      .from("logos")
+      .getPublicUrl(filePath);
+
+    if (publicUrlError || !data?.publicUrl) {
+      console.error("Public URL error:", publicUrlError);
+      alert("Failed to get public URL.");
+      return;
+    }
+
+    updatePreview(data.publicUrl);
   });
 </script>
 </body>
