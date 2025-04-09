@@ -156,35 +156,35 @@
   <main class="aqua-panel">
     <h1>Watermark Panel</h1>
 
-    <div class="aqua-top-row">
-      <!-- Upload Logo -->
-      <div class="aqua-card aqua-upload">
-        <h2>Upload Logo</h2>
-        <div class="upload-box">
-          <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
-          <p>Drag & drop or click to upload</p>
-        </div>
-        <button id="changeLogoBtn">Change Logo</button>
-      </div>
-
-      <!-- Stored Logo Preview -->
-      <div class="aqua-card">
-        <h2>Your Logo</h2>
-        <div class="logo-preview-container">
-          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Logo Preview" />
-        </div>
-      </div>
-
-      <!-- Sample Watermark Preview -->
-      <div class="aqua-card">
-        <h2>Sample Preview</h2>
-        <div class="sample-preview small-preview">
-          <img src="/statement.jpg" alt="Sample Statement" class="statement-image" />
-          <canvas id="watermarkCanvas"></canvas>
-        </div>
-      </div>
+<div class="aqua-top-row">
+  <!-- Upload Logo -->
+  <div class="aqua-card aqua-upload">
+    <h2>Upload Logo</h2>
+    <div class="upload-box">
+      <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+      <p>Drag & drop or click to upload</p>
     </div>
-  </main>
+    <button id="changeLogoBtn">Change Logo</button>
+  </div>
+
+  <!-- Stored Logo Preview -->
+  <div class="aqua-card">
+    <h2>Your Logo</h2>
+    <div class="logo-preview-container">
+      <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Logo Preview" />
+    </div>
+  </div>
+
+  <!-- Sample Watermark Preview -->
+  <div class="aqua-card">
+    <h2>Sample Preview</h2>
+    <div class="sample-preview small-preview">
+      <img src="/statement.jpg" alt="Sample Statement" class="statement-image" />
+      <canvas id="watermarkCanvas"></canvas>
+    </div>
+  </div>
+</div>
+</main>
 
   <!-- JS Placeholder for Next Steps -->
   <script>
