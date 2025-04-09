@@ -57,21 +57,26 @@
       margin-bottom: 2rem;
     }
 
-    .aqua-top-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
+.aqua-top-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
 
-    .aqua-card {
-      flex: 1 1 30%;
-      min-width: 280px;
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
+.aqua-card {
+  flex: 1 1 32%;
+  min-width: 300px;
+  min-height: 320px;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
     .upload-box {
       border: 2px dashed #cce0f5;
@@ -104,15 +109,15 @@
       object-fit: contain;
     }
 
-    .sample-preview.small-preview {
-      position: relative;
-      width: 100%;
-      padding-top: 100%;
-      background: #f9f9f9;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 1rem;
-    }
+ .sample-preview.small-preview {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
 
     .sample-preview img.statement-image,
     .sample-preview canvas#watermarkCanvas {
