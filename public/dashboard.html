@@ -1,111 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <title>Aquamark.io - Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
   <style>
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      background: #fff;
-      color: #111;
+      padding: 0;
+      background: #f8f9fb;
+      color: #1e1e2f;
     }
-    .topbar {
+
+    .aqua-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 16px 32px;
-      border-bottom: 1px solid #eee;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
-    .logo {
-      height: 36px;
+
+    .aqua-logo {
+      height: 28px;
     }
-    nav {
-      display: flex;
-      gap: 24px;
-    }
-    nav a {
+
+    .aqua-nav a {
+      margin-left: 1.5rem;
       text-decoration: none;
-      color: #3e5eff;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .aqua-nav a.active {
+      color: #007bff;
+    }
+
+    .aqua-panel {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .aqua-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .aqua-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      flex: 1 1 45%;
+      min-width: 300px;
+    }
+
+    .aqua-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .usage-stat {
+      font-size: 1.5rem;
       font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
+      margin-bottom: 0.25rem;
     }
-    nav a:hover {
-      text-decoration: underline;
+
+    .usage-subtext {
+      color: #777;
+      font-size: 0.9rem;
     }
-    .container {
-      padding: 40px 32px;
-    }
-    .section {
-      display: none;
-    }
-    .section.active {
-      display: block;
+
+    @media (max-width: 900px) {
+      .aqua-cards {
+        flex-direction: column;
+      }
+
+      .aqua-card {
+        flex: 1 1 100%;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-<nav>
-  <a onclick="showSection('dashboard')">Dashboard</a>
-  <a href="/watermark.html">Watermark</a>
-  <a onclick="showSection('usage')">Usage</a>
-  <a onclick="showSection('api')">API</a>
-  <a onclick="showSection('profile')">Profile</a>
-  <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
-</nav>
+
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark.io Logo" class="aqua-logo" />
+    <nav class="aqua-nav">
+      <a href="/dashboard.html" class="active">Dashboard</a>
+      <a href="/watermark.html">Watermark</a>
+      <a href="#">Usage</a>
+      <a href="#">API</a>
+      <a href="#">Log Out</a>
+    </nav>
   </header>
 
-  <main class="container">
-    <div id="dashboard" class="section active">
-      <h2>Welcome back 👋</h2>
-      <p>This is your Aquamark dashboard. Your plan and usage info will appear here soon.</p>
-    </div>
+  <main class="aqua-panel">
+    <h1>Welcome to your Dashboard</h1>
 
-    <div id="watermark" class="section">
-      <h2>Watermark Your Files</h2>
-      <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
-        <div style="flex: 1; min-width: 280px;">
-          <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br />
-          <input type="file" id="logoInput" accept="image/png, image/jpeg" />
-          <button id="changeLogoButton" style="margin-top: 8px;">Change Logo</button>
-          <div id="logoPreviewContainer" style="display:none; margin-top: 16px;">
-            <p style="font-weight: 600;">Your uploaded logo:</p>
-            <img id="logoPreview" src="" alt="Your Logo" style="max-width: 300px; border: 1px solid #eee; padding: 8px;" />
-          </div>
-        </div>
-        <div style="flex: 1; min-width: 300px;">
-          <p style="font-weight: 600; margin-bottom: 8px;">See a sample:</p>
-          <div style="position: relative; width: 100%; max-width: 500px; border: 1px solid #ccc;">
-            <img id="statementImage" src="/statement.jpg" alt="Sample Statement" style="width: 100%; display: block;" />
-            <div id="watermarkOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
-          </div>
-        </div>
+    <!-- Outseta Profile Embed -->
+    <div data-o-profile="1" data-mode="embed" style="margin-bottom: 2rem;"></div>
+
+    <!-- Usage and API Cards -->
+    <div class="aqua-cards">
+      <div class="aqua-card">
+        <h2>Usage</h2>
+        <div class="usage-stat">348 / 1000 pages</div>
+        <div class="usage-subtext">Pages watermarked this month</div>
       </div>
-    </div>
 
-    <div id="usage" class="section">
-      <h2>Usage</h2>
-      <p>Pages used this month: <strong>Coming soon</strong></p>
-    </div>
-
-    <div id="api" class="section">
-      <h2>API Access</h2>
-      <p>Your documentation and API keys will go here.</p>
-    </div>
-
-    <div id="profile" class="section">
-      <h2>Your Profile</h2>
-      <div data-o-profile="1" data-mode="embed"></div>
+      <div class="aqua-card">
+        <h2>API Instructions</h2>
+        <p>Use your unique API key found in your profile to authenticate requests.</p>
+        <p><strong>POST</strong> your PDFs to:  
+          <code>https://api.aquamark.io/watermark</code>
+        </p>
+        <p>Include your API key in the header like so:  
+          <code>Authorization: Bearer YOUR_API_KEY</code>
+        </p>
+        <p>Responses will include a download link for each watermarked file.</p>
+      </div>
     </div>
   </main>
 
+  <!-- Outseta JS -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -114,124 +142,5 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <script>
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-  </script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const token = new URLSearchParams(window.location.search).get('access_token');
-      window.aquamarkUserEmail = null;
-
-      if (token) {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const firstName = payload['given_name'] || 'there';
-        const email = payload['email'];
-        const plan = payload['outseta:planUid'];
-        window.aquamarkUserEmail = email;
-
-        const planNames = {
-          'yW1zoPmB': 'ISO Shops – Unlimited',
-          'A1B2C3D4': 'Small Teams',
-          'X9Y8Z7': 'Riding Solo'
-        };
-
-        const planLabel = planNames[plan] || 'Unknown Plan';
-
-        const dashboard = document.getElementById('dashboard');
-        dashboard.innerHTML = `
-          <h2>Hey ${firstName}, welcome back to Aquamark 👋</h2>
-          <p>Email: ${email}</p>
-          <p>Plan: ${planLabel}</p>
-        `;
-      } else {
-        document.body.innerHTML = `
-          <div style="padding: 40px; font-family: Inter, sans-serif;">
-            <h2>Session Expired</h2>
-            <p>Please <a href="/login.html">log in again</a> to continue.</p>
-          </div>
-        `;
-      }
-    });
-  </script>
-
-  <script type="module">
-    import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
-
-    const supabase = createClient(
-      "https://dvzmnikrvkvgragzhrof.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-    );
-
-    const logoInput = document.getElementById("logoInput");
-    const changeLogoButton = document.getElementById("changeLogoButton");
-    const previewContainer = document.getElementById("logoPreviewContainer");
-    const previewImage = document.getElementById("logoPreview");
-    const overlay = document.getElementById("watermarkOverlay");
-
-    let selectedFile = null;
-
-    logoInput.addEventListener("change", (e) => {
-      selectedFile = e.target.files[0];
-    });
-
-    changeLogoButton.addEventListener("click", async () => {
-      if (!selectedFile) return alert("Please choose a file first.");
-
-      const extension = selectedFile.name.split(".").pop().toLowerCase();
-      const filePath = `logo.${extension}`;
-
-      await supabase.storage.from("logos").remove([filePath]);
-
-      const { error: uploadError } = await supabase.storage
-        .from("logos")
-        .upload(filePath, selectedFile, {
-          upsert: true,
-          contentType: selectedFile.type,
-        });
-
-      if (uploadError) {
-        console.error("Upload error:", uploadError.message);
-        alert("Upload failed: " + uploadError.message);
-        return;
-      }
-
-      const { data: publicData, error: publicUrlError } = supabase.storage
-        .from("logos")
-        .getPublicUrl(filePath);
-
-      if (publicUrlError || !publicData?.publicUrl) {
-        console.error("Public URL error:", publicUrlError);
-        alert("Failed to get public URL for uploaded logo.");
-        return;
-      }
-
-      const url = publicData.publicUrl;
-      localStorage.setItem("aquamark_logo_url", url);
-      previewImage.src = url;
-      previewContainer.style.display = "block";
-      overlay.style.backgroundImage = `url('${url}')`;
-      overlay.style.backgroundRepeat = "repeat";
-      overlay.style.backgroundSize = "120px";
-      overlay.style.backgroundPosition = "0 0";
-      overlay.style.transform = "rotate(-25deg)";
-      overlay.style.opacity = "0.1";
-    });
-
-    const savedLogo = localStorage.getItem("aquamark_logo_url");
-    if (savedLogo) {
-      previewImage.src = savedLogo;
-      previewContainer.style.display = "block";
-      overlay.style.backgroundImage = `url('${savedLogo}')`;
-      overlay.style.backgroundRepeat = "repeat";
-      overlay.style.backgroundSize = "120px";
-      overlay.style.backgroundPosition = "0 0";
-      overlay.style.transform = "rotate(-25deg)";
-      overlay.style.opacity = "0.1";
-    }
-  </script>
 </body>
 </html>
