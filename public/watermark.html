@@ -3,154 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Watermark Files - Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <title>Aquamark.io – Watermark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
-      background: #fff;
-      color: #111;
+      padding: 2rem;
+      background: #f8f9fb;
     }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 32px;
-      border-bottom: 1px solid #eee;
+    h1 {
+      color: #1e1e2f;
     }
-    .logo {
-      height: 36px;
+    .upload-section, .process-section {
+      margin-top: 2rem;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
     }
-    nav {
-      display: flex;
-      gap: 24px;
+    .file-list {
+      margin-top: 1rem;
     }
-    nav a {
-      text-decoration: none;
-      color: #3e5eff;
+    .file-list li {
+      margin-bottom: 0.5rem;
+    }
+    button {
+      margin-top: 1rem;
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      cursor: pointer;
       font-weight: 600;
-      font-size: 14px;
     }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .preview-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 500px;
-      border: 1px solid #ccc;
-      overflow: hidden; /* crop watermark overlay inside */
-    }
-    .preview-wrapper img {
-      width: 100%;
-      display: block;
-    }
-    #watermarkOverlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background-repeat: repeat;
-      background-size: 150px auto;
-      opacity: 0.08;
-      transform: rotate(-25deg);
+    button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <nav>
-      <a href="/dashboard.html">Dashboard</a>
-      <a href="/watermark.html">Watermark</a>
-      <a href="/api.html">API</a>
-      <a href="/profile.html">Profile</a>
-      <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
-    </nav>
-  </header>
+  <h1>Watermark Documents</h1>
 
-  <main style="padding: 40px 32px;">
-    <h2>Watermark Your Files</h2>
-    <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
-      <!-- Upload Section -->
-      <div style="flex: 1; min-width: 280px;">
-        <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br />
-        <input type="file" id="logoInput" accept="image/png, image/jpeg" />
-        <button id="changeLogoButton" style="margin-top: 8px;">Change Logo</button>
-        <div id="logoPreviewContainer" style="display:none; margin-top: 16px;">
-          <p style="font-weight: 600;">Your uploaded logo:</p>
-          <img id="logoPreview" src="" alt="Your Logo" style="max-width: 300px; border: 1px solid #eee; padding: 8px;" />
-        </div>
-      </div>
+  <div class="upload-section">
+    <h2>Step 1: Upload PDF files</h2>
+    <input type="file" id="pdfUpload" accept="application/pdf" multiple />
+    <ul class="file-list" id="fileList"></ul>
+  </div>
 
-      <!-- Sample Preview Section -->
-      <div style="flex: 1; min-width: 300px;">
-        <p style="font-weight: 600; margin-bottom: 8px;">See a sample:</p>
-        <div class="preview-wrapper">
-          <img id="statementImage" src="/statement.jpg" alt="Sample Statement" />
-          <div id="watermarkOverlay"></div>
-        </div>
-      </div>
-    </div>
-  </main>
+  <div class="process-section">
+    <h2>Step 2: Apply Watermark</h2>
+    <button id="processBtn" disabled>Process & Download</button>
+    <div id="status"></div>
+  </div>
 
-  <!-- ✅ Supabase Logo Upload + Tiled Watermark Overlay -->
-  <script type="module">
-    import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
+  <script>
+    const pdfInput = document.getElementById('pdfUpload');
+    const fileList = document.getElementById('fileList');
+    const processBtn = document.getElementById('processBtn');
+    const status = document.getElementById('status');
 
-    const supabase = createClient(
-      "https://dvzmnikrvkvgragzhrof.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-    );
+    let selectedFiles = [];
+    const watermarkImageUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg'; // replace with .png if needed
 
-    const logoInput = document.getElementById("logoInput");
-    const changeLogoButton = document.getElementById("changeLogoButton");
-    const previewImage = document.getElementById("logoPreview");
-    const previewContainer = document.getElementById("logoPreviewContainer");
-    const overlay = document.getElementById("watermarkOverlay");
+    pdfInput.addEventListener('change', (event) => {
+      selectedFiles = Array.from(event.target.files).slice(0, 6);
+      fileList.innerHTML = '';
 
-    function applyWatermark(url) {
-      overlay.style.backgroundImage = `url('${url}')`;
+      selectedFiles.forEach(file => {
+        const li = document.createElement('li');
+        li.textContent = file.name;
+        fileList.appendChild(li);
+      });
+
+      processBtn.disabled = selectedFiles.length === 0;
+    });
+
+    async function getWatermarkImageBytes(url) {
+      const res = await fetch(url);
+      return await res.arrayBuffer();
     }
 
-    const storedLogo = localStorage.getItem("aquamark_logo_url");
-    if (storedLogo) {
-      previewImage.src = storedLogo;
-      previewContainer.style.display = "block";
-      applyWatermark(storedLogo);
-    }
+    async function addTiledWatermark(pdfBytes, watermarkBytes) {
+      const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+      const watermarkImg = await pdfDoc.embedJpg(watermarkBytes);
 
-    changeLogoButton.addEventListener("click", async () => {
-      const file = logoInput.files[0];
-      if (!file) return;
+      const wmWidth = watermarkImg.width / 4;
+      const wmHeight = watermarkImg.height / 4;
 
-      const extension = file.name.split(".").pop().toLowerCase();
-      const filePath = `logo.${extension}`;
+      const pages = pdfDoc.getPages();
+      for (const page of pages) {
+        const { width, height } = page.getSize();
 
-      await supabase.storage.from("logos").remove([filePath]);
+        const xSpacing = wmWidth + 60;
+        const ySpacing = wmHeight + 60;
 
-      const { error: uploadError } = await supabase.storage
-        .from("logos")
-        .upload(filePath, file, {
-          upsert: true,
-          contentType: file.type,
-        });
-
-      if (uploadError) {
-        alert("Upload failed: " + uploadError.message);
-        return;
+        for (let x = -wmWidth; x < width + wmWidth; x += xSpacing) {
+          for (let y = -wmHeight; y < height + wmHeight; y += ySpacing) {
+            page.drawImage(watermarkImg, {
+              x,
+              y,
+              width: wmWidth,
+              height: wmHeight,
+              rotate: PDFLib.degrees(-45),
+              opacity: 0.15,
+            });
+          }
+        }
       }
 
-      const { data: publicData } = supabase.storage.from("logos").getPublicUrl(filePath);
-      const url = publicData.publicUrl;
+      return await pdfDoc.save();
+    }
 
-      localStorage.setItem("aquamark_logo_url", url);
-      previewImage.src = url;
-      previewContainer.style.display = "block";
-      applyWatermark(url);
+    processBtn.addEventListener('click', async () => {
+      status.textContent = 'Processing...';
+      processBtn.disabled = true;
+
+      const watermarkBytes = await getWatermarkImageBytes(watermarkImageUrl);
+
+      for (const file of selectedFiles) {
+        const arrayBuffer = await file.arrayBuffer();
+        const watermarkedPdf = await addTiledWatermark(arrayBuffer, watermarkBytes);
+
+        const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'watermarked-' + file.name;
+        a.textContent = 'Download ' + file.name;
+        a.style.display = 'block';
+        status.appendChild(a);
+
+        // Clean up URL after a few seconds
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+      }
+
+      status.insertAdjacentHTML('beforeend', '<p>✅ All files processed.</p>');
     });
   </script>
 </body>
