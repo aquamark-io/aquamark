@@ -143,6 +143,28 @@
     flex: 1 1 100%;
     max-width: 100%;
   }
+
+      /* Hide file input but keep it clickable via label */
+.upload-box input[type="file"] {
+  display: none;
+}
+.aqua-btn {
+  background-color: #2e6eff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s ease;
+}
+
+.aqua-btn:hover {
+  background-color: #1f54d9;
+}
+
 }
   </style>
 </head>
@@ -169,14 +191,14 @@
 
 <div class="aqua-top-row">
   <!-- Upload Logo -->
-  <div class="aqua-card aqua-upload">
-    <h2>Upload Logo</h2>
-    <div class="upload-box">
-      <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
-      <p>Drag & drop or click to upload</p>
-    </div>
-    <button id="changeLogoBtn">Change Logo</button>
-  </div>
+<div class="aqua-card aqua-upload">
+  <h2>Upload Logo</h2>
+  <label for="logoUpload" class="upload-box">
+    <p>Drag & drop or click to upload</p>
+    <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+  </label>
+  <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
+</div>
 
   <!-- Stored Logo Preview -->
   <div class="aqua-card">
