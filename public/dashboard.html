@@ -1,263 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aquamark Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <title>Aquamark - Watermark Upload Preview</title>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: #fff;
-      color: #111;
+      font-family: Arial, sans-serif;
+      margin: 32px;
     }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 32px;
-      border-bottom: 1px solid #eee;
-    }
-    .logo {
-      height: 36px;
-    }
-    nav {
-      display: flex;
-      gap: 24px;
-    }
-    nav a {
-      text-decoration: none;
-      color: #3e5eff;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .container {
-      padding: 40px 32px;
-    }
-    .section {
-      display: none;
-    }
-    .section.active {
-      display: block;
+    #watermarkOverlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-repeat: repeat;
+      background-size: 150px;
+      opacity: 0.1;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <nav>
-      <a onclick="showSection('dashboard')">Dashboard</a>
-      <a onclick="showSection('watermark')">Watermark</a>
-      <a onclick="showSection('usage')">Usage</a>
-      <a onclick="showSection('api')">API</a>
-      <a onclick="showSection('profile')">Profile</a>
-      <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
-    </nav>
-  </header>
 
-  <main class="container">
-    <div id="dashboard" class="section active">
-      <h2>Welcome back 👋</h2>
-      <p>This is your Aquamark dashboard. Your plan and usage info will appear here soon.</p>
+  <h2>Watermark Your Files</h2>
+
+  <!-- Upload Section -->
+  <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
+    <div style="flex: 1; min-width: 280px;">
+      <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br />
+      <input type="file" id="logoInput" accept="image/png, image/jpeg" />
+      <button id="changeLogoButton" style="margin-top: 8px;">Change Logo</button>
+
+      <div id="logoPreviewContainer" style="display:none; margin-top: 16px;">
+        <p style="font-weight: 600;">Your uploaded logo:</p>
+        <img id="logoPreview" src="" alt="Your Logo" style="max-width: 300px; border: 1px solid #eee; padding: 8px;" />
+      </div>
     </div>
 
-    <div id="watermark" class="section">
-      <h2>Watermark Your Files</h2>
-      <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
-        
-<!-- Upload Section -->
-<div style="flex: 1; min-width: 280px;">
-  <label style="font-weight: 600;">Upload your watermark logo (PNG or JPG):</label><br />
-  <input type="file" id="logoInput" accept="image/png, image/jpeg" />
-  <button id="changeLogoButton" style="margin-top: 8px;">Change Logo</button>
-
-  <div id="logoPreviewContainer" style="display:none; margin-top: 16px;">
-    <p style="font-weight: 600;">Your uploaded logo:</p>
-    <img id="logoPreview" src="" alt="Your Logo" style="max-width: 300px; border: 1px solid #eee; padding: 8px;" />
+    <!-- Sample Preview Section -->
+    <div style="flex: 1; min-width: 300px;">
+      <p style="font-weight: 600; margin-bottom: 8px;">See a sample:</p>
+      <div style="position: relative; width: 100%; max-width: 600px; border: 1px solid #ccc;">
+        <img id="statementImage" src="/statement.jpg" alt="Sample Statement" style="width: 100%; display: block;" />
+        <div id="watermarkOverlay"></div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Sample Preview Section -->
-<div style="flex: 1; min-width: 300px;">
-  <p style="font-weight: 600; margin-bottom: 8px;">See a sample:</p>
-  <div style="position: relative; display: inline-block;">
-    <img id="statementImage" src="/statement.jpg" alt="Sample Statement" style="max-width: 100%; border: 1px solid #ccc;" />
-    <div id="watermarkOverlay" style="
-      position: absolute;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      background-repeat: repeat;
-      background-size: 180px;
-      transform: rotate(-20deg);
-      opacity: 0.1;
-    "></div>
-  </div>
-</div>
+  <!-- Supabase + Upload + Overlay Handler -->
+  <script type="module">
+    import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 
-    <div id="usage" class="section">
-      <h2>Usage</h2>
-      <p>Pages used this month: <strong>Coming soon</strong></p>
-    </div>
+    const supabase = createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+    );
 
-    <div id="api" class="section">
-      <h2>API Access</h2>
-      <p>Your documentation and API keys will go here.</p>
-    </div>
+    const logoInput = document.getElementById("logoInput");
+    const changeLogoButton = document.getElementById("changeLogoButton");
+    const previewContainer = document.getElementById("logoPreviewContainer");
+    const previewImage = document.getElementById("logoPreview");
+    const overlay = document.getElementById("watermarkOverlay");
 
-    <div id="profile" class="section">
-      <h2>Your Profile</h2>
-      <div data-o-profile="1" data-mode="embed"></div>
-    </div>
-  </main>
-
-  <!-- ✅ Outseta Full Embed -->
-  <script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
-  <!-- ✅ Section switching -->
-  <script>
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    // Load from localStorage on page load
+    const savedLogo = localStorage.getItem("aquamark_logo_url");
+    if (savedLogo) {
+      previewImage.src = savedLogo;
+      previewContainer.style.display = "block";
+      overlay.style.backgroundImage = `url('${savedLogo}')`;
     }
-  </script>
 
-  <!-- ✅ JWT decoding -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const token = new URLSearchParams(window.location.search).get('access_token');
-      window.aquamarkUserEmail = null;
+    changeLogoButton.addEventListener("click", async () => {
+      const file = logoInput.files[0];
+      if (!file) return alert("Please choose a logo first.");
 
-      if (token) {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const firstName = payload['given_name'] || 'there';
-        const email = payload['email'];
-        const plan = payload['outseta:planUid'];
-        window.aquamarkUserEmail = email;
+      const extension = file.name.split(".").pop().toLowerCase();
+      const filePath = `logo.${extension}`;
 
-        const planNames = {
-          'yW1zoPmB': 'ISO Shops – Unlimited',
-          'A1B2C3D4': 'Small Teams',
-          'X9Y8Z7': 'Riding Solo'
-        };
+      await supabase.storage.from("logos").remove([filePath]);
 
-        const planLabel = planNames[plan] || 'Unknown Plan';
+      const { error: uploadError } = await supabase.storage
+        .from("logos")
+        .upload(filePath, file, {
+          upsert: true,
+          contentType: file.type,
+        });
 
-        const dashboard = document.getElementById('dashboard');
-        dashboard.innerHTML = `
-          <h2>Hey ${firstName}, welcome back to Aquamark 👋</h2>
-          <p>Email: ${email}</p>
-          <p>Plan: ${planLabel}</p>
-        `;
-      } else {
-        document.body.innerHTML = `
-          <div style="padding: 40px; font-family: Inter, sans-serif;">
-            <h2>Session Expired</h2>
-            <p>Please <a href="/login.html">log in again</a> to continue.</p>
-          </div>
-        `;
+      if (uploadError) {
+        console.error("Upload error:", uploadError.message);
+        alert("Upload failed: " + uploadError.message);
+        return;
       }
+
+      const { data: publicData, error: publicUrlError } = supabase.storage
+        .from("logos")
+        .getPublicUrl(filePath);
+
+      if (publicUrlError || !publicData?.publicUrl) {
+        console.error("Public URL error:", publicUrlError);
+        alert("Failed to get public URL.");
+        return;
+      }
+
+      const url = publicData.publicUrl;
+
+      localStorage.setItem("aquamark_logo_url", url);
+      previewImage.src = url;
+      previewContainer.style.display = "block";
+      overlay.style.backgroundImage = `url('${url}')`;
+
+      console.log("New logo uploaded and applied.");
     });
   </script>
-
-<!-- ✅ Supabase Logo Upload + Watermark Preview + Watermark Overlay Handler -->
-<script type="module">
-  import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
-
-  const supabase = createClient(
-    "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-  );
-
-  const logoInput = document.getElementById("logoInput");
-  const changeLogoButton = document.getElementById("changeLogoButton");
-  const previewContainer = document.getElementById("logoPreviewContainer");
-  const previewImage = document.getElementById("logoPreview");
-  const overlay = document.getElementById("watermarkOverlay");
-  const statementImage = document.getElementById("statementImage");
-
-  function applyTiledWatermark(imageUrl) {
-    overlay.style.backgroundImage = `url('${imageUrl}')`;
-
-    // Match size/position to statement image
-    const rect = statementImage.getBoundingClientRect();
-    overlay.style.width = rect.width + "px";
-    overlay.style.height = rect.height + "px";
-  }
-
-  function updateLogoUI(url) {
-    localStorage.setItem("aquamark_logo_url", url);
-    previewImage.src = url;
-    previewContainer.style.display = "block";
-    applyTiledWatermark(url);
-  }
-
-  async function uploadLogo(file) {
-    const ext = file.name.split(".").pop().toLowerCase();
-    const path = `logo.${ext}`;
-
-    await supabase.storage.from("logos").remove([path]);
-
-    const { error: uploadError } = await supabase.storage
-      .from("logos")
-      .upload(path, file, {
-        upsert: true,
-        contentType: file.type,
-      });
-
-    if (uploadError) {
-      alert("Upload failed: " + uploadError.message);
-      return;
-    }
-
-    const { data, error: urlError } = supabase.storage
-      .from("logos")
-      .getPublicUrl(path);
-
-    if (urlError || !data?.publicUrl) {
-      alert("Could not get public URL");
-      return;
-    }
-
-    updateLogoUI(data.publicUrl);
-  }
-
-  logoInput.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if (file) uploadLogo(file);
-  });
-
-  changeLogoButton.addEventListener("click", () => {
-    logoInput.click();
-  });
-
-  // On load
-  window.addEventListener("DOMContentLoaded", () => {
-    const saved = localStorage.getItem("aquamark_logo_url");
-    if (saved) {
-      previewImage.src = saved;
-      previewContainer.style.display = "block";
-      applyTiledWatermark(saved);
-    }
-  });
-
-  // Resize fix
-  window.addEventListener("resize", () => {
-    const saved = localStorage.getItem("aquamark_logo_url");
-    if (saved) applyTiledWatermark(saved);
-  });
-</script>
-
 </body>
 </html>
