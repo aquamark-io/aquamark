@@ -72,8 +72,8 @@
     const status = document.getElementById('status');
     const logoInput = document.getElementById('logoUpload');
 if (logoInput) {
-  logoInput.addEventListener('click', () => {
-    logoInput.value = null; // fix: allows re-selecting same file to trigger upload
+  logoInput.addEventListener('change', () => {
+    logoInput.value = ''; // ensures same file re-triggers change
   });
 }
     
@@ -112,8 +112,10 @@ if (logoInput) {
         const xSpacing = wmWidth + 60;
         const ySpacing = wmHeight + 60;
 
-        for (let x = 0; x <= width - wmWidth; x += xSpacing) {
-  for (let y = 0; y <= height - wmHeight; y += ySpacing) {
+  const diagonalBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
+for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
+  for (let y = diagonalBuffer; y < height - diagonalBuffer; y += ySpacing) {
+
             page.drawImage(watermarkImg, {
               x,
               y,
@@ -124,7 +126,6 @@ if (logoInput) {
             });
           }
         }
-      }
 
       return await pdfDoc.save();
     }
