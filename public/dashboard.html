@@ -120,6 +120,7 @@
       }
     }
   </style>
+
 <script>
   var o_options = {
     domain: "aquamark.outseta.com",
@@ -131,17 +132,81 @@
   };
 </script>
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
 </head>
 <body>
-
-
-
-<!-- Outseta Config and Profile Embed Loader -->
-
-
-
-<!-- Outseta Config -->
-
-
+<script>
+  if (window.location.hash === '#o-logout-link') {
+    window.location.href = '/login.html';
+  }
+</script>
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark.io Logo" class="aqua-logo" />
+    <nav class="aqua-nav">
+<a href="/dashboard.html">Dashboard</a>
+<a href="/watermark.html">Watermark</a>
+<a href="https://www.aquamark.io/#o-logout-link" id="logout-link">Log Out</a>
+    </nav>
+  </header>
+  <main class="aqua-panel">
+    <h1 class="greeting">Hey Christina! 👋 </h1>
+    <div class="aqua-layout">
+      <!-- Profile -->
+      <div class="profile-container">
+        <div data-o-profile="1" data-mode="embed"></div>
+      </div>
+      <!-- Illustration -->
+      <div class="graphic-container">
+      </div>
+    </div>
+    <div class="aqua-cards">
+      <!-- Usage -->
+      <div class="aqua-card">
+        <h2>Usage</h2>
+        <div class="usage-stat">348 / 1000 pages</div>
+        <div class="usage-subtext">Pages watermarked this month</div>
+        <div class="progress-bar-container">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+      <!-- API Instructions -->
+      <div class="aqua-card">
+        <h2>API Instructions</h2>
+        <p>Use your API key from your profile to authenticate.</p>
+        <p><strong>POST</strong> to:<br />
+          <code>https://api.aquamark.io/watermark</code>
+        </p>
+        <p><strong>Headers</strong>:<br />
+          <code>Authorization: Bearer YOUR_API_KEY</code>
+        </p>
+        <p><strong>Response</strong>:<br />
+          Download link(s) for watermarked files.</p>
+      </div>
+    </div>
+  </main>
+  <!-- Outseta Script -->
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+    };
+  </script>
+  
+<script>
+  // Check for access_token in URL on first load
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenFromUrl = urlParams.get("access_token");
+  if (tokenFromUrl) {
+    sessionStorage.setItem("access_token", tokenFromUrl);
+  }
+  // Rewrite navigation links to carry token
+  const token = sessionStorage.getItem("access_token");
+  if (token && token !== "true") {
+    const dashboardLink = document.querySelector("a[href*='dashboard.html']");
+    const watermarkLink = document.querySelector("a[href*='watermark.html']");
+    if (dashboardLink) dashboardLink.href = `/dashboard.html?access_token=${token}`;
+    if (watermarkLink) watermarkLink.href = `/watermark.html?access_token=${token}`;
+  }
+</script>
 </body>
 </html>
