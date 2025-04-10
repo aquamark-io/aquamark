@@ -139,24 +139,15 @@
     }
   </style>
   
-
-<script>
-  var o_options = {
-    domain: "aquamark.outseta.com",
-    tokenStorage: "cookie",
-    auth: {
-      authenticationCallbackUrl: window.location.origin + "/dashboard.html",
-      registrationConfirmationUrl: window.location.origin + "/dashboard.html"
-    }
-  };
-</script>
-<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
 </head>
   
 <body>
   
-
+<script>
+  if (window.location.hash === '#o-logout-link') {
+    window.location.href = '/login.html';
+  }
+</script>
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark.io Logo" class="aqua-logo" />
     <nav class="aqua-nav">
@@ -207,27 +198,39 @@
   </main>
 
   <!-- Outseta Script -->
-  
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
 
 <script>
-  Outseta.getUser().then((profile) => {
-    console.log("PersonUid:", profile.Uid);
-    console.log("Email:", profile.Email);
-    console.log("AccountUid:", profile.Account.Uid);
-  });
+  Outseta.on("accessToken.set", (payload) => {
+    console.log("✅ Token set:", payload);
 
-  Outseta.getJwtPayload().then((payload) => {
-    if(payload) {
-      console.log("PersonUid:", payload.sub);
-      console.log("Email:", payload.email);
-      console.log("AccountUid:", payload["outseta:accountUid"]);
-    }
-  });
+    // Optional: Store in sessionStorage (if needed elsewhere)
+    sessionStorage.setItem("access_token", payload.access_token || "true");
 
-  Outseta.on('accessToken.set', (payload) => {
-    console.log("PersonUid:", payload.sub);
-    console.log("Email:", payload.email);
-    console.log("AccountUid:", payload["outseta:accountUid"]);
+    // 2️⃣ Decode the token (basic snapshot)
+    Outseta.getJwtPayload().then((jwt) => {
+      if (jwt) {
+        console.log("🔐 JWT Payload:", jwt);
+      }
+    });
+
+    // 3️⃣ Load full user profile & account info
+    Outseta.getUser().then((profile) => {
+      if (profile) {
+        console.log("👤 Full Profile:", profile);
+        console.log("Name:", profile.FirstName, profile.LastName);
+        console.log("Email:", profile.Email);
+        console.log("Plan:", profile.Account.Subscription?.Plan?.Name || "None");
+        console.log("Billing:", profile.Account.BillingInfo);
+      }
+    });
   });
 </script>
 
