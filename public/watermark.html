@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Aquamark.io - Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
+  <meta charset="UTF-8">
+  <title>Aquamark.io - Watermark</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -39,50 +38,35 @@
     }
 
     .aqua-panel {
-      max-width: 1400px;
+      max-width: 1700px;
       margin: 2rem auto;
       padding: 0 2rem;
     }
 
-    h1.greeting {
-      font-size: 3.0rem;
-      margin-bottom: 2.0rem;
-      font-weight: 600;
-      color: #1e1e2f;
+    .aqua-panel h1 {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
     }
 
-    .aqua-layout {
+    .aqua-dashboard {
       display: flex;
       gap: 2rem;
-      flex-wrap: wrap;
+      align-items: flex-start;
     }
 
-    .profile-container {
-      flex: 1 1 40%;
-      min-width: 300px;
-    }
-
-    .graphic-container {
-      flex: 1 1 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .graphic-container img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .dashboard-graphic {
-  width: 500px;
-  opacity: 0.65;
-}
-    .aqua-cards {
-      display: flex;
-      flex-wrap: wrap;
+    .aqua-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
-      margin-top: 2rem;
+      flex: 1;
+    }
+
+    .aqua-right-panel {
+      width: 500px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .aqua-card {
@@ -90,102 +74,277 @@
       border-radius: 16px;
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      flex: 1 1 45%;
-      min-width: 300px;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .aqua-card h2 {
-      font-size: 1.2rem;
+    .upload-box {
+      border: 2px dashed #cce0f5;
+      border-radius: 12px;
+      background: #f8fbff;
+      text-align: center;
+      padding: 2rem 1rem;
       margin-bottom: 1rem;
+      color: #667;
+      font-weight: 500;
     }
 
-    .usage-stat {
-      font-size: 1.5rem;
+    .upload-box input[type="file"] {
+      display: none;
+    }
+
+    .upload-disclaimer {
+      font-size: 0.8rem;
+      color: #999;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .aqua-btn {
+      background-color: #2e6eff;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .aqua-btn:hover {
+      background-color: #1f54d9;
+    }
+
+    .upgrade-btn {
+      background-color: #28a745;
+      color: white;
       font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .usage-subtext {
-      color: #777;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-
-    .progress-bar-container {
-      background: #e9ecef;
-      height: 12px;
+      font-size: 15px;
+      padding: 14px 22px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
       width: 100%;
+    }
+
+    .upgrade-btn:hover {
+      background-color: #218838;
+    }
+
+    .stored-logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .stored-logo-container img {
+      max-height: 300px;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .sample-preview.small-preview {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      background: #f9f9f9;
       border-radius: 8px;
       overflow: hidden;
+      margin-top: 1rem;
     }
 
-    .progress-fill {
+    .sample-preview img.statement-image,
+    .sample-preview canvas#watermarkCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
       height: 100%;
-      width: 34.8%; /* example for 348/1000 */
-      background-color: #2e6eff;
-      transition: width 0.3s ease;
+      object-fit: contain;
+      z-index: 1;
     }
 
-    @media (max-width: 900px) {
-      .aqua-layout,
-      .aqua-cards {
+    canvas#watermarkCanvas {
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .progress-bar,
+    .download-console {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-bar {
+      min-height: 100px;
+    }
+
+    .progress-bar h2,
+    .download-console h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .download-console {
+      min-height: 400px;
+    }
+
+    .download-console ul {
+      padding-left: 0;
+      list-style-type: none;
+      margin: 0;
+    }
+
+    .download-console li {
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .download-console li {
+  color: #c9c7c7; /* medium grey */
+}
+
+    .download-icon {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .aqua-dashboard {
         flex-direction: column;
       }
 
-      .graphic-container {
-        justify-content: center;
-        margin-top: 2rem;
+      .aqua-right-panel {
+        width: 100%;
+      }
+
+      .aqua-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
-  
+
+</head>
+<body>
+
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark.io" class="aqua-logo" />
+    <nav class="aqua-nav">
+<a href="/dashboard.html">Dashboard</a>
+<a href="/watermark.html">Watermark</a>
+<a href="/#o-logout-link">Log Out</a>
+    </nav>
+  </header>
+
+  <main class="aqua-panel">
+    <h1>Watermark Panel</h1>
+
+    <div class="aqua-dashboard">
+      <!-- Left 2x2 Grid -->
+      <div class="aqua-grid">
+        <!-- Upload Logo -->
+        <div class="aqua-card">
+          <h2>Upload Logo</h2>
+          <label for="logoUpload" class="upload-box">
+            <p>Drag & drop or click to upload</p>
+            <input type="file" id="logoUpload" accept="image/png, image/jpeg">
+          </label>
+          <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
+        </div>
+
+        <!-- Upload Bank Statements -->
+        <div class="aqua-card">
+          <h2>Upload Bank Statements</h2>
+          <label for="pdfUpload" class="upload-box">
+            <p>Drag & drop or click to upload</p>
+            <input type="file" id="pdfUpload" accept="application/pdf" multiple>
+          </label>
+          <div class="upload-disclaimer">PDF only, max 25MB</div>
+          <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
+        </div>
+
+        <!-- Stored Logo -->
+        <div class="aqua-card">
+          <h2>Stored Logo</h2>
+          <div class="stored-logo-container">
+            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
+          </div>
+        </div>
+
+        <!-- Sample -->
+        <div class="aqua-card">
+          <h2>Sample</h2>
+          <div class="sample-preview small-preview">
+            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
+            <canvas id="watermarkCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="aqua-right-panel">
+        <div class="progress-bar">
+          <h2>Watermark Status</h2>
+          <progress max="100" value="0" style="width: 100%; height: 20px;"></progress>
+        </div>
+
+        <div class="download-console">
+          <h2>Download Console</h2>
+          <ul>
+            <li>File1.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File2.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File3.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File4.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File5.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File6.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+          </ul>
+        </div>
+
+        <button class="upgrade-btn">Upgrade Plan</button>
+      </div>
+    </div>
+  </main>
 
 
 <script>
   Outseta.on("accessToken.set", (payload) => {
-    console.log("✅ Access token received!");
-    console.log("PersonUid:", payload.sub);
-    console.log("Email:", payload.email);
-    console.log("AccountUid:", payload["outseta:accountUid"]);
+    console.log("✅ Token set:", payload);
+
+    // Optional: Store in sessionStorage (if needed elsewhere)
     sessionStorage.setItem("access_token", payload.access_token || "true");
 
-    // ✅ Safe to call getJwtPayload now
-    Outseta.getJwtPayload().then((jwtPayload) => {
-      if (jwtPayload) {
-        console.log("🔐 JWT Payload:", jwtPayload);
+    // 2️⃣ Decode the token (basic snapshot)
+    Outseta.getJwtPayload().then((jwt) => {
+      if (jwt) {
+        console.log("🔐 JWT Payload:", jwt);
       }
     });
-  });
 
-  Outseta.getUser().then((profile) => {
-    if (profile) {
-      console.log("✅ Profile:", profile);
-    }
-  });
-</script>
-
-
-
-<script>
-  Outseta.on("accessToken.set", (payload) => {
-    console.log("✅ Access token received!");
-    console.log("PersonUid:", payload.sub);
-    console.log("Email:", payload.email);
-    console.log("AccountUid:", payload["outseta:accountUid"]);
-    sessionStorage.setItem("access_token", payload.access_token || "true");
-
-    // ✅ Safe to call getJwtPayload now
-    Outseta.getJwtPayload().then((jwtPayload) => {
-      if (jwtPayload) {
-        console.log("🔐 JWT Payload:", jwtPayload);
+    // 3️⃣ Load full user profile & account info
+    Outseta.getUser().then((profile) => {
+      if (profile) {
+        console.log("👤 Full Profile:", profile);
+        console.log("Name:", profile.FirstName, profile.LastName);
+        console.log("Email:", profile.Email);
+        console.log("Plan:", profile.Account.Subscription?.Plan?.Name || "None");
+        console.log("Billing:", profile.Account.BillingInfo);
       }
     });
-  });
-
-  Outseta.getUser().then((profile) => {
-    if (profile) {
-      console.log("✅ Profile:", profile);
-    }
   });
 </script>
 
