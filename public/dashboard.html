@@ -253,5 +253,52 @@
   });
 </script>
 
+
+<!-- Outseta Config and Profile Embed Loader -->
+<script>
+  var o_options = {
+    domain: "aquamark.outseta.com",
+    tokenStorage: "session",
+    auth: {
+      authenticationCallbackUrl: window.location.origin + "/dashboard.html",
+      registrationConfirmationUrl: window.location.origin + "/dashboard.html"
+    }
+  };
+</script>
+<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+<script>
+  // Triggered when user logs in
+  Outseta.on('accessToken.set', (payload) => {
+    console.log("✅ Token Event:");
+    console.log("PersonUid:", payload.sub);
+    console.log("Email:", payload.email);
+    console.log("AccountUid:", payload["outseta:accountUid"]);
+  });
+
+  // Always try to load profile if token/session is valid
+  Outseta.getUser().then((profile) => {
+    if (profile) {
+      console.log("✅ Full User Profile:");
+      console.log("PersonUid:", profile.Uid);
+      console.log("Email:", profile.Email);
+      console.log("AccountUid:", profile.Account.Uid);
+
+      document.getElementById("widget-Outseta_profile").innerHTML = "";
+      Outseta.profile({ container: "widget-Outseta_profile" });
+    }
+  });
+
+  // Optional: JWT payload debugging
+  Outseta.getJwtPayload().then((payload) => {
+    if (payload) {
+      console.log("🔍 JWT Payload:");
+      console.log("PersonUid:", payload.sub);
+      console.log("Email:", payload.email);
+      console.log("AccountUid:", payload["outseta:accountUid"]);
+    }
+  });
+</script>
+
 </body>
 </html>
