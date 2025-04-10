@@ -141,7 +141,11 @@
 </head>
 
 <body>
-
+<script>
+  if (window.location.hash === '#o-logout-link') {
+    window.location.href = '/login.html';
+  }
+</script>
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark.io Logo" class="aqua-logo" />
     <nav class="aqua-nav">
