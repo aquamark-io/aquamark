@@ -483,11 +483,18 @@
   <link rel="stylesheet" href="style.css">
 
 <script>
-  window.addEventListener("DOMContentLoaded", function () {
+  // Works whether hash is available immediately or delayed
+  function checkLogoutHash() {
     if (window.location.hash === '#o-logout-link') {
       window.location.replace('/login.html');
     }
-  });
+  }
+
+  // Run immediately if possible
+  checkLogoutHash();
+
+  // Also run after full load in case hash is delayed
+  window.addEventListener("load", checkLogoutHash);
 </script>
 
 </head>
