@@ -256,6 +256,7 @@
     <div class="aqua-dashboard">
       <!-- Left 2x2 Grid -->
       <div class="aqua-grid">
+        
         <!-- Upload Logo -->
         <div class="aqua-card">
           <h2>Upload Logo</h2>
@@ -266,6 +267,24 @@
           <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
         </div>
 
+       <!-- Stored Logo -->
+        <div class="aqua-card">
+          <h2>Stored Logo</h2>
+          <div class="stored-logo-container">
+            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
+          </div>
+        </div>
+        
+         <!-- Sample -->
+        <div class="aqua-card">
+          <h2>Sample</h2>
+          <div class="sample-preview small-preview">
+            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
+            <canvas id="watermarkCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+        
         <!-- Upload Bank Statements -->
         <div class="aqua-card">
           <h2>Upload Bank Statements</h2>
@@ -276,24 +295,6 @@
           <div class="upload-disclaimer">PDF only, max 25MB</div>
           <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
         </div>
-
-        <!-- Stored Logo -->
-        <div class="aqua-card">
-          <h2>Stored Logo</h2>
-          <div class="stored-logo-container">
-            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
-          </div>
-        </div>
-
-        <!-- Sample -->
-        <div class="aqua-card">
-          <h2>Sample</h2>
-          <div class="sample-preview small-preview">
-            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
-            <canvas id="watermarkCanvas"></canvas>
-          </div>
-        </div>
-      </div>
 
       <!-- Right Column -->
       <div class="aqua-right-panel">
