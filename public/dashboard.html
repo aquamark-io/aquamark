@@ -138,6 +138,23 @@
       }
     }
   </style>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const accessToken = params.get('access_token');
+  const refreshToken = params.get('refresh_token');
+
+  if (accessToken && refreshToken) {
+    sessionStorage.setItem('access_token', accessToken);
+    sessionStorage.setItem('refresh_token', refreshToken);
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } else {
+    if (!sessionStorage.getItem('access_token')) {
+      window.location.replace('/login.html');
+    }
+  }
+</script>
+
 </head>
 
 <body>
@@ -151,7 +168,7 @@
     <nav class="aqua-nav">
 <a href="/dashboard.html">Dashboard</a>
 <a href="/watermark.html">Watermark</a>
-<a href="https://www.aquamark.io/#o-logout-link" id="logout-link">Log Out</a>
+<a href="/">Log Out</a>
     </nav>
   </header>
 
