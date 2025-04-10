@@ -348,5 +348,18 @@
   });
 </script>
 
+
+<script>
+  const token = sessionStorage.getItem("access_token");
+
+  if (token) {
+    const dashboardLink = document.querySelector("a[href*='dashboard.html']");
+    const watermarkLink = document.querySelector("a[href*='watermark.html']");
+
+    if (dashboardLink) dashboardLink.href = `/dashboard.html?access_token=${token}`;
+    if (watermarkLink) watermarkLink.href = `/watermark.html?access_token=${token}`;
+  }
+</script>
+
 </body>
 </html>
