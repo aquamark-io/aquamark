@@ -240,119 +240,52 @@
   </style>
 
 
-<script>
-  var o_options = {
-    domain: "aquamark.outseta.com",
-    tokenStorage: "cookie",
-    auth: {
-      authenticationCallbackUrl: window.location.origin + "/dashboard.html",
-      registrationConfirmationUrl: window.location.origin + "/dashboard.html"
-    }
-  };
-</script>
-<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
-</head>
-<body>
-
-  <header class="aqua-header">
-    <img src="/logo-full-black-blue.png" alt="Aquamark.io" class="aqua-logo" />
-    <nav class="aqua-nav">
-<a href="/dashboard.html">Dashboard</a>
-<a href="/watermark.html">Watermark</a>
-<a href="/#o-logout-link">Log Out</a>
-    </nav>
-  </header>
-
-  <main class="aqua-panel">
-    <h1>Watermark Panel</h1>
-
-    <div class="aqua-dashboard">
-      <!-- Left 2x2 Grid -->
-      <div class="aqua-grid">
-        <!-- Upload Logo -->
-        <div class="aqua-card">
-          <h2>Upload Logo</h2>
-          <label for="logoUpload" class="upload-box">
-            <p>Drag & drop or click to upload</p>
-            <input type="file" id="logoUpload" accept="image/png, image/jpeg">
-          </label>
-          <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
-        </div>
-
-        <!-- Upload Bank Statements -->
-        <div class="aqua-card">
-          <h2>Upload Bank Statements</h2>
-          <label for="pdfUpload" class="upload-box">
-            <p>Drag & drop or click to upload</p>
-            <input type="file" id="pdfUpload" accept="application/pdf" multiple>
-          </label>
-          <div class="upload-disclaimer">PDF only, max 25MB</div>
-          <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
-        </div>
-
-        <!-- Stored Logo -->
-        <div class="aqua-card">
-          <h2>Stored Logo</h2>
-          <div class="stored-logo-container">
-            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
-          </div>
-        </div>
-
-        <!-- Sample -->
-        <div class="aqua-card">
-          <h2>Sample</h2>
-          <div class="sample-preview small-preview">
-            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
-            <canvas id="watermarkCanvas"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column -->
-      <div class="aqua-right-panel">
-        <div class="progress-bar">
-          <h2>Watermark Status</h2>
-          <progress max="100" value="0" style="width: 100%; height: 20px;"></progress>
-        </div>
-
-        <div class="download-console">
-          <h2>Download Console</h2>
-          <ul>
-            <li>File1.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File2.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File3.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File4.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File5.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File6.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-          </ul>
-        </div>
-
-        <button class="upgrade-btn">Upgrade Plan</button>
-      </div>
-    </div>
-  </main>
-
 
 <script>
-  Outseta.getUser().then((profile) => {
-    console.log("PersonUid:", profile.Uid);
-    console.log("Email:", profile.Email);
-    console.log("AccountUid:", profile.Account.Uid);
-  });
-
-  Outseta.getJwtPayload().then((payload) => {
-    if(payload) {
-      console.log("PersonUid:", payload.sub);
-      console.log("Email:", payload.email);
-      console.log("AccountUid:", payload["outseta:accountUid"]);
-    }
-  });
-
-  Outseta.on('accessToken.set', (payload) => {
+  Outseta.on("accessToken.set", (payload) => {
+    console.log("✅ Access token received!");
     console.log("PersonUid:", payload.sub);
     console.log("Email:", payload.email);
     console.log("AccountUid:", payload["outseta:accountUid"]);
+    sessionStorage.setItem("access_token", payload.access_token || "true");
+
+    // ✅ Safe to call getJwtPayload now
+    Outseta.getJwtPayload().then((jwtPayload) => {
+      if (jwtPayload) {
+        console.log("🔐 JWT Payload:", jwtPayload);
+      }
+    });
+  });
+
+  Outseta.getUser().then((profile) => {
+    if (profile) {
+      console.log("✅ Profile:", profile);
+    }
+  });
+</script>
+
+
+
+<script>
+  Outseta.on("accessToken.set", (payload) => {
+    console.log("✅ Access token received!");
+    console.log("PersonUid:", payload.sub);
+    console.log("Email:", payload.email);
+    console.log("AccountUid:", payload["outseta:accountUid"]);
+    sessionStorage.setItem("access_token", payload.access_token || "true");
+
+    // ✅ Safe to call getJwtPayload now
+    Outseta.getJwtPayload().then((jwtPayload) => {
+      if (jwtPayload) {
+        console.log("🔐 JWT Payload:", jwtPayload);
+      }
+    });
+  });
+
+  Outseta.getUser().then((profile) => {
+    if (profile) {
+      console.log("✅ Profile:", profile);
+    }
   });
 </script>
 
