@@ -138,38 +138,34 @@
       }
     }
   </style>
+  </head>
 
   <script>
-    window.onload = function() {
-        // Try to get tokens from query parameters
-        const params = new URLSearchParams(window.location.search);
-        let accessToken = params.get('access_token');
-        let refreshToken = params.get('refresh_token');
-        
-        // If not found in query params, check hash fragment
-        if (!accessToken || !refreshToken) {
-            const hashParams = new URLSearchParams(window.location.hash.replace('#', ''));
-            accessToken = hashParams.get('access_token');
-            refreshToken = hashParams.get('refresh_token');
-        }
-        
-        // Store tokens if found
-        if (accessToken && refreshToken) {
-            sessionStorage.setItem('access_token', accessToken);
-            sessionStorage.setItem('refresh_token', refreshToken);
-            
-            // Clean the URL
-            window.history.replaceState({}, document.title, window.location.pathname);
-            
-            // Log to console for debugging
-            console.log('Tokens stored in session storage');
-        } else {
-            console.log('No tokens found in URL');
-        }
-    };
-    </script> 
-  
-  </head>
+  // Listen for when Outseta sets the access token
+  Outseta.on('accessToken.set', (payload) => {
+    if (payload) {
+      sessionStorage.setItem('access_token', payload.access_token || 'true');
+      console.log("PersonUid:", payload.sub);
+      console.log("Email:", payload.email);
+      console.log("AccountUid:", payload["outseta:accountUid"]);
+    }
+  });
+
+  // Optionally log profile data
+  Outseta.getUser().then((profile) => {
+    if (profile) {
+      console.log("User Profile:", profile);
+    }
+  });
+
+  // Optionally log JWT payload
+  Outseta.getJwtPayload().then((payload) => {
+    if (payload) {
+      console.log("Decoded JWT:", payload);
+    }
+  });
+</script>
+
 <body>
 
 <script>
