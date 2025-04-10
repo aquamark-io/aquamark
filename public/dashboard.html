@@ -139,21 +139,30 @@
     }
   </style>
   
+
+<script>
+  var o_options = {
+    domain: "aquamark.outseta.com",
+    tokenStorage: "cookie",
+    auth: {
+      authenticationCallbackUrl: window.location.origin + "/dashboard.html",
+      registrationConfirmationUrl: window.location.origin + "/dashboard.html"
+    }
+  };
+</script>
+<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
 </head>
   
 <body>
   
-<script>
-  if (window.location.hash === '#o-logout-link') {
-    window.location.href = '/login.html';
-  }
-</script>
+
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark.io Logo" class="aqua-logo" />
     <nav class="aqua-nav">
 <a href="/dashboard.html">Dashboard</a>
 <a href="/watermark.html">Watermark</a>
-<a href="/">Log Out</a>
+<a href="/#o-logout-link">Log Out</a>
     </nav>
   </header>
 
@@ -198,13 +207,29 @@
   </main>
 
   <!-- Outseta Script -->
-  <script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  
+
+<script>
+  Outseta.getUser().then((profile) => {
+    console.log("PersonUid:", profile.Uid);
+    console.log("Email:", profile.Email);
+    console.log("AccountUid:", profile.Account.Uid);
+  });
+
+  Outseta.getJwtPayload().then((payload) => {
+    if(payload) {
+      console.log("PersonUid:", payload.sub);
+      console.log("Email:", payload.email);
+      console.log("AccountUid:", payload["outseta:accountUid"]);
+    }
+  });
+
+  Outseta.on('accessToken.set', (payload) => {
+    console.log("PersonUid:", payload.sub);
+    console.log("Email:", payload.email);
+    console.log("AccountUid:", payload["outseta:accountUid"]);
+  });
+</script>
 
 </body>
 </html>
