@@ -481,6 +481,13 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
   <link rel="stylesheet" href="style.css">
+
+  <script>
+  if (window.location.hash === '#o-logout-link') {
+    window.location.replace('/login.html');
+  }
+</script>
+  
 </head>
 <body>
  <div class="banner">
