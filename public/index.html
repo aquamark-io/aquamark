@@ -483,7 +483,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <div class="banner">
+<script>
+  if (window.location.hash === '#o-logout-link') {
+    window.location.href = '/login.html';
+  }
+</script>
+<div class="banner">
   🎉 New ISO sign ups <strong>daily</strong>!<br>
   <a href="/signup.html">Join the Movement</a>
 </div>
