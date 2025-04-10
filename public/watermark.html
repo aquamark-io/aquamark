@@ -238,6 +238,13 @@
       }
     }
   </style>
+
+<script>
+  if (!sessionStorage.getItem('access_token')) {
+    window.location.replace('/login.html');
+  }
+</script>
+
 </head>
 <body>
   <script>
@@ -250,7 +257,7 @@
     <nav class="aqua-nav">
 <a href="/dashboard.html">Dashboard</a>
 <a href="/watermark.html">Watermark</a>
-<a href="https://www.aquamark.io/#o-logout-link" id="logout-link">Log Out</a>
+<a href="/">Log Out</a>
     </nav>
   </header>
 
@@ -325,5 +332,4 @@
 
 </body>
 </html>
-
 
