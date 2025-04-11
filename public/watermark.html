@@ -2,456 +2,201 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Aquamark.io - Watermark</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquamark.io | Watermark Panel</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: Inter, sans-serif;
+      background: #f8f9fb;
       margin: 0;
       padding: 0;
-      background: #f8f9fb;
-      color: #1e1e2f;
     }
-    .aqua-header {
+    header {
+      background: #f0e7ff;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background: #f3e8ff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
-    .aqua-logo {
-      height: 28px;
+    header img {
+      height: 32px;
     }
-    .aqua-nav a {
-      margin-left: 1.5rem;
+    header nav a {
+      margin-left: 1rem;
       text-decoration: none;
-      font-weight: 500;
       color: #333;
-    }
-    .aqua-nav a.active {
-      color: #007bff;
-    }
-    .aqua-panel {
-      max-width: 1700px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-    .aqua-panel h1 {
-      font-size: 1.8rem;
-      margin-bottom: 2rem;
-    }
-    .aqua-dashboard {
-      display: flex;
-      gap: 2rem;
-      align-items: flex-start;
-    }
-    .aqua-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      flex: 1;
-    }
-    .aqua-right-panel {
-      width: 500px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .aqua-card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      min-height: 340px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .upload-box {
-      border: 2px dashed #cce0f5;
-      border-radius: 12px;
-      background: #f8fbff;
-      text-align: center;
-      padding: 2rem 1rem;
-      margin-bottom: 1rem;
-      color: #667;
       font-weight: 500;
     }
-    .upload-box input[type="file"] {
+    h2 {
+      padding-left: 2rem;
+      margin-top: 1rem;
+    }
+    .panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+      padding: 2rem;
+    }
+    .box {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .box input[type="file"] {
       display: none;
     }
-    .upload-disclaimer {
-      font-size: 0.8rem;
-      color: #999;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .aqua-btn {
-      background-color: #2e6eff;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    .aqua-btn:hover {
-      background-color: #1f54d9;
-    }
-    .upgrade-btn {
-      background-color: #28a745;
-      color: white;
-      font-weight: 600;
-      font-size: 15px;
-      padding: 14px 22px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      margin-top: 1rem;
-      width: 100%;
-    }
-    .upgrade-btn:hover {
-      background-color: #218838;
-    }
-    .stored-logo-container {
+    .drop-zone {
+      border: 2px dashed #cbd5e0;
+      border-radius: 8px;
+      height: 120px;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
-      overflow: hidden;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      color: #718096;
       text-align: center;
     }
-    .stored-logo-container img {
-      max-height: 300px;
+    button {
+      background: #2563eb;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .status {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .success { color: green; }
+    .error { color: red; }
+    .preview-img {
       max-width: 100%;
       height: auto;
-      object-fit: contain;
-    }
-    .sample-preview.small-preview {
-      position: relative;
-      width: 100%;
-      height: 350px;
-      background: #f9f9f9;
-      border-radius: 8px;
-      overflow: hidden;
       margin-top: 1rem;
     }
-    .sample-preview img.statement-image,
-    .sample-preview canvas#watermarkCanvas {
-      position: absolute;
-      top: 0; left: 0;
+    .sample-img {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
-      z-index: 1;
+      border: 1px solid #eee;
     }
-    canvas#watermarkCanvas {
-      z-index: 2;
-      pointer-events: none;
-    }
-    .progress-bar,
-    .download-console {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    .right-col {
+      grid-column: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
     .progress-bar {
-      min-height: 100px;
-    }
-    .progress-bar h2,
-    .download-console h2 {
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-    }
-    .download-console {
-      min-height: 400px;
-    }
-    .download-console ul {
-      padding-left: 0;
-      list-style-type: none;
-      margin: 0;
-    }
-    .download-console li {
-      margin-bottom: 1rem;
-      border: 1px solid #ddd;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .download-console li {
-  color: #c9c7c7; /* medium grey */
-}
-    .download-icon {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-    @media (max-width: 1024px) {
-      .aqua-dashboard {
-        flex-direction: column;
-      }
-      .aqua-right-panel {
-        width: 100%;
-      }
-      .aqua-grid {
-        grid-template-columns: 1fr;
-      }
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
-  <header class="aqua-header">
-    <img src="/logo-full-black-blue.png" alt="Aquamark.io" class="aqua-logo" />
-    <nav class="aqua-nav">
-<a href="/dashboard.html">Dashboard</a>
-<a href="/watermark.html">Watermark</a>
-<a href="/">Log Out</a>
+  <header>
+    <img src="https://aquamark.io/logo.svg" alt="Aquamark.io">
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#">Watermark</a>
+      <a href="#">Log Out</a>
     </nav>
   </header>
-  <main class="aqua-panel">
-    <h1>Watermark Panel</h1>
-    <div class="aqua-dashboard">
-      <!-- Left 2x2 Grid -->
-      <div class="aqua-grid">
-        <!-- Upload Logo -->
-        <div class="aqua-card">
-          <h2>Upload Logo</h2>
-          <label for="logoUpload" class="upload-box">
-            <p>Drag & drop or click to upload</p>
-            <input type="file" id="logoUpload" accept="image/png, image/jpeg">
-          </label>
-          <button id="uploadLogoBtn" class="aqua-btn" onclick="uploadLogo()">Upload Logo</button>
-        </div>
-        <!-- Upload Bank Statements -->
-        <div class="aqua-card">
-          <h2>Upload Bank Statements</h2>
-          <label for="pdfUpload" class="upload-box">
-            <p>Drag & drop or click to upload</p>
-            <input type="file" id="pdfUpload" accept="application/pdf" multiple>
-          </label>
-          <div class="upload-disclaimer">PDF only, max 25MB</div>
-          <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
-        </div>
-        <!-- Stored Logo -->
-        <div class="aqua-card">
-          <h2>Stored Logo</h2>
-          <div class="stored-logo-container">
-            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
-          </div>
-        </div>
-        <!-- Sample -->
-        <div class="aqua-card">
-          <h2>Sample</h2>
-          <div class="sample-preview small-preview">
-            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
-            <canvas id="watermarkCanvas"></canvas>
-          </div>
-        </div>
-      </div>
-      <!-- Right Column -->
-      <div class="aqua-right-panel">
-        <div class="progress-bar">
-          <h2>Watermark Status</h2>
-          <progress max="100" value="0" style="width: 100%; height: 20px;"></progress>
-        </div>
-        <div class="download-console">
-          <h2>Download Console</h2>
-          <ul>
-            <li>File1.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File2.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File3.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File4.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File5.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File6.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-          </ul>
-        </div>
-        <button class="upgrade-btn">Upgrade Plan</button>
-      </div>
+
+  <h2>Watermark Panel</h2>
+  <div class="panel">
+    <div class="box">
+      <h3>Upload Logo</h3>
+      <label for="fileInput" class="drop-zone">Drag & drop or click to upload</label>
+      <input type="file" id="fileInput" accept="image/*">
+      <button id="uploadBtn">Upload Logo</button>
+      <p id="status" class="status"></p>
     </div>
-  </main>
-<script>
-  // Check for access_token in URL on first load
-  const urlParams = new URLSearchParams(window.location.search);
-  const tokenFromUrl = urlParams.get("access_token");
-  if (tokenFromUrl) {
-    sessionStorage.setItem("access_token", tokenFromUrl);
-  }
-  // Rewrite navigation links to carry token
-  const token = sessionStorage.getItem("access_token");
-  if (token && token !== "true") {
-    const dashboardLink = document.querySelector("a[href*='dashboard.html']");
-    const watermarkLink = document.querySelector("a[href*='watermark.html']");
-    if (dashboardLink) dashboardLink.href = `/dashboard.html?access_token=${token}`;
-    if (watermarkLink) watermarkLink.href = `/watermark.html?access_token=${token}`;
-  }
-</script>
-<script>
-  const sampleCanvas = document.getElementById("sample-canvas");
-  const ctx = sampleCanvas.getContext("2d");
-  const sampleImage = new Image();
-  sampleImage.src = "/sample-bank-statement.jpg";
-  const logo = new Image();
-  logo.src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
-  function drawTiledWatermark(img) {
-    const patternCanvas = document.createElement("canvas");
-    const patternCtx = patternCanvas.getContext("2d");
-    const tileSize = 150;
-    patternCanvas.width = tileSize;
-    patternCanvas.height = tileSize;
-    patternCtx.save();
-    patternCtx.translate(tileSize / 2, tileSize / 2);
-    patternCtx.rotate(-45 * Math.PI / 180);
-    patternCtx.globalAlpha = 0.08;
-    patternCtx.drawImage(img, -50, -50, 100, 100);
-    patternCtx.restore();
-    const pattern = ctx.createPattern(patternCanvas, "repeat");
-    ctx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
-    ctx.drawImage(sampleImage, 0, 0, sampleCanvas.width, sampleCanvas.height);
-    ctx.fillStyle = pattern;
-    ctx.fillRect(0, 0, sampleCanvas.width, sampleCanvas.height);
-  }
-  sampleImage.onload = () => logo.onload = () => drawTiledWatermark(logo);
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const { createClient } = supabase;
+    <div class="box">
+      <h3>Upload Bank Statements</h3>
+      <div class="drop-zone">Drag & drop or click to upload</div>
+      <p style="text-align:center; font-size: 0.8rem; color: #666;">PDF only, max 25MB</p>
+      <button>Start Watermark</button>
+    </div>
 
-const supabaseClient = createClient(
-  'https://dvzmnikrvkvgragzhrof.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-);
+    <div class="box">
+      <h3>Watermark Status</h3>
+      <div class="progress-bar"></div>
+    </div>
 
-const uploadBtn = document.getElementById('uploadLogoBtn');
-const fileInput = document.getElementById('logoUpload');
-const status = document.createElement('p');
-uploadBtn.insertAdjacentElement('afterend', status);
+    <div class="box">
+      <h3>Stored Logo</h3>
+      <img id="storedLogo" class="preview-img" src="" alt="Stored Logo">
+    </div>
 
-uploadBtn.addEventListener('click', async () => {
-  const file = fileInput.files[0];
-  if (!file) {
-    status.textContent = "❌ No file selected";
-    status.className = "error";
-    return;
-  }
+    <div class="box">
+      <h3>Sample</h3>
+      <img id="sampleWithLogo" class="sample-img" src="/sample-bank-statement.png" alt="Sample Bank Statement">
+    </div>
 
-  status.textContent = `Uploading: ${file.name}...`;
-  status.className = "";
+    <div class="box">
+      <h3>Download Console</h3>
+      <ul>
+        <li>File1.pdf <i class="fas fa-download"></i></li>
+        <li>File2.pdf <i class="fas fa-download"></i></li>
+        <li>File3.pdf <i class="fas fa-download"></i></li>
+      </ul>
+      <button style="background: green; margin-top: 1rem;">Upgrade Plan</button>
+    </div>
+  </div>
 
-  const { data, error } = await supabaseClient.storage
-    .from('logos')
-    .upload('logo.jpg', file, {
-      cacheControl: '3600',
-      upsert: true
+  <script>
+    const supabaseUrl = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const status = document.getElementById('status');
+    const storedLogo = document.getElementById('storedLogo');
+    const sample = document.getElementById('sampleWithLogo');
+
+    async function refreshLogoPreview() {
+      const { data, error } = await supabase.storage.from('logos').getPublicUrl('logo.jpg');
+      if (!error && data?.publicUrl) {
+        const logoUrl = `${data.publicUrl}?cacheBust=${Date.now()}`;
+        storedLogo.src = logoUrl;
+        sample.src = `/sample-bank-statement.png?logo=${logoUrl}`;
+      }
+    }
+
+    uploadBtn.addEventListener('click', async () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        status.textContent = '❌ No file selected';
+        status.className = 'status error';
+        return;
+      }
+
+      const { error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
+        cacheControl: '3600',
+        upsert: true
+      });
+
+      if (error) {
+        console.error(error);
+        status.textContent = `❌ Upload failed: ${error.message}`;
+        status.className = 'status error';
+      } else {
+        status.textContent = `✅ Uploaded: ${file.name}`;
+        status.className = 'status success';
+        await refreshLogoPreview();
+      }
     });
 
-  if (error) {
-    console.error("Upload error:", error.message);
-    status.textContent = `❌ Upload failed: ${error.message}`;
-    status.className = "error";
-  } else {
-    console.log("✅ Upload successful:", data);
-    status.textContent = `✅ Uploaded: ${file.name}`;
-    status.className = "success";
-  }
-});
-
-</script>
-<script>
-  const supabase = supabase.createClient(
-    "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  );
-
-  const fileInput = document.getElementById("logoUpload");
-  const uploadButton = document.getElementById("uploadLogoBtn");
-  const previewImg = document.getElementById("logoPreview");
-  const uploadStatus = document.getElementById("uploadStatus");
-  const sampleCanvas = document.getElementById("sampleCanvas");
-  const ctx = sampleCanvas.getContext("2d");
-  let selectedFile = null;
-
-  const BANK_STATEMENT_URL = "/sample-bank-statement.jpg";
-  const LOGO_PATH = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg";
-
-  fileInput.addEventListener("change", (e) => {
-    selectedFile = e.target.files[0];
-    if (selectedFile) {
-      uploadStatus.textContent = `Selected: ${selectedFile.name}`;
-      const tempURL = URL.createObjectURL(selectedFile);
-      previewImg.src = tempURL;
-      drawWatermark(tempURL);
-    }
-  });
-
-  uploadButton.addEventListener("click", async () => {
-    if (!selectedFile) {
-      alert("Please select a file first.");
-      return;
-    }
-
-    uploadStatus.textContent = "Uploading...";
-    const { error } = await supabase.storage
-      .from("logos")
-      .upload("logo.jpg", selectedFile, { upsert: true });
-
-    if (error) {
-      uploadStatus.textContent = "❌ Upload failed.";
-      console.error(error);
-    } else {
-      const timestampedURL = LOGO_PATH + "?cache=" + new Date().getTime();
-      previewImg.src = timestampedURL;
-      drawWatermark(timestampedURL);
-      uploadStatus.textContent = "✅ Upload successful!";
-    }
-  });
-
-  function drawWatermark(logoUrl) {
-    const background = new Image();
-    const logo = new Image();
-
-    background.src = BANK_STATEMENT_URL;
-    logo.src = logoUrl;
-
-    background.onload = () => {
-      ctx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
-      ctx.drawImage(background, 0, 0, sampleCanvas.width, sampleCanvas.height);
-
-      logo.onload = () => {
-        const tileSize = 180;
-        const patternCanvas = document.createElement("canvas");
-        patternCanvas.width = tileSize;
-        patternCanvas.height = tileSize;
-        const pctx = patternCanvas.getContext("2d");
-
-        pctx.save();
-        pctx.translate(tileSize / 2, tileSize / 2);
-        pctx.rotate(-45 * Math.PI / 180);
-        pctx.globalAlpha = 0.08;
-        pctx.drawImage(logo, -50, -50, 100, 100);
-        pctx.restore();
-
-        const pattern = ctx.createPattern(patternCanvas, "repeat");
-        ctx.fillStyle = pattern;
-        ctx.fillRect(0, 0, sampleCanvas.width, sampleCanvas.height);
-      };
-    };
-  }
-
-  window.onload = () => {
-    previewImg.src = LOGO_PATH;
-    drawWatermark(LOGO_PATH);
-  };
-</script>
-
+    window.addEventListener('DOMContentLoaded', refreshLogoPreview);
+  </script>
 </body>
 </html>
-
