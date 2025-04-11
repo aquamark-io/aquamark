@@ -2,50 +2,60 @@
 <html>
 <head>
   <title>Upload Logo Test</title>
-  <meta charset="UTF-8">
 </head>
 <body>
-  <h1>Upload Logo Test</h1>
-  <input type="file" id="fileInput" accept="image/*">
+  <h2>Upload Logo Test</h2>
+  <input type="file" id="fileInput" accept="image/*" />
   <button id="uploadBtn">Upload Logo</button>
   <p id="status"></p>
 
-  <!-- ✅ Supabase Client Library -->
+  <!-- ✅ Load Supabase from CDN FIRST -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
+  <!-- ✅ THEN initialize Supabase AFTER the script is available -->
   <script>
-    // ✅ Initialize Supabase client
-    const supabase = supabase.createClient(
-      'https://dvzmnikrvkvgragzhrof.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-    );
+    // Wait for Supabase to be defined
+    window.addEventListener('DOMContentLoaded', () => {
+      const status = document.getElementById('status');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const fileInput = document.getElementById('fileInput');
 
-    // ✅ Upload logic
-    const uploadBtn = document.getElementById('uploadBtn');
-    const fileInput = document.getElementById('fileInput');
-    const status = document.getElementById('status');
-
-    uploadBtn.addEventListener('click', async () => {
-      const file = fileInput.files[0];
-      if (!file) {
-        status.textContent = '❌ No file selected';
+      // ✅ Check if Supabase loaded
+      if (!window.supabase) {
+        status.textContent = '❌ Supabase not loaded';
+        console.error('Supabase failed to load');
         return;
       }
 
-      status.textContent = `Uploading: ${file.name}...`;
+      const supabase = supabase.createClient(
+        'https://dvzmnikrvkvgragzhrof.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+      );
 
-      const { data, error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
-        cacheControl: '3600',
-        upsert: true
+      uploadBtn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) {
+          status.textContent = '❌ No file selected';
+          return;
+        }
+
+        status.textContent = `Uploading: ${file.name}...`;
+
+        const { data, error } = await supabase.storage
+          .from('logos')
+          .upload('logo.jpg', file, {
+            cacheControl: '3600',
+            upsert: true,
+          });
+
+        if (error) {
+          console.error('Upload error:', error.message);
+          status.textContent = `❌ Upload failed: ${error.message}`;
+        } else {
+          console.log('✅ Upload successful:', data);
+          status.textContent = `✅ Uploaded: ${file.name}`;
+        }
       });
-
-      if (error) {
-        console.error('Upload error:', error.message);
-        status.textContent = `❌ Upload failed: ${error.message}`;
-      } else {
-        console.log('✅ Upload successful!', data);
-        status.textContent = `✅ Uploaded: ${file.name}`;
-      }
     });
   </script>
 </body>
