@@ -85,7 +85,6 @@
     .toast {
       text-align: center;
       margin-top: 15px;
-      color: green;
       font-weight: 500;
     }
   </style>
@@ -110,13 +109,14 @@
     <h2>Upload Your Logo</h2>
     <div class="upload-box">
       <p>Drag and drop your logo here or click below</p>
-      <label for="logoInput">Choose Logo</label>
-      <input type="file" id="logoInput" accept="image/*" />
+      <label for="logoInput">Upload Logo</label>
+      <input type="file" id="logoInput" accept="image/png, image/jpeg" />
       <div id="logoPreviewContainer"></div>
       <div class="toast" id="toast"></div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
     const input = document.getElementById('logoInput');
     const preview = document.getElementById('logoPreviewContainer');
@@ -126,35 +126,57 @@
       const file = e.target.files[0];
       if (!file) return;
 
-      // Show local preview
       const reader = new FileReader();
-      reader.onload = () => {
-        preview.innerHTML = `<img class="preview-img" src="${reader.result}" alt="Preview" />`;
+      reader.onload = async () => {
+        const image = new Image();
+        image.src = reader.result;
+
+        image.onload = async () => {
+          // Create canvas and convert to JPG
+          const canvas = document.createElement('canvas');
+          canvas.width = image.width;
+          canvas.height = image.height;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(image, 0, 0);
+
+          const jpegBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.92));
+
+          // Show local preview
+          const previewUrl = URL.createObjectURL(jpegBlob);
+          preview.innerHTML = `<img class="preview-img" src="${previewUrl}" alt="Preview" />`;
+
+          // Supabase upload
+          const { createClient } = window.supabase;
+          const supabase = createClient(
+            'https://dvzmnikrvkvgragzhrof.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+          );
+
+          const userEmail = window._o_user?.email;
+          if (!userEmail) {
+            toast.textContent = '❌ User not authenticated';
+            toast.style.color = 'red';
+            return;
+          }
+
+          const { error } = await supabase.storage.from('logos').upload(`${userEmail}/logo.jpg`, jpegBlob, {
+            upsert: true,
+            contentType: 'image/jpeg'
+          });
+
+          if (error) {
+            toast.textContent = '❌ Upload failed';
+            toast.style.color = 'red';
+          } else {
+            toast.textContent = '✅ Logo uploaded successfully!';
+            toast.style.color = 'green';
+          }
+        };
       };
       reader.readAsDataURL(file);
-
-      // Upload to Supabase
-      const { createClient } = window.supabase;
-      const supabase = createClient(
-        'https://dvzmnikrvkvgragzhrof.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-      );
-
-      const { data, error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
-        upsert: true,
-        contentType: file.type
-      });
-
-      if (error) {
-        toast.textContent = '❌ Upload failed';
-        toast.style.color = 'red';
-      } else {
-        toast.textContent = '✅ Logo uploaded successfully!';
-        toast.style.color = 'green';
-      }
     });
   </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </body>
 </html>
