@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Uppy Test</title>
+  <link href="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Uppy Test</h1>
+  <div id="uppyUploader"></div>
+
+  <script src="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.js"></script>
+  <script>
+    const uppy = new Uppy.Core({
+      restrictions: {
+        maxNumberOfFiles: 6,
+        maxTotalFileSize: 25 * 1024 * 1024,
+        allowedFileTypes: ['application/pdf']
+      },
+      autoProceed: false
+    });
+
+    uppy.use(Uppy.Dashboard, {
+      inline: true,
+      target: '#uppyUploader',
+      showProgressDetails: true,
+      proudlyDisplayPoweredByUppy: false,
+      height: 300
+    });
+
+    uppy.on('complete', (result) => {
+      console.log('✅ Uploaded files:', result.successful);
+    });
+  </script>
+</body>
+</html>
