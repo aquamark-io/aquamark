@@ -1,285 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Aquamark.io - Watermark</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+  <title>Watermark Panel</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      background: #f8f9fb;
       margin: 0;
-      padding: 0;
-      color: #1e1e2f;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
     }
-    .aqua-header {
-      background: #f3e8ff;
-      padding: 1rem 2rem;
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      padding: 20px 40px;
+      background-color: #f3e8ff;
     }
-    .aqua-logo {
-      height: 28px;
+    .logo {
+      font-weight: 800;
+      font-size: 22px;
     }
-    .aqua-nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: 500;
-      color: #333;
-    }
-    .aqua-nav a.active {
-      color: #007bff;
-    }
-    .aqua-panel {
-      max-width: 1700px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-    .aqua-panel h1 {
-      font-size: 1.8rem;
-      margin-bottom: 2rem;
-    }
-    .aqua-top-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-    .aqua-card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      min-height: 300px;
-    }
-    .stored-logo-container {
+    .tabs {
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100%;
-      overflow: hidden;
-      text-align: center;
+      margin-top: 30px;
+      gap: 16px;
     }
-    .stored-logo-container img {
-      max-height: 240px;
-      max-width: 100%;
-      object-fit: contain;
-    }
-    .sample-preview {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      background: #f9f9f9;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 1rem;
-    }
-    .sample-preview img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      z-index: 1;
-    }
-    canvas#watermarkCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .upload-live-panel {
-      background: white;
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-top: 2rem;
-    }
-    .upload-area {
-      border: 2px dashed #cce0f5;
-      border-radius: 12px;
-      background: #f8fbff;
-      padding: 2rem;
-      text-align: center;
+    .tab {
+      padding: 10px 20px;
+      border-radius: 6px;
+      background: #e0e7ff;
+      color: #111;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s ease;
     }
-    .upload-area:hover {
-      background: #eef6ff;
+    .tab.active {
+      background-color: #3e5eff;
+      color: white;
     }
-    #fileInput, #logoUpload {
+    .tab-content {
+      display: none;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .upload-box {
+      border: 2px dashed #c3dafe;
+      padding: 40px;
+      text-align: center;
+      border-radius: 10px;
+      background: #f8f9ff;
+    }
+    .upload-box input {
       display: none;
     }
-    .file-list {
-      margin-top: 1rem;
-    }
-    .file-item {
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 0.75rem;
-      margin-bottom: 0.5rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-    }
-    .aqua-btn {
-      background-color: #2e6eff;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 20px;
-      font-size: 14px;
-      font-weight: 500;
+    .upload-box label {
       cursor: pointer;
-      margin-top: 1rem;
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #3e5eff;
+      color: white;
+      font-weight: 600;
+      border-radius: 8px;
+      margin-top: 16px;
     }
-    @media (max-width: 1024px) {
-      .aqua-top-row {
-        grid-template-columns: 1fr;
-      }
+    .logo-preview {
+      margin-top: 20px;
+    }
+    .logo-preview img {
+      max-width: 150px;
     }
   </style>
 </head>
 <body>
-  <header class="aqua-header">
-    <img src="/logo-full-black-blue.png" alt="Aquamark.io" class="aqua-logo" />
-    <nav class="aqua-nav">
+  <header>
+    <div class="logo">Aquamark.io</div>
+    <nav>
       <a href="/dashboard.html">Dashboard</a>
-      <a href="/watermark.html" class="active">Watermark</a>
-      <a href="/">Log Out</a>
+      <a href="/watermark.html" style="margin-left: 20px;">Watermark</a>
+      <a href="#" style="margin-left: 20px;">Log Out</a>
     </nav>
   </header>
 
-  <main class="aqua-panel">
-    <h1>Watermark Panel</h1>
-    <div class="aqua-top-row">
-      <div class="aqua-card">
-        <h2>Upload Logo</h2>
-        <label for="logoUpload" class="upload-area" onclick="document.getElementById('logoUpload').click();">
-          Click or drag logo here
-        </label>
-        <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
-        <button class="aqua-btn" onclick="uploadLogo()">Upload Logo</button>
-      </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(0)">Upload Logo</div>
+    <div class="tab" onclick="switchTab(1)">Sample Preview</div>
+    <div class="tab" onclick="switchTab(2)">Watermark PDFs</div>
+  </div>
 
-      <div class="aqua-card">
-        <h2>Stored Logo</h2>
-        <div class="stored-logo-container">
-          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo" />
-        </div>
-      </div>
-
-      <div class="aqua-card">
-        <h2>Sample</h2>
-        <div class="sample-preview">
-          <img src="./statement.jpg" alt="Sample Statement" />
-          <canvas id="watermarkCanvas"></canvas>
-        </div>
-      </div>
+  <div class="tab-content active">
+    <h2>Upload Your Logo</h2>
+    <div class="upload-box">
+      <p>Drag and drop your logo here or click below</p>
+      <input type="file" id="logoInput" accept="image/*" />
+      <label for="logoInput">Choose Logo</label>
+      <div class="logo-preview" id="logoPreviewContainer"></div>
     </div>
+  </div>
 
-    <div class="upload-live-panel">
-      <h2>Watermark Live Files</h2>
-      <label for="fileInput" class="upload-area">
-        Click or drag up to 6 PDFs here (25MB max total)
-        <input type="file" id="fileInput" accept="application/pdf" multiple />
-      </label>
-      <div class="file-list" id="fileList"></div>
-      <button class="aqua-btn" onclick="startWatermarking()">Start Watermarking</button>
-    </div>
-  </main>
+  <div class="tab-content">
+    <h2>Sample Preview</h2>
+    <p>This feature will be unlocked after uploading your logo.</p>
+  </div>
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+  <div class="tab-content">
+    <h2>Watermark PDFs</h2>
+    <p>This feature will be unlocked after uploading your logo.</p>
+  </div>
 
-    const supabase = createClient(
-      'https://dvzmnikrvkvgragzhrof.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-    );
-
-    async function uploadLogo() {
-      const file = document.getElementById('logoUpload').files[0];
-      if (!file) return alert('Please select a logo first.');
-
-      const { error } = await supabase.storage
-        .from('logos')
-        .upload('logo.jpg', file, {
-          cacheControl: '3600',
-          upsert: true
-        });
-
-      if (error) {
-        alert('Upload failed: ' + error.message);
-        return;
-      }
-
-      const timestamp = Date.now();
-      const logoUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?t=${timestamp}`;
-      document.getElementById('logoPreview').src = logoUrl;
-      drawSampleWatermark(logoUrl);
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    function switchTab(index) {
+      tabs.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      tabs[index].classList.add('active');
+      tabContents[index].classList.add('active');
     }
 
-    async function drawSampleWatermark(logoUrl) {
-      const canvas = document.getElementById('watermarkCanvas');
-      const ctx = canvas.getContext('2d');
-      const image = new Image();
-      image.crossOrigin = 'anonymous';
-      image.src = logoUrl;
+    const logoInput = document.getElementById('logoInput');
+    const logoPreviewContainer = document.getElementById('logoPreviewContainer');
 
-      image.onload = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+    logoInput.addEventListener('change', async function () {
+      const file = this.files[0];
+      if (!file) return;
 
-        const tileSize = 30;
-        const spacing = 80;
-
-        for (let x = 0; x < canvas.width + tileSize; x += spacing) {
-          for (let y = 0; y < canvas.height + tileSize; y += spacing) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(-0.5);
-            ctx.globalAlpha = 0.06;
-            ctx.drawImage(image, -tileSize / 2, -tileSize / 2, tileSize, tileSize);
-            ctx.restore();
-          }
-        }
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        logoPreviewContainer.innerHTML = `<img src="${e.target.result}" alt="Logo Preview" />`;
       };
-    }
+      reader.readAsDataURL(file);
 
-    drawSampleWatermark('https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg');
-
-    const fileInput = document.getElementById('fileInput');
-    const fileList = document.getElementById('fileList');
-
-    fileInput.addEventListener('change', () => {
-      fileList.innerHTML = '';
-      const files = Array.from(fileInput.files);
-      if (files.length > 6) return alert('Maximum 6 files allowed.');
-
-      const totalSize = files.reduce((sum, f) => sum + f.size, 0);
-      if (totalSize > 25 * 1024 * 1024) return alert('Total file size exceeds 25MB.');
-
-      files.forEach(file => {
-        const div = document.createElement('div');
-        div.className = 'file-item';
-        div.textContent = file.name;
-        fileList.appendChild(div);
-      });
+      // TODO: Add Supabase upload logic here
+      console.log('Logo ready to upload to Supabase:', file);
     });
-
-    function startWatermarking() {
-      const files = Array.from(fileInput.files);
-      if (!files.length) return alert('No files selected.');
-      console.log('Starting client-side watermarking for:', files);
-    }
   </script>
 </body>
 </html>
