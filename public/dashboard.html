@@ -208,5 +208,53 @@
     if (watermarkLink) watermarkLink.href = `/watermark.html?access_token=${token}`;
   }
 </script>
+
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script>
+  const supabase = supabase.createClient(
+    "https://dvzmnikrvkvgragzhrof.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+  );
+
+  function getPlanLimit(planName, isTrial) {
+    if (isTrial) return 100;
+    switch (planName.toLowerCase()) {
+      case "riding solo": return 1000;
+      case "small teams": return 5000;
+      case "iso shops": return 100000;
+      default: return 5;
+    }
+  }
+
+  async function loadUsage() {
+    Outseta.getUser().then(async (profile) => {
+      const email = profile.Email;
+      const name = profile.FirstName;
+      const plan = profile.Account.Subscription.Plan.Name;
+      const isTrial = profile.Account.Subscription.IsTrial;
+      const pageLimit = getPlanLimit(plan, isTrial);
+      const monthKey = isTrial ? "trial" : new Date().toISOString().slice(0, 7);
+
+      const { data, error } = await supabase
+        .from("usage")
+        .select("pages_used")
+        .eq("user_email", email)
+        .eq("month", monthKey);
+
+      const used = data?.[0]?.pages_used || 0;
+      const percent = Math.min((used / pageLimit) * 100, 100).toFixed(1);
+
+      // Update UI
+      document.querySelector(".usage-stat").innerText = `${used} / ${pageLimit} pages`;
+      document.querySelector(".progress-fill").style.width = `${percent}%`;
+      document.querySelector(".usage-subtext").innerText = isTrial
+        ? "Trial pages used"
+        : "Pages watermarked this month";
+    });
+  }
+
+  loadUsage();
+</script>
+
 </body>
 </html>
