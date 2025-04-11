@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Logo Upload</title>
+</head>
+<body>
+  <h2>Test Logo Upload to Supabase</h2>
+  <input type="file" id="logoUpload" accept="image/*" />
+  <button id="uploadLogoBtn">Upload Logo</button>
+  <p id="uploadStatus">No file selected.</p>
+  <img id="preview" style="max-width: 300px; margin-top: 1rem;" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const supabase = supabase.createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    );
+
+    const fileInput = document.getElementById("logoUpload");
+    const uploadButton = document.getElementById("uploadLogoBtn");
+    const previewImg = document.getElementById("preview");
+    const status = document.getElementById("uploadStatus");
+    let selectedFile = null;
+
+    fileInput.addEventListener("change", (e) => {
+      selectedFile = e.target.files[0];
+      if (selectedFile) {
+        status.textContent = `Selected: ${selectedFile.name}`;
+        previewImg.src = URL.createObjectURL(selectedFile);
+      }
+    });
+
+    uploadButton.addEventListener("click", async () => {
+      if (!selectedFile) {
+        alert("Please select a file first.");
+        return;
+      }
+
+      status.textContent = "Uploading...";
+      const { error } = await supabase.storage
+        .from("logos")
+        .upload("logo.jpg", selectedFile, { upsert: true });
+
+      if (error) {
+        console.error(error);
+        status.textContent = "❌ Upload failed.";
+      } else {
+        status.textContent = "✅ Upload successful!";
+        previewImg.src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
+      }
+    });
+  </script>
+</body>
+</html>
