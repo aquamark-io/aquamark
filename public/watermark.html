@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Aquamark.io - Watermark</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-  <!-- Uppy CSS -->
-  <link href="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.css" rel="stylesheet" />
   <style>
     body {
       font-family: 'Inter', sans-serif;
+      background: #f8f9fb;
       margin: 0;
       padding: 0;
-      background: #f8f9fb;
       color: #1e1e2f;
     }
     .aqua-header {
+      background: #f3e8ff;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background: #f3e8ff;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
     .aqua-logo {
@@ -70,7 +70,7 @@
       max-width: 100%;
       object-fit: contain;
     }
-    .sample-preview.small-preview {
+    .sample-preview {
       position: relative;
       width: 100%;
       height: 300px;
@@ -79,10 +79,11 @@
       overflow: hidden;
       margin-top: 1rem;
     }
-    .sample-preview img.statement-image,
-    .sample-preview canvas#watermarkCanvas {
+    .sample-preview img,
+    canvas#watermarkCanvas {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -145,6 +146,7 @@
       <a href="/">Log Out</a>
     </nav>
   </header>
+
   <main class="aqua-panel">
     <h1>Watermark Panel</h1>
 
@@ -155,33 +157,34 @@
         <h2>Upload Logo</h2>
         <label for="logoUpload" class="upload-box">
           <p>Drag & drop or click to upload</p>
-          <input type="file" id="logoUpload" accept="image/png, image/jpeg">
+          <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
         </label>
         <button id="uploadLogoBtn" class="aqua-btn">Upload Logo</button>
       </div>
+
       <!-- Stored Logo -->
       <div class="aqua-card">
         <h2>Stored Logo</h2>
         <div class="stored-logo-container">
-          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
+          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo" />
         </div>
       </div>
+
       <!-- Sample Preview -->
       <div class="aqua-card">
         <h2>Sample</h2>
-        <div class="sample-preview small-preview">
+        <div class="sample-preview">
           <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
           <canvas id="watermarkCanvas"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- Bottom Upload Area -->
+    <!-- Bottom Upload Panel -->
     <div class="upload-live-panel">
       <h2>Watermark Live Files</h2>
       <div id="uppyUploader"></div>
     </div>
-
   </main>
 
   <!-- Uppy JS -->
@@ -190,7 +193,7 @@
     const uppy = new Uppy.Core({
       restrictions: {
         maxNumberOfFiles: 6,
-        maxTotalFileSize: 25 * 1024 * 1024,
+        maxTotalFileSize: 25 * 1024 * 1024, // 25MB
         allowedFileTypes: ['application/pdf']
       },
       autoProceed: false
@@ -205,8 +208,8 @@
     });
 
     uppy.on('complete', (result) => {
-      console.log('Uploaded files:', result.successful);
-      // Future: loop through and watermark
+      console.log('✅ Uploaded files:', result.successful);
+      // Watermark logic would go here later
     });
   </script>
 </body>
