@@ -8,21 +8,22 @@
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
   <style>
 
-      .sticky-note {
-      max-width: 120px;
-      position: absolute;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 5;
-    }
+.sticky-note {
+  max-width: 120px;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
 
-       @media (max-width: 768px) {
-      .sticky-note {
-        max-width: 90px;
-        top: 60px;
-      }
-    
+@media (max-width: 768px) {
+  .sticky-note {
+    max-width: 90px;
+    top: 80px;
+  }
+}
+
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -541,7 +542,8 @@
   <a href="/login.html">Sign In</a>
 </nav>
 
-  <img src="/sticky%20note.png" alt="Sticky Note" class="sticky-note" />
+  <!-- Sticky Note Image -->
+<img src="/sticky%20note.png" alt="Sticky Note" class="sticky-note" />
   <main class="hero">
     <h1>Stop Backdooring. Start Funding.</h1>
     <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
@@ -733,3 +735,4 @@ Less stolen deals. More funded deals. Happier brokers. Happier lenders.
   
 </body>
 </html>
+
