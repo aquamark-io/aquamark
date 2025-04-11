@@ -15,7 +15,6 @@
         .card { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .title { font-weight: bold; margin-bottom: 0.5rem; }
         .upload-box, .bank-upload-box { border: 2px dashed #cdd3dc; padding: 2rem; text-align: center; border-radius: 8px; color: #67717d; cursor: pointer; }
-        .upload-box.dragover { background-color: #f0f8ff; border-color: #276ef1; }
         .btn { display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: #276ef1; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
         .btn:disabled { background: #b3cdfd; cursor: not-allowed; }
         .status { margin-top: 0.5rem; font-size: 14px; }
@@ -27,7 +26,6 @@
         ul { padding-left: 1rem; }
         li { font-size: 14px; }
         .download-icon { color: #9b59b6; margin-left: 5px; }
-        #previewImage { max-width: 100px; margin-top: 10px; display: none; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
@@ -46,8 +44,7 @@
             <div class="card">
                 <div class="title">Upload Logo</div>
                 <input type="file" id="fileInput" accept="image/*" style="display: none;" />
-                <div class="upload-box" id="uploadBox">Drag & drop or click to upload</div>
-                <img id="previewImage" src="" alt="Preview" />
+                <div class="upload-box" onclick="document.getElementById('fileInput').click()">Drag & drop or click to upload</div>
                 <button class="btn" id="uploadBtn">Upload Logo</button>
                 <p id="status" class="status"></p>
             </div>
@@ -92,10 +89,8 @@
         const fileInput = document.getElementById('fileInput');
         const status = document.getElementById('status');
         const storedLogo = document.getElementById('storedLogo');
-        const uploadBox = document.getElementById('uploadBox');
-        const previewImage = document.getElementById('previewImage');
 
-        // Fetch and display the logo from Supabase
+        // Modified function to fetch and display logo with cache busting
         async function fetchAndDisplayLogo() {
             try {
                 const { data, error } = await supabase.storage.from('logos').getPublicUrl('logo.jpg');
@@ -106,35 +101,15 @@
                 }
                 
                 if (data?.publicUrl) {
-                    // Add a timestamp to bust the cache
+                    // Add a timestamp parameter to bust the cache
                     storedLogo.src = `${data.publicUrl}?t=${Date.now()}`;
-                    storedLogo.onload = () => {
-                        console.log('Logo loaded successfully');
-                    };
-                    storedLogo.onerror = (err) => {
-                        console.error('Error loading logo:', err);
-                    };
                 }
             } catch (err) {
                 console.error('Unexpected error fetching logo:', err);
             }
         }
 
-        // Handle file input change
-        fileInput.addEventListener('change', () => {
-            const file = fileInput.files[0];
-            if (file) {
-                // Show preview
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Upload button click handler
+        // Handle file upload button click
         uploadBtn.addEventListener('click', async () => {
             const file = fileInput.files[0];
             if (!file) {
@@ -143,14 +118,15 @@
                 return;
             }
 
+            // Show uploading status
             status.textContent = 'Uploading...';
             status.className = 'status';
             
             try {
-                // Upload the file to Supabase Storage
-                const { data, error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
-                    cacheControl: '0', // Disable caching to ensure the latest version is shown
-                    upsert: true // Override if a file with the same name exists
+                // Upload the file with cache control set to 0
+                const { error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
+                    cacheControl: '0', // Disable caching
+                    upsert: true // Override existing file
                 });
 
                 if (error) {
@@ -161,12 +137,11 @@
                     status.textContent = `✅ Uploaded: ${file.name}`;
                     status.className = 'status success';
                     
-                    // Clear the file input for the next upload
+                    // Clear the file input for next upload
                     fileInput.value = '';
-                    previewImage.style.display = 'none';
                     
-                    // Fetch and display the newly uploaded logo
-                    await fetchAndDisplayLogo();
+                    // Fetch and display the newly uploaded logo with cache busting
+                    setTimeout(fetchAndDisplayLogo, 500); // Small delay to ensure storage update
                 }
             } catch (err) {
                 status.textContent = `❌ Upload failed: ${err.message || 'Unknown error'}`;
@@ -175,34 +150,17 @@
             }
         });
 
-        // Drag and drop functionality
-        uploadBox.addEventListener('click', () => {
-            fileInput.click();
-        });
-
+        // Add basic drag and drop functionality
+        const uploadBox = document.querySelector('.upload-box');
+        
         uploadBox.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadBox.classList.add('dragover');
         });
-
-        uploadBox.addEventListener('dragleave', () => {
-            uploadBox.classList.remove('dragover');
-        });
-
+        
         uploadBox.addEventListener('drop', (e) => {
             e.preventDefault();
-            uploadBox.classList.remove('dragover');
-            
             if (e.dataTransfer.files.length) {
                 fileInput.files = e.dataTransfer.files;
-                
-                // Show preview of dropped file
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                };
-                reader.readAsDataURL(e.dataTransfer.files[0]);
             }
         });
 
