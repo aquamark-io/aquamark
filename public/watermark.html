@@ -3,174 +3,158 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Watermark Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Upload Logo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     body {
-      margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #f8f9fb;
+      background-color: #f8f9fc;
+      margin: 0;
+      padding: 0;
     }
-
-    .topbar {
+    header {
       background-color: #f3e8ff;
-      padding: 16px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 10px 20px;
     }
-
-    .topbar a {
-      margin-left: 24px;
-      text-decoration: none;
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .nav {
+      display: flex;
+      gap: 20px;
+    }
+    .nav a {
       color: #333;
-      font-weight: 500;
+      text-decoration: none;
+      font-size: 14px;
     }
-
     .tabs {
       display: flex;
       justify-content: center;
-      margin: 32px 0;
       gap: 12px;
+      margin-top: 20px;
     }
-
-    .tab-btn {
-      padding: 10px 18px;
-      font-size: 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background-color: #e5e7eb;
-      color: #111;
+    .tabs button {
+      padding: 8px 16px;
       font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      background: #e4e4e4;
+      cursor: pointer;
     }
-
-    .tab-btn.active {
+    .tabs .active {
       background-color: #3e5eff;
-      color: white;
+      color: #fff;
     }
-
-    .tab-content {
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .tab-content.active {
-      display: flex;
-    }
-
-    .card {
-      background-color: white;
+    .main {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-      padding: 32px;
-      width: 600px;
-      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
-
-    .drop-box {
-      border: 2px dashed #cbd5e1;
+    .upload-box {
+      border: 2px dashed #c3d2f3;
       padding: 40px 20px;
-      margin-top: 20px;
-      border-radius: 12px;
-      background-color: #f9f9ff;
-    }
-
-    .upload-btn {
-      margin-top: 20px;
-      background-color: #3e5eff;
-      color: white;
-      padding: 12px 24px;
-      border: none;
+      text-align: center;
       border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 16px;
+      background-color: #f9faff;
     }
-
-    #logo-preview {
-      max-height: 120px;
+    .upload-box input[type="file"] {
+      display: none;
+    }
+    .upload-box label {
+      background: #3e5eff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .preview-img {
       margin-top: 20px;
+      max-height: 150px;
+    }
+    .toast {
+      text-align: center;
+      margin-top: 15px;
+      color: green;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div><strong>Aquamark.io</strong></div>
-    <div>
+  <header>
+    <div class="logo">Aquamark.io</div>
+    <div class="nav">
       <a href="/dashboard.html">Dashboard</a>
       <a href="/watermark.html">Watermark</a>
-      <a href="#logout" onclick="location.href='/login.html'">Log Out</a>
+      <a href="/logout">Log Out</a>
     </div>
-  </div>
+  </header>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab(0)">Upload Logo</button>
-    <button class="tab-btn" onclick="showTab(1)">Sample Preview</button>
-    <button class="tab-btn" onclick="showTab(2)">Watermark PDFs</button>
+    <button class="active">Upload Logo</button>
+    <button onclick="location.href='sample.html'">Sample Preview</button>
+    <button onclick="location.href='watermark.html'">Watermark PDFs</button>
   </div>
 
-  <main>
-    <div class="tab-content active" id="tab-0">
-      <div class="card">
-        <h2>Upload Your Logo</h2>
-        <div class="drop-box" onclick="document.getElementById('logoInput').click()">
-          <p>Drag and drop your logo here or click below</p>
-          <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="uploadLogo()">
-          <button class="upload-btn">Choose Logo</button>
-          <img id="logo-preview" src="" alt="Logo Preview" style="display: none;" />
-        </div>
-      </div>
+  <div class="main">
+    <h2>Upload Your Logo</h2>
+    <div class="upload-box">
+      <p>Drag and drop your logo here or click below</p>
+      <label for="logoInput">Choose Logo</label>
+      <input type="file" id="logoInput" accept="image/*" />
+      <div id="logoPreviewContainer"></div>
+      <div class="toast" id="toast"></div>
     </div>
-
-    <div class="tab-content" id="tab-1">
-      <div class="card">
-        <h2>Sample Preview</h2>
-        <p>Coming next…</p>
-      </div>
-    </div>
-
-    <div class="tab-content" id="tab-2">
-      <div class="card">
-        <h2>Watermark PDFs</h2>
-        <p>Coming soon…</p>
-      </div>
-    </div>
-  </main>
+  </div>
 
   <script>
-    function showTab(index) {
-      document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-        btn.classList.toggle('active', i === index);
-      });
-      document.querySelectorAll('.tab-content').forEach((tab, i) => {
-        tab.classList.toggle('active', i === index);
-      });
-    }
+    const input = document.getElementById('logoInput');
+    const preview = document.getElementById('logoPreviewContainer');
+    const toast = document.getElementById('toast');
 
-    async function uploadLogo() {
-      const fileInput = document.getElementById('logoInput');
-      const file = fileInput.files[0];
+    input.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
       if (!file) return;
 
+      // Show local preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        preview.innerHTML = `<img class="preview-img" src="${reader.result}" alt="Preview" />`;
+      };
+      reader.readAsDataURL(file);
+
+      // Upload to Supabase
       const { createClient } = window.supabase;
       const supabase = createClient(
         'https://dvzmnikrvkvgragzhrof.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
       );
 
-      const { data, error } = await supabase.storage.from('logos').upload('logo.jpg', file, { upsert: true });
+      const { data, error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
+        upsert: true,
+        contentType: file.type
+      });
+
       if (error) {
-        alert('Upload failed');
-        return;
+        toast.textContent = '❌ Upload failed';
+        toast.style.color = 'red';
+      } else {
+        toast.textContent = '✅ Logo uploaded successfully!';
+        toast.style.color = 'green';
       }
-      const url = supabase.storage.from('logos').getPublicUrl('logo.jpg').data.publicUrl;
-      const img = document.getElementById('logo-preview');
-      img.src = url;
-      img.style.display = 'block';
-    }
+    });
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </body>
 </html>
