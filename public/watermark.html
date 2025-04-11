@@ -321,16 +321,22 @@
   sampleImage.onload = () => logo.onload = () => drawTiledWatermark(logo);
 </script>
 
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-  const supabase = createClient(
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const supabase = supabase.createClient(
     "https://dvzmnikrvkvgragzhrof.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
   );
 
   let selectedLogo = null;
   const fileInput = document.getElementById("logoUpload");
-  const uploadStatus = document.getElementById("uploadStatus");
+  const uploadStatus = document.createElement("div");
+  uploadStatus.id = "uploadStatus";
+  uploadStatus.style.marginTop = "10px";
+  uploadStatus.style.fontSize = "14px";
+  uploadStatus.style.color = "#333";
+  fileInput.parentNode.insertBefore(uploadStatus, fileInput.nextSibling);
 
   fileInput.addEventListener("change", (e) => {
     selectedLogo = e.target.files[0];
@@ -356,9 +362,11 @@
       uploadStatus.textContent = "✅ Upload successful!";
       document.getElementById("logoPreview").src =
         "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
+      logo.src = document.getElementById("logoPreview").src;
     }
   }
 </script>
+
 
 </body>
 </html>
