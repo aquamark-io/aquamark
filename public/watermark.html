@@ -3,41 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark Upload</title>
+  <title>Watermark Upload</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,profile'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
+      background-color: #f9faff;
       margin: 0;
       padding: 0;
-      background-color: #f8f9fb;
     }
     .tabs {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      padding: 20px;
-      background-color: #f0eaff;
+      gap: 12px;
+      background-color: #f0e9ff;
+      padding: 16px;
     }
     .tabs button {
       padding: 8px 16px;
       font-weight: 600;
-      border-radius: 6px;
+      border-radius: 8px;
       border: none;
-      background: #e0e4ff;
       cursor: pointer;
     }
     .tabs .active {
       background-color: #3e5eff;
-      color: #fff;
+      color: white;
     }
     main {
       max-width: 700px;
@@ -52,112 +44,115 @@
       padding: 40px;
       text-align: center;
       border-radius: 8px;
-      background-color: #f9f9ff;
-    }
-    .upload-box input[type="file"] {
-      display: none;
+      background-color: #f9faff;
     }
     .upload-box label {
       background: #3e5eff;
       color: white;
       padding: 12px 20px;
+      border-radius: 8px;
       font-size: 15px;
       font-weight: 600;
-      border-radius: 6px;
       display: inline-block;
-      margin-top: 10px;
+      margin-top: 20px;
       cursor: pointer;
     }
     .preview-img {
       margin-top: 20px;
-      max-height: 150px;
+      max-height: 120px;
     }
     .toast {
       text-align: center;
-      margin-top: 20px;
       font-size: 15px;
       font-weight: 500;
+      margin-top: 12px;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
     }
   </style>
 </head>
 <body>
-  <header class="tabs">
+  <div class="tabs">
     <button class="active">Upload Logo</button>
-    <button onclick="location.href='sample.html'">Sample Preview</button>
-    <button onclick="location.href='watermark.html'">Watermark PDFs</button>
-  </header>
+    <button onclick="location.href='/sample.html'">Sample Preview</button>
+    <button onclick="location.href='/watermark-pdfs.html'">Watermark PDFs</button>
+  </div>
+
   <main>
     <h2>Upload Your Logo</h2>
     <div class="upload-box">
       <p>Drag and drop your logo here or click below</p>
-      <input type="file" id="logoInput" accept="image/*">
+      <input type="file" id="logoInput" accept="image/png, image/jpeg" style="display: none;" />
       <label for="logoInput">Upload Logo</label>
-      <div id="preview"></div>
-      <div class="toast" id="status"></div>
+      <div id="previewContainer"></div>
+      <div id="statusMessage" class="toast"></div>
     </div>
   </main>
 
   <script>
-    const supabase = supabase.createClient(
+    // Init Supabase
+    const supabase = supabasejs.createClient(
       'https://dvzmnikrvkvgragzhrof.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
     );
 
-    let userEmail = '';
+    const input = document.getElementById('logoInput');
+    const preview = document.getElementById('previewContainer');
+    const message = document.getElementById('statusMessage');
 
-    window.Outseta.onReady(() => {
-      Outseta.getCurrentUser().then(user => {
-        if (user && user.email) {
-          userEmail = user.email;
-          console.log('Authenticated as:', userEmail);
-        } else {
-          document.getElementById('status').innerHTML = '<span style="color:red">❌ User not authenticated</span>';
-        }
-      });
-    });
-
-    document.getElementById('logoInput').addEventListener('change', async (e) => {
-      const file = e.target.files[0];
+    input.addEventListener('change', async (event) => {
+      const file = event.target.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = async function(event) {
+      preview.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.classList.add('preview-img');
+      preview.appendChild(img);
+
+      const session = await supabase.auth.getSession();
+      const userEmail = session.data.session?.user.email;
+
+      if (!userEmail) {
+        message.textContent = 'User not authenticated';
+        message.className = 'toast error';
+        return;
+      }
+
+      const convertedBlob = await convertToJPG(file);
+      const { data, error } = await supabase.storage.from('logos').upload(`${userEmail}/logo.jpg`, convertedBlob, {
+        cacheControl: '3600',
+        upsert: true,
+        contentType: 'image/jpeg'
+      });
+
+      if (error) {
+        message.textContent = 'Upload failed: ' + error.message;
+        message.className = 'toast error';
+      } else {
+        message.textContent = '✅ Logo uploaded successfully!';
+        message.className = 'toast success';
+      }
+    });
+
+    async function convertToJPG(file) {
+      return new Promise((resolve) => {
         const img = new Image();
-        img.onload = async () => {
+        img.onload = () => {
           const canvas = document.createElement('canvas');
           canvas.width = img.width;
           canvas.height = img.height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0);
-
-          canvas.toBlob(async (blob) => {
-            if (!userEmail) {
-              document.getElementById('status').innerHTML = '<span style="color:red">❌ User not authenticated</span>';
-              return;
-            }
-
-            const fileName = `logos/${userEmail}.jpg`;
-            const { error } = await supabase.storage.from('logos').upload(fileName, blob, {
-              cacheControl: '3600',
-              upsert: true,
-              contentType: 'image/jpeg'
-            });
-
-            if (error) {
-              document.getElementById('status').innerHTML = '<span style="color:red">❌ Upload failed</span>';
-              console.error(error);
-            } else {
-              document.getElementById('status').innerHTML = '<span style="color:green">✅ Logo uploaded successfully!</span>';
-            }
-          }, 'image/jpeg');
-
-          // Show preview
-          document.getElementById('preview').innerHTML = `<img src="${canvas.toDataURL('image/jpeg')}" class="preview-img">`;
+          canvas.toBlob(resolve, 'image/jpeg', 0.92);
         };
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
+        img.src = URL.createObjectURL(file);
+      });
+    }
   </script>
 </body>
 </html>
