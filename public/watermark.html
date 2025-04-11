@@ -34,8 +34,7 @@
     }
     .panel {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       padding: 2rem;
     }
@@ -44,14 +43,12 @@
       border-radius: 12px;
       padding: 1rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    .box input[type="file"] {
-      display: none;
+      min-height: 200px;
     }
     .drop-zone {
       border: 2px dashed #cbd5e0;
       border-radius: 8px;
-      height: 120px;
+      height: 100px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -84,17 +81,9 @@
       width: 100%;
       border: 1px solid #eee;
     }
-    .right-col {
-      grid-column: 3;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 4px;
+    ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
@@ -128,7 +117,7 @@
 
     <div class="box">
       <h3>Watermark Status</h3>
-      <div class="progress-bar"></div>
+      <div class="progress-bar" style="width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px;"></div>
     </div>
 
     <div class="box">
@@ -168,7 +157,7 @@
       if (!error && data?.publicUrl) {
         const logoUrl = `${data.publicUrl}?cacheBust=${Date.now()}`;
         storedLogo.src = logoUrl;
-        sample.src = `/sample-bank-statement.png?logo=${logoUrl}`;
+        sample.src = `/sample-bank-statement.png?logo=${encodeURIComponent(logoUrl)}`;
       }
     }
 
