@@ -392,27 +392,36 @@ uploadBtn.addEventListener('click', async () => {
     }
   });
 
-  uploadButton.addEventListener("click", async () => {
-    if (!selectedFile) {
-      alert("Please select a file first.");
-      return;
-    }
-
-    uploadStatus.textContent = "Uploading...";
-    const { error } = await supabase.storage
-      .from("logos")
-      .upload("logo.jpg", selectedFile, { upsert: true });
-
-    if (error) {
-      uploadStatus.textContent = "❌ Upload failed.";
-      console.error(error);
-    } else {
-      const timestampedURL = LOGO_PATH + "?cache=" + new Date().getTime();
-      previewImg.src = timestampedURL;
-      drawWatermark(timestampedURL);
-      uploadStatus.textContent = "✅ Upload successful!";
-    }
-  });
+uploadButton.addEventListener("click", async () => {
+  if (!selectedFile) {
+    alert("Please select a file first.");
+    return;
+  }
+  
+  uploadStatus.textContent = "Uploading...";
+  
+  const { error } = await supabase.storage
+    .from("logos")
+    .upload("logo.jpg", selectedFile, { 
+      upsert: true,
+      cacheControl: '0' // Set cache control to 0
+    });
+    
+  if (error) {
+    uploadStatus.textContent = "❌ Upload failed.";
+    console.error(error);
+  } else {
+    // Force cache busting with a timestamp
+    const timestampedURL = LOGO_PATH + "?t=" + new Date().getTime();
+    previewImg.src = timestampedURL;
+    drawWatermark(timestampedURL);
+    uploadStatus.textContent = "✅ Upload successful!";
+    
+    // Clear selection for next upload
+    selectedFile = null;
+    fileInput.value = '';
+  }
+});
 
   function drawWatermark(logoUrl) {
     const background = new Image();
@@ -446,11 +455,15 @@ uploadBtn.addEventListener('click', async () => {
     };
   }
 
-  window.onload = () => {
-    previewImg.src = LOGO_PATH;
-    drawWatermark(LOGO_PATH);
-  };
+window.onload = () => {
+  // Add timestamp to prevent caching
+  const timestampedURL = LOGO_PATH + "?t=" + new Date().getTime();
+  previewImg.src = timestampedURL;
+  drawWatermark(timestampedURL);
+};
 </script>
 
 </body>
 </html>
+
+
