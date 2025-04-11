@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Watermark Panel</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body {
       margin: 0;
@@ -130,18 +131,30 @@
     const logoInput = document.getElementById('logoInput');
     const logoPreviewContainer = document.getElementById('logoPreviewContainer');
 
+    const supabase = window.supabase.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
+
     logoInput.addEventListener('change', async function () {
       const file = this.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        logoPreviewContainer.innerHTML = `<img src="${e.target.result}" alt="Logo Preview" />`;
-      };
-      reader.readAsDataURL(file);
+      logoPreviewContainer.innerHTML = `<p>Uploading...</p>`;
 
-      // TODO: Add Supabase upload logic here
-      console.log('Logo ready to upload to Supabase:', file);
+      const { data, error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
+        upsert: true,
+        cacheControl: '3600',
+        contentType: file.type
+      });
+
+      if (error) {
+        logoPreviewContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        return;
+      }
+
+      const { data: urlData } = supabase.storage.from('logos').getPublicUrl('logo.jpg');
+      logoPreviewContainer.innerHTML = `<img src="${urlData.publicUrl}" alt="Logo Preview" />`;
     });
   </script>
 </body>
