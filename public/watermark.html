@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload Logo</title>
+  <title>Watermark | Aquamark</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #f9f9ff;
+      background-color: #f9faff;
+      color: #111;
     }
-    header {
-      background-color: #f0e8ff;
-      padding: 12px 20px;
+    .tabs {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: center;
+      margin: 40px 0 20px;
+      gap: 12px;
     }
     .tabs button {
       padding: 8px 16px;
       font-weight: 600;
+      border-radius: 8px;
       border: none;
-      border-radius: 6px;
-      background: #e4e4e4;
-      margin: 0 4px;
+      color: #3e5eff;
+      background: #e4e9ff;
       cursor: pointer;
     }
     .tabs .active {
@@ -34,50 +34,50 @@
     main {
       max-width: 700px;
       margin: 40px auto;
-      padding: 32px;
-      background: white;
+      padding: 30px;
       border-radius: 12px;
+      background: white;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
     .upload-box {
-      border: 2px dashed #3c4dff;
+      border: 2px dashed #3c3d3f;
       padding: 40px 20px;
       text-align: center;
       border-radius: 8px;
-      background-color: #f9f9ff;
-    }
-    .upload-box input[type="file"] {
-      display: none;
+      background-color: #f9faff;
     }
     .upload-box label {
       background: #3e5eff;
       color: white;
       padding: 12px 20px;
-      border-radius: 6px;
+      font-size: 16px;
       font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
       display: inline-block;
       margin-top: 10px;
     }
-    .preview-image {
+    .preview-img {
       margin-top: 20px;
-      max-height: 120px;
+      max-height: 150px;
     }
     .toast {
       text-align: center;
-      margin-top: 16px;
-      font-size: 15px;
+      color: green;
       font-weight: 500;
+      margin-top: 12px;
+    }
+    .toast.error {
+      color: red;
     }
   </style>
 </head>
 <body>
   <header>
-    <div><strong>Aquamark.io</strong></div>
     <div class="tabs">
       <button class="active">Upload Logo</button>
       <button onclick="location.href='sample.html'">Sample Preview</button>
-      <button onclick="location.href='watermark.html'">Watermark PDFs</button>
+      <button onclick="location.href='process.html'">Watermark PDFs</button>
     </div>
   </header>
 
@@ -85,91 +85,65 @@
     <h2>Upload Your Logo</h2>
     <div class="upload-box">
       <p>Drag and drop your logo here or click below</p>
-      <input type="file" id="logoInput" accept="image/*">
+      <input type="file" id="logoInput" accept="image/png, image/jpeg" style="display: none;" />
       <label for="logoInput">Upload Logo</label>
-      <img id="preview" class="preview-image" style="display:none;" />
-      <div class="toast" id="toast"></div>
+      <div id="preview"></div>
+      <p class="toast" id="toastMsg"></p>
     </div>
   </main>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
-
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Initialize Supabase client
+    const supabase = supabasejs.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
 
     const logoInput = document.getElementById('logoInput');
     const preview = document.getElementById('preview');
-    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toastMsg');
 
-    let selectedFile;
+    let selectedFile = null;
 
     logoInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
       selectedFile = file;
 
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        preview.src = event.target.result;
-        preview.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.className = 'preview-img';
+      preview.innerHTML = '';
+      preview.appendChild(img);
 
-      uploadLogo();
+      uploadLogo(file);
     });
 
-    async function uploadLogo() {
-      toast.textContent = '⏳ Uploading...';
-      toast.style.color = '#444';
-
-      const userSession = await supabase.auth.getSession();
-      const userEmail = userSession?.data?.session?.user?.email;
-
-      if (!userEmail) {
-        toast.textContent = '⚠️ User not authenticated.';
-        toast.style.color = 'red';
+    async function uploadLogo(file) {
+      const user = await supabase.auth.getUser();
+      const email = user.data?.user?.email;
+      if (!email) {
+        toastMsg.textContent = '⚠️ User not authenticated.';
+        toastMsg.classList.add('error');
         return;
       }
 
-      const filename = `${userEmail.replace(/[^a-zA-Z0-9]/g, '_')}.jpg`;
-      const fileBlob = await convertToJPG(selectedFile);
-
-      const { error } = await supabase.storage.from('logos').upload(filename, fileBlob, {
-        contentType: 'image/jpeg',
-        upsert: true
+      const arrayBuffer = await file.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+      const { error } = await supabase.storage.from('logos').upload(`${email}.jpg`, blob, {
+        upsert: true,
+        contentType: 'image/jpeg'
       });
 
       if (error) {
-        toast.textContent = `❌ Upload failed: ${error.message}`;
-        toast.style.color = 'red';
+        toastMsg.textContent = '⚠️ Upload failed.';
+        toastMsg.classList.add('error');
+        console.error(error);
       } else {
-        toast.textContent = '✅ Logo uploaded successfully!';
-        toast.style.color = 'green';
+        toastMsg.textContent = '✅ Logo uploaded successfully!';
+        toastMsg.classList.remove('error');
       }
-    }
-
-    async function convertToJPG(file) {
-      return new Promise((resolve) => {
-        const canvas = document.createElement('canvas');
-        const img = new Image();
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-          img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.95);
-          };
-          img.src = e.target.result;
-        };
-
-        reader.readAsDataURL(file);
-      });
     }
   </script>
 </body>
