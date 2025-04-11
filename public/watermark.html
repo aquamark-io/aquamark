@@ -228,7 +228,7 @@
             <p>Drag & drop or click to upload</p>
             <input type="file" id="logoUpload" accept="image/png, image/jpeg">
           </label>
-          <button id="changeLogoBtn" class="aqua-btn">Change Logo</button>
+          <button id="uploadLogoBtn" class="aqua-btn" onclick="uploadLogo()">Upload Logo</button>
         </div>
         <!-- Upload Bank Statements -->
         <div class="aqua-card">
@@ -293,7 +293,6 @@
     if (watermarkLink) watermarkLink.href = `/watermark.html?access_token=${token}`;
   }
 </script>
-
 <script>
   const sampleCanvas = document.getElementById("sample-canvas");
   const ctx = sampleCanvas.getContext("2d");
@@ -301,29 +300,58 @@
   sampleImage.src = "/sample-bank-statement.jpg";
   const logo = new Image();
   logo.src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
-
   function drawTiledWatermark(img) {
     const patternCanvas = document.createElement("canvas");
     const patternCtx = patternCanvas.getContext("2d");
     const tileSize = 150;
     patternCanvas.width = tileSize;
     patternCanvas.height = tileSize;
-
     patternCtx.save();
     patternCtx.translate(tileSize / 2, tileSize / 2);
     patternCtx.rotate(-45 * Math.PI / 180);
     patternCtx.globalAlpha = 0.08;
     patternCtx.drawImage(img, -50, -50, 100, 100);
     patternCtx.restore();
-
     const pattern = ctx.createPattern(patternCanvas, "repeat");
     ctx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
     ctx.drawImage(sampleImage, 0, 0, sampleCanvas.width, sampleCanvas.height);
     ctx.fillStyle = pattern;
     ctx.fillRect(0, 0, sampleCanvas.width, sampleCanvas.height);
   }
-
   sampleImage.onload = () => logo.onload = () => drawTiledWatermark(logo);
+</script>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+  const supabase = createClient(
+    "https://dvzmnikrvkvgragzhrof.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  );
+
+  let selectedLogo = null;
+  document.getElementById("logoUpload").addEventListener("change", (e) => {
+    selectedLogo = e.target.files[0];
+  });
+
+  async function uploadLogo() {
+    if (!selectedLogo) {
+      alert("Please select a logo file first.");
+      return;
+    }
+
+    const { error } = await supabase.storage
+      .from("logos")
+      .upload("logo.jpg", selectedLogo, { upsert: true });
+
+    if (error) {
+      alert("Upload failed.");
+      console.error(error);
+    } else {
+      alert("Upload successful!");
+      document.getElementById("logoPreview").src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
+      logo.src = document.getElementById("logoPreview").src;
+    }
+  }
 </script>
 
 </body>
