@@ -3,67 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload Logo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>Aquamark Upload</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f8f9fc;
       margin: 0;
       padding: 0;
-    }
-    header {
-      background-color: #f3e8ff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-    }
-    .logo {
-      font-size: 20px;
-      font-weight: 700;
-    }
-    .nav {
-      display: flex;
-      gap: 20px;
-    }
-    .nav a {
-      color: #333;
-      text-decoration: none;
-      font-size: 14px;
+      background-color: #f8f9fb;
     }
     .tabs {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin-top: 20px;
+      gap: 10px;
+      padding: 20px;
+      background-color: #f0eaff;
     }
     .tabs button {
       padding: 8px 16px;
       font-weight: 600;
-      border-radius: 8px;
+      border-radius: 6px;
       border: none;
-      background: #e4e4e4;
+      background: #e0e4ff;
       cursor: pointer;
     }
     .tabs .active {
       background-color: #3e5eff;
       color: #fff;
     }
-    .main {
+    main {
       max-width: 700px;
       margin: 40px auto;
-      background: white;
       padding: 30px;
+      background: white;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
     .upload-box {
       border: 2px dashed #c3d2f3;
-      padding: 40px 20px;
+      padding: 40px;
       text-align: center;
       border-radius: 8px;
-      background-color: #f9faff;
+      background-color: #f9f9ff;
     }
     .upload-box input[type="file"] {
       display: none;
@@ -71,12 +54,13 @@
     .upload-box label {
       background: #3e5eff;
       color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 15px;
       font-weight: 600;
-      cursor: pointer;
+      border-radius: 6px;
       display: inline-block;
       margin-top: 10px;
+      cursor: pointer;
     }
     .preview-img {
       margin-top: 20px;
@@ -84,96 +68,87 @@
     }
     .toast {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 20px;
+      font-size: 15px;
       font-weight: 500;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">Aquamark.io</div>
-    <div class="nav">
-      <a href="/dashboard.html">Dashboard</a>
-      <a href="/watermark.html">Watermark</a>
-      <a href="/logout">Log Out</a>
-    </div>
-  </header>
-
-  <div class="tabs">
+  <header class="tabs">
     <button class="active">Upload Logo</button>
     <button onclick="location.href='sample.html'">Sample Preview</button>
     <button onclick="location.href='watermark.html'">Watermark PDFs</button>
-  </div>
-
-  <div class="main">
+  </header>
+  <main>
     <h2>Upload Your Logo</h2>
     <div class="upload-box">
       <p>Drag and drop your logo here or click below</p>
+      <input type="file" id="logoInput" accept="image/*">
       <label for="logoInput">Upload Logo</label>
-      <input type="file" id="logoInput" accept="image/png, image/jpeg" />
-      <div id="logoPreviewContainer"></div>
-      <div class="toast" id="toast"></div>
+      <div id="preview"></div>
+      <div class="toast" id="status"></div>
     </div>
-  </div>
+  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    const input = document.getElementById('logoInput');
-    const preview = document.getElementById('logoPreviewContainer');
-    const toast = document.getElementById('toast');
+    const supabase = supabase.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
 
-    input.addEventListener('change', async (e) => {
+    let userEmail = '';
+
+    window.Outseta.onReady(() => {
+      Outseta.getCurrentUser().then(user => {
+        if (user && user.email) {
+          userEmail = user.email;
+          console.log('Authenticated as:', userEmail);
+        } else {
+          document.getElementById('status').innerHTML = '<span style="color:red">❌ User not authenticated</span>';
+        }
+      });
+    });
+
+    document.getElementById('logoInput').addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = async () => {
-        const image = new Image();
-        image.src = reader.result;
-
-        image.onload = async () => {
-          // Create canvas and convert to JPG
+      reader.onload = async function(event) {
+        const img = new Image();
+        img.onload = async () => {
           const canvas = document.createElement('canvas');
-          canvas.width = image.width;
-          canvas.height = image.height;
+          canvas.width = img.width;
+          canvas.height = img.height;
           const ctx = canvas.getContext('2d');
-          ctx.fillStyle = '#fff';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(image, 0, 0);
+          ctx.drawImage(img, 0, 0);
 
-          const jpegBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.92));
+          canvas.toBlob(async (blob) => {
+            if (!userEmail) {
+              document.getElementById('status').innerHTML = '<span style="color:red">❌ User not authenticated</span>';
+              return;
+            }
 
-          // Show local preview
-          const previewUrl = URL.createObjectURL(jpegBlob);
-          preview.innerHTML = `<img class="preview-img" src="${previewUrl}" alt="Preview" />`;
+            const fileName = `logos/${userEmail}.jpg`;
+            const { error } = await supabase.storage.from('logos').upload(fileName, blob, {
+              cacheControl: '3600',
+              upsert: true,
+              contentType: 'image/jpeg'
+            });
 
-          // Supabase upload
-          const { createClient } = window.supabase;
-          const supabase = createClient(
-            'https://dvzmnikrvkvgragzhrof.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-          );
+            if (error) {
+              document.getElementById('status').innerHTML = '<span style="color:red">❌ Upload failed</span>';
+              console.error(error);
+            } else {
+              document.getElementById('status').innerHTML = '<span style="color:green">✅ Logo uploaded successfully!</span>';
+            }
+          }, 'image/jpeg');
 
-          const userEmail = window._o_user?.email;
-          if (!userEmail) {
-            toast.textContent = '❌ User not authenticated';
-            toast.style.color = 'red';
-            return;
-          }
-
-          const { error } = await supabase.storage.from('logos').upload(`${userEmail}/logo.jpg`, jpegBlob, {
-            upsert: true,
-            contentType: 'image/jpeg'
-          });
-
-          if (error) {
-            toast.textContent = '❌ Upload failed';
-            toast.style.color = 'red';
-          } else {
-            toast.textContent = '✅ Logo uploaded successfully!';
-            toast.style.color = 'green';
-          }
+          // Show preview
+          document.getElementById('preview').innerHTML = `<img src="${canvas.toDataURL('image/jpeg')}" class="preview-img">`;
         };
+        img.src = event.target.result;
       };
       reader.readAsDataURL(file);
     });
