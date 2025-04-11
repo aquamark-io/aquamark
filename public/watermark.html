@@ -277,7 +277,6 @@
       </div>
     </div>
   </main>
-
 <script>
   // Check for access_token in URL on first load
   const urlParams = new URLSearchParams(window.location.search);
@@ -285,7 +284,6 @@
   if (tokenFromUrl) {
     sessionStorage.setItem("access_token", tokenFromUrl);
   }
-
   // Rewrite navigation links to carry token
   const token = sessionStorage.getItem("access_token");
   if (token && token !== "true") {
@@ -294,6 +292,38 @@
     if (dashboardLink) dashboardLink.href = `/dashboard.html?access_token=${token}`;
     if (watermarkLink) watermarkLink.href = `/watermark.html?access_token=${token}`;
   }
+</script>
+
+<script>
+  const sampleCanvas = document.getElementById("sample-canvas");
+  const ctx = sampleCanvas.getContext("2d");
+  const sampleImage = new Image();
+  sampleImage.src = "/sample-bank-statement.jpg";
+  const logo = new Image();
+  logo.src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
+
+  function drawTiledWatermark(img) {
+    const patternCanvas = document.createElement("canvas");
+    const patternCtx = patternCanvas.getContext("2d");
+    const tileSize = 150;
+    patternCanvas.width = tileSize;
+    patternCanvas.height = tileSize;
+
+    patternCtx.save();
+    patternCtx.translate(tileSize / 2, tileSize / 2);
+    patternCtx.rotate(-45 * Math.PI / 180);
+    patternCtx.globalAlpha = 0.08;
+    patternCtx.drawImage(img, -50, -50, 100, 100);
+    patternCtx.restore();
+
+    const pattern = ctx.createPattern(patternCanvas, "repeat");
+    ctx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
+    ctx.drawImage(sampleImage, 0, 0, sampleCanvas.width, sampleCanvas.height);
+    ctx.fillStyle = pattern;
+    ctx.fillRect(0, 0, sampleCanvas.width, sampleCanvas.height);
+  }
+
+  sampleImage.onload = () => logo.onload = () => drawTiledWatermark(logo);
 </script>
 
 </body>
