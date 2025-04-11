@@ -329,13 +329,19 @@
   );
 
   let selectedLogo = null;
-  document.getElementById("logoUpload").addEventListener("change", (e) => {
+  const fileInput = document.getElementById("logoUpload");
+  const uploadStatus = document.getElementById("uploadStatus");
+
+  fileInput.addEventListener("change", (e) => {
     selectedLogo = e.target.files[0];
+    if (selectedLogo) {
+      uploadStatus.textContent = `Ready to upload: ${selectedLogo.name}`;
+    }
   });
 
   async function uploadLogo() {
     if (!selectedLogo) {
-      alert("Please select a logo file first.");
+      alert("Please select a file first.");
       return;
     }
 
@@ -344,12 +350,12 @@
       .upload("logo.jpg", selectedLogo, { upsert: true });
 
     if (error) {
-      alert("Upload failed.");
+      uploadStatus.textContent = "Upload failed.";
       console.error(error);
     } else {
-      alert("Upload successful!");
-      document.getElementById("logoPreview").src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
-      logo.src = document.getElementById("logoPreview").src;
+      uploadStatus.textContent = "✅ Upload successful!";
+      document.getElementById("logoPreview").src =
+        "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
     }
   }
 </script>
