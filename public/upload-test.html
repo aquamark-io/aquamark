@@ -3,53 +3,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Test Logo Upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Test</title>
 </head>
 <body>
-  <h2>Test Logo Upload to Supabase</h2>
-  <input type="file" id="logoUpload" accept="image/*" />
-  <button id="uploadLogoBtn">Upload Logo</button>
-  <p id="uploadStatus">No file selected.</p>
-  <img id="preview" style="max-width: 300px; margin-top: 1rem;" />
+  <h1>Upload Logo Test</h1>
+  <input type="file" id="fileInput" accept="image/*" />
+  <button id="uploadBtn">Upload Logo</button>
+  <p id="status"></p>
 
+  <!-- Load Supabase library first -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <!-- Initialize Supabase -->
   <script>
     const supabase = supabase.createClient(
-      "https://dvzmnikrvkvgragzhrof.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
     );
+    console.log("Supabase initialized:", supabase);
+  </script>
 
-    const fileInput = document.getElementById("logoUpload");
-    const uploadButton = document.getElementById("uploadLogoBtn");
-    const previewImg = document.getElementById("preview");
-    const status = document.getElementById("uploadStatus");
-    let selectedFile = null;
+  <!-- Upload logic -->
+  <script>
+    const uploadBtn = document.getElementById('uploadBtn');
+    const fileInput = document.getElementById('fileInput');
+    const status = document.getElementById('status');
 
-    fileInput.addEventListener("change", (e) => {
-      selectedFile = e.target.files[0];
-      if (selectedFile) {
-        status.textContent = `Selected: ${selectedFile.name}`;
-        previewImg.src = URL.createObjectURL(selectedFile);
-      }
-    });
-
-    uploadButton.addEventListener("click", async () => {
-      if (!selectedFile) {
-        alert("Please select a file first.");
+    uploadBtn.addEventListener('click', async () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        status.textContent = "❌ No file selected";
         return;
       }
 
-      status.textContent = "Uploading...";
-      const { error } = await supabase.storage
-        .from("logos")
-        .upload("logo.jpg", selectedFile, { upsert: true });
+      status.textContent = `Uploading: ${file.name}...`;
+
+      const { data, error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
+        cacheControl: '3600',
+        upsert: true
+      });
 
       if (error) {
-        console.error(error);
-        status.textContent = "❌ Upload failed.";
+        console.error("Upload error:", error.message);
+        status.textContent = `❌ Upload failed: ${error.message}`;
       } else {
-        status.textContent = "✅ Upload successful!";
-        previewImg.src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
+        console.log("Upload successful:", data);
+        status.textContent = `✅ Uploaded: ${file.name}`;
       }
     });
   </script>
