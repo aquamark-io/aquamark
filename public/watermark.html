@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Aquamark.io - Watermark</title>
@@ -30,17 +31,10 @@
       font-weight: 500;
       color: #333;
     }
-    .aqua-nav a.active {
-      color: #007bff;
-    }
     .aqua-panel {
       max-width: 1700px;
       margin: 2rem auto;
       padding: 0 2rem;
-    }
-    .aqua-panel h1 {
-      font-size: 1.8rem;
-      margin-bottom: 2rem;
     }
     .aqua-dashboard {
       display: flex;
@@ -60,15 +54,11 @@
       flex-direction: column;
       gap: 1.5rem;
     }
-    .aqua-card {
+    .aqua-card, .progress-bar, .download-console {
       background: white;
       border-radius: 16px;
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      min-height: 340px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
     .upload-box {
       border: 2px dashed #cce0f5;
@@ -83,12 +73,6 @@
     .upload-box input[type="file"] {
       display: none;
     }
-    .upload-disclaimer {
-      font-size: 0.8rem;
-      color: #999;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
     .aqua-btn {
       background-color: #2e6eff;
       color: white;
@@ -98,7 +82,6 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s ease;
     }
     .aqua-btn:hover {
       background-color: #1f54d9;
@@ -114,9 +97,6 @@
       cursor: pointer;
       margin-top: 1rem;
       width: 100%;
-    }
-    .upgrade-btn:hover {
-      background-color: #218838;
     }
     .stored-logo-container {
       display: flex;
@@ -142,35 +122,18 @@
       margin-top: 1rem;
     }
     .sample-preview img.statement-image,
-    .sample-preview canvas#watermarkCanvas {
+    .sample-preview canvas#sampleCanvas {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
       z-index: 1;
     }
-    canvas#watermarkCanvas {
+    canvas#sampleCanvas {
       z-index: 2;
       pointer-events: none;
-    }
-    .progress-bar,
-    .download-console {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .progress-bar {
-      min-height: 100px;
-    }
-    .progress-bar h2,
-    .download-console h2 {
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-    }
-    .download-console {
-      min-height: 400px;
     }
     .download-console ul {
       padding-left: 0;
@@ -185,10 +148,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      color: #c9c7c7;
     }
-    .download-console li {
-  color: #c9c7c7; /* medium grey */
-}
     .download-icon {
       width: 20px;
       height: 20px;
@@ -207,56 +168,52 @@
     }
   </style>
 </head>
+
 <body>
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark.io" class="aqua-logo" />
     <nav class="aqua-nav">
-<a href="/dashboard.html">Dashboard</a>
-<a href="/watermark.html">Watermark</a>
-<a href="/">Log Out</a>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/watermark.html">Watermark</a>
+      <a href="/">Log Out</a>
     </nav>
   </header>
+
   <main class="aqua-panel">
     <h1>Watermark Panel</h1>
     <div class="aqua-dashboard">
-      <!-- Left 2x2 Grid -->
       <div class="aqua-grid">
-        <!-- Upload Logo -->
         <div class="aqua-card">
           <h2>Upload Logo</h2>
           <label for="logoUpload" class="upload-box">
             <p>Drag & drop or click to upload</p>
             <input type="file" id="logoUpload" accept="image/png, image/jpeg">
           </label>
-          <button id="uploadLogoBtn" class="aqua-btn" onclick="uploadLogo()">Upload Logo</button>
+          <button id="uploadLogoBtn" class="aqua-btn">Upload Logo</button>
         </div>
-        <!-- Upload Bank Statements -->
         <div class="aqua-card">
           <h2>Upload Bank Statements</h2>
-          <label for="pdfUpload" class="upload-box">
+          <label class="upload-box">
             <p>Drag & drop or click to upload</p>
-            <input type="file" id="pdfUpload" accept="application/pdf" multiple>
+            <input type="file" accept="application/pdf" multiple>
           </label>
           <div class="upload-disclaimer">PDF only, max 25MB</div>
-          <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
+          <button class="aqua-btn">Start Watermark</button>
         </div>
-        <!-- Stored Logo -->
         <div class="aqua-card">
           <h2>Stored Logo</h2>
           <div class="stored-logo-container">
-            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
+            <img id="logoPreview" src="" alt="Stored Logo">
           </div>
         </div>
-        <!-- Sample -->
         <div class="aqua-card">
           <h2>Sample</h2>
           <div class="sample-preview small-preview">
-            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
-            <canvas id="watermarkCanvas"></canvas>
+            <img src="/sample-bank-statement.jpg" class="statement-image" />
+            <canvas id="sampleCanvas"></canvas>
           </div>
         </div>
       </div>
-      <!-- Right Column -->
       <div class="aqua-right-panel">
         <div class="progress-bar">
           <h2>Watermark Status</h2>
@@ -265,205 +222,89 @@
         <div class="download-console">
           <h2>Download Console</h2>
           <ul>
-            <li>File1.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File2.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File3.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File4.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File5.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
-            <li>File6.pdf <img src="/download-icon.png" alt="Download" class="download-icon" /></li>
+            <li>File1.pdf <img src="/download-icon.png" class="download-icon" /></li>
+            <li>File2.pdf <img src="/download-icon.png" class="download-icon" /></li>
+            <li>File3.pdf <img src="/download-icon.png" class="download-icon" /></li>
+            <li>File4.pdf <img src="/download-icon.png" class="download-icon" /></li>
+            <li>File5.pdf <img src="/download-icon.png" class="download-icon" /></li>
+            <li>File6.pdf <img src="/download-icon.png" class="download-icon" /></li>
           </ul>
         </div>
         <button class="upgrade-btn">Upgrade Plan</button>
       </div>
     </div>
   </main>
-<script>
-  // Check for access_token in URL on first load
-  const urlParams = new URLSearchParams(window.location.search);
-  const tokenFromUrl = urlParams.get("access_token");
-  if (tokenFromUrl) {
-    sessionStorage.setItem("access_token", tokenFromUrl);
-  }
-  // Rewrite navigation links to carry token
-  const token = sessionStorage.getItem("access_token");
-  if (token && token !== "true") {
-    const dashboardLink = document.querySelector("a[href*='dashboard.html']");
-    const watermarkLink = document.querySelector("a[href*='watermark.html']");
-    if (dashboardLink) dashboardLink.href = `/dashboard.html?access_token=${token}`;
-    if (watermarkLink) watermarkLink.href = `/watermark.html?access_token=${token}`;
-  }
-</script>
-<script>
-  const sampleCanvas = document.getElementById("sample-canvas");
-  const ctx = sampleCanvas.getContext("2d");
-  const sampleImage = new Image();
-  sampleImage.src = "/sample-bank-statement.jpg";
-  const logo = new Image();
-  logo.src = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?cache=" + new Date().getTime();
-  function drawTiledWatermark(img) {
-    const patternCanvas = document.createElement("canvas");
-    const patternCtx = patternCanvas.getContext("2d");
-    const tileSize = 150;
-    patternCanvas.width = tileSize;
-    patternCanvas.height = tileSize;
-    patternCtx.save();
-    patternCtx.translate(tileSize / 2, tileSize / 2);
-    patternCtx.rotate(-45 * Math.PI / 180);
-    patternCtx.globalAlpha = 0.08;
-    patternCtx.drawImage(img, -50, -50, 100, 100);
-    patternCtx.restore();
-    const pattern = ctx.createPattern(patternCanvas, "repeat");
-    ctx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
-    ctx.drawImage(sampleImage, 0, 0, sampleCanvas.width, sampleCanvas.height);
-    ctx.fillStyle = pattern;
-    ctx.fillRect(0, 0, sampleCanvas.width, sampleCanvas.height);
-  }
-  sampleImage.onload = () => logo.onload = () => drawTiledWatermark(logo);
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const { createClient } = supabase;
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabase = supabase.createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+    );
 
-const supabaseClient = createClient(
-  'https://dvzmnikrvkvgragzhrof.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-);
+    const fileInput = document.getElementById("logoUpload");
+    const uploadButton = document.getElementById("uploadLogoBtn");
+    const previewImg = document.getElementById("logoPreview");
+    const sampleCanvas = document.getElementById("sampleCanvas");
+    const ctx = sampleCanvas.getContext("2d");
+    const LOGO_PATH = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg";
+    const BANK_STATEMENT_URL = "/sample-bank-statement.jpg";
+    let selectedFile = null;
 
-const uploadBtn = document.getElementById('uploadLogoBtn');
-const fileInput = document.getElementById('logoUpload');
-const status = document.createElement('p');
-uploadBtn.insertAdjacentElement('afterend', status);
+    function drawWatermark(logoUrl) {
+      const background = new Image();
+      const logo = new Image();
 
-uploadBtn.addEventListener('click', async () => {
-  const file = fileInput.files[0];
-  if (!file) {
-    status.textContent = "❌ No file selected";
-    status.className = "error";
-    return;
-  }
+      background.src = BANK_STATEMENT_URL;
+      logo.src = logoUrl;
 
-  status.textContent = `Uploading: ${file.name}...`;
-  status.className = "";
+      background.onload = () => {
+        ctx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
+        ctx.drawImage(background, 0, 0, sampleCanvas.width, sampleCanvas.height);
 
-  const { data, error } = await supabaseClient.storage
-    .from('logos')
-    .upload('logo.jpg', file, {
-      cacheControl: '3600',
-      upsert: true
-    });
+        logo.onload = () => {
+          const tileSize = 180;
+          const patternCanvas = document.createElement("canvas");
+          patternCanvas.width = tileSize;
+          patternCanvas.height = tileSize;
+          const pctx = patternCanvas.getContext("2d");
 
-  if (error) {
-    console.error("Upload error:", error.message);
-    status.textContent = `❌ Upload failed: ${error.message}`;
-    status.className = "error";
-  } else {
-    console.log("✅ Upload successful:", data);
-    status.textContent = `✅ Uploaded: ${file.name}`;
-    status.className = "success";
-  }
-});
+          pctx.save();
+          pctx.translate(tileSize / 2, tileSize / 2);
+          pctx.rotate(-45 * Math.PI / 180);
+          pctx.globalAlpha = 0.08;
+          pctx.drawImage(logo, -50, -50, 100, 100);
+          pctx.restore();
 
-</script>
-<script>
-  const supabase = supabase.createClient(
-    "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-  );
-
-  const fileInput = document.getElementById("logoUpload");
-  const uploadButton = document.getElementById("uploadLogoBtn");
-  const previewImg = document.getElementById("logoPreview");
-  const uploadStatus = document.getElementById("uploadStatus");
-  const sampleCanvas = document.getElementById("sampleCanvas");
-  const ctx = sampleCanvas.getContext("2d");
-  let selectedFile = null;
-
-  const BANK_STATEMENT_URL = "/sample-bank-statement.jpg";
-  const LOGO_PATH = "https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg";
-
-  fileInput.addEventListener("change", (e) => {
-    selectedFile = e.target.files[0];
-    if (selectedFile) {
-      uploadStatus.textContent = `Selected: ${selectedFile.name}`;
-      const tempURL = URL.createObjectURL(selectedFile);
-      previewImg.src = tempURL;
-      drawWatermark(tempURL);
-    }
-  });
-
-uploadButton.addEventListener("click", async () => {
-  if (!selectedFile) {
-    alert("Please select a file first.");
-    return;
-  }
-  
-  uploadStatus.textContent = "Uploading...";
-  
-  const { error } = await supabase.storage
-    .from("logos")
-    .upload("logo.jpg", selectedFile, { 
-      upsert: true,
-      cacheControl: '0' // Set cache control to 0
-    });
-    
-  if (error) {
-    uploadStatus.textContent = "❌ Upload failed.";
-    console.error(error);
-  } else {
-    // Force cache busting with a timestamp
-    const timestampedURL = LOGO_PATH + "?t=" + new Date().getTime();
-    previewImg.src = timestampedURL;
-    drawWatermark(timestampedURL);
-    uploadStatus.textContent = "✅ Upload successful!";
-    
-    // Clear selection for next upload
-    selectedFile = null;
-    fileInput.value = '';
-  }
-});
-
-  function drawWatermark(logoUrl) {
-    const background = new Image();
-    const logo = new Image();
-
-    background.src = BANK_STATEMENT_URL;
-    logo.src = logoUrl;
-
-    background.onload = () => {
-      ctx.clearRect(0, 0, sampleCanvas.width, sampleCanvas.height);
-      ctx.drawImage(background, 0, 0, sampleCanvas.width, sampleCanvas.height);
-
-      logo.onload = () => {
-        const tileSize = 180;
-        const patternCanvas = document.createElement("canvas");
-        patternCanvas.width = tileSize;
-        patternCanvas.height = tileSize;
-        const pctx = patternCanvas.getContext("2d");
-
-        pctx.save();
-        pctx.translate(tileSize / 2, tileSize / 2);
-        pctx.rotate(-45 * Math.PI / 180);
-        pctx.globalAlpha = 0.08;
-        pctx.drawImage(logo, -50, -50, 100, 100);
-        pctx.restore();
-
-        const pattern = ctx.createPattern(patternCanvas, "repeat");
-        ctx.fillStyle = pattern;
-        ctx.fillRect(0, 0, sampleCanvas.width, sampleCanvas.height);
+          const pattern = ctx.createPattern(patternCanvas, "repeat");
+          ctx.fillStyle = pattern;
+          ctx.fillRect(0, 0, sampleCanvas.width, sampleCanvas.height);
+        };
       };
+    }
+
+    uploadButton.addEventListener("click", async () => {
+      selectedFile = fileInput.files[0];
+      if (!selectedFile) return alert("Please select a logo file first.");
+
+      const { error } = await supabase.storage.from("logos").upload("logo.jpg", selectedFile, {
+        upsert: true,
+        cacheControl: "0"
+      });
+
+      if (error) return alert("❌ Upload failed: " + error.message);
+
+      const newUrl = `${LOGO_PATH}?t=${Date.now()}`;
+      previewImg.src = newUrl;
+      drawWatermark(newUrl);
+      fileInput.value = "";
+    });
+
+    window.onload = () => {
+      const newUrl = `${LOGO_PATH}?t=${Date.now()}`;
+      previewImg.src = newUrl;
+      drawWatermark(newUrl);
     };
-  }
-
-window.onload = () => {
-  // Add timestamp to prevent caching
-  const timestampedURL = LOGO_PATH + "?t=" + new Date().getTime();
-  previewImg.src = timestampedURL;
-  drawWatermark(timestampedURL);
-};
-</script>
-
+  </script>
 </body>
 </html>
-
-
