@@ -6,6 +6,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
   <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fb;
+      color: #1e1e2f;
+    }
     .aqua-header {
       display: flex;
       justify-content: space-between;
@@ -35,33 +42,53 @@
       font-size: 1.8rem;
       margin-bottom: 2rem;
     }
-    .aqua-dashboard {
-      display: flex;
-      gap: 2rem;
-      align-items: flex-start;
-    }
-    .aqua-grid {
+    .aqua-top-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
-      flex: 1;
-    }
-    .aqua-right-panel {
-      width: 500px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      margin-bottom: 3rem;
     }
     .aqua-card {
       background: white;
       border-radius: 16px;
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      min-height: 340px;
+      min-height: 300px;
+    }
+    .stored-logo-container {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      overflow: hidden;
+      text-align: center;
+    }
+    .stored-logo-container img {
+      max-height: 240px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .sample-preview.small-preview {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .sample-preview img.statement-image,
+    .sample-preview canvas#watermarkCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 1;
+    }
+    canvas#watermarkCanvas {
+      z-index: 2;
+      pointer-events: none;
     }
     .upload-box {
       border: 2px dashed #cce0f5;
@@ -96,124 +123,18 @@
     .aqua-btn:hover {
       background-color: #1f54d9;
     }
-    .upgrade-btn {
-      background-color: #28a745;
-      color: white;
-      font-weight: 600;
-      font-size: 15px;
-      padding: 14px 22px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      margin-top: 1rem;
-      width: 100%;
-    }
-    .upgrade-btn:hover {
-      background-color: #218838;
-    }
-    .stored-logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      overflow: hidden;
-      text-align: center;
-    }
-    .stored-logo-container img {
-      max-height: 300px;
-      max-width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
-    .sample-preview.small-preview {
-      position: relative;
-      width: 100%;
-      height: 350px;
-      background: #f9f9f9;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 1rem;
-    }
-    .sample-preview img.statement-image,
-    .sample-preview canvas#watermarkCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      z-index: 1;
-    }
-    canvas#watermarkCanvas {
-      z-index: 2;
-      pointer-events: none;
-    }
-    .upload-progress-panel {
-      background: #fff;
+    .upload-live-panel {
+      background: white;
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      font-size: 14px;
+      margin-top: 2rem;
     }
-    .upload-progress-panel h2 {
-      font-size: 1.25rem;
+    .upload-live-panel h2 {
       margin-bottom: 1rem;
     }
-    .upload-progress-panel ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-    .upload-progress-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid #eee;
-    }
-    .upload-file-info {
-      flex: 1;
-    }
-    .upload-file-name {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    .upload-file-status {
-      font-size: 13px;
-      color: #888;
-    }
-    .upload-progress-bar {
-      height: 6px;
-      background: #e0e0e0;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-top: 6px;
-    }
-    .upload-progress-bar div {
-      height: 100%;
-      background: #3e5eff;
-      width: 0%;
-      transition: width 0.3s ease;
-    }
-    .upload-remove-icon {
-      width: 18px;
-      height: 18px;
-      margin-left: 12px;
-      cursor: pointer;
-      opacity: 0.5;
-      transition: opacity 0.2s;
-    }
-    .upload-remove-icon:hover {
-      opacity: 1;
-    }
     @media (max-width: 1024px) {
-      .aqua-dashboard {
-        flex-direction: column;
-      }
-      .aqua-right-panel {
-        width: 100%;
-      }
-      .aqua-grid {
+      .aqua-top-row {
         grid-template-columns: 1fr;
       }
     }
@@ -230,55 +151,47 @@
   </header>
   <main class="aqua-panel">
     <h1>Watermark Panel</h1>
-    <div class="aqua-dashboard">
-      <!-- Left Grid -->
-      <div class="aqua-grid">
-        <!-- Upload Logo -->
-        <div class="aqua-card">
-          <h2>Upload Logo</h2>
-          <label for="logoUpload" class="upload-box">
-            <p>Drag & drop or click to upload</p>
-            <input type="file" id="logoUpload" accept="image/png, image/jpeg">
-          </label>
-          <button id="uploadLogoBtn" class="aqua-btn" onclick="uploadLogo()">Upload Logo</button>
-        </div>
-        <!-- Upload PDF -->
-        <div class="aqua-card">
-          <h2>Upload Bank Statements</h2>
-          <label for="pdfUpload" class="upload-box">
-            <p>Drag & drop or click to upload</p>
-            <input type="file" id="pdfUpload" accept="application/pdf" multiple>
-          </label>
-          <div class="upload-disclaimer">PDF only, max 25MB</div>
-          <button id="startWatermarkBtn" class="aqua-btn">Start Watermark</button>
-        </div>
-        <!-- Stored Logo -->
-        <div class="aqua-card">
-          <h2>Stored Logo</h2>
-          <div class="stored-logo-container">
-            <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
-          </div>
-        </div>
-        <!-- Sample Preview -->
-        <div class="aqua-card">
-          <h2>Sample</h2>
-          <div class="sample-preview small-preview">
-            <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
-            <canvas id="watermarkCanvas"></canvas>
-          </div>
+
+    <!-- Top Row -->
+    <div class="aqua-top-row">
+      <!-- Upload Logo -->
+      <div class="aqua-card">
+        <h2>Upload Logo</h2>
+        <label for="logoUpload" class="upload-box">
+          <p>Drag & drop or click to upload</p>
+          <input type="file" id="logoUpload" accept="image/png, image/jpeg">
+        </label>
+        <button id="uploadLogoBtn" class="aqua-btn">Upload Logo</button>
+      </div>
+      <!-- Stored Logo -->
+      <div class="aqua-card">
+        <h2>Stored Logo</h2>
+        <div class="stored-logo-container">
+          <img id="logoPreview" src="https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg" alt="Stored Logo">
         </div>
       </div>
-      <!-- Right Column -->
-      <div class="aqua-right-panel">
-        <div class="upload-progress-panel">
-          <h2>Upload Progress</h2>
-          <ul id="uploadList">
-            <!-- Upload items will be dynamically added here -->
-          </ul>
+      <!-- Sample Preview -->
+      <div class="aqua-card">
+        <h2>Sample</h2>
+        <div class="sample-preview small-preview">
+          <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
+          <canvas id="watermarkCanvas"></canvas>
         </div>
-        <button class="upgrade-btn">Upgrade Plan</button>
       </div>
     </div>
+
+    <!-- Bottom Upload Area -->
+    <div class="upload-live-panel">
+      <h2>Watermark Live Files</h2>
+      <label for="pdfUpload" class="upload-box">
+        <p>Upload up to 6 PDFs (25MB total)</p>
+        <input type="file" id="pdfUpload" accept="application/pdf" multiple>
+      </label>
+      <div class="upload-disclaimer">PDF only. Max 6 files. Max total size: 25MB</div>
+      <button class="aqua-btn">Start Watermarking</button>
+      <!-- Upload progress list will go here -->
+    </div>
+
   </main>
 </body>
 </html>
