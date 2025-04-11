@@ -1,7 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upload Logo Test</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+    #status {
+      margin-top: 1rem;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
 </head>
 <body>
   <h2>Upload Logo Test</h2>
@@ -9,24 +26,24 @@
   <button id="uploadBtn">Upload Logo</button>
   <p id="status"></p>
 
-  <!-- ✅ Load Supabase from CDN FIRST -->
+  <!-- Load Supabase from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-  <!-- ✅ THEN initialize Supabase AFTER the script is available -->
   <script>
-    // Wait for Supabase to be defined
+    // Wait for the page and script to load fully
     window.addEventListener('DOMContentLoaded', () => {
       const status = document.getElementById('status');
       const uploadBtn = document.getElementById('uploadBtn');
       const fileInput = document.getElementById('fileInput');
 
-      // ✅ Check if Supabase loaded
-      if (!window.supabase) {
-        status.textContent = '❌ Supabase not loaded';
-        console.error('Supabase failed to load');
+      // Make sure supabase is available
+      if (typeof supabase === 'undefined') {
+        status.textContent = '❌ Supabase failed to load';
+        status.className = 'error';
         return;
       }
 
+      // Initialize Supabase
       const supabase = supabase.createClient(
         'https://dvzmnikrvkvgragzhrof.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
@@ -34,12 +51,15 @@
 
       uploadBtn.addEventListener('click', async () => {
         const file = fileInput.files[0];
+
         if (!file) {
           status.textContent = '❌ No file selected';
+          status.className = 'error';
           return;
         }
 
         status.textContent = `Uploading: ${file.name}...`;
+        status.className = '';
 
         const { data, error } = await supabase.storage
           .from('logos')
@@ -49,11 +69,13 @@
           });
 
         if (error) {
-          console.error('Upload error:', error.message);
+          console.error('Upload error:', error);
           status.textContent = `❌ Upload failed: ${error.message}`;
+          status.className = 'error';
         } else {
-          console.log('✅ Upload successful:', data);
+          console.log('Upload successful:', data);
           status.textContent = `✅ Uploaded: ${file.name}`;
+          status.className = 'success';
         }
       });
     });
