@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <title>Uppy Test</title>
+
+  <!-- Uppy CSS -->
   <link href="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.css" rel="stylesheet">
 </head>
 <body>
   <h1>Uppy Test</h1>
   <div id="uppyUploader"></div>
 
-  <script src="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.js"></script>
+  <!-- Load Uppy Core and Dashboard separately -->
+  <script src="https://releases.transloadit.com/uppy/v3.4.1/core.min.js"></script>
+  <script src="https://releases.transloadit.com/uppy/v3.4.1/dashboard.min.js"></script>
+
   <script>
-    const uppy = new window.Uppy.Core({
+    const uppy = new UppyCore({
       restrictions: {
         maxNumberOfFiles: 6,
         maxTotalFileSize: 25 * 1024 * 1024,
@@ -20,7 +25,7 @@
       autoProceed: false
     });
 
-    uppy.use(window.Uppy.Dashboard, {
+    uppy.use(UppyDashboard, {
       inline: true,
       target: '#uppyUploader',
       showProgressDetails: true,
