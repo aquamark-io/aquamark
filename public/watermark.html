@@ -65,10 +65,17 @@
       border-radius: 12px;
       background: #f8fbff;
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 2rem;
       margin-bottom: 1rem;
       color: #667;
       font-weight: 500;
+      cursor: pointer;
+    }
+    .upload-box:hover {
+      background-color: #eef6ff;
+    }
+    .upload-box p {
+      margin: 0;
     }
     .upload-box input[type="file"] {
       display: none;
@@ -102,14 +109,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
+      height: 300px;
       overflow: hidden;
       text-align: center;
     }
     .stored-logo-container img {
-      max-height: 300px;
+      max-height: 100%;
       max-width: 100%;
-      height: auto;
       object-fit: contain;
     }
     .sample-preview.small-preview {
