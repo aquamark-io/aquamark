@@ -199,39 +199,66 @@
   </main>
 
   <!-- Placeholder for future watermarking and Supabase logic -->
-  <script>
-    function uploadLogo() {
-      const file = document.getElementById('logoUpload').files[0];
-      if (!file) return alert('Please select a logo first.');
-      console.log('Uploading logo...', file);
-      // Upload logic to Supabase goes here
-    }
+ <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-    const fileInput = document.getElementById('fileInput');
-    const fileList = document.getElementById('fileList');
+  const supabase = createClient(
+    'https://dvzmnikrvkvgragzhrof.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+  );
 
-    fileInput.addEventListener('change', () => {
-      fileList.innerHTML = '';
-      const files = Array.from(fileInput.files);
-      if (files.length > 6) return alert('Maximum 6 files allowed.');
+  async function uploadLogo() {
+    const file = document.getElementById('logoUpload').files[0];
+    if (!file) return alert('Please select a logo first.');
 
-      const totalSize = files.reduce((sum, f) => sum + f.size, 0);
-      if (totalSize > 25 * 1024 * 1024) return alert('Total file size exceeds 25MB.');
-
-      files.forEach(file => {
-        const div = document.createElement('div');
-        div.className = 'file-item';
-        div.textContent = file.name;
-        fileList.appendChild(div);
+    const { error } = await supabase.storage
+      .from('logos')
+      .upload('logo.jpg', file, {
+        cacheControl: '3600',
+        upsert: true
       });
-    });
 
-    function startWatermarking() {
-      const files = Array.from(fileInput.files);
-      if (!files.length) return alert('No files selected.');
-      console.log('Starting client-side watermarking for:', files);
-      // Watermarking logic using PDFLib will go here
+    if (error) {
+      alert('Upload failed: ' + error.message);
+      return;
     }
-  </script>
+
+    // Update logo preview
+    const timestamp = Date.now();
+    const logoUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg?t=${timestamp}`;
+    document.getElementById('logoPreview').src = logoUrl;
+
+    // Re-draw sample watermark
+    drawSampleWatermark(logoUrl);
+  }
+
+  async function drawSampleWatermark(logoUrl) {
+    const canvas = document.getElementById('watermarkCanvas');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.src = logoUrl;
+
+    image.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const tileSize = 80;
+      for (let x = 0; x < canvas.width; x += tileSize * 2) {
+        for (let y = 0; y < canvas.height; y += tileSize * 2) {
+          ctx.save();
+          ctx.translate(x + tileSize / 2, y + tileSize / 2);
+          ctx.rotate(-0.5);
+          ctx.globalAlpha = 0.07;
+          ctx.drawImage(image, -tileSize / 2, -tileSize / 2, tileSize, tileSize);
+          ctx.restore();
+        }
+      }
+    };
+  }
+
+  // Draw watermark overlay on initial load
+  drawSampleWatermark(
+    'https://dvzmnikrvkvgragzhrof.supabase.co/storage/v1/object/public/logos/logo.jpg'
+  );
+</script>
 </body>
 </html>
