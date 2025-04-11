@@ -2,74 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Aquamark Upload</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Watermark Upload</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Supabase JS FIRST -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f9faff;
+      font-family: sans-serif;
+      background: #f9fafc;
       margin: 0;
       padding: 0;
     }
+
     .tabs {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      background-color: #f0e9ff;
-      padding: 16px;
+      background: #f0e7ff;
+      padding: 20px;
     }
+
     .tabs button {
-      padding: 8px 16px;
-      font-weight: 600;
-      border-radius: 8px;
+      background: #e0e0ff;
+      color: #333;
+      font-weight: bold;
       border: none;
+      padding: 10px 18px;
+      margin-right: 10px;
+      border-radius: 8px;
       cursor: pointer;
     }
+
     .tabs .active {
       background-color: #3e5eff;
       color: white;
     }
-    main {
-      max-width: 700px;
+
+    .panel {
+      max-width: 800px;
       margin: 40px auto;
-      padding: 30px;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    }
-    .upload-box {
-      border: 2px dashed #c3d2f3;
       padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       text-align: center;
-      border-radius: 8px;
-      background-color: #f9faff;
     }
-    .upload-box label {
+
+    .upload-area {
+      border: 2px dashed #3e5eff;
+      background: #f8f9ff;
+      padding: 30px;
+      margin-top: 30px;
+      border-radius: 10px;
+    }
+
+    .upload-area img {
+      margin-top: 20px;
+      max-width: 150px;
+    }
+
+    .btn {
       background: #3e5eff;
       color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 15px;
       font-weight: 600;
-      display: inline-block;
+      padding: 10px 24px;
       margin-top: 20px;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
     }
-    .preview-img {
-      margin-top: 20px;
-      max-height: 120px;
-    }
-    .toast {
-      text-align: center;
-      font-size: 15px;
+
+    .message {
+      margin-top: 15px;
       font-weight: 500;
-      margin-top: 12px;
     }
+
     .success {
       color: green;
     }
+
     .error {
       color: red;
     }
@@ -78,81 +90,96 @@
 <body>
   <div class="tabs">
     <button class="active">Upload Logo</button>
-    <button onclick="location.href='/sample.html'">Sample Preview</button>
-    <button onclick="location.href='/watermark-pdfs.html'">Watermark PDFs</button>
+    <button>Sample Preview</button>
+    <button>Watermark PDFs</button>
   </div>
 
-  <main>
+  <div class="panel">
     <h2>Upload Your Logo</h2>
-    <div class="upload-box">
+    <div class="upload-area">
       <p>Drag and drop your logo here or click below</p>
-      <input type="file" id="logoInput" accept="image/png, image/jpeg" style="display: none;" />
-      <label for="logoInput">Upload Logo</label>
+      <input type="file" id="logoInput" accept="image/*" />
+      <br />
+      <button class="btn" onclick="uploadLogo()">Upload Logo</button>
       <div id="previewContainer"></div>
-      <div id="statusMessage" class="toast"></div>
+      <p class="message" id="uploadMessage"></p>
     </div>
-  </main>
+  </div>
 
   <script>
-    // Init Supabase
-    const supabase = supabasejs.createClient(
-      'https://dvzmnikrvkvgragzhrof.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-    );
+    document.addEventListener("DOMContentLoaded", async () => {
+      const supabase = window.supabase.createClient(
+        "https://dvzmnikrvkvgragzhrof.supabase.co",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      );
 
-    const input = document.getElementById('logoInput');
-    const preview = document.getElementById('previewContainer');
-    const message = document.getElementById('statusMessage');
+      window.uploadLogo = async function () {
+        const input = document.getElementById("logoInput");
+        const file = input.files[0];
+        const msg = document.getElementById("uploadMessage");
+        const preview = document.getElementById("previewContainer");
+        msg.textContent = "";
+        preview.innerHTML = "";
 
-    input.addEventListener('change', async (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
+        if (!file) {
+          msg.textContent = "Please choose a file.";
+          msg.className = "message error";
+          return;
+        }
 
-      preview.innerHTML = '';
-      const img = document.createElement('img');
-      img.src = URL.createObjectURL(file);
-      img.classList.add('preview-img');
-      preview.appendChild(img);
-
-      const session = await supabase.auth.getSession();
-      const userEmail = session.data.session?.user.email;
-
-      if (!userEmail) {
-        message.textContent = 'User not authenticated';
-        message.className = 'toast error';
-        return;
-      }
-
-      const convertedBlob = await convertToJPG(file);
-      const { data, error } = await supabase.storage.from('logos').upload(`${userEmail}/logo.jpg`, convertedBlob, {
-        cacheControl: '3600',
-        upsert: true,
-        contentType: 'image/jpeg'
-      });
-
-      if (error) {
-        message.textContent = 'Upload failed: ' + error.message;
-        message.className = 'toast error';
-      } else {
-        message.textContent = '✅ Logo uploaded successfully!';
-        message.className = 'toast success';
-      }
-    });
-
-    async function convertToJPG(file) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          canvas.toBlob(resolve, 'image/jpeg', 0.92);
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.src = reader.result;
+          img.style.maxWidth = "120px";
+          preview.appendChild(img);
         };
-        img.src = URL.createObjectURL(file);
-      });
-    }
+        reader.readAsDataURL(file);
+
+        try {
+          const sessionRes = await supabase.auth.getSession();
+          const user = sessionRes.data?.session?.user;
+
+          if (!user || !user.email) {
+            msg.textContent = "⚠️ User not authenticated.";
+            msg.className = "message error";
+            return;
+          }
+
+          // Convert to JPG via canvas
+          const img = new Image();
+          img.onload = async () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob(async (blob) => {
+              const path = `${user.email}/logo.jpg`;
+              const { error } = await supabase.storage.from("logos").upload(path, blob, {
+                cacheControl: "3600",
+                upsert: true,
+                contentType: "image/jpeg"
+              });
+
+              if (error) {
+                msg.textContent = "❌ Upload failed.";
+                msg.className = "message error";
+              } else {
+                msg.textContent = "✅ Logo uploaded successfully!";
+                msg.className = "message success";
+              }
+            }, "image/jpeg");
+          };
+          img.src = URL.createObjectURL(file);
+        } catch (err) {
+          console.error(err);
+          msg.textContent = "Unexpected error occurred.";
+          msg.className = "message error";
+        }
+      };
+    });
   </script>
 </body>
 </html>
