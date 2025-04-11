@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Aquamark.io - Watermark</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link href="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.css" rel="stylesheet" />
-  <link href="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -94,18 +92,41 @@
       z-index: 2;
       pointer-events: none;
     }
-    .upload-box {
+    .upload-live-panel {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-top: 2rem;
+    }
+    .upload-live-panel h2 {
+      margin-bottom: 1rem;
+    }
+    .upload-area {
       border: 2px dashed #cce0f5;
       border-radius: 12px;
       background: #f8fbff;
+      padding: 2rem;
       text-align: center;
-      padding: 2rem 1rem;
-      margin-bottom: 1rem;
-      color: #667;
-      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
     }
-    .upload-box input[type="file"] {
+    .upload-area:hover {
+      background: #eef6ff;
+    }
+    #fileInput {
       display: none;
+    }
+    .file-list {
+      margin-top: 1rem;
+    }
+    .file-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
     }
     .aqua-btn {
       background-color: #2e6eff;
@@ -116,20 +137,7 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    .aqua-btn:hover {
-      background-color: #1f54d9;
-    }
-    .upload-live-panel {
-      background: white;
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-top: 2rem;
-    }
-    .upload-live-panel h2 {
-      margin-bottom: 1rem;
+      margin-top: 1rem;
     }
     @media (max-width: 1024px) {
       .aqua-top-row {
@@ -153,17 +161,15 @@
 
     <!-- Top Row -->
     <div class="aqua-top-row">
-      <!-- Upload Logo -->
       <div class="aqua-card">
         <h2>Upload Logo</h2>
-        <label for="logoUpload" class="upload-box">
-          <p>Drag & drop or click to upload</p>
-          <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
+        <label for="logoUpload" class="upload-area">
+          Click or drag logo here
+          <input type="file" id="logoUpload" accept="image/png, image/jpeg">
         </label>
-        <button id="uploadLogoBtn" class="aqua-btn">Upload Logo</button>
+        <button class="aqua-btn" onclick="uploadLogo()">Upload Logo</button>
       </div>
 
-      <!-- Stored Logo -->
       <div class="aqua-card">
         <h2>Stored Logo</h2>
         <div class="stored-logo-container">
@@ -171,47 +177,61 @@
         </div>
       </div>
 
-      <!-- Sample Preview -->
       <div class="aqua-card">
         <h2>Sample</h2>
         <div class="sample-preview">
-          <img src="./statement.jpg" alt="Sample Statement" class="statement-image" />
+          <img src="./statement.jpg" alt="Sample Statement" />
           <canvas id="watermarkCanvas"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- Bottom Upload Panel -->
+    <!-- Bottom Upload Area -->
     <div class="upload-live-panel">
       <h2>Watermark Live Files</h2>
-      <div id="uppyUploader"></div>
+      <label for="fileInput" class="upload-area">
+        Click or drag up to 6 PDFs here (25MB max total)
+        <input type="file" id="fileInput" accept="application/pdf" multiple />
+      </label>
+      <div class="file-list" id="fileList"></div>
+      <button class="aqua-btn" onclick="startWatermarking()">Start Watermarking</button>
     </div>
   </main>
 
-  <!-- Uppy JS -->
-  <script src="https://releases.transloadit.com/uppy/v3.4.1/uppy.min.js"></script>
+  <!-- Placeholder for future watermarking and Supabase logic -->
   <script>
-    const uppy = new Uppy.Core({
-      restrictions: {
-        maxNumberOfFiles: 6,
-        maxTotalFileSize: 25 * 1024 * 1024, // 25MB
-        allowedFileTypes: ['application/pdf']
-      },
-      autoProceed: false
+    function uploadLogo() {
+      const file = document.getElementById('logoUpload').files[0];
+      if (!file) return alert('Please select a logo first.');
+      console.log('Uploading logo...', file);
+      // Upload logic to Supabase goes here
+    }
+
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+
+    fileInput.addEventListener('change', () => {
+      fileList.innerHTML = '';
+      const files = Array.from(fileInput.files);
+      if (files.length > 6) return alert('Maximum 6 files allowed.');
+
+      const totalSize = files.reduce((sum, f) => sum + f.size, 0);
+      if (totalSize > 25 * 1024 * 1024) return alert('Total file size exceeds 25MB.');
+
+      files.forEach(file => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.textContent = file.name;
+        fileList.appendChild(div);
+      });
     });
 
-    uppy.use(Uppy.Dashboard, {
-      inline: true,
-      target: '#uppyUploader',
-      showProgressDetails: true,
-      proudlyDisplayPoweredByUppy: false,
-      height: 300
-    });
-
-    uppy.on('complete', (result) => {
-      console.log('✅ Uploaded files:', result.successful);
-      // Watermark logic would go here later
-    });
+    function startWatermarking() {
+      const files = Array.from(fileInput.files);
+      if (!files.length) return alert('No files selected.');
+      console.log('Starting client-side watermarking for:', files);
+      // Watermarking logic using PDFLib will go here
+    }
   </script>
 </body>
 </html>
