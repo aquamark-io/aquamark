@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Supabase Upload Test</title>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h2>Supabase Upload Test</h2>
+  <button onclick="uploadTestFile()">Upload Dummy File</button>
+  <p id="status">Status: Idle</p>
+
+  <script>
+    const supabase = supabase.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
+
+    async function uploadTestFile() {
+      const status = document.getElementById('status');
+      status.textContent = 'Status: Uploading...';
+
+      const file = new Blob(["This is a test file."], { type: "text/plain" });
+      const filename = `test-${Date.now()}.txt`;
+
+      const { data, error } = await supabase.storage
+        .from("logos")
+        .upload(filename, file, { upsert: true });
+
+      if (error) {
+        status.textContent = `Status: Upload failed – ${error.message}`;
+        console.error(error);
+      } else {
+        status.textContent = `✅ Upload success: ${filename}`;
+        console.log("File uploaded to:", data);
+      }
+    }
+  </script>
+</body>
+</html>
