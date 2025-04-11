@@ -90,26 +90,14 @@
         const status = document.getElementById('status');
         const storedLogo = document.getElementById('storedLogo');
 
-        // Modified function to fetch and display logo with cache busting
         async function fetchAndDisplayLogo() {
-            try {
-                const { data, error } = await supabase.storage.from('logos').getPublicUrl('logo.jpg');
-                
-                if (error) {
-                    console.error('Error fetching logo:', error);
-                    return;
-                }
-                
-                if (data?.publicUrl) {
-                    // Add a timestamp parameter to bust the cache
-                    storedLogo.src = `${data.publicUrl}?t=${Date.now()}`;
-                }
-            } catch (err) {
-                console.error('Unexpected error fetching logo:', err);
+            const { data } = await supabase.storage.from('logos').getPublicUrl('logo.jpg');
+            if (data?.publicUrl) {
+                // Add cache-busting parameter
+                storedLogo.src = `${data.publicUrl}?t=${Date.now()}`;
             }
         }
 
-        // Handle file upload button click
         uploadBtn.addEventListener('click', async () => {
             const file = fileInput.files[0];
             if (!file) {
@@ -118,54 +106,27 @@
                 return;
             }
 
-            // Show uploading status
-            status.textContent = 'Uploading...';
-            status.className = 'status';
-            
-            try {
-                // Upload the file with cache control set to 0
-                const { error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
-                    cacheControl: '0', // Disable caching
-                    upsert: true // Override existing file
-                });
+            const { error } = await supabase.storage.from('logos').upload('logo.jpg', file, {
+                cacheControl: '0', // Disable caching
+                upsert: true // Override existing file
+            });
 
-                if (error) {
-                    status.textContent = `❌ Upload failed: ${error.message}`;
-                    status.className = 'status error';
-                    console.error('Upload error:', error);
-                } else {
-                    status.textContent = `✅ Uploaded: ${file.name}`;
-                    status.className = 'status success';
-                    
-                    // Clear the file input for next upload
-                    fileInput.value = '';
-                    
-                    // Fetch and display the newly uploaded logo with cache busting
-                    setTimeout(fetchAndDisplayLogo, 500); // Small delay to ensure storage update
-                }
-            } catch (err) {
-                status.textContent = `❌ Upload failed: ${err.message || 'Unknown error'}`;
+            if (error) {
+                status.textContent = `❌ Upload failed: ${error.message}`;
                 status.className = 'status error';
-                console.error('Unexpected error:', err);
+            } else {
+                status.textContent = `✅ Uploaded: ${file.name}`;
+                status.className = 'status success';
+                
+                // Wait briefly then fetch the updated logo with cache busting
+                setTimeout(() => {
+                    fetchAndDisplayLogo();
+                }, 300);
             }
         });
 
-        // Add basic drag and drop functionality
-        const uploadBox = document.querySelector('.upload-box');
-        
-        uploadBox.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-        
-        uploadBox.addEventListener('drop', (e) => {
-            e.preventDefault();
-            if (e.dataTransfer.files.length) {
-                fileInput.files = e.dataTransfer.files;
-            }
-        });
-
-        // Initial logo fetch when page loads
-        document.addEventListener('DOMContentLoaded', fetchAndDisplayLogo);
+        // Initial logo fetch
+        fetchAndDisplayLogo();
     </script>
 </body>
 </html>
