@@ -140,8 +140,8 @@
 
         for (const page of pages) {
           const { width, height } = page.getSize();
-          for (let x = 0; x < width; x += logoWidth + 40) {
-            for (let y = 0; y < height; y += logoHeight + 40) {
+          for (let x = 0; x < width; x += (logoWidth + 80)) {
+            for (let y = 0; y < height; y += (logoHeight + 80)) {
               page.drawImage(logoImage, {
                 x: x,
                 y: y,
