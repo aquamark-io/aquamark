@@ -2,148 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Aquamark | Watermark Files</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Watermark | Aquamark</title>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #f9faff;
-      color: #111;
+      background: #f9f9ff;
+      margin: 0;
+      padding: 0;
     }
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin: 40px 0 20px;
-      gap: 12px;
-    }
-    .tabs button {
-      padding: 8px 16px;
-      font-weight: 600;
-      border-radius: 8px;
-      border: none;
-      color: #3e5eff;
-      background: #e4e9ff;
-      cursor: pointer;
-    }
-    .tabs .active {
-      background-color: #3e5eff;
-      color: #fff;
+    header {
+      background: #f0e8ff;
+      padding: 16px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
     }
     main {
-      max-width: 700px;
+      max-width: 800px;
       margin: 40px auto;
       padding: 30px;
-      border-radius: 12px;
       background: white;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
-    .upload-box {
-      border: 2px dashed #3c3d3f;
-      padding: 40px 20px;
-      text-align: center;
-      border-radius: 8px;
-      background-color: #f9faff;
+    .upload-section {
+      margin-bottom: 30px;
     }
-    .upload-box label {
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    input[type="file"] {
+      display: block;
+      margin-bottom: 20px;
+    }
+    button {
       background: #3e5eff;
       color: white;
-      padding: 12px 20px;
+      padding: 12px 24px;
       font-size: 16px;
       font-weight: 600;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
-      display: inline-block;
-      margin-top: 10px;
     }
-    .preview-img {
+    .file-status {
       margin-top: 20px;
-      max-height: 150px;
-    }
-    .toast {
-      text-align: center;
-      color: green;
-      font-weight: 500;
-      margin-top: 12px;
-    }
-    .toast.error {
-      color: red;
+      font-size: 14px;
+      color: #444;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="tabs">
-      <button class="active">Upload Logo</button>
-      <button onclick="location.href='sample.html'">Sample Preview</button>
-      <button onclick="location.href='process.html'">Watermark PDFs</button>
-    </div>
+    Aquamark.io - Watermark Documents
   </header>
-
   <main>
-    <h2>Upload Your Logo</h2>
-    <div class="upload-box">
-      <p>Drag and drop your logo here or click below</p>
-      <input type="file" id="logoInput" accept="image/png, image/jpeg" style="display: none;" />
-      <label for="logoInput">Upload Logo</label>
-      <div id="preview"></div>
-      <p class="toast" id="toastMsg"></p>
+    <div class="upload-section">
+      <label for="logo">1. Upload Logo (JPG or PNG)</label>
+      <input type="file" id="logo" accept="image/*">
     </div>
+
+    <div class="upload-section">
+      <label for="pdfs">2. Upload Bank Statements (PDF only, up to 6)</label>
+      <input type="file" id="pdfs" accept="application/pdf" multiple>
+    </div>
+
+    <button onclick="processFiles()">3. Watermark Files</button>
+    <div class="file-status" id="status"></div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script>
-    // Initialize Supabase client
-    const supabase = supabasejs.createClient(
-      'https://dvzmnikrvkvgragzhrof.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-    );
+    let watermarkImageBytes;
 
-    const logoInput = document.getElementById('logoInput');
-    const preview = document.getElementById('preview');
-    const toastMsg = document.getElementById('toastMsg');
-
-    let selectedFile = null;
-
-    logoInput.addEventListener('change', (e) => {
+    document.getElementById('logo').addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
-      selectedFile = file;
-
-      const img = document.createElement('img');
-      img.src = URL.createObjectURL(file);
-      img.className = 'preview-img';
-      preview.innerHTML = '';
-      preview.appendChild(img);
-
-      uploadLogo(file);
+      watermarkImageBytes = await file.arrayBuffer();
     });
 
-    async function uploadLogo(file) {
-      const user = await supabase.auth.getUser();
-      const email = user.data?.user?.email;
-      if (!email) {
-        toastMsg.textContent = '⚠️ User not authenticated.';
-        toastMsg.classList.add('error');
+    async function processFiles() {
+      const status = document.getElementById('status');
+      const files = document.getElementById('pdfs').files;
+      if (!watermarkImageBytes) {
+        status.textContent = '❌ Please upload a logo first.';
         return;
       }
-
-      const arrayBuffer = await file.arrayBuffer();
-      const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
-      const { error } = await supabase.storage.from('logos').upload(`${email}.jpg`, blob, {
-        upsert: true,
-        contentType: 'image/jpeg'
-      });
-
-      if (error) {
-        toastMsg.textContent = '⚠️ Upload failed.';
-        toastMsg.classList.add('error');
-        console.error(error);
-      } else {
-        toastMsg.textContent = '✅ Logo uploaded successfully!';
-        toastMsg.classList.remove('error');
+      if (!files.length) {
+        status.textContent = '❌ Please upload at least one PDF.';
+        return;
       }
+      if (files.length > 6) {
+        status.textContent = '❌ Max 6 PDFs allowed at a time.';
+        return;
+      }
+      status.textContent = '⏳ Processing...';
+      for (const file of files) {
+        const pdfBytes = await file.arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+        const watermarkImg = await pdfDoc.embedJpg(watermarkImageBytes);
+        const pages = pdfDoc.getPages();
+        for (const page of pages) {
+          const { width, height } = page.getSize();
+          const imgWidth = watermarkImg.width / 5;
+          const imgHeight = watermarkImg.height / 5;
+          for (let y = 0; y < height; y += imgHeight * 2) {
+            for (let x = 0; x < width; x += imgWidth * 2) {
+              page.drawImage(watermarkImg, {
+                x,
+                y,
+                width: imgWidth,
+                height: imgHeight,
+                opacity: 0.2,
+                rotate: PDFLib.degrees(-30)
+              });
+            }
+          }
+        }
+        const watermarkedPdf = await pdfDoc.save();
+        const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `watermarked-${file.name}`;
+        link.click();
+      }
+      status.textContent = '✅ Done! Files downloaded.';
     }
   </script>
 </body>
