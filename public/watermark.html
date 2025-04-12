@@ -2,101 +2,124 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aquamark.io - Watermark Documents</title>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
-    body { font-family: sans-serif; background: #f9f9ff; padding: 0; margin: 0; }
-    header { background: #ede4ff; padding: 1rem; font-weight: bold; text-align: center; font-size: 1.2rem; }
-    main { max-width: 700px; margin: 2rem auto; background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 0 10px rgba(0,0,0,0.06); }
-    h2 { margin-top: 1rem; font-size: 1rem; }
-    input[type="file"] { margin: 0.5rem 0 1rem; display: block; }
-    button { padding: 0.75rem 1.5rem; background: #3f5efb; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
-    .status { margin-top: 1rem; color: #444; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
-    .status.done { color: green; }
-    .status.error { color: red; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9ff;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+      color: #222;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 30px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .box label {
+      font-weight: bold;
+      display: block;
+      margin: 15px 0 5px;
+    }
+    .box input {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 12px 25px;
+      background: #3e5bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <header>Aquamark.io - Watermark Documents</header>
-  <main>
-    <h2>1. Upload Logo (JPG or PNG)</h2>
-    <input type="file" id="logoInput" accept="image/*" />
+  <h1>Aquamark.io - Watermark Documents</h1>
+  <div class="box">
+    <label>1. Upload Logo (JPG or PNG)</label>
+    <input type="file" id="logoInput" accept="image/png, image/jpeg" />
 
-    <h2>2. Upload Bank Statements (PDF only, up to 6)</h2>
-    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+    <label>2. Upload Bank Statements (PDF only, up to 6)</label>
+    <input type="file" id="pdfInput" multiple accept="application/pdf" />
 
+    <br/>
     <button onclick="processFiles()">3. Watermark Files</button>
-    <div id="toast" class="status"></div>
-  </main>
 
-  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <div id="status"></div>
+  </div>
+
   <script>
     async function processFiles() {
-      const toast = document.getElementById('toast');
       const logoFile = document.getElementById('logoInput').files[0];
       const pdfFiles = document.getElementById('pdfInput').files;
+      const status = document.getElementById('status');
 
       if (!logoFile || pdfFiles.length === 0) {
-        toast.textContent = '❌ Please upload both a logo and PDFs.';
-        toast.className = 'status error';
+        status.innerText = '⚠️ Please upload both logo and PDFs.';
         return;
       }
 
-      toast.textContent = '⏳ Processing...';
-      toast.className = 'status';
+      status.innerText = '⏳ Processing...';
 
-      const logoBytes = await logoFile.arrayBuffer();
-      const logoExt = logoFile.name.endsWith('.png') ? 'png' : 'jpg';
+      try {
+        const logoBytes = await logoFile.arrayBuffer();
+        const zip = new JSZip();
 
-      for (const file of pdfFiles) {
-        try {
+        for (let file of pdfFiles) {
           const pdfBytes = await file.arrayBuffer();
-          const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
-          const image = logoExt === 'png'
-            ? await pdfDoc.embedPng(logoBytes)
-            : await pdfDoc.embedJpg(logoBytes);
 
+          const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
+            ignoreEncryption: true,
+          });
+
+          const jpgImg = await pdfDoc.embedJpg(logoBytes);
           const pages = pdfDoc.getPages();
+
+          const wmWidth = jpgImg.width / 8;
+          const wmHeight = jpgImg.height / 8;
+
           for (const page of pages) {
             const { width, height } = page.getSize();
-            const imgW = 60, imgH = 60;
-            const gapX = 120, gapY = 100;
-
-            for (let y = 0; y < height; y += gapY) {
-              for (let x = 0; x < width; x += gapX) {
-                page.drawImage(image, {
-                  x: x + 10,
-                  y: y + 10,
-                  width: imgW,
-                  height: imgH,
+            for (let x = 0; x < width; x += wmWidth * 2.5) {
+              for (let y = 0; y < height; y += wmHeight * 2.5) {
+                page.drawImage(jpgImg, {
+                  x,
+                  y,
+                  width: wmWidth,
+                  height: wmHeight,
                   opacity: 0.08,
-                  rotate: PDFLib.degrees(-30),
                 });
               }
             }
           }
 
-          const finalPdf = await pdfDoc.save();
-          if (!finalPdf || finalPdf.byteLength < 100) throw new Error('Corrupt output');
-
-          const blob = new Blob([finalPdf], { type: 'application/pdf' });
-          const url = URL.createObjectURL(blob);
+          const watermarkedPdf = await pdfDoc.save();
+          const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
           const a = document.createElement('a');
-          a.href = url;
-          a.download = `watermarked-${file.name}`;
+          a.href = URL.createObjectURL(blob);
+          a.download = `watermarked-${new Date().toISOString().split('T')[0]}-${file.name}`;
           a.click();
-          URL.revokeObjectURL(url);
-        } catch (err) {
-          console.error(err);
-          toast.textContent = '❌ One or more files failed to watermark.';
-          toast.className = 'status error';
-          return;
         }
-      }
 
-      toast.textContent = '✅ Done. Files downloaded';
-      toast.className = 'status done';
+        status.innerText = '✅ Done. Files downloaded.';
+      } catch (err) {
+        console.error(err);
+        status.innerText = '❌ Error: ' + err.message;
+      }
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </body>
 </html>
