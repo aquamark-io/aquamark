@@ -2,135 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Aquamark | Watermark Files</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Aquamark.io - Watermark Documents</title>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      background: #f9f9ff;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9ff;
       margin: 0;
       padding: 0;
     }
     header {
-      background: #f0e8ff;
-      padding: 16px;
+      background-color: #eee6ff;
+      padding: 1rem;
       text-align: center;
-      font-size: 20px;
       font-weight: bold;
+      font-size: 1.2rem;
     }
-    main {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
+    .panel {
       background: white;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
     }
-    .upload-section {
-      margin-bottom: 30px;
+    h2 {
+      margin-top: 0;
     }
-    label {
-      display: block;
+    .row {
+      margin-bottom: 1.5rem;
+    }
+    .row label {
       font-weight: 600;
-      margin-bottom: 8px;
-    }
-    input[type="file"] {
-      display: block;
-      margin-bottom: 20px;
     }
     button {
-      background: #3e5eff;
+      background: #3e5bff;
       color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
       border: none;
-      border-radius: 8px;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
+      margin-top: 1rem;
     }
-    .file-status {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #444;
+    #status {
+      margin-top: 1.5rem;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
-  <header>
-    Aquamark.io - Watermark Documents
-  </header>
-  <main>
-    <div class="upload-section">
-      <label for="logo">1. Upload Logo (JPG or PNG)</label>
-      <input type="file" id="logo" accept="image/*">
+  <header>Aquamark.io - Watermark Documents</header>
+  <div class="panel">
+    <div class="row">
+      <label>1. Upload Logo (JPG or PNG)</label><br />
+      <input type="file" id="logoFile" accept="image/png, image/jpeg" />
     </div>
-
-    <div class="upload-section">
-      <label for="pdfs">2. Upload Bank Statements (PDF only, up to 6)</label>
-      <input type="file" id="pdfs" accept="application/pdf" multiple>
+    <div class="row">
+      <label>2. Upload Bank Statements (PDF only, up to 6)</label><br />
+      <input type="file" id="pdfFiles" accept="application/pdf" multiple />
     </div>
-
-    <button onclick="processFiles()">3. Watermark Files</button>
-    <div class="file-status" id="status"></div>
-  </main>
+    <button onclick="watermarkFiles()">3. Watermark Files</button>
+    <div id="status"></div>
+  </div>
 
   <script>
-    let watermarkImageBytes;
+    const status = document.getElementById('status');
 
-    document.getElementById('logo').addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      watermarkImageBytes = await file.arrayBuffer();
-    });
+    async function watermarkFiles() {
+      const logoInput = document.getElementById('logoFile');
+      const pdfInput = document.getElementById('pdfFiles');
+      const logoFile = logoInput.files[0];
+      const pdfFiles = pdfInput.files;
 
-    async function processFiles() {
-      const status = document.getElementById('status');
-      const files = document.getElementById('pdfs').files;
-      if (!watermarkImageBytes) {
-        status.textContent = '❌ Please upload a logo first.';
+      if (!logoFile || pdfFiles.length === 0) {
+        status.innerText = 'Please upload both a logo and at least one PDF.';
         return;
       }
-      if (!files.length) {
-        status.textContent = '❌ Please upload at least one PDF.';
-        return;
-      }
-      if (files.length > 6) {
-        status.textContent = '❌ Max 6 PDFs allowed at a time.';
-        return;
-      }
-      status.textContent = '⏳ Processing...';
-      for (const file of files) {
-        const pdfBytes = await file.arrayBuffer();
-        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
-        const watermarkImg = await pdfDoc.embedJpg(watermarkImageBytes);
-        const pages = pdfDoc.getPages();
-        for (const page of pages) {
-          const { width, height } = page.getSize();
-          const imgWidth = watermarkImg.width / 5;
-          const imgHeight = watermarkImg.height / 5;
-          for (let y = 0; y < height; y += imgHeight * 2) {
-            for (let x = 0; x < width; x += imgWidth * 2) {
-              page.drawImage(watermarkImg, {
-                x,
-                y,
-                width: imgWidth,
-                height: imgHeight,
-                opacity: 0.2,
-                rotate: PDFLib.degrees(-30)
-              });
+
+      status.innerHTML = '⏳ Processing...';
+
+      try {
+        const logoBytes = await logoFile.arrayBuffer();
+
+        for (let i = 0; i < pdfFiles.length; i++) {
+          const pdfFile = pdfFiles[i];
+          const pdfBytes = await pdfFile.arrayBuffer();
+          const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+          const logoImg = await pdfDoc.embedJpg(logoBytes);
+
+          const pages = pdfDoc.getPages();
+          const wmWidth = logoImg.width / 4;
+          const wmHeight = logoImg.height / 4;
+
+          for (const page of pages) {
+            const { width, height } = page.getSize();
+            const xSpacing = wmWidth + 60;
+            const ySpacing = wmHeight + 60;
+            const diagBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
+
+            for (let x = diagBuffer; x < width - diagBuffer; x += xSpacing) {
+              for (let y = diagBuffer; y < height - diagBuffer; y += ySpacing) {
+                page.drawImage(logoImg, {
+                  x: x,
+                  y: y,
+                  width: wmWidth,
+                  height: wmHeight,
+                  opacity: 0.1,
+                  rotate: PDFLib.degrees(45)
+                });
+              }
             }
           }
+
+          const newPdfBytes = await pdfDoc.save();
+          const blob = new Blob([newPdfBytes], { type: 'application/pdf' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `watermarked-${pdfFile.name}`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
         }
-        const watermarkedPdf = await pdfDoc.save();
-        const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `watermarked-${file.name}`;
-        link.click();
+
+        status.innerHTML = '✅ Done! Files downloaded.';
+      } catch (error) {
+        console.error(error);
+        status.innerHTML = '❌ Error: ' + error.message;
       }
-      status.textContent = '✅ Done! Files downloaded.';
     }
   </script>
 </body>
