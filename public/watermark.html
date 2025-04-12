@@ -99,9 +99,16 @@
         return;
       }
 
+      const logoFile = logoInput.files[0];
+      const fileType = logoFile.type;
+      if (!fileType.includes('jpeg') && !fileType.includes('png')) {
+        status.textContent = "⚠️ Please upload a valid PNG or JPG logo file.";
+        return;
+      }
+
       status.textContent = "⏳ Processing...";
 
-      const logoBytes = await logoInput.files[0].arrayBuffer();
+      const logoBytes = await logoFile.arrayBuffer();
       const pdfFiles = Array.from(pdfInput.files);
 
       for (let file of pdfFiles) {
@@ -119,8 +126,15 @@
         const originalBytes = await file.arrayBuffer();
         const pdfDoc = await PDFLib.PDFDocument.load(originalBytes, { ignoreEncryption: true });
         const pages = pdfDoc.getPages();
-        const logoImage = await pdfDoc.embedJpg(logoBytes);
-        const scale = 0.08; // very small logo
+
+        let logoImage;
+        if (fileType.includes('png')) {
+          logoImage = await pdfDoc.embedPng(logoBytes);
+        } else {
+          logoImage = await pdfDoc.embedJpg(logoBytes);
+        }
+
+        const scale = 0.08;
         const logoWidth = logoImage.width * scale;
         const logoHeight = logoImage.height * scale;
 
