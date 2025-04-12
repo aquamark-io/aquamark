@@ -2,156 +2,155 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aquamark.io - Watermark Documents</title>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       background: #f9f9ff;
-      padding: 40px;
       margin: 0;
+      padding: 0;
     }
-    h1 {
+    header {
+      background: #ede6ff;
+      padding: 20px;
       text-align: center;
-      color: #222;
+      font-size: 1.2rem;
+      font-weight: 600;
     }
-    .box {
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
       background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
       padding: 30px;
-      border-radius: 10px;
-      max-width: 700px;
-      margin: 30px auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-    .box label {
-      font-weight: bold;
-      display: block;
-      margin: 15px 0 5px;
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
     }
-    .box input {
-      margin-bottom: 20px;
+    .upload-group {
+      margin-bottom: 25px;
     }
-    .instructions {
-      background: #eef3ff;
-      border-left: 6px solid #3e5bff;
-      padding: 16px 24px;
-      margin-bottom: 30px;
-      border-radius: 6px;
-      font-size: 15px;
-    }
-    .instructions b {
-      display: block;
+    input[type="file"] {
       margin-top: 8px;
     }
     button {
-      padding: 12px 25px;
-      background: #3e5bff;
-      color: white;
+      background: #3e5fff;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
       cursor: pointer;
     }
-    #status {
+    .status {
       margin-top: 20px;
-      font-size: 14px;
-      font-weight: bold;
-      text-align: center;
+      font-weight: 500;
+    }
+    .instructions {
+      background: #f4f1fe;
+      border-left: 5px solid #a08ef7;
+      padding: 15px 20px;
+      margin-bottom: 30px;
+      border-radius: 5px;
+    }
+    .instructions ul {
+      padding-left: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Aquamark.io - Watermark Documents</h1>
-  <div class="box">
+  <header>Aquamark.io - Watermark Documents</header>
+  <div class="container">
     <div class="instructions">
-      📝 <b>How to Use:</b>
-      - Upload your logo (JPG or PNG)<br>
-      - Upload up to 6 PDFs (max 25MB total)<br>
-      - Click "Watermark Files" and they’ll download automatically
-      <br><br>
-      ⚠️ <b>Encrypted PDFs:</b> Some bank PDFs (like Chase) are encrypted and can’t be watermarked. If that happens, try printing to PDF or screenshotting the file and saving it as a new PDF.
+      <strong>How to Use:</strong>
+      <ul>
+        <li>1. Upload your logo (JPG or PNG)</li>
+        <li>2. Upload up to 6 bank statements (PDF only)</li>
+        <li>3. Click "Watermark Files" to begin processing</li>
+      </ul>
+      <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
     </div>
 
-    <label>1. Upload Logo</label>
-    <input type="file" id="logoInput" accept="image/png, image/jpeg" />
+    <div class="upload-group">
+      <h2>1. Upload Logo (JPG or PNG)</h2>
+      <input type="file" id="logoInput" accept="image/jpeg,image/png" />
+    </div>
 
-    <label>2. Upload PDFs (Max 6)</label>
-    <input type="file" id="pdfInput" multiple accept="application/pdf" />
+    <div class="upload-group">
+      <h2>2. Upload Bank Statements (PDF only, up to 6)</h2>
+      <input type="file" id="pdfInput" accept="application/pdf" multiple />
+    </div>
 
-    <br/>
     <button onclick="processFiles()">3. Watermark Files</button>
-    <div id="status"></div>
+    <div class="status" id="status"></div>
   </div>
 
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
     async function processFiles() {
-      const logoFile = document.getElementById('logoInput').files[0];
-      const pdfFiles = document.getElementById('pdfInput').files;
-      const status = document.getElementById('status');
+      const status = document.getElementById("status");
+      const logoInput = document.getElementById("logoInput");
+      const pdfInput = document.getElementById("pdfInput");
 
-      if (!logoFile || pdfFiles.length === 0) {
-        status.innerText = '⚠️ Please upload both logo and PDFs.';
+      if (!logoInput.files[0] || pdfInput.files.length === 0) {
+        status.textContent = "Please upload both a logo and at least one PDF.";
         return;
       }
 
-      if (pdfFiles.length > 6) {
-        status.innerText = '⚠️ You can upload a maximum of 6 PDF files at a time.';
-        return;
+      status.textContent = "⏳ Processing...";
+
+      const logoBytes = await logoInput.files[0].arrayBuffer();
+      const pdfFiles = Array.from(pdfInput.files);
+
+      for (let file of pdfFiles) {
+        try {
+          const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
+            ignoreEncryption: false
+          });
+        } catch (err) {
+          status.textContent = "🔒 One or more PDFs are encrypted and cannot be watermarked. Please upload unlocked files.";
+          return;
+        }
       }
 
-      status.innerText = '⏳ Processing...';
+      for (let file of pdfFiles) {
+        const originalBytes = await file.arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(originalBytes, { ignoreEncryption: true });
+        const pages = pdfDoc.getPages();
+        const logoImage = await pdfDoc.embedJpg(logoBytes);
+        const scale = 0.08; // very small logo
+        const logoWidth = logoImage.width * scale;
+        const logoHeight = logoImage.height * scale;
 
-      try {
-        const logoBytes = await logoFile.arrayBuffer();
-        const fileType = logoFile.name.endsWith('.png') ? 'png' : 'jpg';
-
-        for (let file of pdfFiles) {
-          try {
-            const pdfBytes = await file.arrayBuffer();
-            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
-
-            const logoImg = fileType === 'png'
-              ? await pdfDoc.embedPng(logoBytes)
-              : await pdfDoc.embedJpg(logoBytes);
-
-            const pages = pdfDoc.getPages();
-            const wmWidth = logoImg.width / 6;
-            const wmHeight = logoImg.height / 6;
-
-            for (const page of pages) {
-              const { width, height } = page.getSize();
-              for (let x = 0; x < width; x += wmWidth + 40) {
-                for (let y = 0; y < height; y += wmHeight + 40) {
-                  page.drawImage(logoImg, {
-                    x,
-                    y,
-                    width: wmWidth,
-                    height: wmHeight,
-                    opacity: 0.08,
-                    rotate: PDFLib.degrees(-30),
-                  });
-                }
-              }
+        for (const page of pages) {
+          const { width, height } = page.getSize();
+          for (let x = 0; x < width; x += logoWidth + 40) {
+            for (let y = 0; y < height; y += logoHeight + 40) {
+              page.drawImage(logoImage, {
+                x: x,
+                y: y,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: 0.15,
+                rotate: PDFLib.degrees(45)
+              });
             }
-
-            const output = await pdfDoc.save();
-            const blob = new Blob([output], { type: 'application/pdf' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `watermarked-${file.name}`;
-            link.click();
-          } catch (err) {
-            console.warn(`Skipped ${file.name}:`, err.message);
-            alert(`⚠️ ${file.name} could not be watermarked. It may be encrypted.`);
           }
         }
 
-        status.innerText = '✅ Done. Files downloaded (if successful).';
-      } catch (err) {
-        console.error(err);
-        status.innerText = '❌ Unexpected error occurred.';
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
       }
+
+      status.textContent = "✅ Done. Files downloaded.";
     }
   </script>
 </body>
