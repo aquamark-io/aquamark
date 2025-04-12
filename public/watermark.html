@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aquamark.io - Watermark Documents</title>
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
@@ -9,6 +10,7 @@
       font-family: Arial, sans-serif;
       background: #f9f9ff;
       padding: 40px;
+      margin: 0;
     }
     h1 {
       text-align: center;
@@ -18,7 +20,7 @@
       background: white;
       padding: 30px;
       border-radius: 10px;
-      max-width: 600px;
+      max-width: 700px;
       margin: 30px auto;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
@@ -29,6 +31,18 @@
     }
     .box input {
       margin-bottom: 20px;
+    }
+    .instructions {
+      background: #eef3ff;
+      border-left: 6px solid #3e5bff;
+      padding: 16px 24px;
+      margin-bottom: 30px;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .instructions b {
+      display: block;
+      margin-top: 8px;
     }
     button {
       padding: 12px 25px;
@@ -42,21 +56,31 @@
     #status {
       margin-top: 20px;
       font-size: 14px;
+      font-weight: bold;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <h1>Aquamark.io - Watermark Documents</h1>
   <div class="box">
-    <label>1. Upload Logo (JPG or PNG)</label>
+    <div class="instructions">
+      📝 <b>How to Use:</b>
+      - Upload your logo (JPG or PNG)<br>
+      - Upload up to 6 PDFs (max 25MB total)<br>
+      - Click "Watermark Files" and they’ll download automatically
+      <br><br>
+      ⚠️ <b>Encrypted PDFs:</b> Some bank PDFs (like Chase) are encrypted and can’t be watermarked. If that happens, try printing to PDF or screenshotting the file and saving it as a new PDF.
+    </div>
+
+    <label>1. Upload Logo</label>
     <input type="file" id="logoInput" accept="image/png, image/jpeg" />
 
-    <label>2. Upload Bank Statements (PDF only, up to 6)</label>
+    <label>2. Upload PDFs (Max 6)</label>
     <input type="file" id="pdfInput" multiple accept="application/pdf" />
 
     <br/>
     <button onclick="processFiles()">3. Watermark Files</button>
-
     <div id="status"></div>
   </div>
 
@@ -71,55 +95,64 @@
         return;
       }
 
+      if (pdfFiles.length > 6) {
+        status.innerText = '⚠️ You can upload a maximum of 6 PDF files at a time.';
+        return;
+      }
+
       status.innerText = '⏳ Processing...';
 
       try {
         const logoBytes = await logoFile.arrayBuffer();
-        const zip = new JSZip();
+        const fileType = logoFile.name.endsWith('.png') ? 'png' : 'jpg';
 
         for (let file of pdfFiles) {
-          const pdfBytes = await file.arrayBuffer();
+          try {
+            const pdfBytes = await file.arrayBuffer();
+            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
 
-          const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-            ignoreEncryption: true,
-          });
+            const logoImg = fileType === 'png'
+              ? await pdfDoc.embedPng(logoBytes)
+              : await pdfDoc.embedJpg(logoBytes);
 
-          const jpgImg = await pdfDoc.embedJpg(logoBytes);
-          const pages = pdfDoc.getPages();
+            const pages = pdfDoc.getPages();
+            const wmWidth = logoImg.width / 6;
+            const wmHeight = logoImg.height / 6;
 
-          const wmWidth = jpgImg.width / 8;
-          const wmHeight = jpgImg.height / 8;
-
-          for (const page of pages) {
-            const { width, height } = page.getSize();
-            for (let x = 0; x < width; x += wmWidth * 2.5) {
-              for (let y = 0; y < height; y += wmHeight * 2.5) {
-                page.drawImage(jpgImg, {
-                  x,
-                  y,
-                  width: wmWidth,
-                  height: wmHeight,
-                  opacity: 0.08,
-                });
+            for (const page of pages) {
+              const { width, height } = page.getSize();
+              for (let x = 0; x < width; x += wmWidth + 40) {
+                for (let y = 0; y < height; y += wmHeight + 40) {
+                  page.drawImage(logoImg, {
+                    x,
+                    y,
+                    width: wmWidth,
+                    height: wmHeight,
+                    opacity: 0.08,
+                    rotate: PDFLib.degrees(-30),
+                  });
+                }
               }
             }
-          }
 
-          const watermarkedPdf = await pdfDoc.save();
-          const blob = new Blob([watermarkedPdf], { type: 'application/pdf' });
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = `watermarked-${new Date().toISOString().split('T')[0]}-${file.name}`;
-          a.click();
+            const output = await pdfDoc.save();
+            const blob = new Blob([output], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `watermarked-${file.name}`;
+            link.click();
+          } catch (err) {
+            console.warn(`Skipped ${file.name}:`, err.message);
+            alert(`⚠️ ${file.name} could not be watermarked. It may be encrypted.`);
+          }
         }
 
-        status.innerText = '✅ Done. Files downloaded.';
+        status.innerText = '✅ Done. Files downloaded (if successful).';
       } catch (err) {
         console.error(err);
-        status.innerText = '❌ Error: ' + err.message;
+        status.innerText = '❌ Unexpected error occurred.';
       }
     }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </body>
 </html>
