@@ -135,19 +135,16 @@
       const pdfFiles = Array.from(pdfInput.files);
 
       for (let file of pdfFiles) {
+        let pdfDoc;
         try {
-          await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-            ignoreEncryption: false
+          pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
+            ignoreEncryption: true
           });
         } catch (err) {
-          status.textContent = "🔒 One or more PDFs are encrypted and cannot be watermarked. Please upload unlocked files.";
-          return;
+          status.textContent = `❌ Failed to process "${file.name}" — it may be protected or corrupted.`;
+          continue;
         }
-      }
 
-      for (let file of pdfFiles) {
-        const originalBytes = await file.arrayBuffer();
-        const pdfDoc = await PDFLib.PDFDocument.load(originalBytes, { ignoreEncryption: true });
         const pages = pdfDoc.getPages();
         const logoImage = await pdfDoc.embedJpg(logoBytes);
         const hologramImage = await pdfDoc.embedPng(hologramBytes);
