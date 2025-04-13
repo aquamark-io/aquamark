@@ -89,6 +89,31 @@
 
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
+    async function normalizeImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 150;
+            canvas.height = 150;
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+              const fr = new FileReader();
+              fr.onload = () => resolve(fr.result);
+              fr.readAsArrayBuffer(blob);
+            }, 'image/jpeg', 0.95);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
     async function processFiles() {
       const status = document.getElementById("status");
       const logoInput = document.getElementById("logoInput");
@@ -99,16 +124,9 @@
         return;
       }
 
-      const logoFile = logoInput.files[0];
-      const fileType = logoFile.type;
-      if (!fileType.includes('jpeg') && !fileType.includes('png')) {
-        status.textContent = "⚠️ Please upload a valid PNG or JPG logo file.";
-        return;
-      }
-
       status.textContent = "⏳ Processing...";
 
-      const logoBytes = await logoFile.arrayBuffer();
+      const logoBytes = await normalizeImage(logoInput.files[0]);
       const hologramUrl = "/holgram.png";
       const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
 
@@ -116,7 +134,7 @@
 
       for (let file of pdfFiles) {
         try {
-          const testLoad = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
+          await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
             ignoreEncryption: false
           });
         } catch (err) {
@@ -129,25 +147,17 @@
         const originalBytes = await file.arrayBuffer();
         const pdfDoc = await PDFLib.PDFDocument.load(originalBytes, { ignoreEncryption: true });
         const pages = pdfDoc.getPages();
-
-        let logoImage;
-        if (fileType.includes('png')) {
-          logoImage = await pdfDoc.embedPng(logoBytes);
-        } else {
-          logoImage = await pdfDoc.embedJpg(logoBytes);
-        }
-
+        const logoImage = await pdfDoc.embedJpg(logoBytes);
         const hologramImage = await pdfDoc.embedPng(hologramBytes);
-        const scale = 0.08;
-        const logoWidth = logoImage.width * scale;
-        const logoHeight = logoImage.height * scale;
+
+        const logoWidth = 50;
+        const logoHeight = 50;
         const hologramWidth = 60;
         const hologramHeight = 60;
 
         for (const page of pages) {
           const { width, height } = page.getSize();
 
-          // Greatly reduce frequency
           for (let x = 0; x < width; x += (logoWidth + 352)) {
             for (let y = 0; y < height; y += (logoHeight + 352)) {
               page.drawImage(logoImage, {
