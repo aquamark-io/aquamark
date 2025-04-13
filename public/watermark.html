@@ -109,11 +109,14 @@
       status.textContent = "⏳ Processing...";
 
       const logoBytes = await logoFile.arrayBuffer();
+      const hologramUrl = "/holgram.png";
+      const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
+
       const pdfFiles = Array.from(pdfInput.files);
 
       for (let file of pdfFiles) {
         try {
-          const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
+          const testLoad = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
             ignoreEncryption: false
           });
         } catch (err) {
@@ -134,12 +137,17 @@
           logoImage = await pdfDoc.embedJpg(logoBytes);
         }
 
+        const hologramImage = await pdfDoc.embedPng(hologramBytes);
         const scale = 0.08;
         const logoWidth = logoImage.width * scale;
         const logoHeight = logoImage.height * scale;
+        const hologramWidth = 60;
+        const hologramHeight = 60;
 
         for (const page of pages) {
           const { width, height } = page.getSize();
+
+          // Add tiled watermark logos
           for (let x = 0; x < width; x += (logoWidth + 88)) {
             for (let y = 0; y < height; y += (logoHeight + 88)) {
               page.drawImage(logoImage, {
@@ -152,6 +160,15 @@
               });
             }
           }
+
+          // Add top-right hologram only in edge space
+          page.drawImage(hologramImage, {
+            x: width - hologramWidth - 10,
+            y: height - hologramHeight - 10,
+            width: hologramWidth,
+            height: hologramHeight,
+            opacity: 0.7
+          });
         }
 
         const pdfBytes = await pdfDoc.save();
