@@ -89,16 +89,18 @@
 
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
-    async function normalizeImage(file) {
+    async function normalizeImagePreserveAspect(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = function (e) {
           const img = new Image();
           img.onload = function () {
+            const maxSize = 200;
+            let scale = Math.min(maxSize / img.width, maxSize / img.height);
             const canvas = document.createElement('canvas');
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
             const ctx = canvas.getContext('2d');
-            canvas.width = 150;
-            canvas.height = 150;
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -126,7 +128,7 @@
 
       status.textContent = "⏳ Processing...";
 
-      const logoBytes = await normalizeImage(logoInput.files[0]);
+      const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
       const hologramUrl = "/holgram.png";
       const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
 
@@ -150,21 +152,20 @@
         const logoImage = await pdfDoc.embedJpg(logoBytes);
         const hologramImage = await pdfDoc.embedPng(hologramBytes);
 
-        const logoWidth = 50;
-        const logoHeight = 50;
+        const logoDims = logoImage.scale(0.35); // scale logo down to manageable size
         const hologramWidth = 60;
         const hologramHeight = 60;
 
         for (const page of pages) {
           const { width, height } = page.getSize();
 
-          for (let x = 0; x < width; x += (logoWidth + 352)) {
-            for (let y = 0; y < height; y += (logoHeight + 352)) {
+          for (let x = 0; x < width; x += (logoDims.width + 140)) {
+            for (let y = 0; y < height; y += (logoDims.height + 140)) {
               page.drawImage(logoImage, {
-                x: x,
-                y: y,
-                width: logoWidth,
-                height: logoHeight,
+                x,
+                y,
+                width: logoDims.width,
+                height: logoDims.height,
                 opacity: 0.15,
                 rotate: PDFLib.degrees(45)
               });
