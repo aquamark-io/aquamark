@@ -152,15 +152,15 @@
         const logoImage = await pdfDoc.embedJpg(logoBytes);
         const hologramImage = await pdfDoc.embedPng(hologramBytes);
 
-        const logoDims = logoImage.scale(0.35); // scale logo down to manageable size
+        const logoDims = logoImage.scale(0.35);
         const hologramWidth = 60;
         const hologramHeight = 60;
 
         for (const page of pages) {
           const { width, height } = page.getSize();
 
-          for (let x = 0; x < width; x += (logoDims.width + 140)) {
-            for (let y = 0; y < height; y += (logoDims.height + 140)) {
+          for (let x = 0; x < width; x += (logoDims.width + 100)) {
+            for (let y = 0; y < height; y += (logoDims.height + 100)) {
               page.drawImage(logoImage, {
                 x,
                 y,
