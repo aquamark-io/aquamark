@@ -147,9 +147,9 @@
         for (const page of pages) {
           const { width, height } = page.getSize();
 
-          // Add tiled watermark logos
-          for (let x = 0; x < width; x += (logoWidth + 88)) {
-            for (let y = 0; y < height; y += (logoHeight + 88)) {
+          // Greatly reduce frequency
+          for (let x = 0; x < width; x += (logoWidth + 352)) {
+            for (let y = 0; y < height; y += (logoHeight + 352)) {
               page.drawImage(logoImage, {
                 x: x,
                 y: y,
@@ -161,7 +161,6 @@
             }
           }
 
-          // Add top-right hologram only in edge space
           page.drawImage(hologramImage, {
             x: width - hologramWidth - 10,
             y: height - hologramHeight - 10,
