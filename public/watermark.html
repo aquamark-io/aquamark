@@ -116,6 +116,17 @@
       });
     }
 
+    async function decryptPDF(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Decryption failed");
+      return await response.arrayBuffer();
+    }
+
     async function processFiles() {
       const status = document.getElementById("status");
       const logoInput = document.getElementById("logoInput");
@@ -135,19 +146,24 @@
       const pdfFiles = Array.from(pdfInput.files);
 
       for (let file of pdfFiles) {
-        try {
-          await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-            ignoreEncryption: false
-          });
-        } catch (err) {
-          status.textContent = "🔒 One or more PDFs are encrypted and cannot be watermarked. Please upload unlocked files.";
-          return;
-        }
-      }
+        let pdfBytes;
 
-      for (let file of pdfFiles) {
-        const originalBytes = await file.arrayBuffer();
-        const pdfDoc = await PDFLib.PDFDocument.load(originalBytes, { ignoreEncryption: true });
+        try {
+          // Try loading the file normally (unencrypted)
+          await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
+          pdfBytes = await file.arrayBuffer();
+        } catch (err) {
+          // Fallback to Render decryption
+          status.textContent = "🔐 Decrypting encrypted file...";
+          try {
+            pdfBytes = await decryptPDF(file);
+          } catch {
+            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+            return;
+          }
+        }
+
+        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
         const pages = pdfDoc.getPages();
         const logoImage = await pdfDoc.embedJpg(logoBytes);
         const hologramImage = await pdfDoc.embedPng(hologramBytes);
@@ -181,8 +197,8 @@
           });
         }
 
-        const pdfBytes = await pdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const finalBytes = await pdfDoc.save();
+        const blob = new Blob([finalBytes], { type: 'application/pdf' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
