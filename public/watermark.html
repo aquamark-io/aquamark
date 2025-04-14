@@ -125,15 +125,15 @@
         const page = await pdf.getPage(i + 1);
         const viewport = page.getViewport({ scale: 2 });
         const canvas = document.createElement('canvas');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+        canvas.width = Math.round(viewport.width);
+        canvas.height = Math.round(viewport.height);
         const context = canvas.getContext('2d');
         await page.render({ canvasContext: context, viewport }).promise;
-        const imgData = canvas.toDataURL('image/jpeg');
-        const jpgImageBytes = await fetch(imgData).then(res => res.arrayBuffer());
-        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
-        const newPage = pdfDoc.addPage([viewport.width, viewport.height]);
-        newPage.drawImage(jpgImage, { x: 0, y: 0, width: viewport.width, height: viewport.height });
+        const imgData = canvas.toDataURL('image/png');
+        const pngBytes = await fetch(imgData).then(res => res.arrayBuffer());
+        const pngImage = await pdfDoc.embedPng(pngBytes);
+        const newPage = pdfDoc.addPage([canvas.width, canvas.height]);
+        newPage.drawImage(pngImage, { x: 0, y: 0, width: canvas.width, height: canvas.height });
       }
       return await pdfDoc.save();
     }
