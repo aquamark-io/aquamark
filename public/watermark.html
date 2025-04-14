@@ -86,6 +86,22 @@
       });
     }
 
+    async function decryptPDF(file) {
+      const formData = new FormData();
+      formData.append("pdf", file);
+
+      const res = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error("Decryption failed on server.");
+      }
+
+      return await res.arrayBuffer();
+    }
+
     async function watermarkFiles() {
       const logoInput = document.getElementById("logo");
       const pdfInput = document.getElementById("pdfs");
@@ -109,11 +125,23 @@
 
       for (const pdfFile of pdfInput.files) {
         try {
-          const pdfBytes = await pdfFile.arrayBuffer();
-          const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
-          const logoImg = await pdfDoc.embedJpg(logoBytes);
+          let pdfBytes;
+          let pdfDoc;
 
+          try {
+            // Try loading normally first
+            pdfBytes = await pdfFile.arrayBuffer();
+            pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+          } catch (e) {
+            console.warn("PDF encrypted, sending to decrypt server:", pdfFile.name);
+            // Attempt server-side decryption
+            pdfBytes = await decryptPDF(pdfFile);
+            pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+          }
+
+          const logoImg = await pdfDoc.embedJpg(logoBytes);
           const pages = pdfDoc.getPages();
+
           for (const page of pages) {
             const { width, height } = page.getSize();
             const xCount = Math.floor(width / (logoImg.width / 4 + 50));
@@ -127,7 +155,7 @@
                   width: logoImg.width / 4,
                   height: logoImg.height / 4,
                   opacity: 0.2,
-                  rotate: PDFLib.degrees(45)
+                  rotate: PDFLib.degrees(45),
                 });
               }
             }
@@ -140,9 +168,9 @@
           link.download = "watermarked-" + pdfFile.name;
           link.click();
         } catch (err) {
-          console.error("PDF processing failed:", err);
-          status.innerText = "❌ Failed to watermark. See console.";
-          return;
+          console.error("❌ Failed to watermark PDF:", err);
+          status.innerText = `❌ Error watermarking ${pdfFile.name}`;
+          continue;
         }
       }
 
