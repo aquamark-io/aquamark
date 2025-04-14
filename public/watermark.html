@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Aquamark.io - Watermark Documents</title>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib"></script>
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f8f8ff;
-      padding: 40px;
+      background: #f8f8ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     h1 {
-      text-align: center;
+      margin-top: 40px;
+      font-size: 24px;
     }
     .container {
       background: white;
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 20px 30px;
+      margin-top: 20px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
+      width: 100%;
     }
     label {
       font-weight: bold;
-    }
-    input {
-      margin-bottom: 15px;
+      margin-top: 10px;
       display: block;
     }
+    input[type="file"] {
+      margin-top: 4px;
+    }
     button {
-      background-color: #3b5bff;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-weight: bold;
+      background-color: #3f5efb;
       color: white;
       border: none;
-      padding: 12px 20px;
       border-radius: 6px;
-      font-weight: bold;
       cursor: pointer;
     }
     #status {
       margin-top: 20px;
-      font-weight: bold;
     }
   </style>
 </head>
@@ -47,87 +54,100 @@
   <h1>Aquamark.io - Watermark Documents</h1>
   <div class="container">
     <label>1. Upload Logo (JPG or PNG)</label>
-    <input type="file" id="logo" accept="image/*">
+    <input type="file" id="logo" accept="image/jpeg, image/png" />
 
     <label>2. Upload Bank Statements (PDF only, up to 6)</label>
-    <input type="file" id="pdfs" accept="application/pdf" multiple>
+    <input type="file" id="pdfs" accept="application/pdf" multiple />
 
-    <button>3. Watermark Files</button>
-    <div id="status">⚡ Ready to watermark</div>
+    <button onclick="watermarkFiles()">3. Watermark Files</button>
+
+    <div id="status"></div>
   </div>
 
   <script>
-    async function createSamplePDFWithImage(imageBytes) {
-      const pdfDoc = await PDFLib.PDFDocument.create();
-      const page = pdfDoc.addPage([300, 300]);
-      const img = await pdfDoc.embedJpg(imageBytes);
-      page.drawImage(img, { x: 100, y: 100, width: 100, height: 100 });
-      return await pdfDoc.save();
+    async function loadImageAsJpgBytes(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = 200;
+          canvas.height = 200;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob((blob) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(new Uint8Array(reader.result));
+            reader.readAsArrayBuffer(blob);
+          }, "image/jpeg");
+        };
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+      });
     }
 
-    async function handleWatermarking() {
-      const logoInput = document.getElementById('logo');
-      const filesInput = document.getElementById('pdfs');
-      const status = document.getElementById('status');
-      const logoFile = logoInput.files[0];
-      const pdfFiles = [...filesInput.files];
+    async function watermarkFiles() {
+      const logoInput = document.getElementById("logo");
+      const pdfInput = document.getElementById("pdfs");
+      const status = document.getElementById("status");
 
-      if (!logoFile || pdfFiles.length === 0) {
-        alert('Please upload both a logo and at least one PDF.');
+      status.innerText = "Processing... ⏳";
+
+      if (!logoInput.files[0] || !pdfInput.files.length) {
+        status.innerText = "Please upload both a logo and PDF files.";
         return;
       }
 
-      status.innerText = '🕐 Processing...';
-
+      let logoBytes;
       try {
-        const logoBytes = await logoFile.arrayBuffer();
-        const logoImg = await PDFLib.PDFDocument.load(await createSamplePDFWithImage(logoBytes));
-        const logoEmbed = await logoImg.embedJpg(logoBytes);
-        const logoWidth = 100;
-        const logoHeight = (logoWidth / logoEmbed.width) * logoEmbed.height;
+        logoBytes = await loadImageAsJpgBytes(logoInput.files[0]);
+      } catch (err) {
+        console.error("Failed to process logo:", err);
+        status.innerText = "❌ Failed to process logo.";
+        return;
+      }
 
-        for (const file of pdfFiles) {
-          const fileBytes = await file.arrayBuffer();
-          const pdfDoc = await PDFLib.PDFDocument.load(fileBytes, { ignoreEncryption: true });
+      for (const pdfFile of pdfInput.files) {
+        try {
+          const pdfBytes = await pdfFile.arrayBuffer();
+          const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+          const logoImg = await pdfDoc.embedJpg(logoBytes);
+
           const pages = pdfDoc.getPages();
-
           for (const page of pages) {
             const { width, height } = page.getSize();
-            const cols = Math.floor(width / (logoWidth + 30));
-            const rows = Math.floor(height / (logoHeight + 30));
+            const xCount = Math.floor(width / (logoImg.width / 4 + 50));
+            const yCount = Math.floor(height / (logoImg.height / 4 + 50));
 
-            for (let row = 0; row < rows; row++) {
-              for (let col = 0; col < cols; col++) {
-                const x = col * (logoWidth + 30);
-                const y = height - (row + 1) * (logoHeight + 30);
-                page.drawImage(logoEmbed, {
-                  x,
-                  y,
-                  width: logoWidth,
-                  height: logoHeight,
+            for (let i = 0; i < xCount; i++) {
+              for (let j = 0; j < yCount; j++) {
+                page.drawImage(logoImg, {
+                  x: i * (logoImg.width / 4 + 50),
+                  y: j * (logoImg.height / 4 + 50),
+                  width: logoImg.width / 4,
+                  height: logoImg.height / 4,
                   opacity: 0.2,
+                  rotate: PDFLib.degrees(45)
                 });
               }
             }
           }
 
-          const pdfBytes = await pdfDoc.save();
-          window.blob = new Blob([pdfBytes], { type: 'application/pdf' });
-          const blobUrl = URL.createObjectURL(window.blob);
-          const link = document.createElement('a');
-          link.href = blobUrl;
-          link.download = `manual-test-${file.name}`;
+          const output = await pdfDoc.save();
+          const blob = new Blob([output], { type: "application/pdf" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "watermarked-" + pdfFile.name;
           link.click();
-
-          status.innerText = '✅ Done. Files downloaded.';
+        } catch (err) {
+          console.error("PDF processing failed:", err);
+          status.innerText = "❌ Failed to watermark. See console.";
+          return;
         }
-      } catch (err) {
-        console.error('❌ PDF processing failed:', err);
-        status.innerText = '❌ Failed to watermark. See console.';
       }
-    }
 
-    document.querySelector('button').addEventListener('click', handleWatermarking);
+      status.innerText = "✅ Done. Files downloaded.";
+    }
   </script>
 </body>
 </html>
