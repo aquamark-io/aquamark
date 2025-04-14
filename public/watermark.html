@@ -88,6 +88,8 @@
   </div>
 
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+
   <script>
     async function normalizeImagePreserveAspect(file) {
       return new Promise((resolve) => {
@@ -116,6 +118,26 @@
       });
     }
 
+    async function fallbackFlattenWithPdfjs(arrayBuffer) {
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const pdfDoc = await PDFLib.PDFDocument.create();
+      for (let i = 0; i < pdf.numPages; i++) {
+        const page = await pdf.getPage(i + 1);
+        const viewport = page.getViewport({ scale: 2 });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const context = canvas.getContext('2d');
+        await page.render({ canvasContext: context, viewport }).promise;
+        const imgData = canvas.toDataURL('image/jpeg');
+        const jpgImageBytes = await fetch(imgData).then(res => res.arrayBuffer());
+        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+        const newPage = pdfDoc.addPage([viewport.width, viewport.height]);
+        newPage.drawImage(jpgImage, { x: 0, y: 0, width: viewport.width, height: viewport.height });
+      }
+      return await pdfDoc.save();
+    }
+
     async function processFiles() {
       const status = document.getElementById("status");
       const logoInput = document.getElementById("logoInput");
@@ -136,13 +158,19 @@
 
       for (let file of pdfFiles) {
         let pdfDoc;
+        let originalBytes = await file.arrayBuffer();
+
         try {
-          pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-            ignoreEncryption: true
-          });
+          pdfDoc = await PDFLib.PDFDocument.load(originalBytes, { ignoreEncryption: true });
         } catch (err) {
-          status.textContent = `❌ Failed to process "${file.name}" — it may be protected or corrupted.`;
-          continue;
+          try {
+            status.textContent = `⚠️ "${file.name}" appears to be encrypted. Attempting to flatten...`;
+            originalBytes = await fallbackFlattenWithPdfjs(originalBytes);
+            pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
+          } catch (fail) {
+            status.textContent = `❌ Unable to process "${file.name}". PDF may be too restricted or corrupted.`;
+            continue;
+          }
         }
 
         const pages = pdfDoc.getPages();
