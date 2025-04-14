@@ -1,3 +1,4 @@
+<!-- FULL watermark.html — with Outseta email fetch -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +61,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>Aquamark.io - Watermark Documents</header>
   <div class="container">
@@ -209,6 +211,37 @@
 
       status.textContent = "✅ Done. Files downloaded.";
     }
+
+    // ✅ Step 1: Get logged-in email from Outseta
+    async function getUserEmail() {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        console.error("No access token found.");
+        return null;
+      }
+
+      try {
+        const response = await fetch("https://aquamark.outseta.com/api/auth/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          console.error("Failed to fetch user data:", response.status);
+          return null;
+        }
+
+        const user = await response.json();
+        return user.email;
+      } catch (err) {
+        console.error("Error fetching user email:", err);
+        return null;
+      }
+    }
+
+    // 🧪 TEST THIS in console: getUserEmail().then(console.log);
+
   </script>
 </body>
 </html>
