@@ -1,223 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Aquamark.io - Watermark Documents</title>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
     body {
       font-family: sans-serif;
-      background: #f9f9ff;
-      margin: 0;
-      padding: 0;
+      background-color: #f8f8ff;
+      padding: 40px;
     }
-    header {
-      background: #ede6ff;
-      padding: 20px;
+    h1 {
       text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
     }
     .container {
-      max-width: 800px;
-      margin: 40px auto;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      max-width: 700px;
+      margin: 30px auto;
       padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
-    h2 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
+    label {
+      font-weight: bold;
     }
-    .upload-group {
-      margin-bottom: 25px;
-    }
-    input[type="file"] {
-      margin-top: 8px;
+    input {
+      margin-bottom: 15px;
+      display: block;
     }
     button {
-      background: #3e5fff;
-      border: none;
+      background-color: #3b5bff;
       color: white;
+      border: none;
       padding: 12px 20px;
-      border-radius: 5px;
-      font-size: 1rem;
+      border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
     }
-    .status {
+    #status {
       margin-top: 20px;
-      font-weight: 500;
-    }
-    .instructions {
-      background: #f4f1fe;
-      border-left: 5px solid #a08ef7;
-      padding: 15px 20px;
-      margin-bottom: 30px;
-      border-radius: 5px;
-    }
-    .instructions ul {
-      padding-left: 20px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <header>Aquamark.io - Watermark Documents</header>
+  <h1>Aquamark.io - Watermark Documents</h1>
   <div class="container">
-    <div class="instructions">
-      <strong>How to Use:</strong>
-      <ul>
-        <li>1. Upload your logo (JPG or PNG)</li>
-        <li>2. Upload up to 6 bank statements (PDF only)</li>
-        <li>3. Click "Watermark Files" to begin processing</li>
-      </ul>
-      <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
-    </div>
+    <label>1. Upload Logo (JPG or PNG)</label>
+    <input type="file" id="logo" accept="image/*">
 
-    <div class="upload-group">
-      <h2>1. Upload Logo (JPG or PNG)</h2>
-      <input type="file" id="logoInput" accept="image/jpeg,image/png" />
-    </div>
+    <label>2. Upload Bank Statements (PDF only, up to 6)</label>
+    <input type="file" id="pdfs" accept="application/pdf" multiple>
 
-    <div class="upload-group">
-      <h2>2. Upload Bank Statements (PDF only, up to 6)</h2>
-      <input type="file" id="pdfInput" accept="application/pdf" multiple />
-    </div>
-
-    <button onclick="processFiles()">3. Watermark Files</button>
-    <div class="status" id="status"></div>
+    <button>3. Watermark Files</button>
+    <div id="status">⚡ Ready to watermark</div>
   </div>
 
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
-
   <script>
-    async function normalizeImagePreserveAspect(file) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const img = new Image();
-          img.onload = function () {
-            const maxSize = 200;
-            let scale = Math.min(maxSize / img.width, maxSize / img.height);
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            canvas.toBlob((blob) => {
-              const fr = new FileReader();
-              fr.onload = () => resolve(fr.result);
-              fr.readAsArrayBuffer(blob);
-            }, 'image/jpeg', 0.95);
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    async function fallbackFlattenWithPdfjs(arrayBuffer) {
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    async function createSamplePDFWithImage(imageBytes) {
       const pdfDoc = await PDFLib.PDFDocument.create();
-      for (let i = 0; i < pdf.numPages; i++) {
-        const page = await pdf.getPage(i + 1);
-        const viewport = page.getViewport({ scale: 2 });
-        const canvas = document.createElement('canvas');
-        canvas.width = Math.round(viewport.width);
-        canvas.height = Math.round(viewport.height);
-        const context = canvas.getContext('2d');
-        await page.render({ canvasContext: context, viewport }).promise;
-        const imgData = canvas.toDataURL('image/png');
-        const pngBytes = await fetch(imgData).then(res => res.arrayBuffer());
-        const pngImage = await pdfDoc.embedPng(pngBytes);
-        const newPage = pdfDoc.addPage([canvas.width, canvas.height]);
-        newPage.drawImage(pngImage, { x: 0, y: 0, width: canvas.width, height: canvas.height });
-      }
+      const page = pdfDoc.addPage([300, 300]);
+      const img = await pdfDoc.embedJpg(imageBytes);
+      page.drawImage(img, { x: 100, y: 100, width: 100, height: 100 });
       return await pdfDoc.save();
     }
 
-    async function processFiles() {
-      const status = document.getElementById("status");
-      const logoInput = document.getElementById("logoInput");
-      const pdfInput = document.getElementById("pdfInput");
+    async function handleWatermarking() {
+      const logoInput = document.getElementById('logo');
+      const filesInput = document.getElementById('pdfs');
+      const status = document.getElementById('status');
+      const logoFile = logoInput.files[0];
+      const pdfFiles = [...filesInput.files];
 
-      if (!logoInput.files[0] || pdfInput.files.length === 0) {
-        status.textContent = "Please upload both a logo and at least one PDF.";
+      if (!logoFile || pdfFiles.length === 0) {
+        alert('Please upload both a logo and at least one PDF.');
         return;
       }
 
-      status.textContent = "⏳ Processing...";
+      status.innerText = '🕐 Processing...';
 
-      const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
-      const hologramUrl = "/holgram.png";
-      const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
+      try {
+        const logoBytes = await logoFile.arrayBuffer();
+        const logoImg = await PDFLib.PDFDocument.load(await createSamplePDFWithImage(logoBytes));
+        const logoEmbed = await logoImg.embedJpg(logoBytes);
+        const logoWidth = 100;
+        const logoHeight = (logoWidth / logoEmbed.width) * logoEmbed.height;
 
-      const pdfFiles = Array.from(pdfInput.files);
+        for (const file of pdfFiles) {
+          const fileBytes = await file.arrayBuffer();
+          const pdfDoc = await PDFLib.PDFDocument.load(fileBytes, { ignoreEncryption: true });
+          const pages = pdfDoc.getPages();
 
-      for (let file of pdfFiles) {
-        let pdfDoc;
-        let originalBytes = await file.arrayBuffer();
+          for (const page of pages) {
+            const { width, height } = page.getSize();
+            const cols = Math.floor(width / (logoWidth + 30));
+            const rows = Math.floor(height / (logoHeight + 30));
 
-        try {
-          pdfDoc = await PDFLib.PDFDocument.load(originalBytes, { ignoreEncryption: true });
-        } catch (err) {
-          try {
-            status.textContent = `⚠️ "${file.name}" appears to be encrypted. Attempting to flatten...`;
-            originalBytes = await fallbackFlattenWithPdfjs(originalBytes);
-            pdfDoc = await PDFLib.PDFDocument.load(originalBytes);
-          } catch (fail) {
-            status.textContent = `❌ Unable to process "${file.name}". PDF may be too restricted or corrupted.`;
-            continue;
-          }
-        }
-
-        const pages = pdfDoc.getPages();
-        const logoImage = await pdfDoc.embedJpg(logoBytes);
-        const hologramImage = await pdfDoc.embedPng(hologramBytes);
-
-        const logoDims = logoImage.scale(0.35);
-        const hologramWidth = 60;
-        const hologramHeight = 60;
-
-        for (const page of pages) {
-          const { width, height } = page.getSize();
-
-          for (let x = 0; x < width; x += (logoDims.width + 100)) {
-            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-              page.drawImage(logoImage, {
-                x,
-                y,
-                width: logoDims.width,
-                height: logoDims.height,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(45)
-              });
+            for (let row = 0; row < rows; row++) {
+              for (let col = 0; col < cols; col++) {
+                const x = col * (logoWidth + 30);
+                const y = height - (row + 1) * (logoHeight + 30);
+                page.drawImage(logoEmbed, {
+                  x,
+                  y,
+                  width: logoWidth,
+                  height: logoHeight,
+                  opacity: 0.2,
+                });
+              }
             }
           }
 
-          page.drawImage(hologramImage, {
-            x: width - hologramWidth - 10,
-            y: height - hologramHeight - 10,
-            width: hologramWidth,
-            height: hologramHeight,
-            opacity: 0.7
-          });
+          const pdfBytes = await pdfDoc.save();
+          window.blob = new Blob([pdfBytes], { type: 'application/pdf' });
+          const blobUrl = URL.createObjectURL(window.blob);
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = `manual-test-${file.name}`;
+          link.click();
+
+          status.innerText = '✅ Done. Files downloaded.';
         }
-
-        const pdfBytes = await pdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+      } catch (err) {
+        console.error('❌ PDF processing failed:', err);
+        status.innerText = '❌ Failed to watermark. See console.';
       }
-
-      status.textContent = "✅ Done. Files downloaded.";
     }
+
+    document.querySelector('button').addEventListener('click', handleWatermarking);
   </script>
 </body>
 </html>
