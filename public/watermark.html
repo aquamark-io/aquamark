@@ -15,7 +15,7 @@
       padding: 20px;
       text-align: center;
       font-size: 1.2rem;
-      font-weight: 600;a
+      font-weight: 600;
     }
     .container {
       max-width: 800px;
@@ -210,5 +210,15 @@
       status.textContent = "✅ Done. Files downloaded.";
     }
   </script>
+  <script>
+  // Pass stored token back to dashboard
+  const token = localStorage.getItem("aquamark_access_token");
+  if (token) {
+    const dashboardLink = document.querySelector('a[href="/dashboard.html"]');
+    if (dashboardLink) {
+      dashboardLink.href = `/dashboard.html?access_token=${token}`;
+    }
+  }
+</script>
 </body>
 </html>
