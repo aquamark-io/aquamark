@@ -3,100 +3,219 @@
 <head>
   <meta charset="UTF-8" />
   <title>Aquamark.io - Watermark Documents</title>
-
-  <!-- PDF + Supabase -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="https://unpkg.com/pdf-lib"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-  <!-- ✅ Outseta Embed -->
-  <script src="https://cdn.outseta.com/outseta.min.js"
-    data-outseta-public-key="aa1fded1-39b2-4fa0-91b5-c40449042c44"
-    data-outseta-base-url="https://aquamark.outseta.com"></script>
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f5f5ff;
+      font-family: 'Inter', sans-serif;
       margin: 0;
-      padding: 2rem;
+      background: #f8f9fb;
+      color: #1e1e2f;
+    }
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .aqua-logo {
+      height: 28px;
+    }
+    .aqua-nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #333;
     }
     .container {
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2rem;
       background: white;
       border-radius: 12px;
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
-    .btn {
-      background: #3f51b5;
+    h1 {
+      font-size: 24px;
+      margin-bottom: 1.5rem;
+    }
+    .instructions {
+      background: #f1edff;
+      border-left: 4px solid #8c52ff;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      font-size: 15px;
+    }
+    .upload-section {
+      margin-bottom: 1.5rem;
+    }
+    .upload-section h3 {
+      margin-bottom: 0.5rem;
+      font-size: 18px;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #2e6eff;
       color: white;
+      font-weight: 600;
       border: none;
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
       border-radius: 8px;
       cursor: pointer;
+      font-size: 15px;
+    }
+    .progress {
+      margin-top: 1rem;
+      font-size: 14px;
     }
   </style>
+  <script>
+    var o_options = {
+      domain: "aquamark.outseta.com",
+      tokenStorage: "session",
+      auth: {
+        authenticationCallbackUrl: window.location.origin + "/watermark.html",
+        registrationConfirmationUrl: window.location.origin + "/watermark.html"
+      }
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
 <body>
-  <div class="container">
-    <h2>Aquamark.io - Watermark Documents</h2>
-    <div style="margin-bottom: 1rem;">
+  <script>
+    if (window.location.hash === '#o-logout-link') {
+      window.location.href = '/login.html';
+    }
+  </script>
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
+    <nav class="aqua-nav">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/watermark.html">Watermark</a>
+      <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Watermark Documents</h1>
+    <div class="instructions">
       <strong>How to Use:</strong>
       <ul>
         <li>1. Upload your logo (JPG or PNG)</li>
         <li>2. Upload up to 6 bank statements (PDF only)</li>
         <li>3. Click "Watermark Files" to begin processing</li>
       </ul>
-      <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
+      <p>Your files will not be stored. Downloads begin automatically after watermarking is complete.</p>
     </div>
-
-    <h3>1. Upload Logo (JPG or PNG)</h3>
-    <input type="file" id="logo" accept="image/*" />
-
-    <h3>2. Upload Bank Statements (PDF only, up to 6)</h3>
-    <input type="file" id="statements" multiple accept=".pdf" />
-
-    <div style="margin-top: 1.5rem;">
-      <button class="btn" onclick="watermarkFiles()">3. Watermark Files</button>
+    <div class="upload-section">
+      <h3>1. Upload Logo (JPG or PNG)</h3>
+      <input type="file" id="logoUpload" accept="image/png, image/jpeg" />
     </div>
-  </div>
+    <div class="upload-section">
+      <h3>2. Upload Bank Statements (PDF only, up to 6)</h3>
+      <input type="file" id="pdfUpload" accept="application/pdf" multiple />
+    </div>
+    <button id="processBtn">3. Watermark Files</button>
+    <div class="progress" id="progressText"></div>
+  </main>
 
   <script>
-    async function getUserEmail() {
-      return new Promise((resolve, reject) => {
-        let attempts = 0;
-        const maxAttempts = 30;
+    const DECRYPT_ENDPOINT = "https://aquamark-decrypt.onrender.com/decrypt";
 
-        const interval = setInterval(() => {
-          const user = Outseta?.nocode?.user;
-          if (user && user.Email) {
-            clearInterval(interval);
-            console.log("✅ Found user email:", user.Email);
-            resolve(user.Email);
-          }
-
-          attempts++;
-          if (attempts > maxAttempts) {
-            clearInterval(interval);
-            console.error("❌ Outseta.nocode.user not available in time.");
-            resolve(null);
-          }
-        }, 100);
+    async function decryptViaRender(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch(DECRYPT_ENDPOINT, {
+        method: "POST",
+        body: formData,
       });
+      if (!response.ok) throw new Error("Decryption failed");
+      return await response.arrayBuffer();
     }
 
-    async function watermarkFiles() {
-      const email = await getUserEmail();
-      if (!email) {
-        alert("User not authenticated. Please log in.");
+    async function addWatermark(pdfBytes, watermarkBytes) {
+      const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+      const image = await pdfDoc.embedJpg(watermarkBytes);
+      const pages = pdfDoc.getPages();
+      const wmWidth = image.width / 4;
+      const wmHeight = image.height / 4;
+
+      for (const page of pages) {
+        const { width, height } = page.getSize();
+        const xSpacing = wmWidth + 60;
+        const ySpacing = wmHeight + 60;
+        const diagonalBuffer = Math.sqrt(wmWidth ** 2 + wmHeight ** 2) / 2;
+
+        for (let x = diagonalBuffer; x < width - diagonalBuffer; x += xSpacing) {
+          for (let y = diagonalBuffer; y < height - diagonalBuffer; y += ySpacing) {
+            page.drawImage(image, {
+              x: x - wmWidth / 2,
+              y: y - wmHeight / 2,
+              width: wmWidth,
+              height: wmHeight,
+              opacity: 0.08,
+              rotate: PDFLib.degrees(-45)
+            });
+          }
+        }
+      }
+
+      return await pdfDoc.save();
+    }
+
+    document.getElementById("processBtn").addEventListener("click", async () => {
+      const logoFile = document.getElementById("logoUpload").files[0];
+      const pdfFiles = Array.from(document.getElementById("pdfUpload").files);
+      const progress = document.getElementById("progressText");
+
+      if (!logoFile || !pdfFiles.length) {
+        alert("Please upload a logo and at least one PDF.");
         return;
       }
 
-      console.log("Tracking usage for:", email);
-      alert("✅ Watermarking logic goes here. (Tracking for: " + email + ")");
-    }
+      if (pdfFiles.length > 6) {
+        alert("You can only upload up to 6 PDFs at once.");
+        return;
+      }
+
+      const logoBytes = await logoFile.arrayBuffer();
+
+      for (let i = 0; i < pdfFiles.length; i++) {
+        const file = pdfFiles[i];
+        progress.innerText = `Processing file ${i + 1} of ${pdfFiles.length}...`;
+
+        let pdfBytes;
+        try {
+          pdfBytes = await file.arrayBuffer();
+          await PDFLib.PDFDocument.load(pdfBytes);
+        } catch {
+          try {
+            pdfBytes = await decryptViaRender(file);
+          } catch (e) {
+            console.error("❌ Decryption failed:", e);
+            alert(`Failed to decrypt: ${file.name}`);
+            continue;
+          }
+        }
+
+        try {
+          const watermarked = await addWatermark(pdfBytes, logoBytes);
+          const blob = new Blob([watermarked], { type: "application/pdf" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `watermarked-${file.name}`;
+          a.click();
+        } catch (e) {
+          console.error("Error processing PDF:", e);
+          alert(`Failed to watermark file: ${file.name}`);
+        }
+      }
+
+      progress.innerText = "✅ Done!";
+    });
   </script>
 </body>
 </html>
