@@ -10,13 +10,26 @@
       margin: 0;
       padding: 0;
     }
-    header {
-      background: #ede6ff;
-      padding: 20px;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
+  .aqua-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #f3e8ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+.aqua-logo {
+  height: 28px;
+}
+.aqua-nav a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  color: #333;
+}
+.aqua-nav a.active {
+  color: #007bff;
+}
     .container {
       max-width: 800px;
       margin: 40px auto;
@@ -61,7 +74,14 @@
   </style>
 </head>
 <body>
-  <header>Aquamark.io - Watermark Documents</header>
+<header class="aqua-header">
+  <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
+  <nav class="aqua-nav">
+    <a href="/dashboard.html">Dashboard</a>
+    <a href="/watermark.html" class="active">Watermark</a>
+    <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
+  </nav>
+</header>
   <div class="container">
     <div class="instructions">
       <strong>How to Use:</strong>
