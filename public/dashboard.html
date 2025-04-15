@@ -230,17 +230,9 @@
     }
   }
 
-function waitForOutsetaUser(retries = 10) {
-  if (window.Outseta?.nocode?.user) {
-    loadUsage();
-  } else if (retries > 0) {
-    setTimeout(() => waitForOutsetaUser(retries - 1), 300);
-  } else {
-    console.error("❌ Outseta user session not available after retries.");
-  }
-}
-  
-waitForOutsetaUser();
+window.addEventListener("oEmbedLoaded", () => {
+  loadUsage();
+});
   
 </script>
 
