@@ -1,142 +1,129 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Aquamark.io Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <title>Aquamark Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
   <style>
     body {
-      font-family: Inter, sans-serif;
-      background: #f7f8ff;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
+      background: #f8f9fb;
+      color: #1e1e2f;
     }
-    header {
-      background-color: #4f46e5;
-      padding: 1rem 2rem;
-      color: white;
+    .aqua-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
-    header img {
-      height: 32px;
+    .aqua-logo {
+      height: 28px;
     }
-    nav a {
-      color: white;
+    .aqua-nav a {
       margin-left: 1.5rem;
       text-decoration: none;
+      font-weight: 500;
+      color: #333;
     }
-    .container {
-      max-width: 720px;
-      margin: 3rem auto;
+    .aqua-nav a.active {
+      color: #007bff;
+    }
+    .aqua-panel {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    h1.greeting {
+      font-size: 3.0rem;
+      margin-bottom: 2.0rem;
+      font-weight: 600;
+      color: #1e1e2f;
+    }
+    .aqua-layout {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .profile-container {
+      flex: 1 1 40%;
+      min-width: 300px;
+    }
+    .graphic-container {
+      flex: 1 1 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .dashboard-graphic {
+      width: 500px;
+      opacity: 0.65;
+    }
+    .aqua-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .aqua-card {
       background: white;
-      padding: 2rem;
-      border-radius: 12px;
+      border-radius: 16px;
+      padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      flex: 1 1 45%;
+      min-width: 300px;
     }
-    .progress-bar {
-      height: 10px;
-      background: #e5e7eb;
+    .aqua-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .usage-stat {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .usage-subtext {
+      color: #777;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .progress-bar-container {
+      background: #e9ecef;
+      height: 12px;
+      width: 100%;
       border-radius: 8px;
       overflow: hidden;
-      margin: 0.5rem 0 1rem;
     }
-    .progress-bar-fill {
+    .progress-fill {
       height: 100%;
-      background: #4f46e5;
-      transition: width 0.3s ease-in-out;
+      width: 0%;
+      background-color: #2e6eff;
+      transition: width 0.3s ease;
+    }
+    @media (max-width: 900px) {
+      .aqua-layout,
+      .aqua-cards {
+        flex-direction: column;
+      }
+      .graphic-container {
+        justify-content: center;
+        margin-top: 2rem;
+      }
     }
   </style>
-</head>
-<body>
   <script>
     var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+      domain: "aquamark.outseta.com",
+      tokenStorage: "session",
+      auth: {
+        authenticationCallbackUrl: window.location.origin + "/dashboard.html",
+        registrationConfirmationUrl: window.location.origin + "/dashboard.html"
+      }
     };
   </script>
-
-  <header>
-    <img src="/logo.png" alt="Aquamark Logo" />
-    <nav>
-      <a href="/dashboard.html">Dashboard</a>
-      <a href="/watermark.html">Watermark</a>
-      <a href="/api.html">API</a>
-      <a href="https://aquamark.io/logout">Log Out</a>
-    </nav>
-  </header>
-
-  <div class="container">
-    <h1>Welcome to your Dashboard</h1>
-
-    <section style="margin-bottom: 2rem;">
-      <h3>Monthly Usage</h3>
-      <p id="usage-text">Loading usage...</p>
-      <div class="progress-bar"><div id="usage-fill" class="progress-bar-fill" style="width: 0%"></div></div>
-      <small>Usage resets on the 1st of every month.</small>
-    </section>
-
-    <section style="margin-bottom: 2rem;">
-      <h3>Your Profile</h3>
-      <div data-o-profile="1" data-mode="embed" data-prefs="profile"></div>
-    </section>
-
-    <section>
-      <h3>API Access</h3>
-      <p>Use your API key to programmatically watermark PDFs. Refer to the API docs for details.</p>
-      <code>https://aquamark.io/api</code>
-    </section>
-  </div>
-
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-    const supabase = createClient(
-      "https://dvzmnikrvkvgragzhrof.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-    );
-
-    const getUserEmail = async () => {
-      return new Promise((resolve) => {
-        const check = () => {
-          const user = Outseta.nocode.user;
-          if (user && user.email) {
-            resolve(user.email);
-          } else {
-            setTimeout(check, 300);
-          }
-        };
-        check();
-      });
-    };
-
-    const getUsage = async () => {
-      const email = await getUserEmail();
-      const month = new Date().toISOString().slice(0, 7);
-      const { data, error } = await supabase
-        .from("usage")
-        .select("*")
-        .eq("user_email", email)
-        .eq("month", month)
-        .single();
-
-      const plan = Outseta?.nocode?.user?.plan || "free";
-      const maxPages = plan === "tier3" ? Infinity : plan === "tier2" ? 5000 : plan === "tier1" ? 1000 : 100;
-      const used = data?.pages_used || 0;
-      const percent = Math.min((used / maxPages) * 100, 100).toFixed(1);
-
-      document.getElementById("usage-text").textContent =
-        maxPages === Infinity
-          ? `Used ${used} pages this month (unlimited plan)`
-          : `Used ${used} of ${maxPages} pages`;
-
-      document.getElementById("usage-fill").style.width = percent + "%";
-    };
-
-    getUsage();
-  </script>
-</body>
-</html>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
