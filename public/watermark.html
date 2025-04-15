@@ -130,3 +130,85 @@
     async function processFiles() {
       const status = document.getElementById("status");
       const logoInput = document.getElementById("logoInput");
+      const pdfInput = document.getElementById("pdfInput");
+
+      if (!logoInput.files[0] || pdfInput.files.length === 0) {
+        status.textContent = "Please upload both a logo and at least one PDF.";
+        return;
+      }
+
+      status.textContent = "⏳ Processing...";
+
+      const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
+      const hologramUrl = "/holgram.png";
+      const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
+
+      const pdfFiles = Array.from(pdfInput.files);
+
+      for (let file of pdfFiles) {
+        let pdfBytes;
+
+        try {
+          // Try loading the file normally (unencrypted)
+          await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
+          pdfBytes = await file.arrayBuffer();
+        } catch (err) {
+          // Fallback to Render decryption
+          status.textContent = "🔐 Decrypting encrypted file...";
+          try {
+            pdfBytes = await decryptPDF(file);
+          } catch {
+            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+            return;
+          }
+        }
+
+        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+        const pages = pdfDoc.getPages();
+        const logoImage = await pdfDoc.embedJpg(logoBytes);
+        const hologramImage = await pdfDoc.embedPng(hologramBytes);
+
+        const logoDims = logoImage.scale(0.35);
+        const hologramWidth = 60;
+        const hologramHeight = 60;
+
+        for (const page of pages) {
+          const { width, height } = page.getSize();
+
+          for (let x = 0; x < width; x += (logoDims.width + 100)) {
+            for (let y = 0; y < height; y += (logoDims.height + 100)) {
+              page.drawImage(logoImage, {
+                x,
+                y,
+                width: logoDims.width,
+                height: logoDims.height,
+                opacity: 0.15,
+                rotate: PDFLib.degrees(45)
+              });
+            }
+          }
+
+          page.drawImage(hologramImage, {
+            x: width - hologramWidth - 10,
+            y: height - hologramHeight - 10,
+            width: hologramWidth,
+            height: hologramHeight,
+            opacity: 0.7
+          });
+        }
+
+        const finalBytes = await pdfDoc.save();
+        const blob = new Blob([finalBytes], { type: 'application/pdf' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      status.textContent = "✅ Done. Files downloaded.";
+    }
+  </script>
+</body>
+</html>
