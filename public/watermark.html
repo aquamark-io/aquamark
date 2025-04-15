@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <title>Aquamark.io - Watermark Documents</title>
-
-  <!-- PDF + Supabase -->
-  <script src="https://unpkg.com/pdf-lib"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-  <!-- ✅ Outseta Embed -->
-  <script 
-  src="https://cdn.outseta.com/outseta.min.js"
-  data-outseta-public-key="aa1fded1-39b2-4fa0-91b5-c40449042c44"
-  data-outseta-base-url="https://aquamark.outseta.com">
-    </script>
+  <!-- ✅ Required Outseta Init Script -->
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
   <style>
     body {
       font-family: sans-serif;
-      background: #f5f5ff;
+      background: #f9f9ff;
       margin: 0;
       padding: 2rem;
     }
@@ -39,20 +39,23 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    .status {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h2>Aquamark.io - Watermark Documents</h2>
-    <div style="margin-bottom: 1rem;">
-      <strong>How to Use:</strong>
-      <ul>
-        <li>1. Upload your logo (JPG or PNG)</li>
-        <li>2. Upload up to 6 bank statements (PDF only)</li>
-        <li>3. Click "Watermark Files" to begin processing</li>
-      </ul>
-      <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
-    </div>
+    <p><strong>How to Use:</strong></p>
+    <ul>
+      <li>1. Upload your logo (JPG or PNG)</li>
+      <li>2. Upload up to 6 bank statements (PDF only)</li>
+      <li>3. Click "Watermark Files" to begin processing</li>
+    </ul>
+    <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
 
     <h3>1. Upload Logo (JPG or PNG)</h3>
     <input type="file" id="logo" accept="image/*" />
@@ -63,14 +66,14 @@
     <div style="margin-top: 1.5rem;">
       <button class="btn" onclick="watermarkFiles()">3. Watermark Files</button>
     </div>
+
+    <div class="status" id="status"></div>
   </div>
 
   <script>
     async function getUserEmail() {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         let attempts = 0;
-        const maxAttempts = 30;
-
         const interval = setInterval(() => {
           const user = Outseta?.nocode?.user;
           if (user && user.Email) {
@@ -78,9 +81,7 @@
             console.log("✅ Found user email:", user.Email);
             resolve(user.Email);
           }
-
-          attempts++;
-          if (attempts > maxAttempts) {
+          if (++attempts > 30) {
             clearInterval(interval);
             console.error("❌ Outseta.nocode.user not available in time.");
             resolve(null);
@@ -89,15 +90,127 @@
       });
     }
 
+    async function normalizeImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            const maxSize = 200;
+            let scale = Math.min(maxSize / img.width, maxSize / img.height);
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+              const fr = new FileReader();
+              fr.onload = () => resolve(fr.result);
+              fr.readAsArrayBuffer(blob);
+            }, 'image/jpeg', 0.95);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function decryptPDF(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Decryption failed");
+      return await response.arrayBuffer();
+    }
+
     async function watermarkFiles() {
+      const status = document.getElementById("status");
+      const logoInput = document.getElementById("logo");
+      const pdfInput = document.getElementById("statements");
+
       const email = await getUserEmail();
       if (!email) {
         alert("User not authenticated. Please log in.");
         return;
       }
 
-      console.log("Tracking usage for:", email);
-      alert("✅ Watermarking logic goes here. (Tracking for: " + email + ")");
+      if (!logoInput.files[0] || pdfInput.files.length === 0) {
+        status.textContent = "Please upload a logo and at least one PDF.";
+        return;
+      }
+
+      status.textContent = "⏳ Processing...";
+      const logoBytes = await normalizeImage(logoInput.files[0]);
+      const hologramUrl = "/holgram.png";
+      const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
+      const pdfFiles = Array.from(pdfInput.files);
+
+      let totalPages = 0;
+
+      for (let file of pdfFiles) {
+        let pdfBytes;
+        try {
+          await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
+          pdfBytes = await file.arrayBuffer();
+        } catch {
+          status.textContent = "🔐 Decrypting...";
+          try {
+            pdfBytes = await decryptPDF(file);
+          } catch {
+            status.textContent = "❌ Could not decrypt a PDF.";
+            return;
+          }
+        }
+
+        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+        const pages = pdfDoc.getPages();
+        const logoImage = await pdfDoc.embedJpg(logoBytes);
+        const hologramImage = await pdfDoc.embedPng(hologramBytes);
+        const logoDims = logoImage.scale(0.35);
+
+        for (const page of pages) {
+          const { width, height } = page.getSize();
+          for (let x = 0; x < width; x += (logoDims.width + 100)) {
+            for (let y = 0; y < height; y += (logoDims.height + 100)) {
+              page.drawImage(logoImage, {
+                x, y,
+                width: logoDims.width,
+                height: logoDims.height,
+                opacity: 0.15,
+                rotate: PDFLib.degrees(45),
+              });
+            }
+          }
+          page.drawImage(hologramImage, {
+            x: width - 60 - 10,
+            y: height - 60 - 10,
+            width: 60,
+            height: 60,
+            opacity: 0.7,
+          });
+        }
+
+        totalPages += pages.length;
+
+        const finalBytes = await pdfDoc.save();
+        const blob = new Blob([finalBytes], { type: 'application/pdf' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      status.textContent = `✅ Done! ${totalPages} pages processed.`;
+
+      // TODO: 🔄 Add usage tracking logic here via Supabase using `email` and `totalPages`
+      console.log("Would update usage for", email, "with", totalPages, "pages.");
     }
   </script>
 </body>
