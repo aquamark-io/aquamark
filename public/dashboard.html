@@ -181,47 +181,60 @@
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
     );
 
-    function getPlanLimit(plan, isTrial) {
-      if (isTrial) return 100;
-      switch (plan.toLowerCase()) {
-        case "riding solo": return 1000;
-        case "small teams": return 5000;
-        case "iso shops": return 100000;
-        default: return 0;
+
+
+ <script>
+  async function loadUsage() {
+    try {
+      const user = await Outseta.nocode.user;
+      const email = user?.Email;
+      const plan = user?.Account?.Subscription?.Plan?.Name || "";
+      const isTrial = user?.Account?.Subscription?.IsTrial;
+
+      let pageLimit = 0;
+      let monthKey = "";
+      let usageText = "";
+
+      if (isTrial) {
+        pageLimit = 100;
+        monthKey = "trial";
+        usageText = "Trial pages used";
+      } else if (plan.toLowerCase() === "iso shops") {
+        document.querySelector(".usage-stat").innerText = `Unlimited pages`;
+        document.querySelector(".progress-fill").style.width = `100%`;
+        document.querySelector(".usage-subtext").innerText = "You're on an unlimited plan!";
+        return;
+      } else {
+        // Monthly plan
+        switch (plan.toLowerCase()) {
+          case "riding solo": pageLimit = 1000; break;
+          case "small teams": pageLimit = 5000; break;
+          default: pageLimit = 0;
+        }
+        monthKey = new Date().toISOString().slice(0, 7);
+        usageText = "Pages watermarked this month";
       }
+
+      const { data, error } = await supabase
+        .from("usage")
+        .select("pages_used")
+        .eq("user_email", email)
+        .eq("month", monthKey);
+
+      const used = data?.[0]?.pages_used || 0;
+      const percent = Math.min((used / pageLimit) * 100, 100).toFixed(1);
+
+      document.querySelector(".usage-stat").innerText = `${used} / ${pageLimit} pages`;
+      document.querySelector(".progress-fill").style.width = `${percent}%`;
+      document.querySelector(".usage-subtext").innerText = usageText;
+    } catch (err) {
+      document.querySelector(".usage-stat").innerText = "Error loading usage";
+      console.error("⚠️ Failed to load usage:", err);
     }
+  }
 
-    async function loadUsage() {
-      try {
-        const user = await Outseta.nocode.user;
-        const email = user?.Email;
-        const plan = user?.Account?.Subscription?.Plan?.Name;
-        const isTrial = user?.Account?.Subscription?.IsTrial;
-        const pageLimit = getPlanLimit(plan, isTrial);
-        const monthKey = isTrial ? "trial" : new Date().toISOString().slice(0, 7);
-
-        const { data, error } = await supabase
-          .from("usage")
-          .select("pages_used")
-          .eq("user_email", email)
-          .eq("month", monthKey);
-
-        const used = data?.[0]?.pages_used || 0;
-        const percent = Math.min((used / pageLimit) * 100, 100).toFixed(1);
-
-        document.querySelector(".usage-stat").innerText = `${used} / ${pageLimit} pages`;
-        document.querySelector(".progress-fill").style.width = `${percent}%`;
-        document.querySelector(".usage-subtext").innerText = isTrial
-          ? "Trial pages used"
-          : "Pages watermarked this month";
-      } catch (err) {
-        document.querySelector(".usage-stat").innerText = "Error loading usage";
-        console.error("⚠️ Failed to load usage:", err);
-      }
-    }
-
-    loadUsage();
-  </script>
+  loadUsage();
+</script>
 
   <script>
     const tokenParam = new URLSearchParams(window.location.search).get('access_token');
