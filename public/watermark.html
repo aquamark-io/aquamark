@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Aquamark.io - Watermark Documents</title>
+  <script>
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      window.location.href = "/login.html";
+    }
+  </script>
   <style>
     body {
       font-family: sans-serif;
@@ -15,7 +21,7 @@
       padding: 20px;
       text-align: center;
       font-size: 1.2rem;
-      font-weight: 600;a
+      font-weight: 600;
     }
     .container {
       max-width: 800px;
@@ -72,21 +78,17 @@
       </ul>
       <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
     </div>
-
     <div class="upload-group">
       <h2>1. Upload Logo (JPG or PNG)</h2>
       <input type="file" id="logoInput" accept="image/jpeg,image/png" />
     </div>
-
     <div class="upload-group">
       <h2>2. Upload Bank Statements (PDF only, up to 6)</h2>
       <input type="file" id="pdfInput" accept="application/pdf" multiple />
     </div>
-
     <button onclick="processFiles()">3. Watermark Files</button>
     <div class="status" id="status"></div>
   </div>
-
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
     async function normalizeImagePreserveAspect(file) {
@@ -147,13 +149,10 @@
 
       for (let file of pdfFiles) {
         let pdfBytes;
-
         try {
-          // Try loading the file normally (unencrypted)
           await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
           pdfBytes = await file.arrayBuffer();
         } catch (err) {
-          // Fallback to Render decryption
           status.textContent = "🔐 Decrypting encrypted file...";
           try {
             pdfBytes = await decryptPDF(file);
@@ -174,7 +173,6 @@
 
         for (const page of pages) {
           const { width, height } = page.getSize();
-
           for (let x = 0; x < width; x += (logoDims.width + 100)) {
             for (let y = 0; y < height; y += (logoDims.height + 100)) {
               page.drawImage(logoImage, {
@@ -187,7 +185,6 @@
               });
             }
           }
-
           page.drawImage(hologramImage, {
             x: width - hologramWidth - 10,
             y: height - hologramHeight - 10,
