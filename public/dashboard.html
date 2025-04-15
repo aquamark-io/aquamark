@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -52,14 +51,7 @@
       flex-wrap: wrap;
     }
     .profile-container {
-      flex: 1 1 40%;
-      min-width: 300px;
-    }
-    .graphic-container {
-      flex: 1 1 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      flex: 0 0 750px;
     }
     .dashboard-graphic {
       width: 500px;
@@ -111,10 +103,6 @@
       .aqua-cards {
         flex-direction: column;
       }
-      .graphic-container {
-        justify-content: center;
-        margin-top: 2rem;
-      }
     }
   </style>
 
@@ -153,12 +141,14 @@
   </header>
 
   <main class="aqua-panel">
-<h1 class="greeting" id="greeting">Hey! 👋</h1>
-<div class="aqua-layout" style="justify-content: flex-start;">
-  <div class="profile-container" style="flex: 0 0 750px;">
-    <div data-o-profile="1" data-mode="embed"></div>
-  </div>
-</div>
+    <h1 class="greeting">Welcome back! 👋</h1>
+
+    <div class="aqua-layout" style="justify-content: flex-start;">
+      <div class="profile-container">
+        <div data-o-profile="1" data-mode="embed"></div>
+      </div>
+    </div>
+
     <div class="aqua-cards">
       <div class="aqua-card">
         <h2>Monthly Usage</h2>
@@ -233,7 +223,6 @@
     loadUsage();
   </script>
 
-  <!-- Token-passing logic to watermark.html -->
   <script>
     const tokenParam = new URLSearchParams(window.location.search).get('access_token');
     if (tokenParam) {
@@ -243,15 +232,5 @@
       }
     }
   </script>
-<script>
-setTimeout(() => {
-  if (window.Outseta && Outseta.nocode && Outseta.nocode.user) {
-    Outseta.nocode.user.then(user => {
-      const firstName = user?.Contact?.FirstName || "there";
-      document.getElementById("greeting").innerText = `Hey ${firstName}! 👋`;
-    });
-  }
-}, 500);
-</script>
 </body>
 </html>
