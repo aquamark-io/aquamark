@@ -182,14 +182,26 @@
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
   );
 
+  document.addEventListener("DOMContentLoaded", function() {
+    // This ensures DOM is ready
+    if (window.Outseta && window.Outseta.nocode) {
+      loadUsage();
+    } else {
+      // Set up a listener for when Outseta is ready
+      window.addEventListener("outseta-embedded", loadUsage);
+    }
+  });
+
   async function loadUsage() {
     try {
       const user = await Outseta.nocode.user;
+      if (!user) throw new Error("No user data returned from Outseta");
       console.log("✅ Outseta user loaded:", user);
+      
       const email = user?.Email;
+      const isTrial = user?.Account?.Subscription?.IsTrial;
       const plan = user?.Account?.Subscription?.Plan?.Name || "";
       console.log("📦 Plan:", plan, "| Trial?", isTrial);
-      const isTrial = user?.Account?.Subscription?.IsTrial;
 
       let pageLimit = 0;
       let monthKey = "";
@@ -237,7 +249,7 @@
       document.querySelector(".usage-subtext").innerText = usageText;
     } catch (err) {
       document.querySelector(".usage-stat").innerText = "Error loading usage";
-      console.error("⚠️ Failed to load usage:", err);
+      console.error("⚠️ Outseta error:", err.message);
     }
   }
 
