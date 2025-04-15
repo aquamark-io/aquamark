@@ -16,55 +16,61 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <!-- Supabase -->
-  <script src="https://unpkg.com/@supabase/supabase-js"></script>
-  <script>
-    const { createClient } = supabase;
-    const supabaseClient = createClient(
-      "https://dvzmnikrvkvgragzhrof.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-    );
+  <!-- Supabase JS -->
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script>
+  const { createClient } = supabase;
+  const supabaseClient = createClient(
+    "https://dvzmnikrvkvgragzhrof.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // your anon public key
+  );
 
-    const waitForSignupElements = setInterval(() => {
-      const emailInput = document.querySelector("input[type='email']");
-      const submitButton = document.querySelector("button[type='submit']");
+  const waitForSignupElements = setInterval(() => {
+    const emailInput = document.querySelector("input[type='email']");
+    const submitButton = document.querySelector("button[type='submit']");
 
-      if (emailInput && submitButton) {
-        clearInterval(waitForSignupElements);
+    if (emailInput && submitButton) {
+      clearInterval(waitForSignupElements);
 
-        submitButton.addEventListener("click", async () => {
-          const userEmail = emailInput.value.trim();
-          if (!userEmail) return;
+      console.log("✅ Found email input and submit button");
 
-          const planName = "Free Trial";
-          const pageCredits = 100;
+      submitButton.addEventListener("click", async () => {
+        console.log("🚀 Sign Up button clicked");
 
-          try {
-            const { error } = await supabaseClient
-              .from("usage")
-              .upsert([{
-                user_email: userEmail,
-                month: "trial",
-                plan_name: planName,
-                page_credits: pageCredits,
-                pages_used: 0,
-                pages_remaining: pageCredits
-              }], {
-                onConflict: ['user_email', 'month']
-              });
+        const userEmail = emailInput.value.trim();
+        if (!userEmail) {
+          console.warn("⚠️ No email entered.");
+          return;
+        }
 
-            if (error) {
-              console.error("❌ Supabase insert error:", error.message);
-            } else {
-              console.log("✅ Supabase trial row created for:", userEmail);
-            }
-          } catch (err) {
-            console.error("❌ Unexpected Supabase error:", err.message);
+        console.log("📧 Captured email:", userEmail);
+
+        try {
+          const { error } = await supabaseClient
+            .from("usage")
+            .upsert([{
+              user_email: userEmail,
+              month: "trial",
+              plan_name: "Free Trial",
+              page_credits: 100,
+              pages_used: 0,
+              pages_remaining: 100
+            }], {
+              onConflict: ['user_email', 'month']
+            });
+
+          if (error) {
+            console.error("❌ Supabase insert failed:", error.message);
+          } else {
+            console.log("✅ Supabase row created for:", userEmail);
           }
-        });
-      }
-    }, 500);
-  </script>
+        } catch (err) {
+          console.error("🔥 Unexpected Supabase error:", err.message);
+        }
+      });
+    }
+  }, 500);
+</script>
 
   <style>
     body {
