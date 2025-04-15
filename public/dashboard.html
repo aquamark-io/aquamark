@@ -185,6 +185,7 @@
   async function loadUsage() {
     try {
       const user = await Outseta.nocode.user;
+      console.log("✅ Outseta user loaded:", user);
       const email = user?.Email;
       const plan = user?.Account?.Subscription?.Plan?.Name || "";
       const isTrial = user?.Account?.Subscription?.IsTrial;
