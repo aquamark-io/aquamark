@@ -178,9 +178,9 @@
 <script>
   const { createClient } = supabase;
   const supabaseClient = createClient(
-  "https://dvzmnikrvkvgragzhrof.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-);
+    "https://dvzmnikrvkvgragzhrof.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+  );
 
   async function loadUsage() {
     try {
@@ -212,6 +212,14 @@
         usageText = "Pages watermarked this month";
       }
 
+      // Ensure row exists for this user + month
+      await supabaseClient
+        .from("usage")
+        .upsert([{ user_email: email, month: monthKey, pages_used: 0 }], {
+          onConflict: ['user_email', 'month']
+        });
+
+      // Fetch usage row
       const { data, error } = await supabaseClient
         .from("usage")
         .select("pages_used")
@@ -230,12 +238,11 @@
     }
   }
 
-window.addEventListener("oEmbedLoaded", () => {
-  loadUsage();
-});
-  
+  window.addEventListener("oEmbedLoaded", () => {
+    loadUsage();
+  });
 </script>
-
+  
   <script>
     const tokenParam = new URLSearchParams(window.location.search).get('access_token');
     if (tokenParam) {
