@@ -243,11 +243,15 @@
       }
     }
   </script>
-  <script>
-  Outseta.nocode.user.then(user => {
-    const firstName = user?.FirstName || "there";
-    document.getElementById("greeting").innerText = `Hey ${firstName}! 👋`;
-  });
+<script>
+  setTimeout(() => {
+    if (window.Outseta && Outseta.nocode && Outseta.nocode.user) {
+      Outseta.nocode.user.then(user => {
+        const firstName = user?.FirstName || "there";
+        document.getElementById("greeting").innerText = `Hey ${firstName}! 👋`;
+      });
+    }
+  }, 300);
 </script>
 </body>
 </html>
