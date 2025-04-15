@@ -188,6 +188,7 @@
       console.log("✅ Outseta user loaded:", user);
       const email = user?.Email;
       const plan = user?.Account?.Subscription?.Plan?.Name || "";
+      console.log("📦 Plan:", plan, "| Trial?", isTrial);
       const isTrial = user?.Account?.Subscription?.IsTrial;
 
       let pageLimit = 0;
@@ -229,6 +230,7 @@
 
       const used = data?.[0]?.pages_used || 0;
       const percent = Math.min((used / pageLimit) * 100, 100).toFixed(1);
+      console.log("📊 Supabase query result:", data, error);
 
       document.querySelector(".usage-stat").innerText = `${used} / ${pageLimit} pages`;
       document.querySelector(".progress-fill").style.width = `${percent}%`;
