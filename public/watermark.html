@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Aquamark.io - Watermark Documents</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://unpkg.com/pdf-lib"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -98,6 +98,7 @@
     </nav>
   </header>
 
+  <!-- BEGIN original working watermark container -->
   <main class="container">
     <h1>Watermark Documents</h1>
     <div class="instructions">
@@ -120,6 +121,7 @@
     <button id="processBtn">3. Watermark Files</button>
     <div class="progress" id="progressText"></div>
   </main>
+  <!-- END original working watermark container -->
 
   <script>
     const DECRYPT_ENDPOINT = "https://aquamark-decrypt.onrender.com/decrypt";
