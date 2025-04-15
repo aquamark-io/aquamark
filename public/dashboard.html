@@ -153,7 +153,12 @@
       "https://dvzmnikrvkvgragzhrof.supabase.co",
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
     );
-    window.addEventListener("outseta-embedded", async () => {
+    const waitForUser = setInterval(async () => {
+  if (window.Outseta?.nocode?.user) {
+    clearInterval(waitForUser);
+    const user = await Outseta.nocode.user;
+    const email = user?.Email;
+    console.log("✅ Email:", email);
       try {
         const user = await Outseta.nocode.user;
         const email = user?.Email;
