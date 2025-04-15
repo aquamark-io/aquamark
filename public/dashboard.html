@@ -174,7 +174,7 @@
     </div>
   </main>
 
- <script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
 <script>
   const { createClient } = supabase;
   const supabaseClient = createClient(
@@ -182,12 +182,10 @@
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
   );
 
-  document.addEventListener("DOMContentLoaded", function() {
-    // This ensures DOM is ready
+  document.addEventListener("DOMContentLoaded", function () {
     if (window.Outseta && window.Outseta.nocode) {
       loadUsage();
     } else {
-      // Set up a listener for when Outseta is ready
       window.addEventListener("outseta-embedded", loadUsage);
     }
   });
@@ -197,7 +195,7 @@
       const user = await Outseta.nocode.user;
       if (!user) throw new Error("No user data returned from Outseta");
       console.log("✅ Outseta user loaded:", user);
-      
+
       const email = user?.Email;
       const isTrial = user?.Account?.Subscription?.IsTrial;
       const plan = user?.Account?.Subscription?.Plan?.Name || "";
@@ -226,14 +224,12 @@
         usageText = "Pages watermarked this month";
       }
 
-      // Ensure row exists for this user + month
       await supabaseClient
         .from("usage")
         .upsert([{ user_email: email, month: monthKey, pages_used: 0 }], {
           onConflict: ['user_email', 'month']
         });
 
-      // Fetch usage row
       const { data, error } = await supabaseClient
         .from("usage")
         .select("pages_used")
@@ -256,6 +252,49 @@
   window.addEventListener("oEmbedLoaded", () => {
     loadUsage();
   });
+
+  // 💡 Plan Change Tracking
+  const planCredits = {
+    "Riding Solo": 1000,
+    "Small Teams": 5000,
+    "ISO Shops": 999999
+  };
+
+  const observer = new MutationObserver(async () => {
+    const planText = document.querySelector(".o--Subscription--planName")?.textContent;
+    const confirmButton = document.querySelector("button[type='submit']");
+
+    if (planText && confirmButton) {
+      console.log("🔍 Watching for plan confirmation…");
+
+      confirmButton.addEventListener("click", async () => {
+        try {
+          const user = await Outseta.nocode.user;
+          const email = user?.Email;
+          const selectedPlan = planText.trim();
+          const credits = planCredits[selectedPlan] || 0;
+
+          const { error } = await supabaseClient
+            .from("usage")
+            .update({
+              plan_name: selectedPlan,
+              page_credits: credits,
+              pages_used: 0
+            })
+            .eq("user_email", email);
+
+          if (error) throw error;
+          console.log("✅ Supabase updated for plan change:", selectedPlan);
+        } catch (err) {
+          console.error("❌ Failed to update plan in Supabase:", err.message);
+        }
+      });
+
+      observer.disconnect();
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 </script>
   
   <script>
