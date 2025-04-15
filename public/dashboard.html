@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,10 +54,6 @@
     .profile-container {
       flex: 0 0 750px;
     }
-    .dashboard-graphic {
-      width: 500px;
-      opacity: 0.65;
-    }
     .aqua-cards {
       display: flex;
       flex-wrap: wrap;
@@ -73,16 +70,6 @@
     }
     .aqua-card h2 {
       font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-    .usage-stat {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-    .usage-subtext {
-      color: #777;
-      font-size: 0.9rem;
       margin-bottom: 1rem;
     }
     .progress-bar-container {
@@ -105,14 +92,11 @@
       }
     }
   </style>
-
-  <!-- Outseta Config -->
   <script>
     const accessToken = new URLSearchParams(window.location.search).get("access_token");
     if (accessToken) {
       localStorage.setItem("aquamark_access_token", accessToken);
     }
-
     var o_options = {
       domain: "aquamark.outseta.com",
       auth: {
@@ -123,14 +107,12 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
-
 <body>
   <script>
     if (window.location.hash === '#o-logout-link') {
       window.location.href = '/login.html';
     }
   </script>
-
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
     <nav class="aqua-nav">
@@ -139,24 +121,18 @@
       <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
     </nav>
   </header>
-
   <main class="aqua-panel">
     <h1 class="greeting">Welcome back! 👋</h1>
-
     <div class="aqua-layout" style="justify-content: flex-start;">
       <div class="profile-container">
         <div data-o-profile="1" data-mode="embed"></div>
       </div>
     </div>
-
-   <div id="usage-box" class="box">
-  <h3 class="text-md font-semibold mb-2">Monthly Usage</h3>
-  <p class="text-sm">Loading usage...</p>
-  <p class="text-xs text-gray-500">Usage resets on the 1st of every month.</p>
-  <div class="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 0%"></div>
-  </div>
-</div>
+    <div class="aqua-cards">
+      <div id="usage-box" class="aqua-card">
+        <h2>Monthly Usage</h2>
+        <p>Loading usage data...</p>
+      </div>
       <div class="aqua-card">
         <h2>API Access</h2>
         <p>Use your API key from your profile to authenticate.</p>
@@ -171,202 +147,47 @@
       </div>
     </div>
   </main>
-
-<script src="https://unpkg.com/@supabase/supabase-js"></script>
-<script>
-  const { createClient } = supabase;
-  const supabaseClient = createClient(
-    "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-  );
-
-     else {
-  monthKey = new Date().toISOString().slice(0, 7);
-}
-
-      let monthKey = "";
-      let usageText = "";
-
-      if (isTrial) {
-        pageLimit = 100;
-        monthKey = "trial";
-        usageText = "Trial pages used";
-      } else if (plan.toLowerCase() === "iso shops") {
-        document.querySelector(".usage-stat").innerText = `Unlimited pages`;
-        document.querySelector(".progress-fill").style.width = `100%`;
-        document.querySelector(".usage-subtext").innerText = "You're on an unlimited plan!";
-        return;
-      } else {
-        switch (plan.toLowerCase()) {
-          case "riding solo": pageLimit = 1000; break;
-          case "small teams": pageLimit = 5000; break;
-          default: pageLimit = 0;
-        }
-        monthKey = new Date().toISOString().slice(0, 7);
-        usageText = "Pages watermarked this month";
-      }
-
-      await supabaseClient
-        .from("usage")
-        .upsert([{ user_email: email, month: monthKey, pages_used: 0 }], {
-          onConflict: ['user_email', 'month']
-        });
-
-      const { data, error } = await supabaseClient
-        .from("usage")
-        .select("pages_used")
-        .eq("user_email", email)
-        .eq("month", monthKey);
-
-      const used = data?.[0]?.pages_used || 0;
-      const remaining = Math.max(pageLimit - used, 0);
-const percent = Math.min((used / pageLimit) * 100, 100).toFixed(1);
-      console.log("📊 Supabase query result:", data, error);
-
-      document.querySelector(".usage-stat").innerText = `${remaining} / ${pageLimit} pages remaining`;
-      document.querySelector(".progress-fill").style.width = `${percent}%`;
-      document.querySelector(".usage-subtext").innerText = `${used} of ${pageLimit} pages used this period`;
-    } catch (err) {
-      document.querySelector(".usage-stat").innerText = "Error loading usage";
-      console.error("⚠️ Outseta error:", err.message);
-    }
-  }
-
-  window.addEventListener("oEmbedLoaded", () => {
-    loadUsage();
-  });
-
-  // 💡 Plan Change Tracking
-  const planCredits = {
-    "Riding Solo": 1000,
-    "Small Teams": 5000,
-    "ISO Shops": 999999
-  };
-
-  const observer = new MutationObserver(async () => {
-    const planText = document.querySelector(".o--Subscription--planName")?.textContent;
-    const confirmButton = document.querySelector("button[type='submit']");
-
-    if (planText && confirmButton) {
-      console.log("🔍 Watching for plan confirmation…");
-
-      confirmButton.addEventListener("click", async () => {
-        try {
-          const user = await Outseta.nocode.user;
-          const email = user?.Email;
-          const selectedPlan = planText.trim();
-          const credits = planCredits[selectedPlan] || 0;
-
-          const { error } = await supabaseClient
-            .from("usage")
-            .update({
-              plan_name: selectedPlan,
-              page_credits: credits,
-              pages_used: 0
-            })
-            .eq("user_email", email);
-
-          if (error) throw error;
-          console.log("✅ Supabase updated for plan change:", selectedPlan);
-        } catch (err) {
-          console.error("❌ Failed to update plan in Supabase:", err.message);
-        }
-      });
-
-      // Load and render usage info
-(async () => {
-  try {
-    const user = Outseta.nocode.user;
-    const email = user?.Email;
-
-    if (!email) throw new Error("User email not found");
-
-    const { data, error } = await supabase
-      .from("usage")
-      .select("plan_name, page_credits, pages_used, billing_cycle_start")
-      .eq("user_email", email)
-      .single();
-
-    if (error || !data) throw error || new Error("No usage data found");
-
-    const { plan_name, page_credits, pages_used, billing_cycle_start } = data;
-    const pages_remaining = page_credits - pages_used;
-
-    const usageBox = document.querySelector("#usage-box");
-    const progress = Math.min(100, (pages_used / page_credits) * 100).toFixed(0);
-
-    const nextReset = new Date(billing_cycle_start);
-    nextReset.setDate(nextReset.getDate() + 30);
-    const resetDate = nextReset.toLocaleDateString("en-US", { month: "long", day: "numeric" });
-
-    usageBox.innerHTML = `
-      <h3 class="text-md font-semibold mb-2">Monthly Usage</h3>
-      <p class="text-sm mb-1">${plan_name} • ${pages_remaining} pages left</p>
-      <p class="text-xs text-gray-500 mb-3">Usage resets on ${resetDate}</p>
-      <div class="w-full bg-gray-200 rounded-full h-2.5">
-        <div class="bg-blue-500 h-2.5 rounded-full" style="width: ${progress}%"></div>
-      </div>
-    `;
-  } catch (err) {
-    console.error("❌ Failed to load usage info:", err.message);
-  }
-})();
-      
-      observer.disconnect();
-    }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-</script>
-  
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
   <script>
-    const tokenParam = new URLSearchParams(window.location.search).get('access_token');
-    if (tokenParam) {
-      const watermarkLink = document.querySelector('a[href="/watermark.html"]');
-      if (watermarkLink) {
-        watermarkLink.href = `/watermark.html?access_token=${tokenParam}`;
+    const supabase = supabaseJs.createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+    );
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const user = await Outseta.nocode.user;
+        const email = user?.Email;
+        if (!email) throw new Error("No user email");
+
+        const { data, error } = await supabase
+          .from("usage")
+          .select("plan_name, page_credits, pages_used, billing_cycle_start")
+          .eq("user_email", email)
+          .single();
+
+        if (error) throw error;
+
+        const { plan_name, page_credits, pages_used, billing_cycle_start } = data;
+        const pages_remaining = Math.max(page_credits - pages_used, 0);
+        const percent = Math.min(100, (pages_used / page_credits) * 100).toFixed(0);
+
+        const resetDate = new Date(billing_cycle_start);
+        resetDate.setDate(resetDate.getDate() + 30);
+        const resetString = resetDate.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+
+        document.getElementById("usage-box").innerHTML = `
+          <h2>Monthly Usage</h2>
+          <p><strong>${plan_name}</strong> • ${pages_remaining} pages left</p>
+          <p class="usage-subtext">Resets on ${resetString}</p>
+          <div class="progress-bar-container">
+            <div class="progress-fill" style="width: ${percent}%"></div>
+          </div>
+        `;
+      } catch (err) {
+        document.getElementById("usage-box").innerHTML = "<h2>Monthly Usage</h2><p>Error loading usage.</p>";
+        console.error("⚠️ Usage load failed:", err.message);
       }
-    }
+    });
   </script>
 </body>
 </html>
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const user = await Outseta.nocode.user;
-      const email = user?.Email;
-      if (!email) throw new Error("User email not found");
-
-      const { data, error } = await supabaseClient
-        .from("usage")
-        .select("plan_name, page_credits, pages_used, billing_cycle_start")
-        .eq("user_email", email)
-        .single();
-
-      if (error || !data) throw error || new Error("No usage data found");
-
-      const { plan_name, page_credits, pages_used, billing_cycle_start } = data;
-      const pages_remaining = page_credits - pages_used;
-
-      const usageBox = document.querySelector("#usage-box");
-      const progress = Math.min(100, (pages_used / page_credits) * 100).toFixed(0);
-
-      const nextReset = new Date(billing_cycle_start);
-      nextReset.setDate(nextReset.getDate() + 30);
-      const resetDate = nextReset.toLocaleDateString("en-US", { month: "long", day: "numeric" });
-
-      usageBox.innerHTML = `
-        <h3 class="text-md font-semibold mb-2">Monthly Usage</h3>
-        <p class="text-sm mb-1">${plan_name} • ${pages_remaining} pages left</p>
-        <p class="text-xs text-gray-500 mb-3">Usage resets on ${resetDate}</p>
-        <div class="w-full bg-gray-200 rounded-full h-2.5">
-          <div class="bg-blue-500 h-2.5 rounded-full" style="width: ${progress}%"></div>
-        </div>
-      `;
-    } catch (err) {
-      console.error("❌ Failed to load usage info:", err.message);
-    }
-  });
-</script>
