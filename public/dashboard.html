@@ -153,7 +153,7 @@
   </header>
 
   <main class="aqua-panel">
-    <h1 class="greeting">Hey Christina! 👋</h1>
+<h1 class="greeting" id="greeting">Hey! 👋</h1>
 <div class="aqua-layout" style="justify-content: flex-start;">
   <div class="profile-container" style="flex: 0 0 750px;">
     <div data-o-profile="1" data-mode="embed"></div>
@@ -243,5 +243,11 @@
       }
     }
   </script>
+  <script>
+  Outseta.nocode.user.then(user => {
+    const firstName = user?.FirstName || "there";
+    document.getElementById("greeting").innerText = `Hey ${firstName}! 👋`;
+  });
+</script>
 </body>
 </html>
