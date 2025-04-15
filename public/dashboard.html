@@ -244,14 +244,14 @@
     }
   </script>
 <script>
-  setTimeout(() => {
-    if (window.Outseta && Outseta.nocode && Outseta.nocode.user) {
-      Outseta.nocode.user.then(user => {
-        const firstName = user?.FirstName || "there";
-        document.getElementById("greeting").innerText = `Hey ${firstName}! 👋`;
-      });
-    }
-  }, 500);
+setTimeout(() => {
+  if (window.Outseta && Outseta.nocode && Outseta.nocode.user) {
+    Outseta.nocode.user.then(user => {
+      const firstName = user?.Contact?.FirstName || "there";
+      document.getElementById("greeting").innerText = `Hey ${firstName}! 👋`;
+    });
+  }
+}, 500);
 </script>
 </body>
 </html>
