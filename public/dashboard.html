@@ -202,6 +202,17 @@
       console.log("📦 Plan:", plan, "| Trial?", isTrial);
 
       let pageLimit = 0;
+let billingMonthStart = "";
+const billingStart = user?.Account?.Subscription?.StartDate;
+if (billingStart) {
+  const startDate = new Date(billingStart);
+  const now = new Date();
+  billingMonthStart = new Date(now.getFullYear(), now.getMonth(), startDate.getDate());
+  monthKey = billingMonthStart.toISOString().split("T")[0];
+} else {
+  monthKey = new Date().toISOString().slice(0, 7);
+}
+
       let monthKey = "";
       let usageText = "";
 
@@ -237,12 +248,13 @@
         .eq("month", monthKey);
 
       const used = data?.[0]?.pages_used || 0;
-      const percent = Math.min((used / pageLimit) * 100, 100).toFixed(1);
+      const remaining = Math.max(pageLimit - used, 0);
+const percent = Math.min((used / pageLimit) * 100, 100).toFixed(1);
       console.log("📊 Supabase query result:", data, error);
 
-      document.querySelector(".usage-stat").innerText = `${used} / ${pageLimit} pages`;
+      document.querySelector(".usage-stat").innerText = `${remaining} / ${pageLimit} pages remaining`;
       document.querySelector(".progress-fill").style.width = `${percent}%`;
-      document.querySelector(".usage-subtext").innerText = usageText;
+      document.querySelector(".usage-subtext").innerText = `${used} of ${pageLimit} pages used this period`;
     } catch (err) {
       document.querySelector(".usage-stat").innerText = "Error loading usage";
       console.error("⚠️ Outseta error:", err.message);
@@ -308,3 +320,4 @@
   </script>
 </body>
 </html>
+
