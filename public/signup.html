@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
 
-  <!-- Outseta Auth -->
+  <!-- Outseta -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -16,61 +16,57 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <!-- Supabase JS -->
-<script src="https://unpkg.com/@supabase/supabase-js"></script>
-<script>
-  const { createClient } = supabase;
-  const supabaseClient = createClient(
-    "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // your anon public key
-  );
+  <!-- Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script>
+    const { createClient } = supabase;
+    const supabaseClient = createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // your anon public key
+    );
 
-  const waitForSignupElements = setInterval(() => {
-    const emailInput = document.querySelector("input[type='email']");
-    const submitButton = document.querySelector("button[type='submit']");
+    // Wait for the DOM and Outseta to fully load
+    window.addEventListener("load", () => {
+      const observer = new MutationObserver(() => {
+        const emailInput = document.querySelector("input[type='email']");
+        const form = emailInput?.closest("form");
 
-    if (emailInput && submitButton) {
-      clearInterval(waitForSignupElements);
+        if (form && emailInput) {
+          console.log("✅ Found signup form and email input");
 
-      console.log("✅ Found email input and submit button");
+          form.addEventListener("submit", async () => {
+            const userEmail = emailInput.value.trim();
+            if (!userEmail) return;
 
-      submitButton.addEventListener("click", async () => {
-        console.log("🚀 Sign Up button clicked");
+            console.log("🚀 Submitting to Supabase:", userEmail);
 
-        const userEmail = emailInput.value.trim();
-        if (!userEmail) {
-          console.warn("⚠️ No email entered.");
-          return;
-        }
+            const { error } = await supabaseClient
+              .from("usage")
+              .upsert([{
+                user_email: userEmail,
+                month: "trial",
+                plan_name: "Free Trial",
+                page_credits: 100,
+                pages_used: 0,
+                pages_remaining: 100
+              }], {
+                onConflict: ['user_email', 'month']
+              });
 
-        console.log("📧 Captured email:", userEmail);
+            if (error) {
+              console.error("❌ Supabase error:", error.message);
+            } else {
+              console.log("✅ Supabase row created successfully");
+            }
+          });
 
-        try {
-          const { error } = await supabaseClient
-            .from("usage")
-            .upsert([{
-              user_email: userEmail,
-              month: "trial",
-              plan_name: "Free Trial",
-              page_credits: 100,
-              pages_used: 0,
-              pages_remaining: 100
-            }], {
-              onConflict: ['user_email', 'month']
-            });
-
-          if (error) {
-            console.error("❌ Supabase insert failed:", error.message);
-          } else {
-            console.log("✅ Supabase row created for:", userEmail);
-          }
-        } catch (err) {
-          console.error("🔥 Unexpected Supabase error:", err.message);
+          observer.disconnect(); // stop observing once found
         }
       });
-    }
-  }, 500);
-</script>
+
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+  </script>
 
   <style>
     body {
@@ -84,6 +80,7 @@
       justify-content: center;
       min-height: 100vh;
     }
+
     .container {
       width: 100%;
       max-width: 400px;
@@ -92,6 +89,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
+
     footer {
       margin-top: 2rem;
       font-size: 0.875rem;
