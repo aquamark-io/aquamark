@@ -19,43 +19,53 @@
   <!-- Supabase for usage row -->
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
   <script>
-    const { createClient } = supabase;
-    const supabaseClient = createClient(
-      "https://dvzmnikrvkvgragzhrof.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-    );
+    <script>
+  const { createClient } = supabase;
+  const supabaseClient = createClient(
+    "https://dvzmnikrvkvgragzhrof.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+  );
 
-    document.addEventListener("oSignup", async function (event) {
-      const userEmail = event?.detail?.Email;
-      if (!userEmail) return;
+  // Wait for form to appear and bind submit event
+  const waitForForm = setInterval(() => {
+    const form = document.querySelector("form[data-o-form-type='register']");
+    if (form) {
+      clearInterval(waitForForm);
 
-      const planName = "Free Trial";
-      const pageCredits = 100;
-      const pagesUsed = 0;
+      form.addEventListener("submit", async function () {
+        const emailInput = form.querySelector("input[type='email']");
+        const userEmail = emailInput?.value?.trim();
 
-      try {
-        const { error } = await supabaseClient
-          .from("usage")
-          .upsert([{
-            user_email: userEmail,
-            month: "trial",
-            plan_name: planName,
-            page_credits: pageCredits,
-            pages_used: pagesUsed,
-            pages_remaining: pageCredits
-          }], {
-            onConflict: ['user_email', 'month']
-          });
+        if (!userEmail) return;
 
-        if (error) {
-          console.error("❌ Error inserting usage row:", error.message);
-        } else {
-          console.log("✅ Trial usage row created for", userEmail);
+        const planName = "Free Trial";
+        const pageCredits = 100;
+
+        try {
+          const { error } = await supabaseClient
+            .from("usage")
+            .upsert([{
+              user_email: userEmail,
+              month: "trial",
+              plan_name: planName,
+              page_credits: pageCredits,
+              pages_used: 0,
+              pages_remaining: pageCredits
+            }], {
+              onConflict: ['user_email', 'month']
+            });
+
+          if (error) {
+            console.error("❌ Error inserting usage row:", error.message);
+          } else {
+            console.log("✅ Supabase trial row created for", userEmail);
+          }
+        } catch (err) {
+          console.error("❌ Failed to insert usage row:", err.message);
         }
-      } catch (err) {
-        console.error("❌ Failed to insert usage row:", err.message);
-      }
-    });
+      });
+    }
+  }, 500);
   </script>
 
   <style>
