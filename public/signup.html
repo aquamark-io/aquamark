@@ -16,57 +16,56 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <!-- Supabase for usage row -->
+  <!-- Supabase JS -->
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
-<script>
-  const { createClient } = supabase;
+  <script>
+    const { createClient } = supabase;
+    const supabaseClient = createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+    );
 
-  const supabaseClient = createClient(
-    "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-  );
+    // Wait for email input + sign-up button to load
+    const waitForSignupElements = setInterval(() => {
+      const emailInput = document.querySelector("input[type='email']");
+      const submitButton = document.querySelector("button[type='submit']");
 
-  // Wait for form to appear and bind submit event
-  const waitForForm = setInterval(() => {
-    const form = document.querySelector("form[data-o-form-type='register']");
-    if (form) {
-      clearInterval(waitForForm);
+      if (emailInput && submitButton) {
+        clearInterval(waitForSignupElements);
 
-      form.addEventListener("submit", async function () {
-        const emailInput = form.querySelector("input[type='email']");
-        const userEmail = emailInput?.value?.trim();
+        submitButton.addEventListener("click", async () => {
+          const userEmail = emailInput.value.trim();
+          if (!userEmail) return;
 
-        if (!userEmail) return;
+          const planName = "Free Trial";
+          const pageCredits = 100;
 
-        const planName = "Free Trial";
-        const pageCredits = 100;
+          try {
+            const { error } = await supabaseClient
+              .from("usage")
+              .upsert([{
+                user_email: userEmail,
+                month: "trial",
+                plan_name: planName,
+                page_credits: pageCredits,
+                pages_used: 0,
+                pages_remaining: pageCredits
+              }], {
+                onConflict: ['user_email', 'month']
+              });
 
-        try {
-          const { error } = await supabaseClient
-            .from("usage")
-            .upsert([{
-              user_email: userEmail,
-              month: "trial",
-              plan_name: planName,
-              page_credits: pageCredits,
-              pages_used: 0,
-              pages_remaining: pageCredits
-            }], {
-              onConflict: ['user_email', 'month']
-            });
-
-          if (error) {
-            console.error("❌ Error inserting usage row:", error.message);
-          } else {
-            console.log("✅ Supabase trial row created for", userEmail);
+            if (error) {
+              console.error("❌ Supabase insert error:", error.message);
+            } else {
+              console.log("✅ Trial row created in Supabase for:", userEmail);
+            }
+          } catch (err) {
+            console.error("❌ Unexpected Supabase error:", err.message);
           }
-        } catch (err) {
-          console.error("❌ Failed to insert usage row:", err.message);
-        }
-      });
-    }
-  }, 500);
-</script>
+        });
+      }
+    }, 500);
+  </script>
 
   <style>
     body {
@@ -80,6 +79,7 @@
       justify-content: center;
       min-height: 100vh;
     }
+
     .container {
       width: 100%;
       max-width: 400px;
@@ -88,6 +88,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
+
     footer {
       margin-top: 2rem;
       font-size: 0.875rem;
@@ -105,6 +106,7 @@
       </a>
     </div>
 
+    <!-- Outseta Embed Widget -->
     <div data-o-auth="1"
          data-widget-mode="register"
          data-plan-uid="aWxLDdWV"
