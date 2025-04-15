@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -116,10 +117,16 @@
       }
     }
   </style>
+
+  <!-- Outseta Config -->
   <script>
+    const accessToken = new URLSearchParams(window.location.search).get("access_token");
+    if (accessToken) {
+      localStorage.setItem("aquamark_access_token", accessToken);
+    }
+
     var o_options = {
       domain: "aquamark.outseta.com",
-      tokenStorage: "session",
       auth: {
         authenticationCallbackUrl: window.location.origin + "/dashboard.html",
         registrationConfirmationUrl: window.location.origin + "/dashboard.html"
@@ -128,6 +135,7 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
+
 <body>
   <script>
     if (window.location.hash === '#o-logout-link') {
@@ -161,6 +169,7 @@
           <div class="progress-fill"></div>
         </div>
       </div>
+
       <div class="aqua-card">
         <h2>API Access</h2>
         <p>Use your API key from your profile to authenticate.</p>
@@ -223,6 +232,17 @@
     }
 
     loadUsage();
+  </script>
+
+  <!-- Token-passing logic to watermark.html -->
+  <script>
+    const tokenParam = new URLSearchParams(window.location.search).get('access_token');
+    if (tokenParam) {
+      const watermarkLink = document.querySelector('a[href="/watermark.html"]');
+      if (watermarkLink) {
+        watermarkLink.href = `/watermark.html?access_token=${tokenParam}`;
+      }
+    }
   </script>
 </body>
 </html>
