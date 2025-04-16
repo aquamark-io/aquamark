@@ -72,12 +72,13 @@
   &copy; 2025 Aquamark. All rights reserved.
 </footer>
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
-const supabaseClient = supabase.createClient(
-  "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+  const { createClient } = supabase;
+  const supabaseClient = createClient(
+    "https://dvzmnikrvkvgragzhrof.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
   );
 
   Outseta.on("nocode.confirmationScreenShown", async () => {
@@ -85,7 +86,7 @@ const supabaseClient = supabase.createClient(
     const email = user?.Email;
     if (!email) return;
 
-    const { error } = await supabase
+    const { error } = await supabaseClient
       .from("usage")
       .insert([{
         user_email: email,
