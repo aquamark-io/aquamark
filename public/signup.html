@@ -64,13 +64,19 @@
   <script>
     // Listen for Outseta signup events
     const events = [
-      "redirect"
+      "auth.initialized",
+      "auth.close",
+      "signup.registrationData",
+      "signup.preRegister",
+      "register",
+      "signup"
     ];
 
     events.forEach((event) => {
-      Outseta.on(event, async (data) => {
-        console.log(event, data); // Log event for testing
-
+  Outseta.on(event, async (data) => {
+    console.log(`Event: ${event}`, data); // Log the full event data
+  });
+});
         // Extract the email from the event data
         const email = data.email;
 
