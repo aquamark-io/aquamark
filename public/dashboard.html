@@ -2,39 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <title>Aquamark Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Log In - Aquamark</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
     <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
     <style>
         body {
-            margin: 0;
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-            color: #111827;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fb;
+            color: #1e1e2f;
+        }
+        .aqua-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            padding: 1rem 2rem;
+            background: #f3e8ff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
         }
-        .container {
-            width: 100%;
-            max-width: 400px;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        .aqua-logo {
+            height: 28px;
         }
-        footer {
+        .aqua-nav a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            color: #333;
+        }
+        .aqua-nav a.active {
+            color: #007bff;
+        }
+        .aqua-panel {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h1.greeting {
+            font-size: 3.0rem;
+            margin-bottom: 2.0rem;
+            font-weight: 600;
+            color: #1e1e2f;
+        }
+        .aqua-layout {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .profile-container {
+            flex: 0 0 750px;
+        }
+        .aqua-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
             margin-top: 2rem;
-            font-size: 0.875rem;
-            color: #6b7280;
+        }
+        .aqua-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            flex: 1 1 45%;
+            min-width: 300px;
+        }
+        .aqua-card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .progress-bar-container {
+            background: #e9ecef;
+            height: 12px;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #2e6eff;
+            transition: width 0.3s ease;
+        }
+        /* Hide dashboard content when confirmation container is visible */
+        .hidden {
+            display: none;
+        }
+        #confirmationContainer {
+            display: none;
+            max-width: 500px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             text-align: center;
         }
+        @media (max-width: 900px) {
+            .aqua-layout,
+            .aqua-cards {
+                flex-direction: column;
+            }
+        }
     </style>
-    
-    <!-- Authentication and token handling script -->
+
+    <!-- Outseta configuration - load this first -->
+    <script>
+        var o_options = {
+            domain: "aquamark.outseta.com",
+            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support',
+            auth: {
+                authenticationCallbackUrl: window.location.origin + "/dashboard.html",
+                registrationConfirmationUrl: window.location.origin + "/dashboard.html"
+            }
+        };
+    </script>
+    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
     <script>
         // Function to get URL parameters
         function getUrlParameter(name) {
@@ -43,89 +127,412 @@
             var results = regex.exec(location.search);
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        // Helper function to get cookie value by name
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        // Function to check if user is authenticated
+        function isAuthenticated() {
+            const outsetaToken = localStorage.getItem("outseta_access_token") || 
+                               localStorage.getItem("outseta.accessToken") ||
+                               getCookie("outseta.accessToken");
+            return !!outsetaToken;
+        }
+
+        // Debug helper function to log Outseta object state
+        function debugOutseta() {
+            console.log("Outseta object state:", {
+                exists: typeof window.Outseta !== 'undefined',
+                nocode: window.Outseta ? typeof window.Outseta.nocode !== 'undefined' : false,
+                user: window.Outseta && window.Outseta.nocode ? typeof window.Outseta.nocode.user !== 'undefined' : false,
+                fullObject: window.Outseta
+            });
+        }
+
+        // Wait until DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("🔄 DOM fully loaded");
+            
             // Check for confirmation token in URL
             const confirmationToken = getUrlParameter('confirmationToken');
             if (confirmationToken) {
-                console.log("Confirmation token detected:", confirmationToken);
+                console.log("Confirmation token detected");
                 
-                // Forward to dashboard with the token
-                window.location.href = '/dashboard.html?confirmationToken=' + confirmationToken;
-                return;
-            }
-            
-            // Set up redirect after successful login
-            if (window.Outseta) {
-                setupRedirect();
+                // Show confirmation container and hide main content
+                const confirmationContainer = document.getElementById('confirmationContainer');
+                const mainContent = document.getElementById('mainContent');
+                
+                if (confirmationContainer && mainContent) {
+                    confirmationContainer.style.display = 'block';
+                    mainContent.classList.add('hidden');
+                }
+                
+                // Add Outseta's confirmation widget
+                const confirmWidget = document.getElementById('confirmationWidget');
+                if (confirmWidget) {
+                    confirmWidget.innerHTML = '';
+                    confirmWidget.setAttribute('data-o-auth', '1');
+                    confirmWidget.setAttribute('data-widget-mode', 'completionRegister');
+                    confirmWidget.setAttribute('data-mode', 'embed');
+                    
+                    // This is important - pass the token to the widget
+                    confirmWidget.setAttribute('data-confirmation-token', confirmationToken);
+                }
+                
+                // Listen for successful confirmation
+                if (window.Outseta) {
+                    setupConfirmationListeners();
+                } else {
+                    document.addEventListener("OutsetaLoaded", setupConfirmationListeners);
+                }
             } else {
-                document.addEventListener("OutsetaLoaded", setupRedirect);
+                // No confirmation token, proceed with normal dashboard flow
+                initOutsetaAuth();
+                updateNavigationLinks();
             }
             
-            function setupRedirect() {
-                window.Outseta.on('auth.login.success', function(response) {
-                    console.log("🎉 Login successful", response);
-                    
-                    // Save token for use across the site
-                    if (response?.accessToken) {
-                        localStorage.setItem("outseta_access_token", response.accessToken);
-                        localStorage.setItem("outseta.accessToken", response.accessToken);
+            debugOutseta();
+        });
+
+        // Set up listeners for confirmation events
+        function setupConfirmationListeners() {
+            console.log("Setting up confirmation listeners");
+            
+            window.Outseta.on('auth.registration.confirmed', function(response) {
+                console.log("🎉 Registration confirmed successfully");
+                
+                // Save the token
+                if (response && response.accessToken) {
+                    localStorage.setItem("outseta_access_token", response.accessToken);
+                    localStorage.setItem("outseta.accessToken", response.accessToken);
+                    console.log("✅ Token saved from confirmation");
+                }
+                
+                // Reload the page without the token in the URL
+                window.location.href = '/dashboard.html';
+            });
+        }
+
+        // Initialize Outseta auth for normal dashboard access
+        function initOutsetaAuth() {
+            // Get access token from localStorage
+            const accessToken = localStorage.getItem("outseta_access_token") || 
+                               localStorage.getItem("outseta.accessToken");
+            
+            if (accessToken) {
+                console.log("✅ Access token exists in storage");
+                // Set the token directly in Outseta's auth object
+                if (window.Outseta && window.Outseta.auth) {
+                    window.Outseta.auth.accessToken = accessToken;
+                    console.log("✅ Token applied to Outseta auth");
+                }
+            } else {
+                console.log("⚠️ No access token found, user may need to login");
+                // Redirect to login if no token found
+                window.location.href = '/login.html';
+            }
+        }
+
+        // Handle logout
+        function handleLogout() {
+            localStorage.removeItem("outseta_access_token");
+            localStorage.removeItem("outseta.accessToken");
+            window.location.href = '/login.html';
+        }
+
+        // Fix navigation links based on authentication status
+        function updateNavigationLinks() {
+            const watermarkLink = document.querySelector('a[href="/watermark.html"], a[href*="watermark"]');
+            
+            if (watermarkLink) {
+                // Add data attribute for easier selection
+                watermarkLink.setAttribute('data-requires-auth', 'true');
+                
+                // Update click behavior
+                watermarkLink.addEventListener('click', function(e) {
+                    if (!isAuthenticated()) {
+                        e.preventDefault();
+                        console.log("User not authenticated, redirecting to sign-in");
+                        
+                        // Store the intended destination for after login
+                        localStorage.setItem('auth_redirect', '/watermark.html');
+                        
+                        window.location.href = '/login.html';
+                    } else {
+                        // User is authenticated, allow default link behavior
+                        console.log("User authenticated, proceeding to watermark page");
                     }
-                    
-                    // Check if there's a specific redirect saved
-                    const redirectUrl = localStorage.getItem('auth_redirect') || '/dashboard.html';
-                    console.log("🔄 Redirecting to:", redirectUrl);
-                    localStorage.removeItem('auth_redirect'); // Clear the stored URL
-                    
-                    // Small delay to ensure token is saved before redirect
-                    setTimeout(() => {
-                        window.location.href = redirectUrl;
-                    }, 500);
                 });
             }
             
-            // Save token from auth events
-            window.addEventListener('outseta:accessToken.set', function(event) {
-                const token = event.detail.accessToken;
-                if (token) {
-                    localStorage.setItem("outseta_access_token", token);
-                    localStorage.setItem("outseta.accessToken", token);
-                    console.log("✅ Access token saved from event");
+            // Add similar protection to any other protected links
+            const protectedLinks = document.querySelectorAll('[data-requires-auth="true"]');
+            protectedLinks.forEach(link => {
+                if (link !== watermarkLink) { // Skip if already handled above
+                    link.addEventListener('click', function(e) {
+                        if (!isAuthenticated()) {
+                            e.preventDefault();
+                            localStorage.setItem('auth_redirect', link.getAttribute('href'));
+                            window.location.href = '/login.html';
+                        }
+                    });
                 }
             });
+        }
+
+        // Save token when it's set via event
+        window.addEventListener('outseta:accessToken.set', function(event) {
+            const token = event.detail.accessToken;
+            if (token) {
+                localStorage.setItem("outseta_access_token", token);
+                localStorage.setItem("outseta.accessToken", token); // Store in both locations for compatibility
+                console.log("✅ Access token saved from event");
+            }
         });
     </script>
-
-    <!-- Outseta Configuration -->
-    <script>
-        var o_options = {
-            domain: 'aquamark.outseta.com',
-            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-        };
-    </script>
-    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div style="text-align: center; margin-bottom: 1rem;">
+    <!-- Confirmation container for new user email confirmation -->
+    <div id="confirmationContainer">
+        <div style="text-align: center; margin-bottom: 2rem;">
             <a href="/">
                 <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
             </a>
         </div>
-        
-        <div data-o-auth="1"
-             data-widget-mode="login"
-             data-mode="embed">
-        </div>
-        
-        <div style="text-align: center; margin-top: 1rem;">
-            <p>Don't have an account? <a href="/sign-up.html">Sign up</a></p>
-        </div>
+        <h2>Complete Your Registration</h2>
+        <p>Please set your password to complete your account setup.</p>
+        <div id="confirmationWidget"></div>
     </div>
 
-    <footer>
-        &copy; 2025 Aquamark. All rights reserved.
-    </footer>
+    <!-- Main dashboard content -->
+    <div id="mainContent">
+        <header class="aqua-header">
+            <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
+            <nav class="aqua-nav">
+                <a href="/dashboard.html" class="active">Dashboard</a>
+                <a href="/watermark.html" data-requires-auth="true">Watermark</a>
+                <a href="#" onclick="handleLogout(); return false;">Log Out</a>
+            </nav>
+        </header>
+
+        <main class="aqua-panel">
+            <h1 class="greeting">Welcome back! 👋</h1>
+            <div class="aqua-layout" style="justify-content: flex-start;">
+                <div class="profile-container">
+                    <div data-o-profile="1" data-mode="embed"></div>
+                </div>
+            </div>
+            <div class="aqua-cards">
+                <div id="usage-box" class="aqua-card">
+                    <h2>Monthly Usage</h2>
+                    <p>Loading usage data...</p>
+                </div>
+                <div class="aqua-card">
+                    <h2>API Access</h2>
+                    <p>Use your API key from your profile to authenticate.</p>
+                    <p><strong>POST</strong> to:<br />
+                    <code>https://api.aquamark.io/watermark</code>
+                    </p>
+                    <p><strong>Headers</strong>:<br />
+                    <code>Authorization: Bearer YOUR_API_KEY</code>
+                    </p>
+                    <p><strong>Response</strong>:<br />
+                    Download link(s) for watermarked files.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+        const supabase = supabase.createClient(
+            "https://dvzmnikrvkvgragzhrof.supabase.co",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
+        );
+
+        // Listen for when the Outseta script has loaded
+        window.addEventListener('load', function() {
+            console.log("🔄 Window fully loaded");
+            setTimeout(debugOutseta, 500); // Check after a small delay
+        });
+
+        // Regular check for Outseta initialization
+        let checkCount = 0;
+        const maxChecks = 20; // 10 seconds max (20 * 500ms)
+        
+        function checkOutsetaInitialized() {
+            console.log(`🔄 Checking Outseta initialization (${checkCount}/${maxChecks})`);
+            debugOutseta();
+            
+            if (checkCount >= maxChecks) {
+                console.error("❌ Timeout waiting for Outseta to initialize");
+                const usageBox = document.getElementById("usage-box");
+                if (usageBox) {
+                    usageBox.innerHTML = `
+                    <h2>Monthly Usage</h2>
+                    <p>Unable to load user data. Please refresh the page or check your login status.</p>
+                    `;
+                }
+                return;
+            }
+            
+            checkCount++;
+            setTimeout(checkOutsetaInitialized, 500);
+        }
+
+        // Start checking after a small delay if we're showing the main content
+        if (!getUrlParameter('confirmationToken')) {
+            setTimeout(checkOutsetaInitialized, 1000);
+        }
+
+        // Function to set up event listeners once Outseta is available
+        function setupEventListeners() {
+            if (typeof window.Outseta === 'undefined') {
+                console.log("⏳ Waiting for Outseta to be available before setting up events");
+                setTimeout(setupEventListeners, 500);
+                return;
+            }
+            
+            console.log("✅ Setting up Outseta event listeners");
+            
+            const events = [
+                "accessToken.set",
+                "auth.initialized",
+                "auth.close",
+                "signup.registrationData",
+                "redirect",
+                "signup.preRegister",
+                "signup",
+                "logout",
+                "nocode.accessDenied",
+                "nocode.expired",
+                "nocode.initialized",
+                "account.update",
+                "paymentInformation.update",
+                "profile.close",
+                "profile.initialized",
+                "profile.update",
+                "subscription.cancel",
+                "subscription.reopen",
+                "subscription.update"
+            ];
+            
+            events.forEach(event => {
+                window.Outseta.on(event, (...params) => {
+                    console.log(`📣 Outseta Event: ${event}`, params);
+                    
+                    // Special handling for nocode.initialized
+                    if (event === "nocode.initialized" && !getUrlParameter('confirmationToken')) {
+                        handleNocodeInitialized();
+                    }
+                    
+                    // Save token when set
+                    if (event === "accessToken.set" && params[0]?.accessToken) {
+                        localStorage.setItem("outseta_access_token", params[0].accessToken);
+                        localStorage.setItem("outseta.accessToken", params[0].accessToken);
+                        console.log("✅ Access token saved from Outseta event");
+                    }
+                });
+            });
+        }
+
+        // Start the event listener setup process if we're in main content mode
+        if (!getUrlParameter('confirmationToken')) {
+            setupEventListeners();
+        }
+
+        // Handler for nocode.initialized event
+        async function handleNocodeInitialized() {
+            console.log("✅ nocode.initialized event fired");
+            debugOutseta();
+            
+            try {
+                // Check if nocode is defined
+                if (!window.Outseta || !window.Outseta.nocode) {
+                    throw new Error("Outseta nocode object not available");
+                }
+                
+                console.log("Attempting to access user object...");
+                
+                // Get user with error handling
+                let user;
+                try {
+                    // This pattern handles both Promise-based and direct access
+                    user = typeof window.Outseta.nocode.user.then === 'function'
+                        ? await window.Outseta.nocode.user
+                        : window.Outseta.nocode.user;
+                    
+                    console.log("User object retrieved:", user);
+                } catch (userError) {
+                    console.error("Error retrieving user:", userError);
+                    throw new Error("Failed to retrieve user: " + userError.message);
+                }
+                
+                if (!user) {
+                    throw new Error("User is null or undefined");
+                }
+                
+                const email = user.Email;
+                if (!email) {
+                    throw new Error("No user email found");
+                }
+                
+                console.log("✅ User email:", email);
+                
+                // Fetch user usage data from Supabase
+                const { data, error } = await supabase
+                    .from("usage")
+                    .select("plan_name, page_credits, pages_used, billing_cycle_start")
+                    .eq("user_email", email)
+                    .single();
+                
+                if (error) throw error;
+                
+                const { plan_name, page_credits, pages_used, billing_cycle_start } = data;
+                const pages_remaining = Math.max(page_credits - pages_used, 0);
+                const percent = Math.min(100, (pages_used / page_credits) * 100).toFixed(0);
+                
+                const resetDate = new Date(billing_cycle_start);
+                resetDate.setDate(resetDate.getDate() + 30);
+                const resetString = resetDate.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+                
+                const usageBox = document.getElementById("usage-box");
+                if (usageBox) {
+                    usageBox.innerHTML = `
+                    <h2>Monthly Usage</h2>
+                    <p><strong>${plan_name}</strong> • ${pages_remaining} pages left</p>
+                    <p class="usage-subtext">Resets on ${resetString}</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-fill" style="width: ${percent}%"></div>
+                    </div>
+                    `;
+                }
+            } catch (err) {
+                console.error("❌ Error in handleNocodeInitialized:", err);
+                const usageBox = document.getElementById("usage-box");
+                if (usageBox) {
+                    usageBox.innerHTML = `
+                    <h2>Monthly Usage</h2>
+                    <p>Error loading usage: ${err.message}</p>
+                    `;
+                }
+            }
+        }
+
+        // Try to handle user info after a delay if in main content mode
+        if (!getUrlParameter('confirmationToken')) {
+            setTimeout(() => {
+                console.log("🔄 Final attempt to access user data");
+                debugOutseta();
+                handleNocodeInitialized();
+            }, 5000);
+        }
+    </script>
 </body>
 </html>
