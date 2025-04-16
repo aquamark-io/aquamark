@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Sign In - Aquamark</title>
+    <title>Log In - Aquamark</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
     <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
     <style>
@@ -50,41 +50,9 @@
             if (confirmationToken) {
                 console.log("Confirmation token detected:", confirmationToken);
                 
-                // If we have Outseta loaded already, process the token
-                if (window.Outseta && window.Outseta.auth) {
-                    processConfirmationToken(confirmationToken);
-                } else {
-                    // Otherwise wait for Outseta to load
-                    document.addEventListener("OutsetaLoaded", function() {
-                        processConfirmationToken(confirmationToken);
-                    });
-                }
-            }
-            
-            // Process the confirmation token
-            function processConfirmationToken(token) {
-                console.log("Processing confirmation token...");
-                
-                // Pass the token to Outseta's confirmation handler
-                if (window.Outseta && window.Outseta.auth) {
-                    window.Outseta.auth.confirmRegistration({
-                        confirmationToken: token
-                    }).then(function(result) {
-                        console.log("Confirmation successful:", result);
-                        
-                        // Save token if available
-                        if (result && result.accessToken) {
-                            localStorage.setItem("outseta_access_token", result.accessToken);
-                            localStorage.setItem("outseta.accessToken", result.accessToken);
-                            
-                            // Redirect to dashboard
-                            window.location.href = '/dashboard.html';
-                        }
-                    }).catch(function(error) {
-                        console.error("Confirmation error:", error);
-                        alert("There was a problem confirming your account. Please try again or contact support.");
-                    });
-                }
+                // Forward to dashboard with the token
+                window.location.href = '/dashboard.html?confirmationToken=' + confirmationToken;
+                return;
             }
             
             // Set up redirect after successful login
