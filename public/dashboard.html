@@ -92,11 +92,24 @@
         }
     </style>
     <script>
+        // Debug helper function to log Outseta object state
+        function debugOutseta() {
+            console.log("Outseta object state:", {
+                exists: typeof window.Outseta !== 'undefined',
+                nocode: window.Outseta ? typeof window.Outseta.nocode !== 'undefined' : false,
+                user: window.Outseta && window.Outseta.nocode ? typeof window.Outseta.nocode.user !== 'undefined' : false,
+                fullObject: window.Outseta
+            });
+        }
+
+        // Token handling
         const accessToken = new URLSearchParams(window.location.search).get("access_token");
         if (accessToken) {
             localStorage.setItem("aquamark_access_token", accessToken);
+            console.log("✅ Access token stored");
         }
         
+        // Outseta configuration
         var o_options = {
             domain: "aquamark.outseta.com",
             auth: {
@@ -104,7 +117,14 @@
                 registrationConfirmationUrl: window.location.origin + "/dashboard.html"
             }
         };
+        
+        // Run once DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("🔄 DOM fully loaded");
+            debugOutseta();
+        });
     </script>
+    <!-- Load Outseta after our initialization code -->
     <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
 <body>
@@ -153,20 +173,114 @@
             "https://dvzmnikrvkvgragzhrof.supabase.co",
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
         );
-
-        // Add an event listener for when Outseta is fully initialized
-        Outseta.on("nocode.initialized", async () => {
-            console.log("✅ Outseta nocode initialized");
+        
+        // Listen for when the Outseta script has loaded
+        window.addEventListener('load', function() {
+            console.log("🔄 Window fully loaded");
+            setTimeout(debugOutseta, 500); // Check after a small delay
+        });
+        
+        // Regular check for Outseta initialization
+        let checkCount = 0;
+        const maxChecks = 20; // 10 seconds max (20 * 500ms)
+        
+        function checkOutsetaInitialized() {
+            console.log(`🔄 Checking Outseta initialization (${checkCount}/${maxChecks})`);
+            debugOutseta();
+            
+            if (checkCount >= maxChecks) {
+                console.error("❌ Timeout waiting for Outseta to initialize");
+                document.getElementById("usage-box").innerHTML = `
+                    <h2>Monthly Usage</h2>
+                    <p>Unable to load user data. Please refresh the page or check your login status.</p>
+                `;
+                return;
+            }
+            
+            checkCount++;
+            setTimeout(checkOutsetaInitialized, 500);
+        }
+        
+        // Start checking after a small delay
+        setTimeout(checkOutsetaInitialized, 1000);
+        
+        // Set up event listeners for all Outseta events to help debug
+        const events = [
+            "accessToken.set",
+            "auth.initialized",
+            "auth.close",
+            "signup.registrationData",
+            "redirect",
+            "signup.preRegister",
+            "signup",
+            "logout",
+            "nocode.accessDenied",
+            "nocode.expired",
+            "nocode.initialized",
+            "account.update",
+            "paymentInformation.update",
+            "profile.close",
+            "profile.initialized",
+            "profile.update",
+            "subscription.cancel",
+            "subscription.reopen",
+            "subscription.update"
+        ];
+        
+        // Function to set up event listeners once Outseta is available
+        function setupEventListeners() {
+            if (typeof window.Outseta === 'undefined') {
+                console.log("⏳ Waiting for Outseta to be available before setting up events");
+                setTimeout(setupEventListeners, 500);
+                return;
+            }
+            
+            console.log("✅ Setting up Outseta event listeners");
+            
+            events.forEach(event => {
+                window.Outseta.on(event, (...params) => {
+                    console.log(`📣 Outseta Event: ${event}`, params);
+                    
+                    // Special handling for nocode.initialized
+                    if (event === "nocode.initialized") {
+                        handleNocodeInitialized();
+                    }
+                });
+            });
+        }
+        
+        // Start the event listener setup process
+        setupEventListeners();
+        
+        // Handler for nocode.initialized event
+        async function handleNocodeInitialized() {
+            console.log("✅ nocode.initialized event fired");
+            debugOutseta();
             
             try {
-                // Check if user is available
+                // Check if nocode is defined
                 if (!window.Outseta || !window.Outseta.nocode) {
-                    throw new Error("Outseta nocode not available");
+                    throw new Error("Outseta nocode object not available");
                 }
                 
-                const user = await window.Outseta.nocode.user;
+                console.log("Attempting to access user object...");
+                
+                // Get user with error handling
+                let user;
+                try {
+                    // This pattern handles both Promise-based and direct access
+                    user = typeof window.Outseta.nocode.user.then === 'function' 
+                        ? await window.Outseta.nocode.user 
+                        : window.Outseta.nocode.user;
+                    
+                    console.log("User object retrieved:", user);
+                } catch (userError) {
+                    console.error("Error retrieving user:", userError);
+                    throw new Error("Failed to retrieve user: " + userError.message);
+                }
+                
                 if (!user) {
-                    throw new Error("User not authenticated");
+                    throw new Error("User is null or undefined");
                 }
                 
                 const email = user.Email;
@@ -202,27 +316,20 @@
                     </div>
                 `;
             } catch (err) {
+                console.error("❌ Error in handleNocodeInitialized:", err);
                 document.getElementById("usage-box").innerHTML = `
                     <h2>Monthly Usage</h2>
                     <p>Error loading usage: ${err.message}</p>
                 `;
-                console.error("⚠️ Usage load failed:", err);
             }
-        });
-
-        // Add a fallback in case the event doesn't fire
-        document.addEventListener("DOMContentLoaded", () => {
-            // Set a timeout to check if Outseta initialized
-            setTimeout(() => {
-                if (!window.Outseta || !window.Outseta.nocode) {
-                    console.error("⚠️ Outseta failed to initialize properly");
-                    document.getElementById("usage-box").innerHTML = `
-                        <h2>Monthly Usage</h2>
-                        <p>Unable to load user data. Please refresh the page or check your connection.</p>
-                    `;
-                }
-            }, 5000); // Give it 5 seconds to initialize
-        });
+        }
+        
+        // Try to handle user info after a delay
+        setTimeout(() => {
+            console.log("🔄 Final attempt to access user data");
+            debugOutseta();
+            handleNocodeInitialized();
+        }, 5000);
     </script>
 </body>
 </html>
