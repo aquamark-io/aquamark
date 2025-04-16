@@ -149,38 +149,41 @@
     // Function to fetch and display user usage data
     async function fetchUserUsageData(email) {
       try {
+        // Get rows for this user
         const { data, error } = await supabase
           .from('usage')
           .select('*')
-          .eq('user_email', email)
-          .single();
+          .eq('user_email', email);
           
         if (error) throw error;
         
+        // Get the first row if multiple exist
+        const userData = data && data.length > 0 ? data[0] : null;
+        
         // Update the UI with the data
         const usageStatsElement = document.getElementById('usage-stats');
-        if (data) {
+        if (userData) {
           usageStatsElement.innerHTML = `
             <div style="margin-bottom: 1rem;">
               <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                 <span>Plan:</span>
-                <strong>${data.plan_name || 'Free Trial'}</strong>
+                <strong>${userData.plan_name || 'Free Trial'}</strong>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                 <span>Pages Used:</span>
-                <strong>${data.pages_used || 0}</strong>
+                <strong>${userData.pages_used || 0}</strong>
               </div>
               <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                 <span>Pages Remaining:</span>
-                <strong>${data.pages_remaining || 100}</strong>
+                <strong>${userData.pages_remaining || 100}</strong>
               </div>
               <div style="display: flex; justify-content: space-between;">
                 <span>Total Credits:</span>
-                <strong>${data.page_credits || 100}</strong>
+                <strong>${userData.page_credits || 100}</strong>
               </div>
             </div>
             <div style="background: #f3f4f6; border-radius: 8px; height: 10px; overflow: hidden;">
-              <div style="background: #007bff; height: 100%; width: ${Math.min(100, (data.pages_used / data.page_credits) * 100)}%;"></div>
+              <div style="background: #007bff; height: 100%; width: ${Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100)}%;"></div>
             </div>
           `;
         } else {
@@ -202,41 +205,50 @@
           
           // Upsert - create/update row in Supabase
           try {
-            // Get current data first to calculate pages_remaining
-            const { data: existingData, error: fetchError } = await supabase
+            // First, let's check if the user already exists
+            let { data: existingUser, error: fetchError } = await supabase
               .from('usage')
               .select('*')
-              .eq('user_email', profile.Email)
-              .single();
-            
-            if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 is "not found" error
-              throw fetchError;
-            }
+              .eq('user_email', profile.Email);
             
             // Set default values
             let pages_used = 0;
             let page_credits = 100;
+            let rowId = null;
             
-            // Use existing values if available (to not reset counters)
-            if (existingData) {
-              pages_used = existingData.pages_used || 0;
-              page_credits = existingData.page_credits || 100;
+            // If user exists, use their data
+            if (existingUser && existingUser.length > 0) {
+              // User exists - use the first row we found
+              pages_used = existingUser[0].pages_used || 0;
+              page_credits = existingUser[0].page_credits || 100;
+              rowId = existingUser[0].id;
+              
+              console.log("Found existing user with ID:", rowId);
+            } else {
+              console.log("No existing user found, will create new record");
             }
             
             // Calculate pages_remaining
             const pages_remaining = page_credits - pages_used;
             
+            // Prepare the data object
+            const userData = {
+              user_email: profile.Email,
+              pages_used: pages_used,
+              pages_remaining: pages_remaining,
+              plan_name: 'Free Trial',
+              page_credits: page_credits
+            };
+            
+            // If we have an existing ID, include it to update that specific row
+            if (rowId) {
+              userData.id = rowId;
+            }
+            
             // Upsert the data
             const { data, error } = await supabase
               .from('usage')
-              .upsert({
-                user_email: profile.Email,
-                pages_used: pages_used,
-                pages_remaining: pages_remaining,
-                plan_name: 'Free Trial',
-                page_credits: page_credits,
-                // We're leaving billing_cycle_start blank as requested
-              });
+              .upsert(userData);
               
             if (error) throw error;
             console.log("Supabase update successful", data);
