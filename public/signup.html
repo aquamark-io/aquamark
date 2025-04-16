@@ -17,23 +17,31 @@
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
   <style>
-    /* Add custom styles for the Aquamark logo and form */
-    .logo {
+    /* Center the content */
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      background-color: #f8f8f8;
+    }
+    .container {
       text-align: center;
-      margin-bottom: 20px;
-    }
-    .logo img {
-      width: 200px;
-      height: auto;
-    }
-    .signup-container {
-      max-width: 400px;
-      margin: auto;
       padding: 20px;
       background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
+
+    /* Aquamark Logo Styling */
+    .logo img {
+      width: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
     .outseta-widget {
       width: 100%;
       margin-top: 20px;
@@ -42,13 +50,13 @@
 </head>
 
 <body>
-  <!-- Aquamark Logo -->
-  <div class="logo">
-    <img src="https://www.aquamark.io/public/logo-full-black-blue.png" alt="Aquamark Logo" />
-  </div>
+  <div class="container">
+    <!-- Aquamark Logo -->
+    <div class="logo">
+      <img src="https://www.aquamark.io/public/logo-full-black-blue.png" alt="Aquamark Logo" />
+    </div>
 
-  <!-- Outseta Signup Form -->
-  <div class="signup-container">
+    <!-- Outseta Signup Form -->
     <div data-o-auth="1" data-widget-mode="register" data-plan-uid="aWxLDdWV" data-skip-plan-options="true" data-mode="embed" class="outseta-widget"></div>
   </div>
 
@@ -72,7 +80,7 @@
           const supabaseUrl = "https://dvzmnikrvkvgragzhrof.supabase.co";
           const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk";
 
-          const { data, error } = await fetch(`${supabaseUrl}/rest/v1/usage`, {
+          const response = await fetch(`${supabaseUrl}/rest/v1/usage`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -88,12 +96,14 @@
               pages_used: 0,
               month: 'trial'
             })
-          }).then(response => response.json());
+          });
 
-          if (error) {
-            console.error("Error inserting data into Supabase:", error);
+          const result = await response.json();
+
+          if (response.ok) {
+            console.log("User data added to Supabase:", result);
           } else {
-            console.log("User data added to Supabase:", data);
+            console.error("Error inserting data into Supabase:", result);
           }
         }
       });
