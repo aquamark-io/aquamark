@@ -1,66 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Log In - Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.875rem;
-      color: #6b7280;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Log In - Aquamark</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
+    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        footer {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-align: center;
+        }
+    </style>
+    
+    <!-- Authentication and redirect handling script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up redirect after successful login
+            if (window.Outseta) {
+                setupRedirect();
+            } else {
+                document.addEventListener("OutsetaLoaded", setupRedirect);
+            }
+            
+            function setupRedirect() {
+                window.Outseta.on('auth.login.success', function(response) {
+                    console.log("🎉 Login successful", response);
+                    
+                    // Save token for use across the site
+                    if (response?.accessToken) {
+                        localStorage.setItem("outseta_access_token", response.accessToken);
+                        localStorage.setItem("outseta.accessToken", response.accessToken);
+                    }
+                    
+                    // Check if there's a specific redirect saved (like from watermark)
+                    const redirectUrl = localStorage.getItem('auth_redirect') || '/dashboard.html';
+                    console.log("🔄 Redirecting to:", redirectUrl);
+                    localStorage.removeItem('auth_redirect'); // Clear the stored URL
+                    
+                    // Small delay to ensure token is saved before redirect
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 500);
+                });
+            }
+            
+            // Also save token from any auth events
+            window.addEventListener('outseta:accessToken.set', function(event) {
+                const token = event.detail.accessToken;
+                if (token) {
+                    localStorage.setItem("outseta_access_token", token);
+                    localStorage.setItem("outseta.accessToken", token);
+                    console.log("✅ Access token saved from event");
+                }
+            });
+        });
+    </script>
+
+    <!-- Outseta Configuration -->
+    <script>
+        var o_options = {
+            domain: 'aquamark.outseta.com',
+            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'  // Added more components
+        };
+    </script>
+    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
+
 <body>
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <a href="/">
+                <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
+            </a>
+        </div>
+        
+        <div data-o-auth="1"
+             data-widget-mode="login"
+             data-mode="embed">
+        </div>
+        
+        <div style="text-align: center; margin-top: 1rem;">
+            <p>Don't have an account? <a href="/sign-up.html">Sign up</a></p>
+        </div>
+    </div>
 
-<div class="container">
-  <div style="text-align: center; margin-bottom: 1rem;">
-    <a href="/">
-      <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
-    </a>
-  </div>
-
-  <div data-o-auth="1"
-       data-widget-mode="login"
-       data-mode="embed">
-  </div>
-</div>
-
-<footer>
-  &copy; 2025 Aquamark. All rights reserved.
-</footer>
-
-<!-- Outseta Embed -->
-<script>
-  var o_options = {
-    domain: 'aquamark.outseta.com',
-    load: 'auth'
-  };
-</script>
-<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
+    <footer>
+        &copy; 2025 Aquamark. All rights reserved.
+    </footer>
 </body>
 </html>
