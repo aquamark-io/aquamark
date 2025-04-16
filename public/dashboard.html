@@ -128,7 +128,6 @@
               .from('usage')
               .upsert({
                 user_email: profile.Email,
-                month: 'trial',
                 pages_used: 0,
                 plan_name: 'Free Trial',
                 page_credits: 100,
