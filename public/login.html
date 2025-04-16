@@ -47,16 +47,15 @@
             background-color: #fee2e2;
             color: #b91c1c;
         }
+        #debugInfo {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            display: none;
+        }
     </style>
-    
-    <!-- Outseta Embed -->
-    <script>
-        var o_options = {
-            domain: 'aquamark.outseta.com',
-            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-        };
-    </script>
-    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
     
     <!-- Authentication and token handling script -->
     <script>
@@ -68,7 +67,48 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
         
+        // Function to log debug info to the console and page
+        function logDebug(message, data) {
+            console.log(message, data);
+            const debugInfo = document.getElementById('debugInfo');
+            if (debugInfo) {
+                debugInfo.style.display = 'block';
+                const timestamp = new Date().toISOString().slice(11, 19);
+                debugInfo.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+                if (data) {
+                    debugInfo.innerHTML += `<div><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                }
+            }
+        }
+        
+        // Direct dashboard redirect with token
+        function redirectToDashboard(token) {
+            // Store token in localStorage
+            if (token) {
+                localStorage.setItem("outseta_access_token", token);
+                localStorage.setItem("outseta.accessToken", token);
+                logDebug("Token saved before redirect", { tokenLength: token.length });
+            }
+            
+            // Redirect to dashboard or saved URL
+            const redirectUrl = localStorage.getItem('auth_redirect') || '/dashboard.html';
+            localStorage.removeItem('auth_redirect'); // Clear the stored URL
+            
+            logDebug("Redirecting to:", { url: redirectUrl });
+            
+            // Force redirect to the dashboard
+            window.location.href = redirectUrl;
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Show debug panel for troubleshooting if debugMode is enabled
+            const debugMode = getUrlParameter('debug') === 'true';
+            if (debugMode) {
+                document.getElementById('debugInfo').style.display = 'block';
+            }
+            
+            logDebug("DOM fully loaded");
+            
             // Show message if coming from account confirmation
             const fromConfirmation = getUrlParameter('confirmed');
             if (fromConfirmation === 'true') {
@@ -77,20 +117,48 @@
                     statusMsg.textContent = 'Account confirmed! Please sign in with your email and password.';
                     statusMsg.classList.add('success');
                     statusMsg.style.display = 'block';
+                    logDebug("Showing confirmation success message");
                 }
             }
             
             // Check for confirmation token in URL and forward if found
             const confirmationToken = getUrlParameter('confirmationToken');
             if (confirmationToken) {
-                console.log("Confirmation token detected on login page:", confirmationToken);
+                logDebug("Confirmation token detected on login page, forwarding to dashboard", { tokenExists: !!confirmationToken });
                 window.location.href = '/dashboard.html?confirmationToken=' + confirmationToken;
                 return;
             }
             
+            // Check if user is already authenticated
+            const hasToken = localStorage.getItem("outseta_access_token") || localStorage.getItem("outseta.accessToken");
+            if (hasToken) {
+                logDebug("User already has token, redirecting to dashboard", { hasToken: !!hasToken });
+                redirectToDashboard(hasToken);
+                return;
+            }
+            
+            // Set up periodic checking for tokens (as a fallback)
+            function checkForToken() {
+                const token = localStorage.getItem("outseta_access_token") || localStorage.getItem("outseta.accessToken");
+                if (token) {
+                    logDebug("Token found in periodic check, redirecting", { hasToken: !!token });
+                    redirectToDashboard(token);
+                    return true;
+                }
+                return false;
+            }
+            
+            // Check every 500ms for a token (helpful for catching token set by Outseta's internal mechanisms)
+            const tokenCheckInterval = setInterval(function() {
+                if (checkForToken()) {
+                    clearInterval(tokenCheckInterval);
+                }
+            }, 500);
+            
             // Wait for Outseta to be loaded
             function waitForOutseta() {
                 if (window.Outseta) {
+                    logDebug("Outseta loaded, setting up auth listeners");
                     setupAuthListeners();
                 } else {
                     setTimeout(waitForOutseta, 100);
@@ -100,16 +168,16 @@
             waitForOutseta();
             
             function setupAuthListeners() {
-                console.log("Setting up auth listeners");
+                logDebug("Setting up auth listeners");
                 
                 // Listen for login form submission
                 window.Outseta.on('auth.login.submit', function(payload) {
-                    console.log("Login submitted:", payload);
+                    logDebug("Login submitted", payload);
                 });
                 
                 // Listen for login errors
                 window.Outseta.on('auth.login.error', function(error) {
-                    console.error("Login error:", error);
+                    logDebug("Login error", error);
                     const statusMsg = document.getElementById('statusMessage');
                     if (statusMsg) {
                         statusMsg.textContent = 'Login failed: ' + (error.message || 'Please check your credentials and try again.');
@@ -121,33 +189,21 @@
                 
                 // Listen for successful login
                 window.Outseta.on('auth.login.success', function(response) {
-                    console.log("🎉 Login successful:", response);
+                    logDebug("Login successful", response);
                     
-                    // Save token for use across the site
+                    // Save token and redirect
                     if (response?.accessToken) {
-                        localStorage.setItem("outseta_access_token", response.accessToken);
-                        localStorage.setItem("outseta.accessToken", response.accessToken);
-                        console.log("✅ Token saved from login success");
+                        const statusMsg = document.getElementById('statusMessage');
+                        if (statusMsg) {
+                            statusMsg.textContent = 'Login successful! Redirecting to dashboard...';
+                            statusMsg.classList.remove('error');
+                            statusMsg.classList.add('success');
+                            statusMsg.style.display = 'block';
+                        }
+                        
+                        // Call redirect with token
+                        redirectToDashboard(response.accessToken);
                     }
-                    
-                    // Show success message
-                    const statusMsg = document.getElementById('statusMessage');
-                    if (statusMsg) {
-                        statusMsg.textContent = 'Login successful! Redirecting to dashboard...';
-                        statusMsg.classList.remove('error');
-                        statusMsg.classList.add('success');
-                        statusMsg.style.display = 'block';
-                    }
-                    
-                    // Check if there's a specific redirect saved
-                    const redirectUrl = localStorage.getItem('auth_redirect') || '/dashboard.html';
-                    console.log("🔄 Will redirect to:", redirectUrl);
-                    localStorage.removeItem('auth_redirect'); // Clear the stored URL
-                    
-                    // Small delay to ensure token is saved before redirect
-                    setTimeout(() => {
-                        window.location.href = redirectUrl;
-                    }, 1000);
                 });
             }
             
@@ -155,19 +211,47 @@
             window.addEventListener('outseta:accessToken.set', function(event) {
                 const token = event.detail.accessToken;
                 if (token) {
+                    logDebug("Token received from event", { event: 'outseta:accessToken.set', tokenExists: !!token });
                     localStorage.setItem("outseta_access_token", token);
                     localStorage.setItem("outseta.accessToken", token);
-                    console.log("✅ Access token saved from event");
                     
-                    // Redirect after a short delay when token is set
-                    setTimeout(() => {
-                        const redirectUrl = localStorage.getItem('auth_redirect') || '/dashboard.html';
-                        window.location.href = redirectUrl;
-                    }, 1000);
+                    // Force redirect after token is set
+                    redirectToDashboard(token);
                 }
             });
+            
+            // Add a manual login button for troubleshooting
+            if (debugMode) {
+                const container = document.querySelector('.container');
+                const debugButton = document.createElement('button');
+                debugButton.innerText = 'Force Dashboard Redirect';
+                debugButton.style.marginTop = '1rem';
+                debugButton.style.padding = '0.5rem 1rem';
+                debugButton.style.backgroundColor = '#4338ca';
+                debugButton.style.color = 'white';
+                debugButton.style.border = 'none';
+                debugButton.style.borderRadius = '4px';
+                debugButton.style.cursor = 'pointer';
+                debugButton.onclick = function() {
+                    logDebug("Manual redirect triggered");
+                    redirectToDashboard(localStorage.getItem("outseta_access_token") || localStorage.getItem("outseta.accessToken"));
+                };
+                container.appendChild(debugButton);
+            }
         });
     </script>
+
+    <!-- Outseta Embed -->
+    <script>
+        var o_options = {
+            domain: 'aquamark.outseta.com',
+            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support',
+            auth: {
+                loginRedirectUrl: window.location.origin + "/dashboard.html"
+            }
+        };
+    </script>
+    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
 
 <body>
@@ -188,6 +272,8 @@
         <div style="text-align: center; margin-top: 1rem;">
             <p>Don't have an account? <a href="/sign-up.html">Sign up</a></p>
         </div>
+        
+        <div id="debugInfo"></div>
     </div>
 
     <footer>
