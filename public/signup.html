@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark Signup</title>
+
+  <!-- Outseta Configuration -->
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+    };
+  </script>
+
+  <!-- Outseta External Script -->
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <style>
+    /* Add custom styles for the Aquamark logo and form */
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      width: 200px;
+      height: auto;
+    }
+    .signup-container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .outseta-widget {
+      width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Aquamark Logo -->
+  <div class="logo">
+    <img src="https://www.aquamark.io/public/logo-full-black-blue.png" alt="Aquamark Logo" />
+  </div>
+
+  <!-- Outseta Signup Form -->
+  <div class="signup-container">
+    <div data-o-auth="1" data-widget-mode="register" data-plan-uid="aWxLDdWV" data-skip-plan-options="true" data-mode="embed" class="outseta-widget"></div>
+  </div>
+
+  <!-- JavaScript to Handle Signup Event -->
+  <script>
+    // Listen for Outseta signup events
+    const events = [
+      "signup.registrationData", // event after registration data
+      "signup.preRegister"        // event for pre-registration
+    ];
+
+    events.forEach((event) => {
+      Outseta.on(event, async (data) => {
+        console.log(event, data); // Log event for testing
+
+        // Extract the email from the event data
+        const email = data.email;
+
+        if (email) {
+          // Push the data to Supabase
+          const supabaseUrl = "https://dvzmnikrvkvgragzhrof.supabase.co";
+          const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk";
+
+          const { data, error } = await fetch(`${supabaseUrl}/rest/v1/usage`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${supabaseKey}`
+            },
+            body: JSON.stringify({
+              user_email: email,
+              plan_name: 'Free Trial',
+              created_at: new Date().toISOString(),
+              page_credits: 100,
+              billing_cycle_start: null,
+              pages_remaining: 100,
+              pages_used: 0,
+              month: 'trial'
+            })
+          }).then(response => response.json());
+
+          if (error) {
+            console.error("Error inserting data into Supabase:", error);
+          } else {
+            console.log("User data added to Supabase:", data);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
