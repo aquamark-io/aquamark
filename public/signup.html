@@ -74,36 +74,43 @@ var o_options = {
     &copy; 2025 Aquamark. All rights reserved.
   </footer>
 
-  <script>
+<script>
+  window.addEventListener('DOMContentLoaded', async () => {
     const supabaseUrl = "https://dvzmnikrvkvgragzhrof.supabase.co";
     const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk";
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     Outseta.on("nocode.confirmationScreenShown", async () => {
-      const user = await Outseta.nocode.user;
-      const email = user?.Email;
+      try {
+        const user = await Outseta.nocode.user;
+        const email = user?.Email;
 
-      if (!email) {
-        console.warn("⚠️ No email found. Skipping Supabase row creation.");
-        return;
-      }
+        if (!email) {
+          console.warn("⚠️ No email found. Skipping Supabase row creation.");
+          return;
+        }
 
-      const { error } = await supabase
-        .from("usage")
-        .insert([{
-          user_email: email,
-          month: "trial",
-          plan_name: "Free Trial",
-          page_credits: 100,
-          pages_used: 0
-        }]);
+        const { error } = await supabase
+          .from("usage")
+          .insert([{
+            user_email: email,
+            month: "trial",
+            plan_name: "Free Trial",
+            page_credits: 100,
+            pages_used: 0
+          }]);
 
-      if (error) {
-        console.error("❌ Supabase insert failed:", error.message);
-      } else {
-        console.log("✅ Supabase row created for:", email);
+        if (error) {
+          console.error("❌ Supabase insert failed:", error.message);
+        } else {
+          console.log("✅ Supabase row created for:", email);
+        }
+      } catch (err) {
+        console.error("❌ Unexpected error during signup Supabase logic:", err);
       }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
