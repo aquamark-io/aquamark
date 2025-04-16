@@ -7,7 +7,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
 
-  <!-- ✅ Outseta Auth Embed -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-align: center;
+    }
+  </style>
+
+  <!-- Outseta Auth -->
   <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
@@ -16,96 +46,48 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <!-- ✅ Supabase JS -->
+  <!-- Supabase Client -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
-    }
-
-    .container {
-      max-width: 480px;
-      margin: 80px auto;
-      padding: 40px;
-      background: white;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .logo {
-      width: 180px;
-      margin-bottom: 20px;
-    }
-
-    .checkmark {
-      font-size: 48px;
-      color: #3b82f6;
-      margin-bottom: 12px;
-    }
-
-    .confirm-text {
-      margin-bottom: 16px;
-    }
-
-    small {
-      font-size: 0.8rem;
-      color: #999;
-    }
-  </style>
 </head>
-
 <body>
   <div class="container">
-    <img src="/logo-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <div class="checkmark">✅</div>
-    <h2>Almost done</h2>
-    <p class="confirm-text">
-      We have sent an email to <strong>1christinaduncan@gmail.com</strong>.<br>
-      Please click the link inside to complete the registration process.
-    </p>
-    <small>© 2025 Aquamark. All rights reserved.</small>
+    <div data-o-auth="1"
+         data-widget-mode="register"
+         data-plan-uid="aWxLDdWV"
+         data-plan-payment-term="month"
+         data-skip-plan-options="true"
+         data-mode="embed">
+    </div>
   </div>
 
-  <!-- ✅ Custom Supabase + Outseta logic -->
+  <footer>© 2025 Aquamark. All rights reserved.</footer>
+
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const supabase = window.supabase.createClient(
-        'https://dvzmnikrvkvgragzhrof.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
-      );
+    const supabase = supabase.createClient(
+      "https://dvzmnikrvkvgragzhrof.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    );
 
-      Outseta.on("nocode.confirmationScreenShown", async () => {
-        console.log("✅ Outseta event fired");
+    Outseta.on("signup", async () => {
+      const user = await Outseta.nocode.user;
+      const email = user?.Email;
+      if (!email) return;
 
-        try {
-          const user = await Outseta.nocode.user;
-          const email = user?.Email;
-          if (!email) return console.warn("⚠️ No email found.");
-
-          const { error } = await supabase
-            .from("usage")
-            .insert([{
-              user_email: email,
-              month: "trial",
-              plan_name: "Free Trial",
-              page_credits: 100,
-              pages_used: 0
-            }]);
-
-          if (error) {
-            console.error("❌ Supabase insert failed:", error.message);
-          } else {
-            console.log("✅ Supabase row created for:", email);
-          }
-        } catch (err) {
-          console.error("❌ Unexpected error:", err);
+      const { error } = await supabase.from("usage").insert([
+        {
+          user_email: email,
+          month: "trial",
+          plan_name: "Free Trial",
+          page_credits: 100,
+          pages_used: 0
         }
-      });
+      ]);
+
+      if (error) {
+        console.error("❌ Supabase insert failed:", error.message);
+      } else {
+        console.log("✅ Supabase row created for trial user:", email);
+      }
     });
   </script>
 </body>
