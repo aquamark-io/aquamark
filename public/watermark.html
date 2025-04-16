@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Aquamark.io - Watermark Documents</title>
@@ -10,26 +11,26 @@
       margin: 0;
       padding: 0;
     }
-  .aqua-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: #f3e8ff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-.aqua-logo {
-  height: 28px;
-}
-.aqua-nav a {
-  margin-left: 1.5rem;
-  text-decoration: none;
-  font-weight: 500;
-  color: #333;
-}
-.aqua-nav a.active {
-  color: #007bff;
-}
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .aqua-logo {
+      height: 28px;
+    }
+    .aqua-nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #333;
+    }
+    .aqua-nav a.active {
+      color: #007bff;
+    }
     .container {
       max-width: 800px;
       margin: 40px auto;
@@ -72,16 +73,62 @@
       padding-left: 20px;
     }
   </style>
+  <script>
+    // Initialize Outseta auth when page loads
+    function initOutsetaAuth() {
+      const accessToken = localStorage.getItem("outseta_access_token");
+      
+      if (accessToken) {
+        console.log("✅ Access token exists in storage");
+        
+        // Set the token directly in Outseta's auth object if available
+        if (window.Outseta && window.Outseta.auth) {
+          window.Outseta.auth.accessToken = accessToken;
+          console.log("✅ Token applied to Outseta auth");
+        }
+      } else {
+        console.log("⚠️ No access token found, user may need to login");
+        // Redirect to login if no token found
+        // window.location.href = '/login.html';
+      }
+    }
+
+    // Outseta configuration
+    var o_options = {
+      domain: "aquamark.outseta.com",
+      load: 'auth,nocode',
+      auth: {
+        authenticationCallbackUrl: window.location.origin + "/dashboard.html",
+        registrationConfirmationUrl: window.location.origin + "/dashboard.html"
+      }
+    };
+
+    // Handle logout
+    function handleLogout() {
+      localStorage.removeItem("outseta_access_token");
+      window.location.href = '/login.html';
+    }
+
+    // Run once DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("🔄 DOM fully loaded");
+      initOutsetaAuth();
+    });
+  </script>
+  <!-- Load Outseta after our initialization code -->
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
+
 <body>
-<header class="aqua-header">
-  <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
-  <nav class="aqua-nav">
-    <a href="/dashboard.html">Dashboard</a>
-    <a href="/watermark.html" class="active">Watermark</a>
-    <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
-  </nav>
-</header>
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
+    <nav class="aqua-nav">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/watermark.html" class="active">Watermark</a>
+      <a href="#" onclick="handleLogout(); return false;">Log Out</a>
+    </nav>
+  </header>
+
   <div class="container">
     <div class="instructions">
       <strong>How to Use:</strong>
@@ -167,7 +214,6 @@
 
       for (let file of pdfFiles) {
         let pdfBytes;
-
         try {
           // Try loading the file normally (unencrypted)
           await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
@@ -229,16 +275,15 @@
 
       status.textContent = "✅ Done. Files downloaded.";
     }
+
+    // Listen for Outseta events to capture the access token
+    window.addEventListener('outseta:accessToken.set', function(event) {
+      const token = event.detail.accessToken;
+      if (token) {
+        localStorage.setItem("outseta_access_token", token);
+        console.log("✅ Access token saved from event");
+      }
+    });
   </script>
-  <script>
-  // Pass stored token back to dashboard
-  const token = localStorage.getItem("aquamark_access_token");
-  if (token) {
-    const dashboardLink = document.querySelector('a[href="/dashboard.html"]');
-    if (dashboardLink) {
-      dashboardLink.href = `/dashboard.html?access_token=${token}`;
-    }
-  }
-</script>
 </body>
 </html>
