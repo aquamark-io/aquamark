@@ -1,101 +1,99 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Aquamark Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
   <style>
-    /* Your CSS styles */
-  </style>
-
-  <!-- Correct CDN Script for Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Outseta Config -->
-  <script>
-    const accessToken = new URLSearchParams(window.location.search).get("access_token");
-
-    if (accessToken) {
-      localStorage.setItem("aquamark_access_token", accessToken);
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fb;
+      color: #1e1e2f;
     }
-
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .aqua-logo {
+      height: 28px;
+    }
+    .aqua-nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #333;
+    }
+    .aqua-nav a.active {
+      color: #007bff;
+    }
+    .aqua-panel {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    h1.greeting {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      color: #1e1e2f;
+    }
+    .aqua-layout {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .profile-container {
+      flex: 1 1 40%;
+      min-width: 300px;
+    }
+    .aqua-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .aqua-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      flex: 1 1 45%;
+      min-width: 300px;
+    }
+    .aqua-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+  <!-- Outseta integration -->
+  <script>
     var o_options = {
-      domain: "aquamark.outseta.com",
-      auth: {
-        authenticationCallbackUrl: window.location.origin + "/dashboard.html",
-        registrationConfirmationUrl: window.location.origin + "/dashboard.html"
-      }
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
     };
   </script>
-  <<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <!-- Supabase integration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
 <body>
-
-  <script>
-    if (window.location.hash === '#o-logout-link') {
-      window.location.href = '/login.html';
-    }
-
-    // Initialize Supabase client
-    const supabase = createClient('https://dvzmnikrvkvgragzhrof.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk');
-
-    // Check if the user is logged in via Outseta (authenticated)
-    window.addEventListener('load', async () => {
-      // Check if the Outseta user is authenticated
-      if (Outseta.nocode.user) {
-        const email = Outseta.nocode.user.email;
-
-        // Check if the Supabase row exists for this user (track page usage)
-        const { data, error } = await supabase
-          .from('usage')
-          .select('*')
-          .eq('user_email', email)
-          .single();
-
-        if (error) {
-          console.error('Error querying Supabase:', error);
-        }
-
-        if (!data) {
-          // Insert the row if it doesn't exist
-          await supabase.from('usage').insert([
-            {
-              user_email: email,
-              month: 'trial',  // Adjust this if needed based on the user’s plan
-              pages_used: 0,
-              plan_name: 'Free',  // Adjust according to the user's plan
-              page_credits: 100,  // Default page credits
-              billing_cycle_start: new Date().toISOString(),
-            },
-          ]);
-        }
-
-        // Proceed with the dashboard or any other page functionality
-        console.log('User email:', email);
-      } else {
-        // Handle case if user is not authenticated
-        window.location.href = '/login.html';  // Redirect to login page if not logged in
-      }
-    });
-  </script>
-
   <header class="aqua-header">
-    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
     <nav class="aqua-nav">
-      <a href="/dashboard.html">Dashboard</a>
+      <a href="/dashboard.html" class="active">Dashboard</a>
       <a href="/watermark.html">Watermark</a>
       <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
     </nav>
   </header>
-
+  
   <main class="aqua-panel">
     <h1 class="greeting">My Dashboard</h1>
     <div class="aqua-layout">
@@ -105,6 +103,49 @@
     </div>
   </main>
 
-</body>
+  <script>
+    // Handle logout redirection
+    if (window.location.hash === '#o-logout-link') {
+      window.location.href = '/login.html';
+    }
+    
+    // Initialize Supabase client
+    const supabase = supabase.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
 
+    // Get user profile and update Supabase
+    document.addEventListener('DOMContentLoaded', function() {
+      Outseta.getUser().then(async (profile) => {
+        if (profile) {
+          console.log("PersonUid:", profile.Uid);
+          console.log("Email:", profile.Email);
+          console.log("AccountUid:", profile.Account.Uid);
+          
+          // Upsert - create/update row in Supabase
+          try {
+            const { data, error } = await supabase
+              .from('usage')
+              .upsert({
+                user_email: profile.Email,
+                month: 'trial',
+                pages_used: 0,
+                plan_name: 'Free Trial',
+                page_credits: 100,
+                billing_cycle_start: new Date().toISOString()
+              });
+              
+            if (error) throw error;
+            console.log("Supabase update successful", data);
+          } catch (err) {
+            console.error("Error updating Supabase:", err);
+          }
+        }
+      }).catch(err => {
+        console.error("Error getting Outseta user:", err);
+      });
+    });
+  </script>
+</body>
 </html>
