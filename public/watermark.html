@@ -46,6 +46,35 @@
       margin-top: 20px;
       font-weight: 500;
     }
+    
+    /* File list styling */
+    .file-list {
+      margin-top: 15px;
+      border: 1px solid #e4e7eb;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .file-item:last-child {
+      border-bottom: none;
+    }
+    
+    .file-item.processed {
+      background-color: #f0f8ff;
+    }
+    
+    .file-item.skipped {
+      background-color: #fff0f0;
+    }
   </style>
 </head>
 <body>
@@ -72,6 +101,7 @@
           <li>3. Click "Watermark Files" to begin processing</li>
         </ul>
         <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
+        <p><strong>Note:</strong> Each page in a PDF uses 1 credit. The ISO Shop plan includes unlimited credits.</p>
       </div>
       
       <div class="upload-group">
@@ -82,6 +112,7 @@
       <div class="upload-group">
         <h2>2. Upload Bank Statements (PDF only, up to 6)</h2>
         <input type="file" id="pdfInput" accept="application/pdf" multiple />
+        <div id="file-list" class="file-list" style="display: none;"></div>
       </div>
       
       <button id="watermark-btn" class="watermark-btn">3. Watermark Files</button>
@@ -98,11 +129,39 @@
       let user = null;
       let credits = 0;
       let canUseService = false;
+      let hasUnlimitedCredits = false;
+      let planName = '';
       
       // Elements
       const watermarkBtn = document.getElementById('watermark-btn');
       const upgradeBtn = document.getElementById('upgrade-btn');
       const status = document.getElementById('status');
+      const pdfInput = document.getElementById('pdfInput');
+      const fileList = document.getElementById('file-list');
+      
+      // Listen for file selection to update file list
+      pdfInput.addEventListener('change', updateFileList);
+      
+      function updateFileList() {
+        if (pdfInput.files.length > 0) {
+          fileList.innerHTML = '';
+          fileList.style.display = 'block';
+          
+          for (let i = 0; i < pdfInput.files.length; i++) {
+            const file = pdfInput.files[i];
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.id = `file-${i}`;
+            fileItem.innerHTML = `
+              <span>${file.name}</span>
+              <span>Pending</span>
+            `;
+            fileList.appendChild(fileItem);
+          }
+        } else {
+          fileList.style.display = 'none';
+        }
+      }
       
       // Wait for Outseta to be available
       const initOutseta = () => {
@@ -148,11 +207,22 @@
           errorDiv.innerHTML = 'There was an error checking your credits. Please try again later.';
           document.querySelector('.watermark-container').appendChild(errorDiv);
         } else {
-          credits = parseInt(data.pages_remaining);
-          canUseService = credits > 0;
+          planName = data.plan_name;
+          
+          // Check if user has unlimited credits (ISO Shop plan)
+          hasUnlimitedCredits = (planName === 'ISO Shops');
+          
+          if (hasUnlimitedCredits) {
+            credits = Infinity;
+            document.getElementById('credits-count').textContent = 'Unlimited';
+          } else {
+            credits = parseInt(data.pages_remaining);
+            document.getElementById('credits-count').textContent = credits;
+          }
+          
+          canUseService = hasUnlimitedCredits || credits > 0;
           
           // Update UI based on credits
-          document.getElementById('credits-count').textContent = credits;
           document.getElementById('credits-info').style.display = 'block';
           
           if (canUseService) {
@@ -166,9 +236,9 @@
         }
       }
       
-      // Function to track usage
-      async function trackUsage() {
-        if (!user) return false;
+      // Function to track usage for a specific number of pages
+      async function trackUsage(pageCount) {
+        if (!user || hasUnlimitedCredits) return true;
         
         // Get the current month
         const currentMonth = new Date().toISOString().substring(0, 7); // Format: YYYY-MM
@@ -186,14 +256,13 @@
           return false;
         }
         
-        // Check if user has credits left
-        if (parseInt(data.pages_used) >= parseInt(data.page_credits)) {
-          showUpgradeNotice();
+        // Check if user has enough credits left
+        if (parseInt(data.pages_used) + pageCount > parseInt(data.page_credits)) {
           return false;
         }
         
         // Update usage
-        const newPagesUsed = parseInt(data.pages_used) + 1;
+        const newPagesUsed = parseInt(data.pages_used) + pageCount;
         const newPagesRemaining = parseInt(data.page_credits) - newPagesUsed;
         
         const { error: updateError } = await supabase
@@ -212,8 +281,14 @@
         
         // Update local state
         credits = newPagesRemaining;
-        document.getElementById('credits-count').textContent = credits;
-        canUseService = newPagesRemaining > 0;
+        
+        if (hasUnlimitedCredits) {
+          document.getElementById('credits-count').textContent = 'Unlimited';
+        } else {
+          document.getElementById('credits-count').textContent = credits;
+        }
+        
+        canUseService = hasUnlimitedCredits || credits > 0;
         
         if (!canUseService) {
           showUpgradeNotice();
@@ -277,13 +352,29 @@
         return await response.arrayBuffer();
       }
       
+      // Update file list item status
+      function updateFileStatus(index, status, processed = false, skipped = false) {
+        const fileItem = document.getElementById(`file-${index}`);
+        if (fileItem) {
+          const statusSpan = fileItem.querySelector('span:last-child');
+          statusSpan.textContent = status;
+          
+          if (processed) {
+            fileItem.classList.add('processed');
+          }
+          
+          if (skipped) {
+            fileItem.classList.add('skipped');
+          }
+        }
+      }
+      
       async function processFiles() {
-        if (!canUseService) {
+        if (!canUseService && !hasUnlimitedCredits) {
           alert('You have no credits left. Please upgrade your plan to continue.');
           return;
         }
         
-        const status = document.getElementById("status");
         const logoInput = document.getElementById("logoInput");
         const pdfInput = document.getElementById("pdfInput");
         
@@ -292,38 +383,20 @@
           return;
         }
         
-        // Check if we have enough credits for all PDFs
-        if (pdfInput.files.length > credits) {
-          status.textContent = `Not enough credits. You have ${credits} credits but are trying to watermark ${pdfInput.files.length} files.`;
-          return;
-        }
-        
-        // Track initial usage for first document
-        const trackSuccess = await trackUsage();
-        if (!trackSuccess) {
-          status.textContent = "Error tracking usage. Please try again later.";
-          return;
-        }
-        
-        status.textContent = "⏳ Processing...";
+        status.textContent = "⏳ Processing files...";
         
         const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
         const hologramUrl = "/holgram.png";
         const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
         
         const pdfFiles = Array.from(pdfInput.files);
+        let processedFiles = 0;
+        let skippedFiles = 0;
+        let totalPagesProcessed = 0;
         
         for (let i = 0; i < pdfFiles.length; i++) {
           let file = pdfFiles[i];
-          
-          // If this is not the first file, track usage for each additional file
-          if (i > 0) {
-            const additionalTrackSuccess = await trackUsage();
-            if (!additionalTrackSuccess) {
-              status.textContent = `Processed ${i} files. Unable to process more due to credit tracking error.`;
-              return;
-            }
-          }
+          updateFileStatus(i, "Processing...");
           
           let pdfBytes;
           try {
@@ -332,16 +405,38 @@
             pdfBytes = await file.arrayBuffer();
           } catch (err) {
             // Fallback to Render decryption
-            status.textContent = "🔐 Decrypting encrypted file...";
+            updateFileStatus(i, "🔐 Decrypting...");
             try {
               pdfBytes = await decryptPDF(file);
             } catch {
-              status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-              return;
+              updateFileStatus(i, "❌ Decryption failed", false, true);
+              skippedFiles++;
+              continue;
             }
           }
           
+          // Load the PDF to get page count
           const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+          const pageCount = pdfDoc.getPageCount();
+          
+          // Check if we have enough credits for this file
+          if (!hasUnlimitedCredits && credits < pageCount) {
+            updateFileStatus(i, `⚠️ Not enough credits (${pageCount} pages needed)`, false, true);
+            skippedFiles++;
+            continue;
+          }
+          
+          // Track usage for this file's pages
+          if (!hasUnlimitedCredits) {
+            const trackSuccess = await trackUsage(pageCount);
+            if (!trackSuccess) {
+              updateFileStatus(i, "❌ Credit tracking error", false, true);
+              skippedFiles++;
+              continue;
+            }
+          }
+          
+          // Now process the document
           const pages = pdfDoc.getPages();
           const logoImage = await pdfDoc.embedJpg(logoBytes);
           const hologramImage = await pdfDoc.embedPng(hologramBytes);
@@ -384,9 +479,27 @@
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
+          
+          updateFileStatus(i, `✅ Processed (${pageCount} pages)`, true);
+          processedFiles++;
+          totalPagesProcessed += pageCount;
         }
         
-        status.textContent = "✅ Done. Files downloaded.";
+        let summaryMessage = `✅ Done. ${processedFiles} files processed (${totalPagesProcessed} pages total).`;
+        if (skippedFiles > 0) {
+          summaryMessage += ` ${skippedFiles} files skipped.`;
+        }
+        
+        if (!hasUnlimitedCredits) {
+          summaryMessage += ` ${credits} credits remaining.`;
+        }
+        
+        status.textContent = summaryMessage;
+        
+        // If we've run out of credits, show the upgrade notice
+        if (credits <= 0 && !hasUnlimitedCredits) {
+          showUpgradeNotice();
+        }
       }
       
       // Set up event listeners
