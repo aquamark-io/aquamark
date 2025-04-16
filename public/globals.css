@@ -141,14 +141,22 @@ a:hover {
   margin: 1.5rem 0;
 }
 
+/* Error message */
+.error-message {
+  padding: 1rem;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  color: #721c24;
+  margin: 1rem 0;
+}
+
 /* Loading indicator */
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 1.2rem;
-  color: var(--primary-color);
+#loading-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--secondary-color);
+  font-weight: 500;
 }
 
 /* Responsive adjustments */
