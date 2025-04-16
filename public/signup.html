@@ -74,17 +74,19 @@
       "signup"
     ];
 
-   events.forEach((event) => {
+  events.forEach((event) => {
   Outseta.on(event, async (data) => {
     console.log(`Event: ${event}`, data); // Log the full event data
 
-    // Ensure that data is not null before extracting email
-    if (data && data.email) {
-      const email = data.email;
+    // Extract email from CheckoutAmount if it's available
+    const email = data.checkoutAmount ? data.checkoutAmount.Email : null;
 
-      // Proceed with the rest of the logic to push the data to Supabase
+    if (email) {
+      console.log("Email extracted:", email); // Log the email for verification
+
+      // Push the data to Supabase
       const supabaseUrl = "https://dvzmnikrvkvgragzhrof.supabase.co";
-      const supabaseKey = "<Your Supabase Key>";  // Make sure this key is correct
+      const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk";
 
       const response = await fetch(`${supabaseUrl}/rest/v1/usage`, {
         method: 'POST',
@@ -111,7 +113,7 @@
         console.error("Error inserting data into Supabase:", result);
       }
     } else {
-      console.warn('Email is not available yet for event:', event);
+      console.warn("Email not available yet for event:", event);
     }
   });
 });
