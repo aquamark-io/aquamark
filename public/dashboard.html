@@ -5,13 +5,10 @@
 <head>
 
   <meta charset="UTF-8" />
-
   <title>Aquamark Dashboard</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"/>
-
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
 
   <style>
@@ -94,6 +91,9 @@
 
   </style>
 
+  <!-- Add Supabase Client Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/supabase.min.js"></script>
+
   <!-- Outseta Config -->
   <script>
     const accessToken = new URLSearchParams(window.location.search).get("access_token");
@@ -130,7 +130,6 @@
 
     // Check if it's the first time the user is logging in
     window.addEventListener('load', async () => {
-      // Wait for Outseta session to load
       const checkSession = setInterval(() => {
         if (Outseta.nocode.user) {
           clearInterval(checkSession);  // Stop checking once the user session is available
