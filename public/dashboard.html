@@ -121,47 +121,57 @@
       window.location.href = '/login.html';
     }
 
+    // Your Supabase URL and anon key
+    const SUPABASE_URL = 'https://your-project.supabase.co';  // Replace with your Supabase URL
+    const SUPABASE_ANON_KEY = 'your-anon-key';  // Replace with your Supabase anon key
+
+    // Initialize Supabase client
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     // Check if it's the first time the user is logging in
-window.addEventListener('load', async () => {
-  // Wait for Outseta session to load
-  const checkSession = setInterval(() => {
-    if (Outseta.nocode.user) {
-      clearInterval(checkSession);  // Stop checking once the user session is available
+    window.addEventListener('load', async () => {
+      // Wait for Outseta session to load
+      const checkSession = setInterval(() => {
+        if (Outseta.nocode.user) {
+          clearInterval(checkSession);  // Stop checking once the user session is available
 
-      const isFirstLogin = localStorage.getItem('firstLogin') !== 'false'; // Check if it's the first login
+          const isFirstLogin = localStorage.getItem('firstLogin') !== 'false'; // Check if it's the first login
 
-      if (isFirstLogin) {
-        const email = Outseta.nocode.user.email;
+          if (isFirstLogin) {
+            const email = Outseta.nocode.user.email;
 
-        // Check if the Supabase row exists for this user
-        supabase
-          .from('usage')
-          .select('*')
-          .eq('user_email', email)
-          .single()
-          .then(async ({ data, error }) => {
-            if (!data) {
-              // Insert the row if it doesn't exist
-              await supabase.from('usage').insert([
-                {
-                  user_email: email,
-                  month: 'trial',  // Adjust this if needed based on the user’s plan
-                  pages_used: 0,
-                  plan_name: 'Free',  // Adjust according to the user's plan (Free for trial users)
-                  page_credits: 100,  // Default page credits
-                  billing_cycle_start: new Date().toISOString(),
-                },
-              ]);
-            }
+            // Check if the Supabase row exists for this user
+            supabase
+              .from('usage')
+              .select('*')
+              .eq('user_email', email)
+              .single()
+              .then(async ({ data, error }) => {
+                if (error) {
+                  console.error('Error querying Supabase:', error);
+                }
 
-            // Set the flag to 'false' to prevent future checks
-            localStorage.setItem('firstLogin', 'false');
-          });
-      }
-    }
-  }, 500); // Check every 500ms until the Outseta session is ready
-});
+                if (!data) {
+                  // Insert the row if it doesn't exist
+                  await supabase.from('usage').insert([
+                    {
+                      user_email: email,
+                      month: 'trial',  // Adjust this if needed based on the user’s plan
+                      pages_used: 0,
+                      plan_name: 'Free',  // Adjust according to the user's plan (Free for trial users)
+                      page_credits: 100,  // Default page credits
+                      billing_cycle_start: new Date().toISOString(),
+                    },
+                  ]);
+                }
 
+                // Set the flag to 'false' to prevent future checks
+                localStorage.setItem('firstLogin', 'false');
+              });
+          }
+        }
+      }, 500); // Check every 500ms until the Outseta session is ready
+    });
   </script>
 
   <header class="aqua-header">
