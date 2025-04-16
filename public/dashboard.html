@@ -124,43 +124,44 @@
     // Check if it's the first time the user is logging in
 window.addEventListener('load', async () => {
   // Wait for Outseta session to load
-  if (Outseta.nocode.user) {  // Ensure user session is available
-    const isFirstLogin = localStorage.getItem('firstLogin') !== 'false'; // Check if it's the first login
+  const checkSession = setInterval(() => {
+    if (Outseta.nocode.user) {
+      clearInterval(checkSession);  // Stop checking once the user session is available
 
-    if (isFirstLogin) {
-      const email = Outseta.nocode.user.email;
+      const isFirstLogin = localStorage.getItem('firstLogin') !== 'false'; // Check if it's the first login
 
-      // Check if the Supabase row exists for this user
-      const { data, error } = await supabase
-        .from('usage')
-        .select('*')
-        .eq('user_email', email)
-        .single();
+      if (isFirstLogin) {
+        const email = Outseta.nocode.user.email;
 
-      if (!data) {
-        // Insert the row if it doesn't exist
-        await supabase.from('usage').insert([
-          {
-            user_email: email,
-            month: 'trial',  // Adjust this if needed based on the user’s plan
-            pages_used: 0,
-            plan_name: 'Free',  // Adjust according to the user's plan (Free for trial users)
-            page_credits: 100,  // Default page credits
-            billing_cycle_start: new Date().toISOString(),
-          },
-        ]);
+        // Check if the Supabase row exists for this user
+        supabase
+          .from('usage')
+          .select('*')
+          .eq('user_email', email)
+          .single()
+          .then(async ({ data, error }) => {
+            if (!data) {
+              // Insert the row if it doesn't exist
+              await supabase.from('usage').insert([
+                {
+                  user_email: email,
+                  month: 'trial',  // Adjust this if needed based on the user’s plan
+                  pages_used: 0,
+                  plan_name: 'Free',  // Adjust according to the user's plan (Free for trial users)
+                  page_credits: 100,  // Default page credits
+                  billing_cycle_start: new Date().toISOString(),
+                },
+              ]);
+            }
+
+            // Set the flag to 'false' to prevent future checks
+            localStorage.setItem('firstLogin', 'false');
+          });
       }
-
-      // Set the flag to 'false' to prevent future checks
-      localStorage.setItem('firstLogin', 'false');
     }
-  } else {
-    // If Outseta.nocode.user is undefined, retry after a short delay
-    setTimeout(() => {
-      location.reload();  // Retry after half a second to give time for session to load
-    }, 500);
-  }
+  }, 500); // Check every 500ms until the Outseta session is ready
 });
+
   </script>
 
   <header class="aqua-header">
