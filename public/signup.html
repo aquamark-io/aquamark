@@ -81,30 +81,29 @@
           const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk";
 
           const response = await fetch(`${supabaseUrl}/rest/v1/usage`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${supabaseKey}`
-            },
-            body: JSON.stringify({
-              user_email: email,
-              plan_name: 'Free Trial',
-              created_at: new Date().toISOString(),
-              page_credits: 100,
-              billing_cycle_start: null,
-              pages_remaining: 100,
-              pages_used: 0,
-              month: 'trial'
-            })
-          });
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${supabaseKey}`
+  },
+  body: JSON.stringify({
+    user_email: email,
+    plan_name: 'Free Trial',
+    created_at: new Date().toISOString(),
+    page_credits: 100,
+    billing_cycle_start: null,
+    pages_remaining: 100,
+    pages_used: 0,
+    month: 'trial'
+  })
+});
 
-          const result = await response.json();
-
-          if (response.ok) {
-            console.log("User data added to Supabase:", result);
-          } else {
-            console.error("Error inserting data into Supabase:", result);
-          }
+const result = await response.json();
+if (response.ok) {
+  console.log("User data added to Supabase:", result);
+} else {
+  console.error("Error inserting data into Supabase:", result);
+}
         }
       });
     });
