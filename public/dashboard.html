@@ -30,6 +30,10 @@
       text-decoration: none;
       font-weight: 500;
       color: #333;
+      transition: color 0.2s ease;
+    }
+    .aqua-nav a:hover {
+      color: #007bff;
     }
     .aqua-nav a.active {
       color: #007bff;
@@ -59,6 +63,7 @@
       flex-wrap: wrap;
       gap: 2rem;
       margin-top: 2rem;
+      width: 100%;
     }
     .aqua-card {
       background: white;
@@ -67,10 +72,27 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       flex: 1 1 45%;
       min-width: 300px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .aqua-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     }
     .aqua-card h2 {
       font-size: 1.2rem;
       margin-bottom: 1rem;
+      color: #1e1e2f;
+      display: flex;
+      align-items: center;
+    }
+    .aqua-card h2::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #007bff;
+      border-radius: 50%;
+      margin-right: 8px;
     }
   </style>
   <!-- Outseta integration -->
@@ -100,6 +122,16 @@
       <div class="profile-container">
         <div data-o-profile="1" data-mode="embed"></div>
       </div>
+      
+      <!-- Usage stats card -->
+      <div class="aqua-cards">
+        <div class="aqua-card">
+          <h2>Your Usage</h2>
+          <div id="usage-stats">
+            <p>Loading your usage data...</p>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -114,6 +146,52 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // Function to fetch and display user usage data
+    async function fetchUserUsageData(email) {
+      try {
+        const { data, error } = await supabase
+          .from('usage')
+          .select('*')
+          .eq('user_email', email)
+          .single();
+          
+        if (error) throw error;
+        
+        // Update the UI with the data
+        const usageStatsElement = document.getElementById('usage-stats');
+        if (data) {
+          usageStatsElement.innerHTML = `
+            <div style="margin-bottom: 1rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>Plan:</span>
+                <strong>${data.plan_name || 'Free Trial'}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>Pages Used:</span>
+                <strong>${data.pages_used || 0}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>Pages Remaining:</span>
+                <strong>${data.pages_remaining || 100}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>Total Credits:</span>
+                <strong>${data.page_credits || 100}</strong>
+              </div>
+            </div>
+            <div style="background: #f3f4f6; border-radius: 8px; height: 10px; overflow: hidden;">
+              <div style="background: #007bff; height: 100%; width: ${Math.min(100, (data.pages_used / data.page_credits) * 100)}%;"></div>
+            </div>
+          `;
+        } else {
+          usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+        }
+      } catch (err) {
+        console.error("Error fetching usage data:", err);
+        document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+      }
+    }
+    
     // Get user profile and update Supabase
     document.addEventListener('DOMContentLoaded', function() {
       Outseta.getUser().then(async (profile) => {
@@ -124,19 +202,47 @@
           
           // Upsert - create/update row in Supabase
           try {
+            // Get current data first to calculate pages_remaining
+            const { data: existingData, error: fetchError } = await supabase
+              .from('usage')
+              .select('*')
+              .eq('user_email', profile.Email)
+              .single();
+            
+            if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 is "not found" error
+              throw fetchError;
+            }
+            
+            // Set default values
+            let pages_used = 0;
+            let page_credits = 100;
+            
+            // Use existing values if available (to not reset counters)
+            if (existingData) {
+              pages_used = existingData.pages_used || 0;
+              page_credits = existingData.page_credits || 100;
+            }
+            
+            // Calculate pages_remaining
+            const pages_remaining = page_credits - pages_used;
+            
+            // Upsert the data
             const { data, error } = await supabase
               .from('usage')
               .upsert({
                 user_email: profile.Email,
-                month: 'trial',
-                pages_used: 0,
+                pages_used: pages_used,
+                pages_remaining: pages_remaining,
                 plan_name: 'Free Trial',
-                page_credits: 100,
-                billing_cycle_start: new Date().toISOString()
+                page_credits: page_credits,
+                // We're leaving billing_cycle_start blank as requested
               });
               
             if (error) throw error;
             console.log("Supabase update successful", data);
+            
+            // After successfully updating, let's fetch the data to display on the dashboard
+            fetchUserUsageData(profile.Email);
           } catch (err) {
             console.error("Error updating Supabase:", err);
           }
