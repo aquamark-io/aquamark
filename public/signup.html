@@ -82,8 +82,13 @@
   Outseta.on("nocode.confirmationScreenShown", async () => {
     const user = await Outseta.nocode.user;
     const email = user?.Email;
-    if (!email) return;
 
+    console.log("📧 Extracted email:", email);
+
+  if (!email) {
+    console.warn("⚠️ No email found. Supabase insert skipped.");
+    return;
+  }
     const { error } = await supabaseClient
       .from("usage")
       .insert([{
