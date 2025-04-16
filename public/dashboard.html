@@ -213,8 +213,8 @@
                     console.log("✅ Token saved from confirmation");
                 }
                 
-                // Reload the page without the token in the URL
-                window.location.href = '/dashboard.html';
+                // Redirect to login page with confirmation flag
+                window.location.href = '/login.html?confirmed=true';
             });
         }
 
