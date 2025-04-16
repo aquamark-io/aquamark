@@ -1,125 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create your free account</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+// pages/signup.js
+import { useEffect } from 'react';
+import Head from 'next/head';
 
-  <!-- Outseta -->
-  <script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
-  <!-- Supabase -->
-<script src="https://unpkg.com/@supabase/supabase-js"></script>
-<script>
-  const { createClient } = supabase;
-  const supabaseClient = createClient(
-    "https://dvzmnikrvkvgragzhrof.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk"
-  );
-
-  const observer = new MutationObserver(() => {
-    const confirmation = document.querySelector("p");
-    if (
-      confirmation &&
-      confirmation.textContent.includes("Please click the link inside to complete the registration")
-    ) {
-      const match = confirmation.textContent.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i);
-      const email = match?.[0] || "";
-
-      if (!email) {
-        console.warn("⚠️ Could not extract email from confirmation text.");
-        return;
-      }
-
-      console.log("📧 Extracted email from confirmation:", email);
-
-      supabaseClient
-        .from("usage")
-        .upsert([{
-          user_email: email,
-          month: "trial",
-          plan_name: "Free Trial",
-          page_credits: 100,
-          pages_used: 0,
-          pages_remaining: 100
-        }], {
-          onConflict: ['user_email', 'month']
-        })
-        .then(({ error }) => {
-          if (error) {
-            console.error("❌ Supabase insert failed:", error.message);
-          } else {
-            console.log("✅ Supabase row created successfully");
-          }
+export default function SignupPage() {
+  useEffect(() => {
+    // Wait for Outseta to be available
+    const initOutseta = () => {
+      if (window.Outseta) {
+        // Initialize Outseta signup embed with Free Trial plan
+        window.Outseta.auth('#outseta-auth', {
+          type: 'signup',
+          planId: 'aWxLDdWV', // Free Trial plan ID
+          // Note: Post Sign Up URL is configured in Outseta admin
         });
-
-      observer.disconnect();
-    }
-  });
-
-  window.addEventListener("load", () => {
-    observer.observe(document.body, { childList: true, subtree: true });
-  });
-</script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    footer {
-      margin-top: 2rem;
-      font-size: 0.875rem;
-      color: #6b7280;
-      text-align: center;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container">
-    <div style="text-align: center; margin-bottom: 1rem;">
-      <a href="/">
-        <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
-      </a>
-    </div>
-
-    <div data-o-auth="1"
-         data-widget-mode="register"
-         data-plan-uid="aWxLDdWV"
-         data-plan-payment-term="month"
-         data-skip-plan-options="true"
-         data-mode="embed">
-    </div>
-  </div>
-
-  <footer>
-    &copy; 2025 Aquamark. All rights reserved.
-  </footer>
-</body>
-</html>
+      } else {
+        // If Outseta isn't loaded yet, retry
+        setTimeout(initOutseta, 100);
+      }
+    };
+    
+    initOutseta();
+  }, []);
+  
+  return (
+    <>
+      <Head>
+        <title>Sign Up | AquaMark</title>
+      </Head>
+      <div className="signup-container">
+        <h1>Create Your AquaMark Account</h1>
+        <div id="outseta-auth"></div>
+      </div>
+    </>
+  );
+}
