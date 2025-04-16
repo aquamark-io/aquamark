@@ -1,35 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaMark - Watermark Documents</title>
-  <link rel="stylesheet" href="globals.css">
-  
-  <!-- Outseta Script -->
-  <script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,profile'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-  
-  <!-- Supabase Script -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  
-  <!-- PDF-Lib for PDF Manipulation -->
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  
-  <!-- Config file -->
-  <script src="config.js"></script>
-  
+  <meta charset="UTF-8" />
+  <title>Aquamark.io - Watermark Documents</title>
   <style>
-    /* Additional styles specific to watermarking */
+    body {
+      font-family: sans-serif;
+      background: #f9f9ff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #ede6ff;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;a
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      padding: 30px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
     .upload-group {
       margin-bottom: 25px;
     }
-    
+    input[type="file"] {
+      margin-top: 8px;
+    }
+    button {
+      background: #3e5fff;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .status {
+      margin-top: 20px;
+      font-weight: 500;
+    }
     .instructions {
       background: #f4f1fe;
       border-left: 5px solid #a08ef7;
@@ -37,481 +55,160 @@
       margin-bottom: 30px;
       border-radius: 5px;
     }
-    
     .instructions ul {
       padding-left: 20px;
-    }
-    
-    #status {
-      margin-top: 20px;
-      font-weight: 500;
-    }
-    
-    /* File list styling */
-    .file-list {
-      margin-top: 15px;
-      border: 1px solid #e4e7eb;
-      border-radius: 5px;
-      max-height: 200px;
-      overflow-y: auto;
-      padding: 10px;
-    }
-    
-    .file-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 5px 10px;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    
-    .file-item:last-child {
-      border-bottom: none;
-    }
-    
-    .file-item.processed {
-      background-color: #f0f8ff;
-    }
-    
-    .file-item.skipped {
-      background-color: #fff0f0;
     }
   </style>
 </head>
 <body>
-  <div class="watermark-container">
-    <h1>Watermark Your Documents</h1>
-    
-    <div id="loading-message">Checking your available credits...</div>
-    
-    <div id="credits-info" class="credits-info" style="display: none;">
-      <p>Available Credits: <span id="credits-count">0</span></p>
+  <header>Aquamark.io - Watermark Documents</header>
+  <div class="container">
+    <div class="instructions">
+      <strong>How to Use:</strong>
+      <ul>
+        <li>1. Upload your logo (JPG or PNG)</li>
+        <li>2. Upload up to 6 bank statements (PDF only)</li>
+        <li>3. Click "Watermark Files" to begin processing</li>
+      </ul>
+      <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
     </div>
-    
-    <div id="upgrade-notice" class="upgrade-notice" style="display: none;">
-      <p>You have no credits left. Please upgrade your plan to continue.</p>
-      <button id="upgrade-btn" class="upgrade-btn">Upgrade Plan</button>
+
+    <div class="upload-group">
+      <h2>1. Upload Logo (JPG or PNG)</h2>
+      <input type="file" id="logoInput" accept="image/jpeg,image/png" />
     </div>
-    
-    <div id="watermark-form" class="watermark-form" style="display: none;">
-      <div class="instructions">
-        <strong>How to Use:</strong>
-        <ul>
-          <li>1. Upload your logo (JPG or PNG)</li>
-          <li>2. Upload up to 6 bank statements (PDF only)</li>
-          <li>3. Click "Watermark Files" to begin processing</li>
-        </ul>
-        <small>Your files will not be stored. Downloads begin automatically after watermarking is complete.</small>
-        <p><strong>Note:</strong> Each page in a PDF uses 1 credit. The ISO Shop plan includes unlimited credits.</p>
-      </div>
-      
-      <div class="upload-group">
-        <h2>1. Upload Logo (JPG or PNG)</h2>
-        <input type="file" id="logoInput" accept="image/jpeg,image/png" />
-      </div>
-      
-      <div class="upload-group">
-        <h2>2. Upload Bank Statements (PDF only, up to 6)</h2>
-        <input type="file" id="pdfInput" accept="application/pdf" multiple />
-        <div id="file-list" class="file-list" style="display: none;"></div>
-      </div>
-      
-      <button id="watermark-btn" class="watermark-btn">3. Watermark Files</button>
-      
-      <div id="status"></div>
+
+    <div class="upload-group">
+      <h2>2. Upload Bank Statements (PDF only, up to 6)</h2>
+      <input type="file" id="pdfInput" accept="application/pdf" multiple />
     </div>
+
+    <button onclick="processFiles()">3. Watermark Files</button>
+    <div class="status" id="status"></div>
   </div>
 
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
-    // Initialize watermarking page when document loads
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize Supabase client
-      const supabase = supabase.createClient(config.supabaseUrl, config.supabaseKey);
-      let user = null;
-      let credits = 0;
-      let canUseService = false;
-      let hasUnlimitedCredits = false;
-      let planName = '';
-      
-      // Elements
-      const watermarkBtn = document.getElementById('watermark-btn');
-      const upgradeBtn = document.getElementById('upgrade-btn');
-      const status = document.getElementById('status');
-      const pdfInput = document.getElementById('pdfInput');
-      const fileList = document.getElementById('file-list');
-      
-      // Listen for file selection to update file list
-      pdfInput.addEventListener('change', updateFileList);
-      
-      function updateFileList() {
-        if (pdfInput.files.length > 0) {
-          fileList.innerHTML = '';
-          fileList.style.display = 'block';
-          
-          for (let i = 0; i < pdfInput.files.length; i++) {
-            const file = pdfInput.files[i];
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
-            fileItem.id = `file-${i}`;
-            fileItem.innerHTML = `
-              <span>${file.name}</span>
-              <span>Pending</span>
-            `;
-            fileList.appendChild(fileItem);
-          }
-        } else {
-          fileList.style.display = 'none';
-        }
-      }
-      
-      // Wait for Outseta to be available
-      const initOutseta = () => {
-        if (window.Outseta) {
-          // Get current user
-          window.Outseta.getUser().then(currentUser => {
-            if (currentUser) {
-              user = currentUser;
-              
-              // Check available credits
-              checkCredits(currentUser.email);
-            } else {
-              // Not authenticated, redirect to login
-              window.location.href = 'login.html';
-            }
-          });
-        } else {
-          // If Outseta isn't loaded yet, retry
-          setTimeout(initOutseta, 100);
-        }
-      };
-      
-      initOutseta();
-      
-      // Function to check available credits
-      async function checkCredits(email) {
-        // Get the current month
-        const currentMonth = new Date().toISOString().substring(0, 7); // Format: YYYY-MM
-        
-        const { data, error } = await supabase
-          .from('usage')
-          .select('*')
-          .eq('user_email', email)
-          .eq('month', currentMonth)
-          .single();
-        
-        if (error) {
-          console.error('Error checking credits:', error);
-          document.getElementById('loading-message').style.display = 'none';
-          // Add an error message
-          const errorDiv = document.createElement('div');
-          errorDiv.className = 'error-message';
-          errorDiv.innerHTML = 'There was an error checking your credits. Please try again later.';
-          document.querySelector('.watermark-container').appendChild(errorDiv);
-        } else {
-          planName = data.plan_name;
-          
-          // Check if user has unlimited credits (ISO Shop plan)
-          hasUnlimitedCredits = (planName === 'ISO Shops');
-          
-          if (hasUnlimitedCredits) {
-            credits = Infinity;
-            document.getElementById('credits-count').textContent = 'Unlimited';
-          } else {
-            credits = parseInt(data.pages_remaining);
-            document.getElementById('credits-count').textContent = credits;
-          }
-          
-          canUseService = hasUnlimitedCredits || credits > 0;
-          
-          // Update UI based on credits
-          document.getElementById('credits-info').style.display = 'block';
-          
-          if (canUseService) {
-            document.getElementById('watermark-form').style.display = 'block';
-          } else {
-            document.getElementById('upgrade-notice').style.display = 'block';
-          }
-          
-          // Hide loading message
-          document.getElementById('loading-message').style.display = 'none';
-        }
-      }
-      
-      // Function to track usage for a specific number of pages
-      async function trackUsage(pageCount) {
-        if (!user || hasUnlimitedCredits) return true;
-        
-        // Get the current month
-        const currentMonth = new Date().toISOString().substring(0, 7); // Format: YYYY-MM
-        
-        // Get current usage
-        const { data, error } = await supabase
-          .from('usage')
-          .select('*')
-          .eq('user_email', user.email)
-          .eq('month', currentMonth)
-          .single();
-        
-        if (error) {
-          console.error('Error getting usage:', error);
-          return false;
-        }
-        
-        // Check if user has enough credits left
-        if (parseInt(data.pages_used) + pageCount > parseInt(data.page_credits)) {
-          return false;
-        }
-        
-        // Update usage
-        const newPagesUsed = parseInt(data.pages_used) + pageCount;
-        const newPagesRemaining = parseInt(data.page_credits) - newPagesUsed;
-        
-        const { error: updateError } = await supabase
-          .from('usage')
-          .update({
-            pages_used: newPagesUsed,
-            pages_remaining: newPagesRemaining.toString()
-          })
-          .eq('user_email', user.email)
-          .eq('month', currentMonth);
-        
-        if (updateError) {
-          console.error('Error updating usage:', updateError);
-          return false;
-        }
-        
-        // Update local state
-        credits = newPagesRemaining;
-        
-        if (hasUnlimitedCredits) {
-          document.getElementById('credits-count').textContent = 'Unlimited';
-        } else {
-          document.getElementById('credits-count').textContent = credits;
-        }
-        
-        canUseService = hasUnlimitedCredits || credits > 0;
-        
-        if (!canUseService) {
-          showUpgradeNotice();
-        }
-        
-        return true;
-      }
-      
-      // Function to show upgrade notice
-      function showUpgradeNotice() {
-        document.getElementById('watermark-form').style.display = 'none';
-        document.getElementById('upgrade-notice').style.display = 'block';
-      }
-      
-      // ---- Original Watermarking Functionality ----
-      
-      async function normalizeImagePreserveAspect(file) {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          
-          reader.onload = function (e) {
-            const img = new Image();
-            
-            img.onload = function () {
-              const maxSize = 200;
-              let scale = Math.min(maxSize / img.width, maxSize / img.height);
-              
-              const canvas = document.createElement('canvas');
-              canvas.width = img.width * scale;
-              canvas.height = img.height * scale;
-              
-              const ctx = canvas.getContext('2d');
-              ctx.fillStyle = 'white';
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-              
-              canvas.toBlob((blob) => {
-                const fr = new FileReader();
-                fr.onload = () => resolve(fr.result);
-                fr.readAsArrayBuffer(blob);
-              }, 'image/jpeg', 0.95);
-            };
-            
-            img.src = e.target.result;
+    async function normalizeImagePreserveAspect(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            const maxSize = 200;
+            let scale = Math.min(maxSize / img.width, maxSize / img.height);
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+              const fr = new FileReader();
+              fr.onload = () => resolve(fr.result);
+              fr.readAsArrayBuffer(blob);
+            }, 'image/jpeg', 0.95);
           };
-          
-          reader.readAsDataURL(file);
-        });
-      }
-      
-      async function decryptPDF(file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        
-        const response = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
-          method: "POST",
-          body: formData,
-        });
-        
-        if (!response.ok) throw new Error("Decryption failed");
-        return await response.arrayBuffer();
-      }
-      
-      // Update file list item status
-      function updateFileStatus(index, status, processed = false, skipped = false) {
-        const fileItem = document.getElementById(`file-${index}`);
-        if (fileItem) {
-          const statusSpan = fileItem.querySelector('span:last-child');
-          statusSpan.textContent = status;
-          
-          if (processed) {
-            fileItem.classList.add('processed');
-          }
-          
-          if (skipped) {
-            fileItem.classList.add('skipped');
-          }
-        }
-      }
-      
-      async function processFiles() {
-        if (!canUseService && !hasUnlimitedCredits) {
-          alert('You have no credits left. Please upgrade your plan to continue.');
-          return;
-        }
-        
-        const logoInput = document.getElementById("logoInput");
-        const pdfInput = document.getElementById("pdfInput");
-        
-        if (!logoInput.files[0] || pdfInput.files.length === 0) {
-          status.textContent = "Please upload both a logo and at least one PDF.";
-          return;
-        }
-        
-        status.textContent = "⏳ Processing files...";
-        
-        const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
-        const hologramUrl = "/holgram.png";
-        const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
-        
-        const pdfFiles = Array.from(pdfInput.files);
-        let processedFiles = 0;
-        let skippedFiles = 0;
-        let totalPagesProcessed = 0;
-        
-        for (let i = 0; i < pdfFiles.length; i++) {
-          let file = pdfFiles[i];
-          updateFileStatus(i, "Processing...");
-          
-          let pdfBytes;
-          try {
-            // Try loading the file normally (unencrypted)
-            await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
-            pdfBytes = await file.arrayBuffer();
-          } catch (err) {
-            // Fallback to Render decryption
-            updateFileStatus(i, "🔐 Decrypting...");
-            try {
-              pdfBytes = await decryptPDF(file);
-            } catch {
-              updateFileStatus(i, "❌ Decryption failed", false, true);
-              skippedFiles++;
-              continue;
-            }
-          }
-          
-          // Load the PDF to get page count
-          const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
-          const pageCount = pdfDoc.getPageCount();
-          
-          // Check if we have enough credits for this file
-          if (!hasUnlimitedCredits && credits < pageCount) {
-            updateFileStatus(i, `⚠️ Not enough credits (${pageCount} pages needed)`, false, true);
-            skippedFiles++;
-            continue;
-          }
-          
-          // Track usage for this file's pages
-          if (!hasUnlimitedCredits) {
-            const trackSuccess = await trackUsage(pageCount);
-            if (!trackSuccess) {
-              updateFileStatus(i, "❌ Credit tracking error", false, true);
-              skippedFiles++;
-              continue;
-            }
-          }
-          
-          // Now process the document
-          const pages = pdfDoc.getPages();
-          const logoImage = await pdfDoc.embedJpg(logoBytes);
-          const hologramImage = await pdfDoc.embedPng(hologramBytes);
-          
-          const logoDims = logoImage.scale(0.35);
-          const hologramWidth = 60;
-          const hologramHeight = 60;
-          
-          for (const page of pages) {
-            const { width, height } = page.getSize();
-            
-            for (let x = 0; x < width; x += (logoDims.width + 100)) {
-              for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                page.drawImage(logoImage, {
-                  x,
-                  y,
-                  width: logoDims.width,
-                  height: logoDims.height,
-                  opacity: 0.15,
-                  rotate: PDFLib.degrees(45)
-                });
-              }
-            }
-            
-            page.drawImage(hologramImage, {
-              x: width - hologramWidth - 10,
-              y: height - hologramHeight - 10,
-              width: hologramWidth,
-              height: hologramHeight,
-              opacity: 0.7
-            });
-          }
-          
-          const finalBytes = await pdfDoc.save();
-          const blob = new Blob([finalBytes], { type: 'application/pdf' });
-          
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          
-          updateFileStatus(i, `✅ Processed (${pageCount} pages)`, true);
-          processedFiles++;
-          totalPagesProcessed += pageCount;
-        }
-        
-        let summaryMessage = `✅ Done. ${processedFiles} files processed (${totalPagesProcessed} pages total).`;
-        if (skippedFiles > 0) {
-          summaryMessage += ` ${skippedFiles} files skipped.`;
-        }
-        
-        if (!hasUnlimitedCredits) {
-          summaryMessage += ` ${credits} credits remaining.`;
-        }
-        
-        status.textContent = summaryMessage;
-        
-        // If we've run out of credits, show the upgrade notice
-        if (credits <= 0 && !hasUnlimitedCredits) {
-          showUpgradeNotice();
-        }
-      }
-      
-      // Set up event listeners
-      watermarkBtn.addEventListener('click', processFiles);
-      
-      upgradeBtn.addEventListener('click', function() {
-        // Open Outseta change plan dialog
-        if (window.Outseta) {
-          window.Outseta.showChangePlan();
-        }
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
       });
-    });
+    }
+
+    async function decryptPDF(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const response = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Decryption failed");
+      return await response.arrayBuffer();
+    }
+
+    async function processFiles() {
+      const status = document.getElementById("status");
+      const logoInput = document.getElementById("logoInput");
+      const pdfInput = document.getElementById("pdfInput");
+
+      if (!logoInput.files[0] || pdfInput.files.length === 0) {
+        status.textContent = "Please upload both a logo and at least one PDF.";
+        return;
+      }
+
+      status.textContent = "⏳ Processing...";
+
+      const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
+      const hologramUrl = "/holgram.png";
+      const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
+
+      const pdfFiles = Array.from(pdfInput.files);
+
+      for (let file of pdfFiles) {
+        let pdfBytes;
+
+        try {
+          // Try loading the file normally (unencrypted)
+          await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
+          pdfBytes = await file.arrayBuffer();
+        } catch (err) {
+          // Fallback to Render decryption
+          status.textContent = "🔐 Decrypting encrypted file...";
+          try {
+            pdfBytes = await decryptPDF(file);
+          } catch {
+            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+            return;
+          }
+        }
+
+        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+        const pages = pdfDoc.getPages();
+        const logoImage = await pdfDoc.embedJpg(logoBytes);
+        const hologramImage = await pdfDoc.embedPng(hologramBytes);
+
+        const logoDims = logoImage.scale(0.35);
+        const hologramWidth = 60;
+        const hologramHeight = 60;
+
+        for (const page of pages) {
+          const { width, height } = page.getSize();
+
+          for (let x = 0; x < width; x += (logoDims.width + 100)) {
+            for (let y = 0; y < height; y += (logoDims.height + 100)) {
+              page.drawImage(logoImage, {
+                x,
+                y,
+                width: logoDims.width,
+                height: logoDims.height,
+                opacity: 0.15,
+                rotate: PDFLib.degrees(45)
+              });
+            }
+          }
+
+          page.drawImage(hologramImage, {
+            x: width - hologramWidth - 10,
+            y: height - hologramHeight - 10,
+            width: hologramWidth,
+            height: hologramHeight,
+            opacity: 0.7
+          });
+        }
+
+        const finalBytes = await pdfDoc.save();
+        const blob = new Blob([finalBytes], { type: 'application/pdf' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+
+      status.textContent = "✅ Done. Files downloaded.";
+    }
   </script>
 </body>
 </html>
