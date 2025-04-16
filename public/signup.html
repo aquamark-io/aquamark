@@ -5,55 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up | AquaMark</title>
   <link rel="stylesheet" href="globals.css">
-  
-  <!-- Outseta Script -->
-  <script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth', // Only loading auth component to keep it lightweight
-      id: 'outseta-auth' // Added ID to match target element
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-  
-  <!-- Config file -->
-  <script src="config.js"></script>
 </head>
 <body>
   <div class="signup-container">
     <h1>Create Your AquaMark Account</h1>
     
-    <!-- Important: ID must match the one in o_options -->
-    <div id="outseta-auth"></div>
+    <!-- Outseta Direct Embed Code -->
+    <div id="outseta-auth-forms"></div>
+    <script>
+      var o_signup_options = {
+        domain: 'aquamark.outseta.com',
+        id: 'outseta-auth-forms',
+        widgetMode: 'signup',
+        planid: 'aWxLDdWV' // Free Trial Plan ID
+      };
+    </script>
+    <script src="https://cdn.outseta.com/auth/auth.min.js" data-options="o_signup_options"></script>
   </div>
-
-  <script>
-    // Debugging helper - check if Outseta is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOM Content Loaded');
-      
-      // Function to check if Outseta is available
-      function checkOutseta() {
-        if (window.Outseta) {
-          console.log('Outseta is available');
-          
-          // Initialize Outseta signup embed with Free Trial plan
-          window.Outseta.auth('#outseta-auth', {
-            type: 'signup',
-            planId: config.plans.freeTrial,
-            // Note: Post Sign Up URL is configured in Outseta admin
-          });
-          
-          console.log('Outseta initialized');
-        } else {
-          console.log('Outseta not yet available, retrying...');
-          setTimeout(checkOutseta, 500);
-        }
-      }
-      
-      // Start checking for Outseta
-      checkOutseta();
-    });
-  </script>
 </body>
 </html>
