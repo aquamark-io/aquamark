@@ -5,21 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | AquaMark</title>
   <link rel="stylesheet" href="globals.css">
+  
+  <!-- Outseta Script -->
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
 <body>
   <div class="login-container">
     <h1>Log In to AquaMark</h1>
     
-    <!-- Outseta Direct Embed Code -->
-    <div id="outseta-auth-forms"></div>
-    <script>
-      var o_login_options = {
-        domain: 'aquamark.outseta.com',
-        id: 'outseta-auth-forms',
-        widgetMode: 'login'
-      };
-    </script>
-    <script src="https://cdn.outseta.com/auth/auth.min.js" data-options="o_login_options"></script>
+    <!-- Native Outseta Element -->
+    <div data-o-auth="1"
+         data-mode="embed"
+         data-widget-mode="login">
+    </div>
   </div>
 </body>
 </html>
