@@ -1,141 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Log In - Aquamark</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
-    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-            color: #111827;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-        footer {
-            margin-top: 2rem;
-            font-size: 0.875rem;
-            color: #6b7280;
-            text-align: center;
-        }
-        #statusMessage {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            background-color: #f3f4f6;
-            display: none;
-        }
-        #statusMessage.success {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-        #statusMessage.error {
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
-    </style>
-    
-    <!-- Outseta Configuration - Standard version -->
-    <script>
-        var o_options = {
-            domain: 'aquamark.outseta.com',
-            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support',
-            auth: {
-                loginRedirectUrl: 'https://www.aquamark.io/dashboard.html'
-            }
-        };
-    </script>
-    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-    
-    <script>
-        // Function to get URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Show message if coming from account confirmation
-            const fromConfirmation = getUrlParameter('confirmed');
-            if (fromConfirmation === 'true') {
-                const statusMsg = document.getElementById('statusMessage');
-                if (statusMsg) {
-                    statusMsg.textContent = 'Account confirmed! Please sign in with your email and password.';
-                    statusMsg.classList.add('success');
-                    statusMsg.style.display = 'block';
-                }
-            }
-            
-            // Check for confirmation token in URL and forward if found
-            const confirmationToken = getUrlParameter('confirmationToken');
-            if (confirmationToken) {
-                window.location.href = '/dashboard.html?confirmationToken=' + confirmationToken;
-                return;
-            }
-            
-            // Listen for login success
-            if (window.Outseta) {
-                window.Outseta.on('auth.login.success', function(response) {
-                    if (response?.accessToken) {
-                        localStorage.setItem("outseta_access_token", response.accessToken);
-                        localStorage.setItem("outseta.accessToken", response.accessToken);
-                    }
-                    
-                    // Redirect to dashboard after login
-                    window.location.href = '/dashboard.html';
-                });
-            }
-            
-            // Also save token from auth events
-            window.addEventListener('outseta:accessToken.set', function(event) {
-                const token = event.detail.accessToken;
-                if (token) {
-                    localStorage.setItem("outseta_access_token", token);
-                    localStorage.setItem("outseta.accessToken", token);
-                }
-            });
+// pages/login.js
+import { useEffect } from 'react';
+import Head from 'next/head';
+
+export default function LoginPage() {
+  useEffect(() => {
+    // Wait for Outseta to be available
+    const initOutseta = () => {
+      if (window.Outseta) {
+        // Initialize Outseta login embed
+        window.Outseta.auth('#outseta-auth', {
+          type: 'login',
+          // Note: We don't need to set redirectToUrlAfterLogin here
+          // since it's configured in the Outseta admin panel
         });
-    </script>
-</head>
-
-<body>
-    <div class="container">
-        <div style="text-align: center; margin-bottom: 1rem;">
-            <a href="/">
-                <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
-            </a>
-        </div>
-        
-        <div id="statusMessage"></div>
-        
-        <div data-o-auth="1"
-             data-widget-mode="login"
-             data-mode="embed">
-        </div>
-        
-        <div style="text-align: center; margin-top: 1rem;">
-            <p>Don't have an account? <a href="/sign-up.html">Sign up</a></p>
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2025 Aquamark. All rights reserved.
-    </footer>
-</body>
-</html>
+      } else {
+        // If Outseta isn't loaded yet, retry
+        setTimeout(initOutseta, 100);
+      }
+    };
+    
+    initOutseta();
+  }, []);
+  
+  return (
+    <>
+      <Head>
+        <title>Login | AquaMark</title>
+      </Head>
+      <div className="login-container">
+        <h1>Log In to AquaMark</h1>
+        <div id="outseta-auth"></div>
+      </div>
+    </>
+  );
+}
