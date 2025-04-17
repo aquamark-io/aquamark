@@ -271,7 +271,7 @@
     <header class="aqua-header">
         <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
         <nav class="aqua-nav">
-            <a href="/dashboard.html">Dashboard</a>
+            <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
             <a href="/watermark.html" class="active">Watermark</a>
             <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
         </nav>
@@ -323,6 +323,19 @@
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script>
+        // Preserve URL parameters when navigating between pages
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current URL parameters
+            const urlParams = window.location.search;
+            const hashParams = window.location.hash;
+            
+            // Update dashboard link with current parameters
+            const dashboardLink = document.getElementById('dashboardLink');
+            if (dashboardLink) {
+                dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
+            }
+        });
+        
         // Handle logout redirection
         if (window.location.hash === '#o-logout-link') {
             window.location.href = '/login.html';
