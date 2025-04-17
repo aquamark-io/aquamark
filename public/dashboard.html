@@ -1,445 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Aquamark Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
-    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f8f9fb;
-            color: #1e1e2f;
-        }
-        .aqua-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: #f3e8ff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-        }
-        .aqua-logo {
-            height: 28px;
-        }
-        .aqua-nav a {
-            margin-left: 1.5rem;
-            text-decoration: none;
-            font-weight: 500;
-            color: #333;
-            transition: color 0.2s ease;
-        }
-        .aqua-nav a:hover {
-            color: #007bff;
-        }
-        .aqua-nav a.active {
-            color: #007bff;
-        }
-        .aqua-panel {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-        h1.greeting {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            color: #1e1e2f;
-        }
-        .aqua-layout {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        .profile-container {
-            flex: 1 1 40%;
-            min-width: 300px;
-        }
-        .aqua-cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 2rem;
-            width: 100%;
-        }
-        .aqua-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            flex: 1 1 45%;
-            min-width: 300px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .aqua-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-        }
-        .aqua-card h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: #1e1e2f;
-            display: flex;
-            align-items: center;
-        }
-        .aqua-card h2::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #007bff;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-    </style>
-    <!-- Outseta integration -->
-    <script>
-        var o_options = {
-            domain: 'aquamark.outseta.com',
-            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-        };
-    </script>
-    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-    <!-- Supabase integration -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8">
+  <title>Aquamark Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fb;
+      color: #1e1e2f;
+    }
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .aqua-logo {
+      height: 28px;
+    }
+    .aqua-nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #333;
+      transition: color 0.2s ease;
+    }
+    .aqua-nav a:hover {
+      color: #007bff;
+    }
+    .aqua-nav a.active {
+      color: #007bff;
+    }
+    .aqua-panel {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    h1.greeting {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      color: #1e1e2f;
+    }
+    .aqua-layout {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .profile-container {
+      flex: 1 1 40%;
+      min-width: 300px;
+    }
+    .aqua-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+      width: 100%;
+    }
+    .aqua-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      flex: 1 1 45%;
+      min-width: 300px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .aqua-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+    .aqua-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #1e1e2f;
+      display: flex;
+      align-items: center;
+    }
+    .aqua-card h2::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #007bff;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+  </style>
+  <!-- Outseta integration -->
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <!-- Supabase integration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <header class="aqua-header">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
-        <nav class="aqua-nav">
-            <a href="/dashboard.html" class="active">Dashboard</a>
-            <a href="/watermark.html">Watermark</a>
-            <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
-        </nav>
-    </header>
-    <main class="aqua-panel">
-        <h1 class="greeting">My Dashboard</h1>
-        <div class="aqua-layout">
-            <div class="profile-container">
-                <div data-o-profile="1" data-mode="embed"></div>
-            </div>
-            <!-- Usage stats card -->
-            <div class="aqua-cards">
-                <div class="aqua-card">
-                    <h2>Your Usage</h2>
-                    <div id="usage-stats">
-                        <p>Loading your usage data...</p>
-                    </div>
-                </div>
-            </div>
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
+    <nav class="aqua-nav">
+      <a href="/dashboard.html" class="active">Dashboard</a>
+      <a href="/watermark.html">Watermark</a>
+      <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
+    </nav>
+  </header>
+  
+  <main class="aqua-panel">
+    <h1 class="greeting">My Dashboard</h1>
+    <div class="aqua-layout">
+      <div class="profile-container">
+        <div data-o-profile="1" data-mode="embed"></div>
+      </div>
+      
+      <!-- Usage stats card -->
+      <div class="aqua-cards">
+        <div class="aqua-card">
+          <h2>Your Usage</h2>
+          <div id="usage-stats">
+            <p>Loading your usage data...</p>
+          </div>
         </div>
-    </main>
-    <script>
-        // Handle logout redirection
-        if (window.location.hash === '#o-logout-link') {
-            window.location.href = '/login.html';
-        }
+      </div>
+    </div>
+  </main>
 
-        // Initialize Supabase client
-        const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <script>
+    // Handle logout redirection
+    if (window.location.hash === '#o-logout-link') {
+      window.location.href = '/login.html';
+    }
+    
+    // Initialize Supabase client
+    const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Function to fetch and display user usage data
-        async function fetchUserUsageData(email) {
-            try {
-                // Get rows for this user
-                const { data, error } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', email);
-
-                if (error) throw error;
-
-                // Get the first row if multiple exist
-                const userData = data && data.length > 0 ? data[0] : null;
-
-                // Update the UI with the data
-                const usageStatsElement = document.getElementById('usage-stats');
-
-                if (userData) {
-                    // Handle display of unlimited credits
-                    const displayCredits = userData.page_credits === -1 ? "Unlimited" : (userData.page_credits || 100);
-                    const displayRemaining = userData.page_credits === -1 ? "Unlimited" : (userData.pages_remaining || 100);
-                    
-                    // Calculate progress percentage for the bar
-                    let progressPercentage;
-                    if (userData.page_credits === -1) {
-                        // For unlimited plan, show a partial bar based on pages used
-                        progressPercentage = Math.min(80, (userData.pages_used / 10000) * 100);
-                    } else {
-                        // For limited plans, normal percentage
-                        progressPercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
-                    }
-
-                    usageStatsElement.innerHTML = `
-                    <div style="margin-bottom: 1rem;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Plan:</span>
-                            <strong>${userData.plan_name || 'Free Trial'}</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Pages Used:</span>
-                            <strong>${userData.pages_used || 0}</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Pages Remaining:</span>
-                            <strong>${displayRemaining}</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Total Credits:</span>
-                            <strong>${displayCredits}</strong>
-                        </div>
-                    </div>
-                    <div style="background: #f3f4f6; border-radius: 8px; height: 10px; overflow: hidden;">
-                        <div style="background: #007bff; height: 100%; width: ${progressPercentage}%;"></div>
-                    </div>
-                    `;
-                } else {
-                    usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
-                }
-            } catch (err) {
-                console.error("Error fetching usage data:", err);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
-            }
-        }
-
-        // Get user profile and update Supabase
-        document.addEventListener('DOMContentLoaded', function() {
-            Outseta.getUser().then(async (profile) => {
-                if (profile) {
-                    console.log("PersonUid:", profile.Uid);
-                    console.log("Email:", profile.Email);
-                    console.log("AccountUid:", profile.Account.Uid);
-                    
-                    // Upsert - create/update row in Supabase
-                    try {
-                        // First, let's check if the user already exists
-                        let { data: existingUser, error: fetchError } = await supabase
-                            .from('usage')
-                            .select('*')
-                            .eq('user_email', profile.Email);
-
-                        // Set default values
-                        let pages_used = 0;
-                        let page_credits = 100;
-                        let rowId = null;
-
-                        // If user exists, use their data
-                        if (existingUser && existingUser.length > 0) {
-                            // User exists - use the first row we found
-                            pages_used = existingUser[0].pages_used || 0;
-                            page_credits = existingUser[0].page_credits || 100;
-                            rowId = existingUser[0].id;
-                            console.log("Found existing user with ID:", rowId);
-                        } else {
-                            console.log("No existing user found, will create new record");
-                        }
-
-                        // Calculate pages_remaining
-                        const pages_remaining = page_credits - pages_used;
-
-                        // Prepare the data object
-                        const userData = {
-                            user_email: profile.Email,
-                            pages_used: pages_used,
-                            pages_remaining: pages_remaining,
-                            plan_name: 'Free Trial',
-                            page_credits: page_credits
-                        };
-
-                        // If we have an existing ID, include it to update that specific row
-                        if (rowId) {
-                            userData.id = rowId;
-                        }
-
-                        // Upsert the data
-                        const { data, error } = await supabase
-                            .from('usage')
-                            .upsert(userData);
-
-                        if (error) throw error;
-
-                        console.log("Supabase update successful", data);
-
-                        // After successfully updating, let's fetch the data to display on the dashboard
-                        fetchUserUsageData(profile.Email);
-                    } catch (err) {
-                        console.error("Error updating Supabase:", err);
-                    }
-                }
-            }).catch(err => {
-                console.error("Error getting Outseta user:", err);
-            });
-            
-            // Set up the subscription change listener
-            setupOutsetaSubscriptionListener();
-        });
-
-        // ----------------- SUBSCRIPTION CHANGE HANDLING -----------------
+    // Function to fetch and display user usage data
+    async function fetchUserUsageData(email) {
+      try {
+        // Get rows for this user
+        const { data, error } = await supabase
+          .from('usage')
+          .select('*')
+          .eq('user_email', email);
+          
+        if (error) throw error;
         
-        // Function to handle subscription changes
-        function setupOutsetaSubscriptionListener() {
-            console.log("Setting up Outseta subscription listener...");
+        // Get the first row if multiple exist
+        const userData = data && data.length > 0 ? data[0] : null;
+        
+        // Update the UI with the data
+        const usageStatsElement = document.getElementById('usage-stats');
+        if (userData) {
+          usageStatsElement.innerHTML = `
+            <div style="margin-bottom: 1rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>Plan:</span>
+                <strong>${userData.plan_name || 'Free Trial'}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>Pages Used:</span>
+                <strong>${userData.pages_used || 0}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>Pages Remaining:</span>
+                <strong>${userData.pages_remaining || 100}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>Total Credits:</span>
+                <strong>${userData.page_credits || 100}</strong>
+              </div>
+            </div>
+            <div style="background: #f3f4f6; border-radius: 8px; height: 10px; overflow: hidden;">
+              <div style="background: #007bff; height: 100%; width: ${Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100)}%;"></div>
+            </div>
+          `;
+        } else {
+          usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+        }
+      } catch (err) {
+        console.error("Error fetching usage data:", err);
+        document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+      }
+    }
+    
+    // Get user profile and update Supabase
+    document.addEventListener('DOMContentLoaded', function() {
+      Outseta.getUser().then(async (profile) => {
+        if (profile) {
+          console.log("PersonUid:", profile.Uid);
+          console.log("Email:", profile.Email);
+          console.log("AccountUid:", profile.Account.Uid);
+          
+          // Upsert - create/update row in Supabase
+          try {
+            // First, let's check if the user already exists
+            let { data: existingUser, error: fetchError } = await supabase
+              .from('usage')
+              .select('*')
+              .eq('user_email', profile.Email);
             
-            // Listen for subscription update events
-            Outseta.on('subscription.update', async (event) => {
-                console.log('Subscription update detected:', event);
-                await handleSubscriptionChange();
-            });
+            // Set default values
+            let pages_used = 0;
+            let page_credits = 100;
+            let rowId = null;
             
-            // Also listen for subscription reopen events
-            Outseta.on('subscription.reopen', async (event) => {
-                console.log('Subscription reopen detected:', event);
-                await handleSubscriptionChange();
-            });
+            // If user exists, use their data
+            if (existingUser && existingUser.length > 0) {
+              // User exists - use the first row we found
+              pages_used = existingUser[0].pages_used || 0;
+              page_credits = existingUser[0].page_credits || 100;
+              rowId = existingUser[0].id;
+              
+              console.log("Found existing user with ID:", rowId);
+            } else {
+              console.log("No existing user found, will create new record");
+            }
             
-            // Check for subscription changes on page load too
-            setTimeout(checkSubscriptionStatus, 2000); // Delay to ensure Outseta is fully loaded
-        }
-
-        // Function to handle subscription change
-        async function handleSubscriptionChange() {
-            try {
-                // Get current user profile
-                const profile = await Outseta.getUser();
-                
-                if (!profile) {
-                    console.error("No user profile found");
-                    return;
-                }
-                
-                console.log("User profile:", profile);
-                
-                // Check if user has subscriptions
-                if (!profile.Account || !profile.Account.Subscriptions || profile.Account.Subscriptions.length === 0) {
-                    console.log("No subscriptions found");
-                    return;
-                }
-                
-                // Get the first active subscription
-                const subscription = profile.Account.Subscriptions[0];
-                
-                // Get plan details
-                const planName = subscription.Plan.Name;
-                console.log("Current plan:", planName);
-                
-                // Determine page credits based on plan
-                let pageCredits;
-                switch(planName) {
-                    case 'Riding Solo':
-                        pageCredits = 1000;
-                        break;
-                    case 'Small Teams':
-                        pageCredits = 5000;
-                        break;
-                    case 'ISO Shops':
-                        pageCredits = -1; // -1 represents unlimited
-                        break;
-                    default:
-                        pageCredits = 100; // Default for free trial or unknown plans
-                }
-                
-                // Get current date for billing cycle
-                const billingCycleDate = new Date().toISOString();
-                
-                // Update Supabase
-                await updateSupabaseUsage(profile.Email, {
-                    plan_name: planName,
-                    page_credits: pageCredits,
-                    pages_used: 0, // Reset pages used
-                    pages_remaining: pageCredits === -1 ? "Unlimited" : pageCredits, // Special handling for unlimited
-                    billing_cycle_date: billingCycleDate
-                });
-                
-                // Refresh the usage display
-                await fetchUserUsageData(profile.Email);
-                
-                console.log("Subscription update completed");
-            } catch (error) {
-                console.error("Error handling subscription change:", error);
+            // Calculate pages_remaining
+            const pages_remaining = page_credits - pages_used;
+            
+            // Prepare the data object
+            const userData = {
+              user_email: profile.Email,
+              pages_used: pages_used,
+              pages_remaining: pages_remaining,
+              plan_name: 'Free Trial',
+              page_credits: page_credits
+            };
+            
+            // If we have an existing ID, include it to update that specific row
+            if (rowId) {
+              userData.id = rowId;
             }
+            
+            // Upsert the data
+            const { data, error } = await supabase
+              .from('usage')
+              .upsert(userData);
+              
+            if (error) throw error;
+            console.log("Supabase update successful", data);
+            
+            // After successfully updating, let's fetch the data to display on the dashboard
+            fetchUserUsageData(profile.Email);
+          } catch (err) {
+            console.error("Error updating Supabase:", err);
+          }
         }
-
-        // Function to check subscription status on page load
-        async function checkSubscriptionStatus() {
-            try {
-                // Get JWT payload to check for subscription info
-                const jwtPayload = Outseta.getJwtPayload();
-                
-                if (!jwtPayload) {
-                    console.log("No JWT payload available");
-                    return;
-                }
-                
-                console.log("JWT Payload:", jwtPayload);
-                
-                // Check if user has subscription data in JWT
-                if (jwtPayload["outseta:subscriptionUid"] && jwtPayload["outseta:planUid"]) {
-                    console.log("User has an active subscription");
-                    
-                    // Get current user from Supabase
-                    const profile = await Outseta.getUser();
-                    if (!profile) return;
-                    
-                    const { data: existingUser, error: fetchError } = await supabase
-                        .from('usage')
-                        .select('*')
-                        .eq('user_email', profile.Email);
-                    
-                    // If user exists and still on Free Trial, update to current plan
-                    if (existingUser && existingUser.length > 0 && existingUser[0].plan_name === 'Free Trial') {
-                        console.log("User has subscription but Supabase still shows Free Trial. Updating...");
-                        await handleSubscriptionChange();
-                    }
-                }
-            } catch (error) {
-                console.error("Error checking subscription status:", error);
-            }
-        }
-
-        // Function to update user usage data in Supabase
-        async function updateSupabaseUsage(email, usageData) {
-            try {
-                // First get the existing row
-                const { data: existingUser, error: fetchError } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', email);
-                
-                if (fetchError) throw fetchError;
-                
-                // Get the row ID if it exists
-                const rowId = existingUser && existingUser.length > 0 ? existingUser[0].id : null;
-                
-                // Prepare update data
-                const updateData = {
-                    user_email: email,
-                    ...usageData
-                };
-                
-                // Add the ID if we have one
-                if (rowId) {
-                    updateData.id = rowId;
-                }
-                
-                // Upsert the data
-                const { data, error } = await supabase
-                    .from('usage')
-                    .upsert(updateData);
-                
-                if (error) throw error;
-                
-                console.log("Supabase update successful", data);
-                return data;
-            } catch (error) {
-                console.error("Error updating Supabase:", error);
-                throw error;
-            }
-        }
-    </script>
+      }).catch(err => {
+        console.error("Error getting Outseta user:", err);
+      });
+    });
+  </script>
 </body>
 </html>
