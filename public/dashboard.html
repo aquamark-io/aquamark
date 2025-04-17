@@ -1,893 +1,1543 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Aquamark Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
-    <style>
-        :root {
-            --primary-color: #7e57c2;
-            --primary-light: #f3e8ff;
-            --primary-dark: #4d2c91;
-            --accent-color: #007bff;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #1e1e2f;
-            --text-secondary: #64748b;
-            --bg-color: #f8f9fb;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius: 12px;
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-color);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+<title>Aquamark Dashboard</title>
 
-        /* Header */
-        .aqua-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: var(--primary-light);
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .aqua-logo {
-            height: 32px;
-        }
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 
-        .aqua-nav {
-            display: flex;
-            align-items: center;
-        }
+<link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
 
-        .aqua-nav a {
-            margin-left: 2rem;
-            text-decoration: none;
-            font-weight: 500;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-            position: relative;
-        }
+<style>
 
-        .aqua-nav a:hover {
-            color: var(--accent-color);
-        }
+:root {
 
-        .aqua-nav a.active {
-            color: var(--accent-color);
-        }
+--primary-color: #7e57c2;
 
-        .aqua-nav a.active:after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            height: 3px;
-            width: 100%;
-            background: var(--accent-color);
-            border-radius: 3px;
-        }
+--primary-light: #f3e8ff;
 
-        /* Main Content */
-        .aqua-panel {
-            max-width: 1400px;
-            width: 95%;
-            margin: 2rem auto;
-            flex: 1;
-        }
+--primary-dark: #4d2c91;
 
-        h1.greeting {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
+--accent-color: #007bff;
 
-        /* Main Layout */
-        .aqua-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
+--success-color: #10b981;
 
-        /* Cards */
-        .aqua-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            height: 100%;
-        }
+--warning-color: #f59e0b;
 
-        .aqua-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
+--danger-color: #ef4444;
 
-        .card-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+--text-primary: #1e1e2f;
 
-        .card-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+--text-secondary: #64748b;
 
-        .card-header h2::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-        }
+--bg-color: #f8f9fb;
 
-        .card-body {
-            padding: 1.5rem;
-        }
+--card-bg: #ffffff;
 
-        /* Action Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            padding: 0 1.25rem;
-            border-radius: 8px;
-            font-weight: 550;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-            gap: 0.5rem;
-        }
+--border-color: #e2e8f0;
 
-        .action-buttons a {
-    text-decoration: none;
+--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+--radius: 12px;
+
 }
 
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
+* {
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
+margin: 0;
 
-        .btn-accent {
-            background: var(--accent-color);
-            color: white;
-        }
+padding: 0;
 
-        .btn-accent:hover {
-            background: #0069d9;
-        }
+box-sizing: border-box;
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
+}
 
-        .btn-outline:hover {
-            background: var(--primary-light);
-            border-color: var(--primary-color);
-        }
+body {
 
-        /* Announcement Banner */
-        .announcement-banner {
-            background: linear-gradient(to right, var(--primary-light), #e0f2fe);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: var(--shadow-md);
-        }
+font-family: 'Inter', sans-serif;
 
-        .announcement-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+background: var(--bg-color);
 
-        .announcement-icon {
-            background: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-        }
+color: var(--text-primary);
 
-        .announcement-text h3 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
+min-height: 100vh;
 
-        .announcement-text p {
-            color: var(--text-secondary);
-        }
+display: flex;
 
-        /* Profile Section */
-        .profile-section {
-            margin-top: 1.5rem;
-        }
+flex-direction: column;
 
-        .profile-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-        }
+}
 
-        .profile-item:last-child {
-            border-bottom: none;
-        }
+/* Header */
 
-        .profile-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+.aqua-header {
 
-        .profile-value {
-            font-weight: 500;
-        }
+display: flex;
 
-        .profile-action {
-            color: var(--accent-color);
-            text-decoration: none;
-            margin-left: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
+justify-content: space-between;
 
-        .profile-action:hover {
-            text-decoration: underline;
-        }
+align-items: center;
 
-        .profile-photo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            overflow: hidden;
-        }
+padding: 1rem 2rem;
 
-        .profile-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+background: var(--primary-light);
 
-        .upload-btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 0.4rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 0.75rem;
-        }
+box-shadow: var(--shadow-md);
 
-        .upload-btn:hover {
-            background: #0069d9;
-        }
+position: sticky;
 
-        /* Usage Stats */
-        .usage-stat {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-        }
+top: 0;
 
-        .usage-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+z-index: 100;
 
-        .usage-value {
-            font-weight: 600;
-        }
+}
 
-        .progress-bar {
-            background: #f3f4f6;
-            border-radius: 8px;
-            height: 8px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
+.aqua-logo {
 
-        .progress-fill {
-            background: var(--accent-color);
-            height: 100%;
-            width: 0%; /* Will be set by JavaScript */
-        }
+height: 32px;
 
-        /* Action Card */
-        .action-card {
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            background: white;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
+}
 
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
+.aqua-nav {
 
-        /* Footer */
-        .aqua-footer {
-            background: var(--primary-light);
-            padding: 1.5rem 2rem;
-            margin-top: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+display: flex;
 
-        .footer-logo {
-            height: 24px;
-        }
+align-items: center;
 
-        .footer-nav {
-            display: flex;
-            gap: 2rem;
-        }
+}
 
-        .footer-nav a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
+.aqua-nav a {
 
-        .footer-nav a:hover {
-            color: var(--accent-color);
-        }
+margin-left: 2rem;
 
-        .footer-copyright {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
+text-decoration: none;
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .aqua-layout {
-                grid-template-columns: 1fr;
-            }
-            
-            .announcement-banner {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .aqua-footer {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            
-            .footer-nav {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-    </style>
+font-weight: 500;
 
-    <!-- Outseta integration -->
-    <script>
-        var o_options = {
-            domain: 'aquamark.outseta.com',
-            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-        };
-    </script>
-    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-    
-    <!-- Supabase integration -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+color: var(--text-primary);
+
+transition: all 0.2s ease;
+
+position: relative;
+
+}
+
+.aqua-nav a:hover {
+
+color: var(--accent-color);
+
+}
+
+.aqua-nav a.active {
+
+color: var(--accent-color);
+
+}
+
+.aqua-nav a.active:after {
+
+content: '';
+
+position: absolute;
+
+bottom: -8px;
+
+left: 0;
+
+height: 3px;
+
+width: 100%;
+
+background: var(--accent-color);
+
+border-radius: 3px;
+
+}
+
+/* Main Content */
+
+.aqua-panel {
+
+max-width: 1400px;
+
+width: 95%;
+
+margin: 2rem auto;
+
+flex: 1;
+
+}
+
+h1.greeting {
+
+font-size: 2rem;
+
+margin-bottom: 2rem;
+
+font-weight: 600;
+
+color: var(--text-primary);
+
+}
+
+/* Main Layout */
+
+.aqua-layout {
+
+display: grid;
+
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+
+gap: 2rem;
+
+}
+
+/* Cards */
+
+.aqua-card {
+
+background: var(--card-bg);
+
+border-radius: var(--radius);
+
+box-shadow: var(--shadow-md);
+
+overflow: hidden;
+
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+height: 100%;
+
+}
+
+.aqua-card:hover {
+
+transform: translateY(-5px);
+
+box-shadow: var(--shadow-lg);
+
+}
+
+.card-header {
+
+padding: 1.25rem 1.5rem;
+
+border-bottom: 1px solid var(--border-color);
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+}
+
+.card-header h2 {
+
+font-size: 1.25rem;
+
+font-weight: 600;
+
+color: var(--text-primary);
+
+display: flex;
+
+align-items: center;
+
+gap: 0.5rem;
+
+}
+
+.card-header h2::before {
+
+content: '';
+
+display: inline-block;
+
+width: 10px;
+
+height: 10px;
+
+background-color: var(--accent-color);
+
+border-radius: 50%;
+
+}
+
+.card-body {
+
+padding: 1.5rem;
+
+}
+
+/* Action Buttons */
+
+.btn {
+
+display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+height: 40px;
+
+padding: 0 1.25rem;
+
+border-radius: 8px;
+
+font-weight: 500;
+
+font-size: 0.95rem;
+
+transition: all 0.2s ease;
+
+cursor: pointer;
+
+border: none;
+
+gap: 0.5rem;
+
+}
+
+.btn-primary {
+
+background: var(--primary-color);
+
+color: white;
+
+}
+
+.btn-primary:hover {
+
+background: var(--primary-dark);
+
+}
+
+.btn-accent {
+
+background: var(--accent-color);
+
+color: white;
+
+}
+
+.btn-accent:hover {
+
+background: #0069d9;
+
+}
+
+.btn-outline {
+
+background: transparent;
+
+border: 1px solid var(--border-color);
+
+color: var(--text-primary);
+
+}
+
+.btn-outline:hover {
+
+background: var(--primary-light);
+
+border-color: var(--primary-color);
+
+}
+
+/* Announcement Banner */
+
+.announcement-banner {
+
+background: linear-gradient(to right, var(--primary-light), #e0f2fe);
+
+border-radius: var(--radius);
+
+padding: 1.5rem;
+
+margin-bottom: 2rem;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+box-shadow: var(--shadow-md);
+
+}
+
+.announcement-content {
+
+display: flex;
+
+align-items: center;
+
+gap: 1rem;
+
+}
+
+.announcement-icon {
+
+background: white;
+
+width: 40px;
+
+height: 40px;
+
+border-radius: 50%;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+color: var(--primary-color);
+
+font-size: 1.5rem;
+
+}
+
+.announcement-text h3 {
+
+font-weight: 600;
+
+margin-bottom: 0.25rem;
+
+}
+
+.announcement-text p {
+
+color: var(--text-secondary);
+
+}
+
+/* Profile Section */
+
+.profile-section {
+
+margin-top: 1.5rem;
+
+}
+
+.profile-item {
+
+display: flex;
+
+justify-content: space-between;
+
+padding: 1rem 0;
+
+border-bottom: 1px solid var(--border-color);
+
+}
+
+.profile-item:last-child {
+
+border-bottom: none;
+
+}
+
+.profile-label {
+
+color: var(--text-secondary);
+
+font-weight: 500;
+
+}
+
+.profile-value {
+
+font-weight: 500;
+
+}
+
+.profile-action {
+
+color: var(--accent-color);
+
+text-decoration: none;
+
+margin-left: 0.5rem;
+
+font-size: 0.9rem;
+
+font-weight: 500;
+
+}
+
+.profile-action:hover {
+
+text-decoration: underline;
+
+}
+
+.profile-photo {
+
+width: 80px;
+
+height: 80px;
+
+border-radius: 50%;
+
+background: var(--border-color);
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+margin-bottom: 1rem;
+
+overflow: hidden;
+
+}
+
+.profile-photo img {
+
+width: 100%;
+
+height: 100%;
+
+object-fit: cover;
+
+}
+
+.upload-btn {
+
+background: var(--accent-color);
+
+color: white;
+
+border: none;
+
+border-radius: 6px;
+
+padding: 0.4rem 0.75rem;
+
+font-size: 0.75rem;
+
+font-weight: 500;
+
+cursor: pointer;
+
+transition: all 0.2s ease;
+
+margin-top: 0.75rem;
+
+}
+
+.upload-btn:hover {
+
+background: #0069d9;
+
+}
+
+/* Usage Stats */
+
+.usage-stat {
+
+display: flex;
+
+justify-content: space-between;
+
+margin-bottom: 0.75rem;
+
+}
+
+.usage-label {
+
+color: var(--text-secondary);
+
+font-weight: 500;
+
+}
+
+.usage-value {
+
+font-weight: 600;
+
+}
+
+.progress-bar {
+
+background: #f3f4f6;
+
+border-radius: 8px;
+
+height: 8px;
+
+overflow: hidden;
+
+margin-top: 1rem;
+
+}
+
+.progress-fill {
+
+background: var(--accent-color);
+
+height: 100%;
+
+width: 0%; /* Will be set by JavaScript */
+
+}
+
+/* Action Card */
+
+.action-card {
+
+padding: 1.5rem;
+
+border-radius: var(--radius);
+
+background: white;
+
+box-shadow: var(--shadow-md);
+
+display: flex;
+
+flex-direction: column;
+
+gap: 1rem;
+
+margin-bottom: 2rem;
+
+}
+
+.action-buttons {
+
+display: flex;
+
+gap: 1rem;
+
+flex-wrap: wrap;
+
+}
+
+/* Footer */
+
+.aqua-footer {
+
+background: var(--primary-light);
+
+padding: 1.5rem 2rem;
+
+margin-top: 3rem;
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+}
+
+.footer-logo {
+
+height: 24px;
+
+}
+
+.footer-nav {
+
+display: flex;
+
+gap: 2rem;
+
+}
+
+.footer-nav a {
+
+color: var(--text-primary);
+
+text-decoration: none;
+
+font-size: 0.9rem;
+
+font-weight: 500;
+
+transition: color 0.2s ease;
+
+}
+
+.footer-nav a:hover {
+
+color: var(--accent-color);
+
+}
+
+.footer-copyright {
+
+color: var(--text-secondary);
+
+font-size: 0.9rem;
+
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+
+.aqua-layout {
+
+grid-template-columns: 1fr;
+
+}
+
+.announcement-banner {
+
+flex-direction: column;
+
+align-items: flex-start;
+
+gap: 1rem;
+
+}
+
+.action-buttons {
+
+flex-direction: column;
+
+}
+
+.aqua-footer {
+
+flex-direction: column;
+
+gap: 1rem;
+
+text-align: center;
+
+}
+
+.footer-nav {
+
+flex-direction: column;
+
+gap: 0.5rem;
+
+}
+
+}
+
+</style>
+
+<!-- Outseta integration -->
+
+<script>
+
+var o_options = {
+
+domain: 'aquamark.outseta.com',
+
+load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+
+};
+
+</script>
+
+<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+<!-- Supabase integration -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
-    <header class="aqua-header">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
-        <nav class="aqua-nav">
-            <a href="/dashboard.html" class="active">Dashboard</a>
-            <a href="/watermark.html">Watermark</a>
-            <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
-        </nav>
-    </header>
 
-    <main class="aqua-panel">
-        <h1 class="greeting">My Dashboard</h1>
-        
-        <!-- Announcement Banner -->
-        <div class="announcement-banner">
-            <div class="announcement-content">
-                <div class="announcement-icon">🚀</div>
-                <div class="announcement-text">
-                    <h3>Coming Soon: Aquamark API</h3>
-                    <p>Starting May 2025, Aquamark’s open API will let anyone seamlessly connect and automate watermarking in minutes.</p>
-                </div>
-            </div>
-        </div>
-        
-<!-- Action Buttons Card -->
-<div class="action-card">
-    <div class="action-buttons">
-        <a href="/https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-primary">Upgrade Plan</a>
-        <a href="/https://www.aquamark.io/dashboard.html" class="btn btn-accent">Start Watermarking</a>
-    </div>
+<header class="aqua-header">
+
+<img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
+
+<nav class="aqua-nav">
+
+<a href="/dashboard.html" class="active">Dashboard</a>
+
+<a href="/watermark.html" id="watermarkLink">Watermark</a>
+
+<a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
+
+</nav>
+
+</header>
+
+<main class="aqua-panel">
+
+<h1 class="greeting">My Dashboard</h1>
+
+<!-- Announcement Banner -->
+
+<div class="announcement-banner">
+
+<div class="announcement-content">
+
+<div class="announcement-icon">🚀</div>
+
+<div class="announcement-text">
+
+<h3>Coming Soon: Aquamark API</h3>
+
+<p>Starting May 2025, Aquamark's open API will let anyone seamlessly connect and automate watermarking in minutes.</p>
+
 </div>
 
-        <!-- Main Layout -->
-        <div class="aqua-layout">
-            <!-- Profile Card -->
-            <div class="aqua-card">
-                <div class="card-header">
-                    <h2>My Profile</h2>
-                </div>
-                <div class="card-body">
-                    <div data-o-profile="1" data-mode="embed"></div>
-                </div>
-            </div>
+</div>
 
-            <!-- Usage Card -->
-            <div class="aqua-card">
-                <div class="card-header">
-                    <h2>Your Usage</h2>
-                </div>
-                <div class="card-body" id="usage-stats">
-                    <p>Loading your usage data...</p>
-                </div>
-            </div>
-        </div>
-    </main>
+</div>
 
-    <footer class="aqua-footer">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
-        <div class="footer-nav">
-            <a href="https://www.aquamark.io/terms.html">Terms of Service</a>
-            <a href="https://www.aquamark.io/privacy.html">Privacy Policy</a>
-            <a href="mailto:hey@aquamark.io">Contact Us</a>
-        </div>
-        <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
-    </footer>
+<!-- Action Buttons Card -->
 
-    <script>
-        // Handle logout redirection
-        if (window.location.hash === '#o-logout-link') {
-            window.location.href = '/login.html';
+<div class="action-card">
+
+<div class="action-buttons">
+
+<button class="btn btn-primary">Upgrade Plan</button>
+
+<button class="btn btn-accent">Start Watermarking</button>
+
+</div>
+
+</div>
+
+<!-- Main Layout -->
+
+<div class="aqua-layout">
+
+<!-- Profile Card -->
+
+<div class="aqua-card">
+
+<div class="card-header">
+
+<h2>My Profile</h2>
+
+</div>
+
+<div class="card-body">
+
+<div data-o-profile="1" data-mode="embed"></div>
+
+</div>
+
+</div>
+
+<!-- Usage Card -->
+
+<div class="aqua-card">
+
+<div class="card-header">
+
+<h2>Your Usage</h2>
+
+</div>
+
+<div class="card-body" id="usage-stats">
+
+<p>Loading your usage data...</p>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+<footer class="aqua-footer">
+
+<img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
+
+<div class="footer-nav">
+
+<a href="#">Terms of Service</a>
+
+<a href="#">Privacy Policy</a>
+
+<a href="#">Contact Us</a>
+
+</div>
+
+<div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
+
+</footer>
+
+<!-- Preserve URL parameters when navigating between pages -->
+<script>
+    // Preserve URL parameters when navigating between pages
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get current URL parameters
+        const urlParams = window.location.search;
+        const hashParams = window.location.hash;
+        
+        // Update watermark link with current parameters
+        const watermarkLink = document.getElementById('watermarkLink');
+        if (watermarkLink) {
+            watermarkLink.href = "/watermark.html" + urlParams + hashParams;
         }
+    });
+</script>
 
-        // Initialize Supabase client
-        const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+<script>
 
-        // Function to get page credits based on plan name
-        function getPageCreditsByPlan(planName) {
-            const planCredits = {
-                'Riding Solo': 1000,
-                'Small Teams': 5000,
-                'ISO Shops': 1000000 // Essentially unlimited
-            };
-            return planCredits[planName] || 100; // Default to 100 if plan not found
-        }
+// Handle logout redirection
 
-        // Function to update user plan in Supabase
-        async function updateUserPlan(email, planName) {
-            try {
-                console.log(`Updating plan for ${email} to ${planName}`);
-                // Get the current date for billing cycle
-                const today = new Date();
-                const billing_cycle_start = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+if (window.location.hash === '#o-logout-link') {
 
-                // Get page credits based on plan
-                const page_credits = getPageCreditsByPlan(planName);
+window.location.href = '/login.html';
 
-                // First, check if user exists
-                let { data: existingUser, error: fetchError } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', email);
+}
 
-                if (fetchError) throw fetchError;
+// Initialize Supabase client
 
-                // Set initial values
-                let rowId = null;
+const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
 
-                // If user exists, get their ID
-                if (existingUser && existingUser.length > 0) {
-                    rowId = existingUser[0].id;
-                    console.log("Found existing user with ID:", rowId);
-                } else {
-                    console.log("No existing user found, will create new record");
-                }
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
 
-                // Prepare the data object with updated plan details
-                const userData = {
-                    user_email: email,
-                    pages_used: 0, // Reset to 0 when plan changes
-                    pages_remaining: page_credits,
-                    plan_name: planName,
-                    page_credits: page_credits,
-                    billing_cycle_start: billing_cycle_start
-                };
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-                // Include ID if we have one
-                if (rowId) {
-                    userData.id = rowId;
-                }
+// Function to get page credits based on plan name
 
-                // Upsert the data
-                const { data, error } = await supabase
-                    .from('usage')
-                    .upsert(userData);
+function getPageCreditsByPlan(planName) {
 
-                if (error) throw error;
+const planCredits = {
 
-                console.log("Plan update successful:", data);
+'Riding Solo': 1000,
 
-                // Refresh the dashboard display
-                fetchUserUsageData(email);
+'Small Teams': 5000,
 
-                return true;
-            } catch (err) {
-                console.error("Error updating plan:", err);
-                return false;
-            }
-        }
+'ISO Shops': 1000000 // Essentially unlimited
 
-        // Function to check and update billing cycle
-        async function checkBillingCycle(email) {
-            try {
-                // Get user data
-                const { data, error } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', email);
+};
 
-                if (error) throw error;
+return planCredits[planName] || 100; // Default to 100 if plan not found
 
-                // If no user or no billing cycle, exit
-                if (!data || data.length === 0 || !data[0].billing_cycle_start) {
-                    return;
-                }
+}
 
-                const userData = data[0];
-                const today = new Date();
-                const billingStart = new Date(userData.billing_cycle_start);
+// Function to update user plan in Supabase
 
-                // Calculate next billing date (1 month from billing start)
-                const nextBillingDate = new Date(billingStart);
-                nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
+async function updateUserPlan(email, planName) {
 
-                // If today is on or after the next billing date, reset credits
-                if (today >= nextBillingDate) {
-                    console.log("Billing cycle renewal detected");
+try {
 
-                    // Update billing cycle start to today
-                    const newBillingStart = today.toISOString().split('T')[0];
+console.log(`Updating plan for ${email} to ${planName}`);
 
-                    // Reset pages_used and update billing_cycle_start
-                    const { data: updateData, error: updateError } = await supabase
-                        .from('usage')
-                        .update({
-                            pages_used: 0,
-                            pages_remaining: userData.page_credits,
-                            billing_cycle_start: newBillingStart
-                        })
-                        .eq('id', userData.id);
+// Get the current date for billing cycle
 
-                    if (updateError) throw updateError;
+const today = new Date();
 
-                    console.log("Billing cycle updated:", updateData);
+const billing_cycle_start = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
 
-                    // Refresh the usage display
-                    fetchUserUsageData(email);
-                }
-            } catch (err) {
-                console.error("Error checking billing cycle:", err);
-            }
-        }
+// Get page credits based on plan
 
-        // Function to fetch and display user usage data
-        async function fetchUserUsageData(email) {
-            try {
-                // Get rows for this user
-                const { data, error } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', email);
+const page_credits = getPageCreditsByPlan(planName);
 
-                if (error) throw error;
+// First, check if user exists
 
-                // Get the first row if multiple exist
-                const userData = data && data.length > 0 ? data[0] : null;
+let { data: existingUser, error: fetchError } = await supabase
 
-                // Update the UI with the data
-                const usageStatsElement = document.getElementById('usage-stats');
+.from('usage')
 
-                if (userData) {
-                    const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
-                    
-                    usageStatsElement.innerHTML = `
-                        <div class="usage-stats-container">
-                            <div class="usage-stat">
-                                <span class="usage-label">Plan:</span>
-                                <span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
-                            </div>
-                            <div class="usage-stat">
-                                <span class="usage-label">Pages Used:</span>
-                                <span class="usage-value">${userData.pages_used || 0}</span>
-                            </div>
-                            <div class="usage-stat">
-                                <span class="usage-label">Pages Remaining:</span>
-                                <span class="usage-value">${userData.pages_remaining || 100}</span>
-                            </div>
-                            <div class="usage-stat">
-                                <span class="usage-label">Total Credits:</span>
-                                <span class="usage-value">${userData.page_credits || 100}</span>
-                            </div>
-                            
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${usagePercentage}%;"></div>
-                            </div>
-                        </div>
-                    `;
+.select('*')
 
-                    // Also check if billing cycle needs to be updated
-                    checkBillingCycle(email);
-                } else {
-                    usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
-                }
-            } catch (err) {
-                console.error("Error fetching usage data:", err);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
-            }
-        }
+.eq('user_email', email);
 
-        // Get user profile and update Supabase
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize debug logging for Outseta events
-            const enableDebugLogging = true;
+if (fetchError) throw fetchError;
 
-            // Function to log event data for debugging
-            function logEventData(eventName, params) {
-                if (enableDebugLogging) {
-                    console.log(`${eventName} event received:`, params);
-                    // Try to identify where the plan data might be
-                    if (params) {
-                        if (params.Plan) console.log("Plan data found at params.Plan:", params.Plan);
-                        if (params.plan) console.log("Plan data found at params.plan:", params.plan);
-                        if (params.subscription && params.subscription.plan) {
-                            console.log("Plan data found at params.subscription.plan:", params.subscription.plan);
-                        }
-                        if (params.subscription && params.subscription.Plan) {
-                            console.log("Plan data found at params.subscription.Plan:", params.subscription.Plan);
-                        }
-                    }
-                }
-            }
+// Set initial values
 
-            // Improved handler for subscription.update events
-            Outseta.on("subscription.update", async (params) => {
-                logEventData("subscription.update", params);
-                try {
-                    const profile = await Outseta.getUser();
-                    if (!profile || !profile.Email) {
-                        console.error("Could not get user profile");
-                        return;
-                    }
+let rowId = null;
 
-                    // Extract plan name - checking all possible locations
-                    let planName = "Free Trial"; // Default fallback
-                    if (params) {
-                        // Direct Plan property at the root (seen in your console logs)
-                        if (params.Plan && params.Plan.Name) {
-                            planName = params.Plan.Name;
-                        }
-                        // Lowercase alternative
-                        else if (params.plan && params.plan.name) {
-                            planName = params.plan.name;
-                        }
-                        // Check within subscription object
-                        else if (params.subscription) {
-                            if (params.subscription.Plan && params.subscription.Plan.Name) {
-                                planName = params.subscription.Plan.Name;
-                            }
-                            else if (params.subscription.plan && params.subscription.plan.name) {
-                                planName = params.subscription.plan.name;
-                            }
-                        }
-                    }
+// If user exists, get their ID
 
-                    console.log(`Updating plan for ${profile.Email} to ${planName}`);
-                    // Update user plan in Supabase
-                    await updateUserPlan(profile.Email, planName);
-                } catch (err) {
-                    console.error("Error handling subscription update:", err);
-                }
-            });
+if (existingUser && existingUser.length > 0) {
 
-            // Improved handler for subscription.reopen events (same logic)
-            Outseta.on("subscription.reopen", async (params) => {
-                logEventData("subscription.reopen", params);
-                try {
-                    const profile = await Outseta.getUser();
-                    if (!profile || !profile.Email) {
-                        console.error("Could not get user profile");
-                        return;
-                    }
+rowId = existingUser[0].id;
 
-                    // Extract plan name - checking all possible locations
-                    let planName = "Free Trial"; // Default fallback
-                    if (params) {
-                        // Direct Plan property at the root
-                        if (params.Plan && params.Plan.Name) {
-                            planName = params.Plan.Name;
-                        }
-                        // Lowercase alternative
-                        else if (params.plan && params.plan.name) {
-                            planName = params.plan.name;
-                        }
-                        // Check within subscription object
-                        else if (params.subscription) {
-                            if (params.subscription.Plan && params.subscription.Plan.Name) {
-                                planName = params.subscription.Plan.Name;
-                            }
-                            else if (params.subscription.plan && params.subscription.plan.name) {
-                                planName = params.subscription.plan.name;
-                            }
-                        }
-                    }
+console.log("Found existing user with ID:", rowId);
 
-                    console.log(`Updating plan for ${profile.Email} to ${planName}`);
-                    // Update user plan in Supabase
-                    await updateUserPlan(profile.Email, planName);
-                } catch (err) {
-                    console.error("Error handling subscription reopen:", err);
-                }
-            });
+} else {
 
-            Outseta.getUser().then(async (profile) => {
-                if (profile) {
-                    console.log("PersonUid:", profile.Uid);
-                    console.log("Email:", profile.Email);
-                    console.log("AccountUid:", profile.Account.Uid);
+console.log("No existing user found, will create new record");
 
-                    // Upsert - create/update row in Supabase
-                    try {
-                        // First, let's check if the user already exists
-                        let { data: existingUser, error: fetchError } = await supabase
-                            .from('usage')
-                            .select('*')
-                            .eq('user_email', profile.Email);
+}
 
-                        // Set default values
-                        let pages_used = 0;
-                        let page_credits = 100;
-                        let plan_name = 'Free Trial';
-                        let rowId = null;
-                        let billing_cycle_start;
+// Prepare the data object with updated plan details
 
-                        // If user exists, use their data
-                        if (existingUser && existingUser.length > 0) {
-                            // User exists - use the first row we found
-                            pages_used = existingUser[0].pages_used || 0;
-                            page_credits = existingUser[0].page_credits || 100;
-                            plan_name = existingUser[0].plan_name || 'Free Trial';
-                            rowId = existingUser[0].id;
-                            console.log("Found existing user with ID:", rowId);
-                            // Don't modify the plan name for existing users
-                            // This is the key change - we're preserving the plan name from the database
-                        } else {
-                            console.log("No existing user found, will create new record");
-                            // Set billing cycle start date for new users
-                            const today = new Date();
-                            billing_cycle_start = today.toISOString().split('T')[0];
-                        }
+const userData = {
 
-                        // Calculate pages_remaining
-                        const pages_remaining = page_credits - pages_used;
+user_email: email,
 
-                        // Prepare the data object
-                        const userData = {
-                            user_email: profile.Email,
-                            pages_used: pages_used,
-                            pages_remaining: pages_remaining,
-                            plan_name: plan_name, // Use the variable instead of hardcoding 'Free Trial'
-                            page_credits: page_credits
-                        };
+pages_used: 0, // Reset to 0 when plan changes
 
-                        // Add billing_cycle_start for new users
-                        if (!rowId && billing_cycle_start) {
-                            userData.billing_cycle_start = billing_cycle_start;
-                        }
+pages_remaining: page_credits,
 
-                        // If we have an existing ID, include it to update that specific row
-                        if (rowId) {
-                            userData.id = rowId;
-                        }
+plan_name: planName,
 
-                        // Upsert the data
-                        const { data, error } = await supabase
-                            .from('usage')
-                            .upsert(userData);
+page_credits: page_credits,
 
-                        if (error) throw error;
+billing_cycle_start: billing_cycle_start
 
-                        console.log("Supabase update successful", data);
+};
 
-                        // After successfully updating, let's fetch the data to display on the dashboard
-                        fetchUserUsageData(profile.Email);
-                    } catch (err) {
-                        console.error("Error updating Supabase:", err);
-                    }
-                }
-            }).catch(err => {
-                console.error("Error getting Outseta user:", err);
-            });
-        });
-    </script>
+// Include ID if we have one
+
+if (rowId) {
+
+userData.id = rowId;
+
+}
+
+// Upsert the data
+
+const { data, error } = await supabase
+
+.from('usage')
+
+.upsert(userData);
+
+if (error) throw error;
+
+console.log("Plan update successful:", data);
+
+// Refresh the dashboard display
+
+fetchUserUsageData(email);
+
+return true;
+
+} catch (err) {
+
+console.error("Error updating plan:", err);
+
+return false;
+
+}
+
+}
+
+// Function to check and update billing cycle
+
+async function checkBillingCycle(email) {
+
+try {
+
+// Get user data
+
+const { data, error } = await supabase
+
+.from('usage')
+
+.select('*')
+
+.eq('user_email', email);
+
+if (error) throw error;
+
+// If no user or no billing cycle, exit
+
+if (!data || data.length === 0 || !data[0].billing_cycle_start) {
+
+return;
+
+}
+
+const userData = data[0];
+
+const today = new Date();
+
+const billingStart = new Date(userData.billing_cycle_start);
+
+// Calculate next billing date (1 month from billing start)
+
+const nextBillingDate = new Date(billingStart);
+
+nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
+
+// If today is on or after the next billing date, reset credits
+
+if (today >= nextBillingDate) {
+
+console.log("Billing cycle renewal detected");
+
+// Update billing cycle start to today
+
+const newBillingStart = today.toISOString().split('T')[0];
+
+// Reset pages_used and update billing_cycle_start
+
+const { data: updateData, error: updateError } = await supabase
+
+.from('usage')
+
+.update({
+
+pages_used: 0,
+
+pages_remaining: userData.page_credits,
+
+billing_cycle_start: newBillingStart
+
+})
+
+.eq('id', userData.id);
+
+if (updateError) throw updateError;
+
+console.log("Billing cycle updated:", updateData);
+
+// Refresh the usage display
+
+fetchUserUsageData(email);
+
+}
+
+} catch (err) {
+
+console.error("Error checking billing cycle:", err);
+
+}
+
+}
+
+// Function to fetch and display user usage data
+
+async function fetchUserUsageData(email) {
+
+try {
+
+// Get rows for this user
+
+const { data, error } = await supabase
+
+.from('usage')
+
+.select('*')
+
+.eq('user_email', email);
+
+if (error) throw error;
+
+// Get the first row if multiple exist
+
+const userData = data && data.length > 0 ? data[0] : null;
+
+// Update the UI with the data
+
+const usageStatsElement = document.getElementById('usage-stats');
+
+if (userData) {
+
+const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
+
+usageStatsElement.innerHTML = `
+
+<div class="usage-stats-container">
+
+<div class="usage-stat">
+
+<span class="usage-label">Plan:</span>
+
+<span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
+
+</div>
+
+<div class="usage-stat">
+
+<span class="usage-label">Pages Used:</span>
+
+<span class="usage-value">${userData.pages_used || 0}</span>
+
+</div>
+
+<div class="usage-stat">
+
+<span class="usage-label">Pages Remaining:</span>
+
+<span class="usage-value">${userData.pages_remaining || 100}</span>
+
+</div>
+
+<div class="usage-stat">
+
+<span class="usage-label">Total Credits:</span>
+
+<span class="usage-value">${userData.page_credits || 100}</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div class="progress-fill" style="width: ${usagePercentage}%;"></div>
+
+</div>
+
+</div>
+
+`;
+
+// Also check if billing cycle needs to be updated
+
+checkBillingCycle(email);
+
+} else {
+
+usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+
+}
+
+} catch (err) {
+
+console.error("Error fetching usage data:", err);
+
+document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+
+}
+
+}
+
+// Get user profile and update Supabase
+
+document.addEventListener('DOMContentLoaded', function() {
+
+// Initialize debug logging for Outseta events
+
+const enableDebugLogging = true;
+
+// Function to log event data for debugging
+
+function logEventData(eventName, params) {
+
+if (enableDebugLogging) {
+
+console.log(`${eventName} event received:`, params);
+
+// Try to identify where the plan data might be
+
+if (params) {
+
+if (params.Plan) console.log("Plan data found at params.Plan:", params.Plan);
+
+if (params.plan) console.log("Plan data found at params.plan:", params.plan);
+
+if (params.subscription && params.subscription.plan) {
+
+console.log("Plan data found at params.subscription.plan:", params.subscription.plan);
+
+}
+
+if (params.subscription && params.subscription.Plan) {
+
+console.log("Plan data found at params.subscription.Plan:", params.subscription.Plan);
+
+}
+
+}
+
+}
+
+}
+
+// Improved handler for subscription.update events
+
+Outseta.on("subscription.update", async (params) => {
+
+logEventData("subscription.update", params);
+
+try {
+
+const profile = await Outseta.getUser();
+
+if (!profile || !profile.Email) {
+
+console.error("Could not get user profile");
+
+return;
+
+}
+
+// Extract plan name - checking all possible locations
+
+let planName = "Free Trial"; // Default fallback
+
+if (params) {
+
+// Direct Plan property at the root (seen in your console logs)
+
+if (params.Plan && params.Plan.Name) {
+
+planName = params.Plan.Name;
+
+}
+
+// Lowercase alternative
+
+else if (params.plan && params.plan.name) {
+
+planName = params.plan.name;
+
+}
+
+// Check within subscription object
+
+else if (params.subscription) {
+
+if (params.subscription.Plan && params.subscription.Plan.Name) {
+
+planName = params.subscription.Plan.Name;
+
+}
+
+else if (params.subscription.plan && params.subscription.plan.name) {
+
+planName = params.subscription.plan.name;
+
+}
+
+}
+
+}
+
+console.log(`Updating plan for ${profile.Email} to ${planName}`);
+
+// Update user plan in Supabase
+
+await updateUserPlan(profile.Email, planName);
+
+} catch (err) {
+
+console.error("Error handling subscription update:", err);
+
+}
+
+});
+
+// Improved handler for subscription.reopen events (same logic)
+
+Outseta.on("subscription.reopen", async (params) => {
+
+logEventData("subscription.reopen", params);
+
+try {
+
+const profile = await Outseta.getUser();
+
+if (!profile || !profile.Email) {
+
+console.error("Could not get user profile");
+
+return;
+
+}
+
+// Extract plan name - checking all possible locations
+
+let planName = "Free Trial"; // Default fallback
+
+if (params) {
+
+// Direct Plan property at the root
+
+if (params.Plan && params.Plan.Name) {
+
+planName = params.Plan.Name;
+
+}
+
+// Lowercase alternative
+
+else if (params.plan && params.plan.name) {
+
+planName = params.plan.name;
+
+}
+
+// Check within subscription object
+
+else if (params.subscription) {
+
+if (params.subscription.Plan && params.subscription.Plan.Name) {
+
+planName = params.subscription.Plan.Name;
+
+}
+
+else if (params.subscription.plan && params.subscription.plan.name) {
+
+planName = params.subscription.plan.name;
+
+}
+
+}
+
+}
+
+console.log(`Updating plan for ${profile.Email} to ${planName}`);
+
+// Update user plan in Supabase
+
+await updateUserPlan(profile.Email, planName);
+
+} catch (err) {
+
+console.error("Error handling subscription reopen:", err);
+
+}
+
+});
+
+Outseta.getUser().then(async (profile) => {
+
+if (profile) {
+
+console.log("PersonUid:", profile.Uid);
+
+console.log("Email:", profile.Email);
+
+console.log("AccountUid:", profile.Account.Uid);
+
+// Upsert - create/update row in Supabase
+
+try {
+
+// First, let's check if the user already exists
+
+let { data: existingUser, error: fetchError } = await supabase
+
+.from('usage')
+
+.select('*')
+
+.eq('user_email', profile.Email);
+
+// Set default values
+
+let pages_used = 0;
+
+let page_credits = 100;
+
+let plan_name = 'Free Trial';
+
+let rowId = null;
+
+let billing_cycle_start;
+
+// If user exists, use their data
+
+if (existingUser && existingUser.length > 0) {
+
+// User exists - use the first row we found
+
+pages_used = existingUser[0].pages_used || 0;
+
+page_credits = existingUser[0].page_credits || 100;
+
+plan_name = existingUser[0].plan_name || 'Free Trial';
+
+rowId = existingUser[0].id;
+
+console.log("Found existing user with ID:", rowId);
+
+// Don't modify the plan name for existing users
+
+// This is the key change - we're preserving the plan name from the database
+
+} else {
+
+console.log("No existing user found, will create new record");
+
+// Set billing cycle start date for new users
+
+const today = new Date();
+
+billing_cycle_start = today.toISOString().split('T')[0];
+
+}
+
+// Calculate pages_remaining
+
+const pages_remaining = page_credits - pages_used;
+
+// Prepare the data object
+
+const userData = {
+
+user_email: profile.Email,
+
+pages_used: pages_used,
+
+pages_remaining: pages_remaining,
+
+plan_name: plan_name, // Use the variable instead of hardcoding 'Free Trial'
+
+page_credits: page_credits
+
+};
+
+// Add billing_cycle_start for new users
+
+if (!rowId && billing_cycle_start) {
+
+userData.billing_cycle_start = billing_cycle_start;
+
+}
+
+// If we have an existing ID, include it to update that specific row
+
+if (rowId) {
+
+userData.id = rowId;
+
+}
+
+// Upsert the data
+
+const { data, error } = await supabase
+
+.from('usage')
+
+.upsert(userData);
+
+if (error) throw error;
+
+console.log("Supabase update successful", data);
+
+// After successfully updating, let's fetch the data to display on the dashboard
+
+fetchUserUsageData(profile.Email);
+
+} catch (err) {
+
+console.error("Error updating Supabase:", err);
+
+}
+
+}
+
+}).catch(err => {
+
+console.error("Error getting Outseta user:", err);
+
+});
+
+});
+
+</script>
+
 </body>
+
 </html>
-
-
