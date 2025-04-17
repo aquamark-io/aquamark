@@ -71,16 +71,29 @@
     }
 
     .profile-container {
-      flex: 1 1 40%;
+      flex: 1 1 48%;
       min-width: 300px;
       padding-left: 0; /* Align profile with the usage bar */
+    }
+
+    .coming-soon-container {
+      flex: 1 1 48%;
+      min-width: 300px;
+      background: #f3f3f3;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
     .aqua-cards {
       display: flex;
       flex-wrap: wrap;
       gap: 2rem;
-      margin-top: 2rem;
+      margin-top: 1rem;
       width: 100%;
     }
 
@@ -91,12 +104,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       flex: 1 1 45%;
       min-width: 300px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .aqua-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
 
     .aqua-card h2 {
@@ -146,6 +153,11 @@
       .profile-container {
         flex: 1 1 100%;
       }
+
+      .coming-soon-container {
+        flex: 1 1 100%;
+        margin-top: 2rem;
+      }
     }
   </style>
 
@@ -181,15 +193,22 @@
         <div data-o-profile="1" data-mode="embed"></div>
       </div>
 
-      <div class="aqua-cards">
-        <div class="aqua-card">
-          <h2>Your Usage</h2>
-          <div id="usage-stats">
-            <p>Loading your usage data...</p>
-          </div>
+      <!-- Added the coming soon box -->
+      <div class="coming-soon-container">
+        <p>Coming Soon! Stay tuned for exciting updates!</p>
+      </div>
+    </div>
+
+    <!-- Usage Stats -->
+    <div class="aqua-cards">
+      <div class="aqua-card">
+        <h2>Your Usage</h2>
+        <div id="usage-stats">
+          <p>Loading your usage data...</p>
         </div>
       </div>
     </div>
+
   </main>
 
   <footer class="aqua-footer">
