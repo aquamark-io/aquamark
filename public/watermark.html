@@ -564,7 +564,7 @@ async function processFiles() {
 
         // Check if user has enough credits
         if (data.pages_remaining < totalPagesNeeded) {
-            status.textContent = `❌ Not enough page credits. Attempting ${totalPagesNeeded} pages. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
+            status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
             // Highlight the upgrade button
             const upgradeBtn = document.getElementById('upgradePlanLink');
             if (upgradeBtn) {
