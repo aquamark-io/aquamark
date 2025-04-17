@@ -115,14 +115,12 @@
       <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
     </nav>
   </header>
-  
   <main class="aqua-panel">
     <h1 class="greeting">My Dashboard</h1>
     <div class="aqua-layout">
       <div class="profile-container">
         <div data-o-profile="1" data-mode="embed"></div>
       </div>
-      
       <!-- Usage stats card -->
       <div class="aqua-cards">
         <div class="aqua-card">
@@ -134,18 +132,145 @@
       </div>
     </div>
   </main>
-
   <script>
     // Handle logout redirection
     if (window.location.hash === '#o-logout-link') {
       window.location.href = '/login.html';
     }
-    
+
     // Initialize Supabase client
     const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // Function to get page credits based on plan name
+    function getPageCreditsByPlan(planName) {
+      const planCredits = {
+        'Riding Solo': 1000,
+        'Small Teams': 5000,
+        'ISO Shops': 1000000 // Essentially unlimited
+      };
+      
+      return planCredits[planName] || 100; // Default to 100 if plan not found
+    }
+
+    // Function to update user plan in Supabase
+    async function updateUserPlan(email, planName) {
+      try {
+        console.log(`Updating plan for ${email} to ${planName}`);
+        
+        // Get the current date for billing cycle
+        const today = new Date();
+        const billing_cycle_start = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        
+        // Get page credits based on plan
+        const page_credits = getPageCreditsByPlan(planName);
+        
+        // First, check if user exists
+        let { data: existingUser, error: fetchError } = await supabase
+          .from('usage')
+          .select('*')
+          .eq('user_email', email);
+          
+        if (fetchError) throw fetchError;
+        
+        // Set initial values
+        let rowId = null;
+        
+        // If user exists, get their ID
+        if (existingUser && existingUser.length > 0) {
+          rowId = existingUser[0].id;
+          console.log("Found existing user with ID:", rowId);
+        } else {
+          console.log("No existing user found, will create new record");
+        }
+        
+        // Prepare the data object with updated plan details
+        const userData = {
+          user_email: email,
+          pages_used: 0, // Reset to 0 when plan changes
+          pages_remaining: page_credits,
+          plan_name: planName,
+          page_credits: page_credits,
+          billing_cycle_start: billing_cycle_start
+        };
+        
+        // Include ID if we have one
+        if (rowId) {
+          userData.id = rowId;
+        }
+        
+        // Upsert the data
+        const { data, error } = await supabase
+          .from('usage')
+          .upsert(userData);
+          
+        if (error) throw error;
+        
+        console.log("Plan update successful:", data);
+        
+        // Refresh the dashboard display
+        fetchUserUsageData(email);
+        
+        return true;
+      } catch (err) {
+        console.error("Error updating plan:", err);
+        return false;
+      }
+    }
+
+    // Function to check and update billing cycle
+    async function checkBillingCycle(email) {
+      try {
+        // Get user data
+        const { data, error } = await supabase
+          .from('usage')
+          .select('*')
+          .eq('user_email', email);
+          
+        if (error) throw error;
+        
+        // If no user or no billing cycle, exit
+        if (!data || data.length === 0 || !data[0].billing_cycle_start) {
+          return;
+        }
+        
+        const userData = data[0];
+        const today = new Date();
+        const billingStart = new Date(userData.billing_cycle_start);
+        
+        // Calculate next billing date (1 month from billing start)
+        const nextBillingDate = new Date(billingStart);
+        nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
+        
+        // If today is on or after the next billing date, reset credits
+        if (today >= nextBillingDate) {
+          console.log("Billing cycle renewal detected");
+          
+          // Update billing cycle start to today
+          const newBillingStart = today.toISOString().split('T')[0];
+          
+          // Reset pages_used and update billing_cycle_start
+          const { data: updateData, error: updateError } = await supabase
+            .from('usage')
+            .update({
+              pages_used: 0,
+              pages_remaining: userData.page_credits,
+              billing_cycle_start: newBillingStart
+            })
+            .eq('id', userData.id);
+            
+          if (updateError) throw updateError;
+          
+          console.log("Billing cycle updated:", updateData);
+          
+          // Refresh the usage display
+          fetchUserUsageData(email);
+        }
+      } catch (err) {
+        console.error("Error checking billing cycle:", err);
+      }
+    }
     // Function to fetch and display user usage data
     async function fetchUserUsageData(email) {
       try {
@@ -154,14 +279,15 @@
           .from('usage')
           .select('*')
           .eq('user_email', email);
-          
+
         if (error) throw error;
-        
+
         // Get the first row if multiple exist
         const userData = data && data.length > 0 ? data[0] : null;
-        
+
         // Update the UI with the data
         const usageStatsElement = document.getElementById('usage-stats');
+
         if (userData) {
           usageStatsElement.innerHTML = `
             <div style="margin-bottom: 1rem;">
@@ -186,6 +312,9 @@
               <div style="background: #007bff; height: 100%; width: ${Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100)}%;"></div>
             </div>
           `;
+
+          // Also check if billing cycle needs to be updated
+          checkBillingCycle(email);
         } else {
           usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
         }
@@ -194,15 +323,62 @@
         document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
       }
     }
-    
+
     // Get user profile and update Supabase
     document.addEventListener('DOMContentLoaded', function() {
+      // Setup Outseta event listeners for subscription changes
+      Outseta.on("subscription.update", async (params) => {
+        console.log("Subscription update event:", params);
+        
+        // Get current user
+        try {
+          const profile = await Outseta.getUser();
+          if (profile && profile.Email) {
+            // Get plan details from the event
+            let planName = "Free Trial";
+            
+            // Try to extract plan name from the event params
+            if (params && params.subscription && params.subscription.plan) {
+              planName = params.subscription.plan.name;
+            }
+            
+            // Update user plan in Supabase
+            await updateUserPlan(profile.Email, planName);
+          }
+        } catch (err) {
+          console.error("Error handling subscription update:", err);
+        }
+      });
+      
+      Outseta.on("subscription.reopen", async (params) => {
+        console.log("Subscription reopen event:", params);
+        
+        // Get current user
+        try {
+          const profile = await Outseta.getUser();
+          if (profile && profile.Email) {
+            // Get plan details from the event
+            let planName = "Free Trial";
+            
+            // Try to extract plan name from the event params
+            if (params && params.subscription && params.subscription.plan) {
+              planName = params.subscription.plan.name;
+            }
+            
+            // Update user plan in Supabase
+            await updateUserPlan(profile.Email, planName);
+          }
+        } catch (err) {
+          console.error("Error handling subscription reopen:", err);
+        }
+      });
+
       Outseta.getUser().then(async (profile) => {
         if (profile) {
           console.log("PersonUid:", profile.Uid);
           console.log("Email:", profile.Email);
           console.log("AccountUid:", profile.Account.Uid);
-          
+
           // Upsert - create/update row in Supabase
           try {
             // First, let's check if the user already exists
@@ -210,27 +386,31 @@
               .from('usage')
               .select('*')
               .eq('user_email', profile.Email);
-            
+
             // Set default values
             let pages_used = 0;
             let page_credits = 100;
             let rowId = null;
-            
+            let billing_cycle_start;
+
             // If user exists, use their data
             if (existingUser && existingUser.length > 0) {
               // User exists - use the first row we found
               pages_used = existingUser[0].pages_used || 0;
               page_credits = existingUser[0].page_credits || 100;
               rowId = existingUser[0].id;
-              
               console.log("Found existing user with ID:", rowId);
             } else {
               console.log("No existing user found, will create new record");
+              
+              // Set billing cycle start date for new users
+              const today = new Date();
+              billing_cycle_start = today.toISOString().split('T')[0];
             }
-            
+
             // Calculate pages_remaining
             const pages_remaining = page_credits - pages_used;
-            
+
             // Prepare the data object
             const userData = {
               user_email: profile.Email,
@@ -240,19 +420,25 @@
               page_credits: page_credits
             };
             
+            // Add billing_cycle_start for new users
+            if (!rowId && billing_cycle_start) {
+              userData.billing_cycle_start = billing_cycle_start;
+            }
+
             // If we have an existing ID, include it to update that specific row
             if (rowId) {
               userData.id = rowId;
             }
-            
+
             // Upsert the data
             const { data, error } = await supabase
               .from('usage')
               .upsert(userData);
-              
+
             if (error) throw error;
+
             console.log("Supabase update successful", data);
-            
+
             // After successfully updating, let's fetch the data to display on the dashboard
             fetchUserUsageData(profile.Email);
           } catch (err) {
