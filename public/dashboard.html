@@ -64,48 +64,49 @@
       padding-top: 20px; /* Added padding to bring it down */
     }
 
-    .aqua-layout {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem; /* Adjusted margin */
+.aqua-layout {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    width: 100%;
     }
 
-    .profile-container {
-      flex: 1 1 48%;
-      min-width: 300px;
-      padding-left: 0;
+.profile-container {
+    flex: 1 1 48%;
+    min-width: 300px;
     }
 
-    .coming-soon-container {
-      flex: 1 1 48%;
-      min-width: 300px;
-      background: #f3f3f3;
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
+.coming-soon-container {
+    flex: 1 1 48%; /* Match with profile container */
+    min-width: 300px;
+    background: #f3f3f3;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
-    .aqua-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      width: 100%;
-      margin-top: 2rem; /* Moved usage up */
-    }
+   .aqua-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 2rem;
+    padding-bottom: 2rem; /* Add bottom padding to ensure content stays in container */
+}
 
-    .aqua-card {
-      background: white;
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      flex: 1 1 45%;
-      min-width: 300px;
-    }
+.aqua-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    flex: 1 1 100%;
+    min-width: 300px;
+    box-sizing: border-box;
 
     .aqua-card h2 {
       font-size: 1.4rem;
