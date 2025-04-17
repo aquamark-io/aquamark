@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Aquamark Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -14,6 +16,7 @@
       background: #f8f9fb;
       color: #1e1e2f;
     }
+
     .aqua-header {
       display: flex;
       justify-content: space-between;
@@ -22,42 +25,55 @@
       background: #f3e8ff;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
+
     .aqua-logo {
-      height: 28px;
+      max-height: 40px;
     }
+
     .aqua-nav a {
       margin-left: 1.5rem;
       text-decoration: none;
       font-weight: 500;
       color: #333;
-      transition: color 0.2s ease;
+      transition: color 0.3s ease, background-color 0.3s ease;
     }
+
     .aqua-nav a:hover {
-      color: #007bff;
+      background-color: #e6f0ff;
+      color: #0056b3;
     }
+
     .aqua-nav a.active {
       color: #007bff;
     }
+
     .aqua-panel {
       max-width: 1400px;
       margin: 2rem auto;
       padding: 0 2rem;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
+
     h1.greeting {
       font-size: 2rem;
       margin-bottom: 2rem;
       font-weight: 500;
       color: #1e1e2f;
     }
+
     .aqua-layout {
       display: flex;
       gap: 2rem;
       flex-wrap: wrap;
     }
+
     .profile-container {
-      flex: 1 1 40%;
+      flex: 1 1 100%;
       min-width: 300px;
     }
+
     .aqua-cards {
       display: flex;
       flex-wrap: wrap;
@@ -65,26 +81,30 @@
       margin-top: 2rem;
       width: 100%;
     }
+
     .aqua-card {
       background: white;
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       flex: 1 1 45%;
       min-width: 300px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .aqua-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
+
     .aqua-card h2 {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       margin-bottom: 1rem;
       color: #1e1e2f;
       display: flex;
       align-items: center;
     }
+
     .aqua-card h2::before {
       content: '';
       display: inline-block;
@@ -94,7 +114,34 @@
       border-radius: 50%;
       margin-right: 8px;
     }
+
+    .aqua-card p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .aqua-layout {
+        flex-direction: column;
+      }
+
+      .aqua-card {
+        flex: 1 1 100%;
+        min-width: 100%;
+      }
+
+      .profile-container {
+        flex: 1 1 100%;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f3f3f3;
+    }
   </style>
+
   <!-- Outseta integration -->
   <script>
     var o_options = {
@@ -103,10 +150,13 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
   <!-- Supabase integration -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
+
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
     <nav class="aqua-nav">
@@ -115,13 +165,15 @@
       <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
     </nav>
   </header>
+
   <main class="aqua-panel">
     <h1 class="greeting">My Dashboard</h1>
+
     <div class="aqua-layout">
       <div class="profile-container">
         <div data-o-profile="1" data-mode="embed"></div>
       </div>
-      <!-- Usage stats card -->
+
       <div class="aqua-cards">
         <div class="aqua-card">
           <h2>Your Usage</h2>
@@ -132,6 +184,11 @@
       </div>
     </div>
   </main>
+
+  <footer>
+    <p>© 2025 Aquamark.io - All rights reserved</p>
+  </footer>
+
   <script>
     // Handle logout redirection
     if (window.location.hash === '#o-logout-link') {
@@ -143,134 +200,6 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Function to get page credits based on plan name
-    function getPageCreditsByPlan(planName) {
-      const planCredits = {
-        'Riding Solo': 1000,
-        'Small Teams': 5000,
-        'ISO Shops': 1000000 // Essentially unlimited
-      };
-      
-      return planCredits[planName] || 100; // Default to 100 if plan not found
-    }
-
-    // Function to update user plan in Supabase
-    async function updateUserPlan(email, planName) {
-      try {
-        console.log(`Updating plan for ${email} to ${planName}`);
-        
-        // Get the current date for billing cycle
-        const today = new Date();
-        const billing_cycle_start = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        
-        // Get page credits based on plan
-        const page_credits = getPageCreditsByPlan(planName);
-        
-        // First, check if user exists
-        let { data: existingUser, error: fetchError } = await supabase
-          .from('usage')
-          .select('*')
-          .eq('user_email', email);
-          
-        if (fetchError) throw fetchError;
-        
-        // Set initial values
-        let rowId = null;
-        
-        // If user exists, get their ID
-        if (existingUser && existingUser.length > 0) {
-          rowId = existingUser[0].id;
-          console.log("Found existing user with ID:", rowId);
-        } else {
-          console.log("No existing user found, will create new record");
-        }
-        
-        // Prepare the data object with updated plan details
-        const userData = {
-          user_email: email,
-          pages_used: 0, // Reset to 0 when plan changes
-          pages_remaining: page_credits,
-          plan_name: planName,
-          page_credits: page_credits,
-          billing_cycle_start: billing_cycle_start
-        };
-        
-        // Include ID if we have one
-        if (rowId) {
-          userData.id = rowId;
-        }
-        
-        // Upsert the data
-        const { data, error } = await supabase
-          .from('usage')
-          .upsert(userData);
-          
-        if (error) throw error;
-        
-        console.log("Plan update successful:", data);
-        
-        // Refresh the dashboard display
-        fetchUserUsageData(email);
-        
-        return true;
-      } catch (err) {
-        console.error("Error updating plan:", err);
-        return false;
-      }
-    }
-
-    // Function to check and update billing cycle
-    async function checkBillingCycle(email) {
-      try {
-        // Get user data
-        const { data, error } = await supabase
-          .from('usage')
-          .select('*')
-          .eq('user_email', email);
-          
-        if (error) throw error;
-        
-        // If no user or no billing cycle, exit
-        if (!data || data.length === 0 || !data[0].billing_cycle_start) {
-          return;
-        }
-        
-        const userData = data[0];
-        const today = new Date();
-        const billingStart = new Date(userData.billing_cycle_start);
-        
-        // Calculate next billing date (1 month from billing start)
-        const nextBillingDate = new Date(billingStart);
-        nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
-        
-        // If today is on or after the next billing date, reset credits
-        if (today >= nextBillingDate) {
-          console.log("Billing cycle renewal detected");
-          
-          // Update billing cycle start to today
-          const newBillingStart = today.toISOString().split('T')[0];
-          
-          // Reset pages_used and update billing_cycle_start
-          const { data: updateData, error: updateError } = await supabase
-            .from('usage')
-            .update({
-              pages_used: 0,
-              pages_remaining: userData.page_credits,
-              billing_cycle_start: newBillingStart
-            })
-            .eq('id', userData.id);
-            
-          if (updateError) throw updateError;
-          
-          console.log("Billing cycle updated:", updateData);
-          
-          // Refresh the usage display
-          fetchUserUsageData(email);
-        }
-      } catch (err) {
-        console.error("Error checking billing cycle:", err);
-      }
-    }
     // Function to fetch and display user usage data
     async function fetchUserUsageData(email) {
       try {
@@ -324,199 +253,27 @@
       }
     }
 
-    // Get user profile and update Supabase
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize debug logging for Outseta events
-      const enableDebugLogging = true;
-
-      // Function to log event data for debugging
-      function logEventData(eventName, params) {
-        if (enableDebugLogging) {
-          console.log(`${eventName} event received:`, params);
-          
-          // Try to identify where the plan data might be
-          if (params) {
-            if (params.Plan) console.log("Plan data found at params.Plan:", params.Plan);
-            if (params.plan) console.log("Plan data found at params.plan:", params.plan);
-            if (params.subscription && params.subscription.plan) {
-              console.log("Plan data found at params.subscription.plan:", params.subscription.plan);
-            }
-            if (params.subscription && params.subscription.Plan) {
-              console.log("Plan data found at params.subscription.Plan:", params.subscription.Plan);
-            }
-          }
-        }
-      }
-
-      // Improved handler for subscription.update events
-      Outseta.on("subscription.update", async (params) => {
-        logEventData("subscription.update", params);
-        
-        try {
-          const profile = await Outseta.getUser();
-          if (!profile || !profile.Email) {
-            console.error("Could not get user profile");
-            return;
-          }
-          
-          // Extract plan name - checking all possible locations
-          let planName = "Free Trial"; // Default fallback
-          
-          if (params) {
-            // Direct Plan property at the root (seen in your console logs)
-            if (params.Plan && params.Plan.Name) {
-              planName = params.Plan.Name;
-            }
-            // Lowercase alternative
-            else if (params.plan && params.plan.name) {
-              planName = params.plan.name;
-            }
-            // Check within subscription object
-            else if (params.subscription) {
-              if (params.subscription.Plan && params.subscription.Plan.Name) {
-                planName = params.subscription.Plan.Name;
-              }
-              else if (params.subscription.plan && params.subscription.plan.name) {
-                planName = params.subscription.plan.name;
-              }
-            }
-          }
-          
-          console.log(`Updating plan for ${profile.Email} to ${planName}`);
-          
-          // Update user plan in Supabase
-          await updateUserPlan(profile.Email, planName);
-        } catch (err) {
-          console.error("Error handling subscription update:", err);
-        }
-      });
-
-      // Improved handler for subscription.reopen events (same logic)
-      Outseta.on("subscription.reopen", async (params) => {
-        logEventData("subscription.reopen", params);
-        
-        try {
-          const profile = await Outseta.getUser();
-          if (!profile || !profile.Email) {
-            console.error("Could not get user profile");
-            return;
-          }
-          
-          // Extract plan name - checking all possible locations
-          let planName = "Free Trial"; // Default fallback
-          
-          if (params) {
-            // Direct Plan property at the root
-            if (params.Plan && params.Plan.Name) {
-              planName = params.Plan.Name;
-            }
-            // Lowercase alternative
-            else if (params.plan && params.plan.name) {
-              planName = params.plan.name;
-            }
-            // Check within subscription object
-            else if (params.subscription) {
-              if (params.subscription.Plan && params.subscription.Plan.Name) {
-                planName = params.subscription.Plan.Name;
-              }
-              else if (params.subscription.plan && params.subscription.plan.name) {
-                planName = params.subscription.plan.name;
-              }
-            }
-          }
-          
-          console.log(`Updating plan for ${profile.Email} to ${planName}`);
-          
-          // Update user plan in Supabase
-          await updateUserPlan(profile.Email, planName);
-        } catch (err) {
-          console.error("Error handling subscription reopen:", err);
-        }
-      });
-
-Outseta.getUser().then(async (profile) => {
-  if (profile) {
-    console.log("PersonUid:", profile.Uid);
-    console.log("Email:", profile.Email);
-    console.log("AccountUid:", profile.Account.Uid);
-
-    // Upsert - create/update row in Supabase
-    try {
-      // First, let's check if the user already exists
-      let { data: existingUser, error: fetchError } = await supabase
-        .from('usage')
-        .select('*')
-        .eq('user_email', profile.Email);
-
-      // Set default values
-      let pages_used = 0;
-      let page_credits = 100;
-      let plan_name = 'Free Trial';
-      let rowId = null;
-      let billing_cycle_start;
-
-      // If user exists, use their data
-      if (existingUser && existingUser.length > 0) {
-        // User exists - use the first row we found
-        pages_used = existingUser[0].pages_used || 0;
-        page_credits = existingUser[0].page_credits || 100;
-        plan_name = existingUser[0].plan_name || 'Free Trial';
-        rowId = existingUser[0].id;
-        console.log("Found existing user with ID:", rowId);
-
-        // Don't modify the plan name for existing users
-        // This is the key change - we're preserving the plan name from the database
-      } else {
-        console.log("No existing user found, will create new record");
-        
-        // Set billing cycle start date for new users
-        const today = new Date();
-        billing_cycle_start = today.toISOString().split('T')[0];
-      }
-
-      // Calculate pages_remaining
-      const pages_remaining = page_credits - pages_used;
-
-      // Prepare the data object
-      const userData = {
-        user_email: profile.Email,
-        pages_used: pages_used,
-        pages_remaining: pages_remaining,
-        plan_name: plan_name, // Use the variable instead of hardcoding 'Free Trial'
-        page_credits: page_credits
-      };
-      
-      // Add billing_cycle_start for new users
-      if (!rowId && billing_cycle_start) {
-        userData.billing_cycle_start = billing_cycle_start;
-      }
-
-      // If we have an existing ID, include it to update that specific row
-      if (rowId) {
-        userData.id = rowId;
-      }
-
-      // Upsert the data
-      const { data, error } = await supabase
-        .from('usage')
-        .upsert(userData);
-
-      if (error) throw error;
-
-      console.log("Supabase update successful", data);
-
-      // After successfully updating, let's fetch the data to display on the dashboard
-      fetchUserUsageData(profile.Email);
-    } catch (err) {
-      console.error("Error updating Supabase:", err);
+    // Check if billing cycle needs to be updated
+    async function checkBillingCycle(email) {
+      // Implement logic for billing cycle if necessary
     }
-  }
-}).catch(err => {
-  console.error("Error getting Outseta user:", err);
-});
 
-});
-</script>
+    // Get user profile and update Supabase
+    document.addEventListener('DOMContentLoaded', function () {
+      Outseta.getUser().then(async (profile) => {
+        if (profile) {
+          console.log("PersonUid:", profile.Uid);
+          console.log("Email:", profile.Email);
+          console.log("AccountUid:", profile.Account.Uid);
+
+          fetchUserUsageData(profile.Email);
+        }
+      }).catch(err => {
+        console.error("Error getting Outseta user:", err);
+      });
+    });
+  </script>
+
 </body>
-</html>
 
+</html>
