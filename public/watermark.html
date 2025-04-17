@@ -494,135 +494,194 @@ if (upgradePlanLink) {
       return await response.arrayBuffer();
     }
 
-    async function processFiles() {
-      const status = document.getElementById("status");
-      const logoInput = document.getElementById("logoInput");
-      const pdfInput = document.getElementById("pdfInput");
-      const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
-      
-      if (!logoInput.files[0] || pdfInput.files.length === 0) {
+async function processFiles() {
+    const status = document.getElementById("status");
+    const logoInput = document.getElementById("logoInput");
+    const pdfInput = document.getElementById("pdfInput");
+    const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
+
+    if (!logoInput.files[0] || pdfInput.files.length === 0) {
         status.textContent = "Please upload both a logo and at least one PDF.";
         return;
-      }
+    }
 
-      status.textContent = "⏳ Processing...";
-      
-      // Reset counter for this session
-      pagesWatermarked = 0;
-      pagesWatermarkedElement.textContent = pagesWatermarked;
+    status.textContent = "⏳ Processing...";
 
-      const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
-      const hologramUrl = "/holgram.png";
-      const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
+    // Reset counter for this session
+    pagesWatermarked = 0;
+    pagesWatermarkedElement.textContent = pagesWatermarked;
 
-      const pdfFiles = Array.from(pdfInput.files);
+    try {
+        // Initialize Supabase client
+        const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      for (let file of pdfFiles) {
-        let pdfBytes;
-        try {
-          // Try loading the file normally (unencrypted)
-          await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
-          pdfBytes = await file.arrayBuffer();
-        } catch (err) {
-          // Fallback to Render decryption
-          status.textContent = "🔐 Decrypting encrypted file...";
-          try {
-            pdfBytes = await decryptPDF(file);
-          } catch {
-            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-            return;
-          }
+        // Get current user email from Outseta
+        const profile = await Outseta.getUser();
+        if (!profile || !profile.Email) {
+            throw new Error("Unable to retrieve user profile");
         }
 
-        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
-        const pages = pdfDoc.getPages();
+        // Get current usage data
+        const { data, error } = await supabase
+            .from('usage')
+            .select('*')
+            .eq('user_email', profile.Email)
+            .single();
+
+        if (error) throw error;
+        if (!data) throw new Error("No usage data found for this user");
+
+        // Calculate total pages needed for all PDFs
+        const pdfFiles = Array.from(pdfInput.files);
+        let totalPagesNeeded = 0;
         
-        // Update the counter with the number of pages in this PDF
-        pagesWatermarked += pages.length;
-        pagesWatermarkedElement.textContent = pagesWatermarked;
-
-        try {
-  // Initialize Supabase client
-  const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  
-  // Get current user email from Outseta
-  const profile = await Outseta.getUser();
-  if (profile && profile.Email) {
-    // Get current usage data
-    const { data, error } = await supabase
-      .from('usage')
-      .select('*')
-      .eq('user_email', profile.Email)
-      .single();
-      
-    if (error) throw error;
-    
-    if (data) {
-      // Calculate new values
-      const updatedPagesUsed = data.pages_used + pages.length;
-      const updatedPagesRemaining = data.page_credits - updatedPagesUsed;
-      
-      // Update the usage record
-      const { updateError } = await supabase
-        .from('usage')
-        .update({
-          pages_used: updatedPagesUsed,
-          pages_remaining: updatedPagesRemaining
-        })
-        .eq('user_email', profile.Email);
-        
-      if (updateError) throw updateError;
-      console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
-    }
-  }
-} catch (err) {
-  console.error("Error updating usage data:", err);
-  // Continue with watermarking even if update fails
-}
-        const logoImage = await pdfDoc.embedJpg(logoBytes);
-        const hologramImage = await pdfDoc.embedPng(hologramBytes);
-
-        const logoDims = logoImage.scale(0.35);
-        const hologramWidth = 60;
-        const hologramHeight = 60;
-
-        for (const page of pages) {
-          const { width, height } = page.getSize();
-          for (let x = 0; x < width; x += (logoDims.width + 100)) {
-            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-              page.drawImage(logoImage, {
-                x,
-                y,
-                width: logoDims.width,
-                height: logoDims.height,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(45)
-              });
+        for (let file of pdfFiles) {
+            let pdfBytes;
+            try {
+                // Try loading the file normally (unencrypted)
+                const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), { 
+                    ignoreEncryption: false 
+                });
+                pdfBytes = await file.arrayBuffer();
+                totalPagesNeeded += pdfDoc.getPageCount();
+            } catch (err) {
+                // Fallback to Render decryption
+                status.textContent = "🔐 Decrypting encrypted file to check page count...";
+                try {
+                    pdfBytes = await decryptPDF(file);
+                    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { 
+                        ignoreEncryption: true 
+                    });
+                    totalPagesNeeded += pdfDoc.getPageCount();
+                } catch {
+                    status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+                    return;
+                }
             }
-          }
-          page.drawImage(hologramImage, {
-            x: width - hologramWidth - 10,
-            y: height - hologramHeight - 10,
-            width: hologramWidth,
-            height: hologramHeight,
-            opacity: 0.7
-          });
         }
 
-        const finalBytes = await pdfDoc.save();
-        const blob = new Blob([finalBytes], { type: 'application/pdf' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      }
+        // Check if user has enough credits
+        if (data.pages_remaining < totalPagesNeeded) {
+            status.textContent = `❌ Not enough page credits. You need ${totalPagesNeeded} pages but only have ${data.pages_remaining} remaining. Please upgrade your plan.`;
+            // Highlight the upgrade button
+            const upgradeBtn = document.getElementById('upgradePlanLink');
+            if (upgradeBtn) {
+                upgradeBtn.style.animation = 'pulse 1.5s infinite';
+                upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
+                
+                // Add this CSS to the document head for the pulse animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes pulse {
+                        0% { transform: scale(1); }
+                        50% { transform: scale(1.05); }
+                        100% { transform: scale(1); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            return;
+        }
+        
+        // Proceed with processing if there are enough credits
+        const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
+        const hologramUrl = "/holgram.png";
+        const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
 
-      status.textContent = "✅ Done. Files downloaded.";
+        for (let file of pdfFiles) {
+            let pdfBytes;
+            try {
+                // Try loading the file normally (unencrypted)
+                await PDFLib.PDFDocument.load(await file.arrayBuffer(), { 
+                    ignoreEncryption: false 
+                });
+                pdfBytes = await file.arrayBuffer();
+            } catch (err) {
+                // Fallback to Render decryption
+                status.textContent = "🔐 Decrypting encrypted file...";
+                try {
+                    pdfBytes = await decryptPDF(file);
+                } catch {
+                    status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+                    return;
+                }
+            }
+
+            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { 
+                ignoreEncryption: true 
+            });
+            const pages = pdfDoc.getPages();
+
+            // Update the counter with the number of pages in this PDF
+            pagesWatermarked += pages.length;
+            pagesWatermarkedElement.textContent = pagesWatermarked;
+
+            // Update usage in database
+            const updatedPagesUsed = data.pages_used + pages.length;
+            const updatedPagesRemaining = data.page_credits - updatedPagesUsed;
+
+            const { updateError } = await supabase
+                .from('usage')
+                .update({
+                    pages_used: updatedPagesUsed,
+                    pages_remaining: updatedPagesRemaining
+                })
+                .eq('user_email', profile.Email);
+
+            if (updateError) throw updateError;
+            console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
+
+            const logoImage = await pdfDoc.embedJpg(logoBytes);
+            const hologramImage = await pdfDoc.embedPng(hologramBytes);
+
+            const logoDims = logoImage.scale(0.35);
+            const hologramWidth = 60;
+            const hologramHeight = 60;
+
+            for (const page of pages) {
+                const { width, height } = page.getSize();
+
+                for (let x = 0; x < width; x += (logoDims.width + 100)) {
+                    for (let y = 0; y < height; y += (logoDims.height + 100)) {
+                        page.drawImage(logoImage, {
+                            x,
+                            y,
+                            width: logoDims.width,
+                            height: logoDims.height,
+                            opacity: 0.15,
+                            rotate: PDFLib.degrees(45)
+                        });
+                    }
+                }
+
+                page.drawImage(hologramImage, {
+                    x: width - hologramWidth - 10,
+                    y: height - hologramHeight - 10,
+                    width: hologramWidth,
+                    height: hologramHeight,
+                    opacity: 0.7
+                });
+            }
+
+            const finalBytes = await pdfDoc.save();
+            const blob = new Blob([finalBytes], { type: 'application/pdf' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        status.textContent = "✅ Done. Files downloaded.";
+        
+    } catch (err) {
+        console.error("Error processing files:", err);
+        status.textContent = "❌ An error occurred. Please try again.";
     }
+}
   </script>
 </body>
 </html>
