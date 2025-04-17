@@ -358,8 +358,7 @@ console.log(`Updating plan for ${email} to ${planName}`);
 
 const today = new Date();
 
-const billing_cycle_start = today.toISOString().split('T')[0]; //
-Format as YYYY-MM-DD
+const billing_cycle_start = today.toISOString().split('T')[0]; // Format in YYYY-MM-DD
 
 // Get page credits based on plan
 
