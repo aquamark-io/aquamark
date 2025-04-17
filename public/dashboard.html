@@ -809,7 +809,7 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 <div class="action-card">
     <div class="action-buttons">
         <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-primary">Upgrade Plan</a>
-        <a href="/watermark.html" id="watermarkLink" class="btn btn-accent">Start Watermarking</a>
+        <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-accent">Start Watermarking</a>
     </div>
 </div>
 
@@ -888,6 +888,12 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
         if (watermarkLink) {
             watermarkLink.href = "/watermark.html" + urlParams + hashParams;
         }
+
+      // Update start watermarking button with current parameters
+  const startWatermarkBtn = document.getElementById('startWatermarkBtn');
+  if (startWatermarkBtn) {
+    startWatermarkBtn.href = "/watermark.html" + urlParams + hashParams;
+  }
     });
 </script>
 
