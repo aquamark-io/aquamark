@@ -213,7 +213,7 @@
                 if (profile) {
                     console.log("PersonUid:", profile.Uid);
                     console.log("Email:", profile.Email);
-                    console.log("AccountUid:", profile.Account.Uid);
+                    console.log("AccountUid:", profile.Account ? profile.Account.Uid : 'N/A');
                     
                     // Upsert - create/update row in Supabase
                     try {
@@ -285,50 +285,105 @@
         function setupOutsetaSubscriptionListener() {
             console.log("Setting up Outseta subscription listener...");
             
-            // Listen for subscription update events
+            // Listen for accessToken.set event to detect login/changes
+            Outseta.on('accessToken.set', async (payload) => {
+                console.log('Access token updated:', payload);
+                // Check if token contains subscription info
+                if (payload && payload["outseta:subscriptionUid"]) {
+                    console.log("JWT contains subscription info, checking status...");
+                    await checkSubscriptionStatus();
+                }
+            });
+            
+            // Direct subscription event listeners
             Outseta.on('subscription.update', async (event) => {
                 console.log('Subscription update detected:', event);
                 await handleSubscriptionChange();
             });
             
-            // Also listen for subscription reopen events
             Outseta.on('subscription.reopen', async (event) => {
                 console.log('Subscription reopen detected:', event);
                 await handleSubscriptionChange();
             });
             
-            // Check for subscription changes on page load too
-            setTimeout(checkSubscriptionStatus, 2000); // Delay to ensure Outseta is fully loaded
+            // Check on page load too
+            setTimeout(checkSubscriptionStatus, 2000);
         }
 
         // Function to handle subscription change
         async function handleSubscriptionChange() {
             try {
-                // Get current user profile
-                const profile = await Outseta.getUser();
-                
-                if (!profile) {
-                    console.error("No user profile found");
+                // Get JWT payload first
+                const jwtPayload = Outseta.getJwtPayload();
+                if (!jwtPayload || !jwtPayload.sub) {
+                    console.log("No JWT payload available");
                     return;
                 }
                 
-                console.log("User profile:", profile);
+                // Get the user email from JWT
+                const userEmail = jwtPayload.email;
+                const userId = jwtPayload.sub;
+                console.log("User ID from JWT:", userId);
+                console.log("User email from JWT:", userEmail);
                 
-                // Check if user has subscriptions
-                if (!profile.Account || !profile.Account.Subscriptions || profile.Account.Subscriptions.length === 0) {
-                    console.log("No subscriptions found");
-                    return;
+                // Get plan name from JWT or fallback to direct API
+                let planName = "Free Trial";
+                let pageCredits = 100;
+                
+                // First try to get the plan from the JWT
+                if (jwtPayload["outseta:planUid"]) {
+                    console.log("Plan UID from JWT:", jwtPayload["outseta:planUid"]);
+                    
+                    // Determine plan based on the subscription info
+                    try {
+                        const profile = await Outseta.getUser();
+                        console.log("Full profile:", profile);
+                        
+                        // Check if we have subscription data
+                        if (profile && profile.Account && profile.Account.Subscriptions && profile.Account.Subscriptions.length > 0) {
+                            // Get the active subscription
+                            const subscription = profile.Account.Subscriptions[0];
+                            if (subscription && subscription.Plan) {
+                                planName = subscription.Plan.Name;
+                                console.log("Found plan name from API:", planName);
+                            }
+                        } else {
+                            console.log("No subscriptions found in profile, using manual method");
+                            
+                            // If we can't get the plan name from API, use the subscription UID to determine plan
+                            const planUid = jwtPayload["outseta:planUid"];
+                            // You'll need to map plan UIDs to plan names based on your Outseta setup
+                            // This is just an example mapping - update with your actual plan UIDs
+                            switch(planUid) {
+                                case 'plan-uid-for-riding-solo':
+                                    planName = 'Riding Solo';
+                                    break;
+                                case 'plan-uid-for-small-teams':
+                                    planName = 'Small Teams';
+                                    break;
+                                case 'plan-uid-for-iso-shops':
+                                    planName = 'ISO Shops';
+                                    break;
+                                default:
+                                    // If we can't determine the exact plan, at least mark it as not Free Trial
+                                    planName = 'Paid Plan';
+                            }
+                            
+                            // If the subscription UID exists, it's not a free trial
+                            if (jwtPayload["outseta:subscriptionUid"]) {
+                                console.log("User has a subscription, plan name might be incorrect but it's not Free Trial");
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Error getting profile:", error);
+                        // If we can't get the profile, still mark as subscribed if we know they have a subscription
+                        if (jwtPayload["outseta:subscriptionUid"]) {
+                            planName = 'Paid Plan';
+                        }
+                    }
                 }
-                
-                // Get the first active subscription
-                const subscription = profile.Account.Subscriptions[0];
-                
-                // Get plan details
-                const planName = subscription.Plan.Name;
-                console.log("Current plan:", planName);
                 
                 // Determine page credits based on plan
-                let pageCredits;
                 switch(planName) {
                     case 'Riding Solo':
                         pageCredits = 1000;
@@ -339,24 +394,33 @@
                     case 'ISO Shops':
                         pageCredits = -1; // -1 represents unlimited
                         break;
+                    case 'Paid Plan':
+                        pageCredits = 1000; // Default for unknown paid plans
+                        break;
                     default:
-                        pageCredits = 100; // Default for free trial or unknown plans
+                        pageCredits = 100; // Default for free trial
                 }
+                
+                console.log("Plan name determined:", planName);
+                console.log("Page credits determined:", pageCredits);
                 
                 // Get current date for billing cycle
                 const billingCycleDate = new Date().toISOString();
                 
+                // Calculate pages remaining
+                const pagesRemaining = pageCredits === -1 ? "Unlimited" : pageCredits;
+                
                 // Update Supabase
-                await updateSupabaseUsage(profile.Email, {
+                await updateSupabaseUsage(userEmail, {
                     plan_name: planName,
                     page_credits: pageCredits,
                     pages_used: 0, // Reset pages used
-                    pages_remaining: pageCredits === -1 ? "Unlimited" : pageCredits, // Special handling for unlimited
+                    pages_remaining: pagesRemaining,
                     billing_cycle_date: billingCycleDate
                 });
                 
                 // Refresh the usage display
-                await fetchUserUsageData(profile.Email);
+                await fetchUserUsageData(userEmail);
                 
                 console.log("Subscription update completed");
             } catch (error) {
@@ -378,22 +442,35 @@
                 console.log("JWT Payload:", jwtPayload);
                 
                 // Check if user has subscription data in JWT
-                if (jwtPayload["outseta:subscriptionUid"] && jwtPayload["outseta:planUid"]) {
+                if (jwtPayload["outseta:subscriptionUid"]) {
                     console.log("User has an active subscription");
                     
-                    // Get current user from Supabase
-                    const profile = await Outseta.getUser();
-                    if (!profile) return;
+                    const userEmail = jwtPayload.email;
+                    if (!userEmail) {
+                        console.log("No email found in JWT");
+                        return;
+                    }
                     
+                    // Get current user data from Supabase
                     const { data: existingUser, error: fetchError } = await supabase
                         .from('usage')
                         .select('*')
-                        .eq('user_email', profile.Email);
+                        .eq('user_email', userEmail);
                     
-                    // If user exists and still on Free Trial, update to current plan
-                    if (existingUser && existingUser.length > 0 && existingUser[0].plan_name === 'Free Trial') {
-                        console.log("User has subscription but Supabase still shows Free Trial. Updating...");
-                        await handleSubscriptionChange();
+                    if (fetchError) {
+                        console.error("Error fetching user from Supabase:", fetchError);
+                        return;
+                    }
+                    
+                    // If user exists and still on Free Trial or has outdated info, update to current plan
+                    if (existingUser && existingUser.length > 0) {
+                        const currentPlan = existingUser[0].plan_name;
+                        console.log("Current plan in Supabase:", currentPlan);
+                        
+                        if (currentPlan === 'Free Trial') {
+                            console.log("User has subscription but Supabase still shows Free Trial. Updating...");
+                            await handleSubscriptionChange();
+                        }
                     }
                 }
             } catch (error) {
@@ -425,6 +502,8 @@
                 if (rowId) {
                     updateData.id = rowId;
                 }
+                
+                console.log("Updating Supabase with:", updateData);
                 
                 // Upsert the data
                 const { data, error } = await supabase
