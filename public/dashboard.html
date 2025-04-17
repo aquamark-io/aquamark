@@ -326,48 +326,109 @@
 
     // Get user profile and update Supabase
     document.addEventListener('DOMContentLoaded', function() {
-      // Setup Outseta event listeners for subscription changes
+      // Initialize debug logging for Outseta events
+      const enableDebugLogging = true;
+
+      // Function to log event data for debugging
+      function logEventData(eventName, params) {
+        if (enableDebugLogging) {
+          console.log(`${eventName} event received:`, params);
+          
+          // Try to identify where the plan data might be
+          if (params) {
+            if (params.Plan) console.log("Plan data found at params.Plan:", params.Plan);
+            if (params.plan) console.log("Plan data found at params.plan:", params.plan);
+            if (params.subscription && params.subscription.plan) {
+              console.log("Plan data found at params.subscription.plan:", params.subscription.plan);
+            }
+            if (params.subscription && params.subscription.Plan) {
+              console.log("Plan data found at params.subscription.Plan:", params.subscription.Plan);
+            }
+          }
+        }
+      }
+
+      // Improved handler for subscription.update events
       Outseta.on("subscription.update", async (params) => {
-        console.log("Subscription update event:", params);
+        logEventData("subscription.update", params);
         
-        // Get current user
         try {
           const profile = await Outseta.getUser();
-          if (profile && profile.Email) {
-            // Get plan details from the event
-            let planName = "Free Trial";
-            
-            // Try to extract plan name from the event params
-            if (params && params.subscription && params.subscription.plan) {
-              planName = params.subscription.plan.name;
-            }
-            
-            // Update user plan in Supabase
-            await updateUserPlan(profile.Email, planName);
+          if (!profile || !profile.Email) {
+            console.error("Could not get user profile");
+            return;
           }
+          
+          // Extract plan name - checking all possible locations
+          let planName = "Free Trial"; // Default fallback
+          
+          if (params) {
+            // Direct Plan property at the root (seen in your console logs)
+            if (params.Plan && params.Plan.Name) {
+              planName = params.Plan.Name;
+            }
+            // Lowercase alternative
+            else if (params.plan && params.plan.name) {
+              planName = params.plan.name;
+            }
+            // Check within subscription object
+            else if (params.subscription) {
+              if (params.subscription.Plan && params.subscription.Plan.Name) {
+                planName = params.subscription.Plan.Name;
+              }
+              else if (params.subscription.plan && params.subscription.plan.name) {
+                planName = params.subscription.plan.name;
+              }
+            }
+          }
+          
+          console.log(`Updating plan for ${profile.Email} to ${planName}`);
+          
+          // Update user plan in Supabase
+          await updateUserPlan(profile.Email, planName);
         } catch (err) {
           console.error("Error handling subscription update:", err);
         }
       });
-      
+
+      // Improved handler for subscription.reopen events (same logic)
       Outseta.on("subscription.reopen", async (params) => {
-        console.log("Subscription reopen event:", params);
+        logEventData("subscription.reopen", params);
         
-        // Get current user
         try {
           const profile = await Outseta.getUser();
-          if (profile && profile.Email) {
-            // Get plan details from the event
-            let planName = "Free Trial";
-            
-            // Try to extract plan name from the event params
-            if (params && params.subscription && params.subscription.plan) {
-              planName = params.subscription.plan.name;
-            }
-            
-            // Update user plan in Supabase
-            await updateUserPlan(profile.Email, planName);
+          if (!profile || !profile.Email) {
+            console.error("Could not get user profile");
+            return;
           }
+          
+          // Extract plan name - checking all possible locations
+          let planName = "Free Trial"; // Default fallback
+          
+          if (params) {
+            // Direct Plan property at the root
+            if (params.Plan && params.Plan.Name) {
+              planName = params.Plan.Name;
+            }
+            // Lowercase alternative
+            else if (params.plan && params.plan.name) {
+              planName = params.plan.name;
+            }
+            // Check within subscription object
+            else if (params.subscription) {
+              if (params.subscription.Plan && params.subscription.Plan.Name) {
+                planName = params.subscription.Plan.Name;
+              }
+              else if (params.subscription.plan && params.subscription.plan.name) {
+                planName = params.subscription.plan.name;
+              }
+            }
+          }
+          
+          console.log(`Updating plan for ${profile.Email} to ${planName}`);
+          
+          // Update user plan in Supabase
+          await updateUserPlan(profile.Email, planName);
         } catch (err) {
           console.error("Error handling subscription reopen:", err);
         }
