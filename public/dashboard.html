@@ -224,8 +224,55 @@
                 await checkForPlanChanges(payload);
             });
             
-            // Check for plan changes every 5 seconds as a backup
-            setInterval(checkForPlanChangesFromToken, 5000);
+            // Listen for DOM changes in the profile embed area
+            setTimeout(() => {
+                const profileContainer = document.querySelector('[data-o-profile="1"]');
+                if (profileContainer) {
+                    console.log('Setting up observer for profile embed');
+                    
+                    // Create a MutationObserver to watch for changes in the profile embed
+                    const observer = new MutationObserver(function(mutations) {
+                        // Only check if the mutation includes changes that might indicate a plan change
+                        const shouldCheck = mutations.some(mutation => {
+                            // Check for added nodes that might indicate a plan change
+                            return Array.from(mutation.addedNodes).some(node => {
+                                if (node.nodeType === 1) { // Element node
+                                    // Look for indicators of plan change UI
+                                    return node.textContent.includes('Plan') || 
+                                           node.innerHTML.includes('plan') ||
+                                           node.innerHTML.includes('subscription');
+                                }
+                                return false;
+                            });
+                        });
+                        
+                        if (shouldCheck) {
+                            console.log('Profile embed changed, checking for plan changes');
+                            checkForPlanChangesFromToken();
+                        }
+                    });
+                    
+                    // Start observing the profile container
+                    observer.observe(profileContainer, { 
+                        childList: true, 
+                        subtree: true,
+                        characterData: true
+                    });
+                } else {
+                    console.log('Profile embed not found for observer');
+                }
+            }, 3000); // Give time for the profile to load
+            
+            // Set up direct event listeners for Outseta subscription events
+            Outseta.on('subscription.update', async (event) => {
+                console.log('Subscription update event received:', event);
+                await checkForPlanChangesFromToken();
+            });
+            
+            Outseta.on('subscription.reopen', async (event) => {
+                console.log('Subscription reopen event received:', event);
+                await checkForPlanChangesFromToken();
+            });
         });
 
         // Setup initial user
