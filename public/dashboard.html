@@ -61,6 +61,7 @@
       margin-bottom: 2rem;
       font-weight: 500;
       color: #1e1e2f;
+      padding-top: 20px; /* Added padding to bring it down */
     }
 
     .aqua-layout {
@@ -70,8 +71,9 @@
     }
 
     .profile-container {
-      flex: 1 1 100%;
+      flex: 1 1 40%;
       min-width: 300px;
+      padding-left: 0; /* Align profile with the usage bar */
     }
 
     .aqua-cards {
@@ -120,6 +122,17 @@
       color: #666;
     }
 
+    .aqua-footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f3e8ff; /* Matching header color */
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 0.875rem;
+      color: #333;
+    }
+
     @media (max-width: 768px) {
       .aqua-layout {
         flex-direction: column;
@@ -133,12 +146,6 @@
       .profile-container {
         flex: 1 1 100%;
       }
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #f3f3f3;
     }
   </style>
 
@@ -185,7 +192,7 @@
     </div>
   </main>
 
-  <footer>
+  <footer class="aqua-footer">
     <p>© 2025 Aquamark.io - All rights reserved</p>
   </footer>
 
