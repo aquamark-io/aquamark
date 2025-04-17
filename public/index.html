@@ -1,719 +1,889 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #111;
-    }
+    <meta charset="UTF-8">
+    <title>Aquamark Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
+    <style>
+        :root {
+            --primary-color: #7e57c2;
+            --primary-light: #f3e8ff;
+            --primary-dark: #4d2c91;
+            --accent-color: #007bff;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1e1e2f;
+            --text-secondary: #64748b;
+            --bg-color: #f8f9fb;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
 
-    .banner {
-      background-color: #f3e8ff;
-      color: #111;
-      text-align: center;
-      padding: 12px 20px;
-      font-size: 16px;
-      font-weight: 500;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .banner a {
-      color: #3366ff;
-      font-weight: 400;
-      text-decoration: underline;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .aqua-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--primary-light);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .aqua-logo {
+            height: 32px;
+        }
+
+        .aqua-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .aqua-nav a {
+            margin-left: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .aqua-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .aqua-nav a.active {
+            color: var(--accent-color);
+        }
+
+        .aqua-nav a.active:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        /* Main Content */
+        .aqua-panel {
+            max-width: 1400px;
+            width: 95%;
+            margin: 2rem auto;
+            flex: 1;
+        }
+
+        h1.greeting {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Main Layout */
+        .aqua-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .aqua-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+        }
+
+        .aqua-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-header h2::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-accent {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: #0069d9;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background: linear-gradient(to right, var(--primary-light), #e0f2fe);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+        }
+
+        .announcement-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .announcement-icon {
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .announcement-text h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .announcement-text p {
+            color: var(--text-secondary);
+        }
+
+        /* Profile Section */
+        .profile-section {
+            margin-top: 1.5rem;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .profile-value {
+            font-weight: 500;
+        }
+
+        .profile-action {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .profile-action:hover {
+            text-decoration: underline;
+        }
+
+        .profile-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.75rem;
+        }
+
+        .upload-btn:hover {
+            background: #0069d9;
+        }
+
+        /* Usage Stats */
+        .usage-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .usage-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .usage-value {
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #f3f4f6;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            background: var(--accent-color);
+            height: 100%;
+            width: 0%; /* Will be set by JavaScript */
+        }
+
+        /* Action Card */
+        .action-card {
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            background: white;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .aqua-footer {
+            background: var(--primary-light);
+            padding: 1.5rem 2rem;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            height: 24px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .aqua-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .announcement-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .aqua-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .footer-nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+
+    <!-- Outseta integration -->
+    <script>
+        var o_options = {
+            domain: 'aquamark.outseta.com',
+            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+        };
+    </script>
+    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
     
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 60px;
-    }
-
-    .logo {
-      height: 38px;
-    }
-
-    .nav-links a {
-      margin-left: 25px;
-      text-decoration: none;
-      color: #666;
-      font-size: 15px;
-    }
-
-    .nav-btn {
-  margin-left: 25px;
-  padding: 8px 18px;
-  background-color: #3e5eff;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-    .hero {
-      text-align: center;
-      padding: 120px 20px 80px;
-    }
-
-    .hero h1 {
-      font-size: 58px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 22px;
-      color: #555;
-      margin-bottom: 40px;
-    }
-
-    .hero .btn {
-      padding: 14px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      margin: 0 10px;
-      cursor: pointer;
-    }
-
-    .btn.primary {
-      background-color: #3e5eff;
-      color: #fff;
-    }
-
-    .btn.secondary {
-      background-color: #f1f1f1;
-      color: #000;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 80px;
-      background-color: #f9f9ff;
-      padding: 40px 20px;
-    }
-
-    .stat {
-      text-align: center;
-      min-width: 160px;
-    }
-
-    .stat img {
-      height: 80px;
-      margin-bottom: 10px;
-    }
-
-    .stat h3 {
-      margin: 10px 0 4px;
-      font-size: 22px;
-    }
-
-    .stat p {
-      font-size: 16px;
-      color: #666;
-    }
-
-    .how-it-works {
-      background-color: #ffffff;
-      text-align: center;
-      padding: 60px 20px;
-    }
-
-    .how-it-works h2 {
-      font-size: 41px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .how-it-works .blue {
-      color: #3e5eff;
-    }
-
-    .steps {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 60px;
-      margin-top: 60px;
-    }
-
-    .step {
-      max-width: 180px;
-    }
-
-    .step img {
-      height: 60px;
-      margin-bottom: 20px;
-    }
-
-    .step h4 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .step p {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    .built-for-mca {
-      padding: 80px 20px;
-      background-color: none;
-    }
-    
-    .built-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 60px;
-      max-width: 1200px;
-      margin: 0 auto;
-      flex-wrap: wrap;
-    }
-
-    .built-text {
-      max-width: 500px;
-      flex: 1;
-    }
-
-    .built-text h2 {
-      font-size: 40px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .built-text p {
-      font-size: 20px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 30px;
-      max-width: 480px;
-    }
-
-    .built-text .btn {
-      border: 2px solid #3e5eff;
-      background-color: done;
-      color: #3e5eff;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .built-image {
-      flex: 1;
-      max-width: 600px;
-      text-align: center;
-    }
-
-    .built-image img {
-      max-width: 100%;
-      width: 100%;
-    }
-
-@media (max-width: 768px) {
-  section[style*="gap:150px;"] {
-    flex-direction: column;
-    text-align: center;
-    gap: 60px !important;
-    padding: 60px 20px !important;
-  }
-
-  section[style*="gap:150px;"] > div {
-    max-width: 100% !important;
-  }
-
-  section[style*="gap:150px;"] h2 {
-    font-size: 2.6rem !important;
-  }
-
-  section[style*="gap:150px;"] p {
-    font-size: 1.125rem !important;
-  }
-}
-    
-    @media (max-width: 780px) {
-   .stats {
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-  }
-
-  .stat {
-    width: 100%;
-    max-width: 300px;
-  }
-
-      .built-container {
-        flex-direction: column-reverse;
-        text-align: center;
-      }
-
-      .built-text,
-      .built-image {
-        max-width: 100%;
-      }
-
-      .built-text p {
-        max-width: 100%;
-      }
-.hero .btn {
-  display: block;
-  width: 100%;
-  max-width: 280px;
-  margin: 10px auto;
-}
-      .steps {
-  flex-direction: column;
-  align-items: center;
-}
-
-.step {
-  max-width: 100%;
-}
-    }
-
-    .reviews {
-      background: linear-gradient(to right, #eef2ff, #fdf2ff);
-      text-align: center;
-      padding: 100px 20px;
-    }
-
-    .reviews h2 {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .review-grid {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin-top: 40px;
-    }
-
-    .review {
-      background: #fff;
-      border-radius: 12px;
-      padding: 32px;
-      max-width: 340px;
-      font-size: 20px;
-      line-height: 1.6;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .review span {
-      display: block;
-      margin-top: 18px;
-      font-weight: bold;
-      font-size: 15px;
-      color: #333;
-    }
-
-    .pricing {
-      background-color: #f9f9f9;
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    .pricing h2 {
-      font-size: 46px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .pricing p {
-      font-size: 21px;
-      color: #555;
-      margin-bottom: 50px;
-    }
-
-    .tiers {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
-
-    .tier {
-      background-color: #3366ff;
-      color: #fff;
-      padding: 60px 40px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      width: 280px;
-      text-align: center;
-    }
-
-    .tier h3 {
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .tier .price {
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .tier p {
-      font-size: 18px;
-      margin: 8px 0;
-    }
-
-    .pricing .cta {
-      margin-top: 60px;
-    }
-
-    .faq {
-      padding: 80px 20px;
-      background-color: #f9f9f9;
-      text-align: center;
-    }
-
-    .faq h2 {
-      font-size: 36px;
-      font-weight: 800;
-      margin-bottom: 40px;
-    }
-
-    .faq-item {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      text-align: left;
-    }
-
-    .faq-item h4 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .faq-item p {
-      font-size: 16px;
-      color: #555;
-      line-height: 1.6;
-    }
-
-    .footer {
-      background-color: #f3e8ff;
-      color: #111;
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-  .footer {
-    background-color: #f3e8ff;
-    color: #111;
-    text-align: center;
-    padding: 40px 20px;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-  }
-
-  .hamburger div {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    margin: 4px 0;
-  }
-
-  .mobile-nav {
-    display: none;
-    flex-direction: column;
-    text-align: center;
-    background-color: #fff;
-    padding: 20px 0;
-  }
-
-  .mobile-nav a {
-    margin: 10px 0;
-    text-decoration: none;
-    color: #666;
-    font-size: 16px;
-  }
-    
-  @media (max-width: 768px) {
-    .topbar {
-      padding: 20px;
-    }
-
-    .nav-links {
-      display: none;
-    }
-
-    .hamburger {
-      display: flex;
-    }
-
-    .mobile-nav.active {
-      display: flex;
-    }
-}
-</style>
-
-<script>
-    var o_options = {
-      domain: 'aquamark.outseta.com',
-      load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-  <link rel="stylesheet" href="style.css">
-
-<script>
-  // Works whether hash is available immediately or delayed
-  function checkLogoutHash() {
-    if (window.location.hash === '#o-logout-link') {
-      window.location.replace('/login.html');
-    }
-  }
-
-  // Run immediately if possible
-  checkLogoutHash();
-
-  // Also run after full load in case hash is delayed
-  window.addEventListener("load", checkLogoutHash);
-</script>
-
+    <!-- Supabase integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
- <div class="banner">
-  🔥 Get started with <strong>100 free pages</strong> - on us!<br>
-</div>
+    <header class="aqua-header">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
+        <nav class="aqua-nav">
+            <a href="/dashboard.html" class="active">Dashboard</a>
+            <a href="/watermark.html">Watermark</a>
+            <a href="https://www.aquamark.io/#o-logout-link">Log Out</a>
+        </nav>
+    </header>
 
-  <header class="topbar">
-    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
-    <nav class="nav-links">
-  <a href="#how">How It Works</a>
-  <a href="#pricing">Pricing</a>
-  <a href="#faq">FAQ</a>
-  <button onclick="location.href='/login.html'" class="nav-btn">Sign In</button>
-</nav>
-    <div class="hamburger" onclick="toggleMenu()">
-      <div></div><div></div><div></div>
-    </div>
-  </header>
+    <main class="aqua-panel">
+        <h1 class="greeting">My Dashboard</h1>
+        
+        <!-- Announcement Banner -->
+        <div class="announcement-banner">
+            <div class="announcement-content">
+                <div class="announcement-icon">🚀</div>
+                <div class="announcement-text">
+                    <h3>Coming Soon: Aquamark API</h3>
+                    <p>Starting May 2025, Aquamark’s open API will let anyone seamlessly connect and automate watermarking in minutes.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons Card -->
+        <div class="action-card">
+            <div class="action-buttons">
+                <button class="btn btn-primary">Upgrade Plan</button>
+                <button class="btn btn-accent">Start Watermarking</button>
+            </div>
+        </div>
 
-  <nav class="mobile-nav" id="mobileMenu">
-  <a href="#how">How It Works</a>
-  <a href="#pricing">Pricing</a>
-  <a href="#faq">FAQ</a>
-  <a href="/login.html">Sign In</a>
-</nav>
+        <!-- Main Layout -->
+        <div class="aqua-layout">
+            <!-- Profile Card -->
+            <div class="aqua-card">
+                <div class="card-header">
+                    <h2>My Profile</h2>
+                </div>
+                <div class="card-body">
+                    <div data-o-profile="1" data-mode="embed"></div>
+                </div>
+            </div>
 
-  <main class="hero">
-    <h1>Stop Backdooring. Start Funding.</h1>
-    <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
-    <button class="btn primary" onclick="location.href='/signup.html'">Create Free Account</button>
-    <button class="btn secondary" onclick="location.href='/signup.html'">Upload Docs</button>
-    <button class="btn secondary" onclick="location.href='/signup.html'">Use API</button>
-  </main>
+            <!-- Usage Card -->
+            <div class="aqua-card">
+                <div class="card-header">
+                    <h2>Your Usage</h2>
+                </div>
+                <div class="card-body" id="usage-stats">
+                    <p>Loading your usage data...</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-  <section class="stats">
-    <div class="stat">
-      <img src="protect.svg" alt="Protect Icon" />
-      <h3>2,100+</h3>
-      <p>Deals Protected</p>
-    </div>
-    <div class="stat">
-      <img src="star.svg" alt="Star Icon" />
-      <h3>4.89</h3>
-      <p>User Rating</p>
-    </div>
-    <div class="stat">
-      <img src="document.svg" alt="Document Icon" />
-      <h3>500k+</h3>
-      <p>Pages Watermarked</p>
-    </div>
-  </section>
+    <footer class="aqua-footer">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
+        <div class="footer-nav">
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
+    </footer>
 
-  <section class="how-it-works" id="how">
-    <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
-    <div class="steps">
-      <div class="step">
-        <img src="one.svg" alt="Step One" />
-        <h4>Create Account</h4>
-        <p>It's free.</p>
-      </div>
-      <div class="step">
-        <img src="two.svg" alt="Step Two" />
-        <h4>Upload Logo</h4>
-        <p>Add once. Apply forever.</p>
-      </div>
-      <div class="step">
-        <img src="three.svg" alt="Step Three" />
-        <h4>Add Files</h4>
-        <p>Upload or use the API.</p>
-      </div>
-      <div class="step">
-        <img src="four.svg" alt="Step Four" />
-        <h4>Download Instantly</h4>
-        <p>Ready in seconds.</p>
-      </div>
-    </div>
-  </section>
+    <script>
+        // Handle logout redirection
+        if (window.location.hash === '#o-logout-link') {
+            window.location.href = '/login.html';
+        }
 
-  <section class="built-for-mca">
-    <div class="built-container">
-      <div class="built-text">
-        <h2>Built for <span class="blue">MCA Brokers</span></h2>
-        <p>Our watermarking technology protects you from deal poachers so you can focus on funding. Say goodbye to stolen bank statements and shadow submissions to other lenders.</p>
-        <button class="btn" onclick="location.href='/signup.html'" style="background-color: #3e5eff; color: white; border: none;">Free Sample</button>
-      </div>
-      <div class="built-image">
-        <img src="/built-for-mca.jpg" alt="Built for MCA"
-      </div>
-    </div>
-  </section>
-  
-<section style="background:#ffffff; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:150px;">
-  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
-    <img src="/slanted-stats-transparent-v2.png" alt="Bank statement preview"
-         style="max-width:100%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);" />
+        // Initialize Supabase client
+        const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  </div>
+        // Function to get page credits based on plan name
+        function getPageCreditsByPlan(planName) {
+            const planCredits = {
+                'Riding Solo': 1000,
+                'Small Teams': 5000,
+                'ISO Shops': 1000000 // Essentially unlimited
+            };
+            return planCredits[planName] || 100; // Default to 100 if plan not found
+        }
 
-  <div style="flex:1; min-width:320px; max-width:550px;">
-    <h2 style="font-size:3.2rem; font-weight:700; margin-bottom:0.3em;">
-<span style="color:#3e5eff;"> Increase </span> Sales Conversions
-    </h2>
-    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
-ISOs are seeing up to 8% more conversions in just 60 days. 
-More volume for lenders, more commissions for brokers, and a better experience for merchants. 
-Aquamark protects deals and helps restore integrity to an industry that powers small business.
-</p>
-  </div>
-</section>
+        // Function to update user plan in Supabase
+        async function updateUserPlan(email, planName) {
+            try {
+                console.log(`Updating plan for ${email} to ${planName}`);
+                // Get the current date for billing cycle
+                const today = new Date();
+                const billing_cycle_start = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
 
-<section class="reviews" id="reviews" style="padding: 60px 20px;">
-  <h2 style="text-align: center; font-size: 42px; font-weight: 800; margin-bottom: 50px;">
-    <span </span> Reviews from other <span style="color:#3e5eff;">MCA Brokers
-  </h2>
-  <div class="review-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
-    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
-      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
-        “Solved our backdooring problems no doubt, and less customers complaining about their phone blowing up after we submit.”
-      </p>
-      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">James, ISO</span>
-    </div>
-    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
-      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
-      "Saving even one deal from backdooring more than covers the cost. Hoping more people get on board — the industry needs it."
-      </p>
-      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Eric, Account Executive</span>
-    </div>
-    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
-      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
-        “Our funding team watermarks hundreds of pages daily. We're part of the API BETA and it's saving us hours!”
-      </p>
-      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Jessica, Funding Manager</span>
-    </div>
-  </div>
-</section>
+                // Get page credits based on plan
+                const page_credits = getPageCreditsByPlan(planName);
 
-<section class="pricing" id="pricing">
-  <h2 style="font-size: 66px;">Priced like a tool, not a service.</h2>
-  <p style="font-size: 25px;">Free trial on all plans. Cancel anytime. The way it should be.</p>
-  <div class="tiers">
-    <div class="tier starter" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-      <h3>Riding Solo</h3>
-      <div class="price">$25/mo</div>
-      <p>1,000 pages</p>
-      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;" onclick="location.href='/signup.html'">Free Trial</button>
-    </div>
+                // First, check if user exists
+                let { data: existingUser, error: fetchError } = await supabase
+                    .from('usage')
+                    .select('*')
+                    .eq('user_email', email);
 
-    <div class="tier enterprise" style="background: #CFE9FF; color: #000; position: relative;">
-      <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
-      <h3>ISO Shops</h3>
-      <div class="price">$250/mo</div>
-      <p style="color:#000;">Unlimited</p>
-      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#fa6bee; color:#FFFFFF;" onclick="location.href='/signup.html'">Free Trial</button>
-    </div>
-    <div class="tier pro" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-      <h3>Small Teams</h3>
-      <div class="price">$100/mo</div>
-      <p>5,000 pages</p>
-      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;" onclick="location.href='/signup.html'">Free Trial</button>
-    </div>
-     </div>
-</section>
+                if (fetchError) throw fetchError;
 
-<section class="faq" id="faq" style="background:white;">
-  <h2>Frequently Asked Questions</h2>
+                // Set initial values
+                let rowId = null;
 
-  <div class="faq-item">
-    <h4>Do most lenders accept watermarked statements?</h4>
-    <p>Yes. Expansion Capital Group was among one of the first based on our research and ISO surveys.</p>
-  </div>
+                // If user exists, get their ID
+                if (existingUser && existingUser.length > 0) {
+                    rowId = existingUser[0].id;
+                    console.log("Found existing user with ID:", rowId);
+                } else {
+                    console.log("No existing user found, will create new record");
+                }
 
-  <div class="faq-item">
-    <h4>Why do I need an account?</h4>
-    <p>Test 100 pages for free, manage your plan, track your usage, access API docs, and watermark your files.</p>
-  </div>
-  
-  <div class="faq-item">
-    <h4>Can I cancel anytime?</h4>
-    <p>You're billed month-to-month and can cancel anytime. No subscriptions. No commitments.</p>
-  </div>
+                // Prepare the data object with updated plan details
+                const userData = {
+                    user_email: email,
+                    pages_used: 0, // Reset to 0 when plan changes
+                    pages_remaining: page_credits,
+                    plan_name: planName,
+                    page_credits: page_credits,
+                    billing_cycle_start: billing_cycle_start
+                };
 
-  <div class="faq-item">
-    <h4>Are my files secure?</h4>
-    <p>Yes. Once you download your watermarked file, it is deleted from our database forever.</p>
-  </div>
+                // Include ID if we have one
+                if (rowId) {
+                    userData.id = rowId;
+                }
 
-  <div class="faq-item">
-    <h4>What if I go over my monthly pages?</h4>
-    <p>No problem! You can upgrade, downgrade, or cancel your plan anytime to match your needs.</p>
-  </div>
+                // Upsert the data
+                const { data, error } = await supabase
+                    .from('usage')
+                    .upsert(userData);
 
-  <div class="faq-item">
-    <h4>Questions or feature requests?</h4>
-    <p>Send us an email at <a href="mailto:hey@aquamark.io">hey@aquamark.io<a><p>
-  </div>
-</section>
+                if (error) throw error;
 
-<footer class="footer" style="color:#999; text-align:center;">
-  <img src="logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
-  <br />
-  &copy; 2025 Aquamark. All rights reserved. <br />
-  San Francisco, CA · 
-  <a href="https://www.aquamark.io/privacy.html" style="color:#999; text-decoration:underline;">Privacy</a> · 
-  <a href="https://www.aquamark.io/terms.html" style="color:#999; text-decoration:underline;">Terms</a>
-</footer>
+                console.log("Plan update successful:", data);
 
-<script>
-  function toggleMenu() {
-    const menu = document.getElementById('mobileMenu');
-    menu.classList.toggle('active');
-  }
-</script>
-  
+                // Refresh the dashboard display
+                fetchUserUsageData(email);
+
+                return true;
+            } catch (err) {
+                console.error("Error updating plan:", err);
+                return false;
+            }
+        }
+
+        // Function to check and update billing cycle
+        async function checkBillingCycle(email) {
+            try {
+                // Get user data
+                const { data, error } = await supabase
+                    .from('usage')
+                    .select('*')
+                    .eq('user_email', email);
+
+                if (error) throw error;
+
+                // If no user or no billing cycle, exit
+                if (!data || data.length === 0 || !data[0].billing_cycle_start) {
+                    return;
+                }
+
+                const userData = data[0];
+                const today = new Date();
+                const billingStart = new Date(userData.billing_cycle_start);
+
+                // Calculate next billing date (1 month from billing start)
+                const nextBillingDate = new Date(billingStart);
+                nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
+
+                // If today is on or after the next billing date, reset credits
+                if (today >= nextBillingDate) {
+                    console.log("Billing cycle renewal detected");
+
+                    // Update billing cycle start to today
+                    const newBillingStart = today.toISOString().split('T')[0];
+
+                    // Reset pages_used and update billing_cycle_start
+                    const { data: updateData, error: updateError } = await supabase
+                        .from('usage')
+                        .update({
+                            pages_used: 0,
+                            pages_remaining: userData.page_credits,
+                            billing_cycle_start: newBillingStart
+                        })
+                        .eq('id', userData.id);
+
+                    if (updateError) throw updateError;
+
+                    console.log("Billing cycle updated:", updateData);
+
+                    // Refresh the usage display
+                    fetchUserUsageData(email);
+                }
+            } catch (err) {
+                console.error("Error checking billing cycle:", err);
+            }
+        }
+
+        // Function to fetch and display user usage data
+        async function fetchUserUsageData(email) {
+            try {
+                // Get rows for this user
+                const { data, error } = await supabase
+                    .from('usage')
+                    .select('*')
+                    .eq('user_email', email);
+
+                if (error) throw error;
+
+                // Get the first row if multiple exist
+                const userData = data && data.length > 0 ? data[0] : null;
+
+                // Update the UI with the data
+                const usageStatsElement = document.getElementById('usage-stats');
+
+                if (userData) {
+                    const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
+                    
+                    usageStatsElement.innerHTML = `
+                        <div class="usage-stats-container">
+                            <div class="usage-stat">
+                                <span class="usage-label">Plan:</span>
+                                <span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
+                            </div>
+                            <div class="usage-stat">
+                                <span class="usage-label">Pages Used:</span>
+                                <span class="usage-value">${userData.pages_used || 0}</span>
+                            </div>
+                            <div class="usage-stat">
+                                <span class="usage-label">Pages Remaining:</span>
+                                <span class="usage-value">${userData.pages_remaining || 100}</span>
+                            </div>
+                            <div class="usage-stat">
+                                <span class="usage-label">Total Credits:</span>
+                                <span class="usage-value">${userData.page_credits || 100}</span>
+                            </div>
+                            
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${usagePercentage}%;"></div>
+                            </div>
+                        </div>
+                    `;
+
+                    // Also check if billing cycle needs to be updated
+                    checkBillingCycle(email);
+                } else {
+                    usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+                }
+            } catch (err) {
+                console.error("Error fetching usage data:", err);
+                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+            }
+        }
+
+        // Get user profile and update Supabase
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize debug logging for Outseta events
+            const enableDebugLogging = true;
+
+            // Function to log event data for debugging
+            function logEventData(eventName, params) {
+                if (enableDebugLogging) {
+                    console.log(`${eventName} event received:`, params);
+                    // Try to identify where the plan data might be
+                    if (params) {
+                        if (params.Plan) console.log("Plan data found at params.Plan:", params.Plan);
+                        if (params.plan) console.log("Plan data found at params.plan:", params.plan);
+                        if (params.subscription && params.subscription.plan) {
+                            console.log("Plan data found at params.subscription.plan:", params.subscription.plan);
+                        }
+                        if (params.subscription && params.subscription.Plan) {
+                            console.log("Plan data found at params.subscription.Plan:", params.subscription.Plan);
+                        }
+                    }
+                }
+            }
+
+            // Improved handler for subscription.update events
+            Outseta.on("subscription.update", async (params) => {
+                logEventData("subscription.update", params);
+                try {
+                    const profile = await Outseta.getUser();
+                    if (!profile || !profile.Email) {
+                        console.error("Could not get user profile");
+                        return;
+                    }
+
+                    // Extract plan name - checking all possible locations
+                    let planName = "Free Trial"; // Default fallback
+                    if (params) {
+                        // Direct Plan property at the root (seen in your console logs)
+                        if (params.Plan && params.Plan.Name) {
+                            planName = params.Plan.Name;
+                        }
+                        // Lowercase alternative
+                        else if (params.plan && params.plan.name) {
+                            planName = params.plan.name;
+                        }
+                        // Check within subscription object
+                        else if (params.subscription) {
+                            if (params.subscription.Plan && params.subscription.Plan.Name) {
+                                planName = params.subscription.Plan.Name;
+                            }
+                            else if (params.subscription.plan && params.subscription.plan.name) {
+                                planName = params.subscription.plan.name;
+                            }
+                        }
+                    }
+
+                    console.log(`Updating plan for ${profile.Email} to ${planName}`);
+                    // Update user plan in Supabase
+                    await updateUserPlan(profile.Email, planName);
+                } catch (err) {
+                    console.error("Error handling subscription update:", err);
+                }
+            });
+
+            // Improved handler for subscription.reopen events (same logic)
+            Outseta.on("subscription.reopen", async (params) => {
+                logEventData("subscription.reopen", params);
+                try {
+                    const profile = await Outseta.getUser();
+                    if (!profile || !profile.Email) {
+                        console.error("Could not get user profile");
+                        return;
+                    }
+
+                    // Extract plan name - checking all possible locations
+                    let planName = "Free Trial"; // Default fallback
+                    if (params) {
+                        // Direct Plan property at the root
+                        if (params.Plan && params.Plan.Name) {
+                            planName = params.Plan.Name;
+                        }
+                        // Lowercase alternative
+                        else if (params.plan && params.plan.name) {
+                            planName = params.plan.name;
+                        }
+                        // Check within subscription object
+                        else if (params.subscription) {
+                            if (params.subscription.Plan && params.subscription.Plan.Name) {
+                                planName = params.subscription.Plan.Name;
+                            }
+                            else if (params.subscription.plan && params.subscription.plan.name) {
+                                planName = params.subscription.plan.name;
+                            }
+                        }
+                    }
+
+                    console.log(`Updating plan for ${profile.Email} to ${planName}`);
+                    // Update user plan in Supabase
+                    await updateUserPlan(profile.Email, planName);
+                } catch (err) {
+                    console.error("Error handling subscription reopen:", err);
+                }
+            });
+
+            Outseta.getUser().then(async (profile) => {
+                if (profile) {
+                    console.log("PersonUid:", profile.Uid);
+                    console.log("Email:", profile.Email);
+                    console.log("AccountUid:", profile.Account.Uid);
+
+                    // Upsert - create/update row in Supabase
+                    try {
+                        // First, let's check if the user already exists
+                        let { data: existingUser, error: fetchError } = await supabase
+                            .from('usage')
+                            .select('*')
+                            .eq('user_email', profile.Email);
+
+                        // Set default values
+                        let pages_used = 0;
+                        let page_credits = 100;
+                        let plan_name = 'Free Trial';
+                        let rowId = null;
+                        let billing_cycle_start;
+
+                        // If user exists, use their data
+                        if (existingUser && existingUser.length > 0) {
+                            // User exists - use the first row we found
+                            pages_used = existingUser[0].pages_used || 0;
+                            page_credits = existingUser[0].page_credits || 100;
+                            plan_name = existingUser[0].plan_name || 'Free Trial';
+                            rowId = existingUser[0].id;
+                            console.log("Found existing user with ID:", rowId);
+                            // Don't modify the plan name for existing users
+                            // This is the key change - we're preserving the plan name from the database
+                        } else {
+                            console.log("No existing user found, will create new record");
+                            // Set billing cycle start date for new users
+                            const today = new Date();
+                            billing_cycle_start = today.toISOString().split('T')[0];
+                        }
+
+                        // Calculate pages_remaining
+                        const pages_remaining = page_credits - pages_used;
+
+                        // Prepare the data object
+                        const userData = {
+                            user_email: profile.Email,
+                            pages_used: pages_used,
+                            pages_remaining: pages_remaining,
+                            plan_name: plan_name, // Use the variable instead of hardcoding 'Free Trial'
+                            page_credits: page_credits
+                        };
+
+                        // Add billing_cycle_start for new users
+                        if (!rowId && billing_cycle_start) {
+                            userData.billing_cycle_start = billing_cycle_start;
+                        }
+
+                        // If we have an existing ID, include it to update that specific row
+                        if (rowId) {
+                            userData.id = rowId;
+                        }
+
+                        // Upsert the data
+                        const { data, error } = await supabase
+                            .from('usage')
+                            .upsert(userData);
+
+                        if (error) throw error;
+
+                        console.log("Supabase update successful", data);
+
+                        // After successfully updating, let's fetch the data to display on the dashboard
+                        fetchUserUsageData(profile.Email);
+                    } catch (err) {
+                        console.error("Error updating Supabase:", err);
+                    }
+                }
+            }).catch(err => {
+                console.error("Error getting Outseta user:", err);
+            });
+        });
+    </script>
 </body>
 </html>
+
 
