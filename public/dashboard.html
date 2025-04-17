@@ -164,6 +164,11 @@ border-radius: 3px;
 
 }
 
+  .action-buttons a {
+    text-decoration: none;
+}
+
+
 /* Main Content */
 
 .aqua-panel {
@@ -801,19 +806,11 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 </div>
 
 <!-- Action Buttons Card -->
-
 <div class="action-card">
-
-<div class="action-buttons">
-
-<a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-primary">
-  Upgrade Plan
-</a>
-
-<button class="btn btn-accent">Start Watermarking</button>
-
-</div>
-
+    <div class="action-buttons">
+        <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-primary">Upgrade Plan</a>
+        <a href="/watermark.html" id="watermarkLink" class="btn btn-accent">Start Watermarking</a>
+    </div>
 </div>
 
 <!-- Main Layout -->
