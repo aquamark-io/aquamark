@@ -669,7 +669,7 @@ async function processFiles() {
             const blob = new Blob([finalBytes], { type: 'application/pdf' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `watermarked-${new Date().toISOString().slice(0, 10)}-${file.name}`;
+            a.download = `${file.name}-protected`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
