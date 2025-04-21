@@ -287,17 +287,6 @@
 }
     }
 
-.why-it-works {
-    flex-direction: column;
-    text-align: center;
-    gap: 40px !important;
-    padding: 60px 20px !important;
-  }
-
-  .why-it-works > div {
-    max-width: 100% !important;
-  }
-    
     .reviews {
       background: linear-gradient(to right, #eef2ff, #fdf2ff);
       text-align: center;
@@ -483,6 +472,20 @@
       display: flex;
     }
 }
+
+@media (max-width: 768px) {
+  .why-it-works {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px !important;
+    padding: 40px 20px !important;
+  }
+
+  .why-it-works > div {
+    max-width: 100% !important;
+  }
+}
+
 </style>
 
 <script>
@@ -588,7 +591,7 @@
   </section>
 
 
-<section style="background:#f9f9ff; padding:50px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:120px;">
+<section class="why-it-works" style="background:#f9f9ff; padding:50px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:120px;">
   <div style="flex:1; min-width:300px; max-width:500px;">
     <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
 <span style="color:#3e5eff;"> Why </span> It Works
