@@ -590,33 +590,35 @@ async function processFiles() {
         const hologramUrl = "/holgram.png";
         const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
 
-        for (let file of pdfFiles) {
-            let pdfBytes;
-            try {
-                // Try loading the file normally (unencrypted)
-                await PDFLib.PDFDocument.load(await file.arrayBuffer(), { 
-                    ignoreEncryption: false 
-                });
-                pdfBytes = await file.arrayBuffer();
-            } catch (err) {
-                // Fallback to Render decryption
-                status.textContent = "🔐 Decrypting encrypted file...";
-                try {
-                    pdfBytes = await decryptPDF(file);
-                } catch {
-                    status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-                    return;
-                }
-            }
+for (let file of pdfFiles) {
+  let pdfBytes;
+  try {
+    await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
+      ignoreEncryption: false
+    });
+    pdfBytes = await file.arrayBuffer();
+  } catch (err) {
+    status.textContent = "🔐 Decrypting encrypted file...";
+    try {
+      pdfBytes = await decryptPDF(file);
+    } catch {
+      status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+      return;
+    }
+  }
 
-            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { 
-                ignoreEncryption: true 
-            });
-            const pages = pdfDoc.getPages();
+  const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
+    ignoreEncryption: true
+  });
 
-            // Update the counter with the number of pages in this PDF
-            pagesWatermarked += pages.length;
-            pagesWatermarkedElement.textContent = pagesWatermarked;
+  // ✅ Embed logo and hologram ONCE per document
+  const logoImage = await pdfDoc.embedJpg(logoBytes);
+  const hologramImage = await pdfDoc.embedPng(hologramBytes);
+
+  const pages = pdfDoc.getPages();
+  pagesWatermarked += pages.length;
+  pagesWatermarkedElement.textContent = pagesWatermarked;
+
 
             // Update usage in database
             const updatedPagesUsed = data.pages_used + pages.length;
@@ -632,9 +634,6 @@ async function processFiles() {
 
             if (updateError) throw updateError;
             console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
-
-            const logoImage = await pdfDoc.embedJpg(logoBytes);
-            const hologramImage = await pdfDoc.embedPng(hologramBytes);
 
             const logoDims = logoImage.scale(0.35);
             const hologramWidth = 60;
@@ -665,17 +664,19 @@ async function processFiles() {
                 });
             }
 
-           const finalBytes = await pdfDoc.save({
-    useObjectStreams: true,
-    addDefaultPage: false
+           // ✅ Compress output with objectStreams
+const finalBytes = await pdfDoc.save({
+  useObjectStreams: true,
+  addDefaultPage: false
 });
-            const blob = new Blob([finalBytes], { type: 'application/pdf' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+
+const blob = new Blob([finalBytes], { type: 'application/pdf' });
+const a = document.createElement('a');
+a.href = URL.createObjectURL(blob);
+a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
         }
 
         status.textContent = "✅ Done. Files downloaded.";
@@ -688,5 +689,3 @@ async function processFiles() {
   </script>
 </body>
 </html>
-
-
