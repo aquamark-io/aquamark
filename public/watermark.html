@@ -471,11 +471,7 @@ if (upgradePlanLink) {
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            canvas.toBlob((blob) => {
-              const fr = new FileReader();
-              fr.onload = () => resolve(fr.result);
-              fr.readAsArrayBuffer(blob);
-            }, 'image/jpeg', 0.95);
+            canvas.toBlob((blob) => { ... }, 'image/png');
           };
           img.src = e.target.result;
         };
@@ -590,35 +586,33 @@ async function processFiles() {
         const hologramUrl = "/holgram.png";
         const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
 
-for (let file of pdfFiles) {
-  let pdfBytes;
-  try {
-    await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-      ignoreEncryption: false
-    });
-    pdfBytes = await file.arrayBuffer();
-  } catch (err) {
-    status.textContent = "🔐 Decrypting encrypted file...";
-    try {
-      pdfBytes = await decryptPDF(file);
-    } catch {
-      status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-      return;
-    }
-  }
+        for (let file of pdfFiles) {
+            let pdfBytes;
+            try {
+                // Try loading the file normally (unencrypted)
+                await PDFLib.PDFDocument.load(await file.arrayBuffer(), { 
+                    ignoreEncryption: false 
+                });
+                pdfBytes = await file.arrayBuffer();
+            } catch (err) {
+                // Fallback to Render decryption
+                status.textContent = "🔐 Decrypting encrypted file...";
+                try {
+                    pdfBytes = await decryptPDF(file);
+                } catch {
+                    status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+                    return;
+                }
+            }
 
-  const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-    ignoreEncryption: true
-  });
+            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { 
+                ignoreEncryption: true 
+            });
+            const pages = pdfDoc.getPages();
 
-  // ✅ Embed logo and hologram ONCE per document
-  const logoImage = await pdfDoc.embedJpg(logoBytes);
-  const hologramImage = await pdfDoc.embedPng(hologramBytes);
-
-  const pages = pdfDoc.getPages();
-  pagesWatermarked += pages.length;
-  pagesWatermarkedElement.textContent = pagesWatermarked;
-
+            // Update the counter with the number of pages in this PDF
+            pagesWatermarked += pages.length;
+            pagesWatermarkedElement.textContent = pagesWatermarked;
 
             // Update usage in database
             const updatedPagesUsed = data.pages_used + pages.length;
@@ -635,6 +629,9 @@ for (let file of pdfFiles) {
             if (updateError) throw updateError;
             console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
 
+            const logoImage = await pdfDoc.embedPng(logoBytes);
+            const hologramImage = await pdfDoc.embedPng(hologramBytes);
+
             const logoDims = logoImage.scale(0.35);
             const hologramWidth = 60;
             const hologramHeight = 60;
@@ -642,8 +639,8 @@ for (let file of pdfFiles) {
             for (const page of pages) {
                 const { width, height } = page.getSize();
 
-                for (let x = 0; x < width; x += (logoDims.width + 100)) {
-                    for (let y = 0; y < height; y += (logoDims.height + 100)) {
+                for (let x = 0; x < width; x += (logoDims.width + 200)) {
+                    for (let y = 0; y < height; y += (logoDims.height + 200)) {
                         page.drawImage(logoImage, {
                             x,
                             y,
@@ -664,19 +661,14 @@ for (let file of pdfFiles) {
                 });
             }
 
-           // ✅ Compress output with objectStreams
-const finalBytes = await pdfDoc.save({
-  useObjectStreams: true,
-  addDefaultPage: false
-});
-
-const blob = new Blob([finalBytes], { type: 'application/pdf' });
-const a = document.createElement('a');
-a.href = URL.createObjectURL(blob);
-a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
+            const finalBytes = await pdfDoc.save();
+            const blob = new Blob([finalBytes], { type: 'application/pdf' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         status.textContent = "✅ Done. Files downloaded.";
