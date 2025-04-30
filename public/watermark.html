@@ -471,7 +471,11 @@ if (upgradePlanLink) {
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            canvas.toBlob((blob) => { ... }, 'image/png');
+            canvas.toBlob((blob) => {
+              const fr = new FileReader();
+              fr.onload = () => resolve(fr.result);
+              fr.readAsArrayBuffer(blob);
+            }, 'image/jpeg', 0.95);
           };
           img.src = e.target.result;
         };
@@ -629,7 +633,7 @@ async function processFiles() {
             if (updateError) throw updateError;
             console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
 
-            const logoImage = await pdfDoc.embedPng(logoBytes);
+            const logoImage = await pdfDoc.embedJpg(logoBytes);
             const hologramImage = await pdfDoc.embedPng(hologramBytes);
 
             const logoDims = logoImage.scale(0.35);
@@ -639,8 +643,8 @@ async function processFiles() {
             for (const page of pages) {
                 const { width, height } = page.getSize();
 
-                for (let x = 0; x < width; x += (logoDims.width + 200)) {
-                    for (let y = 0; y < height; y += (logoDims.height + 200)) {
+                for (let x = 0; x < width; x += (logoDims.width + 100)) {
+                    for (let y = 0; y < height; y += (logoDims.height + 100)) {
                         page.drawImage(logoImage, {
                             x,
                             y,
@@ -681,3 +685,5 @@ async function processFiles() {
   </script>
 </body>
 </html>
+
+
