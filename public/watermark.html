@@ -925,42 +925,50 @@
                     // Scale logo to a reasonable size
                     const logoDims = logoImage.scale(0.35);
                     
-                    // Add watermarks to all pages
-                    for (const page of pages) {
-                        const { width, height } = page.getSize();
-
-                        // Add repeating logo watermark
-                        for (let x = 0; x < width; x += (logoDims.width + 100)) {
-                            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                                page.drawImage(logoImage, {
-                                    x,
-                                    y,
-                                    width: logoDims.width,
-                                    height: logoDims.height,
-                                    opacity: 0.15,
-                                    rotate: PDFLib.degrees(45)
-                                });
-                            }
-                        }
-
-                        // Add hologram watermark if available
-                        if (hologramImage) {
-                            const hologramWidth = 60;
-                            const hologramHeight = 60;
-                            
-                            try {
-                                page.drawImage(hologramImage, {
-                                    x: width - hologramWidth - 10,
-                                    y: height - hologramHeight - 10,
-                                    width: hologramWidth,
-                                    height: hologramHeight,
-                                    opacity: 0.7
-                                });
-                            } catch (err) {
-                                console.warn("Couldn't draw hologram on page, continuing without it:", err);
-                            }
-                        }
-                    }
+                   // Add watermarks to all pages
+for (const page of pages) {
+  const { width, height } = page.getSize();
+  
+  // Reduced watermark pattern - only place 9 logos in a 3x3 grid
+  // Calculate spacing for a 3x3 grid
+  const spacingX = width / 3;
+  const spacingY = height / 3;
+  
+  // Place watermarks at strategic positions
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      // Calculate position
+      const xPos = i * spacingX + (spacingX - logoDims.width) / 2;
+      const yPos = j * spacingY + (spacingY - logoDims.height) / 2;
+      
+      page.drawImage(logoImage, {
+        x: xPos,
+        y: yPos,
+        width: logoDims.width,
+        height: logoDims.height,
+        opacity: 0.15,
+        rotate: PDFLib.degrees(45)
+      });
+    }
+  }
+  
+  // Add hologram watermark if available
+  if (hologramImage) {
+    const hologramWidth = 60;
+    const hologramHeight = 60;
+    try {
+      page.drawImage(hologramImage, {
+        x: width - hologramWidth - 10,
+        y: height - hologramHeight - 10,
+        width: hologramWidth,
+        height: hologramHeight,
+        opacity: 0.7
+      });
+    } catch (err) {
+      console.warn("Couldn't draw hologram on page, continuing without it:", err);
+    }
+  }
+}
 
                     // Modified approach to maintain original structure for OCR compatibility
                     // Apply targeted PDF optimization for smaller file size
