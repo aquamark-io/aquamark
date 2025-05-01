@@ -925,6 +925,7 @@ const logoDims = embeddedLogo.scale(0.35);
                             }
                         }
 
+
                     // Add watermarks to all pages
                     for (const page of pages) {
     const { width, height } = page.getSize();
@@ -962,7 +963,7 @@ const logoDims = embeddedLogo.scale(0.35);
 
                     // Modified approach to maintain original structure for OCR compatibility
                     // Apply targeted PDF optimization for smaller file size
-const pdfOpts = {
+               const pdfOpts = {
   useObjectStreams: true,
   compress: true
 };
