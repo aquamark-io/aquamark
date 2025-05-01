@@ -398,7 +398,7 @@
           <input type="file" id="logoInput" accept="image/png" />
           <button onclick="uploadLogo()">Save Logo</button>
           <div id="logoPreview" style="margin-top: 1rem;">
-            <img id="logoImg" src="" alt="Stored Logo" style="max-height: 100px;" />
+            <img id="logoImg" src="/placeholder-logo.png" alt="Stored Logo" style="max-height: 100px; border: 1px solid #ddd; padding: 6px; border-radius: 8px; background: #fff;" />
           </div>
         </div>
       </div>
@@ -752,8 +752,11 @@ async function uploadLogo() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const logoUrl = localStorage.getItem("aquamarkLogo");
-  if (logoUrl) {
-    document.getElementById("logoImg").src = logoUrl;
+ if (logoUrl) {
+  document.getElementById("logoImg").src = logoUrl;
+} else {
+  document.getElementById("logoImg").src = "/placeholder-logo.png";
+}
   }
 });
 </script>
