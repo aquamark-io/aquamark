@@ -399,16 +399,20 @@
           <small>We do not store your files. Downloads begin automatically after watermarking is complete.</small>
         </div>
 
-        
-<div class="upload-group">
-  <h2>Upload Logo</h2>
-  <input type="file" id="logoInput" accept="image/png" />
-  <button onclick="uploadLogo()">Save Logo</button>
-  <div id="logoPreview" style="margin-top: 1rem;">
-    <img id="logoImg" src="" alt="Stored Logo" style="max-height: 100px;" />
-  </div>
-</div>
+        <div class="upload-group">
+          <h2>Upload Logo</h2>
+          <input type="file" id="logoInput" accept="image/jpeg,image/png" />
+        </div>
 
+        <div class="upload-group">
+          <h2>Upload File(s)</h2>
+          <input type="file" id="pdfInput" accept="application/pdf" multiple />
+        </div>
+
+        <div class="action-row">
+          <button onclick="processFiles()">Watermark Now</button>
+          <div class="status" id="status"></div>
+        </div>
       </div>
     </div>
   </main>
@@ -582,13 +586,7 @@ async function processFiles() {
         }
         
         // Proceed with processing if there are enough credits
-        const logoUrl = localStorage.getItem("aquamarkLogo");
-if (!logoUrl) {
-    status.textContent = "❌ No saved logo found. Please upload and save a logo first.";
-    return;
-}
-const logoBlob = await fetch(logoUrl).then(res => res.blob());
-const logoBytes = await logoBlob.arrayBuffer();
+        const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
         const hologramUrl = "/holgram.png";
         const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
 
@@ -685,56 +683,7 @@ const logoBytes = await logoBlob.arrayBuffer();
     }
 }
   </script>
-
-<script>
-const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // truncate if needed
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-async function uploadLogo() {
-  const fileInput = document.getElementById("logoInput");
-  const status = document.getElementById("status");
-  if (!fileInput.files[0]) {
-    status.textContent = "Please select a PNG logo to upload.";
-    return;
-  }
-
-  const profile = await Outseta.getUser();
-  if (!profile || !profile.Email) {
-    status.textContent = "Unable to retrieve user email.";
-    return;
-  }
-
-  const email = profile.Email;
-  const file = fileInput.files[0];
-  const filePath = `${email}/logo.png`;
-
-  const { error } = await supabase.storage.from("logos").upload(filePath, file, {
-    upsert: true,
-    contentType: "image/png"
-  });
-
-  if (error) {
-    status.textContent = "❌ Logo upload failed.";
-    console.error(error);
-    return;
-  }
-
-  const { data: publicData } = supabase.storage.from("logos").getPublicUrl(filePath);
-  const logoUrl = publicData.publicUrl;
-
-  localStorage.setItem("aquamarkLogo", logoUrl);
-  document.getElementById("logoImg").src = logoUrl;
-  status.textContent = "✅ Logo saved successfully!";
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const logoUrl = localStorage.getItem("aquamarkLogo");
-  if (logoUrl) {
-    document.getElementById("logoImg").src = logoUrl;
-  }
-});
-</script>
-
 </body>
 </html>
+
+
