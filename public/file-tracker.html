@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Tracker - Aquamark</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fb;
+      color: #1e1e2f;
+      margin: 0;
+      padding: 2rem;
+    }
+    .page-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      background: #7e57c2;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #4d2c91;
+    }
+    .search-box {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .search-box input {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .log-table {
+      max-width: 1000px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .log-table th, .log-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    .log-table th {
+      background: #f3e8ff;
+    }
+    .log-table td {
+      font-size: 0.95rem;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js"></script>
+</head>
+<body>
+  <h1 class="page-title">📂 File Tracker</h1>
+  <div class="btn-row">
+    <a class="btn" id="dashboardBtn">Back to Dashboard</a>
+    <a class="btn" id="watermarkBtn">Back to Watermark</a>
+  </div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search by file name..." />
+  </div>
+  <table class="log-table" id="logTable">
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>Opened At</th>
+        <th>IP Address</th>
+        <th>Browser</th>
+      </tr>
+    </thead>
+    <tbody id="logTableBody">
+      <tr><td colspan="4">Loading...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'; // Replace if you change keys
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.getElementById('dashboardBtn').href = '/dashboard.html' + window.location.search;
+    document.getElementById('watermarkBtn').href = '/watermark.html' + window.location.search;
+
+    Outseta.getUser().then(async (profile) => {
+      if (!profile || !profile.Email) return;
+      const { data, error } = await supabase
+        .from('tracking_logs')
+        .select('*')
+        .eq('user_email', profile.Email)
+        .order('timestamp', { ascending: false });
+
+      const tableBody = document.getElementById('logTableBody');
+      if (error || !data || data.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="4">No logs found.</td></tr>';
+        return;
+      }
+
+      function renderRows(rows) {
+        tableBody.innerHTML = rows.map(row => {
+          const date = new Date(row.timestamp).toLocaleString();
+          const browser = row.user_agent?.split(') ')[1] || row.user_agent || '';
+          return `<tr>
+            <td>${row.file_name || '—'}</td>
+            <td>${date}</td>
+            <td>${row.ip_address || '—'}</td>
+            <td>${browser}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      renderRows(data);
+
+      // Filter by file name
+      document.getElementById('searchInput').addEventListener('input', e => {
+        const term = e.target.value.toLowerCase();
+        const filtered = data.filter(row => (row.file_name || '').toLowerCase().includes(term));
+        renderRows(filtered);
+      });
+    });
+  </script>
+</body>
+</html>
