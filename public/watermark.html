@@ -962,25 +962,29 @@
                         }
                     }
 
-                    // Apply advanced PDF optimization options for smaller file size
+                    // Modified approach to maintain original structure for OCR compatibility
+                    // Apply targeted PDF optimization for smaller file size
                     const pdfOpts = {
-                        // Use maximum compression for content streams
-                        useObjectStreams: true,       // Group small objects into streams
-                        removeMetadata: true,         // Remove unnecessary metadata
-                        compressContentStreams: true, // Compress page content
+                        // Core compression options that won't affect OCR
+                        useObjectStreams: true,
+                        compressContentStreams: true,
                         
-                        // Add these optimization settings
-                        addDefaultRasterizationSettings: false, // Don't add default settings for unrecognized content
-                        addAnnotDefaultAppearances: false,      // Don't add default appearances for annotations
-                        
-                        // Additional compression options
-                        objectCompressionMethod: 'deflate',     // Use deflate compression for best results
-                        
-                        // Set PDF version to 1.6 for better compression support
-                        version: '1.6'
+                        // Careful with metadata - don't remove completely to preserve structure
+                        // but clean up title overlay
+                        updateInfoDict: (infoDict) => {
+                            // Remove only specific keys that might cause overlays
+                            // but keep structure intact for OCR compatibility
+                            if (infoDict.has(PDFLib.PDFName.of('Title'))) {
+                                infoDict.delete(PDFLib.PDFName.of('Title'));
+                            }
+                            if (infoDict.has(PDFLib.PDFName.of('Subject'))) {
+                                infoDict.delete(PDFLib.PDFName.of('Subject'));
+                            }
+                            return infoDict;
+                        }
                     };
                     
-                    // Save and download the file with advanced optimization options
+                    // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
                         const blob = new Blob([finalBytes], { type: 'application/pdf' });
