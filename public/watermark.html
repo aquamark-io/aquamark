@@ -369,24 +369,45 @@
     </nav>
   </header>
 
-  <main class="aqua-panel">
-    <h1 class="page-title">Watermarking Panel</h1>
+  
+<main class="aqua-panel">
+  <h1 class="page-title">Watermarking Panel</h1>
 
-    <!-- NEW: Pages Used Counter -->
-    <div class="pages-counter">
-      <div class="counter-info">
-        <h3>Pages Watermarked<h3>
-        <div class="counter-value" id="pagesWatermarked">0</div>
+  <!-- Pages Counter -->
+  <div class="pages-counter">
+    <div class="counter-info">
+      <h3>Pages Watermarked</h3>
+      <div class="counter-value" id="pagesWatermarked">0</div>
+    </div>
+    <a href="/dashboard.html" id="upgradePlanLink" class="upgrade-btn">
+      <span class="upgrade-btn-icon">⭐</span>
+      Upgrade Plan
+    </a>
+  </div>
+
+  <!-- Side-by-side cards -->
+  <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+    <!-- Logo Upload Card -->
+    <div class="aqua-card" style="flex: 1 1 300px; max-width: 400px;">
+      <div class="card-header">
+        <h2>Your Logo</h2>
       </div>
-      <a href="/dashboard.html" id="upgradePlanLink" class="upgrade-btn">
-        <span class="upgrade-btn-icon">⭐</span>
-        Upgrade Plan
-      </a>
+      <div class="card-body">
+        <div class="upload-group">
+          <h2>Upload Logo</h2>
+          <input type="file" id="logoInput" accept="image/png" />
+          <button onclick="uploadLogo()">Save Logo</button>
+          <div id="logoPreview" style="margin-top: 1rem;">
+            <img id="logoImg" src="" alt="Stored Logo" style="max-height: 100px;" />
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="aqua-card">
+    <!-- PDF Upload Card -->
+    <div class="aqua-card" style="flex: 1 1 600px;">
       <div class="card-header">
-        <h2>How It Works</h2>
+        <h2>Watermark PDFs</h2>
       </div>
       <div class="card-body">
         <div class="instructions">
@@ -400,11 +421,6 @@
         </div>
 
         <div class="upload-group">
-          <h2>Upload Logo</h2>
-          <input type="file" id="logoInput" accept="image/jpeg,image/png" />
-        </div>
-
-        <div class="upload-group">
           <h2>Upload File(s)</h2>
           <input type="file" id="pdfInput" accept="application/pdf" multiple />
         </div>
@@ -415,7 +431,9 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>
+
 
   <footer class="aqua-footer">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
@@ -586,7 +604,13 @@ async function processFiles() {
         }
         
         // Proceed with processing if there are enough credits
-        const logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
+        const logoUrl = localStorage.getItem("aquamarkLogo");
+if (!logoUrl) {
+    status.textContent = "❌ No saved logo found. Please upload and save a logo first.";
+    return;
+}
+const logoBlob = await fetch(logoUrl).then(res => res.blob());
+const logoBytes = await logoBlob.arrayBuffer();
         const hologramUrl = "/holgram.png";
         const hologramBytes = await fetch(hologramUrl).then(res => res.arrayBuffer());
 
@@ -683,7 +707,57 @@ async function processFiles() {
     }
 }
   </script>
+
+<script>
+const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // truncate if needed
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function uploadLogo() {
+  const fileInput = document.getElementById("logoInput");
+  const status = document.getElementById("status");
+  if (!fileInput.files[0]) {
+    status.textContent = "Please select a PNG logo to upload.";
+    return;
+  }
+
+  const profile = await Outseta.getUser();
+  if (!profile || !profile.Email) {
+    status.textContent = "Unable to retrieve user email.";
+    return;
+  }
+
+  const email = profile.Email;
+  const file = fileInput.files[0];
+  const filePath = `${email}/logo.png`;
+
+  const { error } = await supabase.storage.from("logos").upload(filePath, file, {
+    upsert: true,
+    contentType: "image/png"
+  });
+
+  if (error) {
+    status.textContent = "❌ Logo upload failed.";
+    console.error(error);
+    return;
+  }
+
+  const { data: publicData } = supabase.storage.from("logos").getPublicUrl(filePath);
+  const logoUrl = publicData.publicUrl;
+
+  localStorage.setItem("aquamarkLogo", logoUrl);
+  document.getElementById("logoImg").src = logoUrl;
+  status.textContent = "✅ Logo saved successfully!";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logoUrl = localStorage.getItem("aquamarkLogo");
+  if (logoUrl) {
+    document.getElementById("logoImg").src = logoUrl;
+  }
+});
+</script>
+
 </body>
 </html>
-
 
