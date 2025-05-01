@@ -10,16 +10,30 @@
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <style>
     body { font-family: 'Inter', sans-serif; background: #f8f9fb; margin: 0; padding: 0; }
-    .container { max-width: 900px; margin: 2rem auto; padding: 1rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    header, footer { background: #f3e8ff; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { height: 32px; }
+    nav a { margin-left: 2rem; text-decoration: none; font-weight: 500; color: #1e1e2f; }
+    nav a.active, nav a:hover { color: #007bff; }
+    .container { max-width: 900px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
     .upload-group { margin-bottom: 1.5rem; }
     .upload-group h2 { margin-bottom: 0.5rem; font-size: 1.1rem; }
     input[type="file"] { width: 100%; padding: 0.75rem; margin-top: 0.5rem; }
     button { background: #007bff; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
     .status { margin-top: 1rem; color: #333; font-weight: 500; }
     img#logoImg { max-height: 100px; margin-top: 1rem; border: 1px solid #ccc; border-radius: 8px; padding: 4px; background: white; }
+    footer .links a { margin-left: 2rem; font-size: 0.9rem; color: #333; text-decoration: none; }
   </style>
 </head>
 <body>
+
+<header>
+  <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo">
+  <nav>
+    <a href="/dashboard.html">Dashboard</a>
+    <a href="/watermark.html" class="active">Watermark</a>
+    <a href="/login.html">Log Out</a>
+  </nav>
+</header>
 
 <div class="container">
   <h1>Watermarking Panel</h1>
@@ -39,12 +53,20 @@
   </div>
 </div>
 
+<footer>
+  <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="logo">
+  <div class="links">
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="mailto:hey@aquamark.io">Contact Us</a>
+  </div>
+</footer>
+
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
   const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
-
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   window.supabase = supabase;
 
@@ -140,6 +162,8 @@
 
     status.textContent = "✅ Done. Files downloaded.";
   }
+
+  window.processFiles = processFiles;
 
   document.addEventListener("DOMContentLoaded", () => {
     const logoUrl = localStorage.getItem("aquamarkLogo");
