@@ -930,8 +930,8 @@
                         const { width, height } = page.getSize();
 
                         // Add repeating logo watermark
-                        for (let x = 0; x < width; x += (logoDims.width + 185)) {
-                            for (let y = 0; y < height; y += (logoDims.height + 185)) {
+                        for (let x = 0; x < width; x += (logoDims.width + 100)) {
+                            for (let y = 0; y < height; y += (logoDims.height + 100)) {
                                 page.drawImage(logoImage, {
                                     x,
                                     y,
@@ -965,24 +965,28 @@
                     // Modified approach to maintain original structure for OCR compatibility
                     // Apply targeted PDF optimization for smaller file size
                     const pdfOpts = {
-                        // Core compression options that won't affect OCR
-                        useObjectStreams: true,
-                        compressContentStreams: true,
-                        
-                        // Careful with metadata - don't remove completely to preserve structure
-                        // but clean up title overlay
-                        updateInfoDict: (infoDict) => {
-                            // Remove only specific keys that might cause overlays
-                            // but keep structure intact for OCR compatibility
-                            if (infoDict.has(PDFLib.PDFName.of('Title'))) {
-                                infoDict.delete(PDFLib.PDFName.of('Title'));
-                            }
-                            if (infoDict.has(PDFLib.PDFName.of('Subject'))) {
-                                infoDict.delete(PDFLib.PDFName.of('Subject'));
-                            }
-                            return infoDict;
-                        }
-                    };
+  // Core compression options
+  useObjectStreams: true,
+  compressContentStreams: true,
+  
+  // Don't add additional metadata that might increase file size
+  addDefaultPage: false,
+  
+  // Preserve document structure for OCR compatibility
+  preservePDFFormFields: true,
+  
+  // Clean up only specific keys without affecting structure
+  updateInfoDict: (infoDict) => {
+    // Remove only specific keys that might cause overlays
+    if (infoDict.has(PDFLib.PDFName.of('Title'))) {
+      infoDict.delete(PDFLib.PDFName.of('Title'));
+    }
+    if (infoDict.has(PDFLib.PDFName.of('Subject'))) {
+      infoDict.delete(PDFLib.PDFName.of('Subject'));
+    }
+    return infoDict;
+  }
+};
                     
                     // Use original document to maintain structure
                     try {
