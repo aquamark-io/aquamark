@@ -925,9 +925,6 @@ const logoDims = embeddedLogo.scale(0.35);
                             }
                         }
 
-                    // Scale logo to a reasonable size
-                    const logoDims = logoImage.scale(0.35);
-                    
                     // Add watermarks to all pages
                     for (const page of pages) {
     const { width, height } = page.getSize();
@@ -965,15 +962,11 @@ const logoDims = embeddedLogo.scale(0.35);
 
                     // Modified approach to maintain original structure for OCR compatibility
                     // Apply targeted PDF optimization for smaller file size
-                    const pdfOpts = {
-  // Core compression options
+const pdfOpts = {
   useObjectStreams: true,
-  compressContentStreams: true,
-  
-  // Preserve document structure for OCR compatibility
-  preservePDFFormFields: true
+  compress: true
 };
-                    
+                        
                     // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
