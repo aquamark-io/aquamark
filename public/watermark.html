@@ -862,7 +862,7 @@
                         } catch (err) {
                             console.log("PDF may be encrypted, attempting to decrypt:", err);
                             // Fallback to Render decryption
-                            status.textContent = "🔐 Decrypting protected file...";
+                            status.textContent = "🥷 Decrypting protected file...";
                             try {
                                 pdfBytes = await decryptPDF(file);
                             } catch (decryptErr) {
