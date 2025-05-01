@@ -721,257 +721,140 @@
             return await response.arrayBuffer();
         }
 
-        async function processFiles() {
-            const status = document.getElementById("status");
-            const pdfInput = document.getElementById("pdfInput");
-            const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
-            
-            // Check if we have a stored logo or a newly uploaded logo
-            let logoUrl = localStorage.getItem("aquamarkLogo");
-            const logoInput = document.getElementById("logoInput");
-            
-            if (!logoUrl && !logoInput.files[0]) {
-                status.textContent = "Please upload a logo first.";
-                return;
+        
+async function processFiles() {
+    const status = document.getElementById("status");
+    const pdfInput = document.getElementById("pdfInput");
+    const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
+
+    let logoUrl = localStorage.getItem("aquamarkLogo");
+    const logoInput = document.getElementById("logoInput");
+
+    if (!logoUrl && !logoInput.files[0]) {
+        status.textContent = "Please upload a logo first.";
+        return;
+    }
+
+    if (pdfInput.files.length === 0) {
+        status.textContent = "Please upload at least one PDF.";
+        return;
+    }
+
+    status.textContent = "⏳ Processing...";
+    pagesWatermarked = 0;
+    pagesWatermarkedElement.textContent = pagesWatermarked;
+
+    try {
+        const profile = await Outseta.getUser();
+        if (!profile || !profile.Email) throw new Error("Unable to retrieve user profile");
+
+        const { data, error } = await supabase
+            .from('usage')
+            .select('*')
+            .eq('user_email', profile.Email)
+            .single();
+        if (error || !data) throw error || new Error("No usage data found for this user");
+
+        const pdfFiles = Array.from(pdfInput.files);
+        let totalPagesNeeded = 0;
+
+        for (let file of pdfFiles) {
+            try {
+                const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: false });
+                totalPagesNeeded += pdfDoc.getPageCount();
+            } catch {
+                const decrypted = await decryptPDF(file);
+                const pdfDoc = await PDFLib.PDFDocument.load(decrypted, { ignoreEncryption: true });
+                totalPagesNeeded += pdfDoc.getPageCount();
             }
-            
-            if (pdfInput.files.length === 0) {
-                status.textContent = "Please upload at least one PDF.";
-                return;
+        }
+
+        if (data.pages_remaining < totalPagesNeeded) {
+            status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
+            const upgradeBtn = document.getElementById('upgradePlanLink');
+            if (upgradeBtn) {
+                upgradeBtn.style.animation = 'pulse 1.5s infinite';
+                upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
+            }
+            return;
+        }
+
+        // Get logo bytes once and embed it once
+        let logoBytes;
+        if (logoInput.files[0]) {
+            logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
+        } else if (logoUrl) {
+            const response = await fetch(logoUrl + "?t=" + new Date().getTime());
+            if (!response.ok) throw new Error("Failed to fetch logo.");
+            logoBytes = await response.arrayBuffer();
+        } else {
+            throw new Error("No logo available.");
+        }
+
+        let logoImage = null;
+        const sampleDoc = await PDFLib.PDFDocument.create();
+        try {
+            logoImage = await sampleDoc.embedPng(logoBytes);
+        } catch {
+            logoImage = await sampleDoc.embedJpg(logoBytes);
+        }
+        const logoDims = logoImage.scale(0.35);
+
+        for (let file of pdfFiles) {
+            let pdfBytes;
+            try {
+                const fileBuffer = await file.arrayBuffer();
+                await PDFLib.PDFDocument.load(fileBuffer, { ignoreEncryption: false });
+                pdfBytes = fileBuffer;
+            } catch {
+                status.textContent = "🔐 Decrypting protected file...";
+                pdfBytes = await decryptPDF(file);
             }
 
-            status.textContent = "⏳ Processing...";
-
-            // Reset counter for this session
-            pagesWatermarked = 0;
+            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+            const logoRef = await pdfDoc.embedPng(logoBytes);
+            const pages = pdfDoc.getPages();
+            pagesWatermarked += pages.length;
             pagesWatermarkedElement.textContent = pagesWatermarked;
 
-            try {
-                // Get current user email from Outseta
-                const profile = await Outseta.getUser();
-                if (!profile || !profile.Email) {
-                    throw new Error("Unable to retrieve user profile");
-                }
+            const updatedPagesUsed = data.pages_used + pages.length;
+            const updatedPagesRemaining = data.page_credits - updatedPagesUsed;
+            await supabase.from('usage').update({
+                pages_used: updatedPagesUsed,
+                pages_remaining: updatedPagesRemaining
+            }).eq('user_email', profile.Email);
 
-                // Get current usage data
-                const { data, error } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', profile.Email)
-                    .single();
-
-                if (error) throw error;
-                if (!data) throw new Error("No usage data found for this user");
-
-                // Calculate total pages needed for all PDFs
-                const pdfFiles = Array.from(pdfInput.files);
-                let totalPagesNeeded = 0;
-
-                for (let file of pdfFiles) {
-                    let pdfBytes;
-                    try {
-                        // Try loading the file normally (unencrypted)
-                        const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-                            ignoreEncryption: false
+            const dims = logoRef.scale(0.35);
+            for (const page of pages) {
+                const { width, height } = page.getSize();
+                for (let x = 0; x < width; x += (dims.width + 100)) {
+                    for (let y = 0; y < height; y += (dims.height + 100)) {
+                        page.drawImage(logoRef, {
+                            x, y, width: dims.width, height: dims.height,
+                            opacity: 0.15, rotate: PDFLib.degrees(45)
                         });
-                        pdfBytes = await file.arrayBuffer();
-                        totalPagesNeeded += pdfDoc.getPageCount();
-                    } catch (err) {
-                        // Fallback to Render decryption
-                        status.textContent = "🔐 Decrypting encrypted file to check page count...";
-                        try {
-                            pdfBytes = await decryptPDF(file);
-                            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-                                ignoreEncryption: true
-                            });
-                            totalPagesNeeded += pdfDoc.getPageCount();
-                        } catch {
-                            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-                            return;
-                        }
                     }
                 }
+            }
 
-                // Check if user has enough credits
-                if (data.pages_remaining < totalPagesNeeded) {
-                    status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
-                    
-                    // Highlight the upgrade button
-                    const upgradeBtn = document.getElementById('upgradePlanLink');
-                    if (upgradeBtn) {
-                        upgradeBtn.style.animation = 'pulse 1.5s infinite';
-                        upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
-                    }
-                    return;
-                }
+            const finalBytes = await pdfDoc.save({ useObjectStreams: true, compress: true });
+            const blob = new Blob([finalBytes], { type: 'application/pdf' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(a.href), 100);
+        }
 
-                // Get logo bytes - either from stored logo or newly uploaded logo
-                let logoBytes;
-                try {
-                    if (logoInput.files[0]) {
-                        // Use the just-uploaded logo
-                        logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
-                    } else if (logoUrl) {
-                        // Use the stored logo with error handling
-                        try {
-                            const response = await fetch(logoUrl + "?t=" + new Date().getTime());
-                            if (!response.ok) {
-                                throw new Error(`Failed to fetch logo: ${response.status}`);
-                            }
-                            logoBytes = await response.arrayBuffer();
-                        } catch (fetchError) {
-                            console.error("Error fetching stored logo:", fetchError);
-                            status.textContent = "❌ Couldn't load saved logo. Please upload a new one.";
-                            return;
-                        }
-                    } else {
-                        status.textContent = "❌ No logo available. Please upload a logo first.";
-                        return;
-                    }
-                    
-                    // Verify we have valid image data
-                    if (!logoBytes || logoBytes.byteLength === 0) {
-                        throw new Error("Invalid logo data");
-                    }
-                    
-                    // Get hologram image for watermarking
-                    const hologramUrl = "/holgram.png";
-                    let hologramBytes;
-                    try {
-                        const response = await fetch(hologramUrl);
-                        if (!response.ok) {
-                            console.warn("Hologram image not found, continuing without it");
-                            hologramBytes = null;
-                        } else {
-                            hologramBytes = await response.arrayBuffer();
-                        }
-                    } catch (err) {
-                        console.warn("Error loading hologram, continuing without it:", err);
-                        hologramBytes = null;
-                    }
-
-                    for (let file of pdfFiles) {
-                        let pdfBytes;
-                        try {
-                            // Try loading the file normally (unencrypted)
-                            const fileBuffer = await file.arrayBuffer();
-                            await PDFLib.PDFDocument.load(fileBuffer, {
-                                ignoreEncryption: false
-                            });
-                            pdfBytes = fileBuffer;
-                        } catch (err) {
-                            console.log("PDF may be encrypted, attempting to decrypt:", err);
-                            // Fallback to Render decryption
-                            status.textContent = "🔐 Decrypting protected file...";
-                            try {
-                                pdfBytes = await decryptPDF(file);
-                            } catch (decryptErr) {
-                                console.error("Decryption error:", decryptErr);
-                                status.textContent = "❌ Could not process PDF. It may be corrupted or password-protected.";
-                                return;
-                            }
-                        }
-
-                        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-                            ignoreEncryption: true
-                        });
-
-                        const pages = pdfDoc.getPages();
-
-                        // Update the counter with the number of pages in this PDF
-                        pagesWatermarked += pages.length;
-                        pagesWatermarkedElement.textContent = pagesWatermarked;
-
-                        // Update usage in database
-                        const updatedPagesUsed = data.pages_used + pages.length;
-                        const updatedPagesRemaining = data.page_credits - updatedPagesUsed;
-
-                        const { error: updateError } = await supabase
-                            .from('usage')
-                            .update({
-                                pages_used: updatedPagesUsed,
-                                pages_remaining: updatedPagesRemaining
-                            })
-                            .eq('user_email', profile.Email);
-
-                        if (updateError) throw updateError;
-                        console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
-
-                        // Embed logo image - try PNG first, fall back to JPG if needed
-                        let logoImage;
-                        try {
-                            logoImage = await pdfDoc.embedPng(logoBytes);
-                        } catch (pngError) {
-                            console.log("Failed to embed as PNG, trying as JPG:", pngError);
-                            try {
-                                logoImage = await pdfDoc.embedJpg(logoBytes);
-                            } catch (jpgError) {
-                                console.error("Failed to embed logo in any format:", jpgError);
-                                status.textContent = "❌ Logo format is not compatible. Please try a different image.";
-                                return;
-                            }
-                        }
-                        
-                        // Embed hologram if available
-                        let hologramImage = null;
-                        if (hologramBytes) {
-                            try {
-                                hologramImage = await pdfDoc.embedPng(hologramBytes);
-                            } catch (err) {
-                                console.warn("Failed to embed hologram, continuing without it:", err);
-                            }
-                        }
-
-                    // Scale logo to a reasonable size
-                    const logoDims = logoImage.scale(0.35);
-                    
-                    // Add watermarks to all pages
-                    for (const page of pages) {
-                        const { width, height } = page.getSize();
-
-                        // Add repeating logo watermark
-                        for (let x = 0; x < width; x += (logoDims.width + 100)) {
-                            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                                page.drawImage(logoImage, {
-                                    x,
-                                    y,
-                                    width: logoDims.width,
-                                    height: logoDims.height,
-                                    opacity: 0.15,
-                                    rotate: PDFLib.degrees(45)
-                                });
-                            }
-                        }
-
-                        // Add hologram watermark if available
-                        if (hologramImage) {
-                            const hologramWidth = 60;
-                            const hologramHeight = 60;
-                            
-                            try {
-                                page.drawImage(hologramImage, {
-                                    x: width - hologramWidth - 10,
-                                    y: height - hologramHeight - 10,
-                                    width: hologramWidth,
-                                    height: hologramHeight,
-                                    opacity: 0.7
-                                });
-                            } catch (err) {
-                                console.warn("Couldn't draw hologram on page, continuing without it:", err);
-                            }
-                        }
-                    }
-
-                    // Modified approach to maintain original structure for OCR compatibility
-                    // Apply targeted PDF optimization for smaller file size
-                    const pdfOpts = {
-  // Core compression options
-  useObjectStreams: true,
-  compressContentStreams: true,
-  
-  // Preserve document structure for OCR compatibility
-  preservePDFFormFields: true
-};
+        status.textContent = "✅ Done. Files downloaded.";
+    } catch (err) {
+        console.error("Error processing files:", err);
+        status.textContent = `❌ Error: ${err.message}`;
+    }
+}
+;
                     
                     // Use original document to maintain structure
                     try {
