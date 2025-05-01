@@ -420,7 +420,7 @@
                 <div class="instructions">
                     <strong>Instructions:</strong>
                     <ul>
-                        <li>Upload your logo (transparent background for best results)</li>
+                        <li>Upload your logo (transparent PNG for best results, smaller than 1MB)</li>
                         <li>Save your logo to use it in future sessions</li>
                         <li>Upload any PDF</li>
                         <li>Select "Watermark Now" to begin processing</li>
@@ -510,32 +510,77 @@
                     return;
                 }
 
-                const path = `${profile.Email}/logo.png`;
-                const { data } = supabase.storage.from("logos").getPublicUrl(path);
+                // Get list of files in user's folder to find the latest logo
+                const { data: filesList, error: listError } = await supabase.storage
+                    .from("logos")
+                    .list(profile.Email);
+                
+                if (listError) {
+                    console.error("Error listing logos:", listError);
+                    return;
+                }
+                
+                if (!filesList || filesList.length === 0) {
+                    console.log("No saved logos found.");
+                    return;
+                }
+                
+                // Find the latest logo file (with the highest timestamp)
+                const logoFiles = filesList.filter(file => file.name.startsWith('logo-'));
+                
+                if (logoFiles.length === 0) {
+                    // Try fallback to legacy path
+                    const { data } = supabase.storage.from("logos").getPublicUrl(`${profile.Email}/logo.png`);
+                    
+                    if (data && data.publicUrl) {
+                        // Store URL in localStorage
+                        localStorage.setItem("aquamarkLogo", data.publicUrl);
+                        
+                        // Add cache busting parameter
+                        const cacheBustUrl = data.publicUrl + "?t=" + new Date().getTime();
+                        loadLogoImage(cacheBustUrl);
+                    }
+                    return;
+                }
+                
+                // Sort by timestamp in filename (logo-1234567890.png)
+                logoFiles.sort((a, b) => {
+                    const timestampA = parseInt(a.name.split('-')[1]) || 0;
+                    const timestampB = parseInt(b.name.split('-')[1]) || 0;
+                    return timestampB - timestampA;
+                });
+                
+                // Get the latest logo
+                const latestLogo = logoFiles[0];
+                const logoPath = `${profile.Email}/${latestLogo.name}`;
+                const { data } = supabase.storage.from("logos").getPublicUrl(logoPath);
                 
                 if (data && data.publicUrl) {
-                    // Store URL in localStorage for later use
+                    // Store URL in localStorage
                     localStorage.setItem("aquamarkLogo", data.publicUrl);
                     
-                    // Add cache busting parameter to prevent browser caching
+                    // Add cache busting parameter
                     const cacheBustUrl = data.publicUrl + "?t=" + new Date().getTime();
-                    
-                    // Verify the image can be loaded before updating the UI
-                    const img = new Image();
-                    img.onload = function() {
-                        // Show the logo in the UI only after it's successfully loaded
-                        document.getElementById("logoImg").src = cacheBustUrl;
-                        console.log("Logo loaded successfully from Supabase");
-                    };
-                    img.onerror = function() {
-                        console.warn("Saved logo could not be loaded, using default");
-                        // Keep default image if the logo can't be loaded
-                    };
-                    img.src = cacheBustUrl;
+                    loadLogoImage(cacheBustUrl);
                 }
             } catch (error) {
                 console.error("Error loading logo:", error);
             }
+        }
+        
+        // Helper function to load the logo image with error handling
+        function loadLogoImage(url) {
+            const img = new Image();
+            img.onload = function() {
+                // Show the logo in the UI only after it's successfully loaded
+                document.getElementById("logoImg").src = url;
+                console.log("Logo loaded successfully from Supabase");
+            };
+            img.onerror = function() {
+                console.warn("Saved logo could not be loaded, using default");
+                // Keep default image if the logo can't be loaded
+            };
+            img.src = url;
         }
 
         // Function to upload and save the logo to Supabase
@@ -563,10 +608,14 @@
                 // First, normalize the image to ensure it's properly formatted
                 const imageBytes = await normalizeImagePreserveAspect(file);
                 const blob = new Blob([imageBytes], { type: 'image/png' });
-                const normalizedFile = new File([blob], file.name, { type: 'image/png' });
+                const normalizedFile = new File([blob], "logo.png", { type: 'image/png' });
+
+                // Generate a unique path name with timestamp to force cache invalidation
+                const timestamp = new Date().getTime();
+                const uniquePath = `${profile.Email}/logo-${timestamp}.png`;
 
                 // Upload the normalized file to Supabase Storage
-                const { error } = await supabase.storage.from("logos").upload(path, normalizedFile, {
+                const { error } = await supabase.storage.from("logos").upload(uniquePath, normalizedFile, {
                     upsert: true,
                     contentType: 'image/png'
                 });
@@ -577,20 +626,42 @@
                     return;
                 }
 
-                // Get the public URL for the uploaded file
-                const { data } = supabase.storage.from("logos").getPublicUrl(path);
+                // Get the public URL for the uploaded file with timestamp
+                const { data } = supabase.storage.from("logos").getPublicUrl(uniquePath);
 
-                // Add a cache-busting parameter to the URL to prevent browser caching
-                const cacheBustUrl = data.publicUrl + "?t=" + new Date().getTime();
-                
-                // Store URL in localStorage for later use (without the cache-busting parameter)
+                // Store URL in localStorage for later use
                 localStorage.setItem("aquamarkLogo", data.publicUrl);
                 
                 // Update the image preview with cache-busting
-                document.getElementById("logoImg").src = cacheBustUrl;
+                document.getElementById("logoImg").src = data.publicUrl + "?t=" + timestamp;
                 
                 console.log("Logo saved successfully to:", data.publicUrl);
                 status.textContent = "✅ Logo saved successfully!";
+
+                // Delete previous versions to save storage space
+                try {
+                    // Get list of files in user's folder
+                    const { data: filesList, error: listError } = await supabase.storage
+                        .from("logos")
+                        .list(profile.Email);
+                    
+                    if (!listError && filesList) {
+                        // Filter out the current file and delete the rest
+                        const currentFileName = uniquePath.split('/').pop();
+                        const filesToDelete = filesList
+                            .filter(file => file.name !== currentFileName && file.name.startsWith('logo-'))
+                            .map(file => `${profile.Email}/${file.name}`);
+                        
+                        if (filesToDelete.length > 0) {
+                            // Delete old files
+                            await supabase.storage.from("logos").remove(filesToDelete);
+                            console.log(`Deleted ${filesToDelete.length} old logo files`);
+                        }
+                    }
+                } catch (cleanupError) {
+                    console.warn("Error during old file cleanup:", cleanupError);
+                    // Non-critical error, continue anyway
+                }
             } catch (error) {
                 console.error("Error in uploadLogo:", error);
                 status.textContent = "❌ An error occurred during logo upload.";
@@ -603,26 +674,24 @@
                 reader.onload = function (e) {
                     const img = new Image();
                     img.onload = function () {
-                        const maxSize = 200;
+                        // Limit the logo size to prevent unnecessarily large images
+                        const maxSize = 150; // Reduced from 200 to 150px for better compression
                         let scale = Math.min(maxSize / img.width, maxSize / img.height);
                         const canvas = document.createElement('canvas');
                         canvas.width = img.width * scale;
                         canvas.height = img.height * scale;
                         const ctx = canvas.getContext('2d');
                         
-                        // Remove this line that fills with white background
-                        // to preserve transparency if it's a PNG
-                        // ctx.fillStyle = 'white';
-                        // ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        
+                        // Use transparent background
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                         
-                        // Use PNG format instead of JPEG to preserve transparency
+                        // Use PNG format with compression level
                         canvas.toBlob((blob) => {
                             const fr = new FileReader();
                             fr.onload = () => resolve(fr.result);
                             fr.readAsArrayBuffer(blob);
-                        }, 'image/png', 1.0); // Use PNG with full quality
+                        }, 'image/png', 0.8); // Add compression level to PNG (0.8 is a good balance)
                     };
                     img.src = e.target.result;
                 };
@@ -882,9 +951,17 @@
                         }
                     }
 
-                    // Save and download the file
+                    // Apply PDF optimization options for smaller file size
+                    const pdfOpts = {
+                        // Use lower quality settings for any embedded images
+                        useObjectStreams: true,  // Group small objects into streams for better compression
+                        removeMetadata: true,    // Remove unnecessary metadata
+                        compressContentStreams: true  // Compress page content
+                    };
+                    
+                    // Save and download the file with optimization options
                     try {
-                        const finalBytes = await pdfDoc.save();
+                        const finalBytes = await pdfDoc.save(pdfOpts);
                         const blob = new Blob([finalBytes], { type: 'application/pdf' });
                         const a = document.createElement('a');
                         a.href = URL.createObjectURL(blob);
