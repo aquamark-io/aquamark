@@ -850,24 +850,6 @@
                         hologramBytes = null;
                     }
 
-                    // Embed logo ONCE before looping over PDFs
-let embeddedLogo;
-try {
-    const tempDoc = await PDFLib.PDFDocument.create(); // temp doc to test embedding
-    embeddedLogo = await tempDoc.embedPng(logoBytes);
-} catch (pngError) {
-    console.warn("PNG failed, trying JPG...");
-    try {
-        const tempDoc = await PDFLib.PDFDocument.create();
-        embeddedLogo = await tempDoc.embedJpg(logoBytes);
-    } catch (jpgError) {
-        console.error("Logo embedding failed:", jpgError);
-        status.textContent = "❌ Unsupported logo format.";
-        return;
-    }
-}
-const logoDims = embeddedLogo.scale(0.35);
-
                     for (let file of pdfFiles) {
                         let pdfBytes;
                         try {
@@ -915,6 +897,21 @@ const logoDims = embeddedLogo.scale(0.35);
                         if (updateError) throw updateError;
                         console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
 
+                        // Embed logo image - try PNG first, fall back to JPG if needed
+                        let logoImage;
+                        try {
+                            logoImage = await pdfDoc.embedPng(logoBytes);
+                        } catch (pngError) {
+                            console.log("Failed to embed as PNG, trying as JPG:", pngError);
+                            try {
+                                logoImage = await pdfDoc.embedJpg(logoBytes);
+                            } catch (jpgError) {
+                                console.error("Failed to embed logo in any format:", jpgError);
+                                status.textContent = "❌ Logo format is not compatible. Please try a different image.";
+                                return;
+                            }
+                        }
+                        
                         // Embed hologram if available
                         let hologramImage = null;
                         if (hologramBytes) {
@@ -925,23 +922,27 @@ const logoDims = embeddedLogo.scale(0.35);
                             }
                         }
 
-
+                    // Scale logo to a reasonable size
+                    const logoDims = logoImage.scale(0.35);
+                    
                     // Add watermarks to all pages
                     for (const page of pages) {
-    const { width, height } = page.getSize();
+                        const { width, height } = page.getSize();
 
-    for (let x = 0; x < width; x += (logoDims.width + 100)) {
-        for (let y = 0; y < height; y += (logoDims.height + 100)) {
-            page.drawImage(embeddedLogo, {
-                x,
-                y,
-                width: logoDims.width,
-                height: logoDims.height,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(45)
-            });
-        }
-    }
+                        // Add repeating logo watermark
+                        for (let x = 0; x < width; x += (logoDims.width + 100)) {
+                            for (let y = 0; y < height; y += (logoDims.height + 100)) {
+                                page.drawImage(logoImage, {
+                                    x,
+                                    y,
+                                    width: logoDims.width,
+                                    height: logoDims.height,
+                                    opacity: 0.15,
+                                    rotate: PDFLib.degrees(45)
+                                });
+                            }
+                        }
+
                         // Add hologram watermark if available
                         if (hologramImage) {
                             const hologramWidth = 60;
@@ -963,11 +964,15 @@ const logoDims = embeddedLogo.scale(0.35);
 
                     // Modified approach to maintain original structure for OCR compatibility
                     // Apply targeted PDF optimization for smaller file size
-               const pdfOpts = {
+                    const pdfOpts = {
+  // Core compression options
   useObjectStreams: true,
-  compress: true
+  compressContentStreams: true,
+  
+  // Preserve document structure for OCR compatibility
+  preservePDFFormFields: true
 };
-                        
+                    
                     // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
