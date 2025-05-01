@@ -969,23 +969,8 @@
   useObjectStreams: true,
   compressContentStreams: true,
   
-  // Don't add additional metadata that might increase file size
-  addDefaultPage: false,
-  
   // Preserve document structure for OCR compatibility
-  preservePDFFormFields: true,
-  
-  // Clean up only specific keys without affecting structure
-  updateInfoDict: (infoDict) => {
-    // Remove only specific keys that might cause overlays
-    if (infoDict.has(PDFLib.PDFName.of('Title'))) {
-      infoDict.delete(PDFLib.PDFName.of('Title'));
-    }
-    if (infoDict.has(PDFLib.PDFName.of('Subject'))) {
-      infoDict.delete(PDFLib.PDFName.of('Subject'));
-    }
-    return infoDict;
-  }
+  preservePDFFormFields: true
 };
                     
                     // Use original document to maintain structure
