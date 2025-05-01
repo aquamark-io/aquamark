@@ -674,24 +674,35 @@
                 reader.onload = function (e) {
                     const img = new Image();
                     img.onload = function () {
-                        // Limit the logo size to prevent unnecessarily large images
-                        const maxSize = 150; // Reduced from 200 to 150px for better compression
+                        // Use a higher resolution for logos to preserve quality
+                        const maxSize = 250; // Increased from 150 to 250px for better quality
                         let scale = Math.min(maxSize / img.width, maxSize / img.height);
+                        
+                        // Make sure we get a multiple of 4 for width and height (helps with compression)
+                        const width = Math.floor((img.width * scale) / 4) * 4;
+                        const height = Math.floor((img.height * scale) / 4) * 4;
+                        
                         const canvas = document.createElement('canvas');
-                        canvas.width = img.width * scale;
-                        canvas.height = img.height * scale;
-                        const ctx = canvas.getContext('2d');
+                        canvas.width = width;
+                        canvas.height = height;
                         
-                        // Use transparent background
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        // Use high-quality canvas rendering
+                        const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
                         
-                        // Use PNG format with compression level
+                        // Clear canvas with transparency
+                        ctx.clearRect(0, 0, width, height);
+                        
+                        // Draw with higher quality
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Use high-quality PNG encoding
                         canvas.toBlob((blob) => {
                             const fr = new FileReader();
                             fr.onload = () => resolve(fr.result);
                             fr.readAsArrayBuffer(blob);
-                        }, 'image/png', 0.8); // Add compression level to PNG (0.8 is a good balance)
+                        }, 'image/png'); // Don't compress (removed quality setting for PNG)
                     };
                     img.src = e.target.result;
                 };
@@ -951,15 +962,25 @@
                         }
                     }
 
-                    // Apply PDF optimization options for smaller file size
+                    // Apply advanced PDF optimization options for smaller file size
                     const pdfOpts = {
-                        // Use lower quality settings for any embedded images
-                        useObjectStreams: true,  // Group small objects into streams for better compression
-                        removeMetadata: true,    // Remove unnecessary metadata
-                        compressContentStreams: true  // Compress page content
+                        // Use maximum compression for content streams
+                        useObjectStreams: true,       // Group small objects into streams
+                        removeMetadata: true,         // Remove unnecessary metadata
+                        compressContentStreams: true, // Compress page content
+                        
+                        // Add these optimization settings
+                        addDefaultRasterizationSettings: false, // Don't add default settings for unrecognized content
+                        addAnnotDefaultAppearances: false,      // Don't add default appearances for annotations
+                        
+                        // Additional compression options
+                        objectCompressionMethod: 'deflate',     // Use deflate compression for best results
+                        
+                        // Set PDF version to 1.6 for better compression support
+                        version: '1.6'
                     };
                     
-                    // Save and download the file with optimization options
+                    // Save and download the file with advanced optimization options
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
                         const blob = new Blob([finalBytes], { type: 'application/pdf' });
