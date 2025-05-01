@@ -600,7 +600,7 @@ async function processFiles() {
                 pdfBytes = await file.arrayBuffer();
             } catch (err) {
                 // Fallback to Render decryption
-                status.textContent = "🔐 Decrypting encrypted file...";
+                status.textContent = "🥷 Decrypting encrypted file...";
                 try {
                     pdfBytes = await decryptPDF(file);
                 } catch {
