@@ -134,14 +134,13 @@
         return;
       }
 
-     fileList.innerHTML = data.map(entry => `
+fileList.innerHTML = data.map(entry => `
   <div class="file-entry">
     <div class="file-name">${entry.file_name || "Unnamed"}</div>
     <div class="meta">
       ${new Date(entry.timestamp).toLocaleString()}<br />
       IP: ${entry.ip_address || "n/a"}<br />
-      ${entry.city || "Unknown location"}<br />
-      ${entry.os || "Unknown OS"} • ${entry.device || "Unknown device"}
+      ${entry.os || "Unknown"} • ${entry.device || "Unknown"}
     </div>
   </div>
 `).join('');
