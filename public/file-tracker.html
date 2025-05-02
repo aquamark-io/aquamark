@@ -132,7 +132,7 @@
         .from('tracking_logs')
         .select('*')
         .eq('user_email', profile.Email)
-        .order('created_at', { ascending: false });
+        .order('timestamp', { ascending: false });
 
       if (error) throw error;
 
@@ -145,7 +145,7 @@
         <div class="file-entry">
           <div class="file-name">${entry.file_name || "Unnamed"}</div>
           <div class="meta">
-            ${new Date(entry.created_at).toLocaleString()}<br />
+            ${new Date(entry.timestamp).toLocaleString()}<br />
             IP: ${entry.ip || "n/a"}<br />
             ${entry.city || "Unknown"}, ${entry.state || ""}<br />
             ${entry.os || "?"} • ${entry.device || "?"}
