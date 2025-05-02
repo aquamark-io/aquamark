@@ -903,8 +903,8 @@ const logoDims = embeddedLogo.scale(0.35);
 console.log("Pixel embed starting...", file.name);
 
 try {
-const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}-batch-${Date.now()}-${Math.random().toString(36).substring(2,10)}&file_name=${encodeURIComponent(file.name)}`;  console.log("Tracking URL:", trackingUrl);
-
+// Add cache-busting parameters with both timestamp and random string
+const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}-batch-${Date.now()}-${Math.random().toString(36).substring(2,10)}&file_name=${encodeURIComponent(file.name)}&nocache=${new Date().getTime()}`;
   const trackingResponse = await fetch(trackingUrl);
   if (!trackingResponse.ok) {
     throw new Error(`Pixel fetch failed: ${trackingResponse.status} ${trackingResponse.statusText}`);
