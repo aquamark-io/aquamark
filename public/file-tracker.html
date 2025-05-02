@@ -94,33 +94,17 @@
   <h1>Document Tracking</h1>
   <img src="robber.png" alt="Cartoon Robber" class="robber-img" />
   <div class="nav-buttons">
-    <a href=\"https://www.aquamark.io/dashboard.html\">Dashboard</a>
-    <a href=\"https://www.aquamark.io/watermark.html\">Watermark</a>
-  </div>
+  <a href="https://www.aquamark.io/dashboard.html">Dashboard</a>
+  <a href="https://www.aquamark.io/watermark.html">Watermark</a>
+  <button onclick="loadTrackingData()" style="background:#7e57c2;color:white;padding:0.5rem 1rem;border:none;border-radius:6px;font-weight:600;cursor:pointer;">
+    🔄 Refresh
+  </button>
+</div>
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search files by name" oninput="filterFiles()" />
   </div>
   <div class="disclaimer">30 days available.</div>
-  <div id="fileList">
-    <div class="file-entry">
-      <div class="file-name">BusinessLoanApp_Jan.pdf</div>
-      <div class="meta">
-        Apr 30, 2025 3:14 PM<br />
-        IP: 192.168.1.14<br />
-        Los Angeles, CA<br />
-        Windows • Desktop
-      </div>
-    </div>
-    <div class="file-entry">
-      <div class="file-name">MerchantStatements_March.pdf</div>
-      <div class="meta">
-        Apr 29, 2025 9:27 AM<br />
-        IP: 192.168.1.15<br />
-        Houston, TX<br />
-        Windows • Desktop
-      </div>
-    </div>
-  </div>
+  <div id="fileList"></div>
   <script>
     function filterFiles() {
       const input = document.getElementById('searchInput').value.toLowerCase();
@@ -131,6 +115,52 @@
       });
     }
   </script>
+
+<!-- Supabase + Outseta logic -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'; // your full anon key
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  async function loadTrackingData() {
+    const fileList = document.getElementById("fileList");
+    fileList.innerHTML = "⏳ Loading...";
+    try {
+      const profile = await Outseta.getUser();
+      const { data, error } = await supabase
+        .from('tracking')
+        .select('*')
+        .eq('user_email', profile.Email)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        fileList.innerHTML = "<p style='text-align:center;color:#777;'>No file views yet.</p>";
+        return;
+      }
+
+      fileList.innerHTML = data.map(entry => `
+        <div class="file-entry">
+          <div class="file-name">${entry.file_name || "Unnamed"}</div>
+          <div class="meta">
+            ${new Date(entry.created_at).toLocaleString()}<br />
+            IP: ${entry.ip || "n/a"}<br />
+            ${entry.city || "Unknown"}, ${entry.state || ""}<br />
+            ${entry.os || "?"} • ${entry.device || "?"}
+          </div>
+        </div>
+      `).join('');
+    } catch (err) {
+      fileList.innerHTML = "<p style='color:red;'>Error loading data.</p>";
+      console.error(err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadTrackingData);
+</script>
 </body>
 </html>
+
 
