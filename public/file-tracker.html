@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document Tracking</title>
+  <title>Backdoor Tracking</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     body {
@@ -60,20 +60,7 @@
       text-align: center;
       color: #666;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-    }
-    .refresh-button {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    .refresh-button button {
-      background: #7e57c2;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
+      margin-bottom: 2rem;
     }
     .file-entry {
       background: white;
@@ -81,29 +68,18 @@
       border-radius: 8px;
       padding: 1rem;
       margin: 0 auto 1rem;
-      max-width: 100%;
+      max-width: 600px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
     }
     .file-name {
       font-weight: 600;
-      font-size: 1rem;
-      flex: 1 1 200px;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
     }
     .meta {
       font-size: 0.95rem;
       color: #555;
-      flex: 2 1 400px;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .meta span {
-      min-width: 120px;
+      line-height: 1.4;
     }
   </style>
   <script>
@@ -118,80 +94,43 @@
   <h1>Document Tracking</h1>
   <img src="robber.png" alt="Cartoon Robber" class="robber-img" />
   <div class="nav-buttons">
-    <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
-    <a href="/watermark.html" id="watermarkLink">Watermark</a>
+    <a href=\"https://www.aquamark.io/dashboard.html\">Dashboard</a>
+    <a href=\"https://www.aquamark.io/watermark.html\">Watermark</a>
   </div>
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search files by name" oninput="filterFiles()" />
   </div>
   <div class="disclaimer">30 days available.</div>
-  <div class="refresh-button">
-    <button onclick="loadTrackingData()">🔄 Refresh</button>
+  <div id="fileList">
+    <div class="file-entry">
+      <div class="file-name">BusinessLoanApp_Jan.pdf</div>
+      <div class="meta">
+        Apr 30, 2025 3:14 PM<br />
+        IP: 192.168.1.14<br />
+        Los Angeles, CA<br />
+        Windows • Desktop
+      </div>
+    </div>
+    <div class="file-entry">
+      <div class="file-name">MerchantStatements_March.pdf</div>
+      <div class="meta">
+        Apr 29, 2025 9:27 AM<br />
+        IP: 192.168.1.15<br />
+        Houston, TX<br />
+        Windows • Desktop
+      </div>
+    </div>
   </div>
-  <div id="fileList"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const urlParams = window.location.search;
-      const hashParams = window.location.hash;
-
-      const dashboardLink = document.getElementById('dashboardLink');
-      if (dashboardLink) dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
-
-      const watermarkLink = document.getElementById('watermarkLink');
-      if (watermarkLink) watermarkLink.href = "/watermark.html" + urlParams + hashParams;
-
-      loadTrackingData();
-    });
-
     function filterFiles() {
       const input = document.getElementById('searchInput').value.toLowerCase();
       const entries = document.querySelectorAll('.file-entry');
       entries.forEach(entry => {
         const name = entry.querySelector('.file-name').textContent.toLowerCase();
-        entry.style.display = name.includes(input) ? 'flex' : 'none';
+        entry.style.display = name.includes(input) ? 'block' : 'none';
       });
-    }
-
-    async function loadTrackingData() {
-      const fileList = document.getElementById("fileList");
-      fileList.innerHTML = "⏳ Loading...";
-      try {
-        const profile = await Outseta.getUser();
-        const { data, error } = await supabase
-          .from('tracking')
-          .select('*')
-          .eq('user_email', profile.Email)
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          fileList.innerHTML = "<p style='text-align:center;color:#777;'>No file views yet.</p>";
-          return;
-        }
-
-        fileList.innerHTML = data.map(entry => `
-          <div class="file-entry">
-            <div class="file-name">${entry.file_name || "Unnamed"}</div>
-            <div class="meta">
-              <span>${new Date(entry.created_at).toLocaleString()}</span>
-              <span>IP: ${entry.ip || "n/a"}</span>
-              <span>${entry.city || "Unknown"}, ${entry.state || ""}</span>
-              <span>${entry.os || "?"} • ${entry.device || "?"}</span>
-            </div>
-          </div>
-        `).join('');
-      } catch (err) {
-        fileList.innerHTML = "<p style='color:red;'>Error loading data.</p>";
-        console.error(err);
-      }
     }
   </script>
 </body>
 </html>
+
