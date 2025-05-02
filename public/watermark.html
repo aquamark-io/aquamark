@@ -902,17 +902,17 @@ const logoDims = embeddedLogo.scale(0.35);
                         // Embed tracking pixel on first page only
 try {
   const trackingUrl = `https://file-tracker-omly.onrender.com/track.gif?code=${profile.Email}-batch-${Date.now()}&file_name=${encodeURIComponent(file.name)}`;
-  const trackingImageBytes = await fetch(trackingUrl).then(res => res.arrayBuffer());
-  const trackingImage = await pdfDoc.embedPng(trackingImageBytes);
+const trackingImageBytes = await fetch(trackingUrl).then(res => res.arrayBuffer());
+const trackingImage = await pdfDoc.embedGif(trackingImageBytes); // <-- was embedPng
 
-  const firstPage = pages[0];
-  firstPage.drawImage(trackingImage, {
-    x: 0,
-    y: 0,
-    width: 1,
-    height: 1,
-    opacity: 0.01
-  });
+const firstPage = pages[0];
+firstPage.drawImage(trackingImage, {
+  x: 0,
+  y: 0,
+  width: 1,
+  height: 1,
+  opacity: 0.01
+});
 } catch (err) {
   console.warn("Tracking pixel could not be embedded:", err);
 }
