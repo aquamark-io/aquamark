@@ -75,9 +75,6 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .refresh-button button:hover {
-      background: #4d2c91;
-    }
     .file-entry {
       background: white;
       border: 1px solid #ddd;
@@ -132,10 +129,11 @@
     <button onclick="loadTrackingData()">🔄 Refresh</button>
   </div>
   <div id="fileList"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -143,14 +141,10 @@
       const hashParams = window.location.hash;
 
       const dashboardLink = document.getElementById('dashboardLink');
-      if (dashboardLink) {
-        dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
-      }
+      if (dashboardLink) dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
 
       const watermarkLink = document.getElementById('watermarkLink');
-      if (watermarkLink) {
-        watermarkLink.href = "/watermark.html" + urlParams + hashParams;
-      }
+      if (watermarkLink) watermarkLink.href = "/watermark.html" + urlParams + hashParams;
 
       loadTrackingData();
     });
