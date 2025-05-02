@@ -902,8 +902,12 @@ const logoDims = embeddedLogo.scale(0.35);
                         // Embed tracking pixel on first page only
 try {
   const trackingUrl = `https://file-tracker-omly.onrender.com/track.gif?code=${profile.Email}-batch-${Date.now()}&file_name=${encodeURIComponent(file.name)}`;
-const trackingImageBytes = await fetch(trackingUrl).then(res => res.arrayBuffer());
-const trackingImage = await pdfDoc.embedGif(trackingImageBytes); // <-- was embedPng
+const trackingResponse = await fetch(trackingUrl);
+if (!trackingResponse.ok) {
+  throw new Error(`Pixel fetch failed: ${trackingResponse.status} ${trackingResponse.statusText}`);
+}
+const trackingImageBytes = await trackingResponse.arrayBuffer();
+const trackingImage = await pdfDoc.embedGif(trackingImageBytes);
 
 const firstPage = pages[0];
 firstPage.drawImage(trackingImage, {
