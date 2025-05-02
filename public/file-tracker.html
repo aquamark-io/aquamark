@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Backdoor Tracking</title>
+  <title>Document Tracking</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     body {
@@ -68,18 +68,29 @@
       border-radius: 8px;
       padding: 1rem;
       margin: 0 auto 1rem;
-      max-width: 600px;
+      max-width: 100%;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
     .file-name {
       font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      flex: 1 1 200px;
     }
     .meta {
       font-size: 0.95rem;
       color: #555;
-      line-height: 1.4;
+      flex: 2 1 400px;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .meta span {
+      min-width: 120px;
     }
   </style>
   <script>
@@ -94,8 +105,8 @@
   <h1>Document Tracking</h1>
   <img src="robber.png" alt="Cartoon Robber" class="robber-img" />
   <div class="nav-buttons">
-    <a href=\"https://www.aquamark.io/dashboard.html\">Dashboard</a>
-    <a href=\"https://www.aquamark.io/watermark.html\">Watermark</a>
+    <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
+    <a href="/watermark.html" id="watermarkLink">Watermark</a>
   </div>
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search files by name" oninput="filterFiles()" />
@@ -105,29 +116,44 @@
     <div class="file-entry">
       <div class="file-name">BusinessLoanApp_Jan.pdf</div>
       <div class="meta">
-        Apr 30, 2025 3:14 PM<br />
-        IP: 192.168.1.14<br />
-        Los Angeles, CA<br />
-        Windows • Desktop
+        <span>Apr 30, 2025 3:14 PM</span>
+        <span>IP: 192.168.1.14</span>
+        <span>Los Angeles, CA</span>
+        <span>Windows • Desktop</span>
       </div>
     </div>
     <div class="file-entry">
       <div class="file-name">MerchantStatements_March.pdf</div>
       <div class="meta">
-        Apr 29, 2025 9:27 AM<br />
-        IP: 192.168.1.15<br />
-        Houston, TX<br />
-        Windows • Desktop
+        <span>Apr 29, 2025 9:27 AM</span>
+        <span>IP: 192.168.1.15</span>
+        <span>Houston, TX</span>
+        <span>Windows • Desktop</span>
       </div>
     </div>
   </div>
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = window.location.search;
+      const hashParams = window.location.hash;
+
+      const dashboardLink = document.getElementById('dashboardLink');
+      if (dashboardLink) {
+        dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
+      }
+
+      const watermarkLink = document.getElementById('watermarkLink');
+      if (watermarkLink) {
+        watermarkLink.href = "/watermark.html" + urlParams + hashParams;
+      }
+    });
+
     function filterFiles() {
       const input = document.getElementById('searchInput').value.toLowerCase();
       const entries = document.querySelectorAll('.file-entry');
       entries.forEach(entry => {
         const name = entry.querySelector('.file-name').textContent.toLowerCase();
-        entry.style.display = name.includes(input) ? 'block' : 'none';
+        entry.style.display = name.includes(input) ? 'flex' : 'none';
       });
     }
   </script>
