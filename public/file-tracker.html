@@ -60,7 +60,23 @@
       text-align: center;
       color: #666;
       font-size: 0.9rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .refresh-button {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .refresh-button button {
+      background: #7e57c2;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .refresh-button button:hover {
+      background: #4d2c91;
     }
     .file-entry {
       background: white;
@@ -112,27 +128,16 @@
     <input type="text" id="searchInput" placeholder="Search files by name" oninput="filterFiles()" />
   </div>
   <div class="disclaimer">30 days available.</div>
-  <div id="fileList">
-    <div class="file-entry">
-      <div class="file-name">BusinessLoanApp_Jan.pdf</div>
-      <div class="meta">
-        <span>Apr 30, 2025 3:14 PM</span>
-        <span>IP: 192.168.1.14</span>
-        <span>Los Angeles, CA</span>
-        <span>Windows • Desktop</span>
-      </div>
-    </div>
-    <div class="file-entry">
-      <div class="file-name">MerchantStatements_March.pdf</div>
-      <div class="meta">
-        <span>Apr 29, 2025 9:27 AM</span>
-        <span>IP: 192.168.1.15</span>
-        <span>Houston, TX</span>
-        <span>Windows • Desktop</span>
-      </div>
-    </div>
+  <div class="refresh-button">
+    <button onclick="loadTrackingData()">🔄 Refresh</button>
   </div>
+  <div id="fileList"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     document.addEventListener('DOMContentLoaded', function() {
       const urlParams = window.location.search;
       const hashParams = window.location.hash;
@@ -146,6 +151,8 @@
       if (watermarkLink) {
         watermarkLink.href = "/watermark.html" + urlParams + hashParams;
       }
+
+      loadTrackingData();
     });
 
     function filterFiles() {
@@ -155,6 +162,41 @@
         const name = entry.querySelector('.file-name').textContent.toLowerCase();
         entry.style.display = name.includes(input) ? 'flex' : 'none';
       });
+    }
+
+    async function loadTrackingData() {
+      const fileList = document.getElementById("fileList");
+      fileList.innerHTML = "⏳ Loading...";
+      try {
+        const profile = await Outseta.getUser();
+        const { data, error } = await supabase
+          .from('tracking')
+          .select('*')
+          .eq('user_email', profile.Email)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          fileList.innerHTML = "<p style='text-align:center;color:#777;'>No file views yet.</p>";
+          return;
+        }
+
+        fileList.innerHTML = data.map(entry => `
+          <div class="file-entry">
+            <div class="file-name">${entry.file_name || "Unnamed"}</div>
+            <div class="meta">
+              <span>${new Date(entry.created_at).toLocaleString()}</span>
+              <span>IP: ${entry.ip || "n/a"}</span>
+              <span>${entry.city || "Unknown"}, ${entry.state || ""}</span>
+              <span>${entry.os || "?"} • ${entry.device || "?"}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        fileList.innerHTML = "<p style='color:red;'>Error loading data.</p>";
+        console.error(err);
+      }
     }
   </script>
 </body>
