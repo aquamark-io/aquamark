@@ -74,9 +74,45 @@
         <p>We're currently improving our document tracking system to better monitor when and how your documents are viewed.</p>
         <p>This feature will be back online shortly with enhanced tracking capabilities.</p>
         <div class="nav-buttons">
-            <a href="/dashboard.html">Go to Dashboard</a>
-            <a href="/watermark.html">Watermark Documents</a>
+            <a href="/dashboard.html" id="dashboardLink">Go to Dashboard</a>
+            <a href="/watermark.html" id="watermarkLink">Watermark Documents</a>
         </div>
+        
+        <!-- Outseta integration -->
+        <script>
+            var o_options = {
+                domain: 'aquamark.outseta.com',
+                load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+            };
+        </script>
+        <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+        
+        <!-- Preserve URL parameters when navigating between pages -->
+        <script>
+            // Preserve URL parameters when navigating between pages
+            document.addEventListener('DOMContentLoaded', function() {
+                // Get current URL parameters
+                const urlParams = window.location.search;
+                const hashParams = window.location.hash;
+                
+                // Update dashboard link with current parameters
+                const dashboardLink = document.getElementById('dashboardLink');
+                if (dashboardLink) {
+                    dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
+                }
+                
+                // Update watermark link with current parameters
+                const watermarkLink = document.getElementById('watermarkLink');
+                if (watermarkLink) {
+                    watermarkLink.href = "/watermark.html" + urlParams + hashParams;
+                }
+            });
+            
+            // Handle logout redirection
+            if (window.location.hash === '#o-logout-link') {
+                window.location.href = '/login.html';
+            }
+        </script>
     </div>
 </body>
 </html>
