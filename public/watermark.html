@@ -907,8 +907,7 @@ if (!trackingResponse.ok) {
   throw new Error(`Pixel fetch failed: ${trackingResponse.status} ${trackingResponse.statusText}`);
 }
 const trackingImageBytes = await trackingResponse.arrayBuffer();
-const trackingImage = await pdfDoc.embedGif(trackingImageBytes);
-
+const trackingImage = await pdfDoc.embedPng(trackingImageBytes);
 const firstPage = pages[0];
 firstPage.drawImage(trackingImage, {
   x: 0,
