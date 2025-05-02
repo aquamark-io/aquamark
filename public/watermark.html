@@ -393,6 +393,7 @@
         <nav class="aqua-nav">
             <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
             <a href="/watermark.html" class="active">Watermark</a>
+            <a href="/file-tracker.html" id="fileTrackerLink">File Tracker</a>
             <a href="https://www.aquamark.io/login.html">Log Out</a>
         </nav>
     </header>
@@ -482,6 +483,10 @@
                 dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
             }
 
+            const fileTrackerLink = document.getElementById('fileTrackerLink');
+  if (fileTrackerLink) {
+    fileTrackerLink.href = "/file-tracker.html" + urlParams + hashParams;
+  }
             // Update upgrade plan link with current parameters
             const upgradePlanLink = document.getElementById('upgradePlanLink');
             if (upgradePlanLink) {
