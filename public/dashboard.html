@@ -775,6 +775,8 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 
 <a href="/watermark.html" id="watermarkLink">Watermark</a>
 
+<a href="/file-tracker.html" id="fileTrackerLink">File Tracker</a>
+
 <a href="https://www.aquamark.io/login.html">Log Out</a>
 
 </nav>
@@ -888,6 +890,11 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
         if (watermarkLink) {
             watermarkLink.href = "/watermark.html" + urlParams + hashParams;
         }
+
+      const fileTrackerLink = document.getElementById('fileTrackerLink');
+  if (fileTrackerLink) {
+    fileTrackerLink.href = "/file-tracker.html" + urlParams + hashParams;
+  }
 
       // Update start watermarking button with current parameters
   const startWatermarkBtn = document.getElementById('startWatermarkBtn');
