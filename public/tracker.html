@@ -2,164 +2,292 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>File Tracker | Aquamark</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark File Tracker</title>
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@latest/index.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      margin: 2rem;
-      background: #f9f9fb;
-      color: #333;
+      background: #f8f9fb;
+      margin: 0;
+      padding: 0;
     }
+
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .aqua-logo {
+      height: 32px;
+    }
+
+    .aqua-nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .aqua-nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #1e1e2f;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .aqua-nav a:hover,
+    .aqua-nav a.active {
+      color: #007bff;
+    }
+
+    .aqua-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background: #007bff;
+      border-radius: 3px;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
     h1 {
-      font-size: 1.75rem;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar {
       margin-bottom: 1rem;
     }
-    input[type="text"] {
+
+    .search-bar input {
       padding: 0.5rem;
+      font-size: 1rem;
       width: 100%;
       max-width: 400px;
-      font-size: 1rem;
-      margin-bottom: 1rem;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 6px;
     }
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 0.95rem;
-      background: #0066ff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      margin-bottom: 1.5rem;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #004fcc;
-    }
+
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 1rem;
       background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     }
+
     th, td {
+      text-align: left;
       padding: 0.75rem;
       border-bottom: 1px solid #eee;
-      text-align: left;
+      font-size: 0.95rem;
     }
+
     th {
-      background: #f0f0f5;
+      background: #f3e8ff;
+    }
+
+    .download-btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
       font-weight: 600;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .aqua-footer {
+      background: #f3e8ff;
+      padding: 1.5rem 2rem;
+      margin-top: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      height: 24px;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-nav a {
+      color: #1e1e2f;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-nav a:hover {
+      color: #007bff;
+    }
+
+    .footer-copyright {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .aqua-footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .footer-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
     }
   </style>
-</head>
-<body>
-  <h1>🔐 Backdoor Tracking</h1>
-  <input type="text" id="searchInput" placeholder="Search by file name..." />
-  <button onclick="downloadCSV()">Download CSV</button>
-  <table>
-    <thead>
-      <tr>
-        <th>File Name</th>
-        <th>Views</th>
-        <th>Last Opened</th>
-        <th>City / State</th>
-        <th>IP Address</th>
-        <th>Device / OS</th>
-      </tr>
-    </thead>
-    <tbody id="trackerBody"></tbody>
-  </table>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const supabase = supabase.createClient(
       'https://dvzmnikrvkvgragzhrof.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
     );
 
-    let rows = [];
-
-    async function loadData() {
-      const user = await Outseta.nocode.user();
-      const email = user.Email;
-
-      const { data, error } = await supabase
-        .from('tracking_logs')
-        .select('*')
-        .eq('user_email', email);
-
-      if (error) return console.error('Failed to fetch tracking data', error);
-
-      const grouped = {};
-      data.forEach(row => {
-        if (!grouped[row.file_name]) grouped[row.file_name] = { ...row, view_count: 0 };
-
-        grouped[row.file_name].view_count += row.view_count || 1;
-        if (new Date(row.timestamp) > new Date(grouped[row.file_name].timestamp)) {
-          grouped[row.file_name] = { ...grouped[row.file_name], ...row };
-        }
-      });
-
-      rows = Object.values(grouped);
-      const tbody = document.getElementById('trackerBody');
-      const searchInput = document.getElementById('searchInput');
-
-      function renderTable(filter = '') {
-        tbody.innerHTML = '';
-        rows.filter(r => r.file_name.toLowerCase().includes(filter.toLowerCase())).forEach(r => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${r.file_name}</td>
-            <td>${r.view_count}</td>
-            <td>${new Date(r.timestamp).toLocaleString()}</td>
-            <td>${r.city || ''}, ${r.state || ''}</td>
-            <td>${r.ip_address}</td>
-            <td>${r.device || ''} / ${r.os || ''}</td>
-          `;
-          tbody.appendChild(tr);
-        });
+    async function fetchData() {
+      const { data, error } = await supabase.from('tracking_log').select('*').order('created_at', { ascending: false });
+      if (error) {
+        console.error(error);
+        return;
       }
 
-      searchInput.addEventListener('input', (e) => {
-        renderTable(e.target.value);
+      const tableBody = document.getElementById('tracker-body');
+      tableBody.innerHTML = '';
+
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.created_at}</td>
+          <td>${row.file_name}</td>
+          <td>${row.city || ''}</td>
+          <td>${row.state || ''}</td>
+          <td>${row.ip}</td>
+        `;
+        tableBody.appendChild(tr);
       });
 
-      renderTable();
+      window.fullTrackerData = data;
+    }
+
+    function filterTable() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const tableRows = document.querySelectorAll('#tracker-body tr');
+      tableRows.forEach(row => {
+        const fileName = row.children[1].textContent.toLowerCase();
+        row.style.display = fileName.includes(query) ? '' : 'none';
+      });
     }
 
     function downloadCSV() {
-      const headers = ["File Name","Views","Last Opened","City","State","IP Address","Device","OS"];
-      const csv = [headers.join(",")];
-
-      rows.forEach(r => {
-        csv.push([
-          r.file_name,
-          r.view_count,
-          new Date(r.timestamp).toLocaleString(),
-          r.city || '',
-          r.state || '',
-          r.ip_address,
-          r.device || '',
-          r.os || ''
-        ].map(v => `"${v}"`).join(","));
+      const rows = window.fullTrackerData || [];
+      let csv = "Date,File Name,City,State,IP\n";
+      rows.forEach(row => {
+        csv += `"${row.created_at}","${row.file_name}","${row.city || ''}","${row.state || ''}","${row.ip}"\n`;
       });
-
-      const blob = new Blob([csv.join("\n")], { type: "text/csv" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
       a.href = url;
-      a.download = "tracking_log.csv";
+      a.download = 'tracker.csv';
       a.click();
-      URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(url);
     }
 
-    loadData();
+    document.addEventListener('DOMContentLoaded', fetchData);
+  </script>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
+    <nav class="aqua-nav">
+      <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
+      <a href="/watermark.html" id="watermarkLink">Watermark</a>
+      <a href="/tracker.html" class="active">File Tracker</a>
+      <a href="https://www.aquamark.io/login.html">Log Out</a>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <h1>Backdoor Tracking 🕵️‍♀️</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search by file name..." />
+    </div>
+    <button class="download-btn" onclick="downloadCSV()">Download CSV</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>File Name</th>
+          <th>City</th>
+          <th>State</th>
+          <th>IP Address</th>
+        </tr>
+      </thead>
+      <tbody id="tracker-body">
+        <tr><td colspan="5">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="aqua-footer">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo" />
+    <div class="footer-nav">
+      <a href="https://www.aquamark.io/terms.html">Terms of Service</a>
+      <a href="https://www.aquamark.io/privacy.html">Privacy Policy</a>
+      <a href="mailto:hey@aquamark.io">Contact Us</a>
+    </div>
+    <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
+  </footer>
+
+  <!-- Preserve URL Parameters -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const urlParams = window.location.search;
+      const hashParams = window.location.hash;
+
+      const dashboardLink = document.getElementById('dashboardLink');
+      const watermarkLink = document.getElementById('watermarkLink');
+
+      if (dashboardLink) dashboardLink.href += urlParams + hashParams;
+      if (watermarkLink) watermarkLink.href += urlParams + hashParams;
+    });
+
+    if (window.location.hash === '#o-logout-link') {
+      window.location.href = '/login.html';
+    }
   </script>
 </body>
 </html>
-
-
