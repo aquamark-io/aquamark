@@ -6,15 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
       background: #f8f9fb;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-
     .aqua-header {
       display: flex;
       justify-content: space-between;
@@ -26,16 +29,11 @@
       top: 0;
       z-index: 100;
     }
-
-    .aqua-logo {
-      height: 32px;
-    }
-
+    .aqua-logo { height: 32px; }
     .aqua-nav {
       display: flex;
       align-items: center;
     }
-
     .aqua-nav a {
       margin-left: 2rem;
       text-decoration: none;
@@ -44,12 +42,9 @@
       transition: all 0.2s ease;
       position: relative;
     }
-
-    .aqua-nav a:hover,
-    .aqua-nav a.active {
+    .aqua-nav a:hover, .aqua-nav a.active {
       color: #007bff;
     }
-
     .aqua-nav a.active::after {
       content: '';
       position: absolute;
@@ -60,22 +55,19 @@
       background: #007bff;
       border-radius: 3px;
     }
-
     .container {
+      flex: 1;
       padding: 2rem;
       max-width: 1200px;
       margin: 0 auto;
     }
-
     h1 {
       font-size: 2rem;
       margin-bottom: 1.5rem;
     }
-
     .search-bar {
       margin-bottom: 1rem;
     }
-
     .search-bar input {
       padding: 0.5rem;
       font-size: 1rem;
@@ -84,30 +76,13 @@
       border-radius: 6px;
       border: 1px solid #ccc;
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
-
-    th, td {
-      text-align: left;
-      padding: 0.75rem;
-      border-bottom: 1px solid #eee;
-      font-size: 0.95rem;
-    }
-
-    th {
-      background: #f3e8ff;
-    }
-
-    .download-btn {
-      margin-top: 1rem;
+    .action-buttons button {
       padding: 0.5rem 1rem;
       font-weight: 600;
       background: #007bff;
@@ -116,135 +91,74 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    th, td {
+      text-align: left;
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+      font-size: 0.95rem;
+    }
+    th { background: #f3e8ff; }
     .aqua-footer {
       background: #f3e8ff;
       padding: 1.5rem 2rem;
-      margin-top: 3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
-    .footer-logo {
-      height: 24px;
-    }
-
-    .footer-nav {
-      display: flex;
-      gap: 2rem;
-    }
-
+    .footer-logo { height: 24px; }
+    .footer-nav { display: flex; gap: 2rem; }
     .footer-nav a {
       color: #1e1e2f;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
-      transition: color 0.2s ease;
     }
-
-    .footer-nav a:hover {
-      color: #007bff;
-    }
-
     .footer-copyright {
       color: #64748b;
       font-size: 0.9rem;
     }
-
     @media (max-width: 768px) {
       .aqua-footer {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
       }
-
       .footer-nav {
         flex-direction: column;
         gap: 0.5rem;
       }
     }
   </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const supabase = supabase.createClient(
-      'https://dvzmnikrvkvgragzhrof.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-    );
-
-    async function fetchData() {
-      const { data, error } = await supabase.from('tracking_log').select('*').order('created_at', { ascending: false });
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      const tableBody = document.getElementById('tracker-body');
-      tableBody.innerHTML = '';
-
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${row.created_at}</td>
-          <td>${row.file_name}</td>
-          <td>${row.city || ''}</td>
-          <td>${row.state || ''}</td>
-          <td>${row.ip}</td>
-        `;
-        tableBody.appendChild(tr);
-      });
-
-      window.fullTrackerData = data;
-    }
-
-    function filterTable() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const tableRows = document.querySelectorAll('#tracker-body tr');
-      tableRows.forEach(row => {
-        const fileName = row.children[1].textContent.toLowerCase();
-        row.style.display = fileName.includes(query) ? '' : 'none';
-      });
-    }
-
-    function downloadCSV() {
-      const rows = window.fullTrackerData || [];
-      let csv = "Date,File Name,City,State,IP\n";
-      rows.forEach(row => {
-        csv += `"${row.created_at}","${row.file_name}","${row.city || ''}","${row.state || ''}","${row.ip}"\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'tracker.csv';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    }
-
-    document.addEventListener('DOMContentLoaded', fetchData);
-  </script>
 </head>
-
 <body>
-  <!-- HEADER -->
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
     <nav class="aqua-nav">
       <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
       <a href="/watermark.html" id="watermarkLink">Watermark</a>
-      <a href="/tracker.html" class="active">File Tracker</a>
+      <a href="/file-tracker.html" class="active">File Tracker</a>
       <a href="https://www.aquamark.io/login.html">Log Out</a>
     </nav>
   </header>
 
-  <!-- MAIN CONTENT -->
   <div class="container">
     <h1>Backdoor Tracking 🕵️‍♀️</h1>
     <div class="search-bar">
       <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search by file name..." />
     </div>
-    <button class="download-btn" onclick="downloadCSV()">Download CSV</button>
+    <div class="action-buttons">
+      <button onclick="downloadCSV()">Download CSV</button>
+      <button onclick="goToDashboard()">Go to Dashboard</button>
+      <button onclick="goToWatermark()">Go to Watermark</button>
+    </div>
     <table>
       <thead>
         <tr>
@@ -261,7 +175,6 @@
     </table>
   </div>
 
-  <!-- FOOTER -->
   <footer class="aqua-footer">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo" />
     <div class="footer-nav">
@@ -272,22 +185,64 @@
     <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
   </footer>
 
-  <!-- Preserve URL Parameters -->
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const urlParams = window.location.search;
-      const hashParams = window.location.hash;
+    const supabase = supabase.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+    );
 
-      const dashboardLink = document.getElementById('dashboardLink');
-      const watermarkLink = document.getElementById('watermarkLink');
+    async function fetchData() {
+      const { data, error } = await supabase.from('tracking_log').select('*').order('created_at', { ascending: false });
+      if (error) return console.error(error);
+      const tableBody = document.getElementById('tracker-body');
+      tableBody.innerHTML = '';
+      window.fullTrackerData = data;
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${row.created_at}</td><td>${row.file_name}</td><td>${row.city || ''}</td><td>${row.state || ''}</td><td>${row.ip}</td>`;
+        tableBody.appendChild(tr);
+      });
+    }
 
-      if (dashboardLink) dashboardLink.href += urlParams + hashParams;
-      if (watermarkLink) watermarkLink.href += urlParams + hashParams;
-    });
+    function filterTable() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('#tracker-body tr').forEach(row => {
+        const fileName = row.children[1].textContent.toLowerCase();
+        row.style.display = fileName.includes(query) ? '' : 'none';
+      });
+    }
+
+    function downloadCSV() {
+      const rows = window.fullTrackerData || [];
+      let csv = "Date,File Name,City,State,IP\n";
+      rows.forEach(row => {
+        csv += `"${row.created_at}","${row.file_name}","${row.city || ''}","${row.state || ''}","${row.ip}"
+`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'tracker.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function goToDashboard() {
+      const query = window.location.search + window.location.hash;
+      window.location.href = '/dashboard.html' + query;
+    }
+
+    function goToWatermark() {
+      const query = window.location.search + window.location.hash;
+      window.location.href = '/watermark.html' + query;
+    }
 
     if (window.location.hash === '#o-logout-link') {
       window.location.href = '/login.html';
     }
+
+    document.addEventListener('DOMContentLoaded', fetchData);
   </script>
 </body>
 </html>
