@@ -27,6 +27,19 @@
       border: 1px solid #ccc;
       border-radius: 6px;
     }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      background: #0066ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #004fcc;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -47,6 +60,7 @@
 <body>
   <h1>🔐 Backdoor Tracking</h1>
   <input type="text" id="searchInput" placeholder="Search by file name..." />
+  <button onclick="downloadCSV()">Download CSV</button>
   <table>
     <thead>
       <tr>
@@ -66,6 +80,8 @@
       'https://dvzmnikrvkvgragzhrof.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
     );
+
+    let rows = [];
 
     async function loadData() {
       const user = await Outseta.nocode.user();
@@ -88,7 +104,7 @@
         }
       });
 
-      const rows = Object.values(grouped);
+      rows = Object.values(grouped);
       const tbody = document.getElementById('trackerBody');
       const searchInput = document.getElementById('searchInput');
 
@@ -113,6 +129,32 @@
       });
 
       renderTable();
+    }
+
+    function downloadCSV() {
+      const headers = ["File Name","Views","Last Opened","City","State","IP Address","Device","OS"];
+      const csv = [headers.join(",")];
+
+      rows.forEach(r => {
+        csv.push([
+          r.file_name,
+          r.view_count,
+          new Date(r.timestamp).toLocaleString(),
+          r.city || '',
+          r.state || '',
+          r.ip_address,
+          r.device || '',
+          r.os || ''
+        ].map(v => `"${v}"`).join(","));
+      });
+
+      const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "tracking_log.csv";
+      a.click();
+      URL.revokeObjectURL(url);
     }
 
     loadData();
