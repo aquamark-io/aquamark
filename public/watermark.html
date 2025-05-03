@@ -767,32 +767,34 @@
                 if (error) throw error;
                 if (!data) throw new Error("No usage data found for this user");
 
-                // Calculate total pages needed for all PDFs
-                const pdfFiles = Array.from(pdfInput.files);
-                let totalPagesNeeded = 0;
+// Calculate total pages needed for all PDFs
+const pdfFiles = Array.from(pdfInput.files);
+let totalPagesNeeded = 0;
 
-                for (let file of pdfFiles) {
-                    let pdfBytes;
-                    try {
-                        // Try loading the file normally (unencrypted)
-                        const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-                            ignoreEncryption: false
-                        });
-                        pdfBytes = await file.arrayBuffer();
-                        totalPagesNeeded += pdfDoc.getPageCount();
-                    } catch (err) {
-                        // Fallback to Render decryption
-                        status.textContent = "🔐 Decrypting encrypted file to check page count...";
-                        try {
-                            pdfBytes = await decryptPDF(file);
-                            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-                                ignoreEncryption: true
-                            });
-                            totalPagesNeeded += pdfDoc.getPageCount();
-                        } catch {
-                            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-                            return;
-                        }
+for (let file of pdfFiles) {
+  let pdfBytes;
+  let pdfDoc;
+  try {
+    pdfBytes = await file.arrayBuffer();
+    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
+      ignoreEncryption: false
+    });
+  } catch (err) {
+    status.textContent = "🔐 Decrypting encrypted file to check page count...";
+    try {
+      pdfBytes = await decryptPDF(file);
+      pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
+        ignoreEncryption: true
+      });
+    } catch {
+      status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
+      return;
+    }
+  }
+
+  totalPagesNeeded += pdfDoc.getPageCount();
+}
+
                     }
                 }
 
