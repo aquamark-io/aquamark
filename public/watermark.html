@@ -903,13 +903,20 @@ const logoDims = embeddedLogo.scale(0.35);
 console.log("Pixel embed starting...", file.name);
 
 try {
-// Add cache-busting parameters with both timestamp and random string
-const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}`;  
-const pixelResponse = await fetch(trackingUrl);
-const pixelBytes = await pixelResponse.arrayBuffer();
-const trackingImage = await pdfDoc.embedPng(pixelBytes);
+  const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}-${Math.random()}`;
+
+  // 1x1 transparent PNG placeholder
+  const tinyPixel = new Uint8Array([
+    0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A,0x00,0x00,0x00,0x0D,0x49,0x48,0x44,0x52,
+    0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x01,0x08,0x06,0x00,0x00,0x00,0x1F,0x15,0xC4,
+    0x89,0x00,0x00,0x00,0x0A,0x49,0x44,0x41,0x54,0x78,0x9C,0x63,0x00,0x01,0x00,0x00,
+    0x05,0x00,0x01,0x0D,0x0A,0x2D,0xB4,0x00,0x00,0x00,0x00,0x49,0x45,0x4E,0x44,0xAE,
+    0x42,0x60,0x82
+  ]);
+  const embeddedPixel = await pdfDoc.embedPng(tinyPixel);
   const firstPage = pages[0];
-  firstPage.drawImage(trackingImage, {
+
+  firstPage.drawImage(embeddedPixel, {
     x: 0,
     y: 0,
     width: 1,
@@ -917,9 +924,20 @@ const trackingImage = await pdfDoc.embedPng(pixelBytes);
     opacity: 0.01
   });
 
-  console.log("Pixel embedded.");
+  // Draw invisible clickable link over it to force browser to hit URL
+  const linkText = pdfDoc.registerFontkit ? '' : ' ';
+  firstPage.drawText(linkText, {
+    x: 0,
+    y: 0,
+    size: 1,
+    opacity: 0.01,
+    color: PDFLib.rgb(1,1,1),
+    link: trackingUrl
+  });
+
+  console.log("✅ Remote tracking pixel embedded.");
 } catch (err) {
-  console.warn("Tracking pixel could not be embedded:", err);
+  console.warn("⚠️ Failed to embed pixel:", err);
 }
                         // Update the counter with the number of pages in this PDF
                         pagesWatermarked += pages.length;
