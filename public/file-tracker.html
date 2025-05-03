@@ -214,7 +214,12 @@
     );
 
     async function fetchData() {
-      const { data, error } = await supabase.from('tracking_logs').select('*').order('created_at', { ascending: false });
+const profile = await Outseta.getUser();
+const { data, error } = await supabase
+  .from('tracking_logs')
+  .select('*')
+  .eq('user_email', profile.Email)
+  .order('created_at', { ascending: false });
       if (error) return console.error(error);
       const tableBody = document.getElementById('tracker-body');
       tableBody.innerHTML = '';
