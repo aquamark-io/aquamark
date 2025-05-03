@@ -18,6 +18,7 @@
       flex-direction: column;
       min-height: 100vh;
     }
+
     .aqua-header {
       display: flex;
       justify-content: space-between;
@@ -29,11 +30,14 @@
       top: 0;
       z-index: 100;
     }
+
     .aqua-logo { height: 32px; }
+
     .aqua-nav {
       display: flex;
       align-items: center;
     }
+
     .aqua-nav a {
       margin-left: 2rem;
       text-decoration: none;
@@ -42,9 +46,12 @@
       transition: all 0.2s ease;
       position: relative;
     }
-    .aqua-nav a:hover, .aqua-nav a.active {
+
+    .aqua-nav a:hover,
+    .aqua-nav a.active {
       color: #007bff;
     }
+
     .aqua-nav a.active::after {
       content: '';
       position: absolute;
@@ -55,42 +62,49 @@
       background: #007bff;
       border-radius: 3px;
     }
+
     .container {
       flex: 1;
-      padding: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
+      padding: 2rem 3rem;
+      max-width: 100%;
+      margin: 0;
     }
+
     h1 {
       font-size: 2rem;
       margin-bottom: 1.5rem;
     }
-    .search-bar {
-      margin-bottom: 1rem;
+
+    .search-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
-    .search-bar input {
+
+    .search-actions input {
       padding: 0.5rem;
       font-size: 1rem;
-      width: 100%;
-      max-width: 400px;
       border-radius: 6px;
       border: 1px solid #ccc;
+      width: 300px;
+      max-width: 100%;
     }
-    .action-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .action-buttons button {
+
+    .search-actions button {
       padding: 0.5rem 1rem;
       font-weight: 600;
-      background: #007bff;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
+
+    .search-actions .btn-csv { background: #007bff; }
+    .search-actions .btn-dashboard { background: #00b894; }
+    .search-actions .btn-watermark { background: #6c5ce7; }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -99,13 +113,16 @@
       overflow: hidden;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     }
+
     th, td {
       text-align: left;
       padding: 0.75rem;
       border-bottom: 1px solid #eee;
       font-size: 0.95rem;
     }
+
     th { background: #f3e8ff; }
+
     .aqua-footer {
       background: #f3e8ff;
       padding: 1.5rem 2rem;
@@ -113,18 +130,23 @@
       justify-content: space-between;
       align-items: center;
     }
+
     .footer-logo { height: 24px; }
+
     .footer-nav { display: flex; gap: 2rem; }
+
     .footer-nav a {
       color: #1e1e2f;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
     }
+
     .footer-copyright {
       color: #64748b;
       font-size: 0.9rem;
     }
+
     @media (max-width: 768px) {
       .aqua-footer {
         flex-direction: column;
@@ -135,10 +157,15 @@
         flex-direction: column;
         gap: 0.5rem;
       }
+      .search-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
+
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
     <nav class="aqua-nav">
@@ -151,14 +178,14 @@
 
   <div class="container">
     <h1>Backdoor Tracking 🕵️‍♀️</h1>
-    <div class="search-bar">
+
+    <div class="search-actions">
       <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search by file name..." />
+      <button class="btn-csv" onclick="downloadCSV()">Download CSV</button>
+      <button class="btn-dashboard" onclick="goToDashboard()">Go to Dashboard</button>
+      <button class="btn-watermark" onclick="goToWatermark()">Go to Watermark</button>
     </div>
-    <div class="action-buttons">
-      <button onclick="downloadCSV()">Download CSV</button>
-      <button onclick="goToDashboard()">Go to Dashboard</button>
-      <button onclick="goToWatermark()">Go to Watermark</button>
-    </div>
+
     <table>
       <thead>
         <tr>
@@ -188,7 +215,7 @@
   <script>
     const supabase = supabase.createClient(
       'https://dvzmnikrvkvgragzhrof.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
     );
 
     async function fetchData() {
@@ -216,8 +243,7 @@
       const rows = window.fullTrackerData || [];
       let csv = "Date,File Name,City,State,IP\n";
       rows.forEach(row => {
-        csv += `"${row.created_at}","${row.file_name}","${row.city || ''}","${row.state || ''}","${row.ip}"
-`;
+        csv += `"${row.created_at}","${row.file_name}","${row.city || ''}","${row.state || ''}","${row.ip}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
