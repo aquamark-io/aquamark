@@ -15,7 +15,6 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -102,6 +101,8 @@
     .search-actions .btn-csv { background: #00b894; }
     .search-actions .btn-dashboard { background: #6c5ce7; }
     .search-actions .btn-watermark { background: #007bff; }
+    .search-actions .btn-refresh { background: #ff6b6b; }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -117,6 +118,7 @@
       font-size: 0.95rem;
     }
     th { background: #f3e8ff; }
+
     .aqua-footer {
       background: #f3e8ff;
       padding: 1.5rem 2rem;
@@ -136,6 +138,7 @@
       color: #64748b;
       font-size: 0.9rem;
     }
+
     @media (max-width: 768px) {
       .aqua-footer {
         flex-direction: column;
@@ -153,15 +156,8 @@
     }
   </style>
 </head>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const query = window.location.search + window.location.hash;
-    document.getElementById('dashboardLink').href = '/dashboard.html' + query;
-    document.getElementById('watermarkLink').href = '/watermark.html' + query;
-  });
-</script>
-<body>
 
+<body>
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
     <nav class="aqua-nav">
@@ -178,6 +174,7 @@
     <div class="search-actions">
       <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search by file name..." />
       <button class="btn-csv" onclick="downloadCSV()">Download CSV</button>
+      <button class="btn-refresh" onclick="fetchData()">Refresh</button>
       <button class="btn-dashboard" onclick="goToDashboard()">Dashboard</button>
       <button class="btn-watermark" onclick="goToWatermark()">Watermark</button>
     </div>
@@ -193,7 +190,7 @@
           <th>Views</th>
         </tr>
       </thead>
- <tbody id="tracker-body"></tbody>
+      <tbody id="tracker-body"></tbody>
     </table>
   </div>
 
@@ -214,19 +211,28 @@
     );
 
     async function fetchData() {
-const profile = await Outseta.getUser();
-const { data, error } = await supabase
-  .from('tracking_logs')
-  .select('*')
-  .eq('user_email', profile.Email)
-  .order('created_at', { ascending: false });
+      const profile = await Outseta.getUser();
+      const { data, error } = await supabase
+        .from('tracking_logs')
+        .select('*')
+        .eq('user_email', profile.Email)
+        .order('last_viewed', { ascending: false });
+
       if (error) return console.error(error);
+
       const tableBody = document.getElementById('tracker-body');
       tableBody.innerHTML = '';
       window.fullTrackerData = data;
+
       data.forEach(row => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${row.created_at}</td><td>${row.file_name}</td><td>${row.city || ''}</td><td>${row.state || ''}</td><td>${row.ip}</td><td>${row.view_count || 1}</td>`;
+        tr.innerHTML = `
+          <td>${new Date(row.last_viewed || row.created_at).toLocaleString()}</td>
+          <td>${row.file_name}</td>
+          <td>${row.city || ''}</td>
+          <td>${row.state || ''}</td>
+          <td>${row.ip}</td>
+          <td>${row.view_count || 1}</td>`;
         tableBody.appendChild(tr);
       });
     }
@@ -243,7 +249,7 @@ const { data, error } = await supabase
       const rows = window.fullTrackerData || [];
       let csv = "Date,File Name,City,State,IP,Views\n";
       rows.forEach(row => {
-        csv += `"${row.created_at}","${row.file_name}","${row.city || ''}","${row.state || ''}","${row.ip}","${row.view_count || 1}"\n`;
+        csv += `"${row.last_viewed || row.created_at}","${row.file_name}","${row.city || ''}","${row.state || ''}","${row.ip}","${row.view_count || 1}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
@@ -268,7 +274,11 @@ const { data, error } = await supabase
       window.location.href = '/login.html';
     }
 
-    document.addEventListener('DOMContentLoaded', fetchData);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('dashboardLink').href = '/dashboard.html' + window.location.search + window.location.hash;
+      document.getElementById('watermarkLink').href = '/watermark.html' + window.location.search + window.location.hash;
+      fetchData();
+    });
   </script>
 </body>
 </html>
