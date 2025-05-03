@@ -905,7 +905,10 @@ console.log("Pixel embed starting...", file.name);
 try {
   const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&nocache=${Date.now()}`;
 
-  const trackingImage = await pdfDoc.embedPng(trackingUrl); // embed *from URL*, not local file
+try {
+  const trackingResponse = await fetch(trackingUrl);
+  const trackingBytes = await trackingResponse.arrayBuffer();
+  const trackingImage = await pdfDoc.embedPng(trackingBytes);
 
   const firstPage = pages[0];
   firstPage.drawImage(trackingImage, {
