@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark File Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@latest/index.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 2rem;
+      background: #f9f9fb;
+      color: #333;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 100%;
+      max-width: 400px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+    th {
+      background: #f0f0f5;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔐 Backdoor Tracking</h1>
+  <input type="text" id="searchInput" placeholder="Search by file name..." />
+  <table>
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>Views</th>
+        <th>Last Opened</th>
+        <th>City / State</th>
+        <th>IP Address</th>
+        <th>Device / OS</th>
+      </tr>
+    </thead>
+    <tbody id="trackerBody"></tbody>
+  </table>
+
+  <script>
+    const supabase = supabase.createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
+
+    async function loadData() {
+      const user = await Outseta.nocode.user();
+      const email = user.Email;
+
+      const { data, error } = await supabase
+        .from('tracking_logs')
+        .select('*')
+        .eq('user_email', email);
+
+      if (error) return console.error('Failed to fetch tracking data', error);
+
+      const grouped = {};
+      data.forEach(row => {
+        if (!grouped[row.file_name]) grouped[row.file_name] = { ...row, view_count: 0 };
+
+        grouped[row.file_name].view_count += row.view_count || 1;
+        if (new Date(row.timestamp) > new Date(grouped[row.file_name].timestamp)) {
+          grouped[row.file_name] = { ...grouped[row.file_name], ...row };
+        }
+      });
+
+      const rows = Object.values(grouped);
+      const tbody = document.getElementById('trackerBody');
+      const searchInput = document.getElementById('searchInput');
+
+      function renderTable(filter = '') {
+        tbody.innerHTML = '';
+        rows.filter(r => r.file_name.toLowerCase().includes(filter.toLowerCase())).forEach(r => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${r.file_name}</td>
+            <td>${r.view_count}</td>
+            <td>${new Date(r.timestamp).toLocaleString()}</td>
+            <td>${r.city || ''}, ${r.state || ''}</td>
+            <td>${r.ip_address}</td>
+            <td>${r.device || ''} / ${r.os || ''}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      searchInput.addEventListener('input', (e) => {
+        renderTable(e.target.value);
+      });
+
+      renderTable();
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
