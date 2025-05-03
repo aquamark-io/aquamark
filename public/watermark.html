@@ -899,18 +899,13 @@ const logoDims = embeddedLogo.scale(0.35);
 
                         const pages = pdfDoc.getPages();
 
-                        // Embed tracking pixel on first page only
+// Embed tracking pixel on first page only using dummy pixel image
 console.log("Pixel embed starting...", file.name);
 
 try {
-// Add cache-busting parameters with both timestamp and random string
-const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}-batch-${Date.now()}-${Math.random().toString(36).substring(2,10)}&file_name=${encodeURIComponent(file.name)}&nocache=${new Date().getTime()}`;
-  const trackingResponse = await fetch(trackingUrl);
-  if (!trackingResponse.ok) {
-    throw new Error(`Pixel fetch failed: ${trackingResponse.status} ${trackingResponse.statusText}`);
-  }
+  const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&nocache=${Date.now()}`;
 
-  const trackingImageBytes = await trackingResponse.arrayBuffer();
+  const trackingImageBytes = await fetch("/pixel.png").then(res => res.arrayBuffer());
   const trackingImage = await pdfDoc.embedPng(trackingImageBytes);
 
   const firstPage = pages[0];
@@ -922,10 +917,11 @@ const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick
     opacity: 0.01
   });
 
-  console.log("Pixel embedded.");
+  console.log("📌 Embedded pixel that will hit:", trackingUrl);
 } catch (err) {
-  console.warn("Tracking pixel could not be embedded:", err);
+  console.warn("⚠️ Could not embed tracking pixel:", err);
 }
+
                         // Update the counter with the number of pages in this PDF
                         pagesWatermarked += pages.length;
                         pagesWatermarkedElement.textContent = pagesWatermarked;
@@ -1036,4 +1032,5 @@ const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick
     </script>
 </body>
 </html>
+
 
