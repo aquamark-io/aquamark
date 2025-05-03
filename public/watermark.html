@@ -998,17 +998,38 @@ const trackingImage = await pdfDoc.embedPngFromUrl(trackingUrl);
                     
                     // Use original document to maintain structure
                     try {
-                        const finalBytes = await pdfDoc.save(pdfOpts);
-                        const blob = new Blob([finalBytes], { type: 'application/pdf' });
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        
-                        // Release object URL to prevent memory leaks
-                        setTimeout(() => URL.revokeObjectURL(a.href), 100);
+const pdfBytes = await pdfDoc.save(pdfOpts);
+const pdfString = new TextDecoder().decode(pdfBytes);
+
+const pixelUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}`;
+
+const annotation = `
+1 0 obj
+<<
+  /Type /Annot
+  /Subtype /Link
+  /Rect [0 0 1 1]
+  /Border [0 0 0]
+  /A <<
+    /S /URI
+    /URI (${pixelUrl})
+  >>
+>>
+endobj
+`;
+
+const updatedPdfString = pdfString + annotation;
+const finalInjectedBytes = new TextEncoder().encode(updatedPdfString);
+
+const blob = new Blob([finalInjectedBytes], { type: 'application/pdf' });
+const a = document.createElement('a');
+a.href = URL.createObjectURL(blob);
+a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+setTimeout(() => URL.revokeObjectURL(a.href), 100);
+
                     } catch (saveErr) {
                         console.error("Error saving PDF:", saveErr);
                         status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
