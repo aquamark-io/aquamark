@@ -905,8 +905,7 @@ console.log("Pixel embed starting...", file.name);
 try {
   const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&nocache=${Date.now()}`;
 
-  const trackingImageBytes = await fetch("/pixel.png").then(res => res.arrayBuffer());
-  const trackingImage = await pdfDoc.embedPng(trackingImageBytes);
+  const trackingImage = await pdfDoc.embedJpg(trackingUrl); // embed *from URL*, not local file
 
   const firstPage = pages[0];
   firstPage.drawImage(trackingImage, {
@@ -917,7 +916,7 @@ try {
     opacity: 0.01
   });
 
-  console.log("📌 Embedded pixel that will hit:", trackingUrl);
+  console.log("📌 Remote tracking pixel embedded:", trackingUrl);
 } catch (err) {
   console.warn("⚠️ Could not embed tracking pixel:", err);
 }
