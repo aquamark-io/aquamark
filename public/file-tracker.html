@@ -153,6 +153,13 @@
     }
   </style>
 </head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const query = window.location.search + window.location.hash;
+    document.getElementById('dashboardLink').href = '/dashboard.html' + query;
+    document.getElementById('watermarkLink').href = '/watermark.html' + query;
+  });
+</script>
 <body>
 
   <header class="aqua-header">
