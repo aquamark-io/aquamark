@@ -224,17 +224,17 @@
       tableBody.innerHTML = '';
       window.fullTrackerData = data;
 
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${new Date(row.last_viewed || row.created_at).toLocaleString()}</td>
-          <td>${row.file_name}</td>
-          <td>${row.city || ''}</td>
-          <td>${row.state || ''}</td>
-          <td>${row.ip}</td>
-          <td>${row.view_count || 1}</td>`;
-        tableBody.appendChild(tr);
-      });
+     data.forEach(row => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${new Date(row.timestamp).toLocaleString()}</td>
+    <td>${row.file_name}</td>
+    <td>${row.city || ''}</td>
+    <td>${row.state || ''}</td>
+    <td>${row.ip_address}</td>
+    <td>${row.view_count || 1}</td>`;
+  tableBody.appendChild(tr);
+});
     }
 
     function filterTable() {
