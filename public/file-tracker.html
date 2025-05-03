@@ -216,7 +216,7 @@
         .from('tracking_logs')
         .select('*')
         .eq('user_email', profile.Email)
-        .order('created_at', { ascending: false });
+        .order('timestamp', { ascending: false });
 
       if (error) return console.error(error);
 
