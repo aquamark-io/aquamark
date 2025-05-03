@@ -904,14 +904,8 @@ console.log("Pixel embed starting...", file.name);
 
 try {
 // Add cache-busting parameters with both timestamp and random string
-const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}`;  const trackingResponse = await fetch(trackingUrl);
-  if (!trackingResponse.ok) {
-    throw new Error(`Pixel fetch failed: ${trackingResponse.status} ${trackingResponse.statusText}`);
-  }
-
-  const trackingImageBytes = await trackingResponse.arrayBuffer();
-  const trackingImage = await pdfDoc.embedPng(trackingImageBytes);
-
+const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}`;  
+const trackingImage = await pdfDoc.embedPngFromUrl(trackingUrl);
   const firstPage = pages[0];
   firstPage.drawImage(trackingImage, {
     x: 0,
