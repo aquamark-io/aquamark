@@ -905,17 +905,17 @@ console.log("Pixel embed starting...", file.name);
 try {
 // Add cache-busting parameters with both timestamp and random string
 const trackingUrl = `https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function?code=${profile.Email}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}`;  
-const pixelResponse = await fetch(trackingUrl);
-const pixelBytes = await pixelResponse.arrayBuffer();
-const trackingImage = await pdfDoc.embedPng(pixelBytes);
-  const firstPage = pages[0];
-  firstPage.drawImage(trackingImage, {
-    x: 0,
-    y: 0,
-    width: 1,
-    height: 1,
-    opacity: 0.01
-  });
+const trackingUrl = `https://www.aquamark.io/pixel.png?code=${encodeURIComponent(profile.Email)}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}`;
+const pixelImageBytes = await fetch(trackingUrl).then(res => res.arrayBuffer());
+const pixelImage = await pdfDoc.embedPng(pixelImageBytes);
+const firstPage = pages[0];
+firstPage.drawImage(pixelImage, {
+  x: 5,
+  y: 5,
+  width: 1,
+  height: 1,
+  opacity: 0.01
+});
 
   console.log("Pixel embedded.");
 } catch (err) {
