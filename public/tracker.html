@@ -2,78 +2,206 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark File Tracker</title>
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@latest/index.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Tracker - Aquamark</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
   <style>
+    :root {
+      --primary-color: #7e57c2;
+      --primary-light: #f3e8ff;
+      --primary-dark: #4d2c91;
+      --accent-color: #007bff;
+      --text-primary: #1e1e2f;
+      --text-secondary: #64748b;
+      --bg-color: #f8f9fb;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --radius: 12px;
+    }
     body {
+      margin: 0;
       font-family: 'Inter', sans-serif;
-      margin: 2rem;
-      background: #f9f9fb;
-      color: #333;
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--primary-light);
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .aqua-logo {
+      height: 32px;
+    }
+    .aqua-nav {
+      display: flex;
+      align-items: center;
+    }
+    .aqua-nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .aqua-nav a:hover,
+    .aqua-nav a.active {
+      color: var(--accent-color);
+    }
+    .main-panel {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
     }
     h1 {
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
     }
-    input[type="text"] {
-      padding: 0.5rem;
-      width: 100%;
-      max-width: 400px;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
+    .nav-buttons {
+      margin-bottom: 1.5rem;
+    }
+    .nav-buttons a {
+      display: inline-block;
+      margin-right: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--primary-color);
+      color: #fff;
       border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
     }
-    button {
+    .nav-buttons a:hover {
+      background: var(--primary-dark);
+    }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .toolbar input {
       padding: 0.5rem 1rem;
-      font-size: 0.95rem;
-      background: #0066ff;
+      font-size: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      width: 250px;
+    }
+    .toolbar button {
+      background: var(--accent-color);
       color: white;
       border: none;
       border-radius: 6px;
-      margin-bottom: 1.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
     }
-    button:hover {
-      background: #004fcc;
+    .toolbar button:hover {
+      background: #0069d9;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-top: 1rem;
     }
     th, td {
       padding: 0.75rem;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--border-color);
       text-align: left;
+      font-size: 0.95rem;
     }
     th {
-      background: #f0f0f5;
+      background: var(--primary-light);
       font-weight: 600;
     }
+    td {
+      color: var(--text-secondary);
+    }
+    .aqua-footer {
+      background: var(--primary-light);
+      padding: 1.5rem 2rem;
+      margin-top: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      height: 24px;
+    }
+    .footer-nav {
+      display: flex;
+      gap: 2rem;
+    }
+    .footer-nav a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .footer-nav a:hover {
+      color: var(--accent-color);
+    }
+    .footer-copyright {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
   </style>
+
+  <!-- Outseta & Supabase -->
+  <script>
+    var o_options = { domain: 'aquamark.outseta.com', load: 'auth,nocode' };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
-  <h1>🔐 Backdoor Tracking</h1>
-  <input type="text" id="searchInput" placeholder="Search by file name..." />
-  <button onclick="downloadCSV()">Download CSV</button>
-  <table>
-    <thead>
-      <tr>
-        <th>File Name</th>
-        <th>Views</th>
-        <th>Last Opened</th>
-        <th>City / State</th>
-        <th>IP Address</th>
-        <th>Device / OS</th>
-      </tr>
-    </thead>
-    <tbody id="trackerBody"></tbody>
-  </table>
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
+    <nav class="aqua-nav">
+      <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
+      <a href="/watermark.html" id="watermarkLink">Watermark</a>
+      <a href="/file-tracker.html" class="active">File Tracker</a>
+      <a href="/login.html">Log Out</a>
+    </nav>
+  </header>
+
+  <main class="main-panel">
+    <h1>Backdoor Tracking</h1>
+    <div class="nav-buttons">
+      <a href="/dashboard.html" id="backToDashboard">← Dashboard</a>
+      <a href="/watermark.html" id="backToWatermark">← Watermark</a>
+    </div>
+
+    <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="Search by file name...">
+      <button onclick="downloadCSV()">Download CSV</button>
+    </div>
+
+    <div id="tracker-table-container">Loading...</div>
+  </main>
+
+  <footer class="aqua-footer">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
+    <div class="footer-nav">
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="mailto:hey@aquamark.io">Contact Us</a>
+    </div>
+    <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
+  </footer>
 
   <script>
     const supabase = supabase.createClient(
@@ -81,83 +209,85 @@
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
     );
 
-    let rows = [];
+    let trackerData = [];
 
-    async function loadData() {
-      const user = await Outseta.nocode.user();
-      const email = user.Email;
+    Outseta.getUser().then(async user => {
+      if (!user?.Email) return;
 
       const { data, error } = await supabase
-        .from('tracking_logs')
+        .from('tracking_log')
         .select('*')
-        .eq('user_email', email);
+        .eq('user_email', user.Email)
+        .order('timestamp', { ascending: false });
 
-      if (error) return console.error('Failed to fetch tracking data', error);
-
-      const grouped = {};
-      data.forEach(row => {
-        if (!grouped[row.file_name]) grouped[row.file_name] = { ...row, view_count: 0 };
-
-        grouped[row.file_name].view_count += row.view_count || 1;
-        if (new Date(row.timestamp) > new Date(grouped[row.file_name].timestamp)) {
-          grouped[row.file_name] = { ...grouped[row.file_name], ...row };
-        }
-      });
-
-      rows = Object.values(grouped);
-      const tbody = document.getElementById('trackerBody');
-      const searchInput = document.getElementById('searchInput');
-
-      function renderTable(filter = '') {
-        tbody.innerHTML = '';
-        rows.filter(r => r.file_name.toLowerCase().includes(filter.toLowerCase())).forEach(r => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${r.file_name}</td>
-            <td>${r.view_count}</td>
-            <td>${new Date(r.timestamp).toLocaleString()}</td>
-            <td>${r.city || ''}, ${r.state || ''}</td>
-            <td>${r.ip_address}</td>
-            <td>${r.device || ''} / ${r.os || ''}</td>
-          `;
-          tbody.appendChild(tr);
-        });
+      if (error) {
+        document.getElementById('tracker-table-container').innerText = 'Error fetching data.';
+        return;
       }
 
-      searchInput.addEventListener('input', (e) => {
-        renderTable(e.target.value);
-      });
+      trackerData = data;
+      renderTable(trackerData);
+    });
 
-      renderTable();
+    function renderTable(data) {
+      if (!data.length) {
+        document.getElementById('tracker-table-container').innerHTML = '<p>No file views logged yet.</p>';
+        return;
+      }
+
+      let html = `<table><thead>
+        <tr><th>File Name</th><th>IP</th><th>City</th><th>State</th><th>Date</th><th>Views</th></tr>
+      </thead><tbody>`;
+      data.forEach(row => {
+        html += `<tr>
+          <td>${row.file_name || ''}</td>
+          <td>${row.ip || ''}</td>
+          <td>${row.city || ''}</td>
+          <td>${row.state || ''}</td>
+          <td>${new Date(row.timestamp).toLocaleString()}</td>
+          <td>${row.views || 1}</td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      document.getElementById('tracker-table-container').innerHTML = html;
     }
 
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const val = this.value.toLowerCase();
+      const filtered = trackerData.filter(row => row.file_name?.toLowerCase().includes(val));
+      renderTable(filtered);
+    });
+
     function downloadCSV() {
-      const headers = ["File Name","Views","Last Opened","City","State","IP Address","Device","OS"];
-      const csv = [headers.join(",")];
-
-      rows.forEach(r => {
-        csv.push([
-          r.file_name,
-          r.view_count,
-          new Date(r.timestamp).toLocaleString(),
-          r.city || '',
-          r.state || '',
-          r.ip_address,
-          r.device || '',
-          r.os || ''
-        ].map(v => `"${v}"`).join(","));
-      });
-
-      const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+      if (!trackerData.length) return;
+      const header = ['File Name', 'IP', 'City', 'State', 'Date', 'Views'];
+      const rows = trackerData.map(r => [
+        r.file_name, r.ip, r.city, r.state,
+        new Date(r.timestamp).toLocaleString(),
+        r.views || 1
+      ]);
+      const csvContent = [header, ...rows].map(e => e.join(',')).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
-      a.download = "tracking_log.csv";
+      a.download = 'file-tracker.csv';
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    loadData();
+    // Preserve URL params
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = window.location.search + window.location.hash;
+      ['dashboardLink', 'watermarkLink', 'backToDashboard', 'backToWatermark'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = el.href.split('?')[0] + params;
+      });
+    });
+
+    if (window.location.hash === '#o-logout-link') {
+      window.location.href = '/login.html';
+    }
   </script>
 </body>
 </html>
