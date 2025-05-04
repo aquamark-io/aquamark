@@ -33,7 +33,8 @@ async function decryptPDF(pdfBuffer) {
     const response = await fetch('https://aquamark-decrypt.onrender.com/decrypt', {
       method: 'POST',
       body: formData,
-      headers: formData.getHeaders(),
+      // Remove the headers line that could cause issues
+      // headers: formData.getHeaders(),
     });
 
     if (!response.ok) {
