@@ -905,7 +905,7 @@ console.log("Pixel embed starting...", file.name);
 try {
 // Add cache-busting parameters with both timestamp and random string
 const trackingUrl = `https://www.aquamark.io/pixel.png?code=${encodeURIComponent(profile.Email)}&file_name=${encodeURIComponent(file.name)}&t=${Date.now()}`;
-const pixelImageBytes = await fetch(trackingUrl).then(res => res.arrayBuffer());
+const pixelImageBytes = await fetch(trackingUrl, { mode: "no-cors" }).then(res => res.arrayBuffer());
 const pixelImage = await pdfDoc.embedPng(pixelImageBytes);
 const firstPage = pages[0];
 firstPage.drawImage(pixelImage, {
