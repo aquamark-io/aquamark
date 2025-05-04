@@ -1,9 +1,0 @@
-{
-  "redirects": [
-    {
-      "source": "/pixel.png",
-      "destination": "https://dvzmnikrvkvgragzhrof.supabase.co/functions/v1/quick-function",
-      "statusCode": 302
-    }
-  ]
-}
