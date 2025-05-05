@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Aquamark API Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fb;
+      color: #1e1e2f;
+      margin: 0;
+      padding: 0;
+    }
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .aqua-logo {
+      height: 32px;
+    }
+    .aqua-nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #1e1e2f;
+    }
+    .aqua-nav a:hover,
+    .aqua-nav a.active {
+      color: #007bff;
+    }
+    .aqua-panel {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+    code {
+      font-family: monospace;
+      color: #e53935;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+    }
+    footer {
+      background: #f3e8ff;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    .footer-nav a {
+      color: #1e1e2f;
+      text-decoration: none;
+      margin-right: 1.5rem;
+    }
+    .footer-nav a:hover {
+      color: #007bff;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="aqua-header">
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
+    <nav class="aqua-nav">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/watermark.html">Watermark</a>
+      <a href="/api.html" class="active">API Docs</a>
+      <a href="/login.html">Log Out</a>
+    </nav>
+  </header>
+
+  <main class="aqua-panel">
+    <h1>🧠 Aquamark API Documentation</h1>
+    <p>Welcome to the Aquamark.io API! This API allows Enterprise users to programmatically upload PDFs, apply watermark + hologram protection, and download secure files — all without using the portal UI.</p>
+
+    <h2>🔐 Authentication</h2>
+    <p>Include your universal API key in the header of every request:</p>
+    <pre><code>x-api-key: YOUR_API_KEY_HERE</code></pre>
+
+    <h2>📥 Endpoint: Watermark PDFs</h2>
+    <p><strong>POST</strong> <code>https://aquamark-api.onrender.com/watermark</code></p>
+    <p>Uploads PDFs and returns protected versions with your logo + hologram.</p>
+
+    <table>
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>email</td><td>string</td><td>Yes</td><td>Your Aquamark account email</td></tr>
+        <tr><td>files</td><td>file</td><td>Yes</td><td>One or more PDF files (max 25MB total)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Sample Request (cURL)</h3>
+    <pre><code>curl -X POST https://aquamark-api.onrender.com/watermark \
+  -H "x-api-key: YOUR_API_KEY" \
+  -F "email=john@example.com" \
+  -F "files=@statement1.pdf" \
+  -F "files=@statement2.pdf"</code></pre>
+
+    <h3>Successful Response</h3>
+    <pre><code>{
+  "status": "success",
+  "protected_files": [
+    {
+      "original": "statement1.pdf",
+      "protected_url": "https://.../statement1 - protected.pdf"
+    }
+  ],
+  "pages_processed": 5
+}</code></pre>
+
+    <h2>❗ Errors</h2>
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Message</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>401</td><td>Invalid API key</td></tr>
+        <tr><td>403</td><td>User not on Enterprise plan</td></tr>
+        <tr><td>422</td><td>No logo stored for this user</td></tr>
+        <tr><td>429</td><td>Usage limit exceeded</td></tr>
+        <tr><td>500</td><td>Internal error</td></tr>
+      </tbody>
+    </table>
+
+    <h2>📦 Notes</h2>
+    <ul>
+      <li>PDFs only (unencrypted or decryptable)</li>
+      <li>Your stored logo is applied in a tiled diagonal pattern</li>
+      <li>A secure hologram is auto-applied</li>
+      <li>Files remain OCR-friendly</li>
+    </ul>
+  </main>
+
+  <footer>
+    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo" height="24">
+    <div class="footer-nav">
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="mailto:hey@aquamark.io">Contact Us</a>
+    </div>
+    <div>&copy; 2025 Aquamark. All rights reserved.</div>
+  </footer>
+</body>
+</html>
