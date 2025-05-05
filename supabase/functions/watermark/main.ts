@@ -25,7 +25,8 @@ serve(async (req)=>{
     }
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     // Check usage table for Enterprise access
-    const { data: usageData, error: usageError } = await supabase.from('usage').select('*').eq('user_email', email).single();
+    const { data: usageData, error: usageError } = await supabase.from('usage').select('*').eq('user_email', email).maybeSingle()
+;
     if (usageError || !usageData || usageData.plan_name !== 'Enterprise') {
       return new Response('Access restricted to Enterprise users only', {
         status: 403
