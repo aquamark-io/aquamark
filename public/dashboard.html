@@ -920,13 +920,10 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 function getPageCreditsByPlan(planName) {
 
 const planCredits = {
-
-'Riding Solo': 1000,
-
-'Small Teams': 5000,
-
-'ISO Shops': 1000000 // Essentially unlimited
-
+  'Riding Solo': 1000,
+  'Small Teams': 5000,
+  'ISO Shops': 1000000,
+  'Enterprise': 1000000
 };
 
 return planCredits[planName] || 100; // Default to 100 if plan not found
