@@ -1,110 +1,136 @@
-import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-import { PDFDocument, rgb } from 'https://esm.sh/pdf-lib@1.17.1'
-
-const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co'
-const SUPABASE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-const API_KEY = Deno.env.get('AQUAMARK_API_KEY')!
-const RENDER_DECRYPT_URL = 'https://aquamark-decrypt.onrender.com/decrypt'
-
-serve(async (req) => {
-  if (req.method !== 'POST') {
-    return new Response('Method Not Allowed', { status: 405 })
-  }
-
-  const authHeader = req.headers.get('authorization') || ''
-  if (!authHeader.startsWith('Bearer ') || authHeader.split(' ')[1] !== API_KEY) {
-    return new Response('Unauthorized', { status: 401 })
-  }
-
-  const formData = await req.formData()
-  const email = formData.get('email')?.toString()
-  const file = formData.get('file') as File
-
-  if (!email || !file) {
-    return new Response('Missing email or file', { status: 400 })
-  }
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
-
-  // Fetch user plan
-  const { data: usageRow, error: usageError } = await supabase
-    .from('usage')
-    .select('plan_name, pages_used, page_credits, id')
-    .eq('user_email', email)
-    .single()
-
-  if (usageError || !usageRow || usageRow.plan_name !== 'Enterprise') {
-    return new Response('Access denied. Enterprise plan required.', { status: 403 })
-  }
-
-  // Fetch most recent logo from Supabase Storage
-  const { data: files, error: fileError } = await supabase
-    .storage
-    .from('logos')
-    .list(email, { limit: 1, sortBy: { column: 'created_at', order: 'desc' } })
-
-  if (fileError || !files || files.length === 0) {
-    return new Response('No logo found for this user.', { status: 404 })
-  }
-
-  const logoPath = `${email}/${files[0].name}`
-  const { data: logoUrlData } = supabase.storage.from('logos').getPublicUrl(logoPath)
-  const logoRes = await fetch(logoUrlData.publicUrl)
-  const logoBytes = new Uint8Array(await logoRes.arrayBuffer())
-
-  // Get PDF bytes
-  const originalBytes = new Uint8Array(await file.arrayBuffer())
-
-  // Decrypt if needed
-  let pdfBytes = originalBytes
+// Supabase Edge Function: watermark PDF with stored logo + hologram
+// Location: supabase/functions/watermark/main.ts
+import { serve } from 'https://deno.land/std@0.192.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { PDFDocument } from 'https://esm.sh/pdf-lib@1.17.1';
+const SUPABASE_URL = Deno.env.get('https://dvzmnikrvkvgragzhrof.supabase.co');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Mzk2ODk3NSwiZXhwIjoyMDU5NTQ0OTc1fQ.bFC6pFK5i2O3YKI74AV0DnKf41qY1ZLZS-yBq9DKHkM');
+const BUCKET = 'logos';
+const HOLOGRAM_URL = 'https://aquamark.io/hologram.png';
+const API_KEY = Deno.env.get('AQUAMARK_API_KEY');
+serve(async (req)=>{
   try {
-    const decryptRes = await fetch(RENDER_DECRYPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/pdf' },
-      body: originalBytes
-    })
-    if (decryptRes.ok) {
-      pdfBytes = new Uint8Array(await decryptRes.arrayBuffer())
+    const url = new URL(req.url);
+    const email = url.searchParams.get('email');
+    const auth = req.headers.get('authorization');
+    if (!auth || auth !== `Bearer ${API_KEY}`) {
+      return new Response('Unauthorized', {
+        status: 401
+      });
     }
-  } catch (_) {
-    // Fail silently if decrypt fails
-  }
-
-  // Watermark the PDF
-  const pdfDoc = await PDFDocument.load(pdfBytes)
-  const logoImage = await pdfDoc.embedPng(logoBytes)
-  const pages = pdfDoc.getPages()
-  const logoDims = logoImage.scale(0.15)
-
-  for (const page of pages) {
-    const { width, height } = page.getSize()
-    for (let x = 0; x < width; x += logoDims.width + 50) {
-      for (let y = 0; y < height; y += logoDims.height + 50) {
-        page.drawImage(logoImage, {
-          x,
-          y,
-          width: logoDims.width,
-          height: logoDims.height,
-          rotate: { type: 'degrees', angle: -30 },
-          opacity: 0.25
-        })
+    if (!email) {
+      return new Response('Missing email parameter', {
+        status: 400
+      });
+    }
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+    // Check usage table for Enterprise access
+    const { data: usageData, error: usageError } = await supabase.from('usage').select('*').eq('user_email', email).single();
+    if (usageError || !usageData || usageData.plan_name !== 'Enterprise') {
+      return new Response('Access restricted to Enterprise users only', {
+        status: 403
+      });
+    }
+    // Parse multipart form
+    const formData = await req.formData();
+    const file = formData.get('file');
+    if (!file || file.type !== 'application/pdf') {
+      return new Response('Invalid or missing PDF file', {
+        status: 400
+      });
+    }
+    const pdfBytes = new Uint8Array(await file.arrayBuffer());
+    // Try loading PDF, fallback to decryption
+    let pdfDoc;
+    try {
+      pdfDoc = await PDFDocument.load(pdfBytes);
+    } catch (err) {
+      const decryptRes = await fetch('https://aquamark-decrypt.onrender.com/decrypt', {
+        method: 'POST',
+        body: file
+      });
+      if (!decryptRes.ok) return new Response('Decryption failed', {
+        status: 400
+      });
+      const decryptedBytes = new Uint8Array(await decryptRes.arrayBuffer());
+      pdfDoc = await PDFDocument.load(decryptedBytes);
+    }
+    // Fetch user's most recent logo from Supabase
+    const { data: list, error: listErr } = await supabase.storage.from(BUCKET).list(email, {
+      limit: 1,
+      sortBy: {
+        column: 'created_at',
+        order: 'desc'
       }
+    });
+    if (listErr || !list.length) return new Response('No logo found for user', {
+      status: 400
+    });
+    const logoPath = `${email}/${list[0].name}`;
+    const { data: logoRes } = await supabase.storage.from(BUCKET).download(logoPath);
+    if (!logoRes) return new Response('Error fetching logo file', {
+      status: 500
+    });
+    const logoBytes = new Uint8Array(await logoRes.arrayBuffer());
+    const logoImg = await pdfDoc.embedPng(logoBytes);
+    const logoDims = logoImg.scale(0.2);
+    const holoRes = await fetch(HOLOGRAM_URL);
+    const holoBytes = new Uint8Array(await holoRes.arrayBuffer());
+    const holoImg = await pdfDoc.embedPng(holoBytes);
+    const holoDims = holoImg.scale(0.15);
+    const pages = pdfDoc.getPages();
+    for (const page of pages){
+      const { width, height } = page.getSize();
+      // Tile watermark across the page
+      const xGap = logoDims.width + 50;
+      const yGap = logoDims.height + 50;
+      for(let x = -logoDims.width; x < width; x += xGap){
+        for(let y = -logoDims.height; y < height; y += yGap){
+          page.drawImage(logoImg, {
+            x,
+            y,
+            width: logoDims.width,
+            height: logoDims.height,
+            rotate: {
+              type: 'degrees',
+              angle: 45
+            },
+            opacity: 0.2
+          });
+        }
+      }
+      // Add hologram (top-right)
+      page.drawImage(holoImg, {
+        x: width - holoDims.width - 10,
+        y: height - holoDims.height - 10,
+        width: holoDims.width,
+        height: holoDims.height,
+        opacity: 0.8
+      });
     }
+    const finalPdf = await pdfDoc.save();
+    const pageCount = pages.length;
+    // Track usage
+    await supabase.from('usage').upsert({
+      user_email: email,
+      pages_used: usageData.pages_used + pageCount
+    }, {
+      onConflict: [
+        'user_email'
+      ]
+    });
+    // Return final PDF
+    const headers = new Headers();
+    headers.set('Content-Type', 'application/pdf');
+    headers.set('Content-Disposition', `attachment; filename="${file.name.replace('.pdf', ' - protected.pdf')}"`);
+    return new Response(finalPdf, {
+      status: 200,
+      headers
+    });
+  } catch (err) {
+    console.error('Function error:', err);
+    return new Response('Internal error', {
+      status: 500
+    });
   }
-
-  const watermarkedBytes = await pdfDoc.save()
-
-  // Update usage
-  await supabase
-    .from('usage')
-    .update({ pages_used: usageRow.pages_used + pages.length })
-    .eq('id', usageRow.id)
-
-  return new Response(watermarkedBytes, {
-    headers: {
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="watermarked.pdf"'
-    }
-  })
-})
+});
