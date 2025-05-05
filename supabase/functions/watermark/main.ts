@@ -3,8 +3,8 @@
 import { serve } from 'https://deno.land/std@0.192.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { PDFDocument } from 'https://esm.sh/pdf-lib@1.17.1';
-const SUPABASE_URL = Deno.env.get('https://dvzmnikrvkvgragzhrof.supabase.co');
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Mzk2ODk3NSwiZXhwIjoyMDU5NTQ0OTc1fQ.bFC6pFK5i2O3YKI74AV0DnKf41qY1ZLZS-yBq9DKHkM');
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 const BUCKET = 'logos';
 const HOLOGRAM_URL = 'https://aquamark.io/hologram.png';
 const API_KEY = Deno.env.get('AQUAMARK_API_KEY');
