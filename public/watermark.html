@@ -263,22 +263,28 @@
             color: var(--text-secondary);
         }
 
-        /* Upgrade Button */
-        .upgrade-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.25rem;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
+       /* Upgrade Button */
+.upgrade-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #ABEBC6;
+    color: black;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.upgrade-btn:hover {
+    background: #94d7ae;
+    transform: translateY(-2px);
+}
+
 
         .upgrade-btn:hover {
             background: var(--primary-dark);
@@ -407,9 +413,9 @@
                 <div class="counter-value" id="pagesWatermarked">0</div>
             </div>
             <a href="/dashboard.html" id="upgradePlanLink" class="upgrade-btn">
-                <span class="upgrade-btn-icon">⭐</span>
-                Upgrade Plan
-            </a>
+    Upgrade Plan
+</a>
+
         </div>
 
         <div class="aqua-card">
