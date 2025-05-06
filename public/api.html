@@ -8,13 +8,41 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f8f9fb;
-      color: #1e1e2f;
+    :root {
+      --primary-color: #7e57c2;
+      --primary-light: #f3e8ff;
+      --primary-dark: #4d2c91;
+      --accent-color: #007bff;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --text-primary: #1e1e2f;
+      --text-secondary: #64748b;
+      --bg-color: #f8f9fb;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+    }
+    
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Keeping original header styles */
     .aqua-header {
       display: flex;
       justify-content: space-between;
@@ -26,54 +54,139 @@
       top: 0;
       z-index: 100;
     }
+    
     .aqua-logo {
       height: 32px;
     }
+    
     .aqua-nav a {
       margin-left: 2rem;
       text-decoration: none;
       font-weight: 500;
       color: #1e1e2f;
     }
+    
     .aqua-nav a:hover,
     .aqua-nav a.active {
       color: #007bff;
     }
+    
+    /* Updated main panel styling */
     .aqua-panel {
-      max-width: 900px;
+      max-width: 1000px;
+      width: 95%;
       margin: 2rem auto;
-      background: #ffffff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      flex: 1;
     }
+    
     h1 {
       font-size: 2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
     }
+    
+    h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+    
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    
     pre {
-      background: #f4f4f4;
-      padding: 1rem;
+      background: #f8fafc;
+      padding: 1.25rem;
       overflow-x: auto;
       border-radius: 8px;
+      border: 1px solid var(--border-color);
+      margin: 1.25rem 0;
     }
+    
     code {
-      font-family: monospace;
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
       color: #e53935;
+      font-size: 0.9rem;
     }
-    h2 {
-      margin-top: 2rem;
-    }
+    
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 1rem 0;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
-    th, td {
-      padding: 0.75rem;
-      border: 1px solid #e2e8f0;
+    
+    thead {
+      background-color: var(--primary-light);
+    }
+    
+    th {
+      padding: 0.875rem;
       text-align: left;
+      font-weight: 600;
+      color: var(--primary-dark);
     }
+    
+    td {
+      padding: 0.875rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+    
+    tr:nth-child(even) {
+      background-color: #fafbfc;
+    }
+    
+    ul {
+      margin: 1rem 0 1.5rem 1.5rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    /* API method badges */
+    .api-method {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      background: var(--accent-color);
+      color: white;
+    }
+    
+    /* Footer - keep original */
     footer {
       background: #f3e8ff;
       padding: 1.5rem 2rem;
@@ -82,18 +195,50 @@
       align-items: center;
       margin-top: 3rem;
     }
+    
     .footer-nav a {
       color: #1e1e2f;
       text-decoration: none;
       margin-right: 1.5rem;
     }
+    
     .footer-nav a:hover {
       color: #007bff;
+    }
+
+    /* Response status indicators */
+    .status-success {
+      color: var(--success-color);
+      font-weight: 500;
+    }
+    
+    .status-error {
+      color: var(--danger-color);
+      font-weight: 500;
+    }
+    
+    @media (max-width: 768px) {
+      .aqua-panel {
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      h2 {
+        font-size: 1.35rem;
+      }
+      
+      pre {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 
 <body>
+  <!-- Original header preserved -->
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
     <nav class="aqua-nav">
@@ -104,6 +249,7 @@
     </nav>
   </header>
 
+  <!-- Updated main content -->
   <main class="aqua-panel">
     <h1>🧠 Aquamark API Documentation</h1>
     <p>Welcome to the Aquamark.io API! This API allows Enterprise users to programmatically upload PDFs, apply watermark + hologram protection, and download secure files — all without using the portal UI.</p>
@@ -113,7 +259,7 @@
     <pre><code>x-api-key: YOUR_API_KEY_HERE</code></pre>
 
     <h2>📥 Endpoint: Watermark PDFs</h2>
-    <p><strong>POST</strong> <code>https://aquamark-api.onrender.com/watermark</code></p>
+    <p><span class="api-method">POST</span> <code>https://aquamark-api.onrender.com/watermark</code></p>
     <p>Uploads PDFs and returns protected versions with your logo + hologram.</p>
 
     <table>
@@ -145,17 +291,17 @@
   "pages_processed": 5
 }</code></pre>
 
-    <h2>❗ Errors</h2>
+    <h2>❗ Error Responses</h2>
     <table>
       <thead>
         <tr><th>Code</th><th>Message</th></tr>
       </thead>
       <tbody>
-        <tr><td>401</td><td>Invalid API key</td></tr>
-        <tr><td>403</td><td>User not on Enterprise plan</td></tr>
-        <tr><td>422</td><td>No logo stored for this user</td></tr>
-        <tr><td>429</td><td>Usage limit exceeded</td></tr>
-        <tr><td>500</td><td>Internal error</td></tr>
+        <tr><td><span class="status-error">401</span></td><td>Invalid API key</td></tr>
+        <tr><td><span class="status-error">403</span></td><td>User not on Enterprise plan</td></tr>
+        <tr><td><span class="status-error">422</span></td><td>No logo stored for this user</td></tr>
+        <tr><td><span class="status-error">429</span></td><td>Usage limit exceeded</td></tr>
+        <tr><td><span class="status-error">500</span></td><td>Internal error</td></tr>
       </tbody>
     </table>
 
@@ -168,6 +314,7 @@
     </ul>
   </main>
 
+  <!-- Original footer preserved -->
   <footer>
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo" height="24">
     <div class="footer-nav">
