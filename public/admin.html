@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aquamark Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js"></script>
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      margin: 2rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .card {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    table {
+      width: 100%;
+      margin-top: 1rem;
+      border-collapse: collapse;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📊 Aquamark Admin Dashboard</h1>
+
+<div class="card" id="totalPages">Loading total pages...</div>
+<div class="card">
+  <h2>Top Users</h2>
+  <table id="topUsersTable">
+    <thead><tr><th>Email</th><th>Pages Used</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<div class="card">
+  <h2>Daily Usage</h2>
+  <canvas id="dailyChart" height="100"></canvas>
+</div>
+<div class="card">
+  <h2>Most Viewed Files</h2>
+  <table id="fileViewsTable">
+    <thead><tr><th>File Name</th><th>Views</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  const supabase = supabase.createClient(
+    'https://dvzmnikrvkvgragzhrof.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+  );
+
+  async function loadAnalytics() {
+    // Total pages
+    let { data: totalResult } = await supabase.rpc('get_total_pages');
+    document.getElementById('totalPages').innerHTML = `<strong>Total Pages Watermarked:</strong> ${totalResult}`;
+
+    // Top users
+    let { data: topUsers } = await supabase
+      .from('usage')
+      .select('user_email, pages_used')
+      .order('pages_used', { ascending: false })
+      .limit(10);
+    const topUsersBody = document.querySelector('#topUsersTable tbody');
+    topUsers.forEach(row => {
+      topUsersBody.innerHTML += `<tr><td>${row.user_email}</td><td>${row.pages_used}</td></tr>`;
+    });
+
+    // Daily usage
+    let { data: dailyUsage } = await supabase
+      .rpc('get_daily_usage');
+    const labels = dailyUsage.map(row => row.day);
+    const pages = dailyUsage.map(row => row.pages);
+    new Chart(document.getElementById('dailyChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Pages per Day',
+          data: pages,
+          borderWidth: 2,
+          fill: false,
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // File views
+    let { data: fileViews } = await supabase
+      .from('tracking_logs')
+      .select('file_name, view_count')
+      .order('view_count', { ascending: false })
+      .limit(10);
+    const fileViewsBody = document.querySelector('#fileViewsTable tbody');
+    fileViews.forEach(row => {
+      fileViewsBody.innerHTML += `<tr><td>${row.file_name}</td><td>${row.view_count}</td></tr>`;
+    });
+  }
+
+  // Admin email restriction
+  Outseta.on('ready', async function () {
+    const user = Outseta.nocode.user;
+    const adminEmail = '1christinaduncan@gmail.com';
+
+    if (!user || user.email !== adminEmail) {
+      document.body.innerHTML = "<h2>Access Denied</h2><p>You do not have permission to view this page.</p>";
+      return;
+    }
+
+    loadAnalytics(); // Only runs if user is authorized
+  });
+</script>
+
+</body>
+</html>
