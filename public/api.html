@@ -326,5 +326,25 @@
     </div>
     <div>&copy; 2025 Aquamark. All rights reserved.</div>
   </footer>
+
+<!-- Preserve URL parameters for all internal links -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = window.location.search;
+    const hashParams = window.location.hash;
+
+    // List of internal paths to apply token preservation to
+    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html"];
+
+    document.querySelectorAll("a[href]").forEach(link => {
+      const href = link.getAttribute("href");
+      if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+        const cleanHref = href.split('?')[0].split('#')[0];
+        link.href = cleanHref + urlParams + hashParams;
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
