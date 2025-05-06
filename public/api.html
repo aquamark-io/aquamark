@@ -278,10 +278,10 @@
     </table>
 
     <h3>Sample Request (cURL)</h3>
-    <pre><code>curl -X POST https://aquamark-api.onrender.com/watermark \
+    <pre><code>curl curl -X POST "https://aquamark-api.onrender.com/watermark?email=john@example.com" \
   -H "x-api-key: YOUR_API_KEY" \
-  -F "email=john@example.com" \
-  -F "files=@statement1.pdf"
+  -F "file=@statement1.pdf" \
+  --output "statement1 - protected.pdf"
     </code></pre>
 
     <h3>Successful Response</h3>
