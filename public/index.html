@@ -9,10 +9,12 @@
 <link href="/logo-icon-black-blue.jpg" rel="icon" type="image/jpg">
 <style>
     body {
-      margin: 0;
+      margin: 0 auto;
       font-family: 'Inter', sans-serif;
       background-color: #ffffff;
       color: #111;
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     .banner {
@@ -227,6 +229,11 @@
     }
 
 @media (max-width: 768px) {
+
+  section[style*="gap:150px;"]:nth-of-type(3) {
+    flex-direction: column-reverse !important;
+  }
+
   section[style*="gap:150px;"] {
     flex-direction: column;
     text-align: center;
@@ -457,6 +464,11 @@
   }
     
   @media (max-width: 768px) {
+
+  section[style*="gap:150px;"]:nth-of-type(3) {
+    flex-direction: column-reverse !important;
+  }
+
     .topbar {
       padding: 20px;
     }
@@ -475,6 +487,11 @@
 }
 
 @media (max-width: 768px) {
+
+  section[style*="gap:150px;"]:nth-of-type(3) {
+    flex-direction: column-reverse !important;
+  }
+
   .why-it-works {
     flex-direction: column-reverse;
     text-align: center;
