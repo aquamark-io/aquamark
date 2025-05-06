@@ -911,30 +911,24 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 
 </footer>
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Get current URL parameters
-  const urlParams = window.location.search;
-  const hashParams = window.location.hash;
+<!-- Preserve URL parameters for all internal links -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = window.location.search;
+    const hashParams = window.location.hash;
 
-  // Update watermark link with current parameters
-  const watermarkLink = document.getElementById('watermarkLink');
-  if (watermarkLink) {
-    watermarkLink.href = "/watermark.html" + urlParams + hashParams;
-  }
+    // List of internal paths you want to preserve parameters for
+    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html"];
 
-  // Update start watermarking button with current parameters
-  const startWatermarkBtn = document.getElementById('startWatermarkBtn');
-  if (startWatermarkBtn) {
-    startWatermarkBtn.href = "/watermark.html" + urlParams + hashParams;
-  }
-
-  // ✅ NEW: Update API Docs button with current parameters
-  const apiDocsBtn = document.querySelector('a.btn.btn-api');
-  if (apiDocsBtn) {
-    apiDocsBtn.href = "/api.html" + urlParams + hashParams;
-  }
-});
-
+    document.querySelectorAll("a[href]").forEach(link => {
+      const href = link.getAttribute("href");
+      if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+        // Strip any existing query/hash to avoid duplicates
+        const cleanHref = href.split('?')[0].split('#')[0];
+        link.href = cleanHref + urlParams + hashParams;
+      }
+    });
+  });
 </script>
 
 <script>
