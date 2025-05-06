@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Aquamark API Documentation</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/logo-icon-black-blue.jpg" rel="icon" type="image/jpg"/>
+<style>
+    :root {
+      --primary-color: #000000;
+      --primary-light: #f3e8ff;
+      --primary-dark: #4d2c91;
+      --accent-color: #007bff;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --text-primary: #1e1e2f;
+      --text-secondary: #64748b;
+      --bg-color: #f8f9fb;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Keeping original header styles */
+    .aqua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #f3e8ff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .aqua-logo {
+      height: 32px;
+    }
+    
+    .aqua-nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      color: #1e1e2f;
+    }
+    
+    .aqua-nav a:hover,
+    .aqua-nav a.active {
+      color: #007bff;
+    }
+    
+    /* Updated main panel styling */
+    .aqua-panel {
+      max-width: 1000px;
+      width: 95%;
+      margin: 2rem auto;
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      flex: 1;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+    
+    h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+    
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    
+    pre {
+      background: #f8fafc;
+      padding: 1.25rem;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      margin: 1.25rem 0;
+    }
+    
+    code {
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      color: #e53935;
+      font-size: 0.9rem;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    thead {
+      background-color: var(--primary-light);
+    }
+    
+    th {
+      padding: 0.875rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    
+    td {
+      padding: 0.875rem;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+    
+    tr:nth-child(even) {
+      background-color: #fafbfc;
+    }
+    
+    ul {
+      margin: 1rem 0 1.5rem 1.5rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    /* API method badges */
+    .api-method {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      background: var(--accent-color);
+      color: white;
+    }
+    
+    /* Footer - keep original */
+    footer {
+      background: #f3e8ff;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    
+    .footer-nav a {
+      color: #1e1e2f;
+      text-decoration: none;
+      margin-right: 1.5rem;
+    }
+    
+    .footer-nav a:hover {
+      color: #007bff;
+    }
+
+    /* Response status indicators */
+    .status-success {
+      color: var(--success-color);
+      font-weight: 500;
+    }
+    
+    .status-error {
+      color: var(--danger-color);
+      font-weight: 500;
+    }
+    
+    @media (max-width: 768px) {
+      .aqua-panel {
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      h2 {
+        font-size: 1.35rem;
+      }
+      
+      pre {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Original header preserved -->
+<header class="aqua-header">
+<img alt="Aquamark Logo" class="aqua-logo" src="/logo-full-black-blue.png"/>
+<nav class="aqua-nav"><button onclick="location.href='/index.html'" style="background-color:#AAF0D1; color:#000; padding:8px 18px; font-size:16px; font-weight:600; border:none; border-radius:8px; cursor:pointer;">Home</button></nav>
+</header>
+<!-- Updated main content -->
+<main class="aqua-panel">
+<h1>Aquamark API Documentation</h1>
+<p>This API allows Enterprise users to automate the watermarking process without using the portal UI.</p>
+<p><strong>IMPORTANT:</strong> Send one PDF at a time. Each file is processed individually to ensure accurate page usage tracking, watermark integrity, and fast response times.</p>
+<p>For requests containing multiple files, simply loop through and send each in a separate request. Batch uploads are not supported.</p>
+<h2>🔐 Authentication</h2>
+<p>Include the API key in the header of every request:</p>
+<pre><code>Authorization: Bearer YOUR_API_KEY_HERE</code></pre>
+<h2>📥 Endpoint: Watermark PDFs</h2>
+<p>Accepts multipart/form-data with a PDF file and email address. Returns the processed, watermarked PDF as a binary response.</p>
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>user_email</td><td>string</td><td>Yes</td><td>Your Aquamark account email</td></tr>
+<tr><td>file</td><td>file</td><td>Yes</td><td>One PDF at a time (max 25MB)</td></tr>
+</tbody>
+</table>
+<h3>cURL</h3>
+<pre><code>curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -F "user_email=john@example.com" \
+  -F "file=@statement1.pdf" \
+  --output "statement1 - protected.pdf"
+</code></pre>
+<h3>🐍 Python</h3>
+<pre><code>import requests
+
+url = "https://aquamark-decrypt.onrender.com/watermark"
+headers = {"Authorization": "Bearer YOUR_API_KEY"}
+files = {
+    "file": open("statement.pdf", "rb"),
+    "user_email": (None, "john@example.com")
+}
+
+response = requests.post(url, headers=headers, files=files)
+with open("statement - protected.pdf", "wb") as f:
+    f.write(response.content)
+</code></pre>
+<h3>🟦 Node.js</h3>
+<pre><code>const axios = require("axios");
+const FormData = require("form-data");
+const fs = require("fs");
+
+const form = new FormData();
+form.append("file", fs.createReadStream("statement.pdf"));
+form.append("user_email", "john@example.com");
+
+axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
+  headers: {
+    ...form.getHeaders(),
+    Authorization: "Bearer YOUR_API_KEY"
+  },
+  responseType: "stream"
+}).then(res =&gt; {
+  res.data.pipe(fs.createWriteStream("statement - protected.pdf"));
+});
+</code></pre>
+<h3>🐘 PHP - cURL</h3>
+<pre><code>$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://aquamark-decrypt.onrender.com/watermark");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Authorization: Bearer YOUR_API_KEY"
+]);
+curl_setopt($ch, CURLOPT_POSTFIELDS, [
+    "user_email" =&gt; "john@example.com",
+    "file" =&gt; new CURLFile("statement.pdf")
+]);
+$response = curl_exec($ch);
+file_put_contents("statement - protected.pdf", $response);
+curl_close($ch);
+</code></pre>
+<h3>⚡ Zapier / No-Code</h3>
+<p>Use a "Webhooks by Zapier" action with the following configuration:</p>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>URL:</strong> https://aquamark-decrypt.onrender.com/watermark</li>
+<li><strong>Headers:</strong> Authorization: Bearer YOUR_API_KEY</li>
+<li><strong>Body Type:</strong> Form</li>
+<li><strong>Body Fields:</strong>
+<ul>
+<li><code>user_email</code>: your email</li>
+<li><code>file</code>: upload the PDF file</li>
+</ul>
+</li>
+</ul>
+<h3>Successful Response</h3>
+<pre><code>[Binary PDF file is returned with proper headers for direct download]</code></pre>
+<h2>📫 Postman Setup</h2>
+<p>Here's how to configure Postman to test the Aquamark API:</p>
+<ul>
+<li><strong>Method:</strong> POST</li>
+<li><strong>URL:</strong> <code>https://aquamark-decrypt.onrender.com/watermark</code></li>
+<li><strong>Headers:</strong> <code>Authorization: Bearer YOUR_API_KEY</code></li>
+<li><strong>Body:</strong> form-data</li>
+<ul>
+<li><strong>user_email</strong> (type: text) – your Aquamark account email</li>
+<li><strong>file</strong> (type: file) – select a PDF from your computer</li>
+</ul>
+</ul>
+<h2>❗ Error Responses</h2>
+<table>
+<thead>
+<tr><th>Code</th><th>Message</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="status-error">401</span></td><td>Invalid API key</td></tr>
+<tr><td><span class="status-error">403</span></td><td>User not on Enterprise plan</td></tr>
+<tr><td><span class="status-error">422</span></td><td>No logo stored for this user</td></tr>
+<tr><td><span class="status-error">429</span></td><td>Usage limit exceeded</td></tr>
+<tr><td><span class="status-error">500</span></td><td>Internal error</td></tr>
+</tbody>
+</table>
+<h2>📝 Notes</h2>
+<ul>
+<li>Must be a subscriber on the Enterprise plan</li>
+<li>PDFs only, no document links</li>
+<li>Log into the portal and upload logo to your account</li>
+<li>For support and to request API key, email christina@aquamark.io or text/call (415) 500-1117</li>
+</ul>
+</main>
+<!-- Original footer preserved -->
+<footer>
+<img alt="Aquamark Logo" class="footer-logo" height="24" src="/logo-full-black-blue.png"/>
+<div class="footer-nav">
+<a href="/terms.html">Terms of Service</a>
+<a href="/privacy.html">Privacy Policy</a>
+<a href="mailto:hey@aquamark.io">Contact Us</a>
+</div>
+<div>© 2025 Aquamark. All rights reserved.</div>
+</footer>
+<!-- Preserve URL parameters for all internal links -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = window.location.search;
+    const hashParams = window.location.hash;
+
+    // List of internal paths to apply token preservation to
+    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html"];
+
+    document.querySelectorAll("a[href]").forEach(link => {
+      const href = link.getAttribute("href");
+      if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+        const cleanHref = href.split('?')[0].split('#')[0];
+        link.href = cleanHref + urlParams + hashParams;
+      }
+    });
+  });
+</script>
+</body>
+</html>
