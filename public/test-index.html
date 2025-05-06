@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #111;
+    }
+
+    .banner {
+      background-color: #f3e8ff;
+      color: #111;
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .banner a {
+      color: #3366ff;
+      font-weight: 400;
+      text-decoration: underline;
+    }
+    
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+    }
+
+    .logo {
+      height: 38px;
+    }
+
+    .nav-links a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #666;
+      font-size: 15px;
+    }
+
+    .nav-btn {
+  margin-left: 25px;
+  padding: 8px 18px;
+  background-color: #3e5eff;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+    .hero {
+      text-align: center;
+      padding: 120px 20px 80px;
+    }
+
+    .hero h1 {
+      font-size: 62px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 22px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .hero .btn {
+      padding: 14px 24px;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background-color: #3e5eff;
+      color: #fff;
+    }
+
+    .btn.secondary {
+      background-color: #f1f1f1;
+      color: #000;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      background-color: #f9f9ff;
+      padding: 40px 20px;
+    }
+
+    .stat {
+      text-align: center;
+      min-width: 160px;
+    }
+
+    .stat img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .stat h3 {
+      margin: 10px 0 4px;
+      font-size: 22px;
+    }
+
+    .stat p {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .how-it-works {
+      background-color: #ffffff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .how-it-works h2 {
+      font-size: 41px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .how-it-works .blue {
+      color: #3e5eff;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    .step {
+      max-width: 180px;
+    }
+
+    .step img {
+      height: 60px;
+      margin-bottom: 20px;
+    }
+
+    .step h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .-for-mca {
+      padding: 80px 20px;
+      background-color: none;
+    }
+    
+    .built-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .built-text {
+      max-width: 500px;
+      flex: 1;
+    }
+
+    .built-text h2 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .built-text p {
+      font-size: 20px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      max-width: 480px;
+    }
+
+    .built-text .btn {
+      border: 2px solid #3e5eff;
+      background-color: done;
+      color: #3e5eff;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .built-image {
+      flex: 1;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .built-image img {
+      max-width: 100%;
+      width: 100%;
+    }
+
+@media (max-width: 768px) {
+  section[style*="gap:150px;"] {
+    flex-direction: column;
+    text-align: center;
+    gap: 60px !important;
+    padding: 60px 20px !important;
+  }
+
+  section[style*="gap:150px;"] > div {
+    max-width: 100% !important;
+  }
+
+  section[style*="gap:150px;"] h2 {
+    font-size: 2.6rem !important;
+  }
+
+  section[style*="gap:150px;"] p {
+    font-size: 1.125rem !important;
+  }
+}
+    
+    @media (max-width: 780px) {
+   .stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .stat {
+    width: 100%;
+    max-width: 300px;
+  }
+
+      .built-container {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .built-text,
+      .built-image {
+        max-width: 100%;
+      }
+
+      .built-text p {
+        max-width: 100%;
+      }
+.hero .btn {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 10px auto;
+}
+      .steps {
+  flex-direction: column;
+  align-items: center;
+}
+
+.step {
+  max-width: 100%;
+}
+    }
+
+    .reviews {
+      background: linear-gradient(to right, #eef2ff, #fdf2ff);
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .reviews h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .review-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .review {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 340px;
+      font-size: 20px;
+      line-height: 1.6;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .review span {
+      display: block;
+      margin-top: 18px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .pricing {
+      background-color: #f9f9f9;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .pricing h2 {
+      font-size: 46px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .pricing p {
+      font-size: 21px;
+      color: #555;
+      margin-bottom: 50px;
+    }
+
+    .tiers {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .tier {
+      background-color: #3366ff;
+      color: #fff;
+      padding: 60px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      width: 280px;
+      text-align: center;
+    }
+
+    .tier h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .tier .price {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .tier p {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+
+    .pricing .cta {
+      margin-top: 60px;
+    }
+
+    .faq {
+      padding: 80px 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .faq h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 40px;
+    }
+
+    .faq-item {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      text-align: left;
+    }
+
+    .faq-item h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .footer {
+      background-color: #f3e8ff;
+      color: #111;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  .footer {
+    background-color: #f3e8ff;
+    color: #111;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 4px 0;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px 0;
+  }
+
+  .mobile-nav a {
+    margin: 10px 0;
+    text-decoration: none;
+    color: #666;
+    font-size: 16px;
+  }
+    
+  @media (max-width: 768px) {
+    .topbar {
+      padding: 20px;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    .mobile-nav.active {
+      display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+  .why-it-works {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 40px !important;
+    padding: 40px 20px !important;
+  }
+
+  .why-it-works > div {
+    max-width: 100% !important;
+  }
+}
+
+</style>
+
+<script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <link rel="stylesheet" href="style.css">
+
+<script>
+  // Works whether hash is available immediately or delayed
+  function checkLogoutHash() {
+    if (window.location.hash === '#o-logout-link') {
+      window.location.replace('/login.html');
+    }
+  }
+
+  // Run immediately if possible
+  checkLogoutHash();
+
+  // Also run after full load in case hash is delayed
+  window.addEventListener("load", checkLogoutHash);
+</script>
+
+</head>
+<body>
+ <div class="banner">
+  🔥 Get started with <strong>100 free pages</strong>!<br>
+</div>
+
+  <header class="topbar">
+    <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
+    <nav class="nav-links">
+  <a href="#how">How It Works</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <button onclick="location.href='/login.html'" class="nav-btn">Sign In</button>
+</nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div><div></div><div></div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobileMenu">
+  <a href="#how">How It Works</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <a href="/login.html">Sign In</a>
+</nav>
+
+  <main class="hero">
+    <h1>Prevent Backdooring. Fund More Deals.</h1>
+    <p>Protect your submissions. Instant watermarking built for MCA brokers.</p>
+    <button class="btn primary" onclick="location.href='/signup.html'">Create Free Account</button>
+    <button class="btn secondary" onclick="location.href='/signup.html'">Upload Docs</button>
+    <button class="btn secondary" onclick="location.href='/signup.html'">Use API</button>
+  </main>
+
+  <section class="stats">
+    <div class="stat">
+      <img src="protect.svg" alt="Protect Icon" />
+      <h3>2,100+</h3>
+      <p>Deals Protected</p>
+    </div>
+    <div class="stat">
+      <img src="star.svg" alt="Star Icon" />
+      <h3>4.89</h3>
+      <p>User Rating</p>
+    </div>
+    <div class="stat">
+      <img src="document.svg" alt="Document Icon" />
+      <h3>500k+</h3>
+      <p>Pages Watermarked</p>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how">
+    <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
+    <div class="steps">
+      <div class="step">
+        <img src="one.svg" alt="Step One" />
+        <h4>Create Account</h4>
+        <p>It's free.</p>
+      </div>
+      <div class="step">
+        <img src="two.svg" alt="Step Two" />
+        <h4>Upload Logo</h4>
+        <p>Add once. Apply forever.</p>
+      </div>
+      <div class="step">
+        <img src="three.svg" alt="Step Three" />
+        <h4>Add Files</h4>
+        <p>Upload or use the API.</p>
+      </div>
+      <div class="step">
+        <img src="four.svg" alt="Step Four" />
+        <h4>Download Instantly</h4>
+        <p>Ready in seconds.</p>
+      </div>
+    </div>
+  </section>
+
+
+<section class="why-it-works" style="background:#f9f9ff; padding:50px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:120px;">
+  <div style="flex:1; min-width:300px; max-width:500px;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
+<span style="color:#3e5eff;"> Why </span> It Works
+    </h2>
+    <p style="font-size:1.2rem; color:#555; line-height:1.6;">    <p style="font-size:1.15rem; color:#444; line-height:1.7; margin-bottom:24px;">
+      Aquamark is a tool that helps brokers and funders protect their submissions using our watermarking technology. 
+      Your logo and our protection seal get stamped on every page of the bank statements in seconds, making it impossible for others to reuse or sell. More and more lenders are encouraging watermarking and we have ISOs signing up every week. It’s working — and the industry is taking notice!
+    </p>
+  </div>
+  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
+    <img src="/why-it-works.png" alt="Watermarked Statement Sample" style="max-width:80%; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,0.06);" />
+  </div>
+</section>
+  
+  <section class="built-for-mca">
+    <div class="built-container">
+      <div class="built-text">
+        <h2>Built for <span class="blue">MCA Brokers</span></h2>
+        <p>Our watermarking technology protects you from deal poachers so you can focus on funding. Say goodbye to stolen bank statements and shadow submissions to other lenders.</p>
+        <button class="btn" onclick="location.href='/signup.html'" style="background-color: #3e5eff; color: white; border: none;">Free Sample</button>
+      </div>
+      <div class="built-image">
+        <img src="/built-for-mca.jpg" alt="Built for MCA"
+      </div>
+    </div>
+  </section>
+
+<section style="background:#ffffff; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:150px;">
+  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
+    <img src="/slanted-stats-transparent-v2.png" alt="Bank statement preview"
+         style="max-width:80%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);" />
+
+  </div>
+
+  <div style="flex:1; min-width:320px; max-width:550px;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
+<span style="color:#3e5eff;"> Increase </span> Sales Conversions
+    </h2>
+    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
+ISOs are seeing up to 8% more conversions in just 60 days. 
+More volume for lenders, more commissions for brokers, and a better experience for merchants. 
+Aquamark protects deals and helps restore integrity to an industry that powers small business.
+</p>
+  </div>
+</section>
+
+<section class="reviews" id="reviews" style="padding: 60px 20px;">
+  <h2 style="text-align: center; font-size: 42px; font-weight: 800; margin-bottom: 50px;">
+    <span </span> Reviews from other <span style="color:#3e5eff;">MCA Brokers
+  </h2>
+  <div class="review-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
+        “Solved our backdooring problems no doubt, and less customers complaining about their phone blowing up after we submit.”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">James, ISO</span>
+    </div>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
+      "Saving even one deal from backdooring more than covers the cost. Hoping more people get on board — the industry needs it."
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Eric, Account Executive</span>
+    </div>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img src="heart.svg" alt="Heart Icon" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;" />
+      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
+        “Our funding team watermarks hundreds of pages daily. We're part of the API BETA and it's saving us hours!”
+      </p>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Jessica, Funding Manager</span>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <h2 style="font-size: 66px;">Priced like a tool, not a service.</h2>
+  <p style="font-size: 25px;">Free trial on all plans. Cancel anytime. The way it should be.</p>
+  <div class="tiers">
+    <div class="tier starter" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+      <h3>Riding Solo</h3>
+      <div class="price">$25/mo</div>
+      <p>1,000 pages</p>
+      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;" onclick="location.href='/signup.html'">Free Trial</button>
+    </div>
+
+    <div class="tier enterprise" style="background: #CFE9FF; color: #000; position: relative;">
+      <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
+      <h3>ISO Shops</h3>
+      <div class="price">$250/mo</div>
+      <p style="color:#000;">Unlimited</p>
+      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#fa6bee; color:#FFFFFF;" onclick="location.href='/signup.html'">Free Trial</button>
+    </div>
+    <div class="tier pro" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+      <h3>Small Teams</h3>
+      <div class="price">$100/mo</div>
+      <p>5,000 pages</p>
+      <button class="btn primary" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;" onclick="location.href='/signup.html'">Free Trial</button>
+    </div>
+     </div>
+</section>
+
+<section class="faq" id="faq" style="background:white;">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <h4>Do most lenders accept watermarked statements?</h4>
+    <p>Yes. Expansion Capital Group was among one of the first based on our research and ISO surveys.</p>
+  </div>
+
+    <div class="faq-item">
+    <h4>How does it stop people from backdooring?</h4>
+    <p>The reality is, if someone already has the file, you can’t stop them from stealing it. Aquamark just makes it risky to use. Your logo gets tiled across every page, so if someone tries to submit a package without their name — or worse, with someone else’s logo still stamped on it — it’s a dead giveaway. Not a smart move. In fact, we’re already seeing lenders blacklist people over it. </p>
+  </div>
+
+  <div class="faq-item">
+    <h4>How does this impact OCR?</h4>
+    <p>We've tested with Ocrolus, MoneyThumb, and DocPanda, and all parsed cleanly. Contact us for a free sample to test on your end - hey@aquamark.io </p>
+  </div>
+
+    <div class="faq-item">
+    <h4>Are my files secure?</h4>
+    <p>Yes. Our browser-based system processes your files securely, without ever saving them. For encrypted PDFs, we decrypt them briefly on a secure server, then return them instantly to your browser for processing. </p>
+  </div>
+
+<div class="faq-item">
+    <h4>Can AI remove the watermarks?</h4>
+    <p>Nope - our watermarks are designed to resist removal by common AI tools. Most AI platforms also follow ethical guidelines that prohibit removing watermarks, as it's a violation of copyright and usage rights. Aquamark was built to protect your documents, even in an AI-powered world.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>Why do I need an account?</h4>
+    <p>Test 100 pages for free, manage your plan, track your usage, access API docs, and watermark your files.</p>
+  </div>
+  
+  <div class="faq-item">
+    <h4>Can I cancel anytime?</h4>
+    <p>You're billed month-to-month and can cancel anytime. No subscriptions. No commitments.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>What if I go over my monthly pages?</h4>
+    <p>No problem! You can upgrade, downgrade, or cancel your plan anytime to match your needs.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>Questions or feature requests?</h4>
+    <p>Send us an email at <a href="mailto:hey@aquamark.io">hey@aquamark.io<a><p>
+  </div>
+
+<!-- Region Banner -->
+<section style="background:#e7f4ff; text-align:center; padding:16px 20px; font-size:18px; font-weight:500;">
+  🌍 Now onboarding users in the <strong>US, Canada, and UK</strong>!
+</section>
+
+<!-- Deterrence Section -->
+<section style="background:#ffffff; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:150px;">
+  <div style="flex:1; min-width:300px; max-width:520px;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
+      <span style="color:#3e5eff;">Built to Deter,</span> Not Just Detect
+    </h2>
+    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
+      Your logo gets tiled across every page — loud, clear, and impossible to ignore. On top of that, we overlay a custom hologram that adds distortion, making tampering obvious. 
+      Backdooring doesn’t stop — it just becomes risky, obvious, and not worth the trouble. Early users report fewer ghosting merchants and a smoother submission process.
+    </p>
+  </div>
+  <div style="flex:1; min-width:300px; max-width:480px; text-align:center;">
+    <img src="/deterrence.png" alt="Deterrence Sample" style="max-width:85%; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,0.06);" />
+  </div>
+</section>
+
+<!-- OCR Compatibility Section -->
+<section style="background:#f9f9ff; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:150px;">
+  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
+    <img src="/ocr-preview.png" alt="OCR Example" style="max-width:80%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);" />
+  </div>
+  <div style="flex:1; min-width:320px; max-width:540px;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
+      <span style="color:#3e5eff;">OCR-Compatible</span> by Design
+    </h2>
+    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
+      Our semi-transparent watermark tiles sit above the text layer, preserving parseability. Tools like Ocrolus and DocPanda read everything cleanly.
+      No DRM. No encryption. No metadata injection. Just clean, underwriter-friendly files — protected.
+    </p>
+  </div>
+</section>
+
+<!-- Patent Banner -->
+<section style="background:#e7f4ff; text-align:center; padding:20px; font-size:16px; font-weight:500; color:#333;">
+  🛡️ Aquamark’s watermarking and file decryption system is <strong>patent pending</strong> with the USPTO (#63/800,523)
+</section>
+
+
+<footer class="footer" style="color:#999; text-align:center;">
+  <img src="logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
+  <br />
+  &copy; 2025 Aquamark. All rights reserved. <br />
+  1 Bristol Court, San Francisco, CA
+  <a href="https://www.aquamark.io/privacy.html" style="color:#999; text-decoration:underline;">Privacy</a> · 
+  <a href="https://www.aquamark.io/terms.html" style="color:#999; text-decoration:underline;">Terms</a>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('active');
+  }
+</script>
+  
+</body>
+</html>
