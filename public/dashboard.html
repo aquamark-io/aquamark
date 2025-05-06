@@ -911,26 +911,30 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 
 </footer>
 
-<!-- Preserve URL parameters when navigating between pages -->
-<script>
-    // Preserve URL parameters when navigating between pages
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get current URL parameters
-        const urlParams = window.location.search;
-        const hashParams = window.location.hash;
-        
-        // Update watermark link with current parameters
-        const watermarkLink = document.getElementById('watermarkLink');
-        if (watermarkLink) {
-            watermarkLink.href = "/watermark.html" + urlParams + hashParams;
-        }
+document.addEventListener('DOMContentLoaded', function() {
+  // Get current URL parameters
+  const urlParams = window.location.search;
+  const hashParams = window.location.hash;
 
-      // Update start watermarking button with current parameters
+  // Update watermark link with current parameters
+  const watermarkLink = document.getElementById('watermarkLink');
+  if (watermarkLink) {
+    watermarkLink.href = "/watermark.html" + urlParams + hashParams;
+  }
+
+  // Update start watermarking button with current parameters
   const startWatermarkBtn = document.getElementById('startWatermarkBtn');
   if (startWatermarkBtn) {
     startWatermarkBtn.href = "/watermark.html" + urlParams + hashParams;
   }
-    });
+
+  // ✅ NEW: Update API Docs button with current parameters
+  const apiDocsBtn = document.querySelector('a.btn.btn-api');
+  if (apiDocsBtn) {
+    apiDocsBtn.href = "/api.html" + urlParams + hashParams;
+  }
+});
+
 </script>
 
 <script>
