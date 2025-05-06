@@ -70,17 +70,27 @@
 <!-- Email Domain Filter -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    Outseta.on("user:registering", function(user, cancel) {
-      const email = user.email || "";
-      const domain = email.split("@")[1]?.toLowerCase();
-      const blockedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "aol.com", "outlook.com"];
-      if (blockedDomains.includes(domain)) {
-        alert("Only company email addresses are allowed. Please use your business email.");
-        cancel();
+    const blockedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "aol.com", "outlook.com"];
+
+    const observer = new MutationObserver(() => {
+      const form = document.querySelector("form");
+      const emailInput = document.querySelector('input[type="email"]');
+      if (form && emailInput && !form.dataset.checked) {
+        form.dataset.checked = true;
+
+        form.addEventListener("submit", (e) => {
+          const email = emailInput.value.trim();
+          const domain = email.split("@")[1]?.toLowerCase();
+          if (blockedDomains.includes(domain)) {
+            e.preventDefault();
+            alert("Only company email addresses are allowed. Please use your business email.");
+          }
+        });
       }
     });
+
+    observer.observe(document.body, { childList: true, subtree: true });
   });
 </script>
-
 </body>
 </html>
