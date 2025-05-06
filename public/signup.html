@@ -7,21 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
   <style>
-    <script>
-  // Wait for Outseta to be ready
-  document.addEventListener("DOMContentLoaded", () => {
-    Outseta.on("user:registering", function(user, cancel) {
-      const email = user.email || "";
-      const domain = email.split("@")[1]?.toLowerCase();
-      const blockedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "aol.com", "outlook.com"];
-
-      if (blockedDomains.includes(domain)) {
-        alert("Error: please use a business email to sign up.");
-        cancel(); // Prevent the form from submitting
-      }
-    });
-  });
-</script>
 
     body {
       margin: 0;
