@@ -12,7 +12,6 @@
       font-family: 'Inter', sans-serif;
       background-color: #ffffff;
       color: #111;
-      overflow-x: hidden;
     }
 
     .banner {
@@ -24,6 +23,12 @@
       font-weight: 500;
     }
 
+    .banner a {
+      color: #3366ff;
+      font-weight: 400;
+      text-decoration: underline;
+    }
+    
     .topbar {
       display: flex;
       justify-content: space-between;
@@ -43,16 +48,16 @@
     }
 
     .nav-btn {
-      margin-left: 25px;
-      padding: 8px 18px;
-      background-color: #3e5eff;
-      color: white;
-      font-size: 17px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+  margin-left: 25px;
+  padding: 8px 18px;
+  background-color: #3e5eff;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
     .hero {
       text-align: center;
@@ -71,13 +76,13 @@
       margin-bottom: 40px;
     }
 
-    .btn {
+    .hero .btn {
       padding: 14px 24px;
       font-size: 17px;
       font-weight: 600;
       border: none;
       border-radius: 8px;
-      margin: 10px;
+      margin: 0 10px;
       cursor: pointer;
     }
 
@@ -91,43 +96,122 @@
       color: #000;
     }
 
-    .stats, .steps, .tiers, .review-grid {
+    .stats {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
+      gap: 80px;
+      background-color: #f9f9ff;
       padding: 40px 20px;
     }
 
-    .stat, .step, .tier, .review {
-      max-width: 300px;
+    .stat {
       text-align: center;
+      min-width: 160px;
     }
 
-    .step img, .stat img, .review img {
+    .stat img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .stat h3 {
+      margin: 10px 0 4px;
+      font-size: 22px;
+    }
+
+    .stat p {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .how-it-works {
+      background-color: #ffffff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .how-it-works h2 {
+      font-size: 41px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .how-it-works .blue {
+      color: #3e5eff;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    .step {
+      max-width: 180px;
+    }
+
+    .step img {
       height: 60px;
       margin-bottom: 20px;
     }
 
-    .how-it-works, .pricing, .faq, .reviews {
-      text-align: center;
-      padding: 80px 20px;
+    .step h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
+    .step p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .-for-mca {
+      padding: 80px 20px;
+      background-color: none;
+    }
+    
     .built-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-wrap: wrap;
       gap: 60px;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 80px 20px;
+      flex-wrap: wrap;
     }
 
     .built-text {
-      flex: 1;
       max-width: 500px;
+      flex: 1;
+    }
+
+    .built-text h2 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .built-text p {
+      font-size: 20px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      max-width: 480px;
+    }
+
+    .built-text .btn {
+      border: 2px solid #3e5eff;
+      background-color: done;
+      color: #3e5eff;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
     .built-image {
@@ -138,116 +222,324 @@
 
     .built-image img {
       max-width: 100%;
-      border-radius: 12px;
+      width: 100%;
     }
 
-    footer.footer {
-      background-color: #f3e8ff;
-      color: #999;
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 14px;
-    }
+@media (max-width: 768px) {
+  section[style*="gap:150px;"] {
+    flex-direction: column;
+    text-align: center;
+    gap: 60px !important;
+    padding: 60px 20px !important;
+  }
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
+  section[style*="gap:150px;"] > div {
+    max-width: 100% !important;
+  }
 
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background-color: #333;
-      margin: 4px 0;
-    }
+  section[style*="gap:150px;"] h2 {
+    font-size: 2.6rem !important;
+  }
 
-    .mobile-nav {
-      display: none;
-      flex-direction: column;
-      text-align: center;
-      background-color: #fff;
-      padding: 20px 0;
-    }
+  section[style*="gap:150px;"] p {
+    font-size: 1.125rem !important;
+  }
+}
+    
+    @media (max-width: 780px) {
+   .stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
 
-    .mobile-nav a {
-      margin: 10px 0;
-      text-decoration: none;
-      color: #666;
-      font-size: 16px;
-    }
-
-    @media (max-width: 768px) {
-      .topbar {
-        padding: 20px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .mobile-nav.active {
-        display: flex;
-      }
-
-      .hero h1 {
-        font-size: 36px;
-      }
-
-      .hero p {
-        font-size: 18px;
-      }
-
-      .btn {
-        width: 100%;
-        max-width: 280px;
-        margin: 10px auto;
-      }
+  .stat {
+    width: 100%;
+    max-width: 300px;
+  }
 
       .built-container {
         flex-direction: column-reverse;
         text-align: center;
       }
-    }
-  </style>
 
-  <script>
-    function toggleMenu() {
-      document.getElementById('mobileMenu').classList.toggle('active');
+      .built-text,
+      .built-image {
+        max-width: 100%;
+      }
+
+      .built-text p {
+        max-width: 100%;
+      }
+.hero .btn {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 10px auto;
+}
+      .steps {
+  flex-direction: column;
+  align-items: center;
+}
+
+.step {
+  max-width: 100%;
+}
     }
+
+    .reviews {
+      background: linear-gradient(to right, #eef2ff, #fdf2ff);
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .reviews h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .review-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .review {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 340px;
+      font-size: 20px;
+      line-height: 1.6;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .review span {
+      display: block;
+      margin-top: 18px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .pricing {
+      background-color: #f9f9f9;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .pricing h2 {
+      font-size: 46px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .pricing p {
+      font-size: 21px;
+      color: #555;
+      margin-bottom: 50px;
+    }
+
+    .tiers {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .tier {
+      background-color: #3366ff;
+      color: #fff;
+      padding: 60px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      width: 280px;
+      text-align: center;
+    }
+
+    .tier h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .tier .price {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .tier p {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+
+    .pricing .cta {
+      margin-top: 60px;
+    }
+
+    .faq {
+      padding: 80px 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .faq h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 40px;
+    }
+
+    .faq-item {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      text-align: left;
+    }
+
+    .faq-item h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .footer {
+      background-color: #f3e8ff;
+      color: #111;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  .footer {
+    background-color: #f3e8ff;
+    color: #111;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 4px 0;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px 0;
+  }
+
+  .mobile-nav a {
+    margin: 10px 0;
+    text-decoration: none;
+    color: #666;
+    font-size: 16px;
+  }
+    
+  @media (max-width: 768px) {
+    .topbar {
+      padding: 20px;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    .mobile-nav.active {
+      display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+  .why-it-works {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 40px !important;
+    padding: 40px 20px !important;
+  }
+
+  .why-it-works > div {
+    max-width: 100% !important;
+  }
+}
+
+</style>
+
+<script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support'
+    };
   </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <link rel="stylesheet" href="style.css">
+
+<script>
+  // Works whether hash is available immediately or delayed
+  function checkLogoutHash() {
+    if (window.location.hash === '#o-logout-link') {
+      window.location.replace('/login.html');
+    }
+  }
+
+  // Run immediately if possible
+  checkLogoutHash();
+
+  // Also run after full load in case hash is delayed
+  window.addEventListener("load", checkLogoutHash);
+</script>
+
 </head>
 <body>
-  <div class="banner">
-    🔥 Get started with <strong>100 free pages</strong>!
-  </div>
+ <div class="banner">
+  🔥 Get started with <strong>100 free pages</strong>!<br>
+</div>
   <div class="banner" style="background-color: #e0f3ff;">
-    🌍 Now onboarding users in the US, Canada, and UK!
-  </div>
+  🌍 Now onboarding users in the US, Canada, and UK!
+</div>
 
   <header class="topbar">
     <img src="logo-full-black-blue.png" alt="Aquamark Logo" class="logo" />
     <nav class="nav-links">
-      <a href="#how">How It Works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <button onclick="location.href='/login.html'" class="nav-btn">Sign In</button>
-    </nav>
+  <a href="#how">How It Works</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <button onclick="location.href='/login.html'" class="nav-btn">Sign In</button>
+</nav>
     <div class="hamburger" onclick="toggleMenu()">
       <div></div><div></div><div></div>
     </div>
   </header>
 
   <nav class="mobile-nav" id="mobileMenu">
-    <a href="#how">How It Works</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#faq">FAQ</a>
-    <a href="/login.html">Sign In</a>
-  </nav>
+  <a href="#how">How It Works</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <a href="/login.html">Sign In</a>
+</nav>
 
   <main class="hero">
     <h1>Prevent Backdooring. Fund More Deals.</h1>
@@ -454,13 +746,21 @@ Aquamark protects deals and helps restore integrity to an industry that powers s
   </div>
 </section>
 
-  <footer class="footer">
-    <img src="logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
-    <br />
-    &copy; 2025 Aquamark. All rights reserved. <br />
-    1 Bristol Court, San Francisco, CA
-    <a href="https://www.aquamark.io/privacy.html" style="color:#999; text-decoration:underline;">Privacy</a> · 
-    <a href="https://www.aquamark.io/terms.html" style="color:#999; text-decoration:underline;">Terms</a>
-  </footer>
+<footer class="footer" style="color:#999; text-align:center;">
+  <img src="logo-icon-black-blue.png" alt="Aquamark Logo" style="width:40px; margin-bottom:10px;" />
+  <br />
+  &copy; 2025 Aquamark. All rights reserved. <br />
+  1 Bristol Court, San Francisco, CA
+  <a href="https://www.aquamark.io/privacy.html" style="color:#999; text-decoration:underline;">Privacy</a> · 
+  <a href="https://www.aquamark.io/terms.html" style="color:#999; text-decoration:underline;">Terms</a>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('active');
+  }
+</script>
+  
 </body>
 </html>
