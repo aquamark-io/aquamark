@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Aquamark Admin Dashboard</title>
+  <title>Aquamark Stats</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
-  <script src="https://cdn.outseta.com/outseta.min.js"></script>
   <style>
     body {
       font-family: Inter, sans-serif;
@@ -38,7 +37,7 @@
 </head>
 <body>
 
-<h1>📊 Aquamark Admin Dashboard</h1>
+<h1>📊 Aquamark Stats</h1>
 
 <div class="card" id="totalPages">Loading total pages...</div>
 <div class="card">
@@ -118,18 +117,7 @@
     });
   }
 
-  // Admin email restriction
-  Outseta.on('ready', async function () {
-    const user = Outseta.nocode.user;
-    const adminEmail = '1christinaduncan@gmail.com';
-
-    if (!user || user.email !== adminEmail) {
-      document.body.innerHTML = "<h2>Access Denied</h2><p>You do not have permission to view this page.</p>";
-      return;
-    }
-
-    loadAnalytics(); // Only runs if user is authorized
-  });
+  loadAnalytics();
 </script>
 
 </body>
