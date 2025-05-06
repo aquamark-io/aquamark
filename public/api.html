@@ -266,6 +266,7 @@
     
 <h2>📥 Endpoint: Watermark PDFs</h2>
 <p><span class="api-method">POST</span> <code>https://aquamark-decrypt.onrender.com/watermark</code></p>
+<p><strong>Note:</strong> This API does not accept links to files (e.g., Dropbox, Google Drive). You must send the actual PDF file using <code>multipart/form-data</code>.</p>
 <p>Accepts multipart/form-data with a PDF file and email address. Returns the processed, watermarked PDF as a binary response.</p>
 
 <table>
@@ -302,23 +303,6 @@
     <li><strong>file</strong> (type: file) – select a PDF from your computer</li>
   </ul>
 </ul>
-
-<h2>🧪 Try It Live (Optional)</h2>
-<p>If you're logged in and already have a valid API key, you can test a request directly using this simple HTML form:</p>
-
-<form method="POST" enctype="multipart/form-data" action="https://aquamark-decrypt.onrender.com/watermark" target="_blank" style="margin-top: 1rem;">
-  <label>
-    Email (user_email):
-    <input type="email" name="user_email" required style="margin: 0.5rem 0; width: 100%;">
-  </label><br>
-  <label>
-    Upload PDF:
-    <input type="file" name="file" accept=".pdf" required style="margin: 0.5rem 0; width: 100%;">
-  </label><br>
-  <button type="submit" style="padding: 0.75rem 1.25rem; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer;">
-    Submit to API
-  </button>
-</form>
 
 <h2>❗ Error Responses</h2>
     <table>
