@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,13 +43,12 @@
     </a>
   </div>
 
-  <!-- Outseta Signup Embed -->
-  <div data-o-auth="1"
-       data-widget-mode="register"
-       data-plan-uid="aWxLDdWV"
-       data-skip-plan-options="true"
-       data-mode="embed">
-  </div>
+<div data-o-auth="1"
+     data-widget-mode="register"
+     data-plan-uid="aWxLDdWV"
+     data-skip-plan-options="true"
+     data-mode="embed">
+</div>
 </div>
 
 <footer>
@@ -67,30 +64,5 @@
 </script>
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-<!-- Email Domain Filter -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const blockedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "aol.com", "outlook.com"];
-
-    const observer = new MutationObserver(() => {
-      const form = document.querySelector("form");
-      const emailInput = document.querySelector('input[type="email"]');
-      if (form && emailInput && !form.dataset.checked) {
-        form.dataset.checked = true;
-
-        form.addEventListener("submit", (e) => {
-          const email = emailInput.value.trim();
-          const domain = email.split("@")[1]?.toLowerCase();
-          if (blockedDomains.includes(domain)) {
-            e.preventDefault();
-            alert("Only company email addresses are allowed. Please use your business email.");
-          }
-        });
-      }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-  });
-</script>
 </body>
 </html>
