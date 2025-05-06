@@ -345,7 +345,13 @@ color: white;
   background: #dc2626;
 }
 
-
+.btn-success {
+  background: var(--success-color);
+  color: white;
+}
+.btn-success:hover {
+  background: #059669;
+}
 .btn-accent:hover {
 
 background: #0069d9;
@@ -817,9 +823,9 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 <!-- Action Buttons Card -->
 <div class="action-card">
     <div class="action-buttons">
-        <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-primary">Upgrade Plan</a>
+<a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-success">Upgrade Plan</a>
         <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-accent">Start Watermarking</a>
-        <a href="/api.html" class="btn btn-outline">API Docs</a>
+<a href="/api.html" class="btn btn-danger">API Docs</a>
     </div>
 </div>
 
