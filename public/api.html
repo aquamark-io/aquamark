@@ -260,7 +260,7 @@
 
   <h2>🔐 Authentication</h2>
   <p>Include the API key in the header of every request:</p>
-  <pre><code>x-api-key: YOUR_API_KEY_HERE</code></pre>
+  <pre><code>Authorization: Bearer YOUR_API_KEY_HERE</code></pre>
 
 
     
@@ -280,7 +280,7 @@
 
 <h3>Sample Request (cURL)</h3>
 <pre><code>curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
-  -H "x-api-key: YOUR_API_KEY" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
   -F "user_email=john@example.com" \
   -F "file=@statement1.pdf" \
   --output "statement1 - protected.pdf"
@@ -295,7 +295,7 @@
 <ul>
   <li><strong>Method:</strong> POST</li>
   <li><strong>URL:</strong> <code>https://aquamark-decrypt.onrender.com/watermark</code></li>
-  <li><strong>Headers:</strong> <code>x-api-key: YOUR_API_KEY</code></li>
+  <li><strong>Headers:</strong> <code>Authorization: Bearer YOUR_API_KEY</code></li>
   <li><strong>Body:</strong> form-data</li>
   <ul>
     <li><strong>user_email</strong> (type: text) – your Aquamark account email</li>
