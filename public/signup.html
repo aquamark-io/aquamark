@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
   <style>
-
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -44,12 +45,13 @@
     </a>
   </div>
 
-<div data-o-auth="1"
-     data-widget-mode="register"
-     data-plan-uid="aWxLDdWV"
-     data-skip-plan-options="true"
-     data-mode="embed">
-</div>
+  <!-- Outseta Signup Embed -->
+  <div data-o-auth="1"
+       data-widget-mode="register"
+       data-plan-uid="aWxLDdWV"
+       data-skip-plan-options="true"
+       data-mode="embed">
+  </div>
 </div>
 
 <footer>
@@ -64,6 +66,21 @@
   };
 </script>
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+<!-- Email Domain Filter -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    Outseta.on("user:registering", function(user, cancel) {
+      const email = user.email || "";
+      const domain = email.split("@")[1]?.toLowerCase();
+      const blockedDomains = ["gmail.com", "yahoo.com", "hotmail.com", "aol.com", "outlook.com"];
+      if (blockedDomains.includes(domain)) {
+        alert("Only company email addresses are allowed. Please use your business email.");
+        cancel();
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
