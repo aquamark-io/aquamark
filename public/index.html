@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Aquamark</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <link href="/logo-icon-black-blue.jpg" rel="icon" type="image/jpg">
 <style>
     body {
@@ -49,16 +49,16 @@
     }
 
     .nav-btn {
-  margin-left: 25px;
-  padding: 8px 18px;
-  background-color: #3e5eff;
-  color: white;
-  font-size: 17px;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
+      margin-left: 25px;
+      padding: 8px 18px;
+      background-color: #3e5eff;
+      color: white;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
     .hero {
       text-align: center;
@@ -226,38 +226,38 @@
       width: 100%;
     }
 
-@media (max-width: 768px) {
-  section[style*="gap:150px;"] {
-    flex-direction: column;
-    text-align: center;
-    gap: 60px !important;
-    padding: 60px 20px !important;
-  }
+    @media (max-width: 768px) {
+      section[style*="gap:150px;"] {
+        flex-direction: column;
+        text-align: center;
+        gap: 60px !important;
+        padding: 60px 20px !important;
+      }
 
-  section[style*="gap:150px;"] > div {
-    max-width: 100% !important;
-  }
+      section[style*="gap:150px;"] > div {
+        max-width: 100% !important;
+      }
 
-  section[style*="gap:150px;"] h2 {
-    font-size: 2.6rem !important;
-  }
+      section[style*="gap:150px;"] h2 {
+        font-size: 2.6rem !important;
+      }
 
-  section[style*="gap:150px;"] p {
-    font-size: 1.125rem !important;
-  }
-}
+      section[style*="gap:150px;"] p {
+        font-size: 1.125rem !important;
+      }
+    }
     
     @media (max-width: 780px) {
-   .stats {
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-  }
+      .stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
 
-  .stat {
-    width: 100%;
-    max-width: 300px;
-  }
+      .stat {
+        width: 100%;
+        max-width: 300px;
+      }
 
       .built-container {
         flex-direction: column-reverse;
@@ -272,20 +272,22 @@
       .built-text p {
         max-width: 100%;
       }
-.hero .btn {
-  display: block;
-  width: 100%;
-  max-width: 280px;
-  margin: 10px auto;
-}
+      
+      .hero .btn {
+        display: block;
+        width: 100%;
+        max-width: 280px;
+        margin: 10px auto;
+      }
+      
       .steps {
-  flex-direction: column;
-  align-items: center;
-}
+        flex-direction: column;
+        align-items: center;
+      }
 
-.step {
-  max-width: 100%;
-}
+      .step {
+        max-width: 100%;
+      }
     }
 
     .reviews {
@@ -419,83 +421,205 @@
       font-size: 14px;
       line-height: 1.6;
     }
-  .footer {
-    background-color: #f3e8ff;
-    color: #111;
-    text-align: center;
-    padding: 40px 20px;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-  }
-
-  .hamburger div {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    margin: 4px 0;
-  }
-
-  .mobile-nav {
-    display: none;
-    flex-direction: column;
-    text-align: center;
-    background-color: #fff;
-    padding: 20px 0;
-  }
-
-  .mobile-nav a {
-    margin: 10px 0;
-    text-decoration: none;
-    color: #666;
-    font-size: 16px;
-  }
-    
-  @media (max-width: 768px) {
-    .topbar {
-      padding: 20px;
-    }
-
-    .nav-links {
-      display: none;
-    }
 
     .hamburger {
-      display: flex;
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
     }
 
-    .mobile-nav.active {
-      display: flex;
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      margin: 4px 0;
     }
-}
 
-@media (max-width: 768px) {
-  .why-it-works {
-    flex-direction: column-reverse;
-    text-align: center;
-    gap: 40px !important;
-    padding: 40px 20px !important;
-  }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      text-align: center;
+      background-color: #fff;
+      padding: 20px 0;
+    }
 
-  .why-it-works > div {
-    max-width: 100% !important;
-  }
-}
+    .mobile-nav a {
+      margin: 10px 0;
+      text-decoration: none;
+      color: #666;
+      font-size: 16px;
+    }
+    
+    @media (max-width: 768px) {
+      .topbar {
+        padding: 20px;
+      }
 
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav.active {
+        display: flex;
+      }
+      
+      .why-it-works {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 40px !important;
+        padding: 40px 20px !important;
+      }
+
+      .why-it-works > div {
+        max-width: 100% !important;
+      }
+    }
+
+    /* Mobile centering fixes */
+    @media (max-width: 768px) {
+      body {
+        margin: 0 auto;
+        width: 100%;
+        overflow-x: hidden;
+      }
+      
+      /* Fix banner text centering */
+      .banner {
+        padding: 12px 10px;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      /* Fix topbar and logo alignment */
+      .topbar {
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: space-between;
+      }
+      
+      /* Center the hero section properly */
+      .hero {
+        padding: 80px 20px 60px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .hero h1 {
+        font-size: 36px;
+        margin: 0 auto 20px;
+        max-width: 100%;
+      }
+      
+      .hero p {
+        font-size: 18px;
+        margin: 0 auto 30px;
+        max-width: 100%;
+      }
+      
+      /* Fix the buttons on mobile */
+      .btn {
+        margin: 10px auto;
+        display: block;
+        max-width: 240px;
+      }
+      
+      /* Properly center sections with flex layouts */
+      section {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      /* Fix for the reviews section */
+      .reviews {
+        padding: 40px 15px;
+      }
+      
+      .review-grid {
+        padding: 0;
+      }
+      
+      .review {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      
+      /* Fix for the FAQ section */
+      .faq-item {
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+      }
+      
+      /* Fix for the pricing section */
+      .pricing {
+        padding: 40px 15px;
+      }
+      
+      .pricing h2 {
+        font-size: 36px;
+      }
+      
+      .tiers {
+        gap: 30px;
+      }
+      
+      .tier {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      
+      /* Fix for sections using custom inline styles */
+      section[style*="display:flex"] {
+        width: 100%;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      section[style*="display:flex"] > div {
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+      }
+      
+      section[style*="display:flex"] img {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+      }
+      
+      /* Fix for mobile menu */
+      .mobile-nav {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      /* Fix for footer */
+      .footer {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 30px 15px;
+      }
+    }
 </style>
 <script>
     var o_options = {
       domain: 'aquamark.outseta.com',
       load: 'auth,customForm,emaillist,leadCapture,nocode,profile,support'
     };
-  </script>
+</script>
 <script data-options="o_options" src="https://cdn.outseta.com/outseta.min.js"></script>
-<link href="style.css" rel="stylesheet"/>
 <script>
   // Works whether hash is available immediately or delayed
   function checkLogoutHash() {
@@ -510,191 +634,191 @@
   // Also run after full load in case hash is delayed
   window.addEventListener("load", checkLogoutHash);
 </script>
-</link></head>
+</head>
 <body>
 <div class="banner">
-  🔥 Get started with <strong>100 free pages</strong><br/>
+  🔥 Get started with <strong>100 free pages</strong>
 </div>
 <div class="banner" style="background-color: #e0f3ff;">
   🌍 Now onboarding users in the US, Canada, and UK!
 </div>
 <header class="topbar">
-<img alt="Aquamark Logo" class="logo" src="logo-full-black-blue.png"/>
-<nav class="nav-links">
-<a href="#pricing">Pricing</a>
-<a href="#faq">FAQ</a>
-<button class="nav-btn" onclick="location.href='/login.html'">Sign In</button>
-</nav>
-<div class="hamburger" onclick="toggleMenu()">
-<div></div><div></div><div></div>
-</div>
+  <img alt="Aquamark Logo" class="logo" src="logo-full-black-blue.png"/>
+  <nav class="nav-links">
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <button class="nav-btn" onclick="location.href='/login.html'">Sign In</button>
+  </nav>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
 </header>
 <nav class="mobile-nav" id="mobileMenu">
-<a href="#pricing">Pricing</a>
-<a href="#faq">FAQ</a>
-<a href="/login.html">Sign In</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <a href="/login.html">Sign In</a>
 </nav>
 <main class="hero">
-<h1>Prevent Backdooring. Fund More Deals.</h1>
-<p>Protect your submissions. Instant watermarking built for the MCA space.</p>
-<button class="btn primary" onclick="location.href='/signup.html'">Get Free Account</button>
-<button class="btn secondary" onclick="location.href='/api-docs.html'" style="background-color: #AAF0D1; color: #000;">API Documentation</button>
+  <h1>Prevent Backdooring. Fund More Deals.</h1>
+  <p>Protect your submissions. Instant watermarking built for the MCA space.</p>
+  <button class="btn primary" onclick="location.href='/signup.html'">Get Free Account</button>
+  <button class="btn secondary" onclick="location.href='/api-docs.html'" style="background-color: #AAF0D1; color: #000;">API Documentation</button>
 </main>
 <section class="stats">
-<div class="stat">
-<img alt="Protect Icon" src="protect.svg"/>
-<h3>2,100+</h3>
-<p>Deals Protected</p>
-</div>
-<div class="stat">
-<img alt="Star Icon" src="star.svg"/>
-<h3>4.89</h3>
-<p>User Rating</p>
-</div>
-<div class="stat">
-<img alt="Document Icon" src="document.svg"/>
-<h3>500k+</h3>
-<p>Pages Watermarked</p>
-</div>
+  <div class="stat">
+    <img alt="Protect Icon" src="protect.svg"/>
+    <h3>2,100+</h3>
+    <p>Deals Protected</p>
+  </div>
+  <div class="stat">
+    <img alt="Star Icon" src="star.svg"/>
+    <h3>4.89</h3>
+    <p>User Rating</p>
+  </div>
+  <div class="stat">
+    <img alt="Document Icon" src="document.svg"/>
+    <h3>500k+</h3>
+    <p>Pages Watermarked</p>
+  </div>
 </section>
 <section class="how-it-works" id="how">
-<h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
-<div class="steps">
-<div class="step">
-<img alt="Step One" src="one.svg"/>
-<h4>Create Account</h4>
-<p>It's free.</p>
-</div>
-<div class="step">
-<img alt="Step Two" src="two.svg"/>
-<h4>Upload Logo</h4>
-<p>Add once. Apply forever.</p>
-</div>
-<div class="step">
-<img alt="Step Three" src="three.svg"/>
-<h4>Add Files</h4>
-<p>Upload or use the API.</p>
-</div>
-<div class="step">
-<img alt="Step Four" src="four.svg"/>
-<h4>Download Instantly</h4>
-<p>Ready in seconds.</p>
-</div>
-</div>
+  <h2><span class="black">Join the</span> <span class="blue">Aquamark</span> <span class="black">Movement.</span></h2>
+  <div class="steps">
+    <div class="step">
+      <img alt="Step One" src="one.svg"/>
+      <h4>Create Account</h4>
+      <p>It's free.</p>
+    </div>
+    <div class="step">
+      <img alt="Step Two" src="two.svg"/>
+      <h4>Upload Logo</h4>
+      <p>Add once. Apply forever.</p>
+    </div>
+    <div class="step">
+      <img alt="Step Three" src="three.svg"/>
+      <h4>Add Files</h4>
+      <p>Upload or use the API.</p>
+    </div>
+    <div class="step">
+      <img alt="Step Four" src="four.svg"/>
+      <h4>Download Instantly</h4>
+      <p>Ready in seconds.</p>
+    </div>
+  </div>
 </section>
 <section class="why-it-works" style="background:#f9f9ff; padding:50px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:120px;">
-<div style="flex:1; min-width:300px; max-width:500px;">
-<h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
-<span style="color:#3e5eff;"> OCR </span> Compatible
+  <div style="flex:1; min-width:300px; max-width:500px;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
+      <span style="color:#3e5eff;"> OCR </span> Compatible
     </h2>
-<p style="font-size:1.2rem; color:#555; line-height:1.6;"> <p style="font-size:1.15rem; color:#444; line-height:1.7; margin-bottom:24px;">
-We watermark every page without altering or obscuring the original content. Tested with Ocrolus, MoneyThumb, and DocPanda — all files remain fully parseable and text-selectable post-processing. No DRM. No encryption. No metadata manipulation. It's a secure overlay that protects your documents without breaking underwriting workflows.
+    <p style="font-size:1.15rem; color:#444; line-height:1.7; margin-bottom:24px;">
+      We watermark every page without altering or obscuring the original content. Tested with Ocrolus, MoneyThumb, and DocPanda — all files remain fully parseable and text-selectable post-processing. No DRM. No encryption. No metadata manipulation. It's a secure overlay that protects your documents without breaking underwriting workflows.
     </p>
-</p></div>
-<div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
-<img alt="Watermarked Statement Sample" src="/patent-statement.png" style="max-width:80%; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,0.06);"/>
-</div>
+  </div>
+  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
+    <img alt="Watermarked Statement Sample" src="/patent-statement.png" style="max-width:80%; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,0.06);"/>
+  </div>
 </section>
 <section style="background:#ffffff; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:150px;">
-<div style="flex:1; min-width:320px; max-width:550px;">
-<h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
-<span style="color:black;">Built on</span> <span style="color:#3e5eff;">Proprietary</span> <span style="color:black;">Tech.</span>
-</h2>
-<p style="font-size:1.2rem; color:#555; line-height:1.6;">
-      Aquamark isn’t just another watermark tool. Our proprietary engine tiles your logo diagonally across every page in seconds.
+  <div style="flex:1; min-width:320px; max-width:550px;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
+      <span style="color:black;">Built on</span> <span style="color:#3e5eff;">Proprietary</span> <span style="color:black;">Tech.</span>
+    </h2>
+    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
+      Aquamark isn't just another watermark tool. Our proprietary engine tiles your logo diagonally across every page in seconds.
     </p>
-<p style="font-size:1.2rem; color:#555; line-height:1.6;">
+    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
       Encrypted bank statements? Our private decryption servers unlock protected files and watermark seamlessly. 
     </p>
-<button class="btn" onclick="location.href='/signup.html'" style="margin-top: 10px; background-color: #3e5eff; color: white; border: none; padding: 14px 24px; font-size: 16px; font-weight: 600; border-radius: 8px;">Free Sample</button>
-</div>
-<div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
-<img alt="Built for MCA" src="/robot.png" style="max-width:80%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);"/>
-</div>
+    <button class="btn" onclick="location.href='/signup.html'" style="margin-top: 10px; background-color: #3e5eff; color: white; border: none; padding: 14px 24px; font-size: 16px; font-weight: 600; border-radius: 8px;">Free Sample</button>
+  </div>
+  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
+    <img alt="Built for MCA" src="/robot.png" style="max-width:80%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);"/>
+  </div>
 </section>
 <section style="background:#ffffff; padding:80px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:150px;">
-<div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
-<img alt="Bank statement preview" src="/theft.png" style="max-width:80%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);"/>
-</div>
-<div style="flex:1; min-width:320px; max-width:550px;">
-<h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
-<span style="color:black;">Less Theft =</span> <span style="color:#3e5eff;"> More Deals</span>
-</h2>
-<p style="font-size:1.2rem; color:#555; line-height:1.6;">
-No funder wants to see another broker’s branding stamped all over a deal. And no backdoor hustler wants to explain why they submitted a package that still has your brand plastered across it.
-</p>
-</div>
+  <div style="flex:1; min-width:300px; max-width:500px; text-align:center;">
+    <img alt="Bank statement preview" src="/theft.png" style="max-width:80%; height:auto; border-radius:24px; box-shadow:0 8px 30px rgba(0,0,0,0.06);"/>
+  </div>
+  <div style="flex:1; min-width:320px; max-width:550px;">
+    <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:0.3em;">
+      <span style="color:black;">Less Theft =</span> <span style="color:#3e5eff;"> More Deals</span>
+    </h2>
+    <p style="font-size:1.2rem; color:#555; line-height:1.6;">
+      No funder wants to see another broker's branding stamped all over a deal. And no backdoor hustler wants to explain why they submitted a package that still has your brand plastered across it.
+    </p>
+  </div>
 </section>
 <section class="reviews" id="reviews" style="padding: 60px 20px;">
-<h2 style="text-align: center; font-size: 42px; font-weight: 800; margin-bottom: 50px;">
-<span <="" span=""> Reviews from other <span style="color:#3e5eff;">Aquamarkers
-  </span></span></h2>
-<div class="review-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
-<div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-<img alt="Heart Icon" src="heart.svg" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;"/>
-<p style="font-size: 20px; line-height: 1.6; margin: 0;">
-        “Solved our backdooring problems no doubt, and less customers complaining about their phone blowing up after we submit.”
+  <h2 style="text-align: center; font-size: 42px; font-weight: 800; margin-bottom: 50px;">
+    Reviews from other <span style="color:#3e5eff;">Aquamarkers</span>
+  </h2>
+  <div class="review-grid" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px;">
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img alt="Heart Icon" src="heart.svg" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;"/>
+      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
+        "Solved our backdooring problems no doubt, and less customers complaining about their phone blowing up after we submit."
       </p>
-<span style="margin-top: auto; font-weight: bold; font-size: 18px;">James, ISO</span>
-</div>
-<div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-<img alt="Heart Icon" src="heart.svg" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;"/>
-<p style="font-size: 20px; line-height: 1.6; margin: 0;">
-      "Saving even one deal from backdooring more than covers the cost. Hoping more people get on board — the industry needs it."
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">James, ISO</span>
+    </div>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img alt="Heart Icon" src="heart.svg" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;"/>
+      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
+        "Saving even one deal from backdooring more than covers the cost. Hoping more people get on board — the industry needs it."
       </p>
-<span style="margin-top: auto; font-weight: bold; font-size: 18px;">Eric, Account Executive</span>
-</div>
-<div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
-<img alt="Heart Icon" src="heart.svg" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;"/>
-<p style="font-size: 20px; line-height: 1.6; margin: 0;">
-        “No brainer.”
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Eric, Account Executive</span>
+    </div>
+    <div class="review" style="background: #fff; border-radius: 12px; padding: 32px; max-width: 340px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; justify-content: space-between; height: 300px; text-align: center;">
+      <img alt="Heart Icon" src="heart.svg" style="height: 48px; margin-bottom: 20px; margin-left: auto; margin-right: auto;"/>
+      <p style="font-size: 20px; line-height: 1.6; margin: 0;">
+        "No brainer."
       </p>
-<span style="margin-top: auto; font-weight: bold; font-size: 18px;">Jessica, Funding Manager</span>
-</div>
-</div>
+      <span style="margin-top: auto; font-weight: bold; font-size: 18px;">Jessica, Funding Manager</span>
+    </div>
+  </div>
 </section>
 <section class="pricing" id="pricing">
-<h2 style="font-size: 66px;">Priced like a tool, not a service.</h2>
-<p style="font-size: 25px;">Free trial on all plans. Cancel anytime. The way it should be.</p>
-<div class="tiers">
-<div class="tier starter" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-<h3>Riding Solo</h3>
-<div class="price">$25/mo</div>
-<p>1,000 pages</p>
-<button class="btn primary" onclick="location.href='/signup.html'" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;">Free Trial</button>
-</div>
-<div class="tier enterprise" style="background: #CFE9FF; color: #000; position: relative;">
-<span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
-<h3>ISO Shops</h3>
-<div class="price">$250/mo</div>
-<p style="color:#000;">Unlimited</p>
-<button class="btn primary" onclick="location.href='/signup.html'" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#fa6bee; color:#FFFFFF;">Free Trial</button>
-</div>
-<div class="tier pro" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
-<h3>Small Teams</h3>
-<div class="price">$100/mo</div>
-<p>5,000 pages</p>
-<button class="btn primary" onclick="location.href='/signup.html'" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;">Free Trial</button>
-</div>
-</div>
+  <h2 style="font-size: 66px;">Priced like a tool, not a service.</h2>
+  <p style="font-size: 25px;">Free trial on all plans. Cancel anytime. The way it should be.</p>
+  <div class="tiers">
+    <div class="tier starter" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+      <h3>Riding Solo</h3>
+      <div class="price">$25/mo</div>
+      <p>1,000 pages</p>
+      <button class="btn primary" onclick="location.href='/signup.html'" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;">Free Trial</button>
+    </div>
+    <div class="tier enterprise" style="background: #CFE9FF; color: #000; position: relative;">
+      <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background-color: #3e5eff; color: white; padding: 6px 12px; font-size: 14px; font-weight: 600; border-radius: 999px;">Most Popular</span>
+      <h3>ISO Shops</h3>
+      <div class="price">$250/mo</div>
+      <p style="color:#000;">Unlimited</p>
+      <button class="btn primary" onclick="location.href='/signup.html'" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#fa6bee; color:#FFFFFF;">Free Trial</button>
+    </div>
+    <div class="tier pro" style="background: #ffffff; color: #000; border: 1px solid #ddd;">
+      <h3>Small Teams</h3>
+      <div class="price">$100/mo</div>
+      <p>5,000 pages</p>
+      <button class="btn primary" onclick="location.href='/signup.html'" style="margin-top: 40px; padding:14px 24px; font-size:16px; font-weight:600; border-radius:8px; border: none; background:#ffcffb; color:#000;">Free Trial</button>
+    </div>
+  </div>
 </section>
 <section class="faq" id="faq" style="background:white;">
-<h2>Frequently Asked Questions</h2>
-<div class="faq-item">
-<h4>Do most lenders accept watermarked statements?</h4>
-<p>Yes. Expansion Capital Group was among one of the first based on our research and ISO surveys.</p>
-</div>
-<div class="faq-item">
-<h4>Are my files secure?</h4>
-<p>Yes. Our browser-based system processes your files securely, without ever saving them. For encrypted PDFs, we decrypt them briefly on a secure server, then return them instantly to your browser for processing. </p>
-</div>
-<div class="faq-item">
-<h4>Can AI remove the watermarks?</h4>
-<p>Nope - our watermarks are designed to resist removal by common AI tools. Most AI platforms also follow ethical guidelines that prohibit removing watermarks, as it's a violation of copyright and usage rights.</p>
-</div>
-<div class="faq-item">
-<h4>Why do I need an account?</h4>
-<p>Test 100 pages for free, manage your plan, track your usage, access API docs, and watermark your files.</p>
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item">
+    <h4>Do most lenders accept watermarked statements?</h4>
+    <p>Yes. Expansion Capital Group was among one of the first based on our research and ISO surveys.</p>
+  </div>
+  <div class="faq-item">
+    <h4>Are my files secure?</h4>
+    <p>Yes. Our browser-based system processes your files securely, without ever saving them. For encrypted PDFs, we decrypt them briefly on a secure server, then return them instantly to your browser for processing.</p>
+  </div>
+  <div class="faq-item">
+    <h4>Can AI remove the watermarks?</h4>
+    <p>Nope - our watermarks are designed to resist removal by common AI tools. Most AI platforms also follow ethical guidelines that prohibit removing watermarks, as it's a violation of copyright and usage rights.</p>
+  </div>
+  <div class="faq-item">
+    <h4>Why do I need an account?</h4>
+    <p>Test 100 pages for free, manage your plan, track your usage, access API docs, and watermark your files.</p>
 </div>
 <div class="faq-item">
 <h4>Can I cancel anytime?</h4>
