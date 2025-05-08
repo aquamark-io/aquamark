@@ -1,81 +1,49 @@
-// Aquamark Chrome Extension: watermark.js
-
-// Import PDFLib for watermarking
-import { PDFDocument } from 'https://unpkg.com/pdf-lib/dist/pdf-lib.min.js';
-
-// Listen for incoming watermark tasks
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-    if (request.action === 'WATERMARK_PDF') {
-        const { pdfUrl, logoUrl } = request.data;
-        console.log('Received for watermarking:', pdfUrl);
-
-        try {
-            // Fetch the PDF
-            let pdfBytes;
-            try {
-                pdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer());
-            } catch (err) {
-                console.error('Failed to fetch PDF:', err);
-                sendResponse({ success: false, message: 'Failed to fetch PDF.' });
-                return;
-            }
-
-            // Fetch the logo image
-            let logoBytes;
-            try {
-                logoBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
-            } catch (err) {
-                console.error('Failed to fetch Logo:', err);
-                sendResponse({ success: false, message: 'Failed to fetch Logo.' });
-                return;
-            }
-
-            // Load the PDF and image
-            const pdfDoc = await PDFDocument.load(pdfBytes);
-            const logoImage = await pdfDoc.embedPng(logoBytes);
-
-            // Get dimensions
-            const pages = pdfDoc.getPages();
-            const { width, height } = pages[0].getSize();
-
-            // Calculate scale
-            const scale = 0.3;
-            const logoWidth = logoImage.width * scale;
-            const logoHeight = logoImage.height * scale;
-
-            // Loop through pages and add watermark
-            pages.forEach((page) => {
-                const xOffset = (width - logoWidth) / 2;
-                const yOffset = (height - logoHeight) / 2;
-                page.drawImage(logoImage, {
-                    x: xOffset,
-                    y: yOffset,
-                    width: logoWidth,
-                    height: logoHeight,
-                    opacity: 0.3
-                });
-            });
-
-            // Serialize the document
-            const pdfBytesFinal = await pdfDoc.save();
-
-            // Trigger download
-            const blob = new Blob([pdfBytesFinal], { type: 'application/pdf' });
-            const downloadUrl = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = downloadUrl;
-            a.download = 'OriginalFileName_Watermarked.pdf';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(downloadUrl);
-
-            console.log('Watermarking complete!');
-            sendResponse({ success: true, message: 'Watermarking complete!' });
-        } catch (error) {
-            console.error('Error during watermarking:', error);
-            sendResponse({ success: false, message: 'Error during watermarking.' });
-        }
+{
+  "manifest_version": 3,
+  "name": "Aquamark Gmail Watermarker",
+  "description": "Watermark PDFs directly from your Gmail inbox.",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "downloads",
+    "declarativeContent",
+    "notifications",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://dvzmnikrvkvgragzhrof.supabase.co/*",
+    "https://aquamark-decrypt.onrender.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"]
     }
-    return true;
-});
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"
+      ],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "aquamark_icon.png",
+      "48": "aquamark_icon.png",
+      "128": "aquamark_icon.png"
+    }
+  },
+  "icons": {
+    "128": "aquamark_icon.png"
+  }
+}
