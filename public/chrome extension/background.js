@@ -44,6 +44,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             }
 
             console.log('Logo URL:', data.publicUrl);
+console.log('Watermark process initiated for:', url);
 
             // Pass the URL and logo to the next step (watermark.js)
             sendResponse({ success: true, logoUrl: data.publicUrl, pdfUrl: url });
