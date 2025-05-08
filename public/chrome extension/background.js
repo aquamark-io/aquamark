@@ -28,6 +28,12 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                 .from('logos')
                 .list(userEmail);
 
+            if (!filesList || filesList.length === 0) {
+    console.error('No logos found for user:', userEmail);
+    sendResponse({ success: false, message: 'No logos found.' });
+    return;
+}
+
             if (listError || !filesList.length) {
                 console.error('Error retrieving logo:', listError);
                 sendResponse({ success: false, message: 'Logo not found.' });
