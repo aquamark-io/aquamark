@@ -35,13 +35,14 @@
       "matches": ["https://mail.google.com/*"]
     }
   ],
-  "action": {
-    "default_icon": {
-      "16": "aquamark_icon.png",
-      "48": "aquamark_icon.png",
-      "128": "aquamark_icon.png"
-    }
-  },
+ "action": {
+  "default_popup": "popup.html",
+  "default_icon": {
+    "16": "aquamark_icon.png",
+    "48": "aquamark_icon.png",
+    "128": "aquamark_icon.png"
+  }
+},
   "icons": {
     "128": "aquamark_icon.png"
   }
