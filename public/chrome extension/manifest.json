@@ -18,7 +18,8 @@
     "https://aquamark-decrypt.onrender.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"      <--- This is required for ES6 imports
   },
   "content_scripts": [
     {
