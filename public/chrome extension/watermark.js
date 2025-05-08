@@ -1,7 +1,7 @@
 // Aquamark Chrome Extension: watermark.js
 
 // Import PDFLib for watermarking
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument } from 'https://unpkg.com/pdf-lib/dist/pdf-lib.min.js';
 
 // Listen for incoming watermark tasks
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
@@ -11,10 +11,24 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 
         try {
             // Fetch the PDF
-            const pdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer());
+            let pdfBytes;
+            try {
+                pdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer());
+            } catch (err) {
+                console.error('Failed to fetch PDF:', err);
+                sendResponse({ success: false, message: 'Failed to fetch PDF.' });
+                return;
+            }
 
             // Fetch the logo image
-            const logoBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
+            let logoBytes;
+            try {
+                logoBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
+            } catch (err) {
+                console.error('Failed to fetch Logo:', err);
+                sendResponse({ success: false, message: 'Failed to fetch Logo.' });
+                return;
+            }
 
             // Load the PDF and image
             const pdfDoc = await PDFDocument.load(pdfBytes);
@@ -51,7 +65,9 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             const a = document.createElement('a');
             a.href = downloadUrl;
             a.download = 'Aquamark_Watermarked.pdf';
+            document.body.appendChild(a);
             a.click();
+            a.remove();
             URL.revokeObjectURL(downloadUrl);
 
             console.log('Watermarking complete!');
