@@ -6,7 +6,7 @@
   "permissions": [
     "identity",
     "activeTab",
-    "identity.email"    <-- Added this line
+    "identity.email"
   ],
   "action": {
     "default_popup": "popup.html",
