@@ -64,7 +64,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             const downloadUrl = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = downloadUrl;
-            a.download = 'Aquamark_Watermarked.pdf';
+            a.download = 'OriginalFileName_Watermarked.pdf';
             document.body.appendChild(a);
             a.click();
             a.remove();
