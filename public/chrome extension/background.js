@@ -1,7 +1,7 @@
 // Aquamark Chrome Extension: background.js
 
 // Import Supabase properly
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 // Initialize Supabase client
 const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
