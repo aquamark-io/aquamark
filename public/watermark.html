@@ -977,35 +977,16 @@ const logoDims = embeddedLogo.scale(0.35);
   preservePDFFormFields: true
 };
                     
-// Apply metadata locks to prevent easy editing
-pdfDoc.setTitle("Protected by Aquamark");
-pdfDoc.setAuthor("Aquamark.io");
-pdfDoc.setSubject("Watermark Protection - Backdooring Prevention");
-pdfDoc.setKeywords(["non-editable", "watermark", "Aquamark", "MCA", "Protected"]);
-pdfDoc.setProducer("Aquamark.io - Document Protection System");
-pdfDoc.setCreationDate(new Date());
-pdfDoc.setModificationDate(new Date());
-
-// Add custom metadata locks
-pdfDoc.context.trailerInfo.Info.set("Locked", "true");
-pdfDoc.context.trailerInfo.Info.set("NoPrint", "false");
-pdfDoc.context.trailerInfo.Info.set("NoCopy", "true");
-pdfDoc.context.trailerInfo.Info.set("NoEdit", "true");
-
-// Save the document with metadata
-const finalBytes = await pdfDoc.save(pdfOpts);
-
-// Proceed with download
-const blob = new Blob([finalBytes], { type: 'application/pdf' });
-const a = document.createElement('a');
-a.href = URL.createObjectURL(blob);
-a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-
-// Release object URL to prevent memory leaks
-setTimeout(() => URL.revokeObjectURL(a.href), 100);
+   // Use original document to maintain structure
+                    try {
+                        const finalBytes = await pdfDoc.save(pdfOpts);
+                        const blob = new Blob([finalBytes], { type: 'application/pdf' });
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = ${file.name.replace(".pdf", "")}-protected.pdf;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
 
                         
                         // Release object URL to prevent memory leaks
