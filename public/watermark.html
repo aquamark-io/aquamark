@@ -977,17 +977,16 @@ const logoDims = embeddedLogo.scale(0.35);
   preservePDFFormFields: true
 };
                     
-   // Use original document to maintain structure
+                    // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
                         const blob = new Blob([finalBytes], { type: 'application/pdf' });
                         const a = document.createElement('a');
                         a.href = URL.createObjectURL(blob);
-                        a.download = ${file.name.replace(".pdf", "")}-protected.pdf;
+                        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
-
                         
                         // Release object URL to prevent memory leaks
                         setTimeout(() => URL.revokeObjectURL(a.href), 100);
@@ -1011,4 +1010,3 @@ const logoDims = embeddedLogo.scale(0.35);
     </script>
 </body>
 </html>
-
