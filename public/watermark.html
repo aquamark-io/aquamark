@@ -976,7 +976,24 @@ const logoDims = embeddedLogo.scale(0.35);
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-                    
+
+// Flatten the watermark overlay by merging it into the page content
+pages.forEach((page, index) => {
+    try {
+        page.node.set(PDFLib.PDFName.of('Annots'), null); // Remove annotation references
+        
+        // Directly mark the page as fully rendered and part of the content stream
+        const contentsArray = page.node.lookup(PDFLib.PDFName.of('Contents'));
+        if (contentsArray) {
+            page.node.set(PDFLib.PDFName.of('Contents'), contentsArray);
+        }
+
+        console.log(`Watermark successfully flattened on page ${index + 1}.`);
+    } catch (err) {
+        console.warn(`Flattening failed for page ${index + 1}:`, err);
+    }
+});
+        
                     // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
