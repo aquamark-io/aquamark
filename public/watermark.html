@@ -936,24 +936,16 @@ const logoDims = embeddedLogo.scale(0.35);
                         // Add repeating logo watermark
                         for (let x = 0; x < width; x += (logoDims.width + 100)) {
                             for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                                // Draw the watermark directly onto the content stream
-if (embeddedLogo && typeof embeddedLogo.sizeInBytes === 'function') {
-    page.drawImage(embeddedLogo, {
-        x,
-        y,
-        width: logoDims.width,
-        height: logoDims.height,
-        opacity: 0.15,
-        rotate: PDFLib.degrees(45),
-        blendMode: 'Multiply'
-    });
-} else {
-    console.error("Embedded logo is not valid. Skipping watermarking.");
-    status.textContent = "❌ Logo data is corrupted or not loaded. Please re-upload.";
-    return;
-}
-
-}
+                                page.drawImage(embeddedLogo, {
+                                    x,
+                                    y,
+                                    width: logoDims.width,
+                                    height: logoDims.height,
+                                    opacity: 0.15,
+                                    rotate: PDFLib.degrees(45)
+                                });
+                            }
+                        }
 
                         // Add hologram watermark if available
                         if (hologramImage) {
@@ -984,48 +976,25 @@ if (embeddedLogo && typeof embeddedLogo.sizeInBytes === 'function') {
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-
-const flattenPage = page => {
-    page.node.set('Annots', undefined); // Remove annotations
-    page.node.set('AcroForm', undefined); // Remove interactive forms
-};
-
-// Apply to all pages
-pdfDoc.getPages().forEach(flattenPage);
                     
+                    // Use original document to maintain structure
                     try {
-    const finalBytes = await pdfDoc.save({
-        useObjectStreams: false, // Ensures no separation of content streams
-        compress: true,          // Minimizes file size
-    });
-
-    // Create a Blob from the PDF bytes
-    const blob = new Blob([finalBytes], { type: 'application/pdf' });
-
-    // Generate a URL for the Blob
-    const url = URL.createObjectURL(blob);
-
-    // Create an anchor element and trigger download
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-    document.body.appendChild(a);
-    a.click();
-
-    // Clean up
-    document.body.removeChild(a);
-
-    // Release object URL to prevent memory leaks
-    setTimeout(() => URL.revokeObjectURL(url), 100);
-
-    status.textContent = "✅ Done. Files downloaded.";
-
-} catch (saveErr) {
-    console.error("Error saving PDF:", saveErr);
-    status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
-    return;
-}
-
+                        const finalBytes = await pdfDoc.save(pdfOpts);
+                        const blob = new Blob([finalBytes], { type: 'application/pdf' });
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        
+                        // Release object URL to prevent memory leaks
+                        setTimeout(() => URL.revokeObjectURL(a.href), 100);
+                    } catch (saveErr) {
+                        console.error("Error saving PDF:", saveErr);
+                        status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
+                        return;
+                    }
                 }
 
                 status.textContent = "✅ Done. Files downloaded.";
