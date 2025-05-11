@@ -976,7 +976,23 @@ const logoDims = embeddedLogo.scale(0.35);
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-                    
+
+// Before saving and downloading, flatten the first page only
+try {
+    const pages = pdfDoc.getPages();
+    const firstPage = pages[0];
+
+    // Flattening the watermark on the first page only
+    firstPage.flatten();
+
+    console.log("✅ First page successfully flattened.");
+
+} catch (flattenErr) {
+    console.error("❌ Error flattening the first page:", flattenErr);
+    status.textContent = `❌ Error flattening the first page: ${flattenErr.message}`;
+    return;
+}
+                        
                     // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
