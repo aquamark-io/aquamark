@@ -973,31 +973,9 @@ const logoDims = embeddedLogo.scale(0.35);
   useObjectStreams: true,
   compressContentStreams: true,
   
-  // Preserve document structure for OCR compatibility and flatten page 1
+  // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-                        
-try {
-    const pages = pdfDoc.getPages();
-    const firstPage = pages[0];
-
-    // Get the annotations (widgets, links, etc.)
-    const annotations = firstPage.node.Annots();
-    
-    if (annotations) {
-        annotations.forEach((annot) => {
-            // Set flag to make it non-editable
-            annot.set('F', 3);  // Flag 3 means ReadOnly + Locked
-        });
-    }
-
-    console.log("✅ First page successfully flattened (locked).");
-    
-} catch (flattenErr) {
-    console.error("❌ Error flattening the first page:", flattenErr);
-    status.textContent = `❌ Error flattening the first page: ${flattenErr.message}`;
-    return;
-}
                     
                     // Use original document to maintain structure
                     try {
@@ -1032,4 +1010,5 @@ try {
     </script>
 </body>
 </html>
+
 
