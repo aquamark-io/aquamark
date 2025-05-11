@@ -936,14 +936,17 @@ const logoDims = embeddedLogo.scale(0.35);
                         // Add repeating logo watermark
                         for (let x = 0; x < width; x += (logoDims.width + 100)) {
                             for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                                page.drawImage(embeddedLogo, {
-                                    x,
-                                    y,
-                                    width: logoDims.width,
-                                    height: logoDims.height,
-                                    opacity: 0.15,
-                                    rotate: PDFLib.degrees(45)
-                                });
+                                // Draw the watermark directly onto the content stream
+page.drawImage(embeddedLogo, {
+    x,
+    y,
+    width: logoDims.width,
+    height: logoDims.height,
+    opacity: 0.15,
+    rotate: PDFLib.degrees(45),
+    blendMode: 'multiply' // Forces it to become part of the page raster
+});
+
                             }
                         }
 
@@ -976,12 +979,19 @@ const logoDims = embeddedLogo.scale(0.35);
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
+
+const flattenPage = page => {
+    page.node.set('Annots', undefined); // Remove annotations
+    page.node.set('AcroForm', undefined); // Remove interactive forms
+};
+
+// Apply to all pages
+pdfDoc.getPages().forEach(flattenPage);
                     
                     try {
     const finalBytes = await pdfDoc.save({
         useObjectStreams: false, // Ensures no separation of content streams
         compress: true,          // Minimizes file size
-        addDefaultPageAnnotations: false // Ensures flattening without interactive fields
     });
 
     // Create a Blob from the PDF bytes
