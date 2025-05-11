@@ -976,33 +976,7 @@ const logoDims = embeddedLogo.scale(0.35);
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-
-try {
-    const pages = pdfDoc.getPages();
-    const firstPage = pages[0];
-
-    // Access the annotations (if any) on the page
-    const annots = firstPage.node.Annots();
-
-    if (annots) {
-        // `annots` is a PDFArray, we need to loop through it properly
-        for (let idx = 0; idx < annots.size(); idx++) {
-            const annotRef = annots.get(idx);
-            const annot = pdfDoc.context.lookup(annotRef);
-
-            // Lock the annotation to make it non-editable
-            annot.set('F', 3);  // 3 = ReadOnly + Locked
-        }
-    }
-
-    console.log("✅ First page successfully flattened (locked annotations).");
-    
-} catch (flattenErr) {
-    console.error("❌ Error flattening the first page:", flattenErr);
-    status.textContent = `❌ Error flattening the first page: ${flattenErr.message}`;
-    return;
-}
-                        
+                    
                     // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
