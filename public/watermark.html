@@ -977,7 +977,7 @@ const logoDims = embeddedLogo.scale(0.35);
   preservePDFFormFields: true
 };
                     
-                    // Apply metadata locks to prevent easy editing
+// Apply metadata locks to prevent easy editing
 pdfDoc.setTitle("Protected by Aquamark");
 pdfDoc.setAuthor("Aquamark.io");
 pdfDoc.setSubject("Watermark Protection - Backdooring Prevention");
@@ -986,20 +986,21 @@ pdfDoc.setProducer("Aquamark.io - Document Protection System");
 pdfDoc.setCreationDate(new Date());
 pdfDoc.setModificationDate(new Date());
 
-pdfDoc.setMetadata({
+// Embed metadata directly into the Info Dictionary
+const pdfDocContext = pdfDoc.context;
+const infoDict = pdfDocContext.obj({
     Title: "Protected by Aquamark",
     Author: "Aquamark.io",
     Subject: "Watermark Protection - Backdooring Prevention",
     Keywords: "non-editable, watermark, Aquamark, MCA, Protected",
     Producer: "Aquamark.io - Document Protection System",
-    CreationDate: new Date(),
-    ModificationDate: new Date(),
-    Custom: {
-        "Watermark Protected": "true",
-        "Aquamark Version": "1.0",
-        "Modification Restricted": "true"
-    }
+    "Watermark Protected": "true",
+    "Aquamark Version": "1.0",
+    "Modification Restricted": "true"
 });
+
+// Set it as the trailer info
+pdfDocContext.trailerInfo.Info = infoDict;
 
 // Save the document
 const finalBytes = await pdfDoc.save();
