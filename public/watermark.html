@@ -797,20 +797,6 @@
                     }
                 }
 
-
-const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-    ignoreEncryption: true
-});
-
-// 🚀 Validate the contents after decryption
-const pages = pdfDoc.getPages();
-pages.forEach((page, index) => {
-    const contentsArray = page.node.lookup(PDFLib.PDFName.of('Contents'));
-    if (!contentsArray) {
-        console.warn(`No content stream found on page ${index + 1}. The page might still be encrypted or corrupted.`);
-    }
-});
-
                 // Check if user has enough credits
                 if (data.pages_remaining < totalPagesNeeded) {
                     status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
@@ -943,71 +929,54 @@ const logoDims = embeddedLogo.scale(0.35);
                             }
                         }
 
-// Add watermarks to all pages
-for (const page of pages) {
-    const { width, height } = page.getSize();
-    
-    // Create a background layer for watermarks (under text content)
-    page.pushOperators(
-        PDFLib.pushGraphicsState(),
-        PDFLib.setBlendMode('normal')
-    );
-    
-    // Add repeating logo watermark
-    for (let x = 0; x < width; x += (logoDims.width + 100)) {
-        for (let y = 0; y < height; y += (logoDims.height + 100)) {
-            page.drawImage(embeddedLogo, {
-                x,
-                y,
-                width: logoDims.width,
-                height: logoDims.height,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(45),
-                blendMode: 'multiply'
-            });
-        }
-    }
-    
-    // Add hologram watermark if available
-    if (hologramImage) {
-        const hologramWidth = 45;
-        const hologramHeight = 45;
-        
-        try {
-            page.drawImage(hologramImage, {
-                x: width - hologramWidth - 10,
-                y: height - hologramHeight - 10,
-                width: hologramWidth,
-                height: hologramHeight,
-                opacity: 0.7,
-                blendMode: 'normal'
-            });
-        } catch (err) {
-            console.warn("Couldn't draw hologram on page, continuing without it:", err);
-        }
-    }
-    
-    // Restore graphics state
-    page.pushOperators(
-        PDFLib.popGraphicsState()
-    );
-}
+                    // Add watermarks to all pages
+                    for (const page of pages) {
+                        const { width, height } = page.getSize();
 
-                   // Modified approach to maintain original structure for OCR compatibility
-// Apply targeted PDF optimization for smaller file size
-const pdfOpts = {
+                        // Add repeating logo watermark
+                        for (let x = 0; x < width; x += (logoDims.width + 100)) {
+                            for (let y = 0; y < height; y += (logoDims.height + 100)) {
+                                page.drawImage(embeddedLogo, {
+                                    x,
+                                    y,
+                                    width: logoDims.width,
+                                    height: logoDims.height,
+                                    opacity: 0.15,
+                                    rotate: PDFLib.degrees(45)
+                                });
+                            }
+                        }
+
+                        // Add hologram watermark if available
+                        if (hologramImage) {
+                            const hologramWidth = 45;
+                            const hologramHeight = 45;
+                            
+                            try {
+                                page.drawImage(hologramImage, {
+                                    x: width - hologramWidth - 10,
+                                    y: height - hologramHeight - 10,
+                                    width: hologramWidth,
+                                    height: hologramHeight,
+                                    opacity: 0.7
+                                });
+                            } catch (err) {
+                                console.warn("Couldn't draw hologram on page, continuing without it:", err);
+                            }
+                        }
+                    }
+
+                    // Modified approach to maintain original structure for OCR compatibility
+                    // Apply targeted PDF optimization for smaller file size
+                    const pdfOpts = {
   // Core compression options
   useObjectStreams: true,
   compressContentStreams: true,
   
-  // Critical for OCR compatibility
-  preserveEditability: true,
-  preservePDFFormFields: true,
-  
-  // Ensure text content remains in the foreground
-  updateFieldAppearances: false
+  // Preserve document structure for OCR compatibility
+  preservePDFFormFields: true
 };
-                  
+                    
                     // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
@@ -1041,5 +1010,4 @@ const pdfOpts = {
     </script>
 </body>
 </html>
-
 
