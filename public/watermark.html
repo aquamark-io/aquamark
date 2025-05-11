@@ -977,26 +977,35 @@ const logoDims = embeddedLogo.scale(0.35);
   preservePDFFormFields: true
 };
                     
-                    // Use original document to maintain structure
-                    try {
-                        const finalBytes = await pdfDoc.save(pdfOpts);
-                        const blob = new Blob([finalBytes], { type: 'application/pdf' });
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        
-                        // Release object URL to prevent memory leaks
-                        setTimeout(() => URL.revokeObjectURL(a.href), 100);
-                    } catch (saveErr) {
-                        console.error("Error saving PDF:", saveErr);
-                        status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
-                        return;
-                    }
-                }
+// Use original document to maintain structure
+try {
+    console.log("✅ All watermarks applied. Preparing final save...");
 
+    // Perform the final save, locking in all render streams
+    const finalBytes = await pdfDoc.save({
+        useObjectStreams: true,
+        compress: true,
+        addDefaultPageAnnotations: false,
+    });
+
+    const blob = new Blob([finalBytes], { type: 'application/pdf' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Release object URL to prevent memory leaks
+    setTimeout(() => URL.revokeObjectURL(a.href), 100);
+
+    console.log("✅ PDF saved with all watermarks locked in.");
+} catch (saveErr) {
+    console.error("❌ Error saving PDF:", saveErr);
+    status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
+    return;
+}
+}
                 status.textContent = "✅ Done. Files downloaded.";
             } catch (err) {
                 console.error("Error processing files:", err);
