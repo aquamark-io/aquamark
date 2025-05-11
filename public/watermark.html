@@ -937,18 +937,23 @@ const logoDims = embeddedLogo.scale(0.35);
                         for (let x = 0; x < width; x += (logoDims.width + 100)) {
                             for (let y = 0; y < height; y += (logoDims.height + 100)) {
                                 // Draw the watermark directly onto the content stream
-page.drawImage(embeddedLogo, {
-    x,
-    y,
-    width: logoDims.width,
-    height: logoDims.height,
-    opacity: 0.15,
-    rotate: PDFLib.degrees(45),
-    blendMode: 'Multiply' // Forces it to become part of the page raster
-});
+if (embeddedLogo && typeof embeddedLogo.sizeInBytes === 'function') {
+    page.drawImage(embeddedLogo, {
+        x,
+        y,
+        width: logoDims.width,
+        height: logoDims.height,
+        opacity: 0.15,
+        rotate: PDFLib.degrees(45),
+        blendMode: 'Multiply'
+    });
+} else {
+    console.error("Embedded logo is not valid. Skipping watermarking.");
+    status.textContent = "❌ Logo data is corrupted or not loaded. Please re-upload.";
+    return;
+}
 
-                            }
-                        }
+}
 
                         // Add hologram watermark if available
                         if (hologramImage) {
