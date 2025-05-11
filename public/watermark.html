@@ -947,6 +947,12 @@ const logoDims = embeddedLogo.scale(0.35);
                             }
                         }
 
+                   // Flatten each page to lock the watermark
+                   pages.forEach((page) => {
+                      page.node.set(PDFLib.PDFName.of('Annots'), null); // Remove annotation references
+                   });
+
+
                         // Add hologram watermark if available
                         if (hologramImage) {
                             const hologramWidth = 45;
