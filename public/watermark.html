@@ -976,9 +976,10 @@ const logoDims = embeddedLogo.scale(0.35);
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-                    // Flatten watermark overlay to make it harder to remove
-pages.forEach(page => {
-    page.setFlattened(true)
+
+                        // Flatten watermark overlay to make it harder to remove
+pages.forEach((page) => {
+    page.node.set(PDFLib.PDFName.of('Annots'), PDFLib.PDFArray.withContext(pdfDoc.context));
 });
 
                     // Use original document to maintain structure
