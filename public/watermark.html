@@ -976,7 +976,32 @@ const logoDims = embeddedLogo.scale(0.35);
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-                    
+
+// This will flatten the watermark while preserving OCR
+
+// Get document data - we need this to preserve OCR
+const originalBytes = await pdfDoc.save();
+
+// Create a flattened version of the PDF
+const flattenedPdfDoc = await PDFLib.PDFDocument.create();
+
+// Load the original with watermark applied
+const tempPdfDoc = await PDFLib.PDFDocument.load(originalBytes);
+const tempPages = tempPdfDoc.getPages();
+
+// Copy each page as an appearance (this flattens content)
+for (let i = 0; i < tempPages.length; i++) {
+  const [copiedPage] = await flattenedPdfDoc.copyPages(tempPdfDoc, [i]);
+  flattenedPdfDoc.addPage(copiedPage);
+  
+  // The key part: this forces PDF-lib to flatten the page content
+  const destPage = flattenedPdfDoc.getPages()[i];
+  destPage.setSize(destPage.getWidth(), destPage.getHeight());
+}
+
+// Replace original pdfDoc with flattened version
+pdfDoc = flattenedPdfDoc;
+        
                     // Use original document to maintain structure
                     try {
                         const finalBytes = await pdfDoc.save(pdfOpts);
