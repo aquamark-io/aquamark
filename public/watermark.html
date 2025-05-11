@@ -976,44 +976,29 @@ const logoDims = embeddedLogo.scale(0.35);
   // Preserve document structure for OCR compatibility
   preservePDFFormFields: true
 };
-                    
-// Apply metadata locks to prevent easy editing
-pdfDoc.setTitle("Protected by Aquamark");
-pdfDoc.setAuthor("Aquamark.io");
-pdfDoc.setSubject("Watermark Protection - Backdooring Prevention");
-pdfDoc.setKeywords(["non-editable", "watermark", "Aquamark", "MCA", "Protected"]);
-pdfDoc.setProducer("Aquamark.io - Document Protection System");
-pdfDoc.setCreationDate(new Date());
-pdfDoc.setModificationDate(new Date());
-
-// Embed metadata directly into the Info Dictionary
-const pdfDocContext = pdfDoc.context;
-const infoDict = pdfDocContext.obj({
-    Title: "Protected by Aquamark",
-    Author: "Aquamark.io",
-    Subject: "Watermark Protection - Backdooring Prevention",
-    Keywords: "non-editable, watermark, Aquamark, MCA, Protected",
-    Producer: "Aquamark.io - Document Protection System",
-    "Watermark Protected": "true",
-    "Aquamark Version": "1.0",
-    "Modification Restricted": "true"
+                    // Flatten watermark overlay to make it harder to remove
+pages.forEach(page => {
+    page.setFlattened(true)
 });
 
-// Set it as the trailer info
-pdfDocContext.trailerInfo.Info = infoDict;
-
-// Save the document
-const finalBytes = await pdfDoc.save();
-const blob = new Blob([finalBytes], { type: 'application/pdf' });
-const a = document.createElement('a');
-a.href = URL.createObjectURL(blob);
-a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-
-// Release object URL to prevent memory leaks
-setTimeout(() => URL.revokeObjectURL(a.href), 100);
+                    // Use original document to maintain structure
+                    try {
+                        const finalBytes = await pdfDoc.save(pdfOpts);
+                        const blob = new Blob([finalBytes], { type: 'application/pdf' });
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        
+                        // Release object URL to prevent memory leaks
+                        setTimeout(() => URL.revokeObjectURL(a.href), 100);
+                    } catch (saveErr) {
+                        console.error("Error saving PDF:", saveErr);
+                        status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
+                        return;
+                    }
                 }
 
                 status.textContent = "✅ Done. Files downloaded.";
