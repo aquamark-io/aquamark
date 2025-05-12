@@ -68,6 +68,16 @@
                 opacity: 0.15,
                 rotate: PDFLib.degrees(45)  // Rotate each logo 45 degrees
               });
+              
+              // Add hologram-style text under each logo
+              watermarkPage.drawText("Protected by Aquamark.io", {
+                x: (x % width) + (logoWidth / 2) - 50, // Center text under logo
+                y: y - 15, // Position text below the logo
+                size: 8,
+                opacity: 0.2,
+                color: PDFLib.rgb(0.1, 0.5, 0.9), // Holographic blue color
+                rotate: PDFLib.degrees(45) // Same rotation as the logo
+              });
             }
           }
         }
