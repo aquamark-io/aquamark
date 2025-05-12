@@ -1,62 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watermark Embed Test</title>
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Watermark Embed Test</title>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
-    <h1>Watermark Embed Test (XObject)</h1>
-    <input type="file" id="pdfInput" accept="application/pdf">
-    <button onclick="embedWatermark()">Watermark & Download</button>
+  <h1>Watermark Embed Test</h1>
+  <input type="file" id="pdfInput" accept="application/pdf" />
+  <button onclick="embedWatermark()">Watermark & Download</button>
 
-    <script>
-        const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
+  <script>
+    const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
 
-        async function embedWatermark() {
-            const input = document.getElementById('pdfInput');
-            if (input.files.length === 0) {
-                alert("Please upload a PDF file.");
-                return;
-            }
+    async function embedWatermark() {
+      const input = document.getElementById("pdfInput");
+      if (input.files.length === 0) {
+        alert("Please upload a PDF file.");
+        return;
+      }
 
-            const pdfBytes = await input.files[0].arrayBuffer();
-            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+      const pdfBytes = await input.files[0].arrayBuffer();
+      const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
 
-            // Fetch the logo image
-            const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-            const logoImage = await pdfDoc.embedPng(logoImageBytes);
+      // Fetch and embed the logo image
+      const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+      const logoImage = await pdfDoc.embedPng(logoImageBytes);
+      const logoDims = logoImage.scale(0.5); // Adjust the scale as needed
 
-            // Create a FormXObject (XObject)
-            const xObject = pdfDoc.createFormXObject();
-            const formPage = xObject.addPage([logoImage.width, logoImage.height]);
+      const pages = pdfDoc.getPages();
+      pages.forEach(page => {
+        const { width, height } = page.getSize();
+        page.drawImage(logoImage, {
+          x: (width - logoDims.width) / 2,
+          y: (height - logoDims.height) / 2,
+          width: logoDims.width,
+          height: logoDims.height,
+          opacity: 0.5,
+        });
 
-            formPage.drawImage(logoImage, {
-                x: 0,
-                y: 0,
-                width: logoImage.width,
-                height: logoImage.height
-            });
+        // Force flattening by re-drawing content on top of it
+        page.setFontSize(0.001); // Invisible font size to "stamp" it
+        page.drawText('', { x: 0, y: 0 });
+      });
 
-            // Embed the XObject into each page
-            const pages = pdfDoc.getPages();
-            pages.forEach(page => {
-                const { width, height } = page.getSize();
-                page.drawPage(xObject, {
-                    x: width / 2 - logoImage.width / 2,
-                    y: height / 2 - logoImage.height / 2,
-                    opacity: 0.5
-                });
-            });
-
-            const modifiedPdfBytes = await pdfDoc.save();
-            const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'watermarked.pdf';
-            link.click();
-        }
-    </script>
+      // Save the document with flattening
+      const modifiedPdfBytes = await pdfDoc.save({ useObjectStreams: false });
+      const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "watermarked.pdf";
+      link.click();
+    }
+  </script>
 </body>
 </html>
