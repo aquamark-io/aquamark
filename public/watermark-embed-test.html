@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PDF Watermark Tool</title>
+  <title>Diagonal Watermark Tool</title>
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
-  <h1>PDF Watermark Tool</h1>
+  <h1>PDF Diagonal Watermark Tool</h1>
   <div>
     <input type="file" id="pdfInput" accept="application/pdf" />
     <button onclick="embedWatermark()">Watermark & Download</button>
@@ -40,16 +40,37 @@
         const { width, height } = pdfDoc.getPages()[0].getSize();
         const watermarkPage = watermarkDoc.addPage([width, height]);
         
-        // Size and position the logo
-        const logoWidth = width * 0.6;
+        // Calculate dimensions for smaller repeating logos
+        const logoWidth = width * 0.2;  // Smaller logo size
         const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
-        const x = (width - logoWidth) / 2;
-        const y = (height - logoHeight) / 2;
         
-        // Draw the logo
-        watermarkPage.drawImage(logoImage, {
-          x, y, width: logoWidth, height: logoHeight, opacity: 0.3
-        });
+        // Create diagonal pattern of logos
+        const rows = 5;
+        const cols = 5;
+        const spacingX = width / cols;
+        const spacingY = height / rows;
+        
+        // Draw the checkered diagonal pattern
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
+            // Only draw on alternating positions for checkered effect
+            if ((i + j) % 2 === 0) {
+              // Position calculation for diagonal-like layout
+              const x = j * spacingX + (i * width / (rows * 2));
+              const y = i * spacingY;
+              
+              // Draw the logo with rotation
+              watermarkPage.drawImage(logoImage, {
+                x: x % width,  // Wrap around if beyond page width
+                y,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: 0.15,
+                rotate: PDFLib.degrees(45)  // Rotate each logo 45 degrees
+              });
+            }
+          }
+        }
         
         // Embed the watermark page
         const watermarkPdfBytes = await watermarkDoc.save();
@@ -59,7 +80,7 @@
         // Apply watermark to each page
         for (const page of pdfDoc.getPages()) {
           const { width, height } = page.getSize();
-          page.drawPage(embeddedPage, { x: 0, y: 0, width, height, opacity: 0.3 });
+          page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
         }
         
         // Save and download
