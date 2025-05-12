@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watermark Embed Test</title>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+<body>
+    <h1>Watermark Embed Test</h1>
+    <input type="file" id="pdfInput" accept="application/pdf">
+    <button onclick="embedWatermark()">Watermark & Download</button>
+
+    <script>
+        const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
+
+        async function embedWatermark() {
+            const input = document.getElementById('pdfInput');
+            if (input.files.length === 0) {
+                alert("Please upload a PDF file.");
+                return;
+            }
+
+            const pdfBytes = await input.files[0].arrayBuffer();
+            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+
+            // Fetch the logo image
+            const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+            const logoImage = await pdfDoc.embedPng(logoImageBytes);
+
+            // Dimensions and positioning
+            const pages = pdfDoc.getPages();
+            pages.forEach(page => {
+                const { width, height } = page.getSize();
+                page.drawImage(logoImage, {
+                    x: width / 2 - 75,
+                    y: height / 2 - 25,
+                    width: 150,
+                    height: 50,
+                    opacity: 0.5,
+                });
+            });
+
+            const modifiedPdfBytes = await pdfDoc.save();
+            const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'watermarked.pdf';
+            link.click();
+        }
+    </script>
+</body>
+</html>
