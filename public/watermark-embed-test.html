@@ -50,7 +50,7 @@
         const spacingX = width / cols;
         const spacingY = height / rows;
         
-        // Draw the checkered diagonal pattern - original top-left to bottom-right
+        // Draw the checkered diagonal pattern
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
             // Only draw on alternating positions for checkered effect
@@ -67,64 +67,6 @@
                 height: logoHeight,
                 opacity: 0.15,
                 rotate: PDFLib.degrees(45)  // Rotate each logo 45 degrees
-              });
-            }
-          }
-        }
-        
-        // Add top-right to bottom-left diagonal
-        for (let i = 0; i < rows; i++) {
-          for (let j = 0; j < cols; j++) {
-            if ((i + j) % 2 === 0) {
-              // Position calculation for the reverse diagonal layout
-              const x = width - (j * spacingX + (i * width / (rows * 2))) - logoWidth;
-              const y = i * spacingY;
-              
-              watermarkPage.drawImage(logoImage, {
-                x: (x + width) % width,  // Ensure it wraps properly
-                y,
-                width: logoWidth,
-                height: logoHeight,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(-45)  // Rotate in opposite direction
-              });
-            }
-          }
-        }
-        
-        // Add bottom-left to top-right diagonal
-        for (let i = 0; i < rows; i++) {
-          for (let j = 0; j < cols; j++) {
-            if ((i + j) % 2 === 0) {
-              const x = j * spacingX + (i * width / (rows * 2));
-              const y = height - (i * spacingY) - logoHeight;
-              
-              watermarkPage.drawImage(logoImage, {
-                x: x % width,
-                y,
-                width: logoWidth,
-                height: logoHeight,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(-45)
-              });
-            }
-          }
-        }
-        
-        // Add bottom-right to top-left diagonal
-        for (let i = 0; i < rows; i++) {
-          for (let j = 0; j < cols; j++) {
-            if ((i + j) % 2 === 0) {
-              const x = width - (j * spacingX + (i * width / (rows * 2))) - logoWidth;
-              const y = height - (i * spacingY) - logoHeight;
-              
-              watermarkPage.drawImage(logoImage, {
-                x: (x + width) % width,
-                y,
-                width: logoWidth,
-                height: logoHeight,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(45)
               });
             }
           }
