@@ -2,55 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Watermark Embed Test</title>
+  <title>Enhanced Watermark Embed</title>
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
-  <h1>Watermark Embed Test</h1>
-  <input type="file" id="pdfInput" accept="application/pdf" />
-  <button onclick="embedWatermark()">Watermark & Download</button>
+  <h1>PDF Watermark Tool</h1>
+  <div>
+    <p>Upload a PDF to add a watermark that preserves OCR compatibility:</p>
+    <input type="file" id="pdfInput" accept="application/pdf" />
+    <button onclick="embedWatermark()">Watermark & Download</button>
+  </div>
+  <div id="status" style="margin-top: 20px;"></div>
 
   <script>
     const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
+    const statusElement = document.getElementById("status");
 
     async function embedWatermark() {
-      const input = document.getElementById("pdfInput");
-      if (input.files.length === 0) {
-        alert("Please upload a PDF file.");
-        return;
-      }
+      try {
+        statusElement.textContent = "Processing...";
+        const input = document.getElementById("pdfInput");
+        if (input.files.length === 0) {
+          alert("Please upload a PDF file.");
+          statusElement.textContent = "";
+          return;
+        }
 
-      const pdfBytes = await input.files[0].arrayBuffer();
-      const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+        const pdfBytes = await input.files[0].arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+        
+        // Fetch and embed the logo image
+        const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+        const logoImage = await pdfDoc.embedPng(logoImageBytes);
+        
+        // Process each page
+        const pages = pdfDoc.getPages();
+        for (let i = 0; i < pages.length; i++) {
+          const page = pages[i];
+          const { width, height } = page.getSize();
+          
+          // Calculate dimensions for a reasonably sized watermark
+          const maxWidth = width * 0.5;  // Max 50% of page width
+          const maxHeight = height * 0.5; // Max 50% of page height
+          
+          // Calculate scaling to fit within our constraints while maintaining aspect ratio
+          const scale = Math.min(
+            maxWidth / logoImage.width,
+            maxHeight / logoImage.height
+          ) * 0.8; // Further reduce to 80% of max size
+          
+          const logoDims = logoImage.scale(scale);
+          
+          // Center the watermark
+          const centerX = (width - logoDims.width) / 2;
+          const centerY = (height - logoDims.height) / 2;
+          
+          // Create a separate XObject Form for the watermark
+          const watermarkForm = pdfDoc.context.obj({
+            Type: 'XObject',
+            Subtype: 'Form',
+            BBox: [0, 0, width, height],
+            Resources: {
+              XObject: { Im0: logoImage.ref }
+            }
+          });
+          
+          // Build content stream for the watermark form
+          const contentStream = pdfDoc.context.stream(`
+            q
+            ${logoDims.width} 0 0 ${logoDims.height} ${centerX} ${centerY} cm
+            /Im0 Do
+            Q
+          `);
+          watermarkForm.set(PDFLib.PDFName.of('Length'), PDFLib.PDFNumber.of(contentStream.sizeInBytes()));
+          watermarkForm.set(PDFLib.PDFName.of('Matrix'), pdfDoc.context.obj([1, 0, 0, 1, 0, 0]));
+          watermarkForm.set(PDFLib.PDFName.of('Contents'), contentStream);
+          
+          // Add the watermark form to the page as a background layer (under content)
+          page.node.set(PDFLib.PDFName.of('Watermark'), watermarkForm);
+          
+          // Add the watermark as content to ensure it integrates with existing content
+          page.drawImage(logoImage, {
+            x: centerX,
+            y: centerY,
+            width: logoDims.width,
+            height: logoDims.height,
+            opacity: 0.3, // Semi-transparent
+            blendMode: 'Multiply' // Blend with existing content
+          });
+          
+          // Add opacity-based transparency group
+          const opacityDict = pdfDoc.context.obj({
+            Type: PDFLib.PDFName.of('ExtGState'),
+            CA: 0.3, // Stroke opacity
+            ca: 0.3, // Fill opacity
+          });
+          
+          // Add to page resources
+          const extGState = page.node.normalizedEntries().Resources.get(PDFLib.PDFName.of('ExtGState')) || 
+                           pdfDoc.context.obj({});
+          extGState.set(PDFLib.PDFName.of('WMOpacity'), opacityDict);
+          
+          // Update page resources
+          const resources = page.node.normalizedEntries().Resources;
+          resources.set(PDFLib.PDFName.of('ExtGState'), extGState);
+          
+          // Force integration with content streams by ensuring watermark is part of content stream
+          const existingContent = await page.getContentStream();
+          const newContentStream = pdfDoc.context.stream(`
+            q
+            /WMOpacity gs
+            ${logoDims.width} 0 0 ${logoDims.height} ${centerX} ${centerY} cm
+            /Im0 Do
+            Q
+            ${existingContent}
+          `);
+          
+          // Update page content stream
+          page.setContentStream(newContentStream);
+        }
 
-      // Fetch and embed the logo image
-      const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-      const logoImage = await pdfDoc.embedPng(logoImageBytes);
-      const logoDims = logoImage.scale(0.5); // Adjust the scale as needed
-
-      const pages = pdfDoc.getPages();
-      pages.forEach(page => {
-        const { width, height } = page.getSize();
-        page.drawImage(logoImage, {
-          x: (width - logoDims.width) / 2,
-          y: (height - logoDims.height) / 2,
-          width: logoDims.width,
-          height: logoDims.height,
-          opacity: 0.5,
+        // Save with flattening and compression
+        const modifiedPdfBytes = await pdfDoc.save({ 
+          useObjectStreams: false,
+          addDefaultPage: false,
+          updateFieldAppearances: true
         });
-
-        // Force flattening by re-drawing content on top of it
-        page.setFontSize(0.001); // Invisible font size to "stamp" it
-        page.drawText('', { x: 0, y: 0 });
-      });
-
-      // Save the document with flattening
-      const modifiedPdfBytes = await pdfDoc.save({ useObjectStreams: false });
-      const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "watermarked.pdf";
-      link.click();
+        
+        // Create download
+        const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "watermarked-" + input.files[0].name;
+        link.click();
+        
+        statusElement.textContent = "Watermark added successfully!";
+      } catch (error) {
+        console.error("Error adding watermark:", error);
+        statusElement.textContent = "Error: " + error.message;
+      }
     }
   </script>
 </body>
