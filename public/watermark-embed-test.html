@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
-    <h1>Watermark Embed Test</h1>
+    <h1>Watermark Embed Test (XObject)</h1>
     <input type="file" id="pdfInput" accept="application/pdf">
     <button onclick="embedWatermark()">Watermark & Download</button>
 
@@ -28,16 +28,25 @@
             const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
             const logoImage = await pdfDoc.embedPng(logoImageBytes);
 
-            // Dimensions and positioning
+            // Create a FormXObject (XObject)
+            const xObject = pdfDoc.createFormXObject();
+            const formPage = xObject.addPage([logoImage.width, logoImage.height]);
+
+            formPage.drawImage(logoImage, {
+                x: 0,
+                y: 0,
+                width: logoImage.width,
+                height: logoImage.height
+            });
+
+            // Embed the XObject into each page
             const pages = pdfDoc.getPages();
             pages.forEach(page => {
                 const { width, height } = page.getSize();
-                page.drawImage(logoImage, {
-                    x: width / 2 - 75,
-                    y: height / 2 - 25,
-                    width: 150,
-                    height: 50,
-                    opacity: 0.5,
+                page.drawPage(xObject, {
+                    x: width / 2 - logoImage.width / 2,
+                    y: height / 2 - logoImage.height / 2,
+                    opacity: 0.5
                 });
             });
 
