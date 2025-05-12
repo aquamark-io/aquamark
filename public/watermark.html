@@ -839,22 +839,6 @@
                         throw new Error("Invalid logo data");
                     }
                     
-                    // Get hologram image for watermarking
-const hologramUrl = "/hologram.png";
-                    let hologramBytes;
-                    try {
-                        const response = await fetch(hologramUrl);
-                        if (!response.ok) {
-                            console.warn("Hologram image not found, continuing without it");
-                            hologramBytes = null;
-                        } else {
-                            hologramBytes = await response.arrayBuffer();
-                        }
-                    } catch (err) {
-                        console.warn("Error loading hologram, continuing without it:", err);
-                        hologramBytes = null;
-                    }
-
                     for (let file of pdfFiles) {
                         let pdfBytes;
                         try {
@@ -919,17 +903,7 @@ const logoDims = embeddedLogo.scale(0.35);
                         if (updateError) throw updateError;
                         console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
   
-                        // Embed hologram if available
-                        let hologramImage = null;
-                        if (hologramBytes) {
-                            try {
-                                hologramImage = await pdfDoc.embedPng(hologramBytes);
-                            } catch (err) {
-                                console.warn("Failed to embed hologram, continuing without it:", err);
-                            }
-                        }
-
-                    // Add watermarks to all pages
+                   // Add watermarks to all pages
                     for (const page of pages) {
                         const { width, height } = page.getSize();
 
@@ -946,25 +920,6 @@ const logoDims = embeddedLogo.scale(0.35);
                                 });
                             }
                         }
-
-                        // Add hologram watermark if available
-                        if (hologramImage) {
-                            const hologramWidth = 45;
-                            const hologramHeight = 45;
-                            
-                            try {
-                                page.drawImage(hologramImage, {
-                                    x: width - hologramWidth - 10,
-                                    y: height - hologramHeight - 10,
-                                    width: hologramWidth,
-                                    height: hologramHeight,
-                                    opacity: 0.7
-                                });
-                            } catch (err) {
-                                console.warn("Couldn't draw hologram on page, continuing without it:", err);
-                            }
-                        }
-                    }
 
                     // Modified approach to maintain original structure for OCR compatibility
                     // Apply targeted PDF optimization for smaller file size
@@ -1010,3 +965,4 @@ const logoDims = embeddedLogo.scale(0.35);
     </script>
 </body>
 </html>
+
