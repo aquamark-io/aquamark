@@ -31,105 +31,134 @@
         const pdfBytes = await input.files[0].arrayBuffer();
         const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
         
-        // Fetch and embed the logo image
-        const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-        const logoImage = await pdfDoc.embedPng(logoImageBytes);
+        // Create a temporary PDF to hold our watermark
+        const watermarkDoc = await PDFLib.PDFDocument.create();
         
-        // Process each page
+        // Fetch and embed the logo image
+        let logoImage;
+        try {
+          const logoImageBytes = await fetch(logoUrl).then(res => {
+            if (!res.ok) throw new Error("Failed to fetch logo");
+            return res.arrayBuffer();
+          });
+          logoImage = await watermarkDoc.embedPng(logoImageBytes);
+        } catch (error) {
+          console.error("Error loading logo:", error);
+          statusElement.textContent += "\nFalling back to text watermark...";
+          // We'll continue and use text instead
+        }
+        
+        // Create a watermark page
+        const watermarkPage = watermarkDoc.addPage();
+        const { width: wmWidth, height: wmHeight } = watermarkPage.getSize();
+        
+        // Set up watermark - either image or text
+        if (logoImage) {
+          // Calculate dimensions to fit the watermark properly
+          const scaleFactor = Math.min(wmWidth / logoImage.width, wmHeight / logoImage.height) * 0.5;
+          const scaledWidth = logoImage.width * scaleFactor;
+          const scaledHeight = logoImage.height * scaleFactor;
+          
+          // Center the image
+          const centerX = (wmWidth - scaledWidth) / 2;
+          const centerY = (wmHeight - scaledHeight) / 2;
+          
+          // Draw watermark image
+          watermarkPage.drawImage(logoImage, {
+            x: centerX,
+            y: centerY,
+            width: scaledWidth,
+            height: scaledHeight,
+            opacity: 0.3
+          });
+        } else {
+          // Use text as fallback
+          watermarkPage.drawText('WATERMARK', {
+            x: wmWidth / 2 - 150,
+            y: wmHeight / 2,
+            size: 60,
+            opacity: 0.3,
+            color: PDFLib.rgb(0.3, 0.3, 0.8)
+          });
+        }
+        
+        // Convert the watermark document to bytes and load as embedded page
+        const watermarkPdfBytes = await watermarkDoc.save();
+        const watermarkPdf = await PDFLib.PDFDocument.load(watermarkPdfBytes);
+        
+        // Embed the watermark page
+        const [embeddedWatermarkPage] = await pdfDoc.embedPdf(watermarkPdf, [0]);
+        
+        // Add the watermark to each page
         const pages = pdfDoc.getPages();
         for (let i = 0; i < pages.length; i++) {
           const page = pages[i];
           const { width, height } = page.getSize();
           
-          // Calculate dimensions for a reasonably sized watermark
-          const maxWidth = width * 0.5;  // Max 50% of page width
-          const maxHeight = height * 0.5; // Max 50% of page height
+          // Draw the watermark in three different ways for persistence
           
-          // Calculate scaling to fit within our constraints while maintaining aspect ratio
-          const scale = Math.min(
-            maxWidth / logoImage.width,
-            maxHeight / logoImage.height
-          ) * 0.8; // Further reduce to 80% of max size
-          
-          const logoDims = logoImage.scale(scale);
-          
-          // Center the watermark
-          const centerX = (width - logoDims.width) / 2;
-          const centerY = (height - logoDims.height) / 2;
-          
-          // Create a separate XObject Form for the watermark
-          const watermarkForm = pdfDoc.context.obj({
-            Type: 'XObject',
-            Subtype: 'Form',
-            BBox: [0, 0, width, height],
-            Resources: {
-              XObject: { Im0: logoImage.ref }
-            }
+          // 1. As a visible underlay
+          page.drawPage(embeddedWatermarkPage, {
+            x: 0,
+            y: 0,
+            width: width,
+            height: height,
+            opacity: 0.3,
+            rotate: PDFLib.degrees(0)
           });
           
-          // Build content stream for the watermark form
-          const contentStream = pdfDoc.context.stream(`
-            q
-            ${logoDims.width} 0 0 ${logoDims.height} ${centerX} ${centerY} cm
-            /Im0 Do
-            Q
-          `);
-          watermarkForm.set(PDFLib.PDFName.of('Length'), PDFLib.PDFNumber.of(contentStream.sizeInBytes()));
-          watermarkForm.set(PDFLib.PDFName.of('Matrix'), pdfDoc.context.obj([1, 0, 0, 1, 0, 0]));
-          watermarkForm.set(PDFLib.PDFName.of('Contents'), contentStream);
-          
-          // Add the watermark form to the page as a background layer (under content)
-          page.node.set(PDFLib.PDFName.of('Watermark'), watermarkForm);
-          
-          // Add the watermark as content to ensure it integrates with existing content
-          page.drawImage(logoImage, {
-            x: centerX,
-            y: centerY,
-            width: logoDims.width,
-            height: logoDims.height,
-            opacity: 0.3, // Semi-transparent
-            blendMode: 'Multiply' // Blend with existing content
+          // 2. As a visible overlay
+          page.drawPage(embeddedWatermarkPage, {
+            x: 0,
+            y: 0,
+            width: width,
+            height: height,
+            opacity: 0.2,
+            rotate: PDFLib.degrees(0),
+            xSkew: PDFLib.degrees(15),
+            ySkew: PDFLib.degrees(15)
           });
           
-          // Add opacity-based transparency group
-          const opacityDict = pdfDoc.context.obj({
+          // 3. Use PDF operators for a more embedded approach
+          page.pushOperators(
+            PDFLib.operators.saveGraphicsState(),
+            PDFLib.operators.setGraphicsState('GS0'),
+            PDFLib.operators.translate(width / 2, height / 2),
+            PDFLib.operators.rotate(PDFLib.degrees(30)),
+            PDFLib.operators.translate(-width / 2, -height / 2),
+            PDFLib.operators.drawImage('WM'),
+            PDFLib.operators.restoreGraphicsState()
+          );
+          
+          // Add resources needed by the operators
+          const xObject = pdfDoc.context.obj({});
+          xObject.set(PDFLib.PDFName.of('WM'), embeddedWatermarkPage.ref);
+          
+          const gsState = pdfDoc.context.obj({});
+          gsState.set(PDFLib.PDFName.of('GS0'), pdfDoc.context.obj({
             Type: PDFLib.PDFName.of('ExtGState'),
-            CA: 0.3, // Stroke opacity
-            ca: 0.3, // Fill opacity
-          });
+            CA: 0.3,  // stroke
+            ca: 0.3,  // fill
+          }));
           
-          // Add to page resources
-          const extGState = page.node.normalizedEntries().Resources.get(PDFLib.PDFName.of('ExtGState')) || 
-                           pdfDoc.context.obj({});
-          extGState.set(PDFLib.PDFName.of('WMOpacity'), opacityDict);
+          // Get existing resources or create new ones
+          const resources = page.node.get(PDFLib.PDFName.of('Resources')) || pdfDoc.context.obj({});
           
-          // Update page resources
-          const resources = page.node.normalizedEntries().Resources;
-          resources.set(PDFLib.PDFName.of('ExtGState'), extGState);
-          
-          // Force integration with content streams by ensuring watermark is part of content stream
-          const existingContent = await page.getContentStream();
-          const newContentStream = pdfDoc.context.stream(`
-            q
-            /WMOpacity gs
-            ${logoDims.width} 0 0 ${logoDims.height} ${centerX} ${centerY} cm
-            /Im0 Do
-            Q
-            ${existingContent}
-          `);
-          
-          // Update page content stream
-          page.setContentStream(newContentStream);
+          // Update resources
+          resources.set(PDFLib.PDFName.of('XObject'), xObject);
+          resources.set(PDFLib.PDFName.of('ExtGState'), gsState);
+          page.node.set(PDFLib.PDFName.of('Resources'), resources);
         }
-
-        // Save with flattening and compression
-        const modifiedPdfBytes = await pdfDoc.save({ 
+        
+        // Apply advanced options to make watermark more persistent
+        const modifiedPdfBytes = await pdfDoc.save({
           useObjectStreams: false,
           addDefaultPage: false,
+          objectsPerTick: 100, // Process more objects per tick
           updateFieldAppearances: true
         });
         
-        // Create download
+        // Create the download
         const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -138,7 +167,7 @@
         
         statusElement.textContent = "Watermark added successfully!";
       } catch (error) {
-        console.error("Error adding watermark:", error);
+        console.error("Error processing PDF:", error);
         statusElement.textContent = "Error: " + error.message;
       }
     }
