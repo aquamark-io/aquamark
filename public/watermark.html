@@ -856,53 +856,36 @@ const hologramUrl = "/hologram.png";
                     }
 
                     for (let file of pdfFiles) {
-                        let pdfBytes;
-                        try {
-                            // Try loading the file normally (unencrypted)
-                            const fileBuffer = await file.arrayBuffer();
-                            await PDFLib.PDFDocument.load(fileBuffer, {
-                                ignoreEncryption: false
-                            });
-                            pdfBytes = fileBuffer;
-                        } catch (err) {
-                            console.log("PDF may be encrypted, attempting to decrypt:", err);
-                            // Fallback to Render decryption
-                            status.textContent = "🥷 Decrypting protected file...";
-                            try {
-                                pdfBytes = await decryptPDF(file);
-                            } catch (decryptErr) {
-                                console.error("Decryption error:", decryptErr);
-                                status.textContent = "❌ Could not process PDF. It may be corrupted or password-protected.";
-                                return;
-                            }
-                        }
+    let pdfBytes;
 
-                        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-                            ignoreEncryption: true
-                        });
-
-                        // Embed logo ONCE per document
-let embeddedLogo;
-try {
-    embeddedLogo = await pdfDoc.embedPng(logoBytes);
-} catch (pngError) {
-    console.warn("PNG embed failed, trying JPG...");
     try {
-        embeddedLogo = await pdfDoc.embedJpg(logoBytes);
-    } catch (jpgError) {
-        console.error("Failed to embed logo:", jpgError);
-        status.textContent = "❌ Logo format not supported. Try a different file.";
-        return;
+        // Attempt to load the PDF directly
+        const fileBuffer = await file.arrayBuffer();
+        await PDFLib.PDFDocument.load(fileBuffer, {
+            ignoreEncryption: false
+        });
+        pdfBytes = fileBuffer;
+    } catch (err) {
+        console.log("PDF may be encrypted, attempting to decrypt:", err);
+        status.textContent = "🥷 Decrypting protected file...";
+        try {
+            pdfBytes = await decryptPDF(file);
+        } catch (decryptErr) {
+            console.error("Decryption error:", decryptErr);
+            status.textContent = "❌ Could not process PDF. It may be corrupted or password-protected.";
+            return;
+        }
     }
-}
 
-const logoDims = embeddedLogo.scale(0.35);
+    // Load the document and get its pages
+    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
+        ignoreEncryption: true
+    });
+    const pages = pdfDoc.getPages();  // <-- Fixed: Initialization happens right here.
 
-                        const pages = pdfDoc.getPages();
-
-                        // Update the counter with the number of pages in this PDF
-                        pagesWatermarked += pages.length;
-                        pagesWatermarkedElement.textContent = pagesWatermarked;
+    // Update the counter with the number of pages in this PDF
+    pagesWatermarked += pages.length;
+    pagesWatermarkedElement.textContent = pagesWatermarked;
 
                         // Update usage in database
                         const updatedPagesUsed = data.pages_used + pages.length;
@@ -918,86 +901,66 @@ const logoDims = embeddedLogo.scale(0.35);
 
                         if (updateError) throw updateError;
                         console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
-  
-                        // Embed hologram if available
-                        let hologramImage = null;
-                        if (hologramBytes) {
-                            try {
-                                hologramImage = await pdfDoc.embedPng(hologramBytes);
-                            } catch (err) {
-                                console.warn("Failed to embed hologram, continuing without it:", err);
-                            }
-                        }
 
-                    // Add watermarks to all pages
-                    for (const page of pages) {
-                        const { width, height } = page.getSize();
+    // Get the logo bytes and embed it
+    let embeddedLogo;
 
-                        // Add repeating logo watermark
-                        for (let x = 0; x < width; x += (logoDims.width + 100)) {
-                            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                                page.drawImage(embeddedLogo, {
-                                    x,
-                                    y,
-                                    width: logoDims.width,
-                                    height: logoDims.height,
-                                    opacity: 0.15,
-                                    rotate: PDFLib.degrees(45)
-                                });
-                            }
-                        }
+    try {
+        embeddedLogo = await pdfDoc.embedPng(logoBytes);
+    } catch (pngError) {
+        console.warn("PNG embed failed, trying JPG...");
+        try {
+            embeddedLogo = await pdfDoc.embedJpg(logoBytes);
+        } catch (jpgError) {
+            console.error("Failed to embed logo:", jpgError);
+            status.textContent = "❌ Logo format not supported. Try a different file.";
+            return;
+        }
+    }
 
-                        // Add hologram watermark if available
-                        if (hologramImage) {
-                            const hologramWidth = 45;
-                            const hologramHeight = 45;
-                            
-                            try {
-                                page.drawImage(hologramImage, {
-                                    x: width - hologramWidth - 10,
-                                    y: height - hologramHeight - 10,
-                                    width: hologramWidth,
-                                    height: hologramHeight,
-                                    opacity: 0.7
-                                });
-                            } catch (err) {
-                                console.warn("Couldn't draw hologram on page, continuing without it:", err);
-                            }
-                        }
-                    }
+    const logoDims = embeddedLogo.scale(0.35);
 
-                    // Modified approach to maintain original structure for OCR compatibility
-                    // Apply targeted PDF optimization for smaller file size
-                    const pdfOpts = {
-  // Core compression options
-  useObjectStreams: true,
-  compressContentStreams: true,
-  
-  // Preserve document structure for OCR compatibility
-  preservePDFFormFields: true
-};
-                    
-                    // Use original document to maintain structure
-                    try {
-                        const finalBytes = await pdfDoc.save(pdfOpts);
-                        const blob = new Blob([finalBytes], { type: 'application/pdf' });
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        
-                        // Release object URL to prevent memory leaks
-                        setTimeout(() => URL.revokeObjectURL(a.href), 100);
-                    } catch (saveErr) {
-                        console.error("Error saving PDF:", saveErr);
-                        status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
-                        return;
-                    }
-                }
+    // Add watermarks to all pages
+    for (const page of pages) {
+        const { width, height } = page.getSize();
 
-                status.textContent = "✅ Done. Files downloaded.";
+        // Add repeating logo watermark
+        for (let x = 0; x < width; x += (logoDims.width + 100)) {
+            for (let y = 0; y < height; y += (logoDims.height + 100)) {
+                page.drawImage(embeddedLogo, {
+                    x,
+                    y,
+                    width: logoDims.width,
+                    height: logoDims.height,
+                    opacity: 0.15,
+                    rotate: PDFLib.degrees(45)
+                });
+            }
+        }
+    }
+
+    // Save the document and prepare for download
+    try {
+        const finalBytes = await pdfDoc.save();
+        const blob = new Blob([finalBytes], { type: 'application/pdf' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        // Release object URL to prevent memory leaks
+        setTimeout(() => URL.revokeObjectURL(a.href), 100);
+    } catch (saveErr) {
+        console.error("Error saving PDF:", saveErr);
+        status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
+        return;
+    }
+}
+
+status.textContent = "✅ Done. Files downloaded.";
+
             } catch (err) {
                 console.error("Error processing files:", err);
                 status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
@@ -1010,3 +973,6 @@ const logoDims = embeddedLogo.scale(0.35);
     </script>
 </body>
 </html>
+
+
+
