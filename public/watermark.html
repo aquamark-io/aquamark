@@ -921,9 +921,9 @@ const hologramUrl = "/hologram.png";
     const logoDims = embeddedLogo.scale(0.35);
 
 // Create a watermark PDF
+// Create a watermark PDF
 const watermarkDoc = await PDFLib.PDFDocument.create();
-const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-const logoImage = await watermarkDoc.embedPng(logoImageBytes);
+const logoImage = await watermarkDoc.embedPng(logoBytes);
 
 // Get the size of the first page to match the watermark
 const { width, height } = pdfDoc.getPages()[0].getSize();
