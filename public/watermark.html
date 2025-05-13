@@ -920,23 +920,42 @@ const hologramUrl = "/hologram.png";
 
     const logoDims = embeddedLogo.scale(0.35);
 
-    // Add watermarks to all pages
-    for (const page of pages) {
-        const { width, height } = page.getSize();
+    / Function to apply watermark embedding on each page
+async function embedWatermarkToPDF(pdfDoc, logoUrl) {
+    try {
+        // Fetch and embed the logo image
+        const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+        const logoImage = await pdfDoc.embedPng(logoImageBytes);
 
-        // Add repeating logo watermark
-        for (let x = 0; x < width; x += (logoDims.width + 100)) {
-            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                page.drawImage(embeddedLogo, {
-                    x,
-                    y,
-                    width: logoDims.width,
-                    height: logoDims.height,
-                    opacity: 0.15,
-                    rotate: PDFLib.degrees(45)
-                });
-            }
-        }
+        // Get dimensions from the first page of the PDF
+        const pages = pdfDoc.getPages();
+        const { width, height } = pages[0].getSize();
+
+        // Set watermark dimensions and layout
+        const logoWidth = width * 0.3;
+        const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
+        const opacity = 0.15;
+
+        // Loop through each page and embed the watermark
+        pages.forEach(page => {
+            page.drawImage(logoImage, {
+                x: (width - logoWidth) / 2,
+                y: (height - logoHeight) / 2,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: opacity,
+                rotate: PDFLib.degrees(45)
+            });
+        });
+
+        console.log("Watermark successfully embedded on all pages.");
+        return pdfDoc;
+
+    } catch (error) {
+        console.error("Error embedding watermark:", error);
+        throw new Error("Failed to embed watermark.");
+    }
+}
     }
 
     // Save the document and prepare for download
