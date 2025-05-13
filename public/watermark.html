@@ -945,7 +945,8 @@ const spacingY = height / rows;
 for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
         if ((i + j) % 2 === 0) {
-            const x = j * spacingX + (i * spacingX / 2);
+            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
+            const x = j * spacingX + xOffset;
             const y = i * spacingY;
 
             watermarkPage.drawImage(logoImage, {
