@@ -920,22 +920,52 @@ const hologramUrl = "/hologram.png";
 
     const logoDims = embeddedLogo.scale(0.35);
 
-    // Add watermarks to all pages
-    for (const page of pages) {
-        const { width, height } = page.getSize();
+// Create a watermark PDF
+const watermarkDoc = await PDFLib.PDFDocument.create();
+const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+const logoImage = await watermarkDoc.embedPng(logoImageBytes);
 
-        // Add repeating logo watermark
-        for (let x = 0; x < width; x += (logoDims.width + 100)) {
-            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                page.drawImage(embeddedLogo, {
-                    x,
-                    y,
-                    width: logoDims.width,
-                    height: logoDims.height,
-                    opacity: 0.15,
-                    rotate: PDFLib.degrees(45)
-                });
-            }
+// Get the size of the first page to match the watermark
+const { width, height } = pdfDoc.getPages()[0].getSize();
+const watermarkPage = watermarkDoc.addPage([width, height]);
+
+// Define the grid size and logo spacing
+const rows = 6;
+const cols = 6;
+const spacingX = width / cols;
+const spacingY = height / rows;
+const logoWidth = width * 0.2;  
+const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
+
+// Draw the watermark in a diagonal checkered pattern
+for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+        if ((i + j) % 2 === 0) {
+            const x = j * spacingX + (i * width / (rows * 2));
+            const y = i * spacingY;
+
+            watermarkPage.drawImage(logoImage, {
+                x: x % width,
+                y,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: 0.15,
+                rotate: PDFLib.degrees(45)
+            });
+        }
+    }
+}
+
+// Embed the watermark page
+const watermarkPdfBytes = await watermarkDoc.save();
+const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
+const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
+
+// Apply watermark to each page of the original PDF
+for (const page of pdfDoc.getPages()) {
+    page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
+}
+
         }
     }
 
