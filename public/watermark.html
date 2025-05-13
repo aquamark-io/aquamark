@@ -681,7 +681,7 @@
                     img.onload = function () {
                         // Use a higher resolution for logos to preserve quality
                         const maxSize = 250; // Increased from 150 to 250px for better quality
-                        let scale = Math.min(maxSize / img.width, maxSize / img.height);
+                       let scale = maxSize / img.width;
                         
                         // Make sure we get a multiple of 4 for width and height (helps with compression)
                         const width = Math.floor((img.width * scale) / 4) * 4;
