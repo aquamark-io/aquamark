@@ -929,34 +929,36 @@ const logoImage = await watermarkDoc.embedPng(logoImageBytes);
 const { width, height } = pdfDoc.getPages()[0].getSize();
 const watermarkPage = watermarkDoc.addPage([width, height]);
 
-const logoScale = 0.1;
-const logoDims = embeddedLogo.scale(logoScale);
+// Define number of rows/columns to get ~15–20 logos
+const rows = 6;
+const cols = 6;
 
-// Manual spacing
-const gapX = logoDims.width + 60;
-const gapY = logoDims.height + 60;
+// Logo size: smaller for more spacing
+const logoWidth = width * 0.1;
+const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
 
-for (const page of pages) {
-    const { width, height } = page.getSize();
+// Positioning
+const spacingX = width / cols;
+const spacingY = height / rows;
 
-    for (let row = 0; row < height; row += gapY) {
-        const isOffset = (row / gapY) % 2 === 1; // every other row
-        const offsetX = isOffset ? gapX / 2 : 0;
+// Diagonal checkerboard layout
+for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+        if ((i + j) % 2 === 0) {
+            const x = j * spacingX + (i * spacingX / 2);
+            const y = i * spacingY;
 
-        for (let col = 0; col < width; col += gapX) {
-            page.drawImage(embeddedLogo, {
-                x: col + offsetX,
-                y: row,
-                width: logoDims.width,
-                height: logoDims.height,
+            watermarkPage.drawImage(logoImage, {
+                x,
+                y,
+                width: logoWidth,
+                height: logoHeight,
                 opacity: 0.15,
                 rotate: PDFLib.degrees(45)
             });
         }
     }
 }
-
-
 
 // Embed the watermark page
 const watermarkPdfBytes = await watermarkDoc.save();
