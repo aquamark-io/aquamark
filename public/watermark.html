@@ -680,7 +680,7 @@
                     const img = new Image();
                     img.onload = function () {
                         // Use a higher resolution for logos to preserve quality
-                        const maxSize = 150; // Increased from 150 to 250px for better quality
+                        const maxSize = 75; // Increased from 150 to 250px for better quality
                         let scale = Math.min(maxSize / img.width, maxSize / img.height);
                         
                         // Make sure we get a multiple of 4 for width and height (helps with compression)
@@ -930,8 +930,8 @@ const { width, height } = pdfDoc.getPages()[0].getSize();
 const watermarkPage = watermarkDoc.addPage([width, height]);
 
 // Define the grid size and logo spacing
-const rows = 4;
-const cols = 4;
+const rows = 5;
+const cols = 5;
 const spacingX = width / cols;
 const spacingY = height / rows;
 const logoWidth = width * 0.2;  
