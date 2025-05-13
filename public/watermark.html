@@ -469,510 +469,163 @@
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <script>
-        // Initialize Supabase client
         const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Preserve URL parameters when navigating between pages
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get current URL parameters
-            const urlParams = window.location.search;
-            const hashParams = window.location.hash;
-
-            // Update dashboard link with current parameters
-            const dashboardLink = document.getElementById('dashboardLink');
-            if (dashboardLink) {
-                dashboardLink.href = "/dashboard.html" + urlParams + hashParams;
+        async function loadUserData() {
+            const profile = await Outseta.getUser();
+            if (!profile || !profile.Email) {
+                console.error('Unable to retrieve user profile.');
+                return null;
             }
-
-            // Update upgrade plan link with current parameters
-            const upgradePlanLink = document.getElementById('upgradePlanLink');
-            if (upgradePlanLink) {
-                upgradePlanLink.href = "/dashboard.html" + urlParams + hashParams;
-            }
-
-            // Load saved logo if available
-            loadSavedLogo();
-        });
-
-        // Handle logout redirection
-        if (window.location.hash === '#o-logout-link') {
-            window.location.href = '/login.html';
+            return profile.Email;
         }
 
-        // Pages counter
-        let pagesWatermarked = 0;
+        async function fetchUsageData(email) {
+            const { data, error } = await supabase
+                .from('usage')
+                .select('*')
+                .eq('user_email', email)
+                .single();
 
-        // Function to load the saved logo from Supabase
-        async function loadSavedLogo() {
-            try {
-                const profile = await Outseta.getUser();
-                if (!profile || !profile.Email) {
-                    console.log("Unable to retrieve user email.");
-                    return;
-                }
-
-                // Get list of files in user's folder to find the latest logo
-                const { data: filesList, error: listError } = await supabase.storage
-                    .from("logos")
-                    .list(profile.Email);
-                
-                if (listError) {
-                    console.error("Error listing logos:", listError);
-                    return;
-                }
-                
-                if (!filesList || filesList.length === 0) {
-                    console.log("No saved logos found.");
-                    return;
-                }
-                
-                // Find the latest logo file (with the highest timestamp)
-                const logoFiles = filesList.filter(file => file.name.startsWith('logo-'));
-                
-                if (logoFiles.length === 0) {
-                    // Try fallback to legacy path
-                    const { data } = supabase.storage.from("logos").getPublicUrl(`${profile.Email}/logo.png`);
-                    
-                    if (data && data.publicUrl) {
-                        // Store URL in localStorage
-                        localStorage.setItem("aquamarkLogo", data.publicUrl);
-                        
-                        // Add cache busting parameter
-                        const cacheBustUrl = data.publicUrl + "?t=" + new Date().getTime();
-                        loadLogoImage(cacheBustUrl);
-                    }
-                    return;
-                }
-                
-                // Sort by timestamp in filename (logo-1234567890.png)
-                logoFiles.sort((a, b) => {
-                    const timestampA = parseInt(a.name.split('-')[1]) || 0;
-                    const timestampB = parseInt(b.name.split('-')[1]) || 0;
-                    return timestampB - timestampA;
-                });
-                
-                // Get the latest logo
-                const latestLogo = logoFiles[0];
-                const logoPath = `${profile.Email}/${latestLogo.name}`;
-                const { data } = supabase.storage.from("logos").getPublicUrl(logoPath);
-                
-                if (data && data.publicUrl) {
-                    // Store URL in localStorage
-                    localStorage.setItem("aquamarkLogo", data.publicUrl);
-                    
-                    // Add cache busting parameter
-                    const cacheBustUrl = data.publicUrl + "?t=" + new Date().getTime();
-                    loadLogoImage(cacheBustUrl);
-                }
-            } catch (error) {
-                console.error("Error loading logo:", error);
+            if (error) {
+                console.error('Failed to fetch usage data:', error);
+                return null;
             }
-        }
-        
-        // Helper function to load the logo image with error handling
-        function loadLogoImage(url) {
-            const img = new Image();
-            img.onload = function() {
-                // Show the logo in the UI only after it's successfully loaded
-                document.getElementById("logoImg").src = url;
-                console.log("Logo loaded successfully from Supabase");
-            };
-            img.onerror = function() {
-                console.warn("Saved logo could not be loaded, using default");
-                // Keep default image if the logo can't be loaded
-            };
-            img.src = url;
-        }
-
-        // Function to upload and save the logo to Supabase
-        async function uploadLogo() {
-            const fileInput = document.getElementById("logoInput");
-            const status = document.getElementById("status");
-
-            if (!fileInput.files[0]) {
-                status.textContent = "Please select an image to upload.";
-                return;
-            }
-
-            status.textContent = "⏳ Uploading logo...";
-
-            try {
-                const profile = await Outseta.getUser();
-                if (!profile || !profile.Email) {
-                    status.textContent = "Unable to retrieve user email.";
-                    return;
-                }
-
-                const file = fileInput.files[0];
-                const path = `${profile.Email}/logo.png`;
-
-                // First, normalize the image to ensure it's properly formatted
-                const imageBytes = await normalizeImagePreserveAspect(file);
-                const blob = new Blob([imageBytes], { type: 'image/png' });
-                const normalizedFile = new File([blob], "logo.png", { type: 'image/png' });
-
-                // Generate a unique path name with timestamp to force cache invalidation
-                const timestamp = new Date().getTime();
-                const uniquePath = `${profile.Email}/logo-${timestamp}.png`;
-
-                // Upload the normalized file to Supabase Storage
-                const { error } = await supabase.storage.from("logos").upload(uniquePath, normalizedFile, {
-                    upsert: true,
-                    contentType: 'image/png'
-                });
-
-                if (error) {
-                    status.textContent = "❌ Logo upload failed.";
-                    console.error("Logo upload error:", error);
-                    return;
-                }
-
-                // Get the public URL for the uploaded file with timestamp
-                const { data } = supabase.storage.from("logos").getPublicUrl(uniquePath);
-
-                // Store URL in localStorage for later use
-                localStorage.setItem("aquamarkLogo", data.publicUrl);
-                
-                // Update the image preview with cache-busting
-                document.getElementById("logoImg").src = data.publicUrl + "?t=" + timestamp;
-                
-                console.log("Logo saved successfully to:", data.publicUrl);
-                status.textContent = "✅ Logo saved successfully!";
-
-                // Delete previous versions to save storage space
-                try {
-                    // Get list of files in user's folder
-                    const { data: filesList, error: listError } = await supabase.storage
-                        .from("logos")
-                        .list(profile.Email);
-                    
-                    if (!listError && filesList) {
-                        // Filter out the current file and delete the rest
-                        const currentFileName = uniquePath.split('/').pop();
-                        const filesToDelete = filesList
-                            .filter(file => file.name !== currentFileName && file.name.startsWith('logo-'))
-                            .map(file => `${profile.Email}/${file.name}`);
-                        
-                        if (filesToDelete.length > 0) {
-                            // Delete old files
-                            await supabase.storage.from("logos").remove(filesToDelete);
-                            console.log(`Deleted ${filesToDelete.length} old logo files`);
-                        }
-                    }
-                } catch (cleanupError) {
-                    console.warn("Error during old file cleanup:", cleanupError);
-                    // Non-critical error, continue anyway
-                }
-            } catch (error) {
-                console.error("Error in uploadLogo:", error);
-                status.textContent = "❌ An error occurred during logo upload.";
-            }
-        }
-
-        async function normalizeImagePreserveAspect(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = new Image();
-                    img.onload = function () {
-                        // Use a higher resolution for logos to preserve quality
-                        const maxSize = 250; // Increased from 150 to 250px for better quality
-                        let scale = Math.min(maxSize / img.width, maxSize / img.height);
-                        
-                        // Make sure we get a multiple of 4 for width and height (helps with compression)
-                        const width = Math.floor((img.width * scale) / 4) * 4;
-                        const height = Math.floor((img.height * scale) / 4) * 4;
-                        
-                        const canvas = document.createElement('canvas');
-                        canvas.width = width;
-                        canvas.height = height;
-                        
-                        // Use high-quality canvas rendering
-                        const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
-                        ctx.imageSmoothingEnabled = true;
-                        ctx.imageSmoothingQuality = 'high';
-                        
-                        // Clear canvas with transparency
-                        ctx.clearRect(0, 0, width, height);
-                        
-                        // Draw with higher quality
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        // Use high-quality PNG encoding
-                        canvas.toBlob((blob) => {
-                            const fr = new FileReader();
-                            fr.onload = () => resolve(fr.result);
-                            fr.readAsArrayBuffer(blob);
-                        }, 'image/png'); // Don't compress (removed quality setting for PNG)
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+            return data;
         }
 
         async function decryptPDF(file) {
             const formData = new FormData();
-            formData.append("file", file);
-            const response = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
-                method: "POST",
+            formData.append('file', file);
+            const response = await fetch('https://aquamark-decrypt.onrender.com/decrypt', {
+                method: 'POST',
                 body: formData,
             });
-            if (!response.ok) throw new Error("Decryption failed");
+            if (!response.ok) throw new Error('Decryption failed');
             return await response.arrayBuffer();
         }
 
+        async function updateUsage(email, pagesUsed) {
+            const { error } = await supabase
+                .from('usage')
+                .update({ pages_used: pagesUsed })
+                .eq('user_email', email);
+
+            if (error) {
+                console.error('Error updating usage:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+    <button onclick="processFiles()">Watermark Now</button>
+    <div id="status"></div>
+
+    <script>
         async function processFiles() {
-            const status = document.getElementById("status");
-            const pdfInput = document.getElementById("pdfInput");
-            const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
-            
-            // Check if we have a stored logo or a newly uploaded logo
-            let logoUrl = localStorage.getItem("aquamarkLogo");
-            const logoInput = document.getElementById("logoInput");
-            
-            if (!logoUrl && !logoInput.files[0]) {
-                status.textContent = "Please upload a logo first.";
-                return;
-            }
-            
+            const status = document.getElementById('status');
+            const pdfInput = document.getElementById('pdfInput');
+            status.textContent = '⏳ Processing...';
+
             if (pdfInput.files.length === 0) {
-                status.textContent = "Please upload at least one PDF.";
+                status.textContent = 'Please upload at least one PDF.';
                 return;
             }
 
-            status.textContent = "⏳ Processing...";
+            const userEmail = await loadUserData();
+            if (!userEmail) {
+                status.textContent = '❌ Unable to retrieve user information.';
+                return;
+            }
 
-            // Reset counter for this session
-            pagesWatermarked = 0;
-            pagesWatermarkedElement.textContent = pagesWatermarked;
+            const usageData = await fetchUsageData(userEmail);
+            if (!usageData) {
+                status.textContent = '❌ Unable to retrieve usage data.';
+                return;
+            }
 
-            try {
-                // Get current user email from Outseta
-                const profile = await Outseta.getUser();
-                if (!profile || !profile.Email) {
-                    throw new Error("Unable to retrieve user profile");
-                }
-
-                // Get current usage data
-                const { data, error } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', profile.Email)
-                    .single();
-
-                if (error) throw error;
-                if (!data) throw new Error("No usage data found for this user");
-
-                // Calculate total pages needed for all PDFs
-                const pdfFiles = Array.from(pdfInput.files);
-                let totalPagesNeeded = 0;
-
-                for (let file of pdfFiles) {
+            let totalPagesNeeded = 0;
+            for (const file of pdfInput.files) {
+                try {
                     let pdfBytes;
                     try {
-                        // Try loading the file normally (unencrypted)
-                        const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-                            ignoreEncryption: false
-                        });
                         pdfBytes = await file.arrayBuffer();
+                        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
                         totalPagesNeeded += pdfDoc.getPageCount();
                     } catch (err) {
-                        // Fallback to Render decryption
-                        status.textContent = "🔐 Decrypting encrypted file to check page count...";
-                        try {
-                            pdfBytes = await decryptPDF(file);
-                            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-                                ignoreEncryption: true
-                            });
-                            totalPagesNeeded += pdfDoc.getPageCount();
-                        } catch {
-                            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-                            return;
-                        }
+                        status.textContent = '🔐 Decrypting encrypted file...';
+                        pdfBytes = await decryptPDF(file);
+                        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+                        totalPagesNeeded += pdfDoc.getPageCount();
                     }
+                } catch (error) {
+                    console.error('Error processing PDF:', error);
+                    status.textContent = '❌ Error during processing. See console for details.';
                 }
-
-                // Check if user has enough credits
-                if (data.pages_remaining < totalPagesNeeded) {
-                    status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
-                    
-                    // Highlight the upgrade button
-                    const upgradeBtn = document.getElementById('upgradePlanLink');
-                    if (upgradeBtn) {
-                        upgradeBtn.style.animation = 'pulse 1.5s infinite';
-                        upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
-                    }
-                    return;
-                }
-
-                // Get logo bytes - either from stored logo or newly uploaded logo
-                let logoBytes;
-                try {
-                    if (logoInput.files[0]) {
-                        // Use the just-uploaded logo
-                        logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
-                    } else if (logoUrl) {
-                        // Use the stored logo with error handling
-                        try {
-                            const response = await fetch(logoUrl + "?t=" + new Date().getTime());
-                            if (!response.ok) {
-                                throw new Error(`Failed to fetch logo: ${response.status}`);
-                            }
-                            logoBytes = await response.arrayBuffer();
-                        } catch (fetchError) {
-                            console.error("Error fetching stored logo:", fetchError);
-                            status.textContent = "❌ Couldn't load saved logo. Please upload a new one.";
-                            return;
-                        }
-                    } else {
-                        status.textContent = "❌ No logo available. Please upload a logo first.";
-                        return;
-                    }
-                    
-                    // Verify we have valid image data
-                    if (!logoBytes || logoBytes.byteLength === 0) {
-                        throw new Error("Invalid logo data");
-                    }
-                    
-                    // Get hologram image for watermarking
-const hologramUrl = "/hologram.png";
-                    let hologramBytes;
-                    try {
-                        const response = await fetch(hologramUrl);
-                        if (!response.ok) {
-                            console.warn("Hologram image not found, continuing without it");
-                            hologramBytes = null;
-                        } else {
-                            hologramBytes = await response.arrayBuffer();
-                        }
-                    } catch (err) {
-                        console.warn("Error loading hologram, continuing without it:", err);
-                        hologramBytes = null;
-                    }
-
-                    for (let file of pdfFiles) {
-    let pdfBytes;
-
-    try {
-        // Attempt to load the PDF directly
-        const fileBuffer = await file.arrayBuffer();
-        await PDFLib.PDFDocument.load(fileBuffer, {
-            ignoreEncryption: false
-        });
-        pdfBytes = fileBuffer;
-    } catch (err) {
-        console.log("PDF may be encrypted, attempting to decrypt:", err);
-        status.textContent = "🥷 Decrypting protected file...";
-        try {
-            pdfBytes = await decryptPDF(file);
-        } catch (decryptErr) {
-            console.error("Decryption error:", decryptErr);
-            status.textContent = "❌ Could not process PDF. It may be corrupted or password-protected.";
-            return;
-        }
-    }
-
-    // Load the document and get its pages
-    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-        ignoreEncryption: true
-    });
-    const pages = pdfDoc.getPages();  // <-- Fixed: Initialization happens right here.
-
-    // Update the counter with the number of pages in this PDF
-    pagesWatermarked += pages.length;
-    pagesWatermarkedElement.textContent = pagesWatermarked;
-
-                        // Update usage in database
-                        const updatedPagesUsed = data.pages_used + pages.length;
-                        const updatedPagesRemaining = data.page_credits - updatedPagesUsed;
-
-                        const { error: updateError } = await supabase
-                            .from('usage')
-                            .update({
-                                pages_used: updatedPagesUsed,
-                                pages_remaining: updatedPagesRemaining
-                            })
-                            .eq('user_email', profile.Email);
-
-                        if (updateError) throw updateError;
-                        console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
-
-    // Get the logo bytes and embed it
-    let embeddedLogo;
-
-    try {
-        embeddedLogo = await pdfDoc.embedPng(logoBytes);
-    } catch (pngError) {
-        console.warn("PNG embed failed, trying JPG...");
-        try {
-            embeddedLogo = await pdfDoc.embedJpg(logoBytes);
-        } catch (jpgError) {
-            console.error("Failed to embed logo:", jpgError);
-            status.textContent = "❌ Logo format not supported. Try a different file.";
-            return;
-        }
-    }
-
-    const logoDims = embeddedLogo.scale(0.35);
-
-    // Add watermarks to all pages
-    for (const page of pages) {
-        const { width, height } = page.getSize();
-
-        // Add repeating logo watermark
-        for (let x = 0; x < width; x += (logoDims.width + 100)) {
-            for (let y = 0; y < height; y += (logoDims.height + 100)) {
-                page.drawImage(embeddedLogo, {
-                    x,
-                    y,
-                    width: logoDims.width,
-                    height: logoDims.height,
-                    opacity: 0.15,
-                    rotate: PDFLib.degrees(45)
-                });
             }
-        }
-    }
 
-    // Save the document and prepare for download
-    try {
-        const finalBytes = await pdfDoc.save();
-        const blob = new Blob([finalBytes], { type: 'application/pdf' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        // Release object URL to prevent memory leaks
-        setTimeout(() => URL.revokeObjectURL(a.href), 100);
-    } catch (saveErr) {
-        console.error("Error saving PDF:", saveErr);
-        status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
-        return;
-    }
-}
-
-status.textContent = "✅ Done. Files downloaded.";
-
-            } catch (err) {
-                console.error("Error processing files:", err);
-                status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
+            if (usageData.pages_remaining < totalPagesNeeded) {
+                status.textContent = `❌ Not enough page credits. Balance is ${usageData.pages_remaining}. Please upgrade your plan.`;
+                return;
             }
-                } catch (logoErr) {
-                    console.error("Logo processing error:", logoErr);
-                    status.textContent = `❌ Logo error: ${logoErr.message}. Please try a different image.`;
+
+            status.textContent = '⏳ Embedding Watermarks...';
+
+            // Embedding logic
+            const logoUrl = localStorage.getItem('aquamarkLogo');
+            const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+
+            for (const file of pdfInput.files) {
+                const pdfBytes = await file.arrayBuffer();
+                const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+
+                const watermarkDoc = await PDFLib.PDFDocument.create();
+                const watermarkPage = watermarkDoc.addPage([612, 792]);
+                const logoImage = await watermarkDoc.embedPng(logoImageBytes);
+
+                const { width, height } = watermarkPage.getSize();
+                for (let x = 0; x < width; x += 150) {
+                    for (let y = 0; y < height; y += 150) {
+                        watermarkPage.drawImage(logoImage, {
+                            x,
+                            y,
+                            width: 100,
+                            height: 100,
+                            opacity: 0.15,
+                            rotate: PDFLib.degrees(45)
+                        });
+                    }
                 }
+
+                const watermarkBytes = await watermarkDoc.save();
+                const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkBytes);
+                const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
+
+                for (const page of pdfDoc.getPages()) {
+                    page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
+                }
+
+                const finalBytes = await pdfDoc.save();
+                const blob = new Blob([finalBytes], { type: 'application/pdf' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `${file.name.replace('.pdf', '')}-protected.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+
+            status.textContent = '✅ Watermarks Applied and Files Downloaded.';
+            await updateUsage(userEmail, usageData.pages_used + totalPagesNeeded);
         }
     </script>
 </body>
 </html>
+
 
 
 
