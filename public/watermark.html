@@ -929,21 +929,36 @@ const logoImage = await watermarkDoc.embedPng(logoImageBytes);
 const { width, height } = pdfDoc.getPages()[0].getSize();
 const watermarkPage = watermarkDoc.addPage([width, height]);
 
-// Define watermarking pattern
-const logoWidth = width * 0.2;
+// Define number of rows/columns to get ~15–20 logos
+const rows = 7;
+const cols = 6;
+
+// Logo size: smaller for more spacing
+const logoWidth = width * 0.1;
 const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
 
-for (let x = 0; x < width; x += (logoWidth + 150)) {
-  for (let y = 0; y < height; y += (logoHeight + 150)) {
-    watermarkPage.drawImage(logoImage, {
-      x,
-      y,
-      width: logoWidth,
-      height: logoHeight,
-      opacity: 0.15,
-      rotate: PDFLib.degrees(45)
-    });
-  }
+// Positioning
+const spacingX = width / cols;
+const spacingY = height / rows;
+
+// Diagonal checkerboard layout
+for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+        if ((i + j) % 2 === 0) {
+            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
+            const x = j * spacingX + xOffset;
+            const y = i * spacingY;
+
+            watermarkPage.drawImage(logoImage, {
+                x,
+                y,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: 0.20,
+                rotate: PDFLib.degrees(45)
+            });
+        }
+    }
 }
 
 // Embed the watermark page
