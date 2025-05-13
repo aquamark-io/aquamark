@@ -198,14 +198,16 @@
         }
 
       .logo-preview img {
-    max-height: 150px; /* increased from 125px */
-    border-radius: 8px;
-    background: white;
+ .logo-preview img {
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    background: #f9fafb;
     border: 1px solid var(--border-color);
-    max-width: 100%;
-    object-fit: contain; /* ensures logo scales without distortion */
+    border-radius: 8px;
 }
-
 
         /* Button */
         button {
