@@ -611,9 +611,8 @@
                 const path = `${profile.Email}/logo.png`;
 
                 // First, normalize the image to ensure it's properly formatted
-                const imageBytes = await normalizeImagePreserveAspect(file);
-                const blob = new Blob([imageBytes], { type: 'image/png' });
-                const normalizedFile = new File([blob], "logo.png", { type: 'image/png' });
+                const normalizedFile = file; // no resizing, upload as-is
+
 
                 // Generate a unique path name with timestamp to force cache invalidation
                 const timestamp = new Date().getTime();
