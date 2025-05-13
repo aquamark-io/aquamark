@@ -930,11 +930,11 @@ const { width, height } = pdfDoc.getPages()[0].getSize();
 const watermarkPage = watermarkDoc.addPage([width, height]);
 
 // Define the grid size and logo spacing
-const rows = 5;
-const cols = 5;
+const rows = 3;
+const cols = 3;
 const spacingX = width / cols;
 const spacingY = height / rows;
-const logoWidth = width * 0.2;  
+const logoWidth = width * 0.12;  
 const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
 
 // Draw the watermark in a diagonal checkered pattern
