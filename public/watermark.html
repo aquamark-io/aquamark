@@ -702,11 +702,12 @@
                         ctx.drawImage(img, 0, 0, width, height);
                         
                         // Use high-quality PNG encoding
-                        canvas.toBlob((blob) => {
-                            const fr = new FileReader();
-                            fr.onload = () => resolve(fr.result);
-                            fr.readAsArrayBuffer(blob);
-                        }, 'image/png'); // Don't compress (removed quality setting for PNG)
+                        const format = file.type === 'image/jpeg' ? 'image/jpeg' : 'image/png';
+canvas.toBlob((blob) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(fr.result);
+    fr.readAsArrayBuffer(blob);
+}, format); 
                     };
                     img.src = e.target.result;
                 };
