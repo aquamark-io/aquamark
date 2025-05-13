@@ -903,17 +903,19 @@ const hologramUrl = "/hologram.png";
                         console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
 
     // Get the logo bytes and embed it
-let embeddedLogo;
-try {
-    embeddedLogo = await pdfDoc.embedPng(logoBytes);
-} catch (pngError) {
-    console.warn("PNG embed failed, trying JPG...");
+    let embeddedLogo;
+
     try {
-        embeddedLogo = await pdfDoc.embedJpg(logoBytes);
-    } catch (jpgError) {
-        console.error("Failed to embed logo:", jpgError);
-        status.textContent = "❌ Logo format not supported. Try a different file.";
-        return;
+        embeddedLogo = await pdfDoc.embedPng(logoBytes);
+    } catch (pngError) {
+        console.warn("PNG embed failed, trying JPG...");
+        try {
+            embeddedLogo = await pdfDoc.embedJpg(logoBytes);
+        } catch (jpgError) {
+            console.error("Failed to embed logo:", jpgError);
+            status.textContent = "❌ Logo format not supported. Try a different file.";
+            return;
+        }
     }
 
     const logoDims = embeddedLogo.scale(0.35);
@@ -1004,5 +1006,4 @@ status.textContent = "✅ Done. Files downloaded.";
     </script>
 </body>
 </html>
-
 
