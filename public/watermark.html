@@ -569,6 +569,38 @@ function loadLogoImage(url) {
     img.src = url;
 }
 
+        // Function to decrypt PDF files before watermarking
+async function decryptPDF(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        const response = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
+            method: "POST",
+            body: formData,
+        });
+
+        if (!response.ok) throw new Error(`Decryption failed with status ${response.status}`);
+
+        const pdfBuffer = await response.arrayBuffer();
+
+        // ✅ Attempt to load with PDFLib to validate
+        try {
+            const pdfDoc = await PDFLib.PDFDocument.load(pdfBuffer, {
+                ignoreEncryption: true
+            });
+            console.log(`Decryption successful. Page Count: ${pdfDoc.getPageCount()}`);
+            return pdfBuffer;
+        } catch (e) {
+            console.error("PDFLib could not load decrypted file:", e.message);
+            throw new Error("Decryption succeeded but the PDF is corrupted or unsupported.");
+        }
+
+    } catch (error) {
+        console.error("Decryption error:", error.message);
+        throw new Error("Failed to decrypt the PDF.");
+    }
+}
 // Part 2: Logo Upload and Storage
 
 // Function to upload and save the logo to Supabase
@@ -850,6 +882,7 @@ async function embedWatermarkToPDF(pdfDoc, logoUrl) {
 // Function to download watermarked PDF and update usage
 async function downloadAndFinalize(pdfDoc, originalFileName, pageCount, profile) {
     const status = document.getElementById("status");
+    const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
 
     try {
         // Save the document and prepare for download
@@ -867,20 +900,25 @@ async function downloadAndFinalize(pdfDoc, originalFileName, pageCount, profile)
 
         console.log("File successfully downloaded and ready for user.");
 
-        // Update the usage in Supabase
+        // ✅ Update the usage in Supabase
         const { data, error } = await supabase
             .from('usage')
             .update({
                 pages_used: data.pages_used + pageCount,
                 pages_remaining: data.page_credits - (data.pages_used + pageCount)
             })
-            .eq('user_email', profile.Email);
+            .eq('user_email', profile.Email)
+            .select();
 
         if (error) {
             console.error("Failed to update page usage:", error);
             status.textContent = "❌ Error updating page usage.";
             return;
         }
+
+        // ✅ Update UI Counter
+        const currentCount = parseInt(pagesWatermarkedElement.textContent) || 0;
+        pagesWatermarkedElement.textContent = currentCount + pageCount;
 
         console.log(`Updated usage for ${profile.Email}: ${pageCount} pages added.`);
         status.textContent = "✅ Download complete and usage updated.";
@@ -890,39 +928,6 @@ async function downloadAndFinalize(pdfDoc, originalFileName, pageCount, profile)
         status.textContent = `❌ An error occurred during download: ${error.message}`;
     }
 }
-
-// Function to process and download all PDF files
-async function processAndDownloadAll(pdfFiles, logoUrl) {
-    const status = document.getElementById("status");
-
-    try {
-        const profile = await Outseta.getUser();
-        if (!profile || !profile.Email) {
-            throw new Error("Unable to retrieve user profile");
-        }
-
-        for (let file of pdfFiles) {
-            status.textContent = `⏳ Watermarking ${file.name}...`;
-
-            // Load the PDF
-            const pdfBytes = await file.arrayBuffer();
-            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-                ignoreEncryption: true
-            });
-
-            // Apply the watermark overlay
-            await embedWatermarkToPDF(pdfDoc, logoUrl);
-
-            // Download and finalize usage
-            await downloadAndFinalize(pdfDoc, file.name, pdfDoc.getPageCount(), profile);
-        }
-
-        status.textContent = "✅ All files processed and downloaded successfully.";
-    } catch (err) {
-        console.error("Error processing and downloading PDFs:", err);
-        status.textContent = `❌ An error occurred: ${err.message}.`;
-    }
-} 
 </script>
 </body>
 </html>
