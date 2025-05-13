@@ -197,14 +197,15 @@
             text-align: center;
         }
 
-        .logo-preview img {
-            max-height: 125px;
-            border-radius: 8px;
-            background: white;
-            border: 1px solid var(--border-color);
-            padding: 4px;
-            max-width: 100%;
-        }
+       .logo-preview img {
+    max-height: 150px; /* increased from 125px */
+    border-radius: 8px;
+    background: white;
+    border: 1px solid var(--border-color);
+    /* padding: 4px; ← remove this line */
+    max-width: 100%;
+    object-fit: contain; /* ensures logo scales without distortion */
+}
 
         /* Button */
         button {
