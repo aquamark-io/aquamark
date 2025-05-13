@@ -767,7 +767,11 @@ async function processFiles() {
             return;
         }
 
-        status.textContent = "✅ PDF files successfully loaded and verified. Ready for watermarking.";
+        status.textContent = "✅ PDF files successfully loaded and verified. Starting watermarking...";
+        
+        // 🔥 Call the processing and download logic
+        await processAndDownloadAll(pdfFiles, logoUrl);
+
     } catch (err) {
         console.error("Error processing files:", err);
         status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
