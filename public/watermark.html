@@ -911,7 +911,9 @@ const hologramUrl = "/hologram.png";
     }
 
 // Get dimensions of embedded logo
-const logoDims = embeddedLogo.scale(1); // no additional scaling
+const desiredWidth = 80; // in PDF points
+const logoDims = embeddedLogo.scale(desiredWidth / embeddedLogo.width);
+
 
 for (const page of pdfDoc.getPages()) {
     const { width, height } = page.getSize();
