@@ -939,22 +939,33 @@ const watermarkPage = watermarkDoc.addPage([width, height]);
 const rows = 5;
 const cols = 6;
 
-// Diagonal checkerboard layout
-const logoWidth = width * 0.2;
+// Logo size: smaller for more spacing
+const fixedLogoWidth = 80; // standard size in points
+const logoWidth = fixedLogoWidth;
 const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
 
-for (let x = 0; x < width; x += (logoWidth + 150)) {
-  for (let y = 0; y < height; y += (logoHeight + 150)) {
-    watermarkPage.drawImage(logoImage, {
-      x,
-      y,
-      width: logoWidth,
-      height: logoHeight,
-      opacity: 0.15,
-      rotate: PDFLib.degrees(45)
-    });
-  }
-}
+// Positioning
+const spacingX = width / cols;
+const spacingY = height / rows;
+
+// Diagonal checkerboard layout
+for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+        if ((i + j) % 2 === 0) {
+            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
+            const x = j * spacingX + xOffset + 15;
+            const y = i * spacingY + 45;
+
+            watermarkPage.drawImage(logoImage, {
+                x,
+                y,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: 0.20,
+                rotate: PDFLib.degrees(45)
+            });
+        }
+    }
 }
 
 // Embed the watermark page
