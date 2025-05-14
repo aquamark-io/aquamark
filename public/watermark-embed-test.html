@@ -81,25 +81,49 @@
       page.drawPage(wmPageEmbed, { x: 0, y: 0, width, height });
 
       // Add vertical margin message + barcode on page 1 only
-if (i === 0) {
-  const message = `Branded watermark identifies document owner. Unauthorized use is theft. Contact hey@aquamark.io immediately`;
+// Load the warning image
+const warningUrl = "warning.png"; // your uploaded image
+const warningBytes = await fetch(warningUrl).then(res => res.arrayBuffer());
+const warningImage = await pdfDoc.embedPng(warningBytes);
+const warningDims = warningImage.scale(0.25); // Adjust size as needed
 
-  const fontSize = 10;
-  const approxCharWidth = fontSize * 0.5; // ~0.5 is a safe average
-  const textWidth = message.length * approxCharWidth;
+for (let i = 0; i < pages.length; i++) {
+  const page = pages[i];
+  page.drawPage(wmPageEmbed, { x: 0, y: 0, width, height });
 
-  const x = (width - textWidth) / 2 + 13; // center horizontally
-  const y = 20; // bottom padding
+  // Draw warning image on top-right corner
+  const warningX = width - warningDims.width - 20; // 20pt padding from right
+  const warningY = height - warningDims.height - 20; // 20pt padding from top
 
-  page.drawText(message, {
-    x,
-    y,
-    size: fontSize,
-    color: PDFLib.rgb(0.2, 0.2, 0.2),
+  page.drawImage(warningImage, {
+    x: warningX,
+    y: warningY,
+    width: warningDims.width,
+    height: warningDims.height,
     opacity: 0.6,
   });
+
+  // Optionally, keep text footer on page 1
+  if (i === 0) {
+    const message = `Branded watermark identifies document owner. Unauthorized use is theft. Contact hey@aquamark.io immediately`;
+
+    const fontSize = 10;
+    const approxCharWidth = fontSize * 0.5;
+    const textWidth = message.length * approxCharWidth;
+
+    const x = (width - textWidth) / 2 + 13;
+    const y = 20;
+
+    page.drawText(message, {
+      x,
+      y,
+      size: fontSize,
+      color: PDFLib.rgb(0.2, 0.2, 0.2),
+      opacity: 0.6,
+    });
+  }
 }
-    }
+
 
     const finalBytes = await pdfDoc.save();
     const blob = new Blob([finalBytes], { type: "application/pdf" });
