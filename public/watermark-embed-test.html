@@ -84,20 +84,21 @@
 if (i === 0) {
   const message = `Watermarked by owner. Unauthorized use is theft. Contact hey@aquamark.io immediately`;
 
-  const x = width - 16;
-  const y = 40;
+  const fontSize = 8;
+  const textWidth = PDFLib.widthOfTextAtSize(message, fontSize); // we can't use this directly, so we’ll eyeball center instead
+
+  const textX = width / 2 - (message.length * fontSize * 0.25); // approximate center alignment
+  const textY = 20; // about 1/4 inch from bottom
 
   page.drawText(message, {
-    x,
-    y,
-    size: 8,
-    color: PDFLib.rgb(0.2, 0.2, 0.2), // dark gray for body
-    rotate: PDFLib.degrees(90),
+    x: textX,
+    y: textY,
+    size: fontSize,
+    color: PDFLib.rgb(0.2, 0.2, 0.2),
     opacity: 0.6,
-    lineHeight: 10,
-    maxWidth: height - 60,
   });
 }
+
 
     }
 
