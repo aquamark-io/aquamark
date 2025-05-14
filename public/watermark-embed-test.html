@@ -76,23 +76,15 @@
     const wmEmbed = await PDFLib.PDFDocument.load(wmBytes);
     const [wmPageEmbed] = await pdfDoc.embedPages([wmEmbed.getPages()[0]]);
 
-    for (let i = 0; i < pages.length; i++) {
-      const page = pages[i];
-      page.drawPage(wmPageEmbed, { x: 0, y: 0, width, height });
-
-
-
-// Load the warning image
-// Load the warning image ONCE
+// Load the warning image once
 const warningBytes = await fetch("warning.png").then(res => res.arrayBuffer());
 const warningImage = await pdfDoc.embedPng(warningBytes);
-const warningDims = warningImage.scale(0.25); // adjust as needed
+const warningDims = warningImage.scale(0.25); // adjust scale as needed
 
 for (let i = 0; i < pages.length; i++) {
   const page = pages[i];
   page.drawPage(wmPageEmbed, { x: 0, y: 0, width, height });
 
-  // Only on page 1
   if (i === 0) {
     const warningX = width - warningDims.width - 20;
     const warningY = height - warningDims.height - 20;
