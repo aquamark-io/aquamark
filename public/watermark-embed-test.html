@@ -84,11 +84,11 @@
 if (i === 0) {
   const message = `Watermarked by owner. Unauthorized use is theft. Contact hey@aquamark.io immediately`;
 
-  const fontSize = 8;
+  const fontSize = 10;
   const approxCharWidth = fontSize * 0.5; // ~0.5 is a safe average
   const textWidth = message.length * approxCharWidth;
 
-  const x = (width - textWidth) / 2; // center horizontally
+  const x = (width - textWidth) / 2 + 10; // center horizontally
   const y = 20; // bottom padding
 
   page.drawText(message, {
