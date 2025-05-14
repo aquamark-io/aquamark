@@ -14,103 +14,94 @@
   </div>
 
   <script>
-    const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
     const statusElement = document.getElementById("status");
 
     async function embedWatermark() {
-  try {
-    statusElement.textContent = "Processing...";
-    const input = document.getElementById("pdfInput");
-    if (!input.files.length) {
-      alert("Please upload a PDF file.");
-      statusElement.textContent = "";
-      return;
-    }
-
-    const pdfBytes = await input.files[0].arrayBuffer();
-    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
-
-    const barcodeUrl = "barcode.png"; // Make sure this is accessible
-    const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
-
-    // Load logo
-    const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-    const logoImage = await pdfDoc.embedPng(logoImageBytes);
-
-    // Load barcode (force PNG)
-    const barcodeBytes = await fetch(barcodeUrl).then(res => res.arrayBuffer());
-    const barcodeImage = await pdfDoc.embedPng(barcodeBytes);
-
-    const pages = pdfDoc.getPages();
-    const { width, height } = pages[0].getSize();
-
-    // Watermark logic
-    const rows = 6;
-    const cols = 6;
-    const logoWidth = width * 0.2;
-    const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
-    const spacingX = width / cols;
-    const spacingY = height / rows;
-
-    // Create watermark layout on a separate page
-    const wmDoc = await PDFLib.PDFDocument.create();
-    const wmPage = wmDoc.addPage([width, height]);
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        if ((i + j) % 2 === 0) {
-          const x = j * spacingX + (i * spacingX / 2);
-          const y = i * spacingY;
-          wmPage.drawImage(logoImage, {
-            x,
-            y,
-            width: logoWidth,
-            height: logoHeight,
-            opacity: 0.15,
-            rotate: PDFLib.degrees(45),
-          });
+      try {
+        statusElement.textContent = "Processing...";
+        const input = document.getElementById("pdfInput");
+        if (!input.files.length) {
+          alert("Please upload a PDF file.");
+          statusElement.textContent = "";
+          return;
         }
+
+        const pdfBytes = await input.files[0].arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+
+        const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
+        const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+        const logoImage = await pdfDoc.embedPng(logoImageBytes);
+
+        const warningBytes = await fetch("warning.png").then(res => res.arrayBuffer());
+        const warningImage = await pdfDoc.embedPng(warningBytes);
+        const warningDims = warningImage.scale(0.25); // adjust scale as needed
+
+        const pages = pdfDoc.getPages();
+        const { width, height } = pages[0].getSize();
+
+        // Create watermark layout on a separate page
+        const rows = 6;
+        const cols = 6;
+        const logoWidth = width * 0.2;
+        const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
+        const spacingX = width / cols;
+        const spacingY = height / rows;
+
+        const wmDoc = await PDFLib.PDFDocument.create();
+        const wmPage = wmDoc.addPage([width, height]);
+
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
+            if ((i + j) % 2 === 0) {
+              const x = j * spacingX + (i * spacingX / 2);
+              const y = i * spacingY;
+              wmPage.drawImage(logoImage, {
+                x,
+                y,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: 0.15,
+                rotate: PDFLib.degrees(45),
+              });
+            }
+          }
+        }
+
+        const wmBytes = await wmDoc.save();
+        const wmEmbed = await PDFLib.PDFDocument.load(wmBytes);
+        const [wmPageEmbed] = await pdfDoc.embedPages([wmEmbed.getPages()[0]]);
+
+        for (let i = 0; i < pages.length; i++) {
+          const page = pages[i];
+          page.drawPage(wmPageEmbed, { x: 0, y: 0, width, height });
+
+          // Add warning image on page 1 (top right)
+          if (i === 0) {
+            const warningX = width - warningDims.width - 20;
+            const warningY = height - warningDims.height - 20;
+            page.drawImage(warningImage, {
+              x: warningX,
+              y: warningY,
+              width: warningDims.width,
+              height: warningDims.height,
+              opacity: 0.6,
+            });
+          }
+        }
+
+        const finalBytes = await pdfDoc.save();
+        const blob = new Blob([finalBytes], { type: "application/pdf" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "watermarked-" + input.files[0].name;
+        link.click();
+        statusElement.textContent = "✅ Complete";
+      } catch (error) {
+        statusElement.textContent = "❌ Error: " + error.message;
+        console.error(error);
       }
     }
-
-    const wmBytes = await wmDoc.save();
-    const wmEmbed = await PDFLib.PDFDocument.load(wmBytes);
-    const [wmPageEmbed] = await pdfDoc.embedPages([wmEmbed.getPages()[0]]);
-
-// Load the warning image once
-const warningBytes = await fetch("warning.png").then(res => res.arrayBuffer());
-const warningImage = await pdfDoc.embedPng(warningBytes);
-const warningDims = warningImage.scale(0.25); // adjust scale as needed
-
-for (let i = 0; i < pages.length; i++) {
-  const page = pages[i];
-  page.drawPage(wmPageEmbed, { x: 0, y: 0, width, height });
-
-  if (i === 0) {
-    const warningX = width - warningDims.width - 20;
-    const warningY = height - warningDims.height - 20;
-
-    page.drawImage(warningImage, {
-      x: warningX,
-      y: warningY,
-      width: warningDims.width,
-      height: warningDims.height,
-      opacity: 0.6,
-    });
-  }
-}
-    const finalBytes = await pdfDoc.save();
-    const blob = new Blob([finalBytes], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "watermarked-" + input.files[0].name;
-    link.click();
-    statusElement.textContent = "Complete";
-  } catch (error) {
-    statusElement.textContent = "❌ Error: " + error.message;
-    console.error(error);
-  }
-}
-
   </script>
 </body>
 </html>
