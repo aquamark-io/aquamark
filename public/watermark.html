@@ -974,46 +974,9 @@ const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 
 // Apply watermark to each page of the original PDF
-for (let i = 0; i < pdfDoc.getPageCount(); i++) {
-    const page = pdfDoc.getPage(i);
+for (const page of pdfDoc.getPages()) {
     page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
-
-    if (i === 0) {
-        const verticalText = `Important: Watermarked by document owner. Any use or submission by other parties is unauthorized and likely theft. Contact ${profile.Email} immediately.`;
-
-        // Draw vertical text on the right margin
-        page.drawText(verticalText, {
-            x: width - 12,
-            y: height / 2,
-            size: 8,
-            color: PDFLib.rgb(0.3, 0.3, 0.3),
-            rotate: PDFLib.degrees(90),
-            opacity: 0.6,
-            maxWidth: height - 60,
-            lineHeight: 10,
-        });
-
-        // Draw barcode below the message
-        const barcodeImg = await fetch("/barcode.png").then(res => res.arrayBuffer());
-        let barcodeEmbed;
-        try {
-            barcodeEmbed = await pdfDoc.embedPng(barcodeImg);
-        } catch {
-            barcodeEmbed = await pdfDoc.embedJpg(barcodeImg);
-        }
-
-        const barcodeDims = barcodeEmbed.scale(0.25);
-        page.drawImage(barcodeEmbed, {
-            x: width - 12,
-            y: height / 2 - 100,
-            width: barcodeDims.width,
-            height: barcodeDims.height,
-            opacity: 0.7,
-            rotate: PDFLib.degrees(90),
-        });
-    }
 }
-
 
     // Save the document and prepare for download
     try {
