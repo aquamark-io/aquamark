@@ -23,7 +23,7 @@
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius: 12px;
+            --radius: 12px;const logoDims = embeddedLogo.scale
         }
 
         * {
@@ -910,8 +910,6 @@ const hologramUrl = "/hologram.png";
         }
     }
 
-    const logoDims = embeddedLogo.scale(0.35);
-
 // Get dimensions of embedded logo
 const logoDims = embeddedLogo.scale(1); // no additional scaling
 
@@ -934,11 +932,6 @@ for (const page of pdfDoc.getPages()) {
             });
         }
     }
-}
-
-// Apply watermark to each page of the original PDF
-for (const page of pdfDoc.getPages()) {
-    page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
 }
 
     // Save the document and prepare for download
