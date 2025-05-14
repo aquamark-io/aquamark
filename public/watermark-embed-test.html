@@ -82,34 +82,24 @@
 
       // Add vertical margin message + barcode on page 1 only
   if (i === 0) {
-  const message = `Important: Watermarked by document owner. Any use or submission by other parties is unauthorized and likely theft. Contact hey@aquamark.io immediately.`;
+  const message = `Important: Watermarked by document owner. Any use or submission by other parties is unauthorized and likely theft. Contact support@aquamark.io immediately.`;
 
-  const verticalOffset = 120; // distance from bottom of page
-  const marginX = width - 20;
+  // Adjust horizontal margin and vertical offset
+  const x = width - 16;     // right margin
+  const y = 60;             // how far up the text starts (adjust as needed)
 
-  // Draw rotated text bottom-up
   page.drawText(message, {
-    x: marginX,
-    y: verticalOffset,
+    x,
+    y,
     size: 8,
     color: PDFLib.rgb(0.2, 0.2, 0.2),
-    rotate: PDFLib.degrees(-90),
+    rotate: PDFLib.degrees(90),  // ← faces right, reads bottom to top
     opacity: 0.6,
     lineHeight: 10,
     maxWidth: height - 60,
   });
-
-  // Shrink barcode and align it under the message
-  const barcodeDims = barcodeImage.scale(0.15);
-  page.drawImage(barcodeImage, {
-    x: marginX,
-    y: verticalOffset - 70, // stack barcode under text
-    width: barcodeDims.width,
-    height: barcodeDims.height,
-    opacity: 0.6,
-    rotate: PDFLib.degrees(-90),
-  });
 }
+
     }
 
     const finalBytes = await pdfDoc.save();
