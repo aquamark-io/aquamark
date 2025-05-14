@@ -439,7 +439,7 @@
                         <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
                     </div>
                     <div class="logo-actions">
-                        <input type="file" id="logoInput" accept="image/jpeg,image/png" />
+                  <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
                         <button onclick="uploadLogo()">Save Logo</button>
                     </div>
                 </div>
@@ -621,7 +621,7 @@
                 // Upload the normalized file to Supabase Storage
                 const { error } = await supabase.storage.from("logos").upload(uniquePath, normalizedFile, {
                     upsert: true,
-                    contentType: 'image/png'
+                    contentType: file.type
                 });
 
                 if (error) {
