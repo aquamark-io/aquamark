@@ -939,15 +939,6 @@ const watermarkPage = watermarkDoc.addPage([width, height]);
 const rows = 5;
 const cols = 6;
 
-// Logo size: smaller for more spacing
-const fixedLogoWidth = 80; // standard size in points
-const logoWidth = fixedLogoWidth;
-const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
-
-// Positioning
-const spacingX = width / cols;
-const spacingY = height / rows;
-
 // Diagonal checkerboard layout
 const logoWidth = width * 0.2;
 const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
