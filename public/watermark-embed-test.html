@@ -85,21 +85,20 @@ if (i === 0) {
   const message = `Watermarked by owner. Unauthorized use is theft. Contact hey@aquamark.io immediately`;
 
   const fontSize = 8;
-  const textWidth = PDFLib.widthOfTextAtSize(message, fontSize); // we can't use this directly, so we’ll eyeball center instead
+  const approxCharWidth = fontSize * 0.5; // ~0.5 is a safe average
+  const textWidth = message.length * approxCharWidth;
 
-  const textX = width / 2 - (message.length * fontSize * 0.25); // approximate center alignment
-  const textY = 20; // about 1/4 inch from bottom
+  const x = (width - textWidth) / 2; // center horizontally
+  const y = 20; // bottom padding
 
   page.drawText(message, {
-    x: textX,
-    y: textY,
+    x,
+    y,
     size: fontSize,
     color: PDFLib.rgb(0.2, 0.2, 0.2),
     opacity: 0.6,
   });
 }
-
-
     }
 
     const finalBytes = await pdfDoc.save();
