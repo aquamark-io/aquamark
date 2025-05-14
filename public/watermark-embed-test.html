@@ -30,7 +30,7 @@
     const pdfBytes = await input.files[0].arrayBuffer();
     const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
 
-    const barcodeUrl = "/barcode.png"; // Make sure this is accessible
+    const barcodeUrl = "barcode.png"; // Make sure this is accessible
     const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
 
     // Load logo
