@@ -922,8 +922,7 @@ const hologramUrl = "/hologram.png";
 
 // Create a watermark PDF
 const watermarkDoc = await PDFLib.PDFDocument.create();
-const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-
+const logoImageBytes = logoBytes;
 let logoImage;
 try {
     logoImage = await watermarkDoc.embedPng(logoImageBytes);
