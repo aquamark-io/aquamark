@@ -18,84 +18,108 @@
     const statusElement = document.getElementById("status");
 
     async function embedWatermark() {
-      try {
-        statusElement.textContent = "Processing...";
-        const input = document.getElementById("pdfInput");
-        if (!input.files.length) {
-          alert("Please upload a PDF file.");
-          statusElement.textContent = "";
-          return;
-        }
+  try {
+    statusElement.textContent = "Processing...";
+    const input = document.getElementById("pdfInput");
+    if (!input.files.length) {
+      alert("Please upload a PDF file.");
+      statusElement.textContent = "";
+      return;
+    }
 
-        // Load the original PDF
-        const pdfBytes = await input.files[0].arrayBuffer();
-        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
-        
-        // Create a watermark PDF
-        const watermarkDoc = await PDFLib.PDFDocument.create();
-        const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-        const logoImage = await watermarkDoc.embedPng(logoImageBytes);
-        
-        // Add watermark page with same dimensions as first page of original
-        const { width, height } = pdfDoc.getPages()[0].getSize();
-        const watermarkPage = watermarkDoc.addPage([width, height]);
-        
-        // Calculate dimensions for smaller repeating logos
-        const logoWidth = width * 0.2;  // Smaller logo size
-        const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
-        
-        // Create diagonal pattern of logos
-        const rows = 6;
-        const cols = 6;
-        const spacingX = width / cols;
-        const spacingY = height / rows;
-        
-        // Draw the checkered diagonal pattern
-        for (let i = 0; i < rows; i++) {
-          for (let j = 0; j < cols; j++) {
-            // Only draw on alternating positions for checkered effect
-            if ((i + j) % 2 === 0) {
-              // Position calculation for diagonal-like layout
-              const x = j * spacingX + (i * width / (rows * 2));
-              const y = i * spacingY;
-              
-              // Draw the logo with rotation
-              watermarkPage.drawImage(logoImage, {
-                x: x % width,  // Wrap around if beyond page width
-                y,
-                width: logoWidth,
-                height: logoHeight,
-                opacity: 0.15,
-                rotate: PDFLib.degrees(45)  // Rotate each logo 45 degrees
-              });
-            }
-          }
+    const pdfBytes = await input.files[0].arrayBuffer();
+    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+
+    const barcodeUrl = "/barcode.png"; // Make sure this is accessible
+    const logoUrl = "https://www.aquamark.io/logo-full-black-blue.png";
+
+    // Load logo
+    const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
+    const logoImage = await pdfDoc.embedPng(logoImageBytes);
+
+    // Load barcode (force PNG)
+    const barcodeBytes = await fetch(barcodeUrl).then(res => res.arrayBuffer());
+    const barcodeImage = await pdfDoc.embedPng(barcodeBytes);
+
+    const pages = pdfDoc.getPages();
+    const { width, height } = pages[0].getSize();
+
+    // Watermark logic
+    const rows = 6;
+    const cols = 6;
+    const logoWidth = width * 0.2;
+    const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
+    const spacingX = width / cols;
+    const spacingY = height / rows;
+
+    // Create watermark layout on a separate page
+    const wmDoc = await PDFLib.PDFDocument.create();
+    const wmPage = wmDoc.addPage([width, height]);
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if ((i + j) % 2 === 0) {
+          const x = j * spacingX + (i * spacingX / 2);
+          const y = i * spacingY;
+          wmPage.drawImage(logoImage, {
+            x,
+            y,
+            width: logoWidth,
+            height: logoHeight,
+            opacity: 0.15,
+            rotate: PDFLib.degrees(45),
+          });
         }
-        
-        // Embed the watermark page
-        const watermarkPdfBytes = await watermarkDoc.save();
-        const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
-        const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
-        
-        // Apply watermark to each page
-        for (const page of pdfDoc.getPages()) {
-          const { width, height } = page.getSize();
-          page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
-        }
-        
-        // Save and download
-        const modifiedPdfBytes = await pdfDoc.save();
-        const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "watermarked-" + input.files[0].name;
-        link.click();
-        
-        statusElement.textContent = "Complete";
-      } catch (error) {
-        statusElement.textContent = "Error: " + error.message;
       }
     }
+
+    const wmBytes = await wmDoc.save();
+    const wmEmbed = await PDFLib.PDFDocument.load(wmBytes);
+    const [wmPageEmbed] = await pdfDoc.embedPages([wmEmbed.getPages()[0]]);
+
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      page.drawPage(wmPageEmbed, { x: 0, y: 0, width, height });
+
+      // Add vertical margin message + barcode on page 1 only
+      if (i === 0) {
+        const message = `Important: Watermarked by document owner. Any use or submission by other parties is unauthorized and likely theft. Contact support@aquamark.io immediately.`;
+
+        page.drawText(message, {
+          x: width - 14,
+          y: height / 2,
+          size: 8,
+          color: PDFLib.rgb(0.2, 0.2, 0.2),
+          rotate: PDFLib.degrees(90),
+          opacity: 0.6,
+          lineHeight: 10,
+          maxWidth: height - 60,
+        });
+
+        const barcodeDims = barcodeImage.scale(0.25);
+        page.drawImage(barcodeImage, {
+          x: width - 14,
+          y: height / 2 - 100,
+          width: barcodeDims.width,
+          height: barcodeDims.height,
+          opacity: 0.7,
+          rotate: PDFLib.degrees(90),
+        });
+      }
+    }
+
+    const finalBytes = await pdfDoc.save();
+    const blob = new Blob([finalBytes], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "watermarked-" + input.files[0].name;
+    link.click();
+    statusElement.textContent = "Complete";
+  } catch (error) {
+    statusElement.textContent = "❌ Error: " + error.message;
+    console.error(error);
+  }
+}
+
   </script>
 </body>
 </html>
