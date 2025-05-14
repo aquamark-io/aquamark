@@ -82,45 +82,23 @@
 
       // Add vertical margin message + barcode on page 1 only
 if (i === 0) {
-  const prefix = "Important: Watermarked by document owner. Any use or submission by other parties is unauthorized and likely theft. Contact ";
-  const email = "support@aquamark.io";
-  const suffix = " immediately.";
+  const message = `Important: Watermarked by document owner. Any use or submission by other parties is unauthorized and likely theft. Contact support@aquamark.io immediately.`;
 
   const x = width - 16;
-  const y = 30; // moved down half an inch from previous (was 60)
+  const y = 30;
 
-  // Draw prefix
-  page.drawText(prefix, {
+  page.drawText(message, {
     x,
     y,
     size: 8,
-    color: PDFLib.rgb(0.2, 0.2, 0.2),
+    color: PDFLib.rgb(0.2, 0.2, 0.2), // dark gray for body
     rotate: PDFLib.degrees(90),
     opacity: 0.6,
     lineHeight: 10,
-  });
-
-  // Draw email in blue + underline
-  page.drawText(email, {
-    x,
-    y + 150, // email appears after ~15 characters rotated vertically
-    size: 8,
-    color: PDFLib.rgb(0.0, 0.4, 0.8), // blue
-    rotate: PDFLib.degrees(90),
-    opacity: 0.8,
-    underline: true,
-  });
-
-  // Draw suffix
-  page.drawText(suffix, {
-    x,
-    y + 310, // offset to follow email
-    size: 8,
-    color: PDFLib.rgb(0.2, 0.2, 0.2),
-    rotate: PDFLib.degrees(90),
-    opacity: 0.6,
+    maxWidth: height - 60,
   });
 }
+
     }
 
     const finalBytes = await pdfDoc.save();
