@@ -197,13 +197,15 @@
             text-align: center;
         }
 
-       .logo-preview img {
-    max-height: 150px; /* increased from 125px */
+  .logo-preview img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
     border-radius: 8px;
     background: white;
     border: 1px solid var(--border-color);
-    max-width: 100%;
-    object-fit: contain; /* ensures logo scales without distortion */
+    padding: 4px;
+    object-fit: contain;
 }
 
         /* Button */
@@ -672,48 +674,38 @@
             }
         }
 
-        async function normalizeImagePreserveAspect(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = new Image();
-                    img.onload = function () {
-                        // Use a higher resolution for logos to preserve quality
-                        const maxSize = 250; // Increased from 150 to 250px for better quality
-                       let scale = maxSize / img.width;
-                        
-                        // Make sure we get a multiple of 4 for width and height (helps with compression)
-                        const width = Math.floor((img.width * scale) / 4) * 4;
-                        const height = Math.floor((img.height * scale) / 4) * 4;
-                        
-                        const canvas = document.createElement('canvas');
-                        canvas.width = width;
-                        canvas.height = height;
-                        
-                        // Use high-quality canvas rendering
-                        const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: false });
-                        ctx.imageSmoothingEnabled = true;
-                        ctx.imageSmoothingQuality = 'high';
-                        
-                        // Clear canvas with transparency
-                        ctx.clearRect(0, 0, width, height);
-                        
-                        // Draw with higher quality
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        // Use high-quality PNG encoding
-                        const format = file.type === 'image/jpeg' ? 'image/jpeg' : 'image/png';
-canvas.toBlob((blob) => {
-    const fr = new FileReader();
-    fr.onload = () => resolve(fr.result);
-    fr.readAsArrayBuffer(blob);
-}, format); 
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
+async function normalizeImagePreserveAspect(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = new Image();
+            img.onload = function () {
+                const TARGET_WIDTH = 200; // fixed width in pixels
+                const scale = TARGET_WIDTH / img.width;
+                const width = TARGET_WIDTH;
+                const height = Math.floor(img.height * scale);
+
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.clearRect(0, 0, width, height);
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    const fr = new FileReader();
+                    fr.onload = () => resolve(fr.result);
+                    fr.readAsArrayBuffer(blob);
+                }, 'image/png');
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
 
         async function decryptPDF(file) {
             const formData = new FormData();
@@ -920,52 +912,29 @@ const hologramUrl = "/hologram.png";
 
     const logoDims = embeddedLogo.scale(0.35);
 
-// Create a watermark PDF
-// Create a watermark PDF
-const watermarkDoc = await PDFLib.PDFDocument.create();
-const logoImage = await watermarkDoc.embedPng(logoBytes);
+// Get dimensions of embedded logo
+const logoDims = embeddedLogo.scale(1); // no additional scaling
 
-// Get the size of the first page to match the watermark
-const { width, height } = pdfDoc.getPages()[0].getSize();
-const watermarkPage = watermarkDoc.addPage([width, height]);
+for (const page of pdfDoc.getPages()) {
+    const { width, height } = page.getSize();
 
-// Define number of rows/columns to get ~15–20 logos
-const rows = 5;
-const cols = 5;
+    // You can tune spacingX / spacingY below if needed
+    const spacingX = logoDims.width + 100;
+    const spacingY = logoDims.height + 100;
 
-// Logo size: smaller for more spacing
-const fixedLogoWidth = 80; // standard size in points
-const logoWidth = fixedLogoWidth;
-const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
-
-// Positioning
-const spacingX = width / cols;
-const spacingY = height / rows;
-
-// Diagonal checkerboard layout
-for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-        if ((i + j) % 2 === 0) {
-            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
-            const x = j * spacingX + xOffset;
-            const y = i * spacingY;
-
-            watermarkPage.drawImage(logoImage, {
+    for (let x = 0; x < width; x += spacingX) {
+        for (let y = 0; y < height; y += spacingY) {
+            page.drawImage(embeddedLogo, {
                 x,
                 y,
-                width: logoWidth,
-                height: logoHeight,
-                opacity: 0.20,
+                width: logoDims.width,
+                height: logoDims.height,
+                opacity: 0.15,
                 rotate: PDFLib.degrees(45)
             });
         }
     }
 }
-
-// Embed the watermark page
-const watermarkPdfBytes = await watermarkDoc.save();
-const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
-const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
