@@ -204,6 +204,23 @@ async function loadLenders() {
 };
   </script>
 </head>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = window.location.search;
+    const hashParams = window.location.hash;
+
+    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html", "/lenders.html"];
+
+    document.querySelectorAll("a[href]").forEach(link => {
+      const href = link.getAttribute("href");
+      if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+        const cleanHref = href.split('?')[0].split('#')[0];
+        link.href = cleanHref + urlParams + hashParams;
+      }
+    });
+  });
+</script>
+
 <body>
   <header class="aqua-header">
     <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo" />
