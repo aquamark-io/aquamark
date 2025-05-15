@@ -1018,6 +1018,22 @@ status.textContent = "✅ Done. Files downloaded.";
                 }
         }
     </script>
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = window.location.search;
+    const hashParams = window.location.hash;
+
+    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html", "/lenders.html"];
+
+    document.querySelectorAll("a[href]").forEach(link => {
+      const href = link.getAttribute("href");
+      if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+        const cleanHref = href.split('?')[0].split('#')[0];
+        link.href = cleanHref + urlParams + hashParams;
+      }
+    });
+  });
+</script>
 </body>
 </html>
 
