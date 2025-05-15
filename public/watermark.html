@@ -474,11 +474,19 @@
                     <div class="logo-preview">
                         <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
                     </div>
-                    <div class="logo-actions">
-                  <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-                        <button onclick="uploadLogo()">Save Logo</button>
-                    </div>
-                </div>
+                    
+<div class="logo-actions">
+  <div id="logoDropZone" class="drop-zone" style="margin-top: 1rem;">
+    <div class="drop-icon">🖼️</div>
+    <p>Drag & Drop Logo</p>
+    <span>OR</span>
+    <label for="logoInput" class="browse-btn">Browse Logo</label>
+    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden />
+  </div>
+  <div style="margin-top: 0.75rem;">
+    <button onclick="uploadLogo()">Save Logo</button>
+  </div>
+</div>
 
 <div class="upload-group">
   <h2>Upload File(s)</h2>
@@ -1070,7 +1078,28 @@ dropZone.addEventListener('drop', (e) => {
     dropZone.classList.remove('dragover');
     pdfInput.files = e.dataTransfer.files;
 });    
-    
+
+const logoDropZone = document.getElementById('logoDropZone');
+const logoInput = document.getElementById('logoInput');
+
+logoDropZone.addEventListener('click', () => logoInput.click());
+
+logoDropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    logoDropZone.classList.add('dragover');
+});
+
+logoDropZone.addEventListener('dragleave', () => {
+    logoDropZone.classList.remove('dragover');
+});
+
+logoDropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    logoDropZone.classList.remove('dragover');
+    logoInput.files = e.dataTransfer.files;
+});
+
+        
 </script>
 </body>
 </html>
