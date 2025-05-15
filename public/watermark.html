@@ -206,6 +206,18 @@
     object-fit: contain; /* ensures logo scales without distortion */
 }
 
+        #pdfInput {
+    border: 2px dashed var(--border-color);
+    background-color: #f9f9f9;
+    padding: 1.25rem;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+#pdfInput:hover {
+    border-color: var(--accent-color);
+}
+
         /* Button */
         button {
             background: var(--accent-color);
