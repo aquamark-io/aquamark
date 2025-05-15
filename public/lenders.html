@@ -122,7 +122,14 @@
     }
   </style>
 
-  <script src="https://cdn.outseta.com/outseta.min.js"></script>
+<script>
+  var o_options = {
+    domain: 'aquamark.outseta.com',
+    load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+  };
+</script>
+<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
