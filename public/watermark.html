@@ -1016,9 +1016,32 @@ for (const page of pdfDoc.getPages()) {
     }
 }
 
+status.textContent = "✅ Done. Files downloaded.";} 
+                
+                // ✅ All files have now been processed and downloaded.
+// Now update usage just once with total page count.
+
+const updatedPagesUsed = data.pages_used + totalPagesNeeded;
+const updatedPagesRemaining = data.page_credits - updatedPagesUsed;
+
+const { error: updateError } = await supabase
+  .from('usage')
+  .update({
+    pages_used: updatedPagesUsed,
+    pages_remaining: updatedPagesRemaining
+  })
+  .eq('user_email', profile.Email);
+
+if (updateError) {
+  console.error("❌ Error updating usage:", updateError.message);
+  status.textContent = "⚠️ Watermarking completed, but usage data failed to update.";
+} else {
+  console.log(`✅ Usage updated: ${totalPagesNeeded} pages added for ${profile.Email}`);
+}
+
 status.textContent = "✅ Done. Files downloaded.";
 
-            } catch (err) {
+                catch (err) {
                 console.error("Error processing files:", err);
                 status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
             }
