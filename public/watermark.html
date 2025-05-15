@@ -180,23 +180,6 @@
             font-weight: 600;
         }
 
-        .custom-file-upload {
-    display: inline-block;
-    padding: 0.75rem 1.25rem;
-    background-color: var(--accent-color);
-    color: white;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.custom-file-upload:hover {
-    background-color: var(--primary-dark);
-}
-
-
         input[type="file"] {
             display: block;
             width: 100%;
@@ -463,9 +446,7 @@
 
                 <div class="upload-group">
                     <h2>Upload File(s)</h2>
-                    <label for="pdfInput" class="custom-file-upload">Darag & Drop/label>
-                    <input type="file" id="pdfInput" accept="application/pdf" multiple style="display:none;" />
-
+                    <input type="file" id="pdfInput" accept="application/pdf" multiple />
                 </div>
 
                 <div class="action-row">
