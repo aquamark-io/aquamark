@@ -141,11 +141,12 @@
     let userEmail = '';
 
     async function loadUser() {
-      const user = await Outseta.nocode.getUser();
-      if (!user?.email) return alert("Please log in.");
-      userEmail = user.email;
-      loadLenders();
-    }
+  const profile = await Outseta.getUser(); // ✅ use this instead
+  if (!profile?.Email) return alert("Please log in.");
+  userEmail = profile.Email;
+  loadLenders();
+}
+
 
     async function loadLenders() {
       const { data, error } = await supabase
