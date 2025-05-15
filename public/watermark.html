@@ -471,34 +471,30 @@
 
 <div class="upload-group">
   <h2>Saved Logo</h2>
-  <div class="logo-preview">
-    <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
-  </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start;">
+    
+    <!-- Stored logo preview -->
+    <div class="logo-preview" style="flex: 1; min-width: 200px; text-align: center;">
+      <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
+    </div>
 
-  <div id="logoDropZone" class="drop-zone" style="margin-top: 1rem;">
-    <div class="drop-icon">🖼️</div>
-    <p>Drag & Drop Logo</p>
-    <span>OR</span>
-    <label for="logoInput" class="browse-btn">Browse Logo</label>
-    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden />
-  </div>
+    <!-- Upload interface -->
+    <div style="flex: 2; min-width: 250px;">
+      <div id="logoDropZone" class="drop-zone">
+        <div class="drop-icon">🖼️</div>
+        <p>Drag & Drop Logo</p>
+        <span>OR</span>
+        <label for="logoInput" class="browse-btn">Browse Logo</label>
+        <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden />
+      </div>
+      <div style="margin-top: 1rem; text-align: center;">
+        <button onclick="uploadLogo()">Save Logo</button>
+      </div>
+    </div>
 
-  <div style="margin-top: 1rem; text-align: center;">
-    <button onclick="uploadLogo()">Save Logo</button>
-  </div>
-</div>
-
-
-<div class="upload-group">
-  <h2>Upload File(s)</h2>
-  <div id="dropZone" class="drop-zone">
-    <div class="drop-icon">☁️</div>
-    <p>Drag & Drop to Upload PDF</p>
-    <span>OR</span>
-    <label for="pdfInput" class="browse-btn">Browse File</label>
-    <input type="file" id="pdfInput" accept="application/pdf" multiple hidden />
   </div>
 </div>
+
 
                 <div class="action-row">
                     <button onclick="processFiles()">Watermark Now</button>
