@@ -1065,9 +1065,13 @@ status.textContent = "✅ Done. Files downloaded.";
         const files = e.dataTransfer.files;
         if (files.length) {
             logoInput.files = files;
+
+            // Optional: show the file name inside drop zone
+            dropZone.querySelector('span').textContent = files[0].name;
         }
     });
 </script>
+
 </body>
 </html>
 
