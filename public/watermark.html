@@ -191,6 +191,34 @@
             font-family: inherit;
         }
 
+
+.logo-upload-row {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.drop-zone {
+    width: 250px;
+    height: 150px;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 1rem;
+    transition: background 0.2s ease;
+}
+
+.drop-zone:hover {
+    background: #f0f4ff;
+}
+        
         /* Logo Preview */
         .logo-preview {
             margin-top: 1rem;
@@ -434,15 +462,19 @@
                 </div>
 
                 <div class="upload-group">
-                    <h2>Saved Logo</h2>
-                    <div class="logo-preview">
-                        <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
-                    </div>
-                    <div class="logo-actions">
-                  <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-                        <button onclick="uploadLogo()">Save Logo</button>
-                    </div>
-                </div>
+    <h2>Saved Logo</h2>
+    <div class="logo-upload-row">
+        <div class="drop-zone" id="logoDropZone">
+            <span>Drag & Drop or Click to Upload Logo</span>
+            <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden />
+        </div>
+        <div class="logo-preview">
+            <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
+            <button onclick="uploadLogo()" style="margin-top: 1rem;">Save Logo</button>
+        </div>
+    </div>
+</div>
+</div>
 
                 <div class="upload-group">
                     <h2>Upload File(s)</h2>
@@ -1009,7 +1041,33 @@ status.textContent = "✅ Done. Files downloaded.";
                     status.textContent = `❌ Logo error: ${logoErr.message}. Please try a different image.`;
                 }
         }
-    </script>
+
+<script>
+    // Drag-and-drop logic for logo upload
+    const dropZone = document.getElementById('logoDropZone');
+    const logoInput = document.getElementById('logoInput');
+
+    dropZone.addEventListener('click', () => logoInput.click());
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.background = '#f0f4ff';
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.background = 'white';
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.background = 'white';
+
+        const files = e.dataTransfer.files;
+        if (files.length) {
+            logoInput.files = files;
+        }
+    });
+</script>
 </body>
 </html>
 
