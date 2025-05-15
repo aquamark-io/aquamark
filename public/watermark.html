@@ -223,6 +223,15 @@
             background: var(--primary-dark);
         }
 
+        .change-logo-btn {
+    background-color: fdd4fc;
+    color: black;
+}
+
+.change-logo-btn:hover {
+    background-color: #0e9f6e;
+}
+
         /* Status */
         .status {
             margin-top: 1.5rem;
@@ -440,7 +449,7 @@
                     </div>
                     <div class="logo-actions">
                   <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-                        <button onclick="uploadLogo()">Change Logo</button>
+                        <button class="change-logo-btn" onclick="uploadLogo()">Change Logo</button>
                     </div>
                 </div>
 
