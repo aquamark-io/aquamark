@@ -223,27 +223,12 @@
             background: var(--primary-dark);
         }
 
-        #pdfInput {
-    height: 120px; /* or any desired height */
-    padding: 1rem;
-    text-align: center;
-    font-size: 1rem;
-    border: 2px dashed var(--border-color);
-    background-color: var(--bg-color);
-    cursor: pointer;
-}
-
         /* Status */
         .status {
             margin-top: 1.5rem;
             font-weight: 500;
             color: var(--text-primary);
         }
-
-        .change-logo-btn {
-    background-color: #fdd4fc; /* your desired color code */
-    color: black;
-}
 
         /* Pages Used Counter */
         .pages-counter {
@@ -396,39 +381,6 @@
             .logo-actions {
                 flex-direction: column;
             }
-
-            .custom-upload-box {
-    position: relative;
-    border: 2px dashed var(--border-color);
-    border-radius: 8px;
-    background: var(--bg-color);
-    height: 160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0.5rem;
-    overflow: hidden;
-}
-
-.custom-upload-box input[type="file"] {
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: pointer;
-    z-index: 2;
-}
-
-.upload-icon {
-    width: 64px;
-    height: 64px;
-    opacity: 0.4;
-    z-index: 1;
-    pointer-events: none;
-}
-
         }
     </style>
 
@@ -489,17 +441,14 @@
                     </div>
                     <div class="logo-actions">
                   <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-                        <button class="change-logo-btn" onclick="uploadLogo()">Change Logo</button>
+                        <button onclick="uploadLogo()">Change Logo</button>
                     </div>
                 </div>
 
                 <div class="upload-group">
-  <h2>☁️ Drag & Drop File(s) or choose below</h2>
-  <div class="custom-upload-box">
-    <img src="3874b788-e496-4899-89eb-4f40bd2cd6f0.png" alt="Upload Icon" class="upload-icon" />
-    <input type="file" id="pdfInput" accept="application/pdf" multiple />
-  </div>
-</div>
+                    <h2>☁️Drag & Drop File(s) or choose below</h2>
+                    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+                </div>
 
                 <div class="action-row">
                     <button onclick="processFiles()">Watermark</button>
