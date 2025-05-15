@@ -180,27 +180,6 @@
             font-weight: 600;
         }
 
-.drop-zone {
-    border: 2px dashed var(--border-color);
-    border-radius: var(--radius);
-    background-color: #fff;
-    padding: 2rem;
-    text-align: center;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: border-color 0.3s;
-}
-
-.drop-zone:hover {
-    border-color: var(--accent-color);
-}
-
-.drop-zone.dragover {
-    background-color: var(--primary-light);
-    border-color: var(--accent-color);
-}
-
-        
         input[type="file"] {
             display: block;
             width: 100%;
@@ -466,13 +445,9 @@
                 </div>
 
                 <div class="upload-group">
-                <h2>Upload File(s)</h2>
-                <div id="dropZone" class="drop-zone">
-                <p>Drag & drop PDFs here or click to browse</p>
-          <input type="file" id="pdfInput" accept="application/pdf" multiple hidden />
-             </div>
-           </div>
-
+                    <h2>Upload File(s)</h2>
+                    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+                </div>
 
                 <div class="action-row">
                     <button onclick="processFiles()">Watermark Now</button>
@@ -522,24 +497,6 @@
             // Load saved logo if available
             loadSavedLogo();
         });
-
-        document.addEventListener("DOMContentLoaded", function () {
-    const dropZone = document.getElementById("dropZone");
-    const fileInput = document.getElementById("pdfInput");
-
-    dropZone.addEventListener("click", () => fileInput.click());
-
-dropZone.addEventListener("drop", (e) => {
-    e.preventDefault();
-    e.stopPropagation(); // <-- add this line to block browser file-opening
-    dropZone.classList.remove("dragover");
-
-    if (e.dataTransfer.files.length > 0) {
-        fileInput.files = e.dataTransfer.files;
-    }
-});
-
-});
 
         // Handle logout redirection
         if (window.location.hash === '#o-logout-link') {
