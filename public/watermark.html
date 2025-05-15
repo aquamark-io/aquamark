@@ -971,7 +971,7 @@ for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
         if ((i + j) % 2 === 0) {
             const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
-            const x = j * spacingX + xOffset + 20;
+            const x = j * spacingX + xOffset + 35;
             const y = i * spacingY + 45;
 
             watermarkPage.drawImage(logoImage, {
