@@ -180,42 +180,6 @@
             font-weight: 600;
         }
 
-.drop-zone {
-    background: var(--primary-light);
-    border: 2px dashed var(--accent-color);
-    border-radius: var(--radius);
-    padding: 2rem;
-    text-align: center;
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.drop-zone:hover {
-    background: #e9f3ff;
-}
-
-.drop-zone.dragover {
-    background: #d0e8ff;
-}
-
-.drop-zone .drop-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.drop-zone .browse-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    background: var(--accent-color);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-        
         input[type="file"] {
             display: block;
             width: 100%;
@@ -469,32 +433,21 @@
                     <small>We do not store your PDF files. Downloads begin automatically after watermarking is complete.</small>
                 </div>
 
-<div class="upload-group">
-  <h2>Saved Logo</h2>
-  <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start;">
-    
-    <!-- Stored logo preview -->
-    <div class="logo-preview" style="flex: 1; min-width: 200px; text-align: center;">
-      <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
-    </div>
+                <div class="upload-group">
+                    <h2>Saved Logo</h2>
+                    <div class="logo-preview">
+                        <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
+                    </div>
+                    <div class="logo-actions">
+                  <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
+                        <button onclick="uploadLogo()">Save Logo</button>
+                    </div>
+                </div>
 
-    <!-- Upload interface -->
-    <div style="flex: 2; min-width: 250px;">
-      <div id="logoDropZone" class="drop-zone">
-        <div class="drop-icon">🖼️</div>
-        <p>Drag & Drop Logo</p>
-        <span>OR</span>
-        <label for="logoInput" class="browse-btn">Browse Logo</label>
-        <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden />
-      </div>
-      <div style="margin-top: 1rem; text-align: center;">
-        <button onclick="uploadLogo()">Save Logo</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
+                <div class="upload-group">
+                    <h2>Upload File(s)</h2>
+                    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+                </div>
 
                 <div class="action-row">
                     <button onclick="processFiles()">Watermark Now</button>
@@ -1056,48 +1009,7 @@ status.textContent = "✅ Done. Files downloaded.";
                     status.textContent = `❌ Logo error: ${logoErr.message}. Please try a different image.`;
                 }
         }
-const dropZone = document.getElementById('dropZone');
-const pdfInput = document.getElementById('pdfInput');
-
-dropZone.addEventListener('click', () => pdfInput.click());
-
-dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-});
-
-dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-});
-
-dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    pdfInput.files = e.dataTransfer.files;
-});    
-
-const logoDropZone = document.getElementById('logoDropZone');
-const logoInput = document.getElementById('logoInput');
-
-logoDropZone.addEventListener('click', () => logoInput.click());
-
-logoDropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    logoDropZone.classList.add('dragover');
-});
-
-logoDropZone.addEventListener('dragleave', () => {
-    logoDropZone.classList.remove('dragover');
-});
-
-logoDropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    logoDropZone.classList.remove('dragover');
-    logoInput.files = e.dataTransfer.files;
-});
-
-        
-</script>
+    </script>
 </body>
 </html>
 
