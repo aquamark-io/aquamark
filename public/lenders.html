@@ -186,7 +186,10 @@
       loadLenders();
     }
 
-    window.onload = loadUser;
+    window.onload = async () => {
+  await Outseta.init();
+  loadUser();
+};
   </script>
 </head>
 <body>
