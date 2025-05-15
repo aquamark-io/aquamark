@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Lenders – Aquamark</title>
+  <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
+    h1 { font-size: 1.5rem; }
+    .lender-item { display: flex; justify-content: space-between; margin: 0.5rem 0; padding: 0.5rem; border: 1px solid #ddd; border-radius: 8px; }
+    button { padding: 0.3rem 0.6rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>📝 My Lenders</h1>
+
+  <div>
+    <input type="text" id="newLender" placeholder="Enter lender name" />
+    <button onclick="addLender()">Add</button>
+  </div>
+
+  <div id="lenderList" style="margin-top: 1rem;"></div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    const supabase = createClient(
+      'https://dvzmnikrvkvgragzhrof.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk'
+    );
+
+    let userEmail = null;
+
+    async function getUser() {
+      const user = await Outseta.nocode.getUser();
+      if (!user?.email) {
+        alert("You must be logged in.");
+        return;
+      }
+      userEmail = user.email;
+      loadLenders();
+    }
+
+    async function loadLenders() {
+      const { data, error } = await supabase
+        .from('user_lenders')
+        .select('*')
+        .eq('user_email', userEmail)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error loading lenders:', error);
+        return;
+      }
+
+      const container = document.getElementById('lenderList');
+      container.innerHTML = '';
+
+      data.forEach(lender => {
+        const div = document.createElement('div');
+        div.className = 'lender-item';
+        div.innerHTML = `
+          <span>${lender.lender_name}</span>
+          <button onclick="deleteLender('${lender.id}')">🗑</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    async function addLender() {
+      const input = document.getElementById('newLender');
+      const name = input.value.trim();
+      if (!name) return;
+
+      const { error } = await supabase.from('user_lenders').insert([
+        { user_email: userEmail, lender_name: name }
+      ]);
+
+      if (error) {
+        alert('Error adding lender');
+        console.error(error);
+        return;
+      }
+
+      input.value = '';
+      loadLenders();
+    }
+
+    async function deleteLender(id) {
+      const { error } = await supabase.from('user_lenders').delete().eq('id', id);
+      if (error) {
+        alert('Error deleting lender');
+        console.error(error);
+        return;
+      }
+
+      loadLenders();
+    }
+
+    getUser();
+  </script>
+
+  <script src="https://cdn.outseta.com/outseta.min.js"></script>
+</body>
+</html>
