@@ -890,19 +890,7 @@ canvas.toBlob((blob) => {
     pagesWatermarkedElement.textContent = pagesWatermarked;
 
                         // Update usage in database
-                        const updatedPagesUsed = data.pages_used + pages.length;
-                        const updatedPagesRemaining = data.page_credits - updatedPagesUsed;
-
-                        const { error: updateError } = await supabase
-                            .from('usage')
-                            .update({
-                                pages_used: updatedPagesUsed,
-                                pages_remaining: updatedPagesRemaining
-                            })
-                            .eq('user_email', profile.Email);
-
-                        if (updateError) throw updateError;
-                        console.log(`Updated usage for ${profile.Email}: ${pages.length} pages added`);
+console.log(`Processed ${pages.length} pages from ${file.name}`);
 
     // Get the logo bytes and embed it
     let embeddedLogo;
@@ -998,6 +986,22 @@ for (const page of pdfDoc.getPages()) {
         status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
         return;
     }
+
+ // ✅ Update Supabase usage after processing all files
+const finalPagesUsed = data.pages_used + pagesWatermarked;
+const finalPagesRemaining = data.page_credits - finalPagesUsed;
+
+const { error: updateError } = await supabase
+    .from('usage')
+    .update({
+        pages_used: finalPagesUsed,
+        pages_remaining: finalPagesRemaining
+    })
+    .eq('user_email', profile.Email);
+
+if (updateError) throw updateError;
+console.log(`✅ Updated total usage for ${profile.Email}: +${pagesWatermarked} pages`);
+                        
 }
 
 status.textContent = "✅ Done. Files downloaded.";
