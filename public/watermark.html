@@ -444,13 +444,10 @@
                     </div>
                 </div>
 
-               <div class="upload-group">
-    <h2>Upload File(s)</h2>
-    <div id="dropZone" class="drop-zone">
-        <p>Drag & drop PDFs here or click to browse</p>
-        <input type="file" id="pdfInput" accept="application/pdf" multiple hidden />
-    </div>
-</div>
+                <div class="upload-group">
+                    <h2>Upload File(s)</h2>
+                    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+                </div>
 
                 <div class="action-row">
                     <button onclick="processFiles()">Watermark Now</button>
@@ -500,32 +497,6 @@
             // Load saved logo if available
             loadSavedLogo();
         });
-        document.addEventListener("DOMContentLoaded", function () {
-    const dropZone = document.getElementById("dropZone");
-    const fileInput = document.getElementById("pdfInput");
-
-    dropZone.addEventListener("click", () => fileInput.click());
-
-    dropZone.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dropZone.classList.add("dragover");
-    });
-
-    dropZone.addEventListener("dragleave", () => {
-        dropZone.classList.remove("dragover");
-    });
-
-    dropZone.addEventListener("drop", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dropZone.classList.remove("dragover");
-
-        if (e.dataTransfer.files.length > 0) {
-            fileInput.files = e.dataTransfer.files;
-        }
-    });
-});
 
         // Handle logout redirection
         if (window.location.hash === '#o-logout-link') {
