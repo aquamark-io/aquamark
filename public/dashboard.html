@@ -138,13 +138,13 @@ color: var(--accent-color);
 
 }
 
-.aqua-nav a.active {
+.aqua- a.active {
 
 color: var(--accent-color);
 
 }
 
-.aqua-nav a.active:after {
+.aqua- a.active:after {
 
 content: '';
 
@@ -805,13 +805,10 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
 
 <nav class="aqua-nav">
-
-<a href="/dashboard.html" class="active">Dashboard</a>
-
-<a href="/watermark.html" id="watermarkLink">Watermark</a>
-
-<a href="https://www.aquamark.io/login.html">Log Out</a>
-
+  <a href="/dashboard.html" class="active">Dashboard</a>
+  <a href="/watermark.html" id="watermarkLink">Watermark</a>
+  <a href="/lenders.html">My Lenders</a>
+  <a href="https://www.aquamark.io/login.html">Log Out</a>
 </nav>
 
 </header>
@@ -898,13 +895,9 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
 
 <div class="footer-nav">
-
 <a href="https://www.aquamark.io/terms.html">Terms of Service</a>
-
 <a href="https://www.aquamark.io/privacy.html">Privacy Policy</a>
-
 <a href="mailto:hey@aquamark.io">Contact Us</a>
-
 </div>
 
 <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
@@ -918,7 +911,7 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
     const hashParams = window.location.hash;
 
     // List of internal paths you want to preserve parameters for
-    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html"];
+    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html", "/lenders.html"];
 
     document.querySelectorAll("a[href]").forEach(link => {
       const href = link.getAttribute("href");
