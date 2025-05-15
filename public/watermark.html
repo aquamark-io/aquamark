@@ -464,10 +464,11 @@
                 <div class="upload-group">
     <h2>Saved Logo</h2>
     <div class="logo-upload-row">
-        <div class="drop-zone" id="logoDropZone">
-            <span>Drag & Drop or Click to Upload Logo</span>
-            <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden />
-        </div>
+       <div class="drop-zone" id="logoDropZone">
+    <span id="logoDropText">Drag & Drop or Click to Upload Logo</span>
+</div>
+<input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" hidden />
+
         <div class="logo-preview">
             <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
             <button onclick="uploadLogo()" style="margin-top: 1rem;">Save Logo</button>
@@ -1043,9 +1044,9 @@ status.textContent = "✅ Done. Files downloaded.";
         }
 
 <script>
-    // Drag-and-drop logic for logo upload
     const dropZone = document.getElementById('logoDropZone');
     const logoInput = document.getElementById('logoInput');
+    const dropText = document.getElementById('logoDropText');
 
     dropZone.addEventListener('click', () => logoInput.click());
 
@@ -1061,16 +1062,15 @@ status.textContent = "✅ Done. Files downloaded.";
     dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
         dropZone.style.background = 'white';
-
         const files = e.dataTransfer.files;
-        if (files.length) {
-            logoInput.files = files;
-
-            // Optional: show the file name inside drop zone
-            dropZone.querySelector('span').textContent = files[0].name;
-        }
+    if (files.length) {
+    logoInput.files = files;
+    dropText.textContent = files[0].name;
+    logoInput.dispatchEvent(new Event('change'));
+}
     });
 </script>
+
 
 </body>
 </html>
