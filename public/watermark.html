@@ -529,23 +529,16 @@
 
     dropZone.addEventListener("click", () => fileInput.click());
 
-    dropZone.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropZone.classList.add("dragover");
-    });
+dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // <-- add this line to block browser file-opening
+    dropZone.classList.remove("dragover");
 
-    dropZone.addEventListener("dragleave", () => {
-        dropZone.classList.remove("dragover");
-    });
+    if (e.dataTransfer.files.length > 0) {
+        fileInput.files = e.dataTransfer.files;
+    }
+});
 
-    dropZone.addEventListener("drop", (e) => {
-        e.preventDefault();
-        dropZone.classList.remove("dragover");
-
-        if (e.dataTransfer.files.length > 0) {
-            fileInput.files = e.dataTransfer.files;
-        }
-    });
 });
 
         // Handle logout redirection
