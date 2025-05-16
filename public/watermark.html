@@ -462,7 +462,13 @@
                   <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
                     <button class="change-logo-btn" onclick="uploadLogo()">Change Logo</button>
                     </div>
-                </div>
+                    <div id="lender-picker" style="margin: 2rem 0;">
+  <label for="lenderSelect" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Tag Lender (optional):</label>
+  <select id="lenderSelect" style="width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 8px;">
+    <option value="">-- Select Lender --</option>
+  </select>
+</div>
+ </div>
 
                 <div class="upload-group">
                     <h2>☁️Drag & Drop File(s) or choose below</h2>
@@ -1033,6 +1039,26 @@ status.textContent = "✅ Done. Files downloaded.";
       }
     });
   });
+function loadLenderPicklist() {
+  const dropdown = document.getElementById('lenderSelect');
+  if (!dropdown) return;
+
+  dropdown.innerHTML = `<option value="">-- Select Lender --</option>`;
+
+  const stored = localStorage.getItem('aquamark_lenders');
+  if (!stored) return;
+
+  const lenders = JSON.parse(stored);
+  lenders.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    dropdown.appendChild(opt);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', loadLenderPicklist);
+        
 </script>
 </body>
 </html>
