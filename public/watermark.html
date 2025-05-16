@@ -924,39 +924,32 @@ console.log(`Processed ${pages.length} pages from ${file.name}`);
 
     const logoDims = embeddedLogo.scale(0.35);
 
-// Create a watermark PDF
+// Create watermark page with both logos and lender text
 const watermarkDoc = await PDFLib.PDFDocument.create();
-const logoImageBytes = logoBytes;
+const watermarkPage = watermarkDoc.addPage(pdfDoc.getPages()[0].getSize());
+const { width, height } = watermarkPage.getSize();
+
 let logoImage;
 try {
-    logoImage = await watermarkDoc.embedPng(logoImageBytes);
+    logoImage = await watermarkDoc.embedPng(logoBytes);
 } catch (e) {
     console.warn("embedPng failed, trying embedJpg...");
-    logoImage = await watermarkDoc.embedJpg(logoImageBytes);
+    logoImage = await watermarkDoc.embedJpg(logoBytes);
 }
 
-// Get the size of the first page to match the watermark
-const { width, height } = pdfDoc.getPages()[0].getSize();
-const watermarkPage = watermarkDoc.addPage([width, height]);
-
-// Define number of rows/columns to get ~15–20 logos
+// Draw tiled logos
 const rows = 5;
 const cols = 5;
-
-// Logo size: smaller for more spacing
-const fixedLogoWidth = 80; // standard size in points
+const fixedLogoWidth = 80;
 const logoWidth = fixedLogoWidth;
 const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
-
-// Positioning
 const spacingX = width / cols;
 const spacingY = height / rows;
 
-// Diagonal checkerboard layout
 for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
         if ((i + j) % 2 === 0) {
-            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
+            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;
             const x = j * spacingX + xOffset + 35;
             const y = i * spacingY + 45;
 
@@ -972,6 +965,27 @@ for (let i = 0; i < rows; i++) {
     }
 }
 
+// Draw lender name if selected
+const selectedLender = document.getElementById("lenderSelect").value;
+if (selectedLender) {
+    const font = await watermarkDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+    const fontSize = 36;
+    const textWidth = font.widthOfTextAtSize(selectedLender, fontSize);
+    const textHeight = font.heightAtSize(fontSize);
+
+    watermarkPage.drawText(selectedLender, {
+        x: (width - textWidth) / 2,
+        y: (height - textHeight) / 2,
+        size: fontSize,
+        font: font,
+        color: PDFLib.rgb(0.1, 0.1, 0.1),
+        opacity: 0.25,
+    });
+}
+
+    }
+}
+
 // Embed the watermark page
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
@@ -980,24 +994,6 @@ const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
     page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
-    // --- Embed lender name in center if selected ---
-const lenderName = document.getElementById("lenderSelect").value;
-if (lenderName) {
-    const font = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-    const fontSize = 24;
-    const textWidth = font.widthOfTextAtSize(lenderName, fontSize);
-    const textHeight = font.heightAtSize(fontSize);
-
-    page.drawText(lenderName, {
-        x: (width - textWidth) / 2,
-        y: (height - textHeight) / 2,
-        size: fontSize,
-        font: font,
-        color: PDFLib.rgb(0.2, 0.2, 0.2),
-        opacity: 0.5,
-        rotate: PDFLib.degrees(0),
-    });
-}
 }
 
     // Save the document and prepare for download
