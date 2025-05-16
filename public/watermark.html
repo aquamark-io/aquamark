@@ -1034,15 +1034,12 @@ console.log(`✅ Updated total usage for ${profile.Email}: +${pagesWatermarked} 
 
 status.textContent = "✅ Done. Files downloaded.";
 
-            } catch (err) {
+                       } catch (err) {
                 console.error("Error processing files:", err);
                 status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
             }
-                } catch (logoErr) {
-                    console.error("Logo processing error:", logoErr);
-                    status.textContent = `❌ Logo error: ${logoErr.message}. Please try a different image.`;
-                }
         }
+
     </script>
     <script>
   document.addEventListener('DOMContentLoaded', function () {
