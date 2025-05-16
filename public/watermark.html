@@ -324,7 +324,7 @@
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
-            margin-bottom: 2.0rem;
+            margin-bottom: 4.0rem;
         }
 
         /* Footer */
@@ -924,32 +924,39 @@ console.log(`Processed ${pages.length} pages from ${file.name}`);
 
     const logoDims = embeddedLogo.scale(0.35);
 
-// Create watermark page with both logos and lender text
+// Create a watermark PDF
 const watermarkDoc = await PDFLib.PDFDocument.create();
-const watermarkPage = watermarkDoc.addPage(pdfDoc.getPages()[0].getSize());
-const { width, height } = watermarkPage.getSize();
-
+const logoImageBytes = logoBytes;
 let logoImage;
 try {
-    logoImage = await watermarkDoc.embedPng(logoBytes);
+    logoImage = await watermarkDoc.embedPng(logoImageBytes);
 } catch (e) {
     console.warn("embedPng failed, trying embedJpg...");
-    logoImage = await watermarkDoc.embedJpg(logoBytes);
+    logoImage = await watermarkDoc.embedJpg(logoImageBytes);
 }
 
-// Draw tiled logos
+// Get the size of the first page to match the watermark
+const { width, height } = pdfDoc.getPages()[0].getSize();
+const watermarkPage = watermarkDoc.addPage([width, height]);
+
+// Define number of rows/columns to get ~15–20 logos
 const rows = 5;
 const cols = 5;
-const fixedLogoWidth = 80;
+
+// Logo size: smaller for more spacing
+const fixedLogoWidth = 80; // standard size in points
 const logoWidth = fixedLogoWidth;
 const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
+
+// Positioning
 const spacingX = width / cols;
 const spacingY = height / rows;
 
+// Diagonal checkerboard layout
 for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
         if ((i + j) % 2 === 0) {
-            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;
+            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
             const x = j * spacingX + xOffset + 35;
             const y = i * spacingY + 45;
 
@@ -962,27 +969,6 @@ for (let i = 0; i < rows; i++) {
                 rotate: PDFLib.degrees(45)
             });
         }
-    }
-}
-
-// Draw lender name if selected
-const selectedLender = document.getElementById("lenderSelect").value;
-if (selectedLender) {
-    const font = await watermarkDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-    const fontSize = 36;
-    const textWidth = font.widthOfTextAtSize(selectedLender, fontSize);
-    const textHeight = font.heightAtSize(fontSize);
-
-    watermarkPage.drawText(selectedLender, {
-        x: (width - textWidth) / 2,
-        y: (height - textHeight) / 2,
-        size: fontSize,
-        font: font,
-        color: PDFLib.rgb(0.1, 0.1, 0.1),
-        opacity: 0.25,
-    });
-}
-
     }
 }
 
@@ -1034,12 +1020,15 @@ console.log(`✅ Updated total usage for ${profile.Email}: +${pagesWatermarked} 
 
 status.textContent = "✅ Done. Files downloaded.";
 
-                       } catch (err) {
+            } catch (err) {
                 console.error("Error processing files:", err);
                 status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
             }
+                } catch (logoErr) {
+                    console.error("Logo processing error:", logoErr);
+                    status.textContent = `❌ Logo error: ${logoErr.message}. Please try a different image.`;
+                }
         }
-
     </script>
     <script>
   document.addEventListener('DOMContentLoaded', function () {
