@@ -470,14 +470,17 @@
   <!-- lender picker dropdown -->
   <div id="lender-picker" style="margin-top: 1rem;">
     <label for="lenderSelect" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
-      Tag Lender <span style="font-weight: 400;">(optional)</span>:
+      Tag Lender <span style="font-weight: 400;">(optional)</span>
     </label>
     <select id="lenderSelect" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color);">
       <option value="">-- Select Lender --</option>
     </select>
   </div>
 </div>
-
+<div class="upload-group">
+  <h2>Drag & Drop File(s) or choose below</h2>
+  <input type="file" id="pdfInput" accept="application/pdf" multiple />
+</div>
                 <div class="action-row">
                     <button onclick="processFiles()">Watermark</button>
                     <div class="status" id="status"></div>
