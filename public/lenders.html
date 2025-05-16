@@ -151,9 +151,9 @@
 async function loadLenders() {
   const { data, error } = await supabase
     .from('user_lenders')
-    .select('*')
+    .select('id, lender_name')
     .eq('user_email', userEmail)
-    .order('lender_name', { ascending: true }); // ✅ alphabetically
+    .order('lender_name', { ascending: true });
 
   const list = document.getElementById('lenderList');
   list.innerHTML = '';
@@ -164,7 +164,11 @@ async function loadLenders() {
     return;
   }
 
-  if (!data || data.length === 0) {
+  // Mirror to localStorage
+  const names = data.map(row => row.lender_name);
+  localStorage.setItem("aquamark_lenders", JSON.stringify(names));
+
+  if (!names.length) {
     list.innerHTML = '<li style="color:gray;">No lenders saved yet.</li>';
     return;
   }
@@ -179,6 +183,7 @@ async function loadLenders() {
     list.appendChild(li);
   });
 }
+
 
 
     window.addLender = async function () {
