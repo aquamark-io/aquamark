@@ -453,29 +453,30 @@
                     <small>We do not store your PDF files. Downloads begin automatically after watermarking is complete.</small>
                 </div>
 
-                <div class="upload-group">
-                    <h2>Stored Logo</h2>
-                    <div class="logo-preview">
-                        <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
-                    </div>
-                    <div class="logo-actions">
-                  <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-                    <button class="change-logo-btn" onclick="uploadLogo()">Change Logo</button>
-                    </div>
-                    <div id="lender-picker" style="margin: 2rem 0;">
-<label for="lenderSelect" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
-  Tag Lender <span style="font-weight: 400;">(optional)</span>
-</label>
-  <select id="lenderSelect" style="width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 8px;">
-    <option value="">-- Select Lender --</option>
-  </select>
-</div>
- </div>
+<div class="upload-group">
+  <h2>Stored Logo</h2>
 
-                <div class="upload-group">
-                    <h2>☁️Drag & Drop File(s) or choose below</h2>
-                    <input type="file" id="pdfInput" accept="application/pdf" multiple />
-                </div>
+  <!-- logo image -->
+  <div class="logo-preview">
+    <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
+  </div>
+
+  <!-- logo upload section -->
+  <div class="logo-actions">
+    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
+    <button class="change-logo-btn" onclick="uploadLogo()">Change Logo</button>
+  </div>
+
+  <!-- lender picker dropdown -->
+  <div id="lender-picker" style="margin-top: 1rem;">
+    <label for="lenderSelect" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
+      Tag Lender <span style="font-weight: 400;">(optional)</span>:
+    </label>
+    <select id="lenderSelect" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color);">
+      <option value="">-- Select Lender --</option>
+    </select>
+  </div>
+</div>
 
                 <div class="action-row">
                     <button onclick="processFiles()">Watermark</button>
