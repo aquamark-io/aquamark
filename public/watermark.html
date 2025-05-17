@@ -980,6 +980,19 @@ const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
     page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
+// Embed lender name if selected
+const selectedLender = document.getElementById("lenderSelect").value;
+if (selectedLender) {
+    page.drawText(selectedLender, {
+        x: width / 2 - (selectedLender.length * 3), // approx center
+        y: height / 2,
+        size: 28,
+        opacity: 0.15,
+        color: PDFLib.rgb(0.2, 0.2, 0.2),
+        rotate: PDFLib.degrees(0),
+        font: await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold),
+    });
+}
 }
 
     // Save the document and prepare for download
