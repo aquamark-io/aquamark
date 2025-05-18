@@ -978,8 +978,8 @@ const selectedLender = document.getElementById("lenderSelect").value;
 if (selectedLender) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 150;
+    canvas.width = 400;
+    canvas.height = 80;
 
     ctx.fillStyle = 'rgba(50, 50, 50, 0.15)';
     ctx.font = '16px Helvetica';
@@ -992,13 +992,31 @@ if (selectedLender) {
     const textImage = await watermarkDoc.embedPng(pngBytes);
 
     const textDims = textImage.scale(1);
-    watermarkPage.drawImage(textImage, {
-        x: (width - textDims.width) / 2,
-        y: (height - textDims.height) / 2,
-        width: textDims.width,
-        height: textDims.height
-    });
+
+    const rowCount = 5;
+    const colCount = 5;
+    const gapX = width / colCount;
+    const gapY = height / rowCount;
+
+    for (let i = 0; i < rowCount; i++) {
+        for (let j = 0; j < colCount; j++) {
+            if ((i + j) % 2 === 0) {
+                const offsetX = (i % 2 === 0) ? 0 : gapX / 2;
+                const x = j * gapX + offsetX + 15;
+                const y = i * gapY + 20;
+
+                watermarkPage.drawImage(textImage, {
+                    x,
+                    y,
+                    width: textDims.width,
+                    height: textDims.height,
+                    rotate: PDFLib.degrees(45)
+                });
+            }
+        }
+    }
 }
+
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
