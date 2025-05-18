@@ -976,53 +976,47 @@ for (let i = 0; i < rows; i++) {
 // Draw lender name as image if selected
 const selectedLender = document.getElementById("lenderSelect").value;
 if (selectedLender) {
+    // Create watermark image
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = 400;
     canvas.height = 80;
-
     ctx.fillStyle = 'rgba(50, 50, 50, 0.15)';
     ctx.font = '16px Helvetica';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(selectedLender, canvas.width / 2, canvas.height / 2);
-
     const dataUrl = canvas.toDataURL('image/png');
     const pngBytes = await fetch(dataUrl).then(res => res.arrayBuffer());
     const textImage = await watermarkDoc.embedPng(pngBytes);
-
-    const textDims = textImage.scale(1);
-
-    // True 8.5" x 11" page = 612x792 pts
-    // Hand-picked scattered coordinates across the page
+    
+    // Define fixed positions for watermarks
     const positions = [
-        { x: 80,  y: 100 },  // upper-left
-        { x: 400, y: 140 },  // upper-right
-        { x: 150, y: 350 },  // middle-left
-        { x: 380, y: 390 },  // middle-right
-        { x: 100, y: 640 },  // lower-left
-        { x: 420, y: 680 }   // lower-right
+        { x: 150, y: 200 },  // top-left
+        { x: 450, y: 200 },  // top-right
+        { x: 300, y: 400 },  // center
+        { x: 150, y: 600 },  // bottom-left
+        { x: 450, y: 600 }   // bottom-right
     ];
-
-    for (const pos of positions) {
-        watermarkPage.drawImage(textImage, {
-            x: pos.x,
-            y: pos.y,
-            width: textDims.width,
-            height: textDims.height
-        });
+    
+    // Apply watermarks to each page
+    const pages = await watermarkDoc.getPages();
+    for (const page of pages) {
+        for (const pos of positions) {
+            await page.drawImage(textImage, {
+                x: pos.x - textImage.width / 2,
+                y: pos.y - textImage.height / 2,
+                opacity: 0.2
+            });
+        }
     }
+    
+console.log(`Applied ${positions.length} watermarks per page across ${pages.length} pages`);
 }
-
-
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 
-// Apply watermark to each page of the original PDF
-for (const page of pdfDoc.getPages()) {
-    page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
-}
 
     // Save the document and prepare for download
     try {
