@@ -991,28 +991,25 @@ if (selectedLender) {
     const pngBytes = await fetch(dataUrl).then(res => res.arrayBuffer());
     const textImage = await watermarkDoc.embedPng(pngBytes);
 
-    const textDims = textImage.scale(1);
-    const positions = [
-    { x: (width - textDims.width) / 2, y: (height - textDims.height) / 2 }, // center
-    { x: 20, y: height - textDims.height - 20 },                            // top-left
-    { x: width - textDims.width - 20, y: height - textDims.height - 20 },  // top-right
-    { x: 20, y: 20 },                                                       // bottom-left
-    { x: width - textDims.width - 20, y: 20 }                               // bottom-right
-];
+    const textDims = textImage.scale(1); // <-- you were missing this
+    const verticalSpacing = height / 5;
+    const centerX = (width - textDims.width) / 2;
 
-positions.forEach(pos => {
-    watermarkPage.drawImage(textImage, {
-        x: pos.x,
-        y: pos.y,
-        width: textDims.width,
-        height: textDims.height
-    });
-});
-
+    for (let i = 1; i <= 4; i++) {
+        const y = verticalSpacing * i - textDims.height / 2;
+        watermarkPage.drawImage(textImage, {
+            x: centerX,
+            y: y,
+            width: textDims.width,
+            height: textDims.height
+        });
+    }
 }
+
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
+
 
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
