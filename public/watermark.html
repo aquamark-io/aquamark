@@ -993,14 +993,15 @@ if (selectedLender) {
 
     const textDims = textImage.scale(1);
 
-    // Brick-like layout: alternating x positions per row
+    // True 8.5" x 11" page = 612x792 pts
+    // Hand-picked scattered coordinates across the page
     const positions = [
-        { x: width * 0.20, y: height * 0.15 }, // top-left
-        { x: width * 0.65, y: height * 0.22 }, // top-right offset
-        { x: width * 0.25, y: height * 0.45 }, // center-left
-        { x: width * 0.60, y: height * 0.52 }, // center-right offset
-        { x: width * 0.20, y: height * 0.75 }, // bottom-left
-        { x: width * 0.65, y: height * 0.82 }  // bottom-right offset
+        { x: 80,  y: 100 },  // upper-left
+        { x: 400, y: 140 },  // upper-right
+        { x: 150, y: 350 },  // middle-left
+        { x: 380, y: 390 },  // middle-right
+        { x: 100, y: 640 },  // lower-left
+        { x: 420, y: 680 }   // lower-right
     ];
 
     for (const pos of positions) {
@@ -1012,6 +1013,7 @@ if (selectedLender) {
         });
     }
 }
+
 
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
