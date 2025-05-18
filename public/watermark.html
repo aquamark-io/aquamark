@@ -982,7 +982,7 @@ if (selectedLender) {
     canvas.height = 80;
 
     ctx.fillStyle = 'rgba(50, 50, 50, 0.15)';
-    ctx.font = '6px Helvetica';
+    ctx.font = '8px Helvetica';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(selectedLender, canvas.width / 2, canvas.height / 2);
@@ -1010,7 +1010,6 @@ if (selectedLender) {
                     y,
                     width: textDims.width,
                     height: textDims.height,
-                    rotate: PDFLib.degrees(45)
                 });
             }
         }
