@@ -992,12 +992,23 @@ if (selectedLender) {
     const textImage = await watermarkDoc.embedPng(pngBytes);
 
     const textDims = textImage.scale(1);
+    const positions = [
+    { x: (width - textDims.width) / 2, y: (height - textDims.height) / 2 }, // center
+    { x: 20, y: height - textDims.height - 20 },                            // top-left
+    { x: width - textDims.width - 20, y: height - textDims.height - 20 },  // top-right
+    { x: 20, y: 20 },                                                       // bottom-left
+    { x: width - textDims.width - 20, y: 20 }                               // bottom-right
+];
+
+positions.forEach(pos => {
     watermarkPage.drawImage(textImage, {
-        x: (width - textDims.width) / 2,
-        y: (height - textDims.height) / 2,
+        x: pos.x,
+        y: pos.y,
         width: textDims.width,
         height: textDims.height
     });
+});
+
 }
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
