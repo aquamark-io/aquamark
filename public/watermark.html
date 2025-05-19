@@ -967,24 +967,25 @@ const spacingY = height / rows;
 
 // Diagonal checkerboard layout
 for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-        if ((i + j) % 2 === 0) {
-            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
-            const x = j * spacingX + xOffset + 35;
-            const y = i * spacingY + 45;
+  for (let j = 0; j < cols; j++) {
+    if ((i + j) % 2 === 0) {
+      const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;
+      const x = j * spacingX + xOffset + 35;
+      const y = i * spacingY + 45;
 
-            watermarkPage.drawImage(logoImage, {
-                x,
-                y,
-                width: logoWidth,
-                height: logoHeight,
-                opacity: 0.25,
-                rotate: PDFLib.degrees(45)
-            });
-        }
-    } 
+      watermarkPage.drawImage(logoImage, {
+        x,
+        y,
+        width: logoWidth,
+        height: logoHeight,
+        opacity: 0.25,
+        rotate: PDFLib.degrees(45)
+      });
+    }
+  }
 }
- // After all logo tiles are drawn, embed QR code once in bottom-right
+
+// ✅ Correct placement: embed QR code ONCE, AFTER the loop
 if (qrImage) {
   const qrSize = 40;
   watermarkPage.drawImage(qrImage, {
@@ -992,9 +993,9 @@ if (qrImage) {
     y: 10,
     width: qrSize,
     height: qrSize,
-    opacity: 0.4,
+    opacity: 0.4
   });
-}  
+}
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
