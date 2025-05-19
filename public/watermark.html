@@ -951,6 +951,9 @@ try {
 // Get the size of the first page to match the watermark
 const { width, height } = pdfDoc.getPages()[0].getSize();
 const watermarkPage = watermarkDoc.addPage([width, height]);
+const width = 612;
+const height = 792;
+
 
 // Define number of rows/columns to get ~15–20 logos
 const rows = 5;
