@@ -971,10 +971,6 @@ for (let i = 0; i < rows; i++) {
     }
 }
 
-const watermarkPdfBytes = await watermarkDoc.save();
-const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
-const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
-
 // Embed the watermark page
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
@@ -983,6 +979,7 @@ const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
     page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
+
     // Generate QR code payload
 const lenderName = document.getElementById("lenderInput").value || "N/A";
 const today = new Date().toISOString().split("T")[0];
