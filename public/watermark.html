@@ -983,6 +983,17 @@ for (let i = 0; i < rows; i++) {
             });
         }
     }
+ // After all logo tiles are drawn, embed QR code once in bottom-right
+if (qrImage) {
+  const qrSize = 40;
+  watermarkPage.drawImage(qrImage, {
+    x: width - qrSize - 10,
+    y: 10,
+    width: qrSize,
+    height: qrSize,
+    opacity: 0.4,
+  });
+}   
 }
 
 const watermarkPdfBytes = await watermarkDoc.save();
@@ -993,18 +1004,6 @@ const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
     page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
-
-    // Draw QR code in bottom-right corner
-if (qrImage) {
-  const qrSize = 40;
-  page.drawImage(qrImage, {
-    x: page.getWidth() - qrSize - 10,
-    y: 10,
-    width: qrSize,
-    height: qrSize,
-    opacity: 0.4,
-  });
-}
 }
 
                         
