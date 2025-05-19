@@ -924,7 +924,7 @@ console.log(`Processed ${pages.length} pages from ${file.name}`);
 
 // Create QR Code with metadata
 const today = new Date().toISOString().split("T")[0];
-const userEmail = Outseta.nocode.user?.email || "unknown";
+const userEmail = profile.Email || "unknown";
 const lender = document.getElementById("lenderInput")?.value || "N/A";
 const qrText = `Protected by Aquamark.io\nDocument Owner: ${userEmail}\nLender: ${lender}\nDate: ${today}`;
 
