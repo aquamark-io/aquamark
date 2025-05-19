@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Protected Submission – Aquamark</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 600px;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .payload-box {
+      background: #f4f4f4;
+      padding: 1rem;
+      font-family: monospace;
+      border-radius: 8px;
+      margin: 1rem 0;
+      word-break: break-word;
+    }
+    button {
+      background: #2e80ff;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1b5fcc;
+    }
+    .small {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Protected Submission</h2>
+    <p>This document is protected by <strong>Aquamark</strong>. Below is the embedded submission info:</p>
+    
+    <div class="payload-box" id="payloadDisplay">Loading...</div>
+    <button onclick="copyPayload()">Copy to Clipboard</button>
+
+    <div class="small">Scanned via secure watermark. Questions? Contact <a href="mailto:support@aquamark.io">support@aquamark.io</a>.</div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get('data') || 'No data found';
+    const decoded = decodeURIComponent(data);
+    document.getElementById('payloadDisplay').textContent = decoded;
+
+    function copyPayload() {
+      navigator.clipboard.writeText(decoded).then(() => {
+        alert("Copied to clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
