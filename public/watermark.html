@@ -900,7 +900,30 @@ canvas.toBlob((blob) => {
     pagesWatermarked += pages.length;
     pagesWatermarkedElement.textContent = pagesWatermarked;
 
-                        // Update usage in database
+// Check if billing cycle has expired
+const lastReset = new Date(usageRow.billing_cycle_start);
+const now = new Date();
+const daysElapsed = (now - lastReset) / (1000 * 60 * 60 * 24);
+
+if (daysElapsed >= 30) {
+  const { error: resetError } = await supabase
+    .from('usage')
+    .update({
+      pages_used: 0,
+      billing_cycle_start: now.toISOString()
+    })
+    .eq('user_email', userEmail);
+
+  if (resetError) {
+    alert("Error resetting usage.");
+    return;
+  }
+
+  // Set pages_used to 0 locally for rest of function
+  usageRow.pages_used = 0;
+}
+                
+// Update usage in database
 console.log(`Processed ${pages.length} pages from ${file.name}`);
 
     // Get the logo bytes and embed it
