@@ -750,7 +750,7 @@ canvas.toBlob((blob) => {
         async function decryptPDF(file) {
             const formData = new FormData();
             formData.append("file", file);
-            const response = await fetch("https://aquamark-decrypt.onrender.com", {
+const response = await fetch("https://aquamark-decrypt.onrender.com/watermark", {
                 method: "POST",
                 body: formData,
             });
