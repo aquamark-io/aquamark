@@ -743,7 +743,7 @@ canvas.toBlob((blob) => {
     formData.append("file", file);
     formData.append("user_email", userEmail); // ✅ pass actual email to backend
 
-    const response = await fetch("https://aquamark-decrypt.onrender.com/watermark", {
+    const response = await fetch("https://aquamark-decrypt-only.onrender.com/decrypt", {
         method: "POST",
         body: formData,
         headers: {
