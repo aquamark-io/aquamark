@@ -931,7 +931,7 @@ const qrText = `Protected by Aquamark.io\nDocument Owner: ${userEmail}\nLender: 
 try {
   const qrDataUrl = await QRCode.toDataURL(qrText, { margin: 0, scale: 4 });
   const qrBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
-  var qrImage = await pdfDoc.embedPng(qrBytes); // embed in same pdfDoc
+  var qrImage = await watermarkDoc.embedPng(qrBytes); // embed in same pdfDoc
 } catch (err) {
   console.error("❌ Failed to generate QR code:", err);
 }
