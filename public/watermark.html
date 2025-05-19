@@ -977,10 +977,12 @@ const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
                         
 // Apply watermark to each page of the original PDF
+// First apply watermark to each page
 for (const page of pdfDoc.getPages()) {
     page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
+}
 
-    // Generate QR code payload
+// Then generate QR code ONCE
 const lenderName = document.getElementById("lenderInput").value || "N/A";
 const today = new Date().toISOString().split("T")[0];
 const qrText = `Protected by Aquamark.io\nDocument Owner: ${profile.Email}\nLender: ${lenderName}\nDate: ${today}`;
@@ -989,7 +991,7 @@ const qrDataUrl = await QRCode.toDataURL(qrText, { margin: 0, scale: 5 });
 const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
 const qrImage = await pdfDoc.embedPng(qrImageBytes);
 
-// Draw QR image on every page, bottom-right
+// Embed QR code on each page
 for (const page of pdfDoc.getPages()) {
     const { width, height } = page.getSize();
     page.drawImage(qrImage, {
