@@ -409,6 +409,7 @@
         };
     </script>
     <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -921,6 +922,21 @@ console.log(`Processed ${pages.length} pages from ${file.name}`);
 
     const logoDims = embeddedLogo.scale(0.35);
 
+// Create QR Code with metadata
+const today = new Date().toISOString().split("T")[0];
+const userEmail = Outseta.nocode.user?.email || "unknown";
+const lender = document.getElementById("lenderInput")?.value || "N/A";
+const qrText = `Protected by Aquamark.io\nDocument Owner: ${userEmail}\nLender: ${lender}\nDate: ${today}`;
+
+try {
+  const qrDataUrl = await QRCode.toDataURL(qrText, { margin: 0, scale: 4 });
+  const qrBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
+  var qrImage = await pdfDoc.embedPng(qrBytes); // embed in same pdfDoc
+} catch (err) {
+  console.error("❌ Failed to generate QR code:", err);
+}
+
+                        
 // Create a watermark PDF
 const watermarkDoc = await PDFLib.PDFDocument.create();
 const logoImageBytes = logoBytes;
@@ -977,8 +993,21 @@ const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
     page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
+
+    // Draw QR code in bottom-right corner
+if (qrImage) {
+  const qrSize = 40;
+  page.drawImage(qrImage, {
+    x: page.getWidth() - qrSize - 10,
+    y: 10,
+    width: qrSize,
+    height: qrSize,
+    opacity: 0.4,
+  });
+}
 }
 
+                        
     // Save the document and prepare for download
     try {
         const finalBytes = await pdfDoc.save();
