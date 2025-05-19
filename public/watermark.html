@@ -982,7 +982,8 @@ for (let i = 0; i < rows; i++) {
                 rotate: PDFLib.degrees(45)
             });
         }
-    }
+    } 
+}
  // After all logo tiles are drawn, embed QR code once in bottom-right
 if (qrImage) {
   const qrSize = 40;
@@ -993,9 +994,7 @@ if (qrImage) {
     height: qrSize,
     opacity: 0.4,
   });
-}   
-}
-
+}  
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
