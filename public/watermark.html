@@ -982,7 +982,7 @@ if (selectedLender) {
     canvas.height = 150;
 
     ctx.fillStyle = 'rgba(50, 50, 50, 0.15)';
-    ctx.font = '10px Helvetica';
+    ctx.font = '16px Helvetica';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(selectedLender, canvas.width / 2, canvas.height / 2);
@@ -991,25 +991,17 @@ if (selectedLender) {
     const pngBytes = await fetch(dataUrl).then(res => res.arrayBuffer());
     const textImage = await watermarkDoc.embedPng(pngBytes);
 
-    const textDims = textImage.scale(1); // <-- you were missing this
-    const verticalSpacing = height / 5;
-    const centerX = (width - textDims.width) / 2;
-
-    for (let i = 1; i <= 4; i++) {
-        const y = verticalSpacing * i - textDims.height / 2;
-        watermarkPage.drawImage(textImage, {
-            x: centerX,
-            y: y,
-            width: textDims.width,
-            height: textDims.height
-        });
-    }
+    const textDims = textImage.scale(1);
+    watermarkPage.drawImage(textImage, {
+        x: (width - textDims.width) / 2,
+        y: (height - textDims.height) / 2,
+        width: textDims.width,
+        height: textDims.height
+    });
 }
-
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
-
 
 // Apply watermark to each page of the original PDF
 for (const page of pdfDoc.getPages()) {
