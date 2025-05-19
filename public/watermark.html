@@ -972,40 +972,6 @@ for (let i = 0; i < rows; i++) {
     }
 }
 
-// Embed the watermark page
-// Draw lender name as image if selected
-const selectedLender = document.getElementById("lenderSelect").value;
-if (selectedLender) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 150;
-
-    ctx.fillStyle = 'rgba(50, 50, 50, 0.15)';
-    ctx.font = '10px Helvetica';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(selectedLender, canvas.width / 2, canvas.height / 2);
-
-    const dataUrl = canvas.toDataURL('image/png');
-    const pngBytes = await fetch(dataUrl).then(res => res.arrayBuffer());
-    const textImage = await watermarkDoc.embedPng(pngBytes);
-
-    const textDims = textImage.scale(1); // <-- you were missing this
-    const verticalSpacing = height / 5;
-    const centerX = (width - textDims.width) / 2;
-
-    for (let i = 1; i <= 4; i++) {
-        const y = verticalSpacing * i - textDims.height / 2;
-        watermarkPage.drawImage(textImage, {
-            x: centerX,
-            y: y,
-            width: textDims.width,
-            height: textDims.height
-        });
-    }
-}
-
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
