@@ -937,65 +937,76 @@ try {
 }
 
                         
-// Create new watermark document with same size as original
+// Create a watermark PDF
 const watermarkDoc = await PDFLib.PDFDocument.create();
+const { width, height } = pdfDoc.getPages()[0].getSize();
 const watermarkPage = watermarkDoc.addPage([width, height]);
 
-// Calculate tiling layout
-const spacingX = 180;
-const spacingY = 150;
-const rows = Math.ceil(height / spacingY);
-const cols = Math.ceil(width / spacingX);
-const logoDims = logoImage.scale(0.35);
-const logoWidth = logoDims.width;
-const logoHeight = logoDims.height;
-
-// Tile the watermark logos diagonally
-for (let i = 0; i < rows; i++) {
-  for (let j = 0; j < cols; j++) {
-    if ((i + j) % 2 === 0) {
-      const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;
-      const x = j * spacingX + xOffset + 35;
-      const y = i * spacingY + 45;
-
-      watermarkPage.drawImage(logoImage, {
-        x,
-        y,
-        width: logoWidth,
-        height: logoHeight,
-        opacity: 0.25,
-        rotate: PDFLib.degrees(45)
-      });
-    }
-  }
+// Embed the logo into the watermark PDF
+let logoImage;
+try {
+    logoImage = await watermarkDoc.embedPng(logoBytes);
+} catch (e) {
+    console.warn("embedPng failed, trying embedJpg...");
+    logoImage = await watermarkDoc.embedJpg(logoBytes);
 }
 
-// ✅ Generate and embed QR code AFTER watermarkDoc exists
+// Logo sizing
+const fixedLogoWidth = 80;
+const logoWidth = fixedLogoWidth;
+const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
+
+// Grid layout for tiling
+const rows = 5;
+const cols = 5;
+const spacingX = width / cols;
+const spacingY = height / rows;
+
+// Draw watermark tiles
+for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+        if ((i + j) % 2 === 0) {
+            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;
+            const x = j * spacingX + xOffset + 35;
+            const y = i * spacingY + 45;
+
+            watermarkPage.drawImage(logoImage, {
+                x,
+                y,
+                width: logoWidth,
+                height: logoHeight,
+                opacity: 0.25,
+                rotate: PDFLib.degrees(45)
+            });
+        }
+    }
+}
+
+// ✅ Generate and embed QR code after watermarkDoc exists
 const today = new Date().toISOString().split("T")[0];
 const userEmail = profile.Email || "unknown";
 const lender = document.getElementById("lenderInput")?.value || "N/A";
 const qrText = `Protected by Aquamark.io\nDocument Owner: ${userEmail}\nLender: ${lender}\nDate: ${today}`;
 
 try {
-  const qrDataUrl = await QRCode.toDataURL(qrText, { margin: 0, scale: 4 });
-  const qrBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
-  const qrImage = await watermarkDoc.embedPng(qrBytes);
+    const qrDataUrl = await QRCode.toDataURL(qrText, { margin: 0, scale: 4 });
+    const qrBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
+    const qrImage = await watermarkDoc.embedPng(qrBytes);
 
-  // ✅ Draw QR code onto watermark overlay in bottom-right
-  const qrSize = 40;
-  watermarkPage.drawImage(qrImage, {
-    x: width - qrSize - 10,
-    y: 10,
-    width: qrSize,
-    height: qrSize,
-    opacity: 0.4
-  });
-
-  console.log("✅ QR code embedded into watermark overlay");
+    const qrSize = 40;
+    watermarkPage.drawImage(qrImage, {
+        x: width - qrSize - 10,
+        y: 10,
+        width: qrSize,
+        height: qrSize,
+        opacity: 0.4
+    });
+    console.log("✅ QR code embedded");
 } catch (err) {
-  console.error("❌ Failed to embed QR code:", err);
+    console.error("❌ QR code generation failed:", err);
 }
 
+// Save watermark overlay and embed it
 const watermarkPdfBytes = await watermarkDoc.save();
 const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
 const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
