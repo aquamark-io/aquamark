@@ -735,28 +735,13 @@ canvas.toBlob((blob) => {
             });
         }
 
-async function decryptPDF(file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("user_email", Outseta.nocode.user.email); // ✅ pulls actual email from session
-
-    const response = await fetch("https://aquamark-decrypt.onrender.com/watermark", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "Authorization": "Bearer aqua-api-watermark-10182013040420111015"
-        }
-    });
-
-    if (!response.ok) throw new Error("Decryption failed");
-    return await response.arrayBuffer();
-}
-
-    if (!response.ok) throw new Error("Decryption failed");
-
-    return await response.arrayBuffer();
-}
-
+        async function decryptPDF(file) {
+            const formData = new FormData();
+            formData.append("file", file);
+            const response = await fetch("https://aquamark-decrypt.onrender.com/decrypt", {
+                method: "POST",
+                body: formData,
+            });
             if (!response.ok) throw new Error("Decryption failed");
             return await response.arrayBuffer();
         }
