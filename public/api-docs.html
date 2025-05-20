@@ -249,129 +249,80 @@
 </header>
 <!-- Updated main content -->
 <main class="aqua-panel">
-<h1>API Documentation</h1>
-<p>This API allows Enterprise users to automate the watermarking process without using the portal UI.</p>
-<p><strong>IMPORTANT:</strong> Send one PDF at a time. Each file is processed individually to ensure accurate page usage tracking, watermark integrity, and fast response times.</p>
-<p>For requests containing multiple files, simply loop through and send each in a separate request. Batch uploads are not supported.</p>
-<h2>🔐 Authentication</h2>
-<p>Contact hey@aquamark.io for your API Key:</p>
-<pre><code>Authorization: Bearer YOUR_API_KEY_HERE</code></pre>
-<h2>📥 Endpoint: Watermark PDFs</h2>
-<p>Endpoint URL: https://aquamark-decrypt.onrender.com/watermark</p>
-<table>
-<thead>
-<tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
-</thead>
-<tbody>
-<tr><td>user_email</td><td>string</td><td>Yes</td><td>Your Aquamark account email</td></tr>
-<tr><td>file</td><td>file</td><td>Yes</td><td>One PDF at a time (max 25MB)</td></tr>
-</tbody>
-</table>
-<h3>cURL</h3>
-<pre><code>curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
+  <h1>API Documentation</h1>
+  <p>This API lets Enterprise users watermark PDF files automatically—no need to use the portal UI.</p>
+
+  <p><strong>Important:</strong> Upload one PDF at a time. Each request should include a single file for accurate tracking.</p>
+
+  <h2>🔐 Authentication</h2>
+  <p>Contact <a href="mailto:hey@aquamark.io">hey@aquamark.io</a> to request your API key.</p>
+  <pre><code>Authorization: Bearer YOUR_API_KEY</code></pre>
+
+  <h2>📥 Endpoint: Watermark PDFs</h2>
+  <p><strong>URL:</strong> https://aquamark-decrypt.onrender.com/watermark</p>
+  <p>If you're tracking submissions by lender, make sure to set the <code>lender</code> value before sending each file to Aquamark. To minimize storage clutter, most users send the protected file to the lender and then delete it—retaining only the original, unmarked version for internal use.</p>
+
+  <table>
+    <thead>
+      <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>user_email</td><td>string</td><td>Yes</td><td>Your Aquamark account email</td></tr>
+      <tr><td>file</td><td>file</td><td>Yes</td><td>One PDF file (max 25MB)</td></tr>
+      <tr><td>lender</td><td>string</td><td>No</td><td>Optional lender name to embed on the document</td></tr>
+    </tbody>
+  </table>
+
+  <h3>cURL</h3>
+  <pre><code>curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -F "user_email=john@example.com" \
   -F "file=@statement1.pdf" \
+  -F "lender=Fora Financial" \
   --output "statement1 - protected.pdf"
 </code></pre>
-<h3>🐍 Python</h3>
-<pre><code>import requests
 
-url = "https://aquamark-decrypt.onrender.com/watermark"
-headers = {"Authorization": "Bearer YOUR_API_KEY"}
-files = {
-    "file": open("statement.pdf", "rb"),
-    "user_email": (None, "john@example.com")
-}
+  <h2>📫 Postman Setup</h2>
+  <ul>
+    <li><strong>Method:</strong> POST</li>
+    <li><strong>URL:</strong> <code>https://aquamark-decrypt.onrender.com/watermark</code></li>
+    <li><strong>Headers:</strong> <code>Authorization: Bearer YOUR_API_KEY</code></li>
+    <li><strong>Body Type:</strong> form-data</li>
+    <li><strong>Body Fields:</strong>
+      <ul>
+        <li><code>user_email</code> (text) – your Aquamark account email</li>
+        <li><code>file</code> (file) – upload your PDF file</li>
+        <li><code>lender</code> (text, optional) – name of lender to embed</li>
+      </ul>
+    </li>
+  </ul>
 
-response = requests.post(url, headers=headers, files=files)
-with open("statement - protected.pdf", "wb") as f:
-    f.write(response.content)
-</code></pre>
-<h3>🟦 Node.js</h3>
-<pre><code>const axios = require("axios");
-const FormData = require("form-data");
-const fs = require("fs");
+  <h2>✅ Successful Response</h2>
+  <pre><code>[Returns a protected PDF file]</code></pre>
 
-const form = new FormData();
-form.append("file", fs.createReadStream("statement.pdf"));
-form.append("user_email", "john@example.com");
+  <h2>❗ Error Responses</h2>
+  <table>
+    <thead>
+      <tr><th>Code</th><th>Message</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="status-error">401</span></td><td>Invalid API key</td></tr>
+      <tr><td><span class="status-error">403</span></td><td>User not on Enterprise plan</td></tr>
+      <tr><td><span class="status-error">422</span></td><td>No logo stored for this user</td></tr>
+      <tr><td><span class="status-error">429</span></td><td>Usage limit exceeded</td></tr>
+      <tr><td><span class="status-error">500</span></td><td>Internal error</td></tr>
+    </tbody>
+  </table>
 
-axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
-  headers: {
-    ...form.getHeaders(),
-    Authorization: "Bearer YOUR_API_KEY"
-  },
-  responseType: "stream"
-}).then(res =&gt; {
-  res.data.pipe(fs.createWriteStream("statement - protected.pdf"));
-});
-</code></pre>
-<h3>🐘 PHP - cURL</h3>
-<pre><code>$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "https://aquamark-decrypt.onrender.com/watermark");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    "Authorization: Bearer YOUR_API_KEY"
-]);
-curl_setopt($ch, CURLOPT_POSTFIELDS, [
-    "user_email" =&gt; "john@example.com",
-    "file" =&gt; new CURLFile("statement.pdf")
-]);
-$response = curl_exec($ch);
-file_put_contents("statement - protected.pdf", $response);
-curl_close($ch);
-</code></pre>
-<h3>⚡ Zapier / No-Code</h3>
-<p>Use a "Webhooks by Zapier" action with the following configuration:</p>
-<ul>
-<li><strong>Method:</strong> POST</li>
-<li><strong>URL:</strong> https://aquamark-decrypt.onrender.com/watermark</li>
-<li><strong>Headers:</strong> Authorization: Bearer YOUR_API_KEY</li>
-<li><strong>Body Type:</strong> Form</li>
-<li><strong>Body Fields:</strong>
-<ul>
-<li><code>user_email</code>: your email</li>
-<li><code>file</code>: upload the PDF file</li>
-</ul>
-</li>
-</ul>
-<h3>Successful Response</h3>
-<pre><code>[Binary PDF file is returned with proper headers for direct download]</code></pre>
-<h2>📫 Postman Setup</h2>
-<p>Here's how to configure Postman to test the Aquamark API:</p>
-<ul>
-<li><strong>Method:</strong> POST</li>
-<li><strong>URL:</strong> <code>https://aquamark-decrypt.onrender.com/watermark</code></li>
-<li><strong>Headers:</strong> <code>Authorization: Bearer YOUR_API_KEY</code></li>
-<li><strong>Body:</strong> form-data</li>
-<ul>
-<li><strong>user_email</strong> (type: text) – your Aquamark account email</li>
-<li><strong>file</strong> (type: file) – select a PDF from your computer</li>
-</ul>
-</ul>
-<h2>❗ Error Responses</h2>
-<table>
-<thead>
-<tr><th>Code</th><th>Message</th></tr>
-</thead>
-<tbody>
-<tr><td><span class="status-error">401</span></td><td>Invalid API key</td></tr>
-<tr><td><span class="status-error">403</span></td><td>User not on Enterprise plan</td></tr>
-<tr><td><span class="status-error">422</span></td><td>No logo stored for this user</td></tr>
-<tr><td><span class="status-error">429</span></td><td>Usage limit exceeded</td></tr>
-<tr><td><span class="status-error">500</span></td><td>Internal error</td></tr>
-</tbody>
-</table>
-<h2>📝 Notes</h2>
-<ul>
-<li>Must be a subscriber on the Enterprise plan</li>
-<li>PDFs only, no document links</li>
-<li>Log into the portal and upload logo to your account</li>
-<li>For support and to request API key, email hey@aquamark.io</li>
-</ul>
+  <h2>📝 Notes</h2>
+  <ul>
+    <li>You must be on the Enterprise plan to access the API.</li>
+    <li>PDF only. One file per request.</li>
+    <li>Upload your watermark logo in the Aquamark portal before using the API.</li>
+    <li>Questions? Email <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></li>
+  </ul>
 </main>
+
 <!-- Original footer preserved -->
 <footer>
 <div class="footer-nav">
