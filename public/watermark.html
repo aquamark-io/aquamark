@@ -507,7 +507,8 @@
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<!-- ✅ QR Code Generator -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script>
         // Initialize Supabase client
         const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
@@ -906,6 +907,24 @@ canvas.toBlob((blob) => {
                         });
                     }
                 }
+                // ✅ Insert QR code after tiling logo
+const today = new Date().toISOString().split("T")[0];
+const lender = document.getElementById("lenderTag")?.value || "N/A";
+const payload = encodeURIComponent(`ProtectedByAquamark|${profile.Email}|${lender}|${today}`);
+const qrUrl = `https://aquamark.io/q.html?data=${payload}`;
+
+const qrDataUrl = await QRCode.toDataURL(qrUrl, { margin: 0, scale: 5 });
+const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
+const qrImage = await watermarkDoc.embedPng(qrImageBytes);
+
+const qrSize = 20;
+watermarkPage.drawImage(qrImage, {
+  x: width - qrSize - 15,
+  y: 15,
+  width: qrSize,
+  height: qrSize,
+  opacity: 0.4,
+});
             }
 
             const watermarkPdfBytes = await watermarkDoc.save();
