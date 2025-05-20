@@ -458,19 +458,26 @@
     <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
   </div>
 
-  <div class="logo-actions">
-    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-    <button class="change-logo-btn">Change Logo</button>
+ <div class="logo-actions">
+  <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
+  <button class="change-logo-btn">Change Logo</button>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const changeBtn = document.querySelector(".change-logo-btn");
-        if (changeBtn) {
-          changeBtn.addEventListener("click", uploadLogo);
-        }
-      });
-    </script>
-  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const changeBtn = document.querySelector(".change-logo-btn");
+      if (changeBtn) {
+        changeBtn.addEventListener("click", uploadLogo);
+      }
+    });
+  </script>
+</div>
+
+<!-- ✅ Insert the new input here -->
+<div class="upload-group">
+  <label for="lenderTag" style="font-weight: 600;">Tag Lender (optional)</label>
+  <input type="text" id="lenderTag" placeholder="Enter lender name" style="margin-top: 0.5rem; padding: 0.75rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
+</div>
+
 </div>
 
                 <div class="upload-group">
