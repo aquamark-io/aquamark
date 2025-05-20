@@ -886,33 +886,11 @@ if (data.pages_remaining < totalPagesNeeded) {
                     for (let result of validResults) {
     const { file, pdfBytes, pdfDoc, pageCount } = result;
 
-    let pdfBytes;
-
-    try {
-        // Attempt to load the PDF directly
-        const fileBuffer = await file.arrayBuffer();
-        await PDFLib.PDFDocument.load(fileBuffer, {
-            ignoreEncryption: false
-        });
-        pdfBytes = fileBuffer;
-    } catch (err) {
-        console.log("PDF may be encrypted, attempting to decrypt:", err);
-        status.textContent = "🥷 Decrypting protected file...";
-        try {
-            pdfBytes = await decryptPDF(file);
-        } catch (decryptErr) {
-            console.error("Decryption error:", decryptErr);
-            status.textContent = "❌ Could not process PDF. It may be corrupted or password-protected.";
-            return;
-        }
-    }
-
-    // Load the document and get its pages
-    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-        ignoreEncryption: true
-    });
-    const pages = pdfDoc.getPages();  // <-- Fixed: Initialization happens right here.
-
+const { file, pdfBytes, pdfDoc, pageCount } = result;
+const pages = pdfDoc.getPages();
+pagesWatermarked += pages.length;
+pagesWatermarkedElement.textContent = pagesWatermarked;
+       
     // Update the counter with the number of pages in this PDF
     pagesWatermarked += pages.length;
     pagesWatermarkedElement.textContent = pagesWatermarked;
