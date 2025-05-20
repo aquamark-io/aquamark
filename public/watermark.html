@@ -883,7 +883,9 @@ if (data.pages_remaining < totalPagesNeeded) {
                         throw new Error("Invalid logo data");
                     }
 
-                    for (let file of pdfFiles) {
+                    for (let result of validResults) {
+    const { file, pdfBytes, pdfDoc, pageCount } = result;
+
     let pdfBytes;
 
     try {
