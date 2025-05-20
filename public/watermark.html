@@ -460,8 +460,10 @@
                     </div>
                     <div class="logo-actions">
                   <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-                    <button class="change-logo-btn" onclick="uploadLogo()">Change Logo</button>
-                    </div>
+                    document.addEventListener("DOMContentLoaded", function () {
+  document.querySelector(".change-logo-btn").addEventListener("click", uploadLogo);
+});
+  </div>
                 </div>
 
                 <div class="upload-group">
@@ -802,7 +804,6 @@ canvas.toBlob((blob) => {
                 let totalPagesNeeded = 0;
 
                 for (let file of pdfFiles) {
-                    let pdfBytes;
                     let pdfBytes;
 let pdfDoc;
 try {
