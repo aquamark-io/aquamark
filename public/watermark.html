@@ -765,262 +765,178 @@ canvas.toBlob((blob) => {
     return await response.arrayBuffer();
 }
 
-        async function processFiles() {
-            const status = document.getElementById("status");
-            const pdfInput = document.getElementById("pdfInput");
-            const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
-            
-            // Check if we have a stored logo or a newly uploaded logo
-            let logoUrl = localStorage.getItem("aquamarkLogo");
-            const logoInput = document.getElementById("logoInput");
-            
-            if (!logoUrl && !logoInput.files[0]) {
-                status.textContent = "Please upload a logo first.";
-                return;
-            }
-            
-            if (pdfInput.files.length === 0) {
-                status.textContent = "Please upload at least one PDF.";
-                return;
-            }
-
-            status.textContent = "⏳ Processing...";
-
-            // Reset counter for this session
-            pagesWatermarked = 0;
-            pagesWatermarkedElement.textContent = pagesWatermarked;
-
-            try {
-                // Get current user email from Outseta
-                const profile = await Outseta.getUser();
-                if (!profile || !profile.Email) {
-                    throw new Error("Unable to retrieve user profile");
-                }
-
-                // Get current usage data
-                const { data, error } = await supabase
-                    .from('usage')
-                    .select('*')
-                    .eq('user_email', profile.Email)
-                    .single();
-
-                if (error) throw error;
-                if (!data) throw new Error("No usage data found for this user");
-
-
-                const pdfFiles = Array.from(pdfInput.files);
-
-// Step 1: Process all PDFs in parallel
-const processedPDFs = await Promise.allSettled(
-  pdfFiles.map(async (file) => {
-    let pdfBytes;
-    let pdfDoc;
-
-    try {
-      pdfBytes = await file.arrayBuffer();
-      pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: false });
-    } catch {
-      status.textContent = `🔐 Decrypting ${file.name}...`;
-      pdfBytes = await decryptPDF(file);
-      pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+      async function processFiles() {
+    const status = document.getElementById("status");
+    const pdfInput = document.getElementById("pdfInput");
+    const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
+    
+    let logoUrl = localStorage.getItem("aquamarkLogo");
+    const logoInput = document.getElementById("logoInput");
+    
+    if (!logoUrl && !logoInput.files[0]) {
+        status.textContent = "Please upload a logo first.";
+        return;
     }
-const pageCount = pdfDoc.getPageCount();
-
-    return {
-      file,
-      pdfBytes,
-      pdfDoc,
-      pageCount,
-    };
-  })
-);
-
-// Step 2: Filter successful results
-const validResults = processedPDFs
-  .filter(result => result.status === "fulfilled")
-  .map(result => result.value);
-
-// Step 3: Check page credit balance
-const totalPagesNeeded = validResults.reduce((sum, result) => sum + result.pageCount, 0);
-
-if (data.pages_remaining < totalPagesNeeded) {
-  status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
-
-  const upgradeBtn = document.getElementById("upgradePlanLink");
-  if (upgradeBtn) {
-    upgradeBtn.style.animation = 'pulse 1.5s infinite';
-    upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
-  }
-
-  return;
-}
-                // Get logo bytes - either from stored logo or newly uploaded logo
-                let logoBytes;
-                try {
-                    if (logoInput.files[0]) {
-                        // Use the just-uploaded logo
-                        logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
-                    } else if (logoUrl) {
-                        // Use the stored logo with error handling
-                        try {
-                            const response = await fetch(logoUrl + "?t=" + new Date().getTime());
-                            if (!response.ok) {
-                                throw new Error(`Failed to fetch logo: ${response.status}`);
-                            }
-                            logoBytes = await response.arrayBuffer();
-                        } catch (fetchError) {
-                            console.error("Error fetching stored logo:", fetchError);
-                            status.textContent = "❌ Couldn't load saved logo. Please upload a new one.";
-                            return;
-                        }
-                    } else {
-                        status.textContent = "❌ No logo available. Please upload a logo first.";
-                        return;
-                    }
-                    
-                    // Verify we have valid image data
-                    if (!logoBytes || logoBytes.byteLength === 0) {
-                        throw new Error("Invalid logo data");
-                    }
-
-                    for (let result of validResults) {
-    const { file, pdfBytes, pdfDoc, pageCount } = result;
-
-const { file, pdfBytes, pdfDoc, pageCount } = result;
-const pages = pdfDoc.getPages();
-pagesWatermarked += pages.length;
-pagesWatermarkedElement.textContent = pagesWatermarked;
-       
-    // Update the counter with the number of pages in this PDF
-    pagesWatermarked += pages.length;
-    pagesWatermarkedElement.textContent = pagesWatermarked;
-
-                        // Update usage in database
-console.log(`Processed ${pages.length} pages from ${file.name}`);
-
-    // Get the logo bytes and embed it
-    let embeddedLogo;
-
-    try {
-        embeddedLogo = await pdfDoc.embedPng(logoBytes);
-    } catch (pngError) {
-        console.warn("PNG embed failed, trying JPG...");
-        try {
-            embeddedLogo = await pdfDoc.embedJpg(logoBytes);
-        } catch (jpgError) {
-            console.error("Failed to embed logo:", jpgError);
-            status.textContent = "❌ Logo format not supported. Try a different file.";
-            return;
-        }
-    }
-
-    const logoDims = embeddedLogo.scale(0.35);
-
-// Create a watermark PDF
-const watermarkDoc = await PDFLib.PDFDocument.create();
-const logoImageBytes = logoBytes;
-let logoImage;
-try {
-    logoImage = await watermarkDoc.embedPng(logoImageBytes);
-} catch (e) {
-    console.warn("embedPng failed, trying embedJpg...");
-    logoImage = await watermarkDoc.embedJpg(logoImageBytes);
-}
-
-// Get the size of the first page to match the watermark
-const { width, height } = pdfDoc.getPages()[0].getSize();
-const watermarkPage = watermarkDoc.addPage([width, height]);
-
-// Define number of rows/columns to get ~15–20 logos
-const rows = 5;
-const cols = 5;
-
-// Logo size: smaller for more spacing
-const fixedLogoWidth = 80; // standard size in points
-const logoWidth = fixedLogoWidth;
-const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
-
-// Positioning
-const spacingX = width / cols;
-const spacingY = height / rows;
-
-// Diagonal checkerboard layout
-for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-        if ((i + j) % 2 === 0) {
-            const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;  // Only offset odd rows
-            const x = j * spacingX + xOffset + 35;
-            const y = i * spacingY + 45;
-
-            watermarkPage.drawImage(logoImage, {
-                x,
-                y,
-                width: logoWidth,
-                height: logoHeight,
-                opacity: 0.25,
-                rotate: PDFLib.degrees(45)
-            });
-        }
-    }
-}
-
-// Embed the watermark page
-const watermarkPdfBytes = await watermarkDoc.save();
-const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
-const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
-
-// Apply watermark to each page of the original PDF
-for (const page of pdfDoc.getPages()) {
-    page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
-}
-
-    // Save the document and prepare for download
-    try {
-        const finalBytes = await pdfDoc.save();
-        const blob = new Blob([finalBytes], { type: 'application/pdf' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        // Release object URL to prevent memory leaks
-        setTimeout(() => URL.revokeObjectURL(a.href), 100);
-    } catch (saveErr) {
-        console.error("Error saving PDF:", saveErr);
-        status.textContent = `❌ Error saving ${file.name}: ${saveErr.message}`;
+    
+    if (pdfInput.files.length === 0) {
+        status.textContent = "Please upload at least one PDF.";
         return;
     }
 
- // ✅ Update Supabase usage after processing all files
-const finalPagesUsed = data.pages_used + pagesWatermarked;
-const finalPagesRemaining = data.page_credits - finalPagesUsed;
+    status.textContent = "⏳ Processing...";
+    pagesWatermarked = 0;
+    pagesWatermarkedElement.textContent = pagesWatermarked;
 
-const { error: updateError } = await supabase
-    .from('usage')
-    .update({
-        pages_used: finalPagesUsed,
-        pages_remaining: finalPagesRemaining
-    })
-    .eq('user_email', profile.Email);
+    try {
+        const profile = await Outseta.getUser();
+        if (!profile || !profile.Email) throw new Error("Unable to retrieve user profile");
 
-if (updateError) throw updateError;
-console.log(`✅ Updated total usage for ${profile.Email}: +${pagesWatermarked} pages`);
-                        
+        const { data, error } = await supabase
+            .from('usage')
+            .select('*')
+            .eq('user_email', profile.Email)
+            .single();
+
+        if (error || !data) throw new Error("No usage data found for this user");
+
+        const pdfFiles = Array.from(pdfInput.files);
+
+        // ✅ Step 1: Process all PDFs in parallel
+        const processedPDFs = await Promise.allSettled(
+            pdfFiles.map(async (file) => {
+                let pdfBytes, pdfDoc;
+                try {
+                    pdfBytes = await file.arrayBuffer();
+                    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: false });
+                } catch {
+                    status.textContent = `🔐 Decrypting ${file.name}...`;
+                    pdfBytes = await decryptPDF(file);
+                    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+                }
+                const pageCount = pdfDoc.getPageCount();
+                return { file, pdfBytes, pdfDoc, pageCount };
+            })
+        );
+
+        // ✅ Step 2: Filter successful results
+        const validResults = processedPDFs
+            .filter(result => result.status === "fulfilled")
+            .map(result => result.value);
+
+        const totalPagesNeeded = validResults.reduce((sum, result) => sum + result.pageCount, 0);
+        if (data.pages_remaining < totalPagesNeeded) {
+            status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
+            const upgradeBtn = document.getElementById("upgradePlanLink");
+            if (upgradeBtn) {
+                upgradeBtn.style.animation = 'pulse 1.5s infinite';
+                upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
+            }
+            return;
+        }
+
+        // ✅ Step 3: Get logo bytes
+        let logoBytes;
+        if (logoInput.files[0]) {
+            logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
+        } else if (logoUrl) {
+            const response = await fetch(logoUrl + "?t=" + new Date().getTime());
+            if (!response.ok) throw new Error("Couldn't fetch saved logo");
+            logoBytes = await response.arrayBuffer();
+        } else {
+            throw new Error("No logo available");
+        }
+
+        // ✅ Step 4: Watermark and download each file
+        for (let result of validResults) {
+            const { file, pdfBytes, pdfDoc } = result;
+
+            const pages = pdfDoc.getPages();
+            pagesWatermarked += pages.length;
+            pagesWatermarkedElement.textContent = pagesWatermarked;
+
+            // Embed logo
+            let embeddedLogo;
+            try {
+                embeddedLogo = await pdfDoc.embedPng(logoBytes);
+            } catch {
+                embeddedLogo = await pdfDoc.embedJpg(logoBytes);
+            }
+            const logoDims = embeddedLogo.scale(0.35);
+
+            // Build watermark page
+            const watermarkDoc = await PDFLib.PDFDocument.create();
+            let logoImage;
+            try {
+                logoImage = await watermarkDoc.embedPng(logoBytes);
+            } catch {
+                logoImage = await watermarkDoc.embedJpg(logoBytes);
+            }
+
+            const { width, height } = pdfDoc.getPages()[0].getSize();
+            const watermarkPage = watermarkDoc.addPage([width, height]);
+            const rows = 5;
+            const cols = 5;
+            const fixedLogoWidth = 80;
+            const logoWidth = fixedLogoWidth;
+            const logoHeight = (logoWidth / logoImage.width) * logoImage.height;
+            const spacingX = width / cols;
+            const spacingY = height / rows;
+
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    if ((i + j) % 2 === 0) {
+                        const xOffset = (i % 2 === 0) ? 0 : spacingX / 2;
+                        const x = j * spacingX + xOffset + 35;
+                        const y = i * spacingY + 45;
+                        watermarkPage.drawImage(logoImage, {
+                            x,
+                            y,
+                            width: logoWidth,
+                            height: logoHeight,
+                            opacity: 0.25,
+                            rotate: PDFLib.degrees(45)
+                        });
+                    }
+                }
+            }
+
+            const watermarkPdfBytes = await watermarkDoc.save();
+            const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
+            const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
+            for (const page of pdfDoc.getPages()) {
+                page.drawPage(embeddedPage, { x: 0, y: 0, width, height });
+            }
+
+            // Save and download
+            const finalBytes = await pdfDoc.save();
+            const blob = new Blob([finalBytes], { type: 'application/pdf' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(a.href), 100);
+        }
+
+        // ✅ Step 5: Update Supabase usage
+        const finalPagesUsed = data.pages_used + pagesWatermarked;
+        const finalPagesRemaining = data.page_credits - finalPagesUsed;
+        const { error: updateError } = await supabase
+            .from('usage')
+            .update({ pages_used: finalPagesUsed, pages_remaining: finalPagesRemaining })
+            .eq('user_email', profile.Email);
+
+        if (updateError) throw updateError;
+
+        console.log(`✅ Updated total usage for ${profile.Email}: +${pagesWatermarked} pages`);
+        status.textContent = "✅ Done. Files downloaded.";
+    } catch (err) {
+        console.error("Error processing files:", err);
+        status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
+    }
 }
 
-status.textContent = "✅ Done. Files downloaded.";
-
-            } catch (err) {
-                console.error("Error processing files:", err);
-                status.textContent = `❌ An error occurred: ${err.message}. Please try again.`;
-            }
-                } catch (logoErr) {
-                    console.error("Logo processing error:", logoErr);
-                    status.textContent = `❌ Logo error: ${logoErr.message}. Please try a different image.`;
-                }
-        }
     </script>
     <script>
   document.addEventListener('DOMContentLoaded', function () {
