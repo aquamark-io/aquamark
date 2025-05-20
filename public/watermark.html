@@ -807,38 +807,53 @@ canvas.toBlob((blob) => {
                 if (error) throw error;
                 if (!data) throw new Error("No usage data found for this user");
 
-                // Calculate total pages needed for all PDFs
+
                 const pdfFiles = Array.from(pdfInput.files);
-                let totalPagesNeeded = 0;
 
-                for (let file of pdfFiles) {
-                    let pdfBytes;
-let pdfDoc;
-try {
-    pdfBytes = await file.arrayBuffer();
-    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: false });
-} catch (err) {
-    console.log("Encrypted. Decrypting...");
-    status.textContent = "🔐 Decrypting...";
-    pdfBytes = await decryptPDF(file);
-    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+// Step 1: Process all PDFs in parallel
+const processedPDFs = await Promise.allSettled(
+  pdfFiles.map(async (file) => {
+    let pdfBytes;
+    let pdfDoc;
+
+    try {
+      pdfBytes = await file.arrayBuffer();
+      pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: false });
+    } catch {
+      status.textContent = `🔐 Decrypting ${file.name}...`;
+      pdfBytes = await decryptPDF(file);
+      pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+    }
+const pageCount = pdfDoc.getPageCount();
+
+    return {
+      file,
+      pdfBytes,
+      pdfDoc,
+      pageCount,
+    };
+  })
+);
+
+// Step 2: Filter successful results
+const validResults = processedPDFs
+  .filter(result => result.status === "fulfilled")
+  .map(result => result.value);
+
+// Step 3: Check page credit balance
+const totalPagesNeeded = validResults.reduce((sum, result) => sum + result.pageCount, 0);
+
+if (data.pages_remaining < totalPagesNeeded) {
+  status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
+
+  const upgradeBtn = document.getElementById("upgradePlanLink");
+  if (upgradeBtn) {
+    upgradeBtn.style.animation = 'pulse 1.5s infinite';
+    upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
+  }
+
+  return;
 }
-totalPagesNeeded += pdfDoc.getPageCount();
-}
-
-                // Check if user has enough credits
-                if (data.pages_remaining < totalPagesNeeded) {
-                    status.textContent = `❌ Not enough page credits. Balance is ${data.pages_remaining}. Please upgrade your plan.`;
-                    
-                    // Highlight the upgrade button
-                    const upgradeBtn = document.getElementById('upgradePlanLink');
-                    if (upgradeBtn) {
-                        upgradeBtn.style.animation = 'pulse 1.5s infinite';
-                        upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
-                    }
-                    return;
-                }
-
                 // Get logo bytes - either from stored logo or newly uploaded logo
                 let logoBytes;
                 try {
