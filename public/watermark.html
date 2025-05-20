@@ -907,6 +907,8 @@ canvas.toBlob((blob) => {
                         });
                     }
                 }
+            }
+
                 // ✅ Insert QR code after tiling logo
 const today = new Date().toISOString().split("T")[0];
 const lender = document.getElementById("lenderTag")?.value || "N/A";
@@ -925,8 +927,7 @@ watermarkPage.drawImage(qrImage, {
   height: qrSize,
   opacity: 0.4,
 });
-            }
-
+            
             const watermarkPdfBytes = await watermarkDoc.save();
             const watermarkEmbed = await PDFLib.PDFDocument.load(watermarkPdfBytes);
             const [embeddedPage] = await pdfDoc.embedPages([watermarkEmbed.getPages()[0]]);
