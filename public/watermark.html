@@ -803,28 +803,19 @@ canvas.toBlob((blob) => {
 
                 for (let file of pdfFiles) {
                     let pdfBytes;
-                    try {
-                        // Try loading the file normally (unencrypted)
-                        const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer(), {
-                            ignoreEncryption: false
-                        });
-                        pdfBytes = await file.arrayBuffer();
-                        totalPagesNeeded += pdfDoc.getPageCount();
-                    } catch (err) {
-                        // Fallback to Render decryption
-                        status.textContent = "🔐 Decrypting encrypted file to check page count...";
-                        try {
-                            pdfBytes = await decryptPDF(file);
-                            const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, {
-                                ignoreEncryption: true
-                            });
-                            totalPagesNeeded += pdfDoc.getPageCount();
-                        } catch {
-                            status.textContent = "❌ Could not decrypt one of the uploaded PDFs.";
-                            return;
-                        }
-                    }
-                }
+                    let pdfBytes;
+let pdfDoc;
+try {
+    pdfBytes = await file.arrayBuffer();
+    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: false });
+} catch (err) {
+    console.log("Encrypted. Decrypting...");
+    status.textContent = "🔐 Decrypting...";
+    pdfBytes = await decryptPDF(file);
+    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+}
+totalPagesNeeded += pdfDoc.getPageCount();
+}
 
                 // Check if user has enough credits
                 if (data.pages_remaining < totalPagesNeeded) {
