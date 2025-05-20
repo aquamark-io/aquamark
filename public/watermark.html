@@ -453,18 +453,26 @@
                     <small>We do not store your PDF files. Downloads begin automatically after watermarking is complete.</small>
                 </div>
 
-                <div class="upload-group">
-                    <h2>Stored Logo</h2>
-                    <div class="logo-preview">
-                        <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
-                    </div>
-                    <div class="logo-actions">
-                  <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
-                    document.addEventListener("DOMContentLoaded", function () {
-  document.querySelector(".change-logo-btn").addEventListener("click", uploadLogo);
-});
+           <div class="upload-group">
+  <h2>Stored Logo</h2>
+  <div class="logo-preview">
+    <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
   </div>
-                </div>
+
+  <div class="logo-actions">
+    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" />
+    <button class="change-logo-btn">Change Logo</button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const changeBtn = document.querySelector(".change-logo-btn");
+        if (changeBtn) {
+          changeBtn.addEventListener("click", uploadLogo);
+        }
+      });
+    </script>
+  </div>
+</div>
 
                 <div class="upload-group">
                     <h2>☁️Drag & Drop File(s) or choose below</h2>
