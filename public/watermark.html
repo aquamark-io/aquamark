@@ -840,6 +840,8 @@ const processedPDFs = await Promise.allSettled(
         .map(async ({ value }) => {
             const { file, buffer } = value;
             const pdfDoc = await PDFLib.PDFDocument.load(buffer, { ignoreEncryption: true });
+            console.log("Decrypted PDF buffer size:", buffer.byteLength);
+console.log("First few bytes:", new Uint8Array(buffer).slice(0, 10));
             const pageCount = pdfDoc.getPageCount();
             return { file, pdfBytes: buffer, pdfDoc, pageCount };
         })
