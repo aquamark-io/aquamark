@@ -824,14 +824,22 @@ canvas.toBlob((blob) => {
         const processedPDFs = await Promise.allSettled(
             pdfFiles.map(async (file) => {
                 let pdfBytes, pdfDoc;
-                try {
-                    pdfBytes = await file.arrayBuffer();
-                    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: false });
-                } catch {
-                    status.textContent = `🔐 Decrypting ${file.name}...`;
-                    pdfBytes = await decryptPDF(file);
-                    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
-                }
+               pdfBytes = await file.arrayBuffer();
+const isEncrypted = (buffer) => new TextDecoder().decode(buffer.slice(0, 1024)).includes("/Encrypt");
+
+if (isEncrypted(pdfBytes)) {
+  status.textContent = `🔐 Decrypting ${file.name}...`;
+  const formData = new FormData();
+  formData.append("pdf", file);
+  const resp = await fetch("https://aquamark-decrypt-only.onrender.com/decrypt", {
+    method: "POST",
+    body: formData,
+  });
+  pdfBytes = await resp.arrayBuffer();
+}
+
+pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+
                 const pageCount = pdfDoc.getPageCount();
                 return { file, pdfBytes, pdfDoc, pageCount };
             })
