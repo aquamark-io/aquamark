@@ -820,24 +820,32 @@ canvas.toBlob((blob) => {
 
         const pdfFiles = Array.from(pdfInput.files);
 
-        // ✅ Step 1: Process all PDFs in parallel
-        const processedPDFs = await Promise.allSettled(
-            pdfFiles.map(async (file) => {
-                let pdfBytes, pdfDoc;
-                try {
-                    pdfBytes = await file.arrayBuffer();
-                    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: false });
-                } catch {
-                    status.textContent = `🔐 Decrypting ${file.name}...`;
-                    pdfBytes = await decryptPDF(file);
-                    pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
-                }
-                const pageCount = pdfDoc.getPageCount();
-                return { file, pdfBytes, pdfDoc, pageCount };
-            })
-        );
+      // Step 1: Preload or decrypt all files in parallel
+const decryptedResults = await Promise.allSettled(
+    pdfFiles.map(async (file) => {
+        try {
+            const buffer = await file.arrayBuffer();
+            return { file, buffer, decrypted: false };
+        } catch {
+            const buffer = await decryptPDF(file);
+            return { file, buffer, decrypted: true };
+        }
+    })
+);
 
-        // ✅ Step 2: Filter successful results
+// Step 2: Load PDFs from decrypted buffers
+const processedPDFs = await Promise.allSettled(
+    decryptedResults
+        .filter(r => r.status === 'fulfilled')
+        .map(async ({ value }) => {
+            const { file, buffer } = value;
+            const pdfDoc = await PDFLib.PDFDocument.load(buffer, { ignoreEncryption: true });
+            const pageCount = pdfDoc.getPageCount();
+            return { file, pdfBytes: buffer, pdfDoc, pageCount };
+        })
+);
+
+        // Filter successful results
         const validResults = processedPDFs
             .filter(result => result.status === "fulfilled")
             .map(result => result.value);
@@ -853,7 +861,7 @@ canvas.toBlob((blob) => {
             return;
         }
 
-        // ✅ Step 3: Get logo bytes
+        // Get logo bytes
         let logoBytes;
         if (logoInput.files[0]) {
             logoBytes = await normalizeImagePreserveAspect(logoInput.files[0]);
@@ -865,7 +873,7 @@ canvas.toBlob((blob) => {
             throw new Error("No logo available");
         }
 
-        // ✅ Step 4: Watermark and download each file
+        // Watermark and download each file
         for (let result of validResults) {
             const { file, pdfBytes, pdfDoc } = result;
 
@@ -919,7 +927,7 @@ canvas.toBlob((blob) => {
                 }
             }
 
-                // ✅ Insert QR code after tiling logo
+                // Insert QR code after tiling logo
 const today = new Date().toISOString().split("T")[0];
 const lender = document.getElementById("lenderTag")?.value || "N/A";
 const payload = encodeURIComponent(`ProtectedByAquamark|${profile.Email}|${lender}|${today}`);
@@ -957,7 +965,7 @@ watermarkPage.drawImage(qrImage, {
             setTimeout(() => URL.revokeObjectURL(a.href), 100);
         }
 
-        // ✅ Step 5: Update Supabase usage
+        // Update Supabase usage
         const finalPagesUsed = data.pages_used + pagesWatermarked;
         const finalPagesRemaining = data.page_credits - finalPagesUsed;
         const { error: updateError } = await supabase
