@@ -113,7 +113,7 @@
 <section class="hero">
   <img src="/salesforces-logo.png" alt="Salesforce Logo" />
   <h1>Aquamark + Salesforce</h1>
-  <p>No managed package — watermark PDFs instantly using our API + APEX</p>
+  <p>No managed package — watermark PDFs instantly using our API + APEX.</p>
 </section>
 
 <section class="section">
@@ -150,9 +150,7 @@ Custom_Object__c record = [
 ];
 String base64 = EncodingUtil.base64Encode(record.Uploaded_PDF__c);</code></pre>
 
-  <h2>Step 2: Call the Aquamark API</h2>
-  <p>Paste this method into an Apex class.</p>
-
+  <h2>Step 2: Call the Aquamark API (Basic)</h2>
   <pre><code>// Sample Apex Callout
 HttpRequest req = new HttpRequest();
 req.setEndpoint('https://salesforce-proxy-kth9.onrender.com/watermark');
@@ -171,10 +169,48 @@ Http http = new Http();
 HttpResponse res = http.send(req);
 System.debug(res.getBody());</code></pre>
 
+  <h2>Step 2: Call the Aquamark API (Multiple Lenders)</h2>
+  <pre><code>// Fetch PDF once
+ContentVersion cv = [
+  SELECT VersionData FROM ContentVersion 
+  WHERE FirstPublishLocationId = '006XXXXXXXXXXXX'
+  ORDER BY CreatedDate DESC LIMIT 1
+];
+String base64File = EncodingUtil.base64Encode(cv.VersionData);
+
+// Loop through Submissions
+List<Submission__c> submissions = [
+  SELECT Id, Lender_Name__c FROM Submission__c 
+  WHERE Opportunity__c = '006XXXXXXXXXXXX'
+];
+
+for (Submission__c submission : submissions) {
+  HttpRequest req = new HttpRequest();
+  req.setEndpoint('https://salesforce-proxy-kth9.onrender.com/watermark');
+  req.setMethod('POST');
+  req.setHeader('Content-Type', 'application/json');
+
+  Map<String, Object> body = new Map<String, Object>{
+    'user_email' => 'you@example.com',
+    'file' => base64File,
+    'lender' => submission.Lender_Name__c
+  };
+
+  req.setBody(JSON.serialize(body));
+  Http http = new Http();
+  HttpResponse res = http.send(req);
+
+  Attachment a = new Attachment();
+  a.Name = 'Watermarked - ' + submission.Lender_Name__c + '.pdf';
+  a.Body = EncodingUtil.base64Decode(res.getBody());
+  a.ParentId = submission.Id;
+  insert a;
+}</code></pre>
+
   <p><strong>🔁 Note:</strong> This proxy simplifies authentication and formatting by automatically converting base64 to multipart and attaching your watermark. No API key needed when calling from Salesforce.</p>
 
   <h2>Step 3: Use Anywhere</h2>
-  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the workflow in one click.</p>
+  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the protection workflow in one click.</p>
 
   <h2>Optional: Save the Protected File in Salesforce</h2>
   <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
