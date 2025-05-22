@@ -150,7 +150,7 @@ Custom_Object__c record = [
 ];
 String base64 = EncodingUtil.base64Encode(record.Uploaded_PDF__c);</code></pre>
 
-  <h2>Step 2: Call the Aquamark API (Basic)</h2>
+  <h2>Step 2A: Call the Aquamark API (Basic)</h2>
   <pre><code>// Sample Apex Callout
 HttpRequest req = new HttpRequest();
 req.setEndpoint('https://salesforce-proxy-kth9.onrender.com/watermark');
@@ -169,7 +169,7 @@ Http http = new Http();
 HttpResponse res = http.send(req);
 System.debug(res.getBody());</code></pre>
 
-  <h2>Step 2: Call the Aquamark API (Multiple Lenders)</h2>
+  <h2>Step 2B: Call the Aquamark API (Multiple Lenders)</h2>
   <pre><code>// Fetch PDF once
 ContentVersion cv = [
   SELECT VersionData FROM ContentVersion 
@@ -210,16 +210,7 @@ for (Submission__c submission : submissions) {
   <p><strong>🔁 Note:</strong> This proxy simplifies authentication and formatting by automatically converting base64 to multipart and attaching your watermark. No API key needed when calling from Salesforce.</p>
 
   <h2>Step 3: Use Anywhere</h2>
-  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the protection workflow in one click.</p>
-
-  <h2>Optional: Save the Protected File in Salesforce</h2>
-  <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
-  <pre><code>// Save returned file as an Attachment
-Attachment a = new Attachment();
-a.Name = 'Watermarked - protected.pdf';
-a.Body = EncodingUtil.base64Decode(res.getBody());
-a.ParentId = 'RECORD_ID_HERE';
-insert a;</code></pre>
+  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the workflow in one click.</p>
 
   <h2>Optional: Auto-Delete File After Submission</h2>
   <p>To reduce storage usage, you can auto-delete the file after a short delay. Set up a Scheduled Apex job like this:</p>
