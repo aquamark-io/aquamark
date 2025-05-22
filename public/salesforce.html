@@ -30,26 +30,26 @@
     }
     .hero {
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 80px 20px 10px;
     }
     .hero img {
-      height: 64px;
-      margin-bottom: 20px;
+      height: 90px;
+      margin-bottom: 24px;
     }
     .hero h1 {
       font-size: 42px;
       font-weight: 800;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .hero p {
       font-size: 20px;
       color: #555;
       max-width: 680px;
-      margin: 0 auto;
+      margin: 0 auto 30px;
     }
     .section {
       max-width: 800px;
-      margin: 120px auto;
+      margin: 100px auto;
       padding: 0 20px;
     }
     .section h2 {
@@ -111,7 +111,7 @@
 </header>
 
 <section class="hero">
-  <img src="/salesforces-logo.png" alt="Salesforce Logo" />
+  <img src="/salesforce-logo.png" alt="Salesforce Logo" />
   <h1>Aquamark + Salesforce</h1>
   <p>No managed package needed — instantly watermark PDFs using our API + APEX.</p>
 </section>
@@ -125,7 +125,7 @@
   </ul>
 
   <h2>Step 1: Prepare Your PDF</h2>
-  <p>Use <code>EncodingUtil.base64Encode(fileBody)</code> to convert your PDF to a base64 string.</p>
+  <p>Use <code>EncodingUtil.base64Encode(file.Body)</code> to convert your PDF to a base64 string.</p>
 
   <h2>Step 2: Call the Aquamark API</h2>
   <p>Paste this method into an Apex class. No extra setup required.</p>
@@ -150,7 +150,7 @@ HttpResponse res = http.send(req);
 System.debug(res.getBody());</code></pre>
 
   <h2>Step 3: Use Anywhere</h2>
-  <p>You can call this method from a Flow using Apex Actions, from a trigger, or any custom logic.</p>
+  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic.</p>
 
   <h2>Optional: Save the Protected File in Salesforce</h2>
   <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
