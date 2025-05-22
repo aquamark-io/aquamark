@@ -143,6 +143,36 @@ System.debug(res.getBody());</code></pre>
   <a class="btn" href="/api-docs.html">View Full API Docs</a>
 </section>
 
+  <h2>⚙️ Requirements</h2>
+  <ul style="color:#444; margin-left: 1.5rem; line-height: 1.6;">
+    <li>API access must be enabled for your Salesforce org</li>
+    <li>Add this URL in Remote Site Settings: <code>https://aquamark-decrypt.onrender.com</code></li>
+    <li>PDF must be converted to Base64 using <code>EncodingUtil.base64Encode(file.Body)</code></li>
+  </ul>
+
+  <h2>📎 Optional: Save the Protected File in Salesforce</h2>
+  <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
+  <pre><code>// Save returned file as an Attachment
+Attachment a = new Attachment();
+a.Name = 'Watermarked - protected.pdf';
+a.Body = EncodingUtil.base64Decode(res.getBody());
+a.ParentId = 'RECORD_ID_HERE';
+insert a;
+</code></pre>
+
+  <h2>🧹 Optional: Auto-Delete File After Submission</h2>
+  <p>To reduce storage usage, you can auto-delete the file after a short delay. Set up a Scheduled Apex job like this:</p>
+  <pre><code>// Example: Delete after 1 hour (custom class required)
+global class DeleteOldFiles implements Schedulable {
+  global void execute(SchedulableContext sc) {
+    List&lt;Attachment&gt; filesToDelete = [SELECT Id FROM Attachment WHERE CreatedDate &lt;= :System.now().addMinutes(-60)];
+    delete filesToDelete;
+  }
+}
+// Schedule via Setup > Apex Classes > Schedule Apex
+</code></pre>
+
+
 <footer>
   &copy; 2025 Aquamark. All rights reserved. • <a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a>
 </footer>
