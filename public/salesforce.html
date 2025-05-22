@@ -111,9 +111,9 @@
 </header>
 
 <section class="hero">
-  <img src="/salesforce-logo.png" alt="Salesforce Logo" />
+  <img src="/salesforces-logo.png" alt="Salesforce Logo" />
   <h1>Aquamark + Salesforce</h1>
-  <p>No managed package — watermark PDFs instantly using our API + APEX.</p>
+  <p>No managed package — watermark PDFs instantly using our API + APEX</p>
 </section>
 
 <section class="section">
@@ -121,7 +121,6 @@
   <ul>
     <li>API access must be enabled for your Salesforce org</li>
     <li>Add this URL in Remote Site Settings: <code>https://salesforce-proxy-kth9.onrender.com</code></li>
-    <li>PDF must be converted to Base64 using <code>EncodingUtil.base64Encode(file.Body)</code></li>
   </ul>
 
   <h2>Step 1: Find and Convert Your PDF</h2>
@@ -152,7 +151,7 @@ Custom_Object__c record = [
 String base64 = EncodingUtil.base64Encode(record.Uploaded_PDF__c);</code></pre>
 
   <h2>Step 2: Call the Aquamark API</h2>
-  <p>Paste this method into an Apex class. No extra setup required.</p>
+  <p>Paste this method into an Apex class.</p>
 
   <pre><code>// Sample Apex Callout
 HttpRequest req = new HttpRequest();
@@ -175,7 +174,7 @@ System.debug(res.getBody());</code></pre>
   <p><strong>🔁 Note:</strong> This proxy simplifies authentication and formatting by automatically converting base64 to multipart and attaching your watermark. No API key needed when calling from Salesforce.</p>
 
   <h2>Step 3: Use Anywhere</h2>
-  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the protection workflow in one click.</p>
+  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the workflow in one click.</p>
 
   <h2>Optional: Save the Protected File in Salesforce</h2>
   <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
