@@ -148,7 +148,22 @@ Custom_Object__c record = [
   SELECT Uploaded_PDF__c FROM Custom_Object__c 
   WHERE Id = 'RECORD_ID'
 ];
-String base64 = EncodingUtil.base64Encode(record.Uploaded_PDF__c);</code></pre>
+String base64 = EncodingUtil.base64Encode(record.Uploaded_PDF__c);
+
+// 4. Files linked via ContentDocumentLink (most reliable)
+ContentDocumentLink link = [
+  SELECT ContentDocumentId 
+  FROM ContentDocumentLink 
+  WHERE LinkedEntityId = 'RECORD_ID' 
+  ORDER BY CreatedDate DESC LIMIT 1
+];
+ContentVersion version = [
+  SELECT VersionData FROM ContentVersion 
+  WHERE ContentDocumentId = :link.ContentDocumentId 
+  ORDER BY CreatedDate DESC LIMIT 1
+];
+String base64 = EncodingUtil.base64Encode(version.VersionData);</code></pre>
+
   <p><strong>📌 Note:</strong> The examples above use common patterns. Your org may store files differently — for example, in <code>ContentDocumentLink</code>, <code>Notes & Attachments</code>, or on a related custom object. Adjust the query and field names accordingly.</p>
 
   <h2>Step 2A: Call the Aquamark API (Basic)</h2>
