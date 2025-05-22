@@ -111,9 +111,9 @@
 </header>
 
 <section class="hero">
-  <img src="/salesforces-logo.png" alt="Salesforce Logo" />
+  <img src="/salesforce-logo.png" alt="Salesforce Logo" />
   <h1>Aquamark + Salesforce</h1>
-  <p>No managed package — watermark PDFs instantly using our API + APEX in minutes</p>
+  <p>No managed package — watermark PDFs instantly using our API + APEX.</p>
 </section>
 
 <section class="section">
@@ -121,10 +121,35 @@
   <ul>
     <li>API access must be enabled for your Salesforce org</li>
     <li>Add this URL in Remote Site Settings: <code>https://salesforce-proxy-kth9.onrender.com</code></li>
+    <li>PDF must be converted to Base64 using <code>EncodingUtil.base64Encode(file.Body)</code></li>
   </ul>
 
-  <h2>Step 1: Prepare Your PDF</h2>
-  <p>Use <code>EncodingUtil.base64Encode(file.Body)</code> to convert your PDF to a base64 string.</p>
+  <h2>Step 1: Find and Convert Your PDF</h2>
+  <p>Most users store their files in one of these locations:</p>
+  <pre><code>// 1. Files tab (ContentVersion)
+ContentVersion cv = [
+  SELECT VersionData FROM ContentVersion 
+  WHERE Title = 'bank_sample' 
+  AND FirstPublishLocationId = 'RECORD_ID'
+  ORDER BY CreatedDate DESC LIMIT 1
+];
+String base64 = EncodingUtil.base64Encode(cv.VersionData);
+
+// 2. Classic Attachment
+Attachment att = [
+  SELECT Body FROM Attachment 
+  WHERE ParentId = 'RECORD_ID' 
+  AND Name = 'bank_sample.pdf' 
+  ORDER BY CreatedDate DESC LIMIT 1
+];
+String base64 = EncodingUtil.base64Encode(att.Body);
+
+// 3. Custom object field
+Custom_Object__c record = [
+  SELECT Uploaded_PDF__c FROM Custom_Object__c 
+  WHERE Id = 'RECORD_ID'
+];
+String base64 = EncodingUtil.base64Encode(record.Uploaded_PDF__c);</code></pre>
 
   <h2>Step 2: Call the Aquamark API</h2>
   <p>Paste this method into an Apex class. No extra setup required.</p>
@@ -137,7 +162,7 @@ req.setHeader('Content-Type', 'application/json');
 
 Map<String, Object> body = new Map<String, Object>{
   'user_email' => 'you@example.com',
-  'file' => 'BASE64_ENCODED_PDF',
+  'file' => base64,
   'lender' => 'Fora Financial' // optional
 };
 
@@ -150,7 +175,7 @@ System.debug(res.getBody());</code></pre>
   <p><strong>🔁 Note:</strong> This proxy simplifies authentication and formatting by automatically converting base64 to multipart and attaching your watermark. No API key needed when calling from Salesforce.</p>
 
   <h2>Step 3: Use Anywhere</h2>
-  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic.</p>
+  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the protection workflow in one click.</p>
 
   <h2>Optional: Save the Protected File in Salesforce</h2>
   <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
