@@ -149,6 +149,7 @@ Custom_Object__c record = [
   WHERE Id = 'RECORD_ID'
 ];
 String base64 = EncodingUtil.base64Encode(record.Uploaded_PDF__c);</code></pre>
+  <p><strong>📌 Note:</strong> The examples above use common patterns. Your org may store files differently — for example, in <code>ContentDocumentLink</code>, <code>Notes & Attachments</code>, or on a related custom object. Adjust the query and field names accordingly.</p>
 
   <h2>Step 2A: Call the Aquamark API (Basic)</h2>
   <pre><code>// Sample Apex Callout
@@ -208,6 +209,7 @@ for (Submission__c submission : submissions) {
 }</code></pre>
 
   <p><strong>🔁 Note:</strong> This proxy simplifies authentication and formatting by automatically converting base64 to multipart and attaching your watermark. No API key needed when calling from Salesforce.</p>
+  <p><strong>⚠️ Reminder:</strong> Your org may use different object or field names (e.g., <code>Lender__c</code>, <code>Opportunity_Lookup__c</code>, etc.). Adjust the sample code accordingly.</p>
 
   <h2>Step 3: Use Anywhere</h2>
   <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic. Most users also add a custom “Aquamark” button to their Opportunity or custom object layouts to trigger the workflow in one click.</p>
