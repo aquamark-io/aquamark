@@ -243,6 +243,33 @@ global class DeleteOldFiles implements Schedulable {
 // Schedule via Setup > Apex Classes > Schedule Apex</code></pre>
 
   <a class="btn" href="/api-docs.html">View Full API Docs</a>
+
+  <h2>Optional: Alternate File Storage Options</h2>
+<p>By default, watermarked files are saved back to the originating record as <code>Attachment</code> objects. However, you may prefer to store them in a different location depending on your workflow:</p>
+
+<ul>
+  <li><strong>ContentDocument:</strong> Store as enhanced files under the “Files” tab for better preview and sharing features.</li>
+  <li><strong>Custom Object Field:</strong> Save the binary data to a custom field (e.g., <code>Watermarked_File__c</code>) if you're managing submissions programmatically.</li>
+  <li><strong>External Storage:</strong> Forward the file to an external service like SharePoint, AWS, or Google Drive via middleware if you're archiving documents outside Salesforce.</li>
+</ul>
+
+<p>Here’s how to attach to ContentDocument instead of Attachment:</p>
+<pre><code>// Create ContentVersion record
+ContentVersion cv = new ContentVersion();
+cv.Title = 'Watermarked - ' + submission.Lender_Name__c;
+cv.PathOnClient = 'Watermarked - ' + submission.Lender_Name__c + '.pdf';
+cv.VersionData = EncodingUtil.base64Decode(res.getBody());
+insert cv;
+
+// Link to parent record
+ContentDocumentLink cdl = new ContentDocumentLink();
+cdl.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId;
+cdl.LinkedEntityId = submission.Id;
+cdl.ShareType = 'V';
+insert cdl;
+</code></pre>
+
+<p><strong>📌 Tip:</strong> Choose your storage method based on access needs, file visibility, and retention policies. Custom workflows may require additional permissions or sharing logic.</p>
 </section>
 
 <footer>
