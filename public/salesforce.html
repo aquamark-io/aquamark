@@ -84,6 +84,11 @@
       border-radius: 8px;
       text-decoration: none;
     }
+    ul {
+      margin-left: 1.5rem;
+      color: #444;
+      line-height: 1.6;
+    }
     footer {
       background: #f3e8ff;
       padding: 40px 20px;
@@ -112,6 +117,13 @@
 </section>
 
 <section class="section">
+  <h2>⚙️ Requirements</h2>
+  <ul>
+    <li>API access must be enabled for your Salesforce org</li>
+    <li>Add this URL in Remote Site Settings: <code>https://aquamark-decrypt.onrender.com</code></li>
+    <li>PDF must be converted to Base64 using <code>EncodingUtil.base64Encode(file.Body)</code></li>
+  </ul>
+
   <h2>Step 1: Prepare Your PDF</h2>
   <p>Use <code>EncodingUtil.base64Encode(fileBody)</code> to convert your PDF to a base64 string.</p>
 
@@ -125,10 +137,10 @@ req.setMethod('POST');
 req.setHeader('Content-Type', 'application/json');
 req.setHeader('Authorization', 'Bearer YOUR_API_KEY'); // Replace with your key
 
-Map&lt;String, Object&gt; body = new Map&lt;String, Object&gt;{
-  'user_email' =&gt; 'you@example.com',
-  'file' =&gt; 'BASE64_ENCODED_PDF',
-  'lender' =&gt; 'Fora Financial' // optional
+Map<String, Object> body = new Map<String, Object>{
+  'user_email' => 'you@example.com',
+  'file' => 'BASE64_ENCODED_PDF',
+  'lender' => 'Fora Financial' // optional
 };
 
 req.setBody(JSON.serialize(body));
@@ -140,16 +152,6 @@ System.debug(res.getBody());</code></pre>
   <h2>Step 3: Use Anywhere</h2>
   <p>You can call this method from a Flow using Apex Actions, from a trigger, or any custom logic.</p>
 
-  <a class="btn" href="/api-docs.html">View Full API Docs</a>
-</section>
-
-  <h2>⚙️ Requirements</h2>
-  <ul style="color:#444; margin-left: 1.5rem; line-height: 1.6;">
-    <li>API access must be enabled for your Salesforce org</li>
-    <li>Add this URL in Remote Site Settings: <code>https://aquamark-decrypt.onrender.com</code></li>
-    <li>PDF must be converted to Base64 using <code>EncodingUtil.base64Encode(file.Body)</code></li>
-  </ul>
-
   <h2>📎 Optional: Save the Protected File in Salesforce</h2>
   <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
   <pre><code>// Save returned file as an Attachment
@@ -157,21 +159,21 @@ Attachment a = new Attachment();
 a.Name = 'Watermarked - protected.pdf';
 a.Body = EncodingUtil.base64Decode(res.getBody());
 a.ParentId = 'RECORD_ID_HERE';
-insert a;
-</code></pre>
+insert a;</code></pre>
 
   <h2>🧹 Optional: Auto-Delete File After Submission</h2>
   <p>To reduce storage usage, you can auto-delete the file after a short delay. Set up a Scheduled Apex job like this:</p>
   <pre><code>// Example: Delete after 1 hour (custom class required)
 global class DeleteOldFiles implements Schedulable {
   global void execute(SchedulableContext sc) {
-    List&lt;Attachment&gt; filesToDelete = [SELECT Id FROM Attachment WHERE CreatedDate &lt;= :System.now().addMinutes(-60)];
+    List<Attachment> filesToDelete = [SELECT Id FROM Attachment WHERE CreatedDate <= :System.now().addMinutes(-60)];
     delete filesToDelete;
   }
 }
-// Schedule via Setup > Apex Classes > Schedule Apex
-</code></pre>
+// Schedule via Setup > Apex Classes > Schedule Apex</code></pre>
 
+  <a class="btn" href="/api-docs.html">View Full API Docs</a>
+</section>
 
 <footer>
   &copy; 2025 Aquamark. All rights reserved. • <a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a>
@@ -179,4 +181,3 @@ global class DeleteOldFiles implements Schedulable {
 
 </body>
 </html>
-
