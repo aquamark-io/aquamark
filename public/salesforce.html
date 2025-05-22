@@ -1,183 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Salesforce Setup | Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
+  <meta charset="UTF-8">
+  <title>Aquamark + Salesforce</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
+      margin: 0;
+      padding: 40px;
+      background: #fff;
       color: #111;
-    }
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 60px;
-    }
-    .logo {
-      height: 38px;
-    }
-    .nav-links a {
-      margin-left: 25px;
-      text-decoration: none;
-      color: #666;
-      font-size: 15px;
-    }
-    .hero {
-      text-align: center;
-      padding: 60px 20px 30px;
-    }
-    .hero img {
-      height: 120px;
-      margin-bottom: 10px;
-    }
-    .hero h1 {
-      font-size: 42px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .hero p {
-      font-size: 20px;
-      color: #555;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      margin: 0 auto 20px;
-    }
-    .section {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-    .section h2 {
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
-    .section p {
-      font-size: 16px;
-      color: #444;
-      margin-bottom: 20px;
       line-height: 1.6;
     }
+    img.logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 120px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+    p.subhead {
+      text-align: center;
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+    .section {
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 90%;
+    }
     pre {
-      background-color: #f5f5f5;
-      padding: 20px;
+      background: #f4f4f4;
+      padding: 16px;
       border-radius: 8px;
       overflow-x: auto;
     }
-    code {
-      font-family: monospace;
-      font-size: 14px;
-      color: #d63384;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 30px;
-      background-color: #3e5eff;
-      color: #fff;
-      font-weight: 600;
-      font-size: 16px;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-    }
     ul {
-      margin-left: 1.5rem;
-      color: #444;
-      line-height: 1.6;
+      padding-left: 20px;
     }
-    footer {
-      background: #f3e8ff;
-      padding: 40px 20px;
-      text-align: center;
-      color: #777;
-      font-size: 14px;
-      margin-top: 80px;
+    li {
+      margin-bottom: 6px;
     }
   </style>
 </head>
 <body>
-
-<header class="topbar">
-  <a href="/index.html">
-    <img class="logo" src="/logo-full-black-blue.png" alt="Aquamark Logo" />
-  </a>
-</header>
-
-<section class="hero">
-  <img src="/salesforces-logo.png" alt="Salesforce Logo" />
+  <img src="salesforce-logo.png" alt="Salesforce Logo" class="logo">
   <h1>Aquamark + Salesforce</h1>
-  <p>No managed package — watermark PDFs instantly using our API + APEX</p>
-</section>
+  <p class="subhead">No managed package needed — instantly watermark PDFs using our API + APEX.</p>
 
-<section class="section">
-  <h2>Requirements</h2>
-  <ul>
-    <li>API access must be enabled for your Salesforce org</li>
-    <li>Add this URL in Remote Site Settings: <code>https://aquamark-decrypt.onrender.com</code></li>
-    <li>PDF must be converted to Base64 using <code>EncodingUtil.base64Encode(file.Body)</code></li>
-  </ul>
+  <div class="section">
+    <h2>Requirements</h2>
+    <ul>
+      <li>API access must be enabled for your Salesforce org</li>
+      <li>Add this URL in Remote Site Settings: <code>https://salesforce-proxy-kth9.onrender.com</code></li>
+      <li>PDF must be converted to Base64 using <code>EncodingUtil.base64Encode(fileBody)</code></li>
+    </ul>
 
-  <h2>Step 1: Prepare Your PDF</h2>
-  <p>Use <code>EncodingUtil.base64Encode(file.Body)</code> to convert your PDF to a base64 string.</p>
+    <h2>Step 1: Prepare Your PDF</h2>
+    <p>Use <code>EncodingUtil.base64Encode(fileBody)</code> to convert your PDF to a base64 string.</p>
 
-  <h2>Step 2: Call the Aquamark API</h2>
-  <p>Paste this method into an Apex class. No extra setup required.</p>
+    <h2>Step 2: Call the Aquamark API</h2>
+    <p>Paste this method into an Apex class. No extra setup required.</p>
 
-  <pre><code>// Sample Apex Callout
+    <pre><code>// Sample Apex Callout
 HttpRequest req = new HttpRequest();
-req.setEndpoint('https://aquamark-decrypt.onrender.com/watermark');
+req.setEndpoint('https://salesforce-proxy-kth9.onrender.com/watermark');
 req.setMethod('POST');
 req.setHeader('Content-Type', 'application/json');
-req.setHeader('Authorization', 'Bearer YOUR_API_KEY'); // Replace with your key
 
-Map<String, Object> body = new Map<String, Object>{
-  'user_email' => 'you@example.com',
-  'file' => 'BASE64_ENCODED_PDF',
-  'lender' => 'Fora Financial' // optional
+Map&lt;String, Object&gt; body = new Map&lt;String, Object&gt;{
+  'user_email' =&gt; 'you@example.com',
+  'file' =&gt; 'BASE64_ENCODED_PDF',
+  'lender' =&gt; 'Optional Lender Name'
 };
 
 req.setBody(JSON.serialize(body));
-
 Http http = new Http();
 HttpResponse res = http.send(req);
-System.debug(res.getBody());</code></pre>
 
-  <h2>Step 3: Use Anywhere</h2>
-  <p>Call from a Flow using Apex Actions, from a trigger, or any custom logic.</p>
+System.debug('Response status: ' + res.getStatus());
+System.debug('Response body: ' + res.getBody());</code></pre>
 
-  <h2>Optional: Save the Protected File in Salesforce</h2>
-  <p>To attach the watermarked file to a record (e.g. Opportunity, Custom Object), use:</p>
-  <pre><code>// Save returned file as an Attachment
-Attachment a = new Attachment();
-a.Name = 'Watermarked - protected.pdf';
-a.Body = EncodingUtil.base64Decode(res.getBody());
-a.ParentId = 'RECORD_ID_HERE';
-insert a;</code></pre>
-
-  <h2>Optional: Auto-Delete File After Submission</h2>
-  <p>To reduce storage usage, you can auto-delete the file after a short delay. Set up a Scheduled Apex job like this:</p>
-  <pre><code>// Example: Delete after 1 hour (custom class required)
-global class DeleteOldFiles implements Schedulable {
-  global void execute(SchedulableContext sc) {
-    List<Attachment> filesToDelete = [SELECT Id FROM Attachment WHERE CreatedDate <= :System.now().addMinutes(-60)];
-    delete filesToDelete;
-  }
-}
-// Schedule via Setup > Apex Classes > Schedule Apex</code></pre>
-
-  <a class="btn" href="/api-docs.html">View Full API Docs</a>
-</section>
-
-<footer>
-  &copy; 2025 Aquamark. All rights reserved. • <a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a>
-</footer>
-
+    <p><strong>🔁 Note:</strong> This proxy simplifies authentication and formatting by automatically converting base64 to multipart and attaching your watermark. No API key needed when calling from Salesforce.</p>
+  </div>
 </body>
 </html>
