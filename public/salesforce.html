@@ -33,13 +33,13 @@
       padding: 80px 20px 40px;
     }
     .hero img {
-      height: 60px;
+      height: 64px;
       margin-bottom: 20px;
     }
     .hero h1 {
-      font-size: 44px;
+      font-size: 42px;
       font-weight: 800;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .hero p {
       font-size: 20px;
@@ -47,24 +47,105 @@
       max-width: 680px;
       margin: 0 auto;
     }
+    .section {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    .section h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .section p {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: monospace;
+      font-size: 14px;
+      color: #d63384;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      background-color: #3e5eff;
+      color: #fff;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    footer {
+      background: #f3e8ff;
+      padding: 40px 20px;
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      margin-top: 80px;
+    }
   </style>
 </head>
 <body>
 
-  <header class="topbar">
-    <img class="logo" src="/logo-full-black-blue.png" alt="Aquamark Logo" />
-    <nav class="nav-links">
-      <a href="/index.html#pricing">Pricing</a>
-      <a href="/index.html#faq">FAQ</a>
-      <a href="/login.html">Sign In</a>
-    </nav>
-  </header>
+<header class="topbar">
+  <img class="logo" src="/logo-full-black-blue.png" alt="Aquamark Logo" />
+  <nav class="nav-links">
+    <a href="/index.html#pricing">Pricing</a>
+    <a href="/index.html#faq">FAQ</a>
+    <a href="/login.html">Sign In</a>
+  </nav>
+</header>
 
-  <section class="hero">
-    <img src="/salesforces-logo.png" alt="Salesforce Logo" />
-    <h1>Use Aquamark with Salesforce</h1>
-<p>
-  No managed package required. We make it simple with an Apex HTTP callout to our open API — works with any Flow or trigger.
-</p>
+<section class="hero">
+  <img src="/salesforce-logo.png" alt="Salesforce Logo" />
+  <h1>Use Aquamark with Salesforce</h1>
+  <p>No managed package needed — just one Apex method. Instantly watermark PDFs using our API.</p>
+</section>
 
-  </section>
+<section class="section">
+  <h2>Step 1: Prepare Your PDF</h2>
+  <p>Use <code>EncodingUtil.base64Encode(fileBody)</code> to convert your PDF to a base64 string.</p>
+
+  <h2>Step 2: Call the Aquamark API</h2>
+  <p>Paste this method into an Apex class. No extra setup required.</p>
+
+  <pre><code>// Sample Apex Callout
+HttpRequest req = new HttpRequest();
+req.setEndpoint('https://aquamark-decrypt.onrender.com/watermark');
+req.setMethod('POST');
+req.setHeader('Content-Type', 'application/json');
+req.setHeader('Authorization', 'Bearer YOUR_API_KEY'); // Replace with your key
+
+Map&lt;String, Object&gt; body = new Map&lt;String, Object&gt;{
+  'user_email' =&gt; 'you@example.com',
+  'file' =&gt; 'BASE64_ENCODED_PDF',
+  'lender' =&gt; 'Fora Financial' // optional
+};
+
+req.setBody(JSON.serialize(body));
+
+Http http = new Http();
+HttpResponse res = http.send(req);
+System.debug(res.getBody());</code></pre>
+
+  <h2>Step 3: Use Anywhere</h2>
+  <p>You can call this method from a Flow using Apex Actions, from a trigger, or any custom logic.</p>
+
+  <a class="btn" href="/api-docs.html">View Full API Docs</a>
+</section>
+
+<footer>
+  &copy; 2025 Aquamark. All rights reserved. • <a href="/terms.html">Terms</a> • <a href="/privacy.html">Privacy</a>
+</footer>
+
+</body>
+</html>
