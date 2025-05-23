@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aquamark for Lenders</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    header {
+      background: #1e1e2f;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .section {
+      padding: 3rem 1.5rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    pre {
+      background: #f3f3f3;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    .button {
+      display: inline-block;
+      background: #e6007a;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    footer {
+      background: #fafafa;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Invisible Underwriter Tagging</h1>
+    <p>Hold your team accountable — every submission, silently tracked.</p>
+  </header>
+
+  <section class="section">
+    <h2>The Problem</h2>
+    <p>
+      Backdooring doesn’t just happen with brokers. It happens inside your walls — when underwriters forward files to outside funders. And when it does, there’s no way to trace it.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>The Solution</h2>
+    <p>
+      <strong>Invisible watermarking tied to your underwriter’s name.</strong><br />
+      Aquamark lets you embed a hidden tag in every file — without changing how your team works.
+    </p>
+    <ul>
+      <li>🔒 Embedded directly into the file</li>
+      <li>👀 Not visible to brokers, funders, or merchants</li>
+      <li>📌 Tracks which underwriter handled the submission</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>How It Works</h2>
+    <p>Plug in via API or direct trigger — works with any CRM or internal system.</p>
+    <p><strong>POST</strong> <code>https://lender-tag.aquamark.io/tag</code></p>
+    <pre>{
+  "pdf_url": "https://yourcrm.com/files/file123.pdf",
+  "underwriter_name": "Jessica M.",
+  "lender_id": "LEND-042",
+  "callback_url": "https://yourcrm.com/aquamark/receive"
+}</pre>
+    <p>We return the watermarked file to your system. That’s it.</p>
+    <ul>
+      <li>✅ No portal</li>
+      <li>✅ No logins</li>
+      <li>✅ No installs</li>
+      <li>✅ No UI changes</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Why Lenders Use This</h2>
+    <ul>
+      <li><strong>Accountability</strong> — trace who handled every deal</li>
+      <li><strong>Deterrence</strong> — invisible watermark discourages rerouting</li>
+      <li><strong>Protection</strong> — defend broker relationships with transparency</li>
+      <li><strong>Flexibility</strong> — built to integrate anywhere</li>
+    </ul>
+  </section>
+
+  <section class="section" style="text-align: center;">
+    <h2>Get Started</h2>
+    <p>We offer a dedicated server and unlimited tagging for lenders on our Enterprise Plan.</p>
+    <a class="button" href="mailto:christina@aquamark.io">Contact Us to Activate</a>
+  </section>
+
+  <footer>
+    &copy; 2025 Aquamark.io &mdash; Invisible. Secure. Traceable.
+  </footer>
+</body>
+</html>
