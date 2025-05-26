@@ -52,16 +52,31 @@
       margin-top: 10px;
       padding-left: 20px;
     }
+
+    .home-btn {
+      display: inline-block;
+      margin-bottom: 30px;
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      background-color: #f3e8ff;
+      color: #000;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+
+  <a href="/" class="home-btn">← Back to Home</a>
 
   <h1>Salesforce Integration Setup</h1>
   <p>This guide walks you through connecting your Salesforce instance to Aquamark in just a few steps.</p>
 
   <div class="step">
     <h2>1. Sign up for the Aquamark Enterprise Plan</h2>
-    <p>Go to <a href="https://www.aquamark.io">Aquamark.io</a> and subscribe to the <span class="highlight">Enterprise</span> plan.</p>
+    <p>Go to <a href="https://www.aquamark.io/signup.html" target="_blank">Aquamark.io</a> and subscribe to the <span class="highlight">Enterprise</span> plan, and add your logo in the portal.</p>
   </div>
 
   <div class="step">
@@ -71,11 +86,11 @@
 
   <div class="step">
     <h2>3. Add Remote Site Settings in Salesforce</h2>
-    <p>In Salesforce Setup, search for <span class="highlight">Remote Site Settings</span> and add the following URLs:</p>
+    <p>In Salesforce Setup, search for <span class="highlight">Remote Site Settings</span> and add the URLs provided for:</p>
     <ul>
-      <li>Aquamark Decrypt Server</li>
-      <li>Aquamark Proxy Server</li>
-      <li>Supabase Storage (for logo access)</li>
+      <li>Decryption Server</li>
+      <li>Proxy Server</li>
+      <li>Logo Access</li>
     </ul>
   </div>
 
@@ -85,19 +100,19 @@
     <p>Edit the following in the code:</p>
     <ul>
       <li>Your <span class="highlight">user_email</span></li>
-      <li>The <span class="highlight">lender list</span> (optional customization)</li>
+      <li>The <span class="highlight">lender list</span></li>
     </ul>
   </div>
 
   <div class="step">
     <h2>5. Add the Visualforce Page</h2>
-    <p>Create a new Visualforce Page and paste in the provided code. Name it something like <strong>Aquamark</strong>.</p>
+    <p>Create a new Visualforce Page and paste in the provided code. Name it <strong>Aquamark</strong>.</p>
   </div>
 
   <div class="step">
     <h2>6. Embed the Visualforce Page into Opportunity Layout</h2>
     <p>In the Opportunity page layout editor, drag in the new Visualforce section.</p>
-    <p>Adjust the section height to ensure the full interface is visible.</p>
+    <p>Now you're ready to go.</p>
   </div>
 
 </body>
