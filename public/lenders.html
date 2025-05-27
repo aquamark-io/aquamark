@@ -16,17 +16,17 @@
     .hero {
       background-color: #f9f9ff;
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 50px 20px 30px;
     }
 
     .hero h1 {
-      font-size: 48px;
+      font-size: 42px;
       font-weight: 800;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .hero p {
-      font-size: 20px;
+      font-size: 18px;
       color: #555;
       max-width: 700px;
       margin: 0 auto;
@@ -34,20 +34,21 @@
 
     .section {
       padding: 40px 20px;
-      max-width: 900px;
+      max-width: 880px;
       margin: 0 auto;
     }
 
     .section h2 {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 800;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .section p {
       font-size: 17px;
       color: #444;
-      line-height: 1.7;
+      line-height: 1.6;
+      margin-bottom: 16px;
     }
 
     .section ul {
@@ -55,68 +56,65 @@
       font-size: 17px;
       line-height: 1.8;
       color: #444;
+      margin: 0 0 16px;
     }
 
     pre {
       background: #f3f3f3;
       padding: 16px;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow-x: auto;
       font-size: 15px;
+      margin-bottom: 16px;
     }
 
     code {
       font-family: monospace;
       background: #f3f3f3;
-      padding: 3px 6px;
+      padding: 2px 5px;
       border-radius: 4px;
     }
 
     .cta-section {
       background-color: #eef2ff;
       text-align: center;
-      padding: 50px 20px;
+      padding: 50px 20px 30px;
     }
 
     .cta-section h2 {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 800;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .cta-section p {
       font-size: 17px;
       color: #444;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
     }
 
     .button {
       background-color: #e6007a;
       color: #fff;
-      font-size: 17px;
-      font-weight: 600;
-      padding: 14px 28px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .back-home {
-      text-align: center;
-      padding: 30px 20px 10px;
-    }
-
-    .back-home a {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #3e5eff;
-      color: #fff;
       font-size: 16px;
       font-weight: 600;
-      text-decoration: none;
+      padding: 12px 24px;
+      border: none;
       border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button.secondary {
+      background-color: #3e5eff;
     }
 
     footer {
@@ -132,6 +130,7 @@
       .hero h1 {
         font-size: 32px;
       }
+
       .hero p,
       .section p,
       .section ul,
@@ -141,7 +140,18 @@
 
       .section h2,
       .cta-section h2 {
-        font-size: 26px;
+        font-size: 24px;
+      }
+
+      .button {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+
+      .button-group {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -205,12 +215,11 @@
   <section class="cta-section">
     <h2>Get Started</h2>
     <p>We offer a dedicated server and unlimited tagging for lenders on our Enterprise Plan.</p>
-    <a class="button" href="mailto:christina@aquamark.io">Contact Us to Activate</a>
+    <div class="button-group">
+      <a class="button" href="mailto:christina@aquamark.io">Contact Us to Activate</a>
+      <a class="button secondary" href="https://www.aquamark.io">← Back to Home</a>
+    </div>
   </section>
-
-  <div class="back-home">
-    <a href="https://www.aquamark.io">← Back to Home</a>
-  </div>
 
   <footer>
     <img alt="Aquamark Logo" src="/logo-icon-black-blue.png" style="width:40px; margin-bottom:10px;"/><br/>
