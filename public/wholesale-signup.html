@@ -2,69 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wholesale Signup - Aquamark</title>
-  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wholesale User Signup | Aquamark</title>
+  <link rel="stylesheet" href="/styles.css" />
   <style>
     body {
-      font-family: Inter, sans-serif;
-      background-color: #f9fafb;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 20px;
-      text-align: center;
+      font-family: 'Inter', sans-serif;
+      background: #f9fafb;
+      padding: 2rem;
     }
-
-    img.logo {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 20px;
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     }
-
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      color: #111827;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      color: #374151;
-    }
-
-    a.signup-button {
-      display: inline-block;
-      background-color: #3b82f6;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 8px;
-      text-decoration: none;
+      font-size: 2rem;
       font-weight: 600;
-      font-size: 1rem;
+      margin-bottom: 1rem;
     }
-
-    a.signup-button:hover {
-      background-color: #2563eb;
-    }
-
-    .back-link {
-      margin-top: 24px;
-      font-size: 0.9rem;
-      color: #3b82f6;
-      text-decoration: none;
+    p {
+      margin-bottom: 2rem;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <img src="/logo-icon-black-blue.png" alt="Aquamark Logo" class="logo" />
-  <h1>Wholesale Partner Program</h1>
-  <p>Access enterprise-level features at a discounted partner rate.</p>
-  <a class="signup-button" href="https://aquamark.outseta.com/auth?widgetMode=register&planUid=EWBrPrWr&planPaymentTerm=month&skipPlanOptions=true#o-anonymous" target="_blank">
-    Sign Up Now
-  </a>
-  <a class="back-link" href="/">← Back to Home</a>
+  <div class="container">
+    <h1>Wholesale User Signup</h1>
+    <p>Partners: Please complete the form below to onboard a new user. Be sure to enter your assigned Partner ID exactly as provided.</p>
+
+    <div data-o-form="1"
+         data-form-title="Wholesale User Signup"
+         data-success-url="/thank-you"
+         data-fields='[
+           {"name": "FirstName", "label": "First Name", "required": true},
+           {"name": "LastName", "label": "Last Name", "required": true},
+           {"name": "Email", "label": "Email", "type": "email", "required": true},
+           {"name": "Company", "label": "Company", "required": true},
+           {"name": "Partner ID", "label": "Partner ID", "required": true}
+         ]'>
+    </div>
+  </div>
+
+  <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 </body>
 </html>
