@@ -840,28 +840,6 @@ if (isEncrypted(pdfBytes)) {
 
 pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
 
-// ✅ Extract business name and address
-let business_name = '';
-let business_address = '';
-try {
-  const pdfText = await pdfDoc.getText(); // pdf-lib ≥ 1.17.1
-  const nameMatch = pdfText.match(/(?:Business Name|DBA|Account Holder):?\s*(.*)/i);
-  const addressMatch = pdfText.match(/\d{2,6}\s+[\w\s]+\s+(Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Drive|Dr)/i);
-  business_name = nameMatch?.[1]?.trim() || '';
-  business_address = addressMatch?.[0]?.trim() || '';
-} catch (err) {
-  console.warn("Couldn't extract business data:", err);
-}
-
-// ✅ Insert into Supabase Datalake table
-try {
-  await supabase.from('datalake').insert([{ business_name, business_address }]);
-  console.log("✅ Business info saved to Datalake");
-} catch (err) {
-  console.warn("❌ Failed to insert business info:", err.message);
-}
-
-
                 const pageCount = pdfDoc.getPageCount();
                 return { file, pdfBytes, pdfDoc, pageCount };
             })
