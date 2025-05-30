@@ -1,8 +1,7 @@
 import * as pdfjsLib from 'https://cdn.skypack.dev/pdfjs-dist@3.11.174/es5/build/pdf.js';
-import Tesseract from 'https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js';
+import * as Tesseract from 'https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.esm.min.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/es5/build/pdf.worker.js';
-
 
 export async function extractBusinessDataFromPDF(pdfBytes, supabase) {
   try {
