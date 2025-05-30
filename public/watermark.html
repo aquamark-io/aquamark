@@ -825,9 +825,6 @@ canvas.toBlob((blob) => {
             pdfFiles.map(async (file) => {
                 let pdfBytes, pdfDoc;
                pdfBytes = await file.arrayBuffer();
-                if (window.extractBusinessDataFromPDF) {
-  await window.extractBusinessDataFromPDF(pdfBytes, supabase);
-}
 const isEncrypted = (buffer) => new TextDecoder().decode(buffer.slice(0, 1024)).includes("/Encrypt");
 
 if (isEncrypted(pdfBytes)) {
@@ -1003,9 +1000,5 @@ watermarkPage.drawImage(qrImage, {
     });
   });
 </script>
-<script type="module" src="ocr-loader.js"></script>
-  import { extractBusinessDataFromPDF } from './ocr.js';
-  window.extractBusinessDataFromPDF = extractBusinessDataFromPDF;
-</script>    
 </body>
 </html>
