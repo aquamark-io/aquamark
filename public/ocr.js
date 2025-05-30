@@ -1,6 +1,22 @@
-import * as pdfjsLib from 'https://cdn.skypack.dev/pdfjs-dist@3.11.174/es5/build/pdf.js';
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/es5/build/pdf.worker.js';
+// Load PDF.js dynamically to avoid build issues
+let pdfjsLib;
+async function loadPDFJS() {
+  if (!pdfjsLib) {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    document.head.appendChild(script);
+    
+    await new Promise((resolve, reject) => {
+      script.onload = () => {
+        pdfjsLib = window.pdfjsLib;
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        resolve();
+      };
+      script.onerror = reject;
+    });
+  }
+  return pdfjsLib;
+}
 
 // Load Tesseract dynamically
 let Tesseract;
@@ -23,8 +39,8 @@ async function loadTesseract() {
 
 export async function extractBusinessDataFromPDF(pdfBytes, supabase) {
   try {
-    // Load Tesseract
-    await loadTesseract();
+    // Load both libraries
+    await Promise.all([loadPDFJS(), loadTesseract()]);
     
     // Load the PDF
     const loadingTask = pdfjsLib.getDocument({ data: pdfBytes });
