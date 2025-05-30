@@ -1,7 +1,7 @@
 import Tesseract from 'https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js';
-import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.mjs';
+import * as pdfjsLib from 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.mjs';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.mjs';
 
 export async function extractBusinessDataFromPDF(pdfBytes, supabase) {
   try {
@@ -10,24 +10,18 @@ export async function extractBusinessDataFromPDF(pdfBytes, supabase) {
     const pdf = await loadingTask.promise;
     const page = await pdf.getPage(1);
 
-    // Set up canvas to render page
+    // Render first page to canvas
     const viewport = page.getViewport({ scale: 1.5 });
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     canvas.height = viewport.height;
     canvas.width = viewport.width;
 
-    const renderContext = {
-      canvasContext: context,
-      viewport: viewport
-    };
+    await page.render({ canvasContext: context, viewport }).promise;
 
-    await page.render(renderContext).promise;
-
-    // Get image data for OCR
     const dataUrl = canvas.toDataURL();
 
-    // Run Tesseract OCR
+    // Run OCR
     const result = await Tesseract.recognize(dataUrl, 'eng', {
       logger: m => console.log(m)
     });
@@ -35,7 +29,7 @@ export async function extractBusinessDataFromPDF(pdfBytes, supabase) {
     const text = result.data.text;
     console.log("📄 OCR Text:", text);
 
-    // Extract business name and address from OCR text
+    // Extract fields
     const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 3);
     const business_name = lines[0] || '';
     const addressLine = lines.find(line =>
@@ -43,10 +37,9 @@ export async function extractBusinessDataFromPDF(pdfBytes, supabase) {
     );
     const business_address = addressLine || '';
 
-    // Insert into Supabase
     await supabase.from('datalake').insert([{ business_name, business_address }]);
-    console.log("✅ Inserted to datalake:", business_name, business_address);
+    console.log("✅ Datalake insert:", business_name, business_address);
   } catch (err) {
-    console.error("❌ OCR failed:", err);
+    console.error("❌ OCR error:", err);
   }
 }
