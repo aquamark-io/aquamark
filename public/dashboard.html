@@ -788,112 +788,13 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 
 };
 
-
-// Track subscription start and renewal dates in Supabase
-async function updateSubscriptionDates(profile, subscription) {
-  const startDate = subscription.StartDate?.split("T")[0] || null;
-  const renewalDate = subscription.RenewalDate?.split("T")[0] || null;
-
-  const { error } = await supabase
-    .from("usage")
-    .update({
-      subscription_start_date: startDate,
-      subscription_renewal_date: renewalDate
-    })
-    .eq("user_email", profile.Email);
-
-  if (error) {
-    console.error("❌ Failed to update subscription dates:", error);
-  } else {
-    console.log("✅ Subscription dates updated");
-  }
-}
-
-Outseta.on("subscription.create", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
-Outseta.on("subscription.update", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
 </script>
 
-<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options">
-// Track subscription start and renewal dates in Supabase
-async function updateSubscriptionDates(profile, subscription) {
-  const startDate = subscription.StartDate?.split("T")[0] || null;
-  const renewalDate = subscription.RenewalDate?.split("T")[0] || null;
-
-  const { error } = await supabase
-    .from("usage")
-    .update({
-      subscription_start_date: startDate,
-      subscription_renewal_date: renewalDate
-    })
-    .eq("user_email", profile.Email);
-
-  if (error) {
-    console.error("❌ Failed to update subscription dates:", error);
-  } else {
-    console.log("✅ Subscription dates updated");
-  }
-}
-
-Outseta.on("subscription.create", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
-Outseta.on("subscription.update", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
-</script>
+<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
 <!-- Supabase integration -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-// Track subscription start and renewal dates in Supabase
-async function updateSubscriptionDates(profile, subscription) {
-  const startDate = subscription.StartDate?.split("T")[0] || null;
-  const renewalDate = subscription.RenewalDate?.split("T")[0] || null;
-
-  const { error } = await supabase
-    .from("usage")
-    .update({
-      subscription_start_date: startDate,
-      subscription_renewal_date: renewalDate
-    })
-    .eq("user_email", profile.Email);
-
-  if (error) {
-    console.error("❌ Failed to update subscription dates:", error);
-  } else {
-    console.log("✅ Subscription dates updated");
-  }
-}
-
-Outseta.on("subscription.create", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
-Outseta.on("subscription.update", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
@@ -1028,39 +929,6 @@ Outseta.on("subscription.update", async (params) => {
       }
     });
   });
-
-// Track subscription start and renewal dates in Supabase
-async function updateSubscriptionDates(profile, subscription) {
-  const startDate = subscription.StartDate?.split("T")[0] || null;
-  const renewalDate = subscription.RenewalDate?.split("T")[0] || null;
-
-  const { error } = await supabase
-    .from("usage")
-    .update({
-      subscription_start_date: startDate,
-      subscription_renewal_date: renewalDate
-    })
-    .eq("user_email", profile.Email);
-
-  if (error) {
-    console.error("❌ Failed to update subscription dates:", error);
-  } else {
-    console.log("✅ Subscription dates updated");
-  }
-}
-
-Outseta.on("subscription.create", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
-Outseta.on("subscription.update", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
 </script>
 
 <script>
@@ -1702,39 +1570,6 @@ console.error("Error getting Outseta user:", err);
 
 });
 
-});
-
-
-// Track subscription start and renewal dates in Supabase
-async function updateSubscriptionDates(profile, subscription) {
-  const startDate = subscription.StartDate?.split("T")[0] || null;
-  const renewalDate = subscription.RenewalDate?.split("T")[0] || null;
-
-  const { error } = await supabase
-    .from("usage")
-    .update({
-      subscription_start_date: startDate,
-      subscription_renewal_date: renewalDate
-    })
-    .eq("user_email", profile.Email);
-
-  if (error) {
-    console.error("❌ Failed to update subscription dates:", error);
-  } else {
-    console.log("✅ Subscription dates updated");
-  }
-}
-
-Outseta.on("subscription.create", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
-});
-
-Outseta.on("subscription.update", async (params) => {
-  const profile = await Outseta.getUser();
-  const sub = params?.subscription;
-  if (profile && sub) await updateSubscriptionDates(profile, sub);
 });
 
 </script>
