@@ -840,6 +840,48 @@ if (isEncrypted(pdfBytes)) {
 
 pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
 
+// ✅ Extract business name and address from Page 1
+let business_name = '';
+let business_address = '';
+
+try {
+  const page1Text = await pdfDoc.getPages()[0].getText(); // extract only page 1 text
+  console.log("📄 Page 1 text:\n", page1Text);
+
+  const lines = page1Text
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 3);
+
+  if (lines.length > 0) {
+    business_name = lines[0]; // assume first line is business name
+  }
+
+  const addressLine = lines.find(line =>
+    /\d{2,6}[\s\w,.-]+(Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Drive|Dr)/i.test(line)
+  );
+
+  if (addressLine) {
+    business_address = addressLine;
+  }
+
+  console.log("📌 Business Name:", business_name);
+  console.log("📌 Business Address:", business_address);
+} catch (err) {
+  console.warn("⚠️ Error extracting text:", err);
+}
+
+// ✅ Save to Supabase
+try {
+  await supabase
+    .from('datalake')
+    .insert([{ business_name, business_address }]);
+  console.log("✅ Inserted into datalake");
+} catch (err) {
+  console.warn("❌ Supabase insert failed:", err.message);
+}
+
+
                 const pageCount = pdfDoc.getPageCount();
                 return { file, pdfBytes, pdfDoc, pageCount };
             })
