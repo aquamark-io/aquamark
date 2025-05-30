@@ -1,10 +1,31 @@
 import * as pdfjsLib from 'https://cdn.skypack.dev/pdfjs-dist@3.11.174/es5/build/pdf.js';
-import Tesseract from 'https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/es5/build/pdf.worker.js';
 
+// Load Tesseract dynamically
+let Tesseract;
+async function loadTesseract() {
+  if (!Tesseract) {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    document.head.appendChild(script);
+    
+    await new Promise((resolve, reject) => {
+      script.onload = () => {
+        Tesseract = window.Tesseract;
+        resolve();
+      };
+      script.onerror = reject;
+    });
+  }
+  return Tesseract;
+}
+
 export async function extractBusinessDataFromPDF(pdfBytes, supabase) {
   try {
+    // Load Tesseract
+    await loadTesseract();
+    
     // Load the PDF
     const loadingTask = pdfjsLib.getDocument({ data: pdfBytes });
     const pdf = await loadingTask.promise;
