@@ -523,9 +523,19 @@
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.3/dist/tesseract.min.js"></script>
+
 <!-- ✅ QR Code Generator -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script>
+
+ const stateDisclaimers = {
+  CA: "⚠️ California Notice: This document may contain financial data protected under California Consumer Privacy Act (CCPA).",
+  NY: "⚠️ New York Disclosure: Ensure proper compliance with NYDFS regulations before sharing this file.",
+  TX: "⚠️ Texas Advisory: This file may be subject to TFC Title 4, Subtitle B. Proceed accordingly.",
+  // Add more as needed
+};
+       
         // Initialize Supabase client
         const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
@@ -770,6 +780,34 @@ canvas.toBlob((blob) => {
             });
         }
 
+async function extractStateFromPDF(pdfBytes) {
+  const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+  const firstPage = pdfDoc.getPages()[0];
+  const { width, height } = firstPage.getSize();
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+
+  const pdfjsLib = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/build/pdf.min.mjs');
+  const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
+  const page = await pdf.getPage(1);
+  const viewport = page.getViewport({ scale: 1 });
+  await page.render({ canvasContext: ctx, viewport }).promise;
+
+  const { data: { text } } = await Tesseract.recognize(canvas, 'eng');
+  const stateMatch = text.match(/\b([A-Z]{2})\b\s*\d{5}/); // e.g., CA 90210
+
+  if (stateMatch) {
+    console.log("Detected state:", stateMatch[1]);
+    return stateMatch[1];
+  } else {
+    console.log("State not detected.");
+    return null;
+  }
+}
+        
        async function decryptPDF(file) {
     const profile = await Outseta.getUser(); // ✅ fetches logged-in user
     const userEmail = profile.Email;
@@ -793,6 +831,15 @@ canvas.toBlob((blob) => {
       async function processFiles() {
     const status = document.getElementById("status");
     const pdfInput = document.getElementById("pdfInput");
+    // Run OCR on first file (first page only)
+let detectedState = null;
+try {
+  const firstFileBytes = await pdfFiles[0].arrayBuffer();
+  detectedState = await extractStateFromPDF(firstFileBytes);
+} catch (e) {
+  console.warn("State detection failed or skipped:", e);
+}
+      
     const pagesWatermarkedElement = document.getElementById("pagesWatermarked");
     
     let logoUrl = localStorage.getItem("aquamarkLogo");
@@ -963,13 +1010,22 @@ watermarkPage.drawImage(qrImage, {
 
             // Save and download
             const finalBytes = await pdfDoc.save();
-            const blob = new Blob([finalBytes], { type: 'application/pdf' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+const finalBytes = await pdfDoc.save();
+const blob = new Blob([finalBytes], { type: 'application/pdf' });
+const a = document.createElement('a');
+a.href = URL.createObjectURL(blob);
+a.download = `${file.name.replace(".pdf", "")}-protected.pdf`;
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+setTimeout(() => URL.revokeObjectURL(a.href), 100);
+
+// Show disclaimer (non-blocking)
+if (detectedState && stateDisclaimers[detectedState]) {
+  alert(`⚠️ ${stateDisclaimers[detectedState]}`);
+}
+
+            
             setTimeout(() => URL.revokeObjectURL(a.href), 100);
         }
 
