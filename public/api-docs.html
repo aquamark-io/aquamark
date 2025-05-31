@@ -271,7 +271,7 @@
       <tr><td>lender</td><td>string</td><td>No</td><td>Optional lender name to embed in the QR code</td></tr>
       <tr><td>salesperson</td><td>string</td><td>No</td><td>Optional salesperson name to embed in the QR code</td></tr>
       <tr><td>processor</td><td>string</td><td>No</td><td>Optional processor name to embed in the QR code</td></tr>
-      <tr><td>state</td><td>string</td><td>No</td><td>Optional 2-letter or full U.S. state name. If recognized, a disclaimer will be returned in the <code>X-State-Disclaimer</code> response header.</td></tr>
+      <tr><td>state</td><td>string</td><td>No</td><td>Optional State name for compliance and regulation disclaimers.</td></tr>
 
 
     </tbody>
@@ -312,7 +312,7 @@
 <pre><code>[Returns a protected PDF file]</code></pre>
 <p>If a valid <code>state</code> is provided and matches regulation rules, the response will include a disclaimer in the following header:</p>
 <pre><code>X-State-Disclaimer: Disclaimer: CFL license required.</code></pre>
-<p>You can programmatically extract this header in your integration and map it into your CRM or internal system if needed.</p>
+<p>You can programmatically extract this header in your integration and map it into your CRM or internal system.</p>
 
 
   <h2>❗ Error Responses</h2>
