@@ -271,7 +271,7 @@
       <tr><td>lender</td><td>string</td><td>No</td><td>Optional lender name to embed in the QR code</td></tr>
       <tr><td>salesperson</td><td>string</td><td>No</td><td>Optional salesperson name to embed in the QR code</td></tr>
       <tr><td>processor</td><td>string</td><td>No</td><td>Optional processor name to embed in the QR code</td></tr>
-      <tr><td>state</td><td>string</td><td>No</td><td>Optional State name for compliance and regulation disclaimers.</td></tr>
+      <tr><td>state</td><td>string</td><td>No</td><td>Optional State name for compliance and regulation disclaimers</td></tr>
 
 
     </tbody>
@@ -285,6 +285,7 @@
   -F "lender=Fora Financial" \
   -F "salesperson=Jack Dawson" \
   -F "processor=Rose DeWitt" \
+  -F "state=CA" \
   --output "statement1 - protected.pdf"
 </code></pre>
 
