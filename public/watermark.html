@@ -478,6 +478,20 @@
   <input type="text" id="lenderTag" placeholder="Enter lender name" style="margin-top: 0.15rem; padding: 0.75rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
 </div>
 
+<div class="upload-group">
+  <label for="salespersonTag" style="font-weight: 600;">
+    Salesperson <span style="font-weight: 400;">(optional)</span>
+  </label>
+  <input type="text" id="salespersonTag" placeholder="Salesperson name" style="margin-top: 0.15rem; padding: 0.75rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
+</div>
+
+<div class="upload-group">
+  <label for="processorTag" style="font-weight: 600;">
+    Processor <span style="font-weight: 400;">(optional)</span>
+  </label>
+  <input type="text" id="processorTag" placeholder="Processor name" style="margin-top: 0.15rem; padding: 0.75rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
+</div>
+
 </div>
 
                 <div class="upload-group">
@@ -930,7 +944,9 @@ pdfDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
                 // ✅ Insert QR code after tiling logo
 const today = new Date().toISOString().split("T")[0];
 const lender = document.getElementById("lenderTag")?.value || "N/A";
-const payload = encodeURIComponent(`ProtectedByAquamark|${profile.Email}|${lender}|${today}`);
+const salesperson = document.getElementById("salespersonTag")?.value || "N/A";
+const processor = document.getElementById("processorTag")?.value || "N/A";
+const payload = encodeURIComponent(`ProtectedByAquamark|${profile.Email}|${lender}|${salesperson}|${processor}|${today}`);
 const qrUrl = `https://aquamark.io/q.html?data=${payload}`;
 
 const qrDataUrl = await QRCode.toDataURL(qrUrl, { margin: 0, scale: 5 });
