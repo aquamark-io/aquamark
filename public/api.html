@@ -272,7 +272,7 @@
     <tbody>
       <tr><td>user_email</td><td>string</td><td>Yes</td><td>Your Aquamark account email</td></tr>
       <tr><td>file</td><td>file</td><td>Yes</td><td>One PDF file (max 25MB)</td></tr>
-      <tr><td>lender</td><td>string</td><td>No</td><td>Optional lender name to embed on the document</td></tr>
+      <tr><td>lender</td><td>string</td><td>No</td><td>Optional lender name to embed in the QR code</td></tr>
      <tr><td>salesperson</td><td>string</td><td>No</td><td>Optional salesperson name to embed in the QR code</td></tr>
      <tr><td>processor</td><td>string</td><td>No</td><td>Optional processor name to embed in the QR code</td></tr>
 
@@ -284,9 +284,9 @@
   -H "Authorization: Bearer YOUR_API_KEY" \
   -F "user_email=john@example.com" \
   -F "file=@statement1.pdf" \
-  -F "lender=Fora Financial" \
-  -F "salesperson=Jen Lee" \
-  -F "processor=Tyler Wong" \
+  -F "lender=Funding Capital Source" \
+  -F "salesperson=Jack Dawson" \
+  -F "processor=Rose DeWitt" \
   --output "statement1 - protected.pdf"
 </code></pre>
 
