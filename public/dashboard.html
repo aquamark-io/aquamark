@@ -354,16 +354,6 @@ color: white;
   background: #95cbea;
 }
 
-.btn-api {
-  background: #D2B4DE;
-  color: black;
-}
-
-.btn-api:hover {
-  background: #c199cd;
-}
-
-
 .btn-success {
   background: #ABEBC6;
   color: black;
@@ -841,7 +831,6 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
 <div class="action-buttons">
   <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-success">Upgrade Plan</a>
   <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
-  <a href="/api.html" class="btn btn-api">API Docs</a>
 </div>
 
 
@@ -918,7 +907,7 @@ load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
     const hashParams = window.location.hash;
 
     // List of internal paths you want to preserve parameters for
-    const pathsToUpdate = ["/watermark.html", "/api.html", "/dashboard.html", "/lenders.html"];
+    const pathsToUpdate = ["/watermark.html", "/dashboard.html", "/lenders.html"];
 
     document.querySelectorAll("a[href]").forEach(link => {
       const href = link.getAttribute("href");
