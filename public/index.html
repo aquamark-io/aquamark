@@ -497,6 +497,37 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
+            /* Adjust Impact section layout */
+section[style*="padding: 5rem 2rem; background: #ffffff;"] > div {
+  flex-direction: column;
+  gap: 2rem !important;
+  padding: 0 1rem;
+}
+
+section[style*="padding: 5rem 2rem; background: #ffffff;"] h2 {
+  font-size: 1.75rem !important;
+}
+
+section[style*="padding: 5rem 2rem; background: #ffffff;"] p {
+  font-size: 1rem !important;
+  text-align: left;
+}
+
+section[style*="padding: 5rem 2rem; background: #ffffff;"] img {
+  width: 100% !important;
+  max-width: 100%;
+  height: auto;
+}
+
+.nav {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logo img {
+  height: 24px;
+}
+
         }
     </style>
 </head>
