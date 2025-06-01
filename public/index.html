@@ -14,16 +14,14 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
+            background: #111111;
+            color: #f0f0f0;
             line-height: 1.6;
         }
 
         /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(0, 0, 0, 0.7);
             position: fixed;
             top: 0;
             width: 100%;
@@ -40,7 +38,7 @@
         }
 
         .logo img {
-            height: 40px;
+            height: 50px;
             object-fit: contain;
         }
 
@@ -51,36 +49,38 @@
         }
 
         .nav-links a {
-            color: #64748b;
+            color: #f0f0f0;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
         }
 
         .nav-links a:hover {
-            color: #2563eb;
+            color: #ff7f50; /* Vibrant accent color */
         }
 
         .cta-button {
-            background: #2563eb;
+            background: #ff7f50;
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.2s;
+            transition: all 0.3s;
         }
 
         .cta-button:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
+            background: #ff6347;
+            transform: translateY(-2px);
         }
 
         /* Hero Section */
         .hero {
             padding: 8rem 2rem 4rem;
             text-align: center;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: url('https://via.placeholder.com/1600x900') center/cover no-repeat; /* Add a background image */
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
         }
 
         .hero-content {
@@ -89,31 +89,27 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #1e293b, #2563eb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 1rem;
+            color: #ff7f50;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
         }
 
         .hero .subtitle {
             font-size: 1.25rem;
-            color: #64748b;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero .tagline {
             font-size: 1.125rem;
-            color: #2563eb;
             font-weight: 600;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -123,36 +119,36 @@
             border-radius: 0.75rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
         }
 
         .btn-primary {
-            background: #2563eb;
+            background: #ff7f50;
             color: white;
         }
 
         .btn-primary:hover {
-            background: #1d4ed8;
+            background: #ff6347;
             transform: translateY(-2px);
         }
 
         .btn-secondary {
-            background: white;
-            color: #2563eb;
-            border: 2px solid #2563eb;
+            background: transparent;
+            color: #ff7f50;
+            border: 2px solid #ff7f50;
         }
 
         .btn-secondary:hover {
-            background: #2563eb;
+            background: #ff7f50;
             color: white;
         }
 
         /* Core Values */
         .values {
             padding: 5rem 2rem;
-            background: #f8fafc;
+            background: #222222;
         }
 
         .values-container {
@@ -165,7 +161,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 3rem;
-            color: #1e293b;
+            color: #ff7f50;
         }
 
         .values-grid {
@@ -176,22 +172,22 @@
         }
 
         .value-card {
-            background: #ffffff;
+            background: #333333;
             padding: 2.5rem 2rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.3s;
         }
 
         .value-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
         .value-icon {
             width: 3rem;
             height: 3rem;
-            background: #2563eb;
+            background: #ff7f50;
             border-radius: 50%;
             margin: 0 auto 1.5rem;
             display: flex;
@@ -205,188 +201,81 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: #1e293b;
+            color: #f0f0f0;
         }
 
         .value-card p {
-            color: #64748b;
+            color: #b0b0b0;
             font-size: 1rem;
         }
 
-        /* Mission Section */
-        .mission {
-            padding: 5rem 2rem;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
-            text-align: center;
-        }
-
-        .mission-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .mission h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
-
-        .mission p {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            line-height: 1.8;
-        }
-
-        /* Features */
+        /* Complete Pipeline Visibility Section */
         .features {
             padding: 5rem 2rem;
-            background: #f8fafc;
+            background: #111111;
         }
 
         .features-container {
             max-width: 1200px;
             margin: 0 auto;
+            text-align: center;
         }
 
         .features h2 {
-            text-align: center;
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 3rem;
-            color: #1e293b;
+            color: #ff7f50;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
+            background: #222222;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
         .feature-icon {
             width: 3rem;
             height: 3rem;
-            background: #2563eb;
+            background: #ff7f50;
             border-radius: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.25rem;
-            flex-shrink: 0;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .feature-content h3 {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
+            color: #f0f0f0;
             margin-bottom: 0.5rem;
-            color: #1e293b;
         }
 
         .feature-content p {
-            color: #64748b;
-        }
-
-        /* Pricing */
-        .pricing {
-            padding: 5rem 2rem;
-            background: #f8fafc;
-        }
-
-        .pricing-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .pricing h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #1e293b;
-        }
-
-        .pricing .subtitle {
-            font-size: 1.125rem;
-            color: #64748b;
-            margin-bottom: 3rem;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .pricing-card {
-            background: white;
-            padding: 2.5rem 2rem;
-            border-radius: 1rem;
-            border: 2px solid #e2e8f0;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .pricing-card:hover {
-            border-color: #2563eb;
-            transform: translateY(-4px);
-        }
-
-        .pricing-card.featured {
-            border-color: #2563eb;
-            transform: scale(1.05);
-        }
-
-        .pricing-card.featured::before {
-            content: 'Most Popular';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #2563eb;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 1rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .plan-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #1e293b;
-        }
-
-        .plan-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #2563eb;
-            margin-bottom: 0.5rem;
-        }
-
-        .plan-period {
-            color: #64748b;
-            margin-bottom: 2rem;
-        }
-
-        .plan-feature {
-            color: #64748b;
-            margin-bottom: 1.5rem;
+            color: #b0b0b0;
+            font-size: 1rem;
         }
 
         /* Footer */
         .footer {
-            background: #1e293b;
-            color: white;
+            background: #111111;
+            color: #ffffff;
             padding: 3rem 2rem 2rem;
             text-align: center;
         }
@@ -405,9 +294,9 @@
         }
 
         .footer-links a {
-            color: #94a3b8;
+            color: #b0b0b0;
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.3s;
         }
 
         .footer-links a:hover {
@@ -415,9 +304,9 @@
         }
 
         .footer-bottom {
-            border-top: 1px solid #334155;
+            border-top: 1px solid #444444;
             padding-top: 2rem;
-            color: #94a3b8;
+            color: #b0b0b0;
             font-size: 0.875rem;
         }
 
@@ -425,10 +314,6 @@
         @media (max-width: 768px) {
             .nav {
                 padding: 1rem;
-            }
-
-            .nav-links {
-                display: none;
             }
 
             .hero {
@@ -473,7 +358,7 @@
     <header class="header">
         <nav class="nav">
             <div class="logo">
-                <img src="https://path-to-your-logo.png" alt="Aquamark Logo">
+                <img src="https://path-to-your-logo.png" alt="Aquamark Logo"> <!-- Add your logo here -->
             </div>
             <div class="nav-links">
                 <a href="#features">Features</a>
@@ -497,57 +382,7 @@
         </div>
     </section>
 
-    <!-- Stats -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stat-item">
-                <h3>2,100+</h3>
-                <p>Deals Protected</p>
-            </div>
-            <div class="stat-item">
-                <h3>500k+</h3>
-                <p>Pages Watermarked</p>
-            </div>
-            <div class="stat-item">
-                <h3>4.89</h3>
-                <p>User Rating</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Core Values -->
-    <section class="values">
-        <div class="values-container">
-            <h2>Built on Three Core Principles</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon">👁</div>
-                    <h3>Transparency</h3>
-                    <p>Know exactly who accessed your files and when — no more blind spots.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🛡</div>
-                    <h3>Accountability</h3>
-                    <p>Deter deal theft and hold every broker and lender to a higher standard.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">⚖</div>
-                    <h3>Integrity</h3>
-                    <p>Aligned with a culture of compliance and ethics.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mission -->
-    <section class="mission">
-        <div class="mission-container">
-            <h2>Our Mission</h2>
-            <p>Aquamark's mission is to safeguard your deals with tools that promote transparency, enforce accountability and compliance, and embed ethical practices — setting a new standard for how the industry protects and shares sensitive files.</p>
-        </div>
-    </section>
-
-    <!-- Features -->
+    <!-- Complete Pipeline Visibility -->
     <section class="features" id="features">
         <div class="features-container">
             <h2>Complete Pipeline Visibility</h2>
@@ -598,39 +433,8 @@
         </div>
     </section>
 
-    <!-- Pricing -->
-    <section class="pricing" id="pricing">
-        <div class="pricing-container">
-            <h2>Simple, Transparent Pricing</h2>
-            <p class="subtitle">Start with 100 free pages. No contracts, cancel anytime.</p>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="plan-name">Solo</div>
-                    <div class="plan-price">$25</div>
-                    <div class="plan-period">per month</div>
-                    <div class="plan-feature">1,000 pages included</div>
-                    <a href="/signup.html" class="btn btn-primary">Start Free Trial</a>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="plan-name">Team</div>
-                    <div class="plan-price">$100</div>
-                    <div class="plan-period">per month</div>
-                    <div class="plan-feature">5,000 pages included</div>
-                    <a href="/signup.html" class="btn btn-primary">Start Free Trial</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="plan-name">Enterprise</div>
-                    <div class="plan-price">$250</div>
-                    <div class="plan-period">per month</div>
-                    <div class="plan-feature">Unlimited pages</div>
-                    <a href="/signup.html" class="btn btn-primary">Start Free Trial</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
-    <footer class="footer" id="contact">
+    <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
                 <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
