@@ -19,7 +19,6 @@
             line-height: 1.6;
         }
 
-        /* Header */
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -31,11 +30,11 @@
         }
 
         .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
 
         .logo {
             font-size: 1.5rem;
@@ -57,8 +56,8 @@
         }
 
         .nav-links a.btn-primary {
-    color: white !important;
-}
+            color: white !important;
+        }
 
         .nav-links a:hover {
             color: #467EFF;
@@ -79,7 +78,6 @@
             transform: translateY(-1px);
         }
 
-        /* Hero Section */
         .hero {
             padding: 8rem 2rem 4rem;
             text-align: center;
@@ -91,18 +89,18 @@
             margin: 0 auto;
         }
 
-.hero h1 {
-    font-size: 4rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    color: #000000;
-}
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
 
-.hero .subtitle {
-    font-size: 1.5rem;
-    color: #64748b;
-    margin-bottom: 2rem;
-}
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
 
         .hero .tagline {
             font-size: 1.125rem;
@@ -150,7 +148,6 @@
             color: white;
         }
 
-        /* Core Values */
         .values {
             padding: 5rem 2rem;
             background: white;
@@ -177,15 +174,15 @@
         }
 
         .value-card {
-    background: #f8fafc;
-    padding: 2.5rem 2rem;
-    border-radius: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+            background: #f8fafc;
+            padding: 2.5rem 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
         .value-card:hover {
             transform: translateY(-4px);
@@ -216,7 +213,6 @@
             font-size: 1rem;
         }
 
-        /* Mission Section */
         .mission {
             padding: 5rem 2rem;
             background: linear-gradient(135deg, #467EFF, #1d4ed8);
@@ -241,7 +237,6 @@
             line-height: 1.8;
         }
 
-        /* Features */
         .features {
             padding: 5rem 2rem;
             background: #f8fafc;
@@ -264,29 +259,29 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 3rem;
-            align-items: center;
+            align-items: stretch;
         }
 
         .feature-item {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    min-height: 130px; /
-}
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            min-height: 130px;
+        }
 
-       .feature-icon {
-    width: 3rem;
-    height: 3rem;
-    background: #467EFF;
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: 700;
-    flex-shrink: 0;
-}
+        .feature-icon {
+            width: 3rem;
+            height: 3rem;
+            background: #467EFF;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
 
         .feature-content h3 {
             font-size: 1.25rem;
@@ -299,7 +294,6 @@
             color: #64748b;
         }
 
-        /* Stats */
         .stats {
             padding: 4rem 2rem;
             background: white;
@@ -326,7 +320,6 @@
             font-weight: 500;
         }
 
-        /* Pricing */
         .pricing {
             padding: 5rem 2rem;
             background: #f8fafc;
@@ -415,7 +408,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Footer */
         .footer {
             background: #1e293b;
             color: white;
@@ -453,7 +445,6 @@
             font-size: 0.875rem;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav {
                 padding: 1rem;
@@ -504,12 +495,13 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-<div class="logo">
-    <a href="/">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;">
-    </a>
-</div>            <div class="nav-links">
-<a href="/login.html" class="btn btn-primary">Sign In</a>
+            <div class="logo">
+                <a href="/">
+                    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;">
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="/login.html" class="btn btn-primary">Sign In</a>
             </div>
         </nav>
     </header>
@@ -544,87 +536,56 @@
         </div>
     </section>
 
-    <!-- Core Values -->
-    <section class="values">
-        <div class="values-container">
-            <h2>Built on Three Core Principles</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <h3>Transparency</h3>
-                    <p>Know exactly who had accessed to your files — no more blind spots.</p>
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2>Built With Brokers and Lenders In Mind</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div class="feature-content">
+                        <h3>Complete Visibility</h3>
+                        <p>Know exactly which brokers, lenders, salespeople and processors had access to your files.</p>
+                    </div>
                 </div>
-                <div class="value-card">
-                    <h3>Accountability</h3>
-                    <p>Deter deal theft and raise the standard across the industry.</p>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div class="feature-content">
+                        <h3>Theft Deterrent</h3>
+                        <p>Watermarking serves as a security system: deterring bad behavior and clearly distinguishing transparent partners.</p>
+                    </div>
                 </div>
-                <div class="value-card">
-                    <h3>Integrity</h3>
-                    <p>Aligned with a culture of compliance and doing the right thing.</p>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div class="feature-content">
+                        <h3>Streamlined Workflow</h3>
+                        <p>Seamless integration via our open API and bulk PDF processing through our portal.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div class="feature-content">
+                        <h3>Compliance Alerts</h3>
+                        <p>We'll flag any files tied to states with disclosure, registration, or licensing requirements.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div class="feature-content">
+                        <h3>OCR Compatible</h3>
+                        <p>Built to not interfere with parsing. Tested with Ocrolus, MoneyThumb, and DocPanda.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <div class="feature-content">
+                        <h3>Instant Processing</h3>
+                        <p>Patent pending engine that processes encrypted PDFs, embeds QR codes, and applies watermarks in seconds.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Mission -->
-    <section class="mission">
-        <div class="mission-container">
-            <h2>Our Mission</h2>
-            <p>Aquamark’s mission is to safeguard pipelines with tools that promote transparency, enforce accountability, and uphold ethical, compliant practices — setting a new standard for how sensitive files are protected and shared across the MCA industry.</p>
-        </div>
-    </section>
-
-    <!-- Features -->
-    <!-- Features -->
-<section class="features" id="features">
-    <div class="features-container">
-        <h2>Built With Brokers and Lenders In Mind</h2>
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon">1</div>
-                <div class="feature-content">
-                    <h3>Complete Visibility</h3>
-                    <p>Know exactly which brokers, lenders, salespeople and processors had access to your files.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">2</div>
-                <div class="feature-content">
-                    <h3>Theft Deterrent</h3>
-                    <p>Watermarking serves as a security system: deterring bad behavior and clearly distinguishing transparent partners.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">3</div>
-                <div class="feature-content">
-                    <h3>Streamlined Workflow</h3>
-                    <p>Seamless integration via our open API and bulk PDF processing through our portal.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">4</div>
-                <div class="feature-content">
-                    <h3>Compliance Alerts</h3>
-                    <p>We'll flag any files tied to states with disclosure, registration, or licensing requirements.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">5</div>
-                <div class="feature-content">
-                    <h3>OCR Compatible</h3>
-                    <p>Built to not interfere with parsing. Tested with Ocrolus, MoneyThumb, and DocPanda.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">6</div>
-                <div class="feature-content">
-                    <h3>Instant Processing</h3>
-                    <p>Patent pending engine that processes encrypted PDFs, embeds QR codes, and applies watermarks in seconds.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 
     <!-- Pricing -->
     <section class="pricing" id="pricing">
