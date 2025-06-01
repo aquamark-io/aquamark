@@ -260,18 +260,22 @@
             color: #1e293b;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            align-items: center;
-        }
+       .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    align-items: stretch;
+}
 
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-        }
+      .feature-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 1rem;
+    background: white;
+    border-radius: 1rem;
+}
 
         .feature-icon {
             width: 3rem;
