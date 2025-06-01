@@ -19,6 +19,7 @@
             line-height: 1.6;
         }
 
+        /* Header */
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -30,11 +31,11 @@
         }
 
         .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
 
         .logo {
             font-size: 1.5rem;
@@ -56,8 +57,8 @@
         }
 
         .nav-links a.btn-primary {
-            color: white !important;
-        }
+    color: white !important;
+}
 
         .nav-links a:hover {
             color: #467EFF;
@@ -78,6 +79,7 @@
             transform: translateY(-1px);
         }
 
+        /* Hero Section */
         .hero {
             padding: 8rem 2rem 4rem;
             text-align: center;
@@ -89,18 +91,18 @@
             margin: 0 auto;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            color: #000000;
-        }
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #000000;
+}
 
-        .hero .subtitle {
-            font-size: 1.5rem;
-            color: #64748b;
-            margin-bottom: 2rem;
-        }
+.hero .subtitle {
+    font-size: 1.5rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+}
 
         .hero .tagline {
             font-size: 1.125rem;
@@ -148,6 +150,7 @@
             color: white;
         }
 
+        /* Core Values */
         .values {
             padding: 5rem 2rem;
             background: white;
@@ -174,15 +177,15 @@
         }
 
         .value-card {
-            background: #f8fafc;
-            padding: 2.5rem 2rem;
-            border-radius: 1rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+    background: #f8fafc;
+    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
         .value-card:hover {
             transform: translateY(-4px);
@@ -213,6 +216,7 @@
             font-size: 1rem;
         }
 
+        /* Mission Section */
         .mission {
             padding: 5rem 2rem;
             background: linear-gradient(135deg, #467EFF, #1d4ed8);
@@ -237,6 +241,7 @@
             line-height: 1.8;
         }
 
+        /* Features */
         .features {
             padding: 5rem 2rem;
             background: #f8fafc;
@@ -259,14 +264,13 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 3rem;
-            align-items: stretch;
+            align-items: center;
         }
 
         .feature-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1.5rem;
-            min-height: 130px;
         }
 
         .feature-icon {
@@ -278,8 +282,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.25rem;
             flex-shrink: 0;
         }
 
@@ -294,6 +297,7 @@
             color: #64748b;
         }
 
+        /* Stats */
         .stats {
             padding: 4rem 2rem;
             background: white;
@@ -320,6 +324,7 @@
             font-weight: 500;
         }
 
+        /* Pricing */
         .pricing {
             padding: 5rem 2rem;
             background: #f8fafc;
@@ -408,6 +413,7 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Footer */
         .footer {
             background: #1e293b;
             color: white;
@@ -445,6 +451,7 @@
             font-size: 0.875rem;
         }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav {
                 padding: 1rem;
@@ -495,13 +502,12 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <div class="logo">
-                <a href="/">
-                    <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;">
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="/login.html" class="btn btn-primary">Sign In</a>
+<div class="logo">
+    <a href="/">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;">
+    </a>
+</div>            <div class="nav-links">
+<a href="/login.html" class="btn btn-primary">Sign In</a>
             </div>
         </nav>
     </header>
@@ -533,6 +539,35 @@
                 <h3>4.89</h3>
                 <p>User Rating</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="values">
+        <div class="values-container">
+            <h2>Built on Three Core Principles</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>Transparency</h3>
+                    <p>Know exactly who had accessed to your files — no more blind spots.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Accountability</h3>
+                    <p>Deter deal theft and raise the standard across the industry.</p>
+                </div>
+                <div class="value-card">
+                    <h3>Integrity</h3>
+                    <p>Aligned with a culture of compliance and doing the right thing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="mission">
+        <div class="mission-container">
+            <h2>Our Mission</h2>
+            <p>Aquamark’s mission is to safeguard pipelines with tools that promote transparency, enforce accountability, and uphold ethical, compliant practices — setting a new standard for how sensitive files are protected and shared across the MCA industry.</p>
         </div>
     </section>
 
