@@ -549,27 +549,16 @@
 
 @media (max-width: 768px) {
   .compliance-section {
-    gap: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  .compliance-image {
-    margin-bottom: -10px !important; /* force upward collapse */
-    padding-bottom: 0 !important;
-    line-height: 0 !important;
+    gap: 0.5rem !important;
   }
 
   .compliance-image img {
-    margin-bottom: -10px !important; /* force image to sit tight */
-    display: block !important;
-    line-height: 0 !important;
+    margin-bottom: 0 !important;
+    display: block;
   }
 
   .compliance-text {
-    margin-top: -5px !important; /* pulls text up if needed */
+    margin-top: 0 !important;
   }
 
   .compliance-text h2 {
@@ -752,7 +741,7 @@
 </div>
 
     <!-- Right Column (Text) -->
-    <div style="flex: 1 1 450px; max-width: 100%; text-align: center;">
+<div class="compliance-text" style="flex: 1 1 450px; max-width: 100%; text-align: center;">
       <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
         Compliance Alerts Built In
       </h2>
