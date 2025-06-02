@@ -491,8 +491,8 @@
     font-size: 0.875rem;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
+        /* Mobile Responsive */
+      @media (max-width: 768px) {
   .nav {
     flex-direction: column;
     align-items: center;
@@ -500,8 +500,8 @@
   }
 
   .hero {
-    padding: 8rem 1rem 3rem;
-  }
+  padding: 8rem 1rem 3rem;
+}
 
   .hero h1 {
     font-size: 2.25rem;
@@ -547,46 +547,36 @@
     justify-items: center;
   }
 
-  /* REPLACE THE OLD COMPLIANCE SECTION CSS WITH THIS: */
+@media (max-width: 768px) {
   .compliance-section {
-    gap: 2rem !important;
-    padding: 3rem 1rem !important;
-    flex-direction: column !important;
+    gap: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .compliance-image {
-    margin-bottom: 0 !important;
+    margin-bottom: -10px !important; /* force upward collapse */
     padding-bottom: 0 !important;
-    line-height: normal !important;
+    line-height: 0 !important;
   }
 
   .compliance-image img {
-    margin-bottom: 0 !important;
+    margin-bottom: -10px !important; /* force image to sit tight */
     display: block !important;
-    line-height: normal !important;
+    line-height: 0 !important;
   }
 
   .compliance-text {
-    margin-top: 0 !important;
+    margin-top: -5px !important; /* pulls text up if needed */
   }
 
   .compliance-text h2 {
     margin-top: 0 !important;
     padding-top: 0 !important;
   }
-
-  /* ADD THIS NEW SECTION CSS: */
-  section[style*="padding: 5rem 2rem; background: #ffffff;"] {
-    padding: 3rem 1rem !important;
-  }
-
-  section[style*="padding: 5rem 2rem; background: #ffffff;"] > div {
-    flex-direction: column !important;
-    gap: 2rem !important;
-    text-align: center !important;
-    padding: 0 !important;
-  }
-
+          
   .feature-item {
     flex-direction: column;
     align-items: center;
