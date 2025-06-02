@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Partners | Aquamark</title>
+  <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #467EFF;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #64748b;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #467EFF;
+    }
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: #467EFF;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    .page-section {
+      padding: 8rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .page-section h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #1e293b;
+    }
+    .partner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    .partner-card {
+      background: #f8fafc;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+    }
+    .partner-card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+    .partner-card p {
+      color: #64748b;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 768px) {
+      .page-section {
+        padding: 6rem 1rem 3rem;
+      }
+      .page-section h1 {
+        font-size: 2rem;
+      }
+    }
+    .footer {
+      background: #467EFF;
+      color: white;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+    .footer-bottom {
+      border-top: 1px solid white;
+      padding-top: 2rem;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">
+        <a href="/"><img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 30px;"></a>
+      </div>
+      <div class="nav-links">
+        <a href="/login.html" class="btn btn-primary">Sign In</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Partner Content -->
+  <section class="page-section">
+    <h1>Strategic Partnerships with Aquamark</h1>
+    <div class="partner-grid">
+
+      <!-- Wholesale Partner -->
+      <div class="partner-card">
+        <h2>Wholesale Partner</h2>
+        <p>Ideal for CRMs, OCR platforms, and compliance software companies looking to offer file security to their users.</p>
+        <p>Join Aquamark in setting the new standard for transparency and compliance in the MCA industry.</p>
+        <p>Benefits include:</p>
+        <ul style="color:#64748b; padding-left:1rem;">
+          <li>• Enterprise accounts at discounted rates</li>
+          <li>• Tiered structure based on volume</li>
+          <li>• Dedicated Render server deployment</li>
+          <li>• White-labeled API access</li>
+          <li>• Easy onboarding and integration</li>
+        </ul>
+      </div>
+
+      <!-- Lender Partner -->
+      <div class="partner-card">
+        <h2>Lender Partner</h2>
+        <p>Custom programs designed for underwriters, funding teams, and lender-side compliance officers.</p>
+        <p><strong>Coming Soon</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
+        <a href="tel:+14155001117">(415) 500-1117</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Aquamark. All rights reserved.</p>
+        <p>1 Bristol Court, Suite 112, San Francisco CA 94130</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
