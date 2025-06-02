@@ -550,17 +550,26 @@
 @media (max-width: 768px) {
   .compliance-section {
     gap: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .compliance-image {
-    margin-bottom: 0 !important;
+    margin-bottom: -10px !important; /* force upward collapse */
     padding-bottom: 0 !important;
+    line-height: 0 !important;
   }
 
   .compliance-image img {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-    display: block;
+    margin-bottom: -10px !important; /* force image to sit tight */
+    display: block !important;
+    line-height: 0 !important;
+  }
+
+  .compliance-text {
+    margin-top: -5px !important; /* pulls text up if needed */
   }
 
   .compliance-text h2 {
