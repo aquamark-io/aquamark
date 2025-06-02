@@ -532,6 +532,11 @@
     justify-items: center;
   }
 
+@media (max-width: 768px) {
+  .compliance-section {
+    gap: 1.5rem !important;
+  }
+          
   .feature-item {
     flex-direction: column;
     align-items: center;
@@ -691,15 +696,15 @@
 
 <!-- Compliance Alerts Section -->
 <section style="padding: 5rem 2rem; background: #ffffff;">
-  <div style="
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
-  ">
+  <div class="compliance-section" style="
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+">
 
     <!-- Left Column (Image) -->
     <div style="flex: 1 1 500px; max-width: 100%; text-align: center;">
