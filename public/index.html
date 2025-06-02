@@ -549,16 +549,27 @@
 
 @media (max-width: 768px) {
   .compliance-section {
-    gap: 0.5rem !important;
+    gap: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .compliance-image {
+    margin-bottom: -10px !important; /* force upward collapse */
+    padding-bottom: 0 !important;
+    line-height: 0 !important;
   }
 
   .compliance-image img {
-    margin-bottom: 0 !important;
-    display: block;
+    margin-bottom: -10px !important; /* force image to sit tight */
+    display: block !important;
+    line-height: 0 !important;
   }
 
   .compliance-text {
-    margin-top: 0 !important;
+    margin-top: -5px !important; /* pulls text up if needed */
   }
 
   .compliance-text h2 {
@@ -696,7 +707,7 @@
         Watermarking that works just as hard as you
       </h2>
       <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem;">
-        Aquamark embeds your logo beneath the document text in a diagonal pattern—preserving OCR compatibility while protecting your files. Each file includes a discreet QR code containing lender name, date, salesperson, and processor, ensuring accountability for every submission.
+        Aquamark embeds your logo beneath the document text in a diagonal pattern—preserving OCR compatibility while protecting your files. Each file also includes a discreet QR code containing lender name, date, salesperson, and processor, ensuring accountability for every submission.
       </p>
       <img src="ROI.png" alt="Aquamark ROI"
            style="width: 100%; border-radius: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.12);">
@@ -736,17 +747,17 @@
 ">
 
     <!-- Left Column (Image) -->
-<div class="compliance-image" style="margin-bottom: -1rem;">  
-    <img src="us-map.png" alt="United States Map">
+<div class="compliance-image">
+  <img src="us-map.png" alt="United States Map">
 </div>
 
     <!-- Right Column (Text) -->
-<div class="compliance-text" style="margin-top: -1rem;">
-    <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
+    <div style="flex: 1 1 450px; max-width: 100%; text-align: center;">
+      <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
         Compliance Alerts Built In
       </h2>
       <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 1.5rem;">
-        Every watermarked file includes state-specific alerts when applicable—covering license, registration, and disclosure requirements across the U.S.
+        For Enterprise users, every watermarked file includes state-specific alerts when applicable—covering license, registration, and disclosure requirements across the U.S.
         <br/><br/>
         This feature helps your business stay aligned with the shifting regulatory landscape, especially as compliance becomes the new standard.
       </p>
