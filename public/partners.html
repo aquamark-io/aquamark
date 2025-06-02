@@ -30,10 +30,8 @@
       align-items: center;
       padding: 1rem 2rem;
     }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #467EFF;
+    .logo img {
+      height: 30px;
     }
     .nav-links {
       display: flex;
@@ -50,14 +48,14 @@
       color: #467EFF;
     }
     .btn {
-      padding: 0.6rem 1.2rem;
+      padding: 0.75rem 1.5rem;
       border-radius: 0.75rem;
       font-weight: 600;
       font-size: 1rem;
       text-decoration: none;
-      transition: all 0.2s;
       border: none;
       cursor: pointer;
+      transition: all 0.2s;
     }
     .btn-primary {
       background: #467EFF;
@@ -81,26 +79,54 @@
     }
     .partner-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 3rem;
       margin-top: 3rem;
     }
     .partner-card {
       background: #f8fafc;
-      padding: 2rem;
+      padding: 3rem;
       border-radius: 1rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .partner-card h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 2rem;
+      font-weight: 800;
       margin-bottom: 1rem;
       color: #1e293b;
     }
     .partner-card p {
-      color: #64748b;
-      font-size: 1rem;
+      color: #475569;
+      font-size: 1.1rem;
       margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    .partner-card ul {
+      margin-bottom: 2rem;
+      padding-left: 1.2rem;
+      color: #475569;
+    }
+    .partner-card ul li {
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+    .btn-apply {
+      background: #467EFF;
+      color: white;
+      border: none;
+      text-align: center;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      align-self: start;
+    }
+    .btn-apply:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
     }
     @media (max-width: 768px) {
       .page-section {
@@ -108,6 +134,9 @@
       }
       .page-section h1 {
         font-size: 2rem;
+      }
+      .partner-grid {
+        grid-template-columns: 1fr;
       }
     }
     .footer {
@@ -144,7 +173,7 @@
   <header class="header">
     <nav class="nav">
       <div class="logo">
-        <a href="/"><img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 30px;"></a>
+        <a href="/"><img src="/logo-full-black-blue.png" alt="Aquamark Logo"></a>
       </div>
       <div class="nav-links">
         <a href="/login.html" class="btn btn-primary">Sign In</a>
@@ -159,25 +188,30 @@
 
       <!-- Wholesale Partner -->
       <div class="partner-card">
-        <h2>Wholesale Partner</h2>
-        <p>Ideal for CRMs, OCR platforms, and compliance software companies looking to offer file security to their users.</p>
-        <p>Join Aquamark in setting the new standard for transparency and compliance in the MCA industry.</p>
-        <p>Benefits include:</p>
-        <ul style="color:#64748b; padding-left:1rem;">
-          <li>• Enterprise accounts at discounted rates</li>
-          <li>• Tiered structure based on volume</li>
-          <li>• Dedicated Render server deployment</li>
-          <li>• White-labeled API access</li>
-          <li>• Easy onboarding and integration</li>
-        </ul>
+        <div>
+          <h2>Wholesale Partner</h2>
+          <p>Built for CRMs, OCR providers, and compliance platforms looking to offer file protection to their customers.</p>
+          <p>Become a true industry partner by embedding Aquamark into your workflow or product. Whether you're powering submission flows, lender packaging, or underwriting, we help you deliver security and accountability without disruption.</p>
+          <ul>
+            <li>Enterprise accounts at discounted rates</li>
+            <li>Tiered volume pricing to match your scale</li>
+            <li>Dedicated server deployments</li>
+            <li>White-label and co-branded options</li>
+            <li>Easy onboarding + developer-friendly API</li>
+            <li>Full access to usage and tracking logs</li>
+          </ul>
+        </div>
+        <a href="/partner-apply.html" class="btn-apply">Apply Now</a>
       </div>
 
       <!-- Lender Partner -->
       <div class="partner-card">
         <h2>Lender Partner</h2>
-        <p>Custom programs designed for underwriters, funding teams, and lender-side compliance officers.</p>
+        <p>Custom-tailored partnerships for underwriting and funding teams.</p>
+        <p>Get access to broker insights, real-time submission visibility, and unmatched protection against cross-submission fraud.</p>
         <p><strong>Coming Soon</strong></p>
       </div>
+
     </div>
   </section>
 
