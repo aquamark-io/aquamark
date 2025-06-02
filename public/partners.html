@@ -57,15 +57,15 @@
       cursor: pointer;
       transition: all 0.2s;
     }
- .btn-primary {
-  background: #467EFF;
-  color: white !important;
-}
-
+    .btn-primary {
+      background: #467EFF;
+      color: white !important;
+    }
     .btn-primary:hover {
       background: #1d4ed8;
       transform: translateY(-2px);
     }
+
     .page-section {
       padding: 8rem 2rem 4rem;
       max-width: 1200px;
@@ -93,12 +93,12 @@
       flex-direction: column;
       justify-content: space-between;
     }
-   .partner-card h2 {
-  font-size: 2.25rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-  color: #467EFF;
-}
+    .partner-card h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: #467EFF;
+    }
     .partner-card p {
       color: #475569;
       font-size: 1.1rem;
@@ -129,17 +129,7 @@
       background: #1d4ed8;
       transform: translateY(-1px);
     }
-    @media (max-width: 768px) {
-      .page-section {
-        padding: 6rem 1rem 3rem;
-      }
-      .page-section h1 {
-        font-size: 2rem;
-      }
-      .partner-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+
     .footer {
       background: #467EFF;
       color: white;
@@ -166,6 +156,37 @@
       padding-top: 2rem;
       font-size: 0.875rem;
     }
+
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+      }
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .page-section {
+        padding: 6rem 1rem 3rem;
+      }
+      .page-section h1 {
+        font-size: 2rem;
+      }
+      .partner-grid {
+        grid-template-columns: 1fr;
+      }
+      .partner-card {
+        padding: 2rem;
+      }
+      .partner-card h2 {
+        font-size: 1.75rem;
+      }
+      .partner-card p,
+      .partner-card ul li {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -177,9 +198,8 @@
         <a href="/"><img src="/logo-full-black-blue.png" alt="Aquamark Logo"></a>
       </div>
       <div class="nav-links">
-  <a href="/" class="btn btn-primary">Home</a>
-</div>
-
+        <a href="/" class="btn btn-primary">Home</a>
+      </div>
     </nav>
   </header>
 
@@ -204,14 +224,13 @@
         <a href="https://aquamark.fillout.com/wholesale" class="btn-apply" target="_blank" rel="noopener">Apply Now</a>
       </div>
 
-<!-- Lender Partner -->
-<div class="partner-card">
-  <h2>Lender Partner</h2>
-  <div style="display: flex; justify-content: center; margin-top: 2rem;">
-    <img src="/coming-soon-sign.png" alt="Coming Soon" style="width: 500px; max-width: 100%;">
-  </div>
-</div>
-
+      <!-- Lender Partner -->
+      <div class="partner-card">
+        <h2>Lender Partner</h2>
+        <div style="display: flex; justify-content: center; margin-top: 2rem;">
+          <img src="/coming-soon-sign.png" alt="Coming Soon" style="width: 500px; max-width: 100%;">
+        </div>
+      </div>
 
     </div>
   </section>
