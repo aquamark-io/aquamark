@@ -260,6 +260,21 @@
             line-height: 1.8;
         }
 
+
+.compliance-image {
+  flex: 1 1 500px;
+  max-width: 100%;
+  text-align: center;
+}
+
+.compliance-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  margin-bottom: 0; /* remove any inherited spacing */
+}
+        
         /* Features */
         .features {
             padding: 5rem 2rem;
@@ -534,7 +549,11 @@
 
 @media (max-width: 768px) {
   .compliance-section {
-    gap: -.5rem !important;
+    gap: 1rem !important; /* small positive gap */
+  }
+
+  .compliance-image img {
+    margin-bottom: 0.5rem; /* optional slight buffer */
   }
           
   .feature-item {
@@ -707,9 +726,9 @@
 ">
 
     <!-- Left Column (Image) -->
-    <div style="flex: 1 1 500px; max-width: 100%; text-align: center;">
-      <img src="us-map.png" alt="United States Map" style="width: 100%; max-width: 500px; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
-    </div>
+<div class="compliance-image">
+  <img src="us-map.png" alt="United States Map">
+</div>
 
     <!-- Right Column (Text) -->
     <div style="flex: 1 1 450px; max-width: 100%; text-align: center;">
