@@ -4,43 +4,130 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Compliance | Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
     body {
       font-family: 'Inter', sans-serif;
       background: #ffffff;
-      color: #1e293b;
+      color: #1a1a1a;
       line-height: 1.6;
+      overflow-x: hidden;
     }
-    header {
+
+    html {
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Header */
+    .header {
       background: rgba(255, 255, 255, 0.95);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      padding: 1rem 2rem;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      padding: 1rem 2rem;
     }
-    .logo img { height: 30px; }
-    .nav-links a {
-      text-decoration: none;
-      color: #467EFF;
-      font-weight: 600;
-      margin-left: 1.5rem;
-    }
-    .hero {
-      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-      padding: 6rem 2rem 3rem;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 3rem;
+
+    .logo {
+      font-size: 1.5rem;
       font-weight: 800;
-      margin-bottom: 1rem;
+      color: #467EFF;
     }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #64748b;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #467EFF;
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #467EFF;
+      color: white !important;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      color: #467EFF !important;
+      border: 2px solid #467EFF;
+      background: white;
+    }
+
+    .btn-secondary:hover {
+      background: #467EFF;
+      color: white !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #000000;
+    }
+
+    .hero .subtitle {
+      font-size: 1.5rem;
+      color: #64748b;
+      margin-bottom: 2rem;
+    }
+
     .hero img {
       max-width: 600px;
       width: 100%;
@@ -48,127 +135,381 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       margin-top: 2rem;
     }
-    .container {
-      max-width: 960px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+
+    /* Main Content */
+    .compliance-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
     }
-    .state-block {
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
+
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .state-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
+    }
+
+    .state-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border-color: #467EFF;
+    }
+
+    .state-card h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .state-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: #467EFF;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .requirement-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .requirement-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #467EFF;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .requirement-text {
+      color: #64748b;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .no-requirement {
+      color: #10b981;
+      font-weight: 600;
+    }
+
+    /* Intro Section */
+    .intro-section {
+      background: white;
+      padding: 3rem 2rem;
+      text-align: center;
       border-bottom: 1px solid #e2e8f0;
     }
-    .state-block h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
+
+    .intro-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .intro-content h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
       color: #1e293b;
       margin-bottom: 1rem;
     }
-    .state-block ul {
-      list-style-type: disc;
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
+
+    .intro-content p {
+      font-size: 1.125rem;
+      color: #64748b;
+      margin-bottom: 2rem;
     }
-    .state-block li {
-      margin-bottom: 0.5rem;
+
+    /* Footer */
+    .footer {
+      background: #467EFF;
+      color: white;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
     }
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 2rem; }
-      .state-block h2 { font-size: 1.5rem; }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.875rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .hero {
+        padding: 8rem 1rem 3rem;
+      }
+
+      .hero h1 {
+        font-size: 2.25rem;
+      }
+
+      .hero .subtitle {
+        font-size: 1.2rem;
+      }
+
+      .compliance-content {
+        padding: 3rem 1rem;
+      }
+
+      .states-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .state-card {
+        padding: 1.5rem;
+      }
+
+      .state-card h2 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .intro-section {
+        padding: 2rem 1rem;
+      }
+
+      .intro-content h2 {
+        font-size: 1.75rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-bottom {
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <a href="/">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo">
-      </a>
-    </div>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/partners.html">Partner</a>
-      <a href="/login.html">Sign In</a>
-    </div>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">
+        <a href="/">
+          <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 30px;">
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="/partners.html" class="btn btn-secondary">Partner</a>
+        <a href="/login.html" class="btn btn-primary">Sign In</a>
+      </div>
+    </nav>
   </header>
 
+  <!-- Hero Section -->
   <section class="hero">
-    <h1>Commercial Financing Compliance</h1>
-    <p style="color: #64748b; font-size: 1.125rem;">Broker and lender requirements by state</p>
-    <img src="/us-map.png" alt="US Map">
+    <div class="hero-content">
+      <h1>Commercial Financing Compliance</h1>
+      <p class="subtitle">Broker and lender requirements by state</p>
+      <img src="/us-map.png" alt="US Map">
+    </div>
   </section>
 
-  <div class="container">
-    <div class="state-block">
-      <h2>California</h2>
-      <ul>
-        <li><strong>Brokers:</strong> Must hold a California Financing Law (CFL) license; disclosures required.</li>
-        <li><strong>Lenders:</strong> Must disclose total repayment amount, APR, and terms for deals ≤ $500,000.</li>
-      </ul>
+  <!-- Intro Section -->
+  <section class="intro-section">
+    <div class="intro-content">
+      <h2>Stay Compliant Across All States</h2>
+      <p>Commercial financing regulations vary significantly by state. Our watermarking system automatically flags files tied to states with specific disclosure, registration, or licensing requirements—helping you stay ahead of compliance obligations.</p>
     </div>
-    <div class="state-block">
-      <h2>Connecticut</h2>
-      <ul>
-        <li><strong>Brokers:</strong> Must register; required to provide disclosures for sales-based financing ≤ $250,000.</li>
-        <li><strong>Lenders:</strong> Must disclose financing amount, fees, terms, and broker compensation.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>Florida</h2>
-      <ul>
-        <li><strong>Brokers:</strong> No current disclosure requirement.</li>
-        <li><strong>Lenders:</strong> Must disclose financing terms including total cost, payment schedule, and prepayment policy for deals ≤ $500,000.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>Georgia</h2>
-      <ul>
-        <li><strong>Brokers:</strong> No current disclosure requirement.</li>
-        <li><strong>Lenders:</strong> Required to provide disclosures for sales-based financing ≤ $500,000.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>Kansas</h2>
-      <ul>
-        <li><strong>Brokers:</strong> No current requirement.</li>
-        <li><strong>Lenders:</strong> Must disclose total financing amount, repayment schedule, and prepayment penalties for deals ≤ $500,000.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>New York</h2>
-      <ul>
-        <li><strong>Brokers:</strong> Must provide state-mandated disclosure before offer is presented.</li>
-        <li><strong>Lenders:</strong> Must disclose APR, total repayment, fees, and terms for transactions ≤ $2.5 million.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>North Carolina</h2>
-      <ul>
-        <li><strong>Brokers:</strong> Must register with the state.</li>
-        <li><strong>Lenders:</strong> Required to disclose total amount financed, fees, and terms for transactions ≤ $500,000.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>Utah</h2>
-      <ul>
-        <li><strong>Brokers:</strong> Must register with the state; disclosures required.</li>
-        <li><strong>Lenders:</strong> Must disclose financing terms and broker compensation for deals ≤ $1 million.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>Virginia</h2>
-      <ul>
-        <li><strong>Brokers:</strong> Must register; required to issue disclosures for sales-based financing.</li>
-        <li><strong>Lenders:</strong> Must disclose financing terms, fees, and broker compensation.</li>
-      </ul>
-    </div>
-    <div class="state-block">
-      <h2>Wisconsin</h2>
-      <ul>
-        <li><strong>Brokers:</strong> Must provide financing disclosures prior to closing.</li>
-        <li><strong>Lenders:</strong> Required to disclose repayment terms and total financing cost for deals ≤ $500,000.</li>
-      </ul>
+  </section>
+
+  <!-- Main Content -->
+  <div class="compliance-content">
+    <div class="states-grid">
+      
+      <div class="state-card">
+        <h2><span class="state-icon">CA</span>California</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text">Must hold a California Financing Law (CFL) license; disclosures required.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Must disclose total repayment amount, APR, and terms for deals ≤ $500,000.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">CT</span>Connecticut</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text">Must register; required to provide disclosures for sales-based financing ≤ $250,000.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Must disclose financing amount, fees, terms, and broker compensation.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">FL</span>Florida</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text no-requirement">No current disclosure requirement.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Must disclose financing terms including total cost, payment schedule, and prepayment policy for deals ≤ $500,000.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">GA</span>Georgia</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text no-requirement">No current disclosure requirement.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Required to provide disclosures for sales-based financing ≤ $500,000.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">KS</span>Kansas</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text no-requirement">No current requirement.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Must disclose total financing amount, repayment schedule, and prepayment penalties for deals ≤ $500,000.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">NY</span>New York</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text">Must provide state-mandated disclosure before offer is presented.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Must disclose APR, total repayment, fees, and terms for transactions ≤ $2.5 million.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">NC</span>North Carolina</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text">Must register with the state.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Required to disclose total amount financed, fees, and terms for transactions ≤ $500,000.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">UT</span>Utah</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text">Must register with the state; disclosures required.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Must disclose financing terms and broker compensation for deals ≤ $1 million.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">VA</span>Virginia</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text">Must register; required to issue disclosures for sales-based financing.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Must disclose financing terms, fees, and broker compensation.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <h2><span class="state-icon">WI</span>Wisconsin</h2>
+        <div class="requirement-section">
+          <div class="requirement-title">Brokers</div>
+          <div class="requirement-text">Must provide financing disclosures prior to closing.</div>
+        </div>
+        <div class="requirement-section">
+          <div class="requirement-title">Lenders</div>
+          <div class="requirement-text">Required to disclose repayment terms and total financing cost for deals ≤ $500,000.</div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
+        <a href="tel:+14155001117">(415) 500-1117</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Aquamark. All rights reserved.</p>
+        <p>1 Bristol Court, Suite 112, San Francisco CA 94130</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
