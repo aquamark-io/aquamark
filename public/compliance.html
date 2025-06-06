@@ -2,108 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Compliance | Aquamark</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
-      color: #1a1a1a;
-      margin: 0;
-      padding: 0;
+      background: #ffffff;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo img { height: 30px; }
+    .nav-links a {
+      text-decoration: none;
+      color: #467EFF;
+      font-weight: 600;
+      margin-left: 1.5rem;
+    }
+    .hero {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      padding: 6rem 2rem 3rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .hero img {
+      max-width: 600px;
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      margin-top: 2rem;
     }
     .container {
       max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 1rem;
+    .state-block {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #e2e8f0;
     }
-    h2 {
+    .state-block h2 {
       font-size: 1.75rem;
       font-weight: 700;
       color: #1e293b;
-      margin-top: 2rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
-    ul {
+    .state-block ul {
       list-style-type: disc;
       padding-left: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
-    li {
+    .state-block li {
       margin-bottom: 0.5rem;
     }
     @media (max-width: 600px) {
-      .container {
-        padding: 1rem;
-      }
-      h1 {
-        font-size: 2rem;
-      }
-      h2 {
-        font-size: 1.5rem;
-      }
+      .hero h1 { font-size: 2rem; }
+      .state-block h2 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
+  <header>
+    <div class="logo">
+      <a href="/">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo">
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/partners.html">Partner</a>
+      <a href="/login.html">Sign In</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Commercial Financing Compliance</h1>
+    <p style="color: #64748b; font-size: 1.125rem;">Broker and lender requirements by state</p>
+    <img src="/us-map.png" alt="US Map">
+  </section>
+
   <div class="container">
-    <h1>State Compliance Requirements</h1>
-    <p>Below is a summary of commercial financing disclosure requirements for brokers and lenders, organized by state.</p>
 
-    <h2>California</h2>
-    <ul>
-      <li><strong>Brokers:</strong> Must provide specific disclosures to recipients before presenting financing offers.</li>
-      <li><strong>Lenders:</strong> Required to furnish detailed financing disclosures, including total cost and APR, for transactions ≤ $500,000.</li>
-    </ul>
+    <div class="state-block">
+      <h2>California</h2>
+      <ul>
+        <li><strong>Brokers:</strong> Must hold a California Financing Law (CFL) license; disclosures required.</li>
+        <li><strong>Lenders:</strong> Must disclose total repayment amount, APR, and terms for deals ≤ $500,000.</li>
+      </ul>
+    </div>
 
-    <h2>New York</h2>
-    <ul>
-      <li><strong>Brokers:</strong> Obligated to deliver disclosures outlining financing terms to recipients.</li>
-      <li><strong>Lenders:</strong> Must disclose total financing amount, finance charges, APR, and repayment terms for transactions ≤ $2.5 million.</li>
-    </ul>
+    <div class="state-block">
+      <h2>Connecticut</h2>
+      <ul>
+        <li><strong>Brokers:</strong> Must register; required to provide disclosures for sales-based financing ≤ $250,000.</li>
+        <li><strong>Lenders:</strong> Must disclose financing amount, fees, terms, and broker compensation.</li>
+      </ul>
+    </div>
 
-    <h2>Connecticut</h2>
-    <ul>
-      <li><strong>Brokers:</strong> Required to register with the state and provide disclosures for sales-based financing ≤ $250,000.</li>
-      <li><strong>Lenders:</strong> Must disclose total financing amount, fees, repayment terms, and broker compensation for applicable transactions.</li>
-    </ul>
+    <div class="state-block">
+      <h2>Georgia</h2>
+      <ul>
+        <li><strong>Brokers:</strong> No active broker requirements.</li>
+        <li><strong>Lenders:</strong> Must provide disclosures for sales-based financing ≤ $500,000.</li>
+      </ul>
+    </div>
 
-    <h2>Florida</h2>
-    <ul>
-      <li><strong>Brokers:</strong> No specific disclosure requirements outlined.</li>
-      <li><strong>Lenders:</strong> Obligated to provide disclosures detailing total financing amount, payment terms, and prepayment rights for transactions ≤ $500,000.</li>
-    </ul>
+    <div class="state-block">
+      <h2>New York</h2>
+      <ul>
+        <li><strong>Brokers:</strong> Must provide disclosure form prior to presenting offers.</li>
+        <li><strong>Lenders:</strong> Required to disclose APR, total cost, term, and fees for deals ≤ $2.5 million.</li>
+      </ul>
+    </div>
 
-    <h2>Georgia</h2>
-    <ul>
-      <li><strong>Brokers:</strong> No specific disclosure requirements outlined.</li>
-      <li><strong>Lenders:</strong> Must furnish disclosures including total funds provided, payment schedule, and prepayment terms for transactions ≤ $500,000.</li>
-    </ul>
+    <div class="state-block">
+      <h2>Utah</h2>
+      <ul>
+        <li><strong>Brokers:</strong> Must register with the state; disclosures required.</li>
+        <li><strong>Lenders:</strong> Must disclose financing terms and broker compensation for deals ≤ $1 million.</li>
+      </ul>
+    </div>
 
-    <h2>Kansas</h2>
-    <ul>
-      <li><strong>Brokers:</strong> No specific disclosure requirements outlined.</li>
-      <li><strong>Lenders:</strong> Required to disclose total financing amount, repayment terms, and prepayment costs for transactions ≤ $500,000.</li>
-    </ul>
+    <div class="state-block">
+      <h2>Virginia</h2>
+      <ul>
+        <li><strong>Brokers:</strong> Must register; required to issue disclosures for sales-based financing.</li>
+        <li><strong>Lenders:</strong> Must disclose financing terms, fees, and broker compensation.</li>
+      </ul>
+    </div>
 
-    <h2>Utah</h2>
-    <ul>
-      <li><strong>Brokers:</strong> Must register with the state and comply with disclosure requirements.</li>
-      <li><strong>Lenders:</strong> Obligated to provide disclosures detailing total financing amount, payment terms, and broker compensation for transactions ≤ $1 million.</li>
-    </ul>
-
-    <h2>Virginia</h2>
-    <ul>
-      <li><strong>Brokers:</strong> Required to register with the state and provide disclosures for sales-based financing.</li>
-      <li><strong>Lenders:</strong> Must disclose total financing amount, finance charges, repayment terms, and broker compensation for applicable transactions.</li>
-    </ul>
   </div>
 </body>
 </html>
