@@ -15,10 +15,13 @@
     
     body {
       font-family: 'Inter', sans-serif;
-      background: #ffffff;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
       color: #1a1a1a;
       line-height: 1.6;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     html {
@@ -103,140 +106,49 @@
       color: white !important;
     }
 
-    /* Hero Section */
-    .hero {
-      padding: 8rem 2rem 4rem;
-      text-align: center;
-      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    }
-
-    .hero-content {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: 4rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-      color: #000000;
-    }
-
-    .hero .subtitle {
-      font-size: 1.5rem;
-      color: #64748b;
-      margin-bottom: -.25rem;
-    }
-
-    .hero img {
-      max-width: 600px;
-      width: 100%;
-      border-radius: 1rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      margin-top: 2rem;
-    }
-
     /* Main Content */
-    .compliance-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
-
-    .states-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .state-card {
-      background: white;
-      border-radius: 1rem;
-      padding: 2rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      transition: all 0.2s;
-    }
-
-    .state-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      border-color: #467EFF;
-    }
-
-    .state-card h2 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 1.5rem;
+    .main-content {
+      flex: 1;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 0.5rem;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 6rem;
+      min-height: 60vh;
     }
 
-    .state-icon {
-      width: 2.5rem;
-      height: 2.5rem;
+    .construction-icon {
+      width: 100px;
+      height: 100px;
       background: #467EFF;
-      border-radius: 0.75rem;
+      border-radius: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 1rem;
-      font-weight: 700;
-      flex-shrink: 0;
+      margin: 0 auto 2rem;
+      box-shadow: 0 10px 25px rgba(70, 126, 255, 0.2);
     }
 
-    .requirement-section {
-      margin-bottom: 1.5rem;
+    .construction-icon svg {
+      width: 50px;
+      height: 50px;
+      fill: white;
     }
 
-    .requirement-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #467EFF;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .requirement-text {
-      color: #64748b;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .no-requirement {
-      color: #10b981;
-      font-weight: 600;
-    }
-
-    /* Intro Section */
-    .intro-section {
-      background: white;
-      padding: 3rem 2rem;
-      text-align: center;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .intro-content {
-      max-width: 950px;
-      margin: 0 auto;
-    }
-
-    .intro-content h2 {
-      font-size: 2.25rem;
+    .main-content h1 {
+      font-size: 3rem;
       font-weight: 800;
-      color: #1e293b;
       margin-bottom: 1rem;
+      color: #1e293b;
     }
 
-    .intro-content p {
-      font-size: 1.125rem;
+    .main-content p {
+      font-size: 1.25rem;
       color: #64748b;
-      margin-bottom: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     /* Footer */
@@ -285,53 +197,22 @@
         padding: 1rem;
       }
 
-      .hero {
-        padding: 8rem 1rem 3rem;
+      .main-content {
+        padding: 1rem;
+        margin-top: 5rem;
       }
 
-      .hero h1 {
+      .main-content h1 {
         font-size: 2.25rem;
       }
 
-      .hero .subtitle {
-        font-size: 1.2rem;
-      }
-
-      .compliance-content {
-        padding: 3rem 1rem;
-      }
-
-      .states-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .state-card {
-        padding: 1.5rem;
-      }
-
-      .state-card h2 {
-        font-size: 1.5rem;
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-      }
-
-      .intro-section {
-        padding: 2rem 1rem;
-      }
-
-      .intro-content h2 {
-        font-size: 1.75rem;
+      .main-content p {
+        font-size: 1.1rem;
       }
 
       .footer-links {
         flex-direction: column;
         gap: 1rem;
-      }
-
-      .footer-bottom {
-        font-size: 0.8rem;
       }
     }
   </style>
@@ -346,157 +227,25 @@
         </a>
       </div>
       <div class="nav-links">
-  <a href="/" class="btn btn-secondary">Home</a>
-  <a href="/partners.html" class="btn btn-secondary">Partner</a>
-  <a href="/login.html" class="btn btn-primary">Sign In</a>
-</div>
+        <a href="/" class="btn btn-secondary">Home</a>
+        <a href="/partners.html" class="btn btn-secondary">Partner</a>
+        <a href="/login.html" class="btn btn-primary">Sign In</a>
+      </div>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Are You Compliant?</h1>
-<p style="color: #64748b; font-size: 1.25rem; margin-top: 1rem;">
-  More regulation is coming in 2025 and 2026. Aquamark automatically flags bank statements tied to states with disclosure, registration, or licensing requirements—helping you stay ahead of evolving compliance rules.
-</p>
-    </div>
-  </section>
-
   <!-- Main Content -->
-  <div class="compliance-content">
-    <div class="states-grid">
-      
-      <div class="state-card">
-        <h2><span class="state-icon">CA</span>California</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text">Must hold a California Financing Law (CFL) license; disclosures required.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Must disclose total repayment amount, APR, and terms for deals ≤ $500,000.</div>
-        </div>
-      </div>
-
-      <div class="state-card">
-        <h2><span class="state-icon">CT</span>Connecticut</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text">Must register; required to provide disclosures for sales-based financing ≤ $250,000.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Must disclose financing amount, fees, terms, and broker compensation.</div>
-        </div>
-      </div>
-
-      <div class="state-card">
-        <h2><span class="state-icon">FL</span>Florida</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text no-requirement">No current disclosure requirement.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Must disclose financing terms including total cost, payment schedule, and prepayment policy for deals ≤ $500,000.</div>
-        </div>
-      </div>
-
-      <div class="state-card">
-        <h2><span class="state-icon">GA</span>Georgia</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text no-requirement">No current disclosure requirement.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Required to provide disclosures for sales-based financing ≤ $500,000.</div>
-        </div>
-      </div>
-
-      <div class="state-card">
-        <h2><span class="state-icon">KS</span>Kansas</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text no-requirement">No current requirement.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Must disclose total financing amount, repayment schedule, and prepayment penalties for deals ≤ $500,000.</div>
-        </div>
-      </div>
-
- <div class="state-card">
-        <h2><span class="state-icon">MO</span>Missouri</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text">Must register with the state.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Required to disclose repayment terms and total financing cost for deals ≤ $500,000.</div>
-        </div>
-      </div>
-      
-      <div class="state-card">
-        <h2><span class="state-icon">NY</span>New York</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text">Must provide state-mandated disclosure before offer is presented.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Must disclose broker compensation, APR, total repayment, fees, and terms for transactions ≤ $2.5 million.</div>
-        </div>
-      </div>
-
-      <div class="state-card">
-        <h2><span class="state-icon">NC</span>North Carolina</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text">Must register with the state.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Required to disclose total amount financed, fees, and terms for transactions ≤ $500,000.</div>
-        </div>
-      </div>
-
-      <div class="state-card">
-        <h2><span class="state-icon">UT</span>Utah</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text">Must register with the state; disclosures required.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Must disclose financing terms and broker compensation for deals ≤ $1 million.</div>
-        </div>
-      </div>
-
-      <div class="state-card">
-        <h2><span class="state-icon">VA</span>Virginia</h2>
-        <div class="requirement-section">
-          <div class="requirement-title">Brokers</div>
-          <div class="requirement-text">Must register; required to issue disclosures for sales-based financing.</div>
-        </div>
-        <div class="requirement-section">
-          <div class="requirement-title">Lenders</div>
-          <div class="requirement-text">Must disclose financing terms, fees, and broker compensation.</div>
-        </div>
-      </div>
-
+  <main class="main-content">
+    <div class="construction-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 4V6L13.5 7.5C13.1 7.9 12.6 8.1 12 8.1S10.9 7.9 10.5 7.5L9 6V4L3 7V9L9 12L12 10.5L15 12L21 9ZM12 13.5L9 15L3 12V14L9 17L12 15.5L15 17L21 14V12L15 15L12 13.5Z"/>
+      </svg>
     </div>
-  </div>
 
-<div style="max-width: 800px; margin: 3rem auto 4rem; text-align: center;">
-  <p style="font-size: 0.95rem; color: #64748b;">
-    <strong>Disclaimer:</strong> This is not legal advice. We recommend conducting your own due diligence and consulting an attorney for anything unclear or specific to your business.
-  </p>
-</div>
+    <h1>Under Construction</h1>
+    <p>We're building a comprehensive resource for current and upcoming regulatory requirements. Check back soon for detailed information on state-specific compliance obligations.</p>
+  </main>
 
-  
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
