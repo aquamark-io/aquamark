@@ -988,10 +988,16 @@ watermarkPage.drawImage(qrImage, {
         // ✅ Step 5: Update Supabase usage
         const finalPagesUsed = data.pages_used + pagesWatermarked;
         const finalPagesRemaining = data.page_credits - finalPagesUsed;
-        const { error: updateError } = await supabase
-            .from('usage')
-            .update({ pages_used: finalPagesUsed, pages_remaining: finalPagesRemaining })
-            .eq('user_email', profile.Email);
+      const finalFilesUsed = (data.files || 0) + validResults.length;
+
+const { error: updateError } = await supabase
+    .from('usage')
+    .update({ 
+        pages_used: finalPagesUsed, 
+        pages_remaining: finalPagesRemaining,
+        files: finalFilesUsed
+    })
+    .eq('user_email', profile.Email);
 
         if (updateError) throw updateError;
 
