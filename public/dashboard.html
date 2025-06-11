@@ -1423,137 +1423,73 @@ console.error("Error handling subscription reopen:", err);
 });
 
 Outseta.getUser().then(async (profile) => {
-
-if (profile) {
-
-console.log("PersonUid:", profile.Uid);
-
-console.log("Email:", profile.Email);
-
-console.log("AccountUid:", profile.Account.Uid);
-
-// Upsert - create/update row in Supabase
-
-try {
-
-// First, let's check if the user already exists
-
-let { data: existingUser, error: fetchError } = await supabase
-
-.from('usage')
-
-.select('*')
-
-.eq('user_email', profile.Email);
-
-// Set default values
-
-let pages_used = 0;
-
-let page_credits = 100;
-
-let plan_name = 'Free Trial';
-
-let rowId = null;
-
-let billing_cycle_start;
-
-// If user exists, use their data
-
-if (existingUser && existingUser.length > 0) {
-
-// User exists - use the first row we found
-
-pages_used = existingUser[0].pages_used || 0;
-
-page_credits = existingUser[0].page_credits || 100;
-
-plan_name = existingUser[0].plan_name || 'Free Trial';
-
-rowId = existingUser[0].id;
-
-console.log("Found existing user with ID:", rowId);
-
-// Don't modify the plan name for existing users
-
-// This is the key change - we're preserving the plan name from the database
-
-} else {
-
-console.log("No existing user found, will create new record");
-
-// Set billing cycle start date for new users
-
-const today = new Date();
-
-billing_cycle_start = today.toISOString().split('T')[0];
-
-}
-
-// Calculate pages_remaining
-
-const pages_remaining = page_credits - pages_used;
-
-// Prepare the data object
-
-const userData = {
-
-user_email: profile.Email,
-
-pages_used: pages_used,
-
-pages_remaining: pages_remaining,
-
-plan_name: plan_name, // Use the variable instead of hardcoding 'Free Trial'
-
-page_credits: page_credits
-
-};
-
-// Add billing_cycle_start for new users
-
-if (!rowId && billing_cycle_start) {
-
-userData.billing_cycle_start = billing_cycle_start;
-
-}
-
-// If we have an existing ID, include it to update that specific row
-
-if (rowId) {
-
-userData.id = rowId;
-
-}
-
-// Upsert the data
-
-const { data, error } = await supabase
-
-.from('usage')
-
-.upsert(userData);
-
-if (error) throw error;
-
-console.log("Supabase update successful", data);
-
-// After successfully updating, let's fetch the data to display on the dashboard
-
-fetchUserUsageData(profile.Email);
-
-} catch (err) {
-
-console.error("Error updating Supabase:", err);
-
-}
-
-}
-
+  if (profile) {
+    console.log("PersonUid:", profile.Uid);
+    console.log("Email:", profile.Email);
+    console.log("AccountUid:", profile.Account.Uid);
+
+    // Try to get referral code from CustomFields
+    let referral_code = null;
+    if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
+      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'referral_code');
+      if (refField) {
+        referral_code = refField.FieldValue || null;
+      }
+    }
+
+    // Check if user already exists
+    let { data: existingUser, error: fetchError } = await supabase
+      .from('usage')
+      .select('*')
+      .eq('user_email', profile.Email);
+
+    let pages_used = 0;
+    let page_credits = 100;
+    let plan_name = 'Free Trial';
+    let rowId = null;
+    let billing_cycle_start;
+
+    if (existingUser && existingUser.length > 0) {
+      pages_used = existingUser[0].pages_used || 0;
+      page_credits = existingUser[0].page_credits || 100;
+      plan_name = existingUser[0].plan_name || 'Free Trial';
+      rowId = existingUser[0].id;
+      console.log("Found existing user with ID:", rowId);
+    } else {
+      console.log("No existing user found, will create new record");
+      const today = new Date();
+      billing_cycle_start = today.toISOString().split('T')[0];
+    }
+
+    const pages_remaining = page_credits - pages_used;
+
+    const userData = {
+      user_email: profile.Email,
+      pages_used: pages_used,
+      pages_remaining: pages_remaining,
+      plan_name: plan_name,
+      page_credits: page_credits,
+      referral_code: referral_code
+    };
+
+    if (!rowId && billing_cycle_start) {
+      userData.billing_cycle_start = billing_cycle_start;
+    }
+    if (rowId) {
+      userData.id = rowId;
+    }
+
+    const { data, error } = await supabase
+      .from('usage')
+      .upsert(userData);
+
+    if (error) throw error;
+
+    console.log("Supabase update successful", data);
+    fetchUserUsageData(profile.Email);
+  }
 }).catch(err => {
-
-console.error("Error getting Outseta user:", err);
-
+  console.error("Error getting Outseta user:", err);
 });
 
 });
