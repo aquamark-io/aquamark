@@ -3,10 +3,436 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Spartan Projects</title>
+  <title>Spartan Projects | Strategic Growth Partners</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="spartan.png" type="image/png">
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-blue: #0066cc;
+      --dark-blue: #004080;
+      --light-blue: #e6f3ff;
+      --accent-blue: #0052a3;
+      --text-dark: #1a1a1a;
+      --text-gray: #666666;
+      --text-light: #999999;
+      --white: #ffffff;
+      --background: #fafbfc;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: var(--white);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      padding-right: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      margin-right: auto;
+    }
+
+    .logo img {
+      height: 80px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      margin-left: auto;
+      margin-right: 24px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-blue);
+    }
+
+    .cta-button {
+      background: var(--primary-blue);
+      color: white;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-blue);
+    }
+
+    .hero {
+      padding: 120px 0 80px;
+      background: linear-gradient(135deg, var(--light-blue) 0%, white 100%);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text-dark);
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: var(--text-gray);
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--primary-blue);
+      color: white;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-blue);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary-blue);
+      padding: 16px 32px;
+      border: 2px solid var(--primary-blue);
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-blue);
+      color: white;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-align: center;
+      color: var(--text-dark);
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--text-gray);
+      text-align: center;
+      margin-bottom: 64px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 64px;
+    }
+
+    .service-card {
+      background: white;
+      padding: 40px 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 102, 204, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #f0f0f0;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 40px rgba(0, 102, 204, 0.12);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-dark);
+    }
+
+    .service-card p {
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+
+    .testimonials {
+      background: var(--background);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 64px;
+    }
+
+    .testimonial {
+      background: white;
+      padding: 32px 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0, 102, 204, 0.08);
+      border: 1px solid #f0f0f0;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testimonial:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 40px rgba(0, 102, 204, 0.12);
+    }
+
+    .testimonial::before {
+      content: '"';
+      font-size: 48px;
+      color: var(--primary-blue);
+      font-weight: bold;
+      position: absolute;
+      top: 16px;
+      left: 24px;
+      line-height: 1;
+      opacity: 0.3;
+    }
+
+    .testimonial-text {
+      font-size: 16px;
+      color: var(--text-dark);
+      margin-bottom: auto;
+      line-height: 1.6;
+      margin-top: 16px;
+      font-weight: 400;
+      flex-grow: 1;
+    }
+
+    .testimonial-author {
+      font-size: 13px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 20px;
+    }
+
+    .about {
+      text-align: center;
+    }
+
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 18px;
+      color: var(--text-gray);
+      line-height: 1.7;
+    }
+
+    .about-content p {
+      margin-bottom: 24px;
+    }
+
+    .contact {
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+      color: white;
+      text-align: center;
+    }
+
+    .contact .section-title {
+      color: white;
+    }
+
+    .contact .section-subtitle {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .contact-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .contact-form input {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      min-width: 200px;
+    }
+
+    .contact-form button {
+      background: white;
+      color: var(--primary-blue);
+      padding: 16px 32px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: var(--text-dark);
+      color: white;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .logo img {
+        height: 60px;
+      }
+
+      .cta-button {
+        padding: 12px 16px;
+        font-size: 13px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .contact-form {
+        flex-direction: column;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .testimonial {
+        min-height: auto;
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
   <header>
