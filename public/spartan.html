@@ -56,10 +56,14 @@
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
             text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         .nav-links {
@@ -205,15 +209,17 @@
         }
 
         .service-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--light-blue);
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            background: var(--primary-blue);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 24px;
-            font-size: 24px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .service-card h3 {
@@ -235,31 +241,53 @@
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
             margin-top: 64px;
         }
 
         .testimonial {
             background: white;
-            padding: 32px;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid var(--primary-blue);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 102, 204, 0.08);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 40px rgba(0, 102, 204, 0.12);
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-size: 64px;
+            color: var(--primary-blue);
+            font-weight: bold;
+            position: absolute;
+            top: 20px;
+            left: 32px;
+            line-height: 1;
+            opacity: 0.3;
         }
 
         .testimonial-text {
-            font-size: 16px;
-            color: var(--text-gray);
-            margin-bottom: 24px;
-            font-style: italic;
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 32px;
             line-height: 1.6;
+            margin-top: 20px;
+            font-weight: 400;
         }
 
         .testimonial-author {
             font-size: 14px;
-            color: var(--text-light);
-            font-weight: 500;
+            color: var(--primary-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         /* About Section */
@@ -391,7 +419,9 @@
 <body>
     <header>
         <nav class="container">
-            <a href="#" class="logo">Spartan Projects</a>
+            <a href="#" class="logo">
+                <img src="spartan.png" alt="Spartan Projects Logo">
+            </a>
             <ul class="nav-links">
                 <li><a href="#services">Services</a></li>
                 <li><a href="#about">About</a></li>
@@ -420,32 +450,32 @@
                 
                 <div class="services-grid">
                     <div class="service-card fade-in">
-                        <div class="service-icon">🚀</div>
+                        <div class="service-icon">✓</div>
                         <h3>Strategic Scaling</h3>
                         <p>Navigate rapid growth phases with confidence. Our expertise helps you scale operations, teams, and processes effectively without losing momentum.</p>
                     </div>
                     <div class="service-card fade-in">
-                        <div class="service-icon">💡</div>
+                        <div class="service-icon">✓</div>
                         <h3>Market Positioning</h3>
                         <p>Stand out in a crowded fintech landscape. We help establish your brand presence and create compelling value propositions that attract partners and customers.</p>
                     </div>
                     <div class="service-card fade-in">
-                        <div class="service-icon">⚙️</div>
+                        <div class="service-icon">✓</div>
                         <h3>Operations Excellence</h3>
                         <p>Transform your operational framework from concept to execution. We help you build scalable processes that support sustainable growth.</p>
                     </div>
                     <div class="service-card fade-in">
-                        <div class="service-icon">📈</div>
+                        <div class="service-icon">✓</div>
                         <h3>Sales Strategy</h3>
                         <p>Refocus and optimize your sales direction. Our proven methodologies help you identify opportunities and build effective go-to-market strategies.</p>
                     </div>
                     <div class="service-card fade-in">
-                        <div class="service-icon">🎯</div>
+                        <div class="service-icon">✓</div>
                         <h3>Strategic Planning</h3>
                         <p>Get clarity on your path forward. We help you document and visualize your strategic initiatives, turning ideas into actionable roadmaps.</p>
                     </div>
                     <div class="service-card fade-in">
-                        <div class="service-icon">🤝</div>
+                        <div class="service-icon">✓</div>
                         <h3>Partnership Development</h3>
                         <p>Build meaningful B2B relationships that drive growth. We help you identify, approach, and secure valuable strategic partnerships.</p>
                     </div>
@@ -460,20 +490,16 @@
                 
                 <div class="testimonials-grid">
                     <div class="testimonial fade-in">
-                        <p class="testimonial-text">"I had a lot on my plate and needed to take a step back. Instead of scaling, I had to scale back before starting over. I learned a lot and completely refocused our sales direction."</p>
+                        <p class="testimonial-text">I had a lot on my plate and needed to take a step back. Instead of scaling, I had to scale back before starting over. I learned a lot and completely refocused our sales direction.</p>
                         <div class="testimonial-author">Independent Sales Office, New York City</div>
                     </div>
                     <div class="testimonial fade-in">
-                        <p class="testimonial-text">"Too many companies in this space. We have a good product and team but were getting ignored. Spartan helped us set up a brand campaign to establish our presence and bring more partners."</p>
+                        <p class="testimonial-text">Too many companies in this space. We have a good product and team but were getting ignored. Spartan helped us set up a brand campaign to establish our presence and bring more partners.</p>
                         <div class="testimonial-author">Funding Company, Miami, Florida</div>
                     </div>
                     <div class="testimonial fade-in">
-                        <p class="testimonial-text">"We were launching our product but lacked operations to run it. We knew what we needed but couldn't get it down on paper. I now have direction and a visual that made it come to life."</p>
+                        <p class="testimonial-text">We were launching our product but lacked operations to run it. We knew what we needed but couldn't get it down on paper. I now have direction and a visual that made it come to life.</p>
                         <div class="testimonial-author">SaaS Company, California</div>
-                    </div>
-                    <div class="testimonial fade-in">
-                        <p class="testimonial-text">"I've referred two people to Spartan Projects because I trust their experts. They give hard truths but find ways to better your company and reach your goals."</p>
-                        <div class="testimonial-author">Independent Sales Agent, Long Island</div>
                     </div>
                 </div>
             </div>
