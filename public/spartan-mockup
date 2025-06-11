@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spartan Projects | Strategic Growth Partners</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0066cc;
+            --dark-blue: #004080;
+            --light-blue: #e6f3ff;
+            --accent-blue: #0052a3;
+            --text-dark: #1a1a1a;
+            --text-gray: #666666;
+            --text-light: #999999;
+            --white: #ffffff;
+            --background: #fafbfc;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e0e0e0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .cta-button {
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, var(--light-blue) 0%, white 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            padding: 16px 32px;
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            text-align: center;
+            margin-bottom: 64px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 102, 204, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 40px rgba(0, 102, 204, 0.12);
+        }
+
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--light-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 24px;
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .service-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: var(--background);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* About Section */
+        .about {
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 18px;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .about-content p {
+            margin-bottom: 24px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .contact-form input {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            min-width: 200px;
+        }
+
+        .contact-form button {
+            background: white;
+            color: var(--primary-blue);
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .contact-form {
+                flex-direction: column;
+            }
+
+            .contact-form input {
+                min-width: unset;
+            }
+        }
+
+        /* Smooth animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">Spartan Projects</a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="fade-in">Your Partners in Strategic Growth</h1>
+                <p class="fade-in">Navigate the complexities of fintech with confidence. We provide the insights and strategies you need to excel in a competitive marketplace.</p>
+                <div class="hero-buttons fade-in">
+                    <a href="#contact" class="btn-primary">Start Your Journey</a>
+                    <a href="#about" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in">Solutions Created for You</h2>
+                <p class="section-subtitle fade-in">We specialize in facilitating common fintech challenges and strategic growth initiatives</p>
+                
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🚀</div>
+                        <h3>Strategic Scaling</h3>
+                        <p>Navigate rapid growth phases with confidence. Our expertise helps you scale operations, teams, and processes effectively without losing momentum.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">💡</div>
+                        <h3>Market Positioning</h3>
+                        <p>Stand out in a crowded fintech landscape. We help establish your brand presence and create compelling value propositions that attract partners and customers.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">⚙️</div>
+                        <h3>Operations Excellence</h3>
+                        <p>Transform your operational framework from concept to execution. We help you build scalable processes that support sustainable growth.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">📈</div>
+                        <h3>Sales Strategy</h3>
+                        <p>Refocus and optimize your sales direction. Our proven methodologies help you identify opportunities and build effective go-to-market strategies.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🎯</div>
+                        <h3>Strategic Planning</h3>
+                        <p>Get clarity on your path forward. We help you document and visualize your strategic initiatives, turning ideas into actionable roadmaps.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🤝</div>
+                        <h3>Partnership Development</h3>
+                        <p>Build meaningful B2B relationships that drive growth. We help you identify, approach, and secure valuable strategic partnerships.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="section testimonials">
+            <div class="container">
+                <h2 class="section-title fade-in">What Our Clients Say</h2>
+                <p class="section-subtitle fade-in">Real results from companies we've helped transform</p>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial fade-in">
+                        <p class="testimonial-text">"I had a lot on my plate and needed to take a step back. Instead of scaling, I had to scale back before starting over. I learned a lot and completely refocused our sales direction."</p>
+                        <div class="testimonial-author">Independent Sales Office, New York City</div>
+                    </div>
+                    <div class="testimonial fade-in">
+                        <p class="testimonial-text">"Too many companies in this space. We have a good product and team but were getting ignored. Spartan helped us set up a brand campaign to establish our presence and bring more partners."</p>
+                        <div class="testimonial-author">Funding Company, Miami, Florida</div>
+                    </div>
+                    <div class="testimonial fade-in">
+                        <p class="testimonial-text">"We were launching our product but lacked operations to run it. We knew what we needed but couldn't get it down on paper. I now have direction and a visual that made it come to life."</p>
+                        <div class="testimonial-author">SaaS Company, California</div>
+                    </div>
+                    <div class="testimonial fade-in">
+                        <p class="testimonial-text">"I've referred two people to Spartan Projects because I trust their experts. They give hard truths but find ways to better your company and reach your goals."</p>
+                        <div class="testimonial-author">Independent Sales Agent, Long Island</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section about">
+            <div class="container">
+                <h2 class="section-title fade-in">Industry Veterans Driving Success</h2>
+                <div class="about-content fade-in">
+                    <p>We are made up of industry veterans who have guided some of the biggest names in fintech, helping them secure and manage multi-million-dollar funding with our expertise in operations, sales, and market trends.</p>
+                    <p>Our deep understanding of the industry's growth patterns has enabled us to drive success for both companies and the talented people behind them. We take our clients' requests for discretion and their need to protect their strategies seriously.</p>
+                    <p>Our mission is simple: We plan to be here for the long haul, working tirelessly to connect the brightest minds in the industry. At Spartan Projects, we refuse to accept mediocrity. We challenge the status quo, encouraging others to raise their standards, dream big, and push beyond what's comfortable.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2 class="section-title fade-in">Ready to Scale Your Business?</h2>
+                <p class="section-subtitle fade-in">Let's discuss how Spartan Projects can help launch your venture or scale with confidence</p>
+                
+                <div class="contact-form fade-in">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Contact Us Today</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Spartan Projects. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Initial fade-in for hero elements
+        setTimeout(() => {
+            document.querySelectorAll('.hero .fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 300);
+
+        // Contact form submission
+        document.querySelector('.contact-form button').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.querySelector('.contact-form input').value;
+            if (email) {
+                alert('Thank you for your interest! We\'ll be in touch soon.');
+                document.querySelector('.contact-form input').value = '';
+            } else {
+                alert('Please enter your email address.');
+            }
+        });
+    </script>
+</body>
+</html>
