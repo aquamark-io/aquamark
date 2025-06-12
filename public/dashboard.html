@@ -1427,6 +1427,7 @@ Outseta.getUser().then(async (profile) => {
     console.log("PersonUid:", profile.Uid);
     console.log("Email:", profile.Email);
     console.log("AccountUid:", profile.Account.Uid);
+    console.log("CustomFields:", profile.CustomFields);
 
     // Try to get referral code from CustomFields
     let referral_code = null;
