@@ -2,27 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>API</title>
+<title>Aquamark API Documentation</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="/logo-icon-black-blue.jpg" rel="icon" type="image/jpg"/>
 <style>
 :root {
-  --primary-color: #1a1a1a;
-  --primary-light: #f8fafc;
-  --primary-dark: #1e293b;
-  --accent-color: #467EFF;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --danger-color: #ef4444;
-  --text-primary: #1a1a1a;
-  --text-secondary: #64748b;
-  --bg-color: #ffffff;
-  --card-bg: #ffffff;
-  --border-color: #e2e8f0;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --primary: #0066FF;
+  --primary-dark: #0052CC;
+  --secondary: #64748B;
+  --accent: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-accent: #F0F9FF;
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --radius: 12px;
+  --radius-lg: 16px;
 }
 
 * {
@@ -32,230 +35,475 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-secondary);
   color: var(--text-primary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  line-height: 1.6;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Header */
-.aqua-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: #e0f0ff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+.header {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(10px);
 }
 
-.aqua-logo {
-  height: 32px;
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.aqua-nav a {
-  margin-left: 2rem;
-  text-decoration: none;
-  font-weight: 500;
-  color: var(--text-primary);
+.logo {
+  height: 36px;
 }
 
-.aqua-nav a:hover,
-.aqua-nav a.active {
-  color: var(--accent-color);
-}
-
-/* Main Panel */
-.aqua-panel {
-  max-width: 1000px;
-  width: 95%;
-  margin: 2rem auto;
-  background: var(--card-bg);
-  padding: 2.5rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-  flex: 1;
-}
-
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: var(--primary-color);
-  font-weight: 800;
-}
-
-h2 {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  color: var(--primary-dark);
-  font-weight: 700;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.5rem;
-}
-
-h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-  font-size: 1.2rem;
-  color: var(--primary-dark);
-}
-
-p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-}
-
-pre {
-  background: var(--primary-light);
-  padding: 1.25rem;
-  overflow-x: auto;
+.nav-home {
+  background: var(--primary);
+  color: white;
+  padding: 10px 20px;
   border-radius: 8px;
-  border: 1px solid var(--border-color);
-  margin: 1.25rem 0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
-code {
-  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-  color: #e53935;
-  font-size: 0.9rem;
+.nav-home:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-accent) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 0;
+}
+
+.hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.hero .highlight {
+  background: var(--bg-accent);
+  color: var(--primary);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  display: inline-block;
+  font-weight: 600;
+  border: 1px solid rgba(0, 102, 255, 0.2);
+}
+
+/* Main Content */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.content-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.card p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* Code Blocks */
+.code-block {
+  background: var(--text-primary);
+  color: #E2E8F0;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.code-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.inline-code {
+  background: var(--bg-accent);
+  color: var(--primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Tables */
+.table-container {
+  background: var(--bg-primary);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin: 1.5rem 0;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-
-thead {
-  background-color: var(--primary-light);
 }
 
 th {
-  padding: 0.875rem;
+  background: var(--bg-secondary);
+  padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: var(--primary-dark);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
 td {
-  padding: 0.875rem;
-  border-top: 1px solid var(--border-color);
+  padding: 1rem;
+  border-top: 1px solid var(--border-light);
   color: var(--text-secondary);
 }
 
-tr:nth-child(even) {
-  background-color: #f9fafb;
+tr:hover {
+  background: var(--bg-secondary);
 }
 
-ul {
-  margin: 1rem 0 1.5rem 1.5rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-li {
-  margin-bottom: 0.5rem;
-}
-
-.api-method {
-  display: inline-block;
+/* Status indicators */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.25rem 0.75rem;
   border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  margin-right: 0.5rem;
-  background: var(--accent-color);
-  color: white;
-}
-
-footer {
-  background: #467EFF;
-  padding: 2rem;
-  text-align: center;
-  color: white;
-}
-
-footer a {
-  color: white;
-  text-decoration: none;
-  margin: 0 1rem;
-}
-
-footer a:hover {
-  text-decoration: underline;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .status-success {
-  color: var(--success-color);
-  font-weight: 500;
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent);
 }
 
 .status-error {
-  color: var(--danger-color);
-  font-weight: 500;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
 }
 
+.status-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+/* Method badges */
+.method {
+  display: inline-block;
+  padding: 0.375rem 0.875rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--primary);
+  color: white;
+}
+
+/* Lists */
+.feature-list {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+.feature-list li::before {
+  content: '✓';
+  background: var(--accent);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+/* Step indicators */
+.steps {
+  counter-reset: step;
+  list-style: none;
+  margin: 2rem 0;
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 2rem;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--primary);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+/* Footer */
+.footer {
+  background: var(--text-primary);
+  color: white;
+  padding: 3rem 0 2rem;
+  margin-top: 4rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.footer a:hover {
+  opacity: 1;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .aqua-panel {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero p {
+    font-size: 1.125rem;
+  }
+  
+  .container {
+    padding: 2rem 1rem;
+  }
+  
+  .card {
     padding: 1.5rem;
   }
-
-  h1 {
-    font-size: 1.75rem;
-  }
-
-  h2 {
-    font-size: 1.35rem;
-  }
-
-  pre {
+  
+  .code-block {
     padding: 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .header-content {
+    padding: 0 1rem;
   }
 }
 </style>
 </head>
 <body>
-<header class="aqua-header">
-  <img alt="Aquamark Logo" class="aqua-logo" src="/logo-full-black-blue.png"/>
-  <nav class="aqua-nav">
-    <a href="/" style="background-color:#467EFF; color:white; padding:8px 18px; font-size:16px; font-weight:600; border:none; border-radius:8px; cursor:pointer; text-decoration:none;">Home</a>
-  </nav>
+
+<header class="header">
+  <div class="header-content">
+    <img alt="Aquamark Logo" class="logo" src="/logo-full-black-blue.png"/>
+    <nav>
+      <a href="/" class="nav-home">← Back to Home</a>
+    </nav>
+  </div>
 </header>
 
-<main class="aqua-panel">
-  <h1>Simple Open API</h1>
-  <p>Start watermarking seamlessly in minutes.</p>
-  <p><strong>Important:</strong> Each request should include a single file for accurate tracking.</p>
+<section class="hero">
+  <div class="hero-content">
+    <h1>API Documentation</h1>
+    <p>Start watermarking seamlessly in minutes with our simple API</p>
+    <div class="highlight">
+      <strong>Important:</strong> Each request should include a single file for accurate tracking
+    </div>
+  </div>
+</section>
 
-  <h2>🔐 Authentication</h2>
-  <p>Contact <a href="mailto:hey@aquamark.io">hey@aquamark.io</a> to request your API key.</p>
-  <pre><code>Authorization: Bearer YOUR_API_KEY</code></pre>
+<main class="container">
+  <div class="content-grid">
+    
+    <!-- Authentication -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🔐</span>
+        <h2>Authentication</h2>
+      </div>
+      <p>Contact <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a> to request your API key.</p>
+      <div class="code-block">Authorization: Bearer YOUR_API_KEY</div>
+    </div>
 
-  <h2>📥 Endpoint & Body</h2>
-  <p><strong>URL:</strong> https://aquamark-decrypt.onrender.com/watermark</p>
-  <table>
-    <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
-    <tbody>
-      <tr><td>user_email</td><td>string</td><td>Yes</td><td>Your Aquamark account email</td></tr>
-      <tr><td>file</td><td>file</td><td>Yes</td><td>One PDF file (max 25MB)</td></tr>
-      <tr><td>lender</td><td>string</td><td>No</td><td>Optional lender name to embed in the QR code</td></tr>
-      <tr><td>salesperson</td><td>string</td><td>No</td><td>Optional salesperson name to embed in the QR code</td></tr>
-      <tr><td>processor</td><td>string</td><td>No</td><td>Optional processor name to embed in the QR code</td></tr>
-      <tr><td>state</td><td>string</td><td>No</td><td>Optional State name for compliance and regulation disclaimers</td></tr>
-    </tbody>
-  </table>
+    <!-- Endpoint -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🌐</span>
+        <h2>Endpoint</h2>
+      </div>
+      <p><span class="method">POST</span> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="inline-code">user_email</span></td>
+              <td>string</td>
+              <td><span class="status status-error">Required</span></td>
+              <td>Your Aquamark account email</td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">file</span></td>
+              <td>file</td>
+              <td><span class="status status-error">Required</span></td>
+              <td>One PDF file (max 25MB)</td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">lender</span></td>
+              <td>string</td>
+              <td><span class="status status-warning">Optional</span></td>
+              <td>Lender name to embed in QR code</td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">salesperson</span></td>
+              <td>string</td>
+              <td><span class="status status-warning">Optional</span></td>
+              <td>Salesperson name for QR code</td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">processor</span></td>
+              <td>string</td>
+              <td><span class="status status-warning">Optional</span></td>
+              <td>Processor name for QR code</td>
+            </tr>
+            <tr>
+              <td><span class="inline-code">state</span></td>
+              <td>string</td>
+              <td><span class="status status-warning">Optional</span></td>
+              <td>State name for compliance disclaimers</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <h3>cURL</h3>
-  <pre><code>curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
+    <!-- Code Examples -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">💻</span>
+        <h2>Code Examples</h2>
+      </div>
+      
+      <h3 style="margin-bottom: 1rem; color: var(--text-primary);">cURL</h3>
+      <div class="code-block">curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -F "user_email=john@example.com" \
   -F "file=@statement1.pdf" \
@@ -263,69 +511,10 @@ footer a:hover {
   -F "salesperson=Jack Dawson" \
   -F "processor=Rose DeWitt" \
   -F "state=CA" \
-  --output "statement1 - protected.pdf"
-</code></pre>
+  --output "statement1 - protected.pdf"</div>
 
-  <h2>📫 Postman Setup</h2>
-  <ul>
-    <li><strong>Method:</strong> POST</li>
-    <li><strong>URL:</strong> <code>https://aquamark-decrypt.onrender.com/watermark</code></li>
-    <li><strong>Authorization:</strong> <code>Bearer YOUR_API_KEY</code></li>
-    <li><strong>Body Type:</strong> form-data</li>
-    <li><strong>Body Fields:</strong>
-      <ul>
-        <li><code>user_email</code> (text) – your Aquamark account email</li>
-        <li><code>file</code> (file) – upload your PDF file</li>
-        <li><code>lender</code> (text, optional) – name of lender to embed</li>
-        <li><code>salesperson</code> (text, optional) – name of salesperson to include in QR code</li>
-        <li><code>processor</code> (text, optional) – name of processor to include in QR code</li>
-        <li><code>state</code> (text, optional) – state abbreviation or full name (e.g. <code>CA</code> or <code>California</code>)</li>
-      </ul>
-    </li>
-  </ul>
-
-  <h2>✅ Successful Response</h2>
-  <pre><code>[Returns a protected PDF file]</code></pre>
-  <p>If a valid <code>state</code> is provided and matches regulation rules, the response will include a disclaimer in the following header:</p>
-  <pre><code>X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</code></pre>
-
-  <h2>❗ Error Responses</h2>
-  <table>
-    <thead><tr><th>Code</th><th>Message</th></tr></thead>
-    <tbody>
-      <tr><td><span class="status-error">401</span></td><td>Invalid API key</td></tr>
-      <tr><td><span class="status-error">403</span></td><td>User not on Enterprise plan</td></tr>
-      <tr><td><span class="status-error">422</span></td><td>No logo stored for this user</td></tr>
-      <tr><td><span class="status-error">429</span></td><td>Usage limit exceeded</td></tr>
-      <tr><td><span class="status-error">500</span></td><td>Internal error</td></tr>
-    </tbody>
-  </table>
-
-  <h2>📝 Notes</h2>
-  <ul>
-    <li>You must be on the Enterprise plan to access the API.</li>
-    <li>PDF only. One file per request.</li>
-    <li>Upload your watermark logo in the Aquamark portal before using the API.</li>
-    <li>Questions? Email <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></li>
-  </ul>
-
-<h2>🧑‍💻 Developer Workflow: Auto-Saving the PDF + Capturing the Compliance Disclaimer</h2>
-
-<p>When you POST a PDF to the Aquamark API, the response will include:</p>
-<ul>
-  <li>The watermarked PDF file (as binary)</li>
-  <li>An optional header: <code>X-State-Disclaimer: License and Disclosure required</code></li>
-</ul>
-
-<p>You can automate the entire workflow using code:</p>
-<ol>
-  <li>Send a POST request with your PDF and info (e.g. email, state)</li>
-  <li>Receive a protected PDF + optional disclaimer header</li>
-  <li>Save the PDF and push the disclaimer into a custom CRM field</li>
-</ol>
-
-<h3>🧪 Example: Node.js (using <code>axios</code>)</h3>
-<pre><code>const axios = require("axios");
+      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Node.js</h3>
+      <div class="code-block">const axios = require("axios");
 const fs = require("fs");
 const FormData = require("form-data");
 
@@ -346,10 +535,10 @@ axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
   console.log("Compliance Disclaimer:", disclaimer);
 }).catch(error => {
   console.error("Error:", error.message);
-});</code></pre>
+});</div>
 
-<h3>🧪 Example: Python (using <code>requests</code>)</h3>
-<pre><code>import requests
+      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Python</h3>
+      <div class="code-block">import requests
 
 with open("bankstatement.pdf", "rb") as f:
     files = { "file": f }
@@ -361,26 +550,122 @@ with open("bankstatement.pdf", "rb") as f:
         "Authorization": "Bearer YOUR_API_KEY"
     }
 
-    response = requests.post("https://aquamark-decrypt.onrender.com/watermark", data=data, files=files, headers=headers)
+    response = requests.post(
+        "https://aquamark-decrypt.onrender.com/watermark", 
+        data=data, 
+        files=files, 
+        headers=headers
+    )
 
     with open("protected.pdf", "wb") as out_file:
         out_file.write(response.content)
 
     disclaimer = response.headers.get("x-state-disclaimer")
-    print("Compliance Disclaimer:", disclaimer)</code></pre>
+    print("Compliance Disclaimer:", disclaimer)</div>
+    </div>
 
-<h3>📌 Notes</h3>
-<ul>
-  <li>The PDF does <strong>not</strong> include the disclaimer text.</li>
-  <li>The disclaimer is only returned in the response header.</li>
-  <li>Works with state names or abbreviations (e.g. <code>CA</code>, <code>California</code>).</li>
-  <li>Push the disclaimer to a CRM field (e.g. <code>compliance_disclaimer</code>) for audit tracking.</li>
-</ul>
+    <!-- Postman Setup -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📫</span>
+        <h2>Postman Setup</h2>
+      </div>
+      <ul class="feature-list">
+        <li><strong>Method:</strong> POST</li>
+        <li><strong>URL:</strong> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></li>
+        <li><strong>Authorization:</strong> <span class="inline-code">Bearer YOUR_API_KEY</span></li>
+        <li><strong>Body Type:</strong> form-data</li>
+      </ul>
+    </div>
 
+    <!-- Response -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">✅</span>
+        <h2>Successful Response</h2>
+      </div>
+      <p>Returns a protected PDF file with optional compliance header:</p>
+      <div class="code-block">X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</div>
+
+      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Error Responses</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="status status-error">401</span></td>
+              <td>Invalid API key</td>
+            </tr>
+            <tr>
+              <td><span class="status status-error">403</span></td>
+              <td>User not on Enterprise plan</td>
+            </tr>
+            <tr>
+              <td><span class="status status-error">422</span></td>
+              <td>No logo stored for this user</td>
+            </tr>
+            <tr>
+              <td><span class="status status-error">429</span></td>
+              <td>Usage limit exceeded</td>
+            </tr>
+            <tr>
+              <td><span class="status status-error">500</span></td>
+              <td>Internal error</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Developer Workflow -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🧑‍💻</span>
+        <h2>Developer Workflow</h2>
+      </div>
+      <p>Automate PDF watermarking and compliance tracking:</p>
+      
+      <ol class="steps">
+        <li>Send a POST request with your PDF and metadata</li>
+        <li>Receive a protected PDF + optional disclaimer header</li>
+        <li>Save the PDF and push disclaimer into your CRM</li>
+      </ol>
+
+      <ul class="feature-list">
+        <li>The PDF does <strong>not</strong> include disclaimer text</li>
+        <li>Disclaimer is only returned in response header</li>
+        <li>Works with state names or abbreviations (e.g. <span class="inline-code">CA</span>, <span class="inline-code">California</span>)</li>
+        <li>Push disclaimer to CRM field for audit tracking</li>
+      </ul>
+    </div>
+
+    <!-- Important Notes -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📝</span>
+        <h2>Important Notes</h2>
+      </div>
+      <ul class="feature-list">
+        <li>You must be on the <strong>Enterprise plan</strong> to access the API</li>
+        <li>PDF only. One file per request</li>
+        <li>Upload your watermark logo in the Aquamark portal before using the API</li>
+        <li>Questions? Email <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a></li>
+      </ul>
+    </div>
+
+  </div>
 </main>
 
-<footer>
-  <div>© 2025 Aquamark · <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></div>
+<footer class="footer">
+  <div class="footer-content">
+    <div>© 2025 Aquamark · <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></div>
+  </div>
 </footer>
+
 </body>
 </html>
