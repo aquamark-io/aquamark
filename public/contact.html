@@ -21,12 +21,13 @@
       padding: 3rem;
       border-radius: 1rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    }
-    h1 {
       text-align: center;
-      margin-bottom: 1.5rem;
-      font-size: 2rem;
-      font-weight: 700;
+    }
+    .logo {
+      margin-bottom: 2rem;
+    }
+    .logo img {
+      height: 30px;
     }
     iframe {
       width: 100%;
@@ -38,10 +39,15 @@
 <body>
 
   <div class="container">
-    <h1>Contact Aquamark</h1>
+    <div class="logo">
+      <a href="/">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo">
+      </a>
+    </div>
 
-    <!-- Replace this iframe with your Fillout embed code -->
-<div style="width:100%;height:500px;" data-fillout-id="bkQqMesfwxus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div><script src="https://server.fillout.com/embed/v1/"></script>
+    <!-- Fillout Embed -->
+    <div style="width:100%;height:500px;" data-fillout-id="bkQqMesfwxus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
+    <script src="https://server.fillout.com/embed/v1/"></script>
   </div>
 
 </body>
