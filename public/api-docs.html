@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <title>Aquamark API Documentation</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="/logo-icon-black-blue.jpg" rel="icon" type="image/jpg"/>
 <style>
 :root {
@@ -14,7 +15,7 @@
   --accent: #10B981;
   --warning: #F59E0B;
   --error: #EF4444;
-  --text-primary: #0F172A;
+  --text-primary: #1e293b;
   --text-secondary: #475569;
   --text-muted: #64748B;
   --bg-primary: #FFFFFF;
@@ -174,7 +175,7 @@ body {
 
 /* Code Blocks */
 .code-block {
-  background: var(--text-primary);
+  background: #f8fafc; color: #1e293b;
   color: #E2E8F0;
   padding: 1.5rem;
   border-radius: var(--radius);
@@ -347,7 +348,7 @@ tr:hover {
 
 /* Footer */
 .footer {
-  background: var(--text-primary);
+  background: #f8fafc; color: #1e293b;
   color: white;
   padding: 3rem 0 2rem;
   margin-top: 4rem;
@@ -402,108 +403,88 @@ tr:hover {
 </style>
 </head>
 <body>
-
 <header class="header">
-  <div class="header-content">
-    <img alt="Aquamark Logo" class="logo" src="/logo-full-black-blue.png"/>
-    <nav>
-      <a href="/" class="nav-home">← Back to Home</a>
-    </nav>
-  </div>
+<div class="header-content">
+<img alt="Aquamark Logo" class="logo" src="/logo-full-black-blue.png"/>
+<nav>
+<a class="nav-home" href="/">← Back to Home</a>
+</nav>
+</div>
 </header>
-
 <section class="hero">
-  <div class="hero-content">
-    <h1>API Documentation</h1>
-    <p>Start watermarking seamlessly in minutes with our simple API</p>
-    <div class="highlight">
-      <strong>Important:</strong> Each request should include a single file for accurate tracking
+<div class="hero-content">
+<h1>API Documentation</h1>
+<p>Start watermarking seamlessly in minutes with our simple API</p>
+<div class="highlight">
+<strong>Important:</strong> Each request should include a single file for accurate tracking
     </div>
-  </div>
+</div>
 </section>
-
 <main class="container">
-  <div class="content-grid">
-    
-    <!-- Authentication -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">🔐</span>
-        <h2>Authentication</h2>
-      </div>
-      <p>Contact <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a> to request your API key.</p>
-      <div class="code-block">Authorization: Bearer YOUR_API_KEY</div>
-    </div>
-
-    <!-- Endpoint -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">🌐</span>
-        <h2>Endpoint</h2>
-      </div>
-      <p><span class="method">POST</span> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></p>
-      
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Type</th>
-              <th>Required</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="inline-code">user_email</span></td>
-              <td>string</td>
-              <td><span class="status status-error">Required</span></td>
-              <td>Your Aquamark account email</td>
-            </tr>
-            <tr>
-              <td><span class="inline-code">file</span></td>
-              <td>file</td>
-              <td><span class="status status-error">Required</span></td>
-              <td>One PDF file (max 25MB)</td>
-            </tr>
-            <tr>
-              <td><span class="inline-code">lender</span></td>
-              <td>string</td>
-              <td><span class="status status-warning">Optional</span></td>
-              <td>Lender name to embed in QR code</td>
-            </tr>
-            <tr>
-              <td><span class="inline-code">salesperson</span></td>
-              <td>string</td>
-              <td><span class="status status-warning">Optional</span></td>
-              <td>Salesperson name for QR code</td>
-            </tr>
-            <tr>
-              <td><span class="inline-code">processor</span></td>
-              <td>string</td>
-              <td><span class="status status-warning">Optional</span></td>
-              <td>Processor name for QR code</td>
-            </tr>
-            <tr>
-              <td><span class="inline-code">state</span></td>
-              <td>string</td>
-              <td><span class="status status-warning">Optional</span></td>
-              <td>State name for compliance disclaimers</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Code Examples -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">💻</span>
-        <h2>Code Examples</h2>
-      </div>
-      
-      <h3 style="margin-bottom: 1rem; color: var(--text-primary);">cURL</h3>
-      <div class="code-block">curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
+<div class="content-grid">
+<!-- Authentication -->
+<div class="card">
+<div class="card-header">
+<span class="card-icon">🔐</span>
+<h2>Authentication</h2>
+</div>
+<p>Contact <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a> to request your API key.</p>
+<div class="code-block">Authorization: Bearer YOUR_API_KEY</div>
+</div>
+<!-- Endpoint -->
+<div class="card">
+<div class="card-header">
+<span class="card-icon">🌐</span>
+<h2>Endpoint</h2>
+</div>
+<p><span class="method">POST</span> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></p>
+<div class="table-container">
+<table><tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr><tr>
+<td><span class="inline-code">state</span></td>
+<td>string</td>
+<td><span class="status status-warning">Optional</span></td>
+<td>State name for compliance disclaimers</td>
+</tr><tr>
+<td><span class="inline-code">user_email</span></td>
+<td>string</td>
+<td><span class="status status-error">Required</span></td>
+<td>Your Aquamark account email</td>
+</tr><tr>
+<td><span class="inline-code">file</span></td>
+<td>file</td>
+<td><span class="status status-error">Required</span></td>
+<td>One PDF file (max 25MB)</td>
+</tr><tr>
+<td><span class="inline-code">lender</span></td>
+<td>string</td>
+<td><span class="status status-warning">Optional</span></td>
+<td>Lender name to embed in QR code</td>
+</tr><tr>
+<td><span class="inline-code">salesperson</span></td>
+<td>string</td>
+<td><span class="status status-warning">Optional</span></td>
+<td>Salesperson name for QR code</td>
+</tr><tr>
+<td><span class="inline-code">processor</span></td>
+<td>string</td>
+<td><span class="status status-warning">Optional</span></td>
+<td>Processor name for QR code</td>
+</tr></table>
+</div>
+</div>
+<!-- Code Examples -->
+<div class="card">
+<div class="card-header">
+<span class="card-icon">💻</span>
+<h2>Code Examples</h2>
+</div>
+<h3 style="margin-bottom: 1rem; color: var(--text-primary);">cURL</h3>
+<div class="code-block">curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -F "user_email=john@example.com" \
   -F "file=@statement1.pdf" \
@@ -512,9 +493,8 @@ tr:hover {
   -F "processor=Rose DeWitt" \
   -F "state=CA" \
   --output "statement1 - protected.pdf"</div>
-
-      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Node.js</h3>
-      <div class="code-block">const axios = require("axios");
+<h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Node.js</h3>
+<div class="code-block">const axios = require("axios");
 const fs = require("fs");
 const FormData = require("form-data");
 
@@ -529,16 +509,15 @@ axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
     Authorization: "Bearer YOUR_API_KEY"
   },
   responseType: "arraybuffer"
-}).then(response => {
+}).then(response =&gt; {
   fs.writeFileSync("protected.pdf", response.data);
   const disclaimer = response.headers["x-state-disclaimer"];
   console.log("Compliance Disclaimer:", disclaimer);
-}).catch(error => {
+}).catch(error =&gt; {
   console.error("Error:", error.message);
 });</div>
-
-      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Python</h3>
-      <div class="code-block">import requests
+<h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Python</h3>
+<div class="code-block">import requests
 
 with open("bankstatement.pdf", "rb") as f:
     files = { "file": f }
@@ -562,110 +541,100 @@ with open("bankstatement.pdf", "rb") as f:
 
     disclaimer = response.headers.get("x-state-disclaimer")
     print("Compliance Disclaimer:", disclaimer)</div>
-    </div>
-
-    <!-- Postman Setup -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">📫</span>
-        <h2>Postman Setup</h2>
-      </div>
-      <ul class="feature-list">
-        <li><strong>Method:</strong> POST</li>
-        <li><strong>URL:</strong> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></li>
-        <li><strong>Authorization:</strong> <span class="inline-code">Bearer YOUR_API_KEY</span></li>
-        <li><strong>Body Type:</strong> form-data</li>
-      </ul>
-    </div>
-
-    <!-- Response -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">✅</span>
-        <h2>Successful Response</h2>
-      </div>
-      <p>Returns a protected PDF file with optional compliance header:</p>
-      <div class="code-block">X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</div>
-
-      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Error Responses</h3>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="status status-error">401</span></td>
-              <td>Invalid API key</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">403</span></td>
-              <td>User not on Enterprise plan</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">422</span></td>
-              <td>No logo stored for this user</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">429</span></td>
-              <td>Usage limit exceeded</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">500</span></td>
-              <td>Internal error</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Developer Workflow -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">🧑‍💻</span>
-        <h2>Developer Workflow</h2>
-      </div>
-      <p>Automate PDF watermarking and compliance tracking:</p>
-      
-      <ol class="steps">
-        <li>Send a POST request with your PDF and metadata</li>
-        <li>Receive a protected PDF + optional disclaimer header</li>
-        <li>Save the PDF and push disclaimer into your CRM</li>
-      </ol>
-
-      <ul class="feature-list">
-        <li>The PDF does <strong>not</strong> include disclaimer text</li>
-        <li>Disclaimer is only returned in response header</li>
-        <li>Works with state names or abbreviations (e.g. <span class="inline-code">CA</span>, <span class="inline-code">California</span>)</li>
-        <li>Push disclaimer to CRM field for audit tracking</li>
-      </ul>
-    </div>
-
-    <!-- Important Notes -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">📝</span>
-        <h2>Important Notes</h2>
-      </div>
-      <ul class="feature-list">
-        <li>You must be on the <strong>Enterprise plan</strong> to access the API</li>
-        <li>PDF only. One file per request</li>
-        <li>Upload your watermark logo in the Aquamark portal before using the API</li>
-        <li>Questions? Email <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a></li>
-      </ul>
-    </div>
-
-  </div>
+</div>
+<!-- Postman Setup -->
+<div class="card">
+<div class="card-header">
+<span class="card-icon">📫</span>
+<h2>Postman Setup</h2>
+</div>
+<ul class="feature-list">
+<li><strong>Method:</strong> POST</li>
+<li><strong>URL:</strong> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></li>
+<li><strong>Authorization:</strong> <span class="inline-code">Bearer YOUR_API_KEY</span></li>
+<li><strong>Body Type:</strong> form-data</li>
+</ul>
+</div>
+<!-- Response -->
+<div class="card">
+<div class="card-header">
+<span class="card-icon">✅</span>
+<h2>Successful Response</h2>
+</div>
+<p>Returns a protected PDF file with optional compliance header:</p>
+<div class="code-block">X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</div>
+<h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Error Responses</h3>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="status status-error">401</span></td>
+<td>Invalid API key</td>
+</tr>
+<tr>
+<td><span class="status status-error">403</span></td>
+<td>User not on Enterprise plan</td>
+</tr>
+<tr>
+<td><span class="status status-error">422</span></td>
+<td>No logo stored for this user</td>
+</tr>
+<tr>
+<td><span class="status status-error">429</span></td>
+<td>Usage limit exceeded</td>
+</tr>
+<tr>
+<td><span class="status status-error">500</span></td>
+<td>Internal error</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Developer Workflow -->
+<div class="card">
+<div class="card-header">
+<span class="card-icon">🧑‍💻</span>
+<h2>Developer Workflow</h2>
+</div>
+<p>Automate PDF watermarking and compliance tracking:</p>
+<ol class="steps">
+<li>Send a POST request with your PDF and metadata</li>
+<li>Receive a protected PDF + optional disclaimer header</li>
+<li>Save the PDF and push disclaimer into your CRM</li>
+</ol>
+<ul class="feature-list">
+<li>The PDF does <strong>not</strong> include disclaimer text</li>
+<li>Disclaimer is only returned in response header</li>
+<li>Works with state names or abbreviations (e.g. <span class="inline-code">CA</span>, <span class="inline-code">California</span>)</li>
+<li>Push disclaimer to CRM field for audit tracking</li>
+</ul>
+</div>
+<!-- Important Notes -->
+<div class="card">
+<div class="card-header">
+<span class="card-icon">📝</span>
+<h2>Important Notes</h2>
+</div>
+<ul class="feature-list">
+<li>You must be on the <strong>Enterprise plan</strong> to access the API</li>
+<li>PDF only. One file per request</li>
+<li>Upload your watermark logo in the Aquamark portal before using the API</li>
+<li>Questions? Email <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a></li>
+</ul>
+</div>
+</div>
 </main>
-
 <footer class="footer">
-  <div class="footer-content">
-    <div>© 2025 Aquamark · <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></div>
-  </div>
+<div class="footer-content">
+<div>© 2025 Aquamark · <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></div>
+</div>
 </footer>
-
 </body>
 </html>
