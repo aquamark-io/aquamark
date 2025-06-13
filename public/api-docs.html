@@ -175,7 +175,7 @@ body {
 
 /* Code Blocks */
 .code-block {
-  background: #f8fafc; color: #1e293b;
+  background: #ffffff; color: #1e293b;
   color: #E2E8F0;
   padding: 1.5rem;
   border-radius: var(--radius);
@@ -188,6 +188,7 @@ body {
 }
 
 .code-block::before {
+  display: none;
   content: '';
   position: absolute;
   top: 0;
@@ -348,7 +349,7 @@ tr:hover {
 
 /* Footer */
 .footer {
-  background: #f8fafc; color: #1e293b;
+  background: #ffffff; color: #1e293b;
   color: white;
   padding: 3rem 0 2rem;
   margin-top: 4rem;
@@ -425,7 +426,7 @@ tr:hover {
 <!-- Authentication -->
 <div class="card">
 <div class="card-header">
-<span class="card-icon">🔐</span>
+
 <h2>Authentication</h2>
 </div>
 <p>Contact <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a> to request your API key.</p>
@@ -434,7 +435,7 @@ tr:hover {
 <!-- Endpoint -->
 <div class="card">
 <div class="card-header">
-<span class="card-icon">🌐</span>
+
 <h2>Endpoint</h2>
 </div>
 <p><span class="method">POST</span> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></p>
@@ -445,11 +446,6 @@ tr:hover {
 <th>Required</th>
 <th>Description</th>
 </tr><tr>
-<td><span class="inline-code">state</span></td>
-<td>string</td>
-<td><span class="status status-warning">Optional</span></td>
-<td>State name for compliance disclaimers</td>
-</tr><tr>
 <td><span class="inline-code">user_email</span></td>
 <td>string</td>
 <td><span class="status status-error">Required</span></td>
@@ -459,6 +455,11 @@ tr:hover {
 <td>file</td>
 <td><span class="status status-error">Required</span></td>
 <td>One PDF file (max 25MB)</td>
+</tr><tr>
+<td><span class="inline-code">state</span></td>
+<td>string</td>
+<td><span class="status status-warning">Optional</span></td>
+<td>State name for compliance disclaimers</td>
 </tr><tr>
 <td><span class="inline-code">lender</span></td>
 <td>string</td>
@@ -480,7 +481,7 @@ tr:hover {
 <!-- Code Examples -->
 <div class="card">
 <div class="card-header">
-<span class="card-icon">💻</span>
+
 <h2>Code Examples</h2>
 </div>
 <h3 style="margin-bottom: 1rem; color: var(--text-primary);">cURL</h3>
@@ -545,7 +546,7 @@ with open("bankstatement.pdf", "rb") as f:
 <!-- Postman Setup -->
 <div class="card">
 <div class="card-header">
-<span class="card-icon">📫</span>
+
 <h2>Postman Setup</h2>
 </div>
 <ul class="feature-list">
@@ -558,49 +559,38 @@ with open("bankstatement.pdf", "rb") as f:
 <!-- Response -->
 <div class="card">
 <div class="card-header">
-<span class="card-icon">✅</span>
+
 <h2>Successful Response</h2>
 </div>
 <p>Returns a protected PDF file with optional compliance header:</p>
 <div class="code-block">X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</div>
 <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Error Responses</h3>
 <div class="table-container">
-<table>
-<thead>
-<tr>
+<table><tr>
 <th>Code</th>
 <th>Message</th>
-</tr>
-</thead>
-<tbody>
-<tr>
+</tr><tr>
 <td><span class="status status-error">401</span></td>
 <td>Invalid API key</td>
-</tr>
-<tr>
+</tr><tr>
 <td><span class="status status-error">403</span></td>
 <td>User not on Enterprise plan</td>
-</tr>
-<tr>
+</tr><tr>
 <td><span class="status status-error">422</span></td>
 <td>No logo stored for this user</td>
-</tr>
-<tr>
+</tr><tr>
 <td><span class="status status-error">429</span></td>
 <td>Usage limit exceeded</td>
-</tr>
-<tr>
+</tr><tr>
 <td><span class="status status-error">500</span></td>
 <td>Internal error</td>
-</tr>
-</tbody>
-</table>
+</tr></table>
 </div>
 </div>
 <!-- Developer Workflow -->
 <div class="card">
 <div class="card-header">
-<span class="card-icon">🧑‍💻</span>
+
 <h2>Developer Workflow</h2>
 </div>
 <p>Automate PDF watermarking and compliance tracking:</p>
@@ -619,7 +609,7 @@ with open("bankstatement.pdf", "rb") as f:
 <!-- Important Notes -->
 <div class="card">
 <div class="card-header">
-<span class="card-icon">📝</span>
+
 <h2>Important Notes</h2>
 </div>
 <ul class="feature-list">
