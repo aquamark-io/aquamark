@@ -286,8 +286,9 @@ footer a:hover {
 
   <h2>✅ Successful Response</h2>
   <pre><code>[Returns a protected PDF file]</code></pre>
-  <p>If a valid <code>state</code> is provided and matches regulation rules, the response will include a disclaimer in the following header:</p>
-  <pre><code>X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</code></pre>
+  <p>If a valid <code>state</code> is provided and matches regulation rules, the response will include a compliance disclaimer as an HTTP header:</p>
+<pre><code>X-State-Disclaimer: License and Disclosure required</code></pre>
+<p>This value will <strong>not</strong> appear in the PDF file. If you would like to store the disclaimer in your CRM, you must extract this header and push it into a custom field (e.g. <code>compliance_disclaimer</code>) using your API client or integration workflow.</p>
 
   <h2>❗ Error Responses</h2>
   <table>
