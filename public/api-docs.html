@@ -188,15 +188,14 @@ body {
 }
 
 .code-block::before {
-  display: none;
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: var(--radius) var(--radius) 0 0;
+  height: 4px;
+  background: #0066FF;
+  border-radius: 12px 12px 0 0;
 }
 
 .inline-code {
@@ -426,7 +425,6 @@ tr:hover {
 <!-- Authentication -->
 <div class="card">
 <div class="card-header">
-
 <h2>Authentication</h2>
 </div>
 <p>Contact <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a> to request your API key.</p>
@@ -435,7 +433,6 @@ tr:hover {
 <!-- Endpoint -->
 <div class="card">
 <div class="card-header">
-
 <h2>Endpoint</h2>
 </div>
 <p><span class="method">POST</span> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></p>
@@ -481,7 +478,6 @@ tr:hover {
 <!-- Code Examples -->
 <div class="card">
 <div class="card-header">
-
 <h2>Code Examples</h2>
 </div>
 <h3 style="margin-bottom: 1rem; color: var(--text-primary);">cURL</h3>
@@ -546,7 +542,6 @@ with open("bankstatement.pdf", "rb") as f:
 <!-- Postman Setup -->
 <div class="card">
 <div class="card-header">
-
 <h2>Postman Setup</h2>
 </div>
 <ul class="feature-list">
@@ -559,7 +554,6 @@ with open("bankstatement.pdf", "rb") as f:
 <!-- Response -->
 <div class="card">
 <div class="card-header">
-
 <h2>Successful Response</h2>
 </div>
 <p>Returns a protected PDF file with optional compliance header:</p>
@@ -590,7 +584,6 @@ with open("bankstatement.pdf", "rb") as f:
 <!-- Developer Workflow -->
 <div class="card">
 <div class="card-header">
-
 <h2>Developer Workflow</h2>
 </div>
 <p>Automate PDF watermarking and compliance tracking:</p>
@@ -609,7 +602,6 @@ with open("bankstatement.pdf", "rb") as f:
 <!-- Important Notes -->
 <div class="card">
 <div class="card-header">
-
 <h2>Important Notes</h2>
 </div>
 <ul class="feature-list">
