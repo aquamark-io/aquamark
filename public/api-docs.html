@@ -286,9 +286,8 @@ footer a:hover {
 
   <h2>✅ Successful Response</h2>
   <pre><code>[Returns a protected PDF file]</code></pre>
-  <p>If a valid <code>state</code> is provided and matches regulation rules, the response will include a compliance disclaimer as an HTTP header:</p>
-<pre><code>X-State-Disclaimer: License and Disclosure required</code></pre>
-<p>This value will <strong>not</strong> appear in the PDF file. If you would like to store the disclaimer in your CRM, you must extract this header and push it into a custom field (e.g. <code>compliance_disclaimer</code>) using your API client or integration workflow.</p>
+  <p>If a valid <code>state</code> is provided and matches regulation rules, the response will include a disclaimer in the following header:</p>
+  <pre><code>X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</code></pre>
 
   <h2>❗ Error Responses</h2>
   <table>
@@ -309,6 +308,75 @@ footer a:hover {
     <li>Upload your watermark logo in the Aquamark portal before using the API.</li>
     <li>Questions? Email <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></li>
   </ul>
+
+<h2>🧑‍💻 Developer Workflow: Auto-Saving the PDF + Capturing the Compliance Disclaimer</h2>
+
+<p>When you POST a PDF to the Aquamark API, the response will include:</p>
+<ul>
+  <li>The watermarked PDF file (as binary)</li>
+  <li>An optional header: <code>X-State-Disclaimer: License and Disclosure required</code></li>
+</ul>
+
+<p>You can automate the entire workflow using code:</p>
+<ol>
+  <li>Send a POST request with your PDF and info (e.g. email, state)</li>
+  <li>Receive a protected PDF + optional disclaimer header</li>
+  <li>Save the PDF and push the disclaimer into a custom CRM field</li>
+</ol>
+
+<h3>🧪 Example: Node.js (using <code>axios</code>)</h3>
+<pre><code>const axios = require("axios");
+const fs = require("fs");
+const FormData = require("form-data");
+
+const form = new FormData();
+form.append("user_email", "john@example.com");
+form.append("state", "CA");
+form.append("file", fs.createReadStream("./bankstatement.pdf"));
+
+axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
+  headers: {
+    ...form.getHeaders(),
+    Authorization: "Bearer YOUR_API_KEY"
+  },
+  responseType: "arraybuffer"
+}).then(response => {
+  fs.writeFileSync("protected.pdf", response.data);
+  const disclaimer = response.headers["x-state-disclaimer"];
+  console.log("Compliance Disclaimer:", disclaimer);
+}).catch(error => {
+  console.error("Error:", error.message);
+});</code></pre>
+
+<h3>🧪 Example: Python (using <code>requests</code>)</h3>
+<pre><code>import requests
+
+with open("bankstatement.pdf", "rb") as f:
+    files = { "file": f }
+    data = {
+        "user_email": "john@example.com",
+        "state": "California"
+    }
+    headers = {
+        "Authorization": "Bearer YOUR_API_KEY"
+    }
+
+    response = requests.post("https://aquamark-decrypt.onrender.com/watermark", data=data, files=files, headers=headers)
+
+    with open("protected.pdf", "wb") as out_file:
+        out_file.write(response.content)
+
+    disclaimer = response.headers.get("x-state-disclaimer")
+    print("Compliance Disclaimer:", disclaimer)</code></pre>
+
+<h3>📌 Notes</h3>
+<ul>
+  <li>The PDF does <strong>not</strong> include the disclaimer text.</li>
+  <li>The disclaimer is only returned in the response header.</li>
+  <li>Works with state names or abbreviations (e.g. <code>CA</code>, <code>California</code>).</li>
+  <li>Push the disclaimer to a CRM field (e.g. <code>compliance_disclaimer</code>) for audit tracking.</li>
+</ul>
+
 </main>
 
 <footer>
