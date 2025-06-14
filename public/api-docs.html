@@ -615,11 +615,14 @@ with open("statement1.pdf", "rb") as f:
       <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Python</h3>
       <div class="code-block">import requests
 
-with open("bankstatement.pdf", "rb") as f:
+with open("statement1.pdf", "rb") as f:
     files = { "file": f }
     data = {
         "user_email": "john@example.com",
-        "state": "California"
+        "state": "CA",
+        "lender": "OnDeck",
+        "salesperson": "Jack Dawson",
+        "processor": "Rose DeWitt"
     }
     headers = {
         "Authorization": "Bearer YOUR_API_KEY"
