@@ -469,7 +469,7 @@ tr:hover {
   <td><span class="inline-code">state</span></td>
   <td>string</td>
   <td><span class="status status-success">Recommended</span></td>
-  <td>State name for compliance disclaimers</td>
+  <td>State name for compliance disclaimers. You must have a <span class="inline-code">compliance</span> field in your CRM for the disclaimers to be pushed there.</td>
 </tr>
 <tr>
   <td><span class="inline-code">lender</span></td>
@@ -639,10 +639,9 @@ with open("bankstatement.pdf", "rb") as f:
       </ol>
 
       <ul class="feature-list">
-        <li>The PDF does <strong>not</strong> include disclaimer text</li>
-        <li>Disclaimer is only returned in response header</li>
+        <li>State compliance disclaimers are returned in response header</li>
         <li>Works with state names or abbreviations (e.g. <span class="inline-code">CA</span>, <span class="inline-code">California</span>)</li>
-        <li>Push disclaimer to CRM field for audit tracking</li>
+        <li>Push disclaimer to your custom compliance CRM field</li>
       </ul>
     </div>
 
@@ -652,9 +651,8 @@ with open("bankstatement.pdf", "rb") as f:
         <h2>Important Notes</h2>
       </div>
       <ul class="feature-list">
-        <li>You must be on the <strong>Enterprise plan</strong> to access the API</li>
         <li>PDF only. One file per request</li>
-        <li>Upload your watermark logo in the Aquamark portal before using the API</li>
+        <li>Retail users must upload logpo in portal before using the API</li>
         <li>Questions? Email <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a></li>
       </ul>
     </div>
