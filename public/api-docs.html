@@ -584,33 +584,30 @@ body {
   --output "statement1 - protected.pdf""</div>
 
       <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Node.js</h3>
-      <div class="code-block">import requests
+      <div class="code-block">const axios = require("axios");
+const fs = require("fs");
+const FormData = require("form-data");
 
-with open("statement1.pdf", "rb") as f:
-    files = { "file": f }
-    data = {
-        "user_email": "john@example.com",
-        "state": "CA",
-        "lender": "OnDeck",
-        "salesperson": "Jack Dawson",
-        "processor": "Rose DeWitt"
-    }
-    headers = {
-        "Authorization": "Bearer YOUR_API_KEY"
-    }
+const form = new FormData();
+form.append("user_email", "john@example.com");
+form.append("file", fs.createReadStream("./statement1.pdf"));
+form.append("state", "CA");
+form.append("lender", "OnDeck");
+form.append("salesperson", "Jack Dawson");
+form.append("processor", "Rose DeWitt");
 
-    response = requests.post(
-        "https://aquamark-decrypt.onrender.com/watermark", 
-        data=data, 
-        files=files, 
-        headers=headers
-    )
-
-    with open("protected.pdf", "wb") as out_file:
-        out_file.write(response.content)
-
-    disclaimer = response.headers.get("x-state-disclaimer")
-    print("Compliance Disclaimer:", disclaimer)</div>
+axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
+  headers: {
+    ...form.getHeaders(),
+    Authorization: "Bearer YOUR_API_KEY"
+  },
+  responseType: "arraybuffer"
+}).then(response =&gt; {
+  fs.writeFileSync("protected.pdf", response.data);
+  const disclaimer = response.headers["x-state-disclaimer"];
+  console.log("Compliance Disclaimer:", disclaimer);
+}).catch(error =&gt; {
+  console.error("Error:", error.message);/div>
 
       <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Python</h3>
       <div class="code-block">import requests
