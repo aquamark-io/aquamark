@@ -521,13 +521,20 @@ background: var(--primary);
       </div>
 
       <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1.1rem;">Advanced Parameters</h3>
-      <div class="info-box">
-        <div class="info-box-title">When to use advanced parameters</div>
-        <p>These fields power your QR code and act as breadcrumbs showing who had access to each file. They only apply if your CRM enforces curtaining, where users can only view files assigned to them. Curtaining is strongly recommended as a best practice.</p>
-      </div>
-    
-        
-      <div class="param-grid">
+
+<div class="info-box">
+  <div class="info-box-title">Power up your QR codes</div>
+  <p>These fields act as digital breadcrumbs that show exactly who had access to each file — lender, salesperson, processor.</p>
+  <p>They only apply if your CRM enforces <strong>curtaining</strong>, where users can only access records assigned to them. Curtaining is strongly recommended as a best practice.</p>
+  <ul class="feature-list" style="margin-top: 1rem;">
+    <li>See exactly who had access to your files</li>
+    <li>Embed QR codes with access information</li>
+    <li>Seamless API integration & bulk processing</li>
+    <li>No more blind spots in your pipeline</li>
+  </ul>
+</div>
+
+<div class="param-grid">
   <div class="param-card">
     <div class="param-header">
       <span class="param-name">salesperson</span>
@@ -549,7 +556,19 @@ background: var(--primary);
     </div>
     <div class="param-description">Team member responsible for preparing and submitting files. Only useful if you assign dedicated processors.</div>
   </div>
+
+  <div class="param-card">
+    <div class="param-header">
+      <span class="param-name">lender</span>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <span class="param-type">string</span>
+        <span class="status status-optional">Optional</span>
+      </div>
+    </div>
+    <div class="param-description">Lender the document was submitted to. Brokers often create separate files for each lender and delete them after submission using automation tools like Zapier, Make, or Apex Scheduler.</div>
+  </div>
 </div>
+
 
 
             <div class="param-grid">
