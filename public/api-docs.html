@@ -261,6 +261,11 @@ body {
 }
 
 /* Status indicators */
+.status-recommended {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--accent);
+}
+
 .status {
   display: inline-flex;
   align-items: center;
@@ -508,7 +513,7 @@ body {
             <span class="param-name">state</span>
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <span class="param-type">string</span>
-              <span class="status status-optional">Optional</span>
+              <span class="status status-recommended">Recommended</span>
             </div>
           </div>
           <div class="param-description">State for compliance disclaimer. Accepts state names or abbreviations (e.g. "CA", "California"). Returns compliance requirements in response header.</div>
