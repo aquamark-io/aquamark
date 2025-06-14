@@ -525,18 +525,7 @@ body {
         <div class="info-box-title">When to use advanced parameters</div>
         <p>These fields power your QR code and serve as breadcrumbs that show who was given access to your files. They are only useful if your CRM enforces curtaining, meaning users can only access files they're assigned to. Curtaining is strongly recommended as a general best practice.</p>
       </div>
-      
-      <div class="param-grid">
-        <div class="param-card">
-          <div class="param-header">
-            <span class="param-name">lender</span>
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <span class="param-type">string</span>
-              <span class="status status-optional">Optional</span>
-            </div>
-          </div>
-          <div class="param-description">Users submit a separate version of the file for each lender, then delete them after submission to reduce storage costs. Most set up a simple automated deletion—using tools like timed scripts, CRM schedulers (e.g. Apex Scheduler in Salesforce), or external automation platforms like Zapier or Make.</div>
-        </div>
+    
         
         <div class="param-card">
           <div class="param-header">
@@ -558,6 +547,18 @@ body {
             </div>
           </div>
           <div class="param-description">Team member responsible for preparing and submitting files. Only useful if your CRM tracks processors.</div>
+        </div>
+
+            <div class="param-grid">
+        <div class="param-card">
+          <div class="param-header">
+            <span class="param-name">lender</span>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <span class="param-type">string</span>
+              <span class="status status-optional">Optional</span>
+            </div>
+          </div>
+          <div class="param-description">Users submit a separate version of the file for each lender, then delete them after submission to reduce storage costs. Most set up a simple automated deletion—using tools like timed scripts, CRM schedulers (e.g. Apex Scheduler in Salesforce), or external automation platforms like Zapier or Make.</div>
         </div>
       </div>
     </div>
