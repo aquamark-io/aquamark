@@ -417,9 +417,6 @@ tr:hover {
   <div class="hero-content">
     <h1>API Documentation</h1>
     <p>Start watermarking seamlessly in minutes with our simple API</p>
-    <div class="highlight">
-      <strong>Important:</strong> Each request should include a single file for accurate tracking
-    </div>
   </div>
 </section>
 
@@ -469,7 +466,7 @@ tr:hover {
   <td><span class="inline-code">state</span></td>
   <td>string</td>
   <td><span class="status status-success">Recommended</span></td>
-  <td>State name for compliance disclaimers. You must have a <span class="inline-code">compliance</span> field in your CRM for the disclaimers to be pushed there.</td>
+  <td>State name for compliance disclaimers. Add custom <span class="inline-code">compliance</span> field in your CRM to house disclaimers.</td>
 </tr>
 <tr>
   <td><span class="inline-code">lender</span></td>
@@ -590,40 +587,6 @@ with open("bankstatement.pdf", "rb") as f:
       <p>Returns a protected PDF file with optional compliance header:</p>
       <div class="code-block">X-State-Disclaimer: Disclaimer: CFL license and Disclosure required.</div>
 
-      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Error Responses</h3>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="status status-error">401</span></td>
-              <td>Invalid API key</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">403</span></td>
-              <td>User not on Enterprise plan</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">422</span></td>
-              <td>No logo stored for this user</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">429</span></td>
-              <td>Usage limit exceeded</td>
-            </tr>
-            <tr>
-              <td><span class="status status-error">500</span></td>
-              <td>Internal error</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
 
     <!-- Developer Workflow -->
     <div class="card">
