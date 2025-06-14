@@ -523,13 +523,21 @@ strong {
   font-weight: 600;
   color: var(--text-primary);
 }
+
+.qr-img {
+  max-width: 120px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
 </style>
 </head>
 <body>
 
 <header class="header">
   <div class="header-content">
-    <a href="/" class="logo">Aquamark</a>
+    <a href="/" class="logo"><img src="logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;"></a>
     <nav>
       <a href="/" class="nav-home">← Back to Home</a>
     </nav>
@@ -543,7 +551,7 @@ strong {
       API Documentation
     </div>
     <h1>Developer API</h1>
-    <p class="hero-subtitle">Seamlessly integrate document protection in minutes</p>
+    <p class="hero-subtitle">Seamlessly integrate Aquamark in minutes</p>
   </div>
 </section>
 
@@ -632,7 +640,7 @@ strong {
     
     <div class="qr-section">
       <div class="qr-preview">
-        <div class="qr-code">QR</div>
+        <img src="qr.png" alt="QR Preview" class="qr-img"/>
       </div>
       <div class="qr-caption">Tamper-resistant QR code on every page with embedded access information</div>
     </div>
