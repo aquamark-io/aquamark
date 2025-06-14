@@ -246,7 +246,7 @@ body {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
+background: var(--primary);
   border-radius: var(--radius) var(--radius) 0 0;
 }
 
@@ -581,7 +581,7 @@ body {
   -F "lender=OnDeck" \
   -F "salesperson=Jack Dawson" \
   -F "processor=Rose DeWitt" \
-  --output "statement1 - protected.pdf""</div>
+  --output "statement1 - protected.pdf"</div>
 
       <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Node.js</h3>
       <div class="code-block">const axios = require("axios");
@@ -602,11 +602,11 @@ axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
     Authorization: "Bearer YOUR_API_KEY"
   },
   responseType: "arraybuffer"
-}).then(response =&gt; {
+}).then(response =>; {
   fs.writeFileSync("protected.pdf", response.data);
   const disclaimer = response.headers["x-state-disclaimer"];
   console.log("Compliance Disclaimer:", disclaimer);
-}).catch(error =&gt; {
+}).catch(error =>; {
   console.error("Error:", error.message);/div>
 
       <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Python</h3>
