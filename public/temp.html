@@ -882,44 +882,64 @@
 
 
 
+<!-- How It Works Section - 3 Column Layout -->
 <section class="how-it-works" id="how-it-works">
   <div class="how-it-works-container">
     <div class="section-header">
       <h2 class="section-title">How It Works</h2>
-      <p class="section-subtitle">Compliance and document protection, fully automated</p>
+      <p class="section-subtitle">Three core functions to protect your pipeline and stay compliant</p>
     </div>
 
-    <div class="steps-grid">
-      <!-- Watermarking with QR Tracking -->
-      <div class="step-card">
-        <h3 class="step-title">Watermarking &amp; Powering QR Code Tracking</h3>
+    <div class="steps-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+
+      <!-- Watermarking -->
+      <div class="step-card" style="text-align: left;">
+        <span style="display: inline-block; background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;">Document Protection</span>
+        <h3 class="step-title">Tamper-Resistant Watermarks</h3>
         <p class="step-description">
-          Upload your documents via portal or our API. We apply your logo as a tamper‑resistant tiled watermark, and embed a QR code—Powering QR Code Tracking—to trace every access,
-          creating a clear breadcrumb trail from lender to processor.
+          Upload documents via portal or API. Your brand is applied instantly as a tiled, semi-transparent watermark—fully OCR-compatible.
         </p>
-        <ul class="feature-list">
-          <li>OCR‑safe tiled watermark</li>
-          <li>Embedded QR code with breadcrumb tracking</li>
-          <li>Full audit trail of who accessed the file</li>
+        <ul class="feature-list" style="margin-top: 1rem;">
+          <li>Prevents backdooring</li>
+          <li>Maintains readability for lenders</li>
+          <li>Custom branding supported</li>
         </ul>
-        <div class="image-row">
-          <img src="qr.png" alt="QR code example" class="qr-thumb">
-          <img src="watermark-sample.png" alt="Watermarked bank statement" class="statement-sample">
+        <div style="margin-top: 1.5rem;">
+          <img src="watermark-sample.png" alt="Sample Watermarked Statement" style="max-width: 100%; border: 1px solid #e2e8f0; border-radius: 0.5rem;">
         </div>
       </div>
 
-      <!-- Compliance Monitoring -->
-      <div class="step-card">
-        <h3 class="step-title">Automated Compliance via &ldquo;state&rdquo; API Input</h3>
+      <!-- QR Code Tracking -->
+      <div class="step-card" style="text-align: left;">
+        <span style="display: inline-block; background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;">Access Intelligence</span>
+        <h3 class="step-title">Power up your QR codes</h3>
         <p class="step-description">
-          When you pass the borrower’s <code>state</code> input via our Compliance API, we return real-time disclaimers for that jurisdiction. Push them to your CRM to flag deals that can’t proceed until compliant.
+          Each QR code acts as a digital breadcrumb, showing exactly who accessed the document — lender, salesperson, or processor.
         </p>
-        <ul class="feature-list">
-          <li>Supports all 50 U.S. states</li>
-          <li>Pushes required disclaimers directly to your CRM</li>
-          <li>No more manual compliance tracking</li>
+        <ul class="feature-list" style="margin-top: 1rem;">
+          <li>Embed QR with access metadata</li>
+          <li>Breadcrumb trail across your CRM</li>
+          <li>No blind spots in the funnel</li>
+        </ul>
+        <div style="margin-top: 1.5rem;">
+          <img src="qr.png" alt="QR Code Sample" style="height: 140px; border-radius: 0.5rem;">
+        </div>
+      </div>
+
+      <!-- Compliance Alerts -->
+      <div class="step-card" style="text-align: left;">
+        <span style="display: inline-block; background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;">State Compliance</span>
+        <h3 class="step-title">CRM-Powered Disclaimers</h3>
+        <p class="step-description">
+          Pass the borrower’s state via API and get back real-time disclaimers. Instantly flag deals that shouldn’t move forward until compliant.
+        </p>
+        <ul class="feature-list" style="margin-top: 1rem;">
+          <li>50-state monitoring</li>
+          <li>Returns disclaimers via API</li>
+          <li>Push alerts into your CRM</li>
         </ul>
       </div>
+
     </div>
   </div>
 </section>
