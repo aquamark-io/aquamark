@@ -520,7 +520,7 @@ background: var(--primary);
         </div>
       </div>
 
-      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1.1rem;">Advanced Parameters</h3>
+<h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1.1rem;">Advanced Parameters</h3>
 
 <div class="info-box">
   <div class="info-box-title">Power up your QR codes</div>
@@ -532,6 +532,11 @@ background: var(--primary);
     <li>Seamless API integration & bulk processing</li>
     <li>No more blind spots in your pipeline</li>
   </ul>
+</div>
+
+<!-- QR IMAGE PREVIEW -->
+<div style="text-align: center; margin-bottom: 2rem;">
+  <img src="qr.png" alt="QR Code Example" style="max-width: 300px; width: 100%; border-radius: 8px; box-shadow: var(--shadow);">
 </div>
 
 <div class="param-grid">
@@ -568,22 +573,6 @@ background: var(--primary);
     <div class="param-description">Lender the document was submitted to. Brokers often create separate files for each lender and delete them after submission using automation tools like Zapier, Make, or Apex Scheduler.</div>
   </div>
 </div>
-
-
-
-            <div class="param-grid">
-        <div class="param-card">
-          <div class="param-header">
-            <span class="param-name">lender</span>
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <span class="param-type">string</span>
-              <span class="status status-optional">Optional</span>
-            </div>
-          </div>
-          <div class="param-description">Users submit a separate version of the file for each lender, then delete them after submission to reduce storage costs. Most set up a simple automated deletion—using tools like timed scripts, CRM schedulers (e.g. Apex Scheduler in Salesforce), or external automation platforms like Zapier or Make.</div>
-        </div>
-      </div>
-    </div>
 
     <!-- Code Examples -->
     <div class="card">
