@@ -501,9 +501,23 @@ body {
         </div>
       </div>
 
-      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1.1rem;">Optional Parameters</h3>
+      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1.1rem;">Recommended Parameters</h3>
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-header">
+            <span class="param-name">state</span>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <span class="param-type">string</span>
+              <span class="status status-optional">Optional</span>
+            </div>
+          </div>
+          <div class="param-description">State for compliance disclaimer. Accepts state names or abbreviations (e.g. "CA", "California"). Returns compliance requirements in response header.</div>
+        </div>
+      </div>
+
+      <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1.1rem;">Advanced Parameters</h3>
       <div class="info-box">
-        <div class="info-box-title">When to use optional parameters</div>
+        <div class="info-box-title">When to use advanced parameters</div>
         <p>These fields embed metadata into a tamper-resistant QR code. Only useful if your CRM uses curtaining (users can only view files they're assigned to). For lender-specific tracking, submit the file separately for each lender.</p>
       </div>
       
