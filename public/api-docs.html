@@ -86,9 +86,38 @@ body {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-accent) 100%);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-accent) 50%, #E0F2FE 100%);
   border-bottom: 1px solid var(--border);
-  padding: 4rem 0;
+  padding: 5rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 40%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.05) 0%, transparent 70%);
+  animation: float 20s ease-in-out infinite;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -15%;
+  width: 30%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
 }
 
 .hero-content {
@@ -96,20 +125,68 @@ body {
   margin: 0 auto;
   padding: 0 2rem;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.025em;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.hero p {
-  font-size: 1.25rem;
+.hero-subtitle {
+  font-size: 1.375rem;
   color: var(--text-secondary);
-  margin-bottom: -.5rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.hero-features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 102, 255, 0.1);
+  backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.hero-feature:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-feature-icon {
+  width: 16px;
+  height: 16px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.7rem;
 }
 
 .hero .highlight {
@@ -324,6 +401,159 @@ background: var(--primary);
   line-height: 1.5;
 }
 
+/* Authentication Card Enhancements */
+.auth-card {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-accent) 100%);
+  border: 1px solid rgba(0, 102, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+.auth-icon {
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-content {
+  margin: 1.5rem 0;
+}
+
+.auth-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 102, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.auth-step:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateX(5px);
+}
+
+.auth-step-number {
+  background: var(--primary);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.auth-step-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.auth-step-content p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.code-language {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.copy-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.copy-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.auth-security {
+  margin-top: 1.5rem;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.security-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.qr-preview {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-primary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+.qr-preview img {
+  max-width: 200px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.qr-caption {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 /* Lists */
 .feature-list {
   list-style: none;
@@ -418,11 +648,20 @@ background: var(--primary);
 /* Responsive */
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
   
-  .hero p {
+  .hero-subtitle {
     font-size: 1.125rem;
+  }
+  
+  .hero-features {
+    gap: 1rem;
+  }
+  
+  .hero-feature {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
   }
   
   .container {
@@ -441,6 +680,19 @@ background: var(--primary);
   .header-content {
     padding: 0 1rem;
   }
+
+  .qr-preview img {
+    max-width: 150px;
+  }
+  
+  .auth-step {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .auth-step:hover {
+    transform: none;
+  }
 }
 </style>
 </head>
@@ -458,7 +710,25 @@ background: var(--primary);
 <section class="hero">
   <div class="hero-content">
     <h1>API Documentation</h1>
-    <p>Easy to set up. Lightweight enough for any stack.</p>
+    <p class="hero-subtitle">Powerful document watermarking with seamless integration</p>
+    <div class="hero-features">
+      <div class="hero-feature">
+        <div class="hero-feature-icon">⚡</div>
+        Lightning Fast
+      </div>
+      <div class="hero-feature">
+        <div class="hero-feature-icon">🔒</div>
+        Enterprise Security
+      </div>
+      <div class="hero-feature">
+        <div class="hero-feature-icon">📱</div>
+        Any Stack
+      </div>
+      <div class="hero-feature">
+        <div class="hero-feature-icon">🎯</div>
+        25MB Files
+      </div>
+    </div>
   </div>
 </section>
 
@@ -466,12 +736,47 @@ background: var(--primary);
   <div class="content-grid">
     
     <!-- Authentication -->
-    <div class="card">
+    <div class="card auth-card">
       <div class="card-header">
-        <h2>Authentication</h2>
+        <div class="auth-icon">🔑</div>
+        <div>
+          <h2>Authentication</h2>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">Secure API access with Bearer tokens</p>
+        </div>
       </div>
-      <p>Contact <a href="mailto:hey@aquamark.io" style="color: var(--primary);">hey@aquamark.io</a> to request your API key.</p>
-      <div class="code-block">Authorization: Bearer Token YOUR_API_KEY</div>
+      
+      <div class="auth-content">
+        <div class="auth-step">
+          <div class="auth-step-number">1</div>
+          <div class="auth-step-content">
+            <h4>Request Your API Key</h4>
+            <p>Contact <a href="mailto:hey@aquamark.io" style="color: var(--primary); text-decoration: none; font-weight: 600;">hey@aquamark.io</a> to get your personalized API key</p>
+          </div>
+        </div>
+        
+        <div class="auth-step">
+          <div class="auth-step-number">2</div>
+          <div class="auth-step-content">
+            <h4>Add to Headers</h4>
+            <p>Include your API key in the Authorization header for all requests</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-language">HTTP Header</span>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('Authorization: Bearer YOUR_API_KEY')">📋 Copy</button>
+        </div>
+        Authorization: Bearer YOUR_API_KEY
+      </div>
+      
+      <div class="auth-security">
+        <div class="security-badge">
+          <span class="security-icon">🛡️</span>
+          <span>Keep your API key secure and never expose it in client-side code</span>
+        </div>
+      </div>
     </div>
 
     <!-- Endpoint -->
@@ -522,6 +827,12 @@ background: var(--primary);
 
 <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1.1rem;">Advanced Parameters</h3>
 
+<!-- QR CODE PREVIEW - Now at the top of Advanced Parameters -->
+<div class="qr-preview">
+  <img src="qr.png" alt="QR Code Example with embedded access information">
+  <div class="qr-caption">Example QR code with embedded access information</div>
+</div>
+
 <div class="info-box">
   <div class="info-box-title">Power up your QR codes</div>
   <p>These fields act as digital breadcrumbs that show exactly who had access to each file — lender, salesperson, processor.</p>
@@ -532,11 +843,6 @@ background: var(--primary);
     <li>Seamless API integration & bulk processing</li>
     <li>No more blind spots in your pipeline</li>
   </ul>
-</div>
-
-<!-- QR IMAGE PREVIEW -->
-<div style="text-align: center; margin-bottom: 2rem;">
-  <img src="qr.png" alt="QR Code Example" style="max-width: 300px; width: 100%; border-radius: 8px; box-shadow: var(--shadow);">
 </div>
 
 <div class="param-grid">
