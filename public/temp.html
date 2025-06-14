@@ -574,7 +574,73 @@
             font-size: 0.875rem;
         }
 
-        /* Mobile Responsive */
+        /* Pricing Styles */
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .plan-header {
+            margin-bottom: 2rem;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .plan-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .plan-features {
+            flex: 1;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features .feature-list {
+            margin: 0;
+        }
+
+        .plan-features .feature-list li {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
         @media (max-width: 768px) {
             .nav {
                 padding: 1rem;
@@ -812,6 +878,96 @@
                         Complete audit trail of all interactions. Ongoing monitoring for regulatory changes and updates.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" style="padding: 6rem 2rem; background: white;">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <div class="section-header">
+                <h2 class="section-title">Choose your plan</h2>
+                <p class="section-subtitle">
+                    From individual brokers to enterprise solutions, we have a plan that fits your needs.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                
+                <!-- Broker Shop Plan -->
+                <div class="pricing-card featured">
+                    <div class="plan-badge">Most Popular</div>
+                    <div class="plan-header">
+                        <h3 class="plan-name">Broker Shop</h3>
+                        <p class="plan-description">For brokers and small teams who want instant protection and compliance automation.</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Document watermarking</li>
+                            <li>Compliance monitoring</li>
+                            <li>State-specific alerts</li>
+                            <li>Portal access</li>
+                            <li>Basic support</li>
+                        </ul>
+                    </div>
+                    <a href="/signup.html" class="btn btn-primary" style="width: 100%; justify-content: center;">Start free trial</a>
+                </div>
+
+                <!-- Wholesale Plan -->
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Wholesale</h3>
+                        <p class="plan-description">Designed for CRMs and OCR software looking to incorporate Aquamark at scale.</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Everything in Broker Shop</li>
+                            <li>API access</li>
+                            <li>CRM integration</li>
+                            <li>Volume processing</li>
+                            <li>Priority support</li>
+                            <li>Custom implementation</li>
+                        </ul>
+                    </div>
+                    <a href="/contact.html" class="btn btn-primary" style="width: 100%; justify-content: center;">Request pricing</a>
+                </div>
+
+                <!-- Compliance A La Carte -->
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Compliance A La Carte</h3>
+                        <p class="plan-description">Stay informed on regulatory changes and trigger compliance alerts when you need them.</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Compliance API access</li>
+                            <li>On-demand alerts</li>
+                            <li>State update notifications</li>
+                            <li>Regulatory monitoring</li>
+                            <li>Email updates</li>
+                        </ul>
+                    </div>
+                    <a href="/contact.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">Get access</a>
+                </div>
+
+                <!-- Affiliate Plan -->
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Affiliate</h3>
+                        <p class="plan-description">Refer brokers and earn recurring monthly commissions—no cap, no commitment.</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Recurring commissions</li>
+                            <li>No referral cap</li>
+                            <li>Marketing materials</li>
+                            <li>Partner dashboard</li>
+                            <li>Dedicated support</li>
+                        </ul>
+                    </div>
+                    <a href="/contact.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">Join program</a>
+                </div>
+                
             </div>
         </div>
     </section>
