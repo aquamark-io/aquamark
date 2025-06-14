@@ -606,8 +606,11 @@ axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
   fs.writeFileSync("protected.pdf", response.data);
   const disclaimer = response.headers["x-state-disclaimer"];
   console.log("Compliance Disclaimer:", disclaimer);
-}).catch(error =>; {
-  console.error("Error:", error.message);/div>
+}).catch(error => {
+  console.error("Error:", error.message);
+});
+</div>
+
 
       <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">Python</h3>
       <div class="code-block">import requests
