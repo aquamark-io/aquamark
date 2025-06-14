@@ -114,7 +114,7 @@
     /* Hero Section */
     .hero {
       padding: 6rem 2rem 3rem;
-      text-align: left;
+      text-align: center;
       background: white;
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
@@ -137,12 +137,16 @@
       color: #6b7280;
       margin-bottom: 1rem;
       max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero .description {
       font-size: 1rem;
       color: #9ca3af;
       max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Main Content */
@@ -157,6 +161,7 @@
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 1.5rem;
       margin-top: 2rem;
+      justify-items: center;
     }
 
     .state-card {
@@ -166,6 +171,8 @@
       border: 1px solid #e5e7eb;
       transition: all 0.2s;
       position: relative;
+      width: 100%;
+      max-width: 500px;
     }
 
     .state-card:hover {
@@ -177,6 +184,7 @@
     .state-header {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.75rem;
       margin-bottom: 1.5rem;
       padding-bottom: 1rem;
@@ -249,6 +257,7 @@
     .bill-link {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       background: #f3f4f6;
       color: #6b7280;
@@ -261,6 +270,9 @@
       transition: all 0.2s;
       border: 1px solid #e5e7eb;
       font-family: 'Monaco', 'Menlo', monospace;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .bill-link:hover {
@@ -292,10 +304,11 @@
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       padding: 0.5rem 0;
       width: 100%;
-      text-align: left;
+      text-align: center;
       transition: color 0.2s;
     }
 
@@ -332,6 +345,7 @@
       background: #f9fafb;
       border-radius: 0.5rem;
       border: 1px solid #f3f4f6;
+      text-align: left;
     }
 
     /* Intro Section */
@@ -344,6 +358,7 @@
     .intro-content {
       max-width: 1400px;
       margin: 0 auto;
+      text-align: center;
     }
 
     .intro-content h2 {
@@ -358,6 +373,9 @@
       font-size: 1rem;
       color: #6b7280;
       margin-bottom: 1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Footer */
@@ -453,6 +471,7 @@
 
       .state-card {
         padding: 1.25rem;
+        max-width: none;
       }
 
       .state-header {
@@ -696,4 +715,4 @@ Providers must disclose terms for deals ≤ $500,000 - funding amount, finance c
         <a href="https://www.kslegislature.gov/li_2024/b2023_24/measures/documents/sb345_00_0000.pdf" class="bill-link" target="_blank">
           <svg viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd"/>
-            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75
+            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4
