@@ -1,652 +1,699 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Broker License Archive</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-:root {
-  --primary: #2563EB;
-  --primary-light: #3B82F6;
-  --primary-dark: #1D4ED8;
-  --accent: #10B981;
-  --text-primary: #1E293B;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F8FAFC;
-  --bg-accent: #F1F5F9;
-  --border: #E2E8F0;
-  --border-light: #F1F5F9;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --radius: 8px;
-  --radius-lg: 12px;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compliance | Aquamark</title>
+  <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    html {
+      overflow-x: hidden;
+    }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  font-feature-settings: 'kern' 1, 'liga' 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+    img {
+      max-width: 100%;
+      height: auto;
+    }
 
-/* Header */
-.header {
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(20px);
-}
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
 
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-decoration: none;
-}
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #467EFF;
+    }
 
-.nav-home {
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  padding: 8px 16px;
-  border-radius: var(--radius);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
-  border: 1px solid var(--border);
-}
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
 
-.nav-home:hover {
-  background: var(--bg-accent);
-  color: var(--text-primary);
-}
+    .nav-links a {
+      color: #6b7280;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+    }
 
-/* Launch Notice */
-.launch-notice {
-  background: #E1FEFF;
-  color: black;
-  padding: 1rem 0;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  position: relative;
-  overflow: hidden;
-}
+    .nav-links a:hover {
+      color: #467EFF;
+      background: rgba(70, 126, 255, 0.05);
+    }
 
-.launch-notice::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  animation: shimmer 3s infinite;
-}
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
 
-@keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
-}
+    .btn-primary {
+      background: #467EFF;
+      color: white !important;
+    }
 
-/* Hero Section */
-.hero {
-  background: var(--bg-primary);
-  padding: 6rem 0 4rem;
-  text-align: center;
-}
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(70, 126, 255, 0.3);
+    }
 
-.hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
+    .btn-secondary {
+      color: #6b7280 !important;
+      background: transparent;
+      border: 1px solid #e5e7eb;
+    }
 
-.hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-  letter-spacing: -0.025em;
-}
+    .btn-secondary:hover {
+      background: #f9fafb;
+      color: #374151 !important;
+      border-color: #d1d5db;
+    }
 
-.hero-subtitle {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-  font-weight: 400;
-}
+    /* Hero Section */
+    .hero {
+      padding: 6rem 2rem 3rem;
+      text-align: left;
+      background: white;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--bg-secondary);
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  border: 1px solid var(--border);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-}
+    .hero-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-}
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #111827;
+      letter-spacing: -0.025em;
+    }
 
-/* Main Content */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
+    .hero .subtitle {
+      font-size: 1.125rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+      max-width: 600px;
+    }
 
-.section {
-  margin-bottom: 4rem;
-}
+    .hero .description {
+      font-size: 1rem;
+      color: #9ca3af;
+      max-width: 700px;
+    }
 
-.section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-}
+    /* Main Content */
+    .compliance-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
 
-.section-subtitle {
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  font-size: 1rem;
-}
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
 
-/* Search */
-.search-container {
-  margin-bottom: 2rem;
-}
+    .state-card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s;
+      position: relative;
+    }
 
-.search-input {
-  width: 100%;
-  max-width: 500px;
-  padding: 1rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  font-size: 1rem;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  transition: all 0.2s ease;
-}
+    .state-card:hover {
+      border-color: #467EFF;
+      box-shadow: 0 4px 12px rgba(70, 126, 255, 0.1);
+      transform: translateY(-2px);
+    }
 
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
+    .state-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
 
-.search-input::placeholder {
-  color: var(--text-muted);
-}
+    .state-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: linear-gradient(135deg, #467EFF 0%, #1d4ed8 100%);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
 
-.search-results {
-  margin-top: 1rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
+    .state-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: -0.025em;
+    }
 
-/* License Table */
-.broker-group {
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  transition: all 0.2s ease;
-}
+    .requirements-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
 
-.broker-group:hover {
-  box-shadow: var(--shadow);
-}
+    .requirement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: #f9fafb;
+      border-radius: 0.5rem;
+      border-left: 3px solid #467EFF;
+    }
 
-.broker-header {
-  background: var(--bg-secondary);
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
+    .requirement-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #467EFF;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      min-width: 80px;
+      background: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      border: 1px solid #e5e7eb;
+    }
 
-.broker-name {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.25rem;
-}
+    .requirement-text {
+      color: #374151;
+      font-size: 0.9rem;
+      font-weight: 500;
+      flex: 1;
+    }
 
-.license-count {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
+    .no-requirement {
+      color: #059669;
+      font-weight: 600;
+    }
 
-.licenses-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+    /* Bill Link Styles */
+    .bill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #f3f4f6;
+      color: #6b7280;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      transition: all 0.2s;
+      border: 1px solid #e5e7eb;
+      font-family: 'Monaco', 'Menlo', monospace;
+    }
 
-.licenses-table th {
-  background: var(--bg-accent);
-  padding: 0.75rem 1.5rem;
-  text-align: left;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--border);
-}
+    .bill-link:hover {
+      background: #467EFF;
+      color: white;
+      border-color: #467EFF;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(70, 126, 255, 0.2);
+    }
 
-.licenses-table td {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border-light);
-  font-size: 0.875rem;
-}
+    .bill-link svg {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
 
-.licenses-table tr:last-child td {
-  border-bottom: none;
-}
+    /* Summary Section */
+    .summary-section {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f3f4f6;
+    }
 
-.licenses-table tr:hover {
-  background: var(--bg-secondary);
-}
+    .summary-toggle {
+      background: none;
+      border: none;
+      color: #6b7280;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      width: 100%;
+      text-align: left;
+      transition: color 0.2s;
+    }
 
-.license-link {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 500;
-  font-family: 'SF Mono', Monaco, monospace;
-}
+    .summary-toggle:hover {
+      color: #467EFF;
+    }
 
-.license-link:hover {
-  text-decoration: underline;
-}
+    .summary-toggle svg {
+      width: 1rem;
+      height: 1rem;
+      transition: transform 0.2s;
+    }
 
-.state-badge {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  background: var(--bg-accent);
-  color: var(--text-primary);
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-}
+    .summary-toggle.expanded svg {
+      transform: rotate(180deg);
+    }
 
-/* Info boxes */
-.info-box {
-  background: var(--bg-accent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
-  margin: 1.5rem 0;
-}
+    .summary-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      margin-top: 0.5rem;
+    }
 
-.info-box-title {
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  font-size: 0.875rem;
-}
+    .summary-content.expanded {
+      max-height: 200px;
+    }
 
-.info-box p {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin: 0 0 1rem 0;
-  line-height: 1.5;
-}
+    .summary-text {
+      padding: 1rem;
+      color: #6b7280;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      background: #f9fafb;
+      border-radius: 0.5rem;
+      border: 1px solid #f3f4f6;
+    }
 
-.info-box p:last-child {
-  margin-bottom: 0;
-}
+    /* Intro Section */
+    .intro-section {
+      background: white;
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 2rem 0;
-}
+    .intro-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-.stat-card {
-  background: var(--bg-secondary);
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  text-align: center;
-  border: 1px solid var(--border);
-}
+    .intro-content h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.025em;
+    }
 
-.stat-number {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.25rem;
-}
+    .intro-content p {
+      font-size: 1rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
 
-.stat-label {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
+    /* Footer */
+    .footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: 3rem 2rem 2rem;
+      margin-top: 4rem;
+    }
 
-.empty-state {
-  text-align: center;
-  padding: 4rem 2rem;
-  color: var(--text-muted);
-}
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      text-align: center;
+    }
 
-.empty-state-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  
-  .container {
-    padding: 1rem;
-  }
-  
-  .header-content {
-    padding: 0 1rem;
-  }
-  
-  .licenses-table {
-    font-size: 0.8125rem;
-  }
-  
-  .licenses-table th,
-  .licenses-table td {
-    padding: 0.75rem 1rem;
-  }
-  
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-}
+    .footer-links a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
 
-/* Link styles */
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
+    .footer-links a:hover {
+      color: #467EFF;
+    }
 
-a:hover {
-  text-decoration: underline;
-}
+    .footer-bottom {
+      border-top: 1px solid #374151;
+      padding-top: 2rem;
+      color: #9ca3af;
+      font-size: 0.85rem;
+    }
 
-/* Emphasis */
-strong {
-  font-weight: 600;
-  color: var(--text-primary);
-}
+    .disclaimer {
+      max-width: 900px;
+      margin: 3rem auto 0;
+      text-align: center;
+      padding: 1.5rem;
+      background: #fef3cd;
+      border: 1px solid #fbbf24;
+      border-radius: 0.75rem;
+    }
 
-.loading {
-  display: none;
-  text-align: center;
-  padding: 2rem;
-  color: var(--text-secondary);
-}
+    .disclaimer p {
+      font-size: 0.9rem;
+      color: #92400e;
+      margin: 0;
+    }
 
-.loading.show {
-  display: block;
-}
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
+      }
 
-</style>
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .hero {
+        padding: 6rem 1rem 2rem;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero .subtitle {
+        font-size: 1rem;
+      }
+
+      .compliance-content {
+        padding: 2rem 1rem;
+      }
+
+      .states-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .state-card {
+        padding: 1.25rem;
+      }
+
+      .state-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+      }
+
+      .state-name {
+        font-size: 1.25rem;
+      }
+
+      .requirement-item {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .requirement-label {
+        min-width: auto;
+        align-self: flex-start;
+      }
+
+      .intro-section {
+        padding: 2rem 1rem;
+      }
+
+      .intro-content h2 {
+        font-size: 1.25rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<!-- Launch Notice -->
-<div class="launch-notice">
-New! The Broker License Archive goes live July 1, 2025
-</div>
-
-<header class="header">
-  <div class="header-content">
-    <a href="/" class="logo"><img src="logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;"></a>
-    <nav>
-      <a href="/" class="nav-home">← Back to Home</a>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">
+        <a href="/">
+          <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 28px;">
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/partners.html">Partners</a>
+        <a href="/api-docs.html">API</a>
+        <a href="/login.html" class="btn btn-primary">Sign In</a>
+      </div>
     </nav>
-  </div>
-</header>
+  </header>
 
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <div class="status-dot"></div>
-      Free Public Archive
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>State Compliance</h1>
+      <p class="subtitle">
+        Automated compliance tracking with state-specific rules and CRM integration.
+      </p>
+      <p class="description">
+        Each watermarked document includes compliance metadata based on state regulations. Aquamark provides independent, verifiable proof of compliance tracking.
+      </p>
     </div>
-    <h1>Broker License Archive</h1>
-    <p class="hero-subtitle">Searchable database of alternative finance broker licenses by state</p>
-  </div>
-</section>
+  </section>
 
-<main class="container">
-  
-  <!-- Stats -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-number" id="broker-count">1</div>
-      <div class="stat-label">Licensed Brokers</div>
+  <!-- Intro Section -->
+  <section class="intro-section">
+    <div class="intro-content">
+      <h2>State-by-State Requirements</h2>
+      <p>Current regulations for commercial finance brokers and providers across regulated states.</p>
     </div>
-    <div class="stat-card">
-      <div class="stat-number" id="license-count">6</div>
-      <div class="stat-label">Total Licenses</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number" id="state-count">6</div>
-      <div class="stat-label">States Covered</div>
-    </div>
-  </div>
+  </section>
 
-  <!-- Search -->
-  <div class="section">
-    <h2 class="section-title">Search Brokers</h2>
-    <div class="search-container">
-      <input 
-        type="text" 
-        class="search-input" 
-        id="search-input"
-        placeholder="Search by broker name or company..."
-      >
-      <div class="search-results" id="search-results"></div>
-    </div>
-  </div>
-
-  <!-- Info Box -->
-  <div class="info-box">
-    <div class="info-box-title">About This Archive</div>
-    <p>This free public database contains license information for alternative finance brokers across the United States.</p>
-    
-    <p><strong>Submissions:</strong> All submission requests are verified before publication. Please allow 3-5 business days for new entries to appear in the archive.</p>
-    
-    <p>Submit corrections or additions to <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></p>
-  </div>
-
-  <!-- Loading -->
-  <div class="loading" id="loading">
-    <div>Loading broker licenses...</div>
-  </div>
-
-  <!-- Broker Listings -->
-  <div class="section">
-    <div id="broker-listings">
+  <!-- Main Content -->
+  <div class="compliance-content">
+    <div class="states-grid">
       
-      <!-- Sample Broker -->
-      <div class="broker-group" data-broker="business funding group">
-        <div class="broker-header">
-          <div class="broker-name">Aquamark Funding Group <span style="color: var(--text-muted); font-size: 0.875rem; font-weight: 400;">(Sample)</span></div>
-          <div class="license-count">6 licenses across 6 states</div>
+      <div class="state-card">
+        <div class="state-header">
+          <span class="state-icon">CA</span>
+          <span class="state-name">California</span>
         </div>
-        <table class="licenses-table">
-          <thead>
-            <tr>
-              <th>State</th>
-              <th>License Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="state-badge">CA</span></td>
-              <td><a href="https://dfpi.ca.gov/licensees/" class="license-link" target="_blank">CFL00098765</a></td>
-            </tr>
-            <tr>
-              <td><span class="state-badge">NY</span></td>
-              <td><a href="https://www.nydfs.gov/consumer/licenses" class="license-link" target="_blank">SLB44444</a></td>
-            </tr>
-            <tr>
-              <td><span class="state-badge">FL</span></td>
-              <td><a href="https://www.flofr.com/StaticPages/LicenseeSearch.htm" class="license-link" target="_blank">SLB55555</a></td>
-            </tr>
-            <tr>
-              <td><span class="state-badge">TX</span></td>
-              <td><a href="https://www.occc.texas.gov/pages/licensees" class="license-link" target="_blank">SLB66666</a></td>
-            </tr>
-            <tr>
-              <td><span class="state-badge">GA</span></td>
-              <td><a href="https://dbf.georgia.gov/licensee-search" class="license-link" target="_blank">SLB77777</a></td>
-            </tr>
-            <tr>
-              <td><span class="state-badge">NC</span></td>
-              <td><a href="https://www.nccob.gov/Public/Licensee-Search" class="license-link" target="_blank">SLB88888</a></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="requirements-grid">
+          <div class="requirement-item">
+            <div class="requirement-label">Brokers</div>
+            <div class="requirement-text">License and Disclosure required.</div>
+          </div>
+          <div class="requirement-item">
+            <div class="requirement-label">Providers</div>
+            <div class="requirement-text">Disclosure required.</div>
+          </div>
+        </div>
+        <a href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB869" class="bill-link" target="_blank">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd"/>
+          </svg>
+          SB-869
+        </a>
+        <div class="summary-section">
+          <button class="summary-toggle" onclick="toggleSummary(this)">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+            </svg>
+            View summary
+          </button>
+          <div class="summary-content">
+            <div class="summary-text">CFL license required to broker loans. Disclosure must be signed by the recipient before the transaction is finalized - funding amount, finance charge, total repayment, prepayment policies, APR.
+            </div>
+          </div>
+        </div>
       </div>
 
-    </div>
+      <div class="state-card">
+        <div class="state-header">
+          <span class="state-icon">CT</span>
+          <span class="state-name">Connecticut</span>
+        </div>
+        <div class="requirements-grid">
+          <div class="requirement-item">
+            <div class="requirement-label">Brokers</div>
+            <div class="requirement-text">Registration and Disclosure required.</div>
+          </div>
+          <div class="requirement-item">
+            <div class="requirement-label">Providers</div>
+            <div class="requirement-text">Registration and Disclosure required.</div>
+          </div>
+        </div>
+        <a href="https://www.cga.ct.gov/2023/amd/S/pdf/2023SB-01032-R00SB-AMD.pdf" class="bill-link" target="_blank">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd"/>
+          </svg>
+          SB 1032
+        </a>
+        <div class="summary-section">
+          <button class="summary-toggle" onclick="toggleSummary(this)">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+            </svg>
+            View summary
+          </button>
+          <div class="summary-content">
+            <div class="summary-text">
+Providers and brokers must register with the state. For transactions ≤ $250,000 - must disclose total funding, cost of borrowing, repayment schedule, and broker compensation. APR is not required. </div>
+          </div>
+        </div>
+      </div>
 
-    <!-- Empty State -->
-    <div class="empty-state" id="empty-state" style="display: none;">
-      <div class="empty-state-icon">🔍</div>
-      <div>No brokers found matching your search.</div>
-    </div>
-  </div>
+      <div class="state-card">
+        <div class="state-header">
+          <span class="state-icon">FL</span>
+          <span class="state-name">Florida</span>
+        </div>
+        <div class="requirements-grid">
+          <div class="requirement-item">
+            <div class="requirement-label">Brokers</div>
+            <div class="requirement-text">Comply with Broker Code of Conduct.</div>
+          </div>
+          <div class="requirement-item">
+            <div class="requirement-label">Providers</div>
+            <div class="requirement-text">Disclosure required.</div>
+          </div>
+        </div>
+        <a href="https://www.flsenate.gov/Session/Bill/2023/1353/BillText/er/PDF" class="bill-link" target="_blank">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd"/>
+          </svg>
+          HB 1353
+        </a>
+        <div class="summary-section">
+          <button class="summary-toggle" onclick="toggleSummary(this)">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+            </svg>
+            View summary
+          </button>
+          <div class="summary-content">
+            <div class="summary-text">
+Providers must disclose terms for deals ≤ $500,000 - funding amount, finance charge, total repayment, prepayment policies, APR. Brokers must comply with code of conduct: no false adverstising or upfront fees, address and phone number must be included in all advertising.            </div>
+          </div>
+        </div>
+      </div>
 
-</main>
+      <div class="state-card">
+        <div class="state-header">
+          <span class="state-icon">GA</span>
+          <span class="state-name">Georgia</span>
+        </div>
+        <div class="requirements-grid">
+          <div class="requirement-item">
+            <div class="requirement-label">Brokers</div>
+            <div class="requirement-text">Disclosure required.</div>
+          </div>
+          <div class="requirement-item">
+            <div class="requirement-label">Providers</div>
+            <div class="requirement-text">Disclosure required.</div>
+          </div>
+        </div>
+        <a href="https://www.legis.ga.gov/api/legislation/document/20232024/219440" class="bill-link" target="_blank">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd"/>
+          </svg>
+         SB 90
+        </a>
+        <div class="summary-section">
+          <button class="summary-toggle" onclick="toggleSummary(this)">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+            </svg>
+            View summary
+          </button>
+          <div class="summary-content">
+            <div class="summary-text">
+              Providers and brokers must disclouse terms for deals ≤ $500,000 - total funding amount, net funds disbursed, total repayment, total dollar cost, and payment schedule. APR is not required.
+            </div>
+          </div>
+        </div>
+      </div>
 
-<script>
-// Search functionality
-const searchInput = document.getElementById('search-input');
-const searchResults = document.getElementById('search-results');
-const brokerListings = document.getElementById('broker-listings');
-const emptyState = document.getElementById('empty-state');
-const brokerGroups = document.querySelectorAll('.broker-group');
-
-let allBrokers = Array.from(brokerGroups);
-
-function updateSearchResults(visibleCount, totalCount) {
-  if (searchInput.value.trim()) {
-    searchResults.textContent = `Showing ${visibleCount} of ${totalCount} brokers`;
-    searchResults.style.display = 'block';
-  } else {
-    searchResults.style.display = 'none';
-  }
-}
-
-function performSearch() {
-  const searchTerm = searchInput.value.toLowerCase().trim();
-  let visibleCount = 0;
-  
-  allBrokers.forEach(broker => {
-    const brokerName = broker.dataset.broker;
-    const isVisible = !searchTerm || brokerName.includes(searchTerm);
-    
-    broker.style.display = isVisible ? 'block' : 'none';
-    if (isVisible) visibleCount++;
-  });
-  
-  // Show/hide empty state
-  if (visibleCount === 0 && searchTerm) {
-    emptyState.style.display = 'block';
-    brokerListings.style.display = 'none';
-  } else {
-    emptyState.style.display = 'none';
-    brokerListings.style.display = 'block';
-  }
-  
-  updateSearchResults(visibleCount, allBrokers.length);
-}
-
-// Debounced search
-let searchTimeout;
-searchInput.addEventListener('input', () => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(performSearch, 300);
-});
-
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-  updateSearchResults(allBrokers.length, allBrokers.length);
-});
-
-// Update stats based on visible content
-function updateStats() {
-  const visibleBrokers = document.querySelectorAll('.broker-group[style*="block"], .broker-group:not([style*="none"])');
-  let totalLicenses = 0;
-  let states = new Set();
-  
-  visibleBrokers.forEach(broker => {
-    const licenseRows = broker.querySelectorAll('.licenses-table tbody tr');
-    totalLicenses += licenseRows.length;
-    
-    licenseRows.forEach(row => {
-      const stateText = row.querySelector('.state-badge').textContent;
-      states.add(stateText);
-    });
-  });
-  
-  // Don't update stats during search - keep original counts
-  if (!searchInput.value.trim()) {
-    document.getElementById('broker-count').textContent = visibleBrokers.length;
-    document.getElementById('license-count').textContent = totalLicenses;
-    document.getElementById('state-count').textContent = states.size;
-  }
-}
-
-// Initial stats calculation
-updateStats();
-</script>
-
-</body>
-</html>
+      <div class="state-card">
+        <div class="state-header">
+          <span class="state-icon">KS</span>
+          <span class="state-name">Kansas</span>
+        </div>
+        <div class="requirements-grid">
+          <div class="requirement-item">
+            <div class="requirement-label">Brokers</div>
+            <div class="requirement-text">Disclosure required.</div>
+          </div>
+          <div class="requirement-item">
+            <div class="requirement-label">Providers</div>
+            <div class="requirement-text">Disclosure required.</div>
+          </div>
+        </div>
+        <a href="https://www.kslegislature.gov/li_2024/b2023_24/measures/documents/sb345_00_0000.pdf" class="bill-link" target="_blank">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75
