@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta name="description" content="The leading compliance platform for fintech and alternative finance. Compliance, document protection, and regulatory monitoring.">
+    <meta name="description" content="The leading compliance platform for fintech and alternative finance. Automated compliance, document protection, and regulatory monitoring.">
     <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
-    <title>Aquamark</title>
+    <title>Aquamark - Fintech Compliance Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <style>
         * {
@@ -226,7 +226,7 @@
             position: relative;
         }
 
-        .dashboard-mockup {
+        .compliance-urgency {
             background: white;
             border-radius: 1rem;
             box-shadow: var(--shadow-xl);
@@ -236,50 +236,46 @@
             width: 100%;
         }
 
-        .mockup-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .states-tracker {
+            space-y: 1.5rem;
+        }
+
+        .tracker-section {
             margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-light);
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .dot-red { background: #ef4444; }
-        .dot-yellow { background: #f59e0b; }
-        .dot-green { background: #10b981; }
-
-        .mockup-content {
-            space-y: 1rem;
-        }
-
-        .compliance-item {
+        .section-label {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 0.75rem;
-            background: var(--bg-tertiary);
-            border-radius: 0.5rem;
+            align-items: center;
             margin-bottom: 0.75rem;
         }
 
-        .compliance-status {
+        .state-list {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 0.5rem;
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
+        .state-pill {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 32px;
+        }
+
+        .state-pill.active {
+            background: rgba(30, 64, 175, 0.1);
+            color: #1e40af;
+            border: 1px solid rgba(30, 64, 175, 0.2);
+        }
+
+        .state-pill.pending {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.2);
         }
 
         /* Features Section */
@@ -668,50 +664,59 @@
                     <a href="/signup.html" class="btn btn-primary btn-lg">Start free trial</a>
                     <a href="/api-docs.html" class="btn btn-secondary btn-lg">View API docs</a>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Documents protected</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Companies</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">99.9%</div>
-                        <div class="stat-label">Uptime</div>
-                    </div>
-                </div>
+
             </div>
             <div class="hero-visual">
-                <div class="dashboard-mockup">
-                    <div class="mockup-header">
-                        <div class="dot dot-red"></div>
-                        <div class="dot dot-yellow"></div>
-                        <div class="dot dot-green"></div>
-                        <span style="margin-left: auto; font-size: 0.875rem; color: var(--text-muted);">Compliance Dashboard</span>
+                <div class="compliance-urgency">
+                    <div class="urgency-header">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            Regulatory Expansion Accelerating
+                        </h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                            State regulations expanding rapidly across the US
+                        </p>
                     </div>
-                    <div class="mockup-content">
-                        <div class="compliance-item">
-                            <div class="compliance-status">
-                                <div class="status-dot"></div>
-                                <span style="font-size: 0.875rem;">California - SB-869</span>
+                    
+                    <div class="states-tracker">
+                        <div class="tracker-section">
+                            <div class="section-label">
+                                <span style="font-size: 0.75rem; font-weight: 600; color: #1e40af; text-transform: uppercase;">Enacted</span>
+                                <span style="font-size: 1.25rem; font-weight: 700; color: #1e40af;">9 States</span>
                             </div>
-                            <span style="font-size: 0.75rem; color: var(--success);">Compliant</span>
+                            <div class="state-list">
+                                <span class="state-pill active">CA</span>
+                                <span class="state-pill active">CT</span>
+                                <span class="state-pill active">FL</span>
+                                <span class="state-pill active">GA</span>
+                                <span class="state-pill active">KS</span>
+                                <span class="state-pill active">MO</span>
+                                <span class="state-pill active">NY</span>
+                                <span class="state-pill active">UT</span>
+                                <span class="state-pill active">VA</span>
+                            </div>
                         </div>
-                        <div class="compliance-item">
-                            <div class="compliance-status">
-                                <div class="status-dot"></div>
-                                <span style="font-size: 0.875rem;">New York - S1061B</span>
+                        
+                        <div class="tracker-section">
+                            <div class="section-label">
+                                <span style="font-size: 0.75rem; font-weight: 600; color: #60a5fa; text-transform: uppercase;">Proposed Legislation</span>
+                                <span style="font-size: 1.25rem; font-weight: 700; color: #60a5fa;">7 States</span>
                             </div>
-                            <span style="font-size: 0.75rem; color: var(--success);">Compliant</span>
+                            <div class="state-list">
+                                <span class="state-pill pending">TX</span>
+                                <span class="state-pill pending">MS</span>
+                                <span class="state-pill pending">IL</span>
+                                <span class="state-pill pending">NC</span>
+                                <span class="state-pill pending">PA</span>
+                                <span class="state-pill pending">NJ</span>
+                                <span class="state-pill pending">MD</span>
+                            </div>
                         </div>
-                        <div class="compliance-item">
-                            <div class="compliance-status">
-                                <div class="status-dot"></div>
-                                <span style="font-size: 0.875rem;">Virginia - HB 1027</span>
-                            </div>
-                            <span style="font-size: 0.75rem; color: var(--success);">Compliant</span>
+                        
+                        <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 0.5rem; margin-top: 1.5rem; text-align: center;">
+                            <p style="font-size: 0.875rem; color: var(--text-secondary);">
+                                <strong>Comprehensive 50-State Monitoring</strong><br/>
+                                Stay ahead of regulatory changes
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -750,7 +755,7 @@
                         Real-time alerts for state-specific requirements. Stay ahead of regulations automatically.
                     </p>
                     <ul class="feature-list">
-                        <li>10 states monitored</li>
+                        <li>All 50 states monitored</li>
                         <li>Real-time alerts</li>
                         <li>CRM integration</li>
                         <li>Automated flagging</li>
@@ -823,8 +828,8 @@
                     <div class="metric-label">Companies using Aquamark</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-number">10</div>
-                    <div class="metric-label">States monitored</div>
+                    <div class="metric-number">16</div>
+                    <div class="metric-label">States with enacted or proposed laws</div>
                 </div>
                 <div class="metric-item">
                     <div class="metric-number">4.9/5</div>
