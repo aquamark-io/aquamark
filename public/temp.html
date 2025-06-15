@@ -17,8 +17,8 @@
         :root {
             --primary: #000000;
             --primary-soft: #1a1a1a;
-            --accent: #6B9EFF;
-            --accent-light: #8AB0FF;
+            --accent: #4f46e5;
+            --accent-light: #6366f1;
             --text-primary: #000000;
             --text-secondary: #6b7280;
             --text-muted: #9ca3af;
@@ -156,7 +156,7 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 25% 25%, rgba(107, 158, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 25% 25%, rgba(79, 70, 229, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
             pointer-events: none;
         }
@@ -182,7 +182,7 @@
         }
 
         .hero-content .highlight {
-            background: linear-gradient(135deg, #6B9EFF 0%, #8AB0FF 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -228,7 +228,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #6B9EFF 0%, #8AB0FF 100%);
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
         }
 
         .card-header {
@@ -601,10 +601,10 @@
         }
 
         .coming-soon {
-            color: #6B9EFF;
+            color: var(--accent);
             font-weight: 600;
             text-align: center;
-            background: rgba(107, 158, 255, 0.1);
+            background: rgba(79, 70, 229, 0.1);
             padding: 0.75rem;
             border-radius: 8px;
             font-size: 0.9rem;
@@ -905,7 +905,43 @@
                 </div>
             </div>
 
- leaks.
+            <!-- Bottom Row (3 Cards) -->
+            <div class="features-grid-bottom">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <h3 class="feature-title small">Compliance Monitoring</h3>
+                        <p class="feature-description">
+                            CRM alerts for state-specific requirements. Stay ahead of regulations automatically.
+                        </p>
+                    </div>
+                    <ul class="feature-list">
+                        <li>All 50 states monitored</li>
+                        <li>Latest regulation</li>
+                        <li>CRM integration</li>
+                        <li>Automated flagging</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <h3 class="feature-title small">Seamless Integration</h3>
+                        <p class="feature-description">
+                            Open API for developers. Bulk processing portal. Works with your existing workflow.
+                        </p>
+                    </div>
+                    <ul class="feature-list">
+                        <li>Open API</li>
+                        <li>Developer-friendly</li>
+                        <li>Simple setup</li>
+                        <li>Basic support</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <h3 class="feature-title small">Coming Soon</h3>
+                        <p class="feature-description">
+                            Working with lenders to introduce underwriter QR codes—to track access and reduce file leaks.
                         </p>
                     </div>
                     <ul class="feature-list">
