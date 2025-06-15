@@ -681,7 +681,7 @@
     </div>
 
     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
-      <!-- Left 2x2 cards -->
+      <!-- Left: 2x2 grid -->
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
         <!-- Card 1 -->
         <div class="feature-card">
@@ -733,11 +733,6 @@
           <p class="feature-description">
             Each QR code acts as a digital breadcrumb, showing exactly who accessed the document — lender, salesperson, or processor.
           </p>
-          <div class="qr-visual" style="text-align: center; margin: 1.5rem 0;">
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
-              Sample tracking QR
-            </div>
-          </div>
           <ul class="feature-list">
             <li>Embed QR with access metadata</li>
             <li>Breadcrumb trail across your CRM</li>
@@ -748,10 +743,17 @@
         </div>
       </div>
 
-      <!-- Right: large image -->
-      <div style="padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: white;">
-        <img src="https://www.aquamark.io/watermark-sample.png" alt="Watermarked Bank Statement Sample"
-             style="width: 100%; height: auto; display: block; border-radius: 4px;" />
+      <!-- Right column: stacked images -->
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <div style="padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: white;">
+          <img src="https://www.aquamark.io/watermark-sample.png" alt="Watermarked Bank Statement"
+               style="width: 100%; height: auto; display: block; border-radius: 4px;" />
+        </div>
+
+        <div style="padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: white;">
+          <img src="https://www.aquamark.io/qr.png" alt="QR Sample"
+               style="width: 100%; height: auto; display: block; border-radius: 4px;" />
+        </div>
       </div>
     </div>
   </div>
