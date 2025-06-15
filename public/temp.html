@@ -6,7 +6,7 @@
     <meta name="description" content="The leading compliance platform for fintech and alternative finance. Automated compliance, document protection, and regulatory monitoring.">
     <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
     <title>Aquamark</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
     <style>
         * {
             margin: 0;
@@ -15,33 +15,34 @@
         }
 
         :root {
-            --primary: #0f172a;
-            --primary-light: #1e293b;
-            --accent: #3b82f6;
-            --accent-light: #60a5fa;
-            --text-primary: #0f172a;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
+            --primary: #000000;
+            --primary-soft: #1a1a1a;
+            --accent: #6B9EFF;
+            --accent-light: #8AB0FF;
+            --text-primary: #000000;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
             --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #f1f5f9;
-            --border: #e2e8f0;
-            --border-light: #f1f5f9;
-            --success: #10b981;
-            --gradient-primary: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --bg-secondary: #fafafa;
+            --bg-tertiary: #f5f5f5;
+            --border: #e5e5e5;
+            --border-light: #f0f0f0;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08);
+            --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.12);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.7;
             font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Header */
@@ -50,42 +51,43 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-light);
-            z-index: 50;
-            transition: all 0.3s ease;
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 1.25rem 2rem;
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary);
             text-decoration: none;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            letter-spacing: -0.01em;
         }
 
         .nav-links a:hover {
@@ -96,15 +98,16 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.625rem 1.25rem;
-            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
             cursor: pointer;
             white-space: nowrap;
+            letter-spacing: -0.01em;
         }
 
         .btn-primary {
@@ -114,32 +117,33 @@
         }
 
         .btn-primary:hover {
-            background: var(--primary-light);
+            background: var(--primary-soft);
             transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--text-secondary);
-            border-color: var(--text-secondary);
+            border-color: var(--border);
         }
 
         .btn-secondary:hover {
-            background: var(--bg-tertiary);
+            background: var(--bg-secondary);
             color: var(--primary);
-            border-color: var(--text-secondary);
+            border-color: var(--border);
         }
 
         .btn-lg {
-            padding: 0.875rem 2rem;
+            padding: 1rem 2rem;
             font-size: 1rem;
+            border-radius: 10px;
         }
 
         /* Hero Section */
         .hero {
-            padding: 9rem 2rem 6rem;
-            background: var(--bg-primary);
+            padding: 8rem 2rem 6rem;
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
             position: relative;
             overflow: hidden;
         }
@@ -151,33 +155,34 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.05) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(107, 158, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .hero-container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 5rem;
             align-items: center;
             position: relative;
             z-index: 1;
         }
 
         .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 800;
             line-height: 1.1;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.03em;
             margin-bottom: 1.5rem;
             color: var(--primary);
         }
 
         .hero-content .highlight {
-            background: linear-gradient(135deg, var(--accent) 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #6B9EFF 0%, #8AB0FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -186,37 +191,15 @@
         .hero-subtitle {
             font-size: 1.25rem;
             color: var(--text-secondary);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             line-height: 1.6;
+            font-weight: 400;
         }
 
         .hero-cta {
             display: flex;
             gap: 1rem;
             margin-bottom: 3rem;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 2rem;
-            padding: 1.5rem 0;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .stat {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-muted);
         }
 
         .hero-visual {
@@ -226,131 +209,224 @@
             position: relative;
         }
 
-        .compliance-urgency {
+        .compliance-card {
             background: white;
-            border-radius: 1rem;
+            border-radius: 16px;
             box-shadow: var(--shadow-xl);
-            border: 1px solid var(--border);
-            padding: 2rem;
-            max-width: 500px;
+            border: 1px solid var(--border-light);
+            padding: 2.5rem;
+            max-width: 480px;
             width: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
-        .states-tracker {
-            space-y: 1.5rem;
+        .compliance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6B9EFF 0%, #8AB0FF 100%);
         }
 
-        .tracker-section {
-            margin-bottom: 1.5rem;
+        .card-header {
+            margin-bottom: 2rem;
         }
 
-        .section-label {
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .states-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
-        .state-list {
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .section-count {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .enacted .section-count {
+            color: var(--success);
+        }
+
+        .pending .section-count {
+            color: var(--warning);
+        }
+
+        .state-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
 
         .state-pill {
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
             text-align: center;
-            min-width: 32px;
+            min-width: 40px;
+            transition: all 0.2s ease;
         }
 
-        .state-pill.active {
-            background: rgba(30, 64, 175, 0.1);
-            color: #1e40af;
-            border: 1px solid rgba(30, 64, 175, 0.2);
+        .state-pill.enacted {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
         .state-pill.pending {
-            background: rgba(96, 165, 250, 0.1);
-            color: #60a5fa;
-            border: 1px solid rgba(96, 165, 250, 0.2);
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .monitoring-badge {
+            background: var(--bg-secondary);
+            padding: 1.25rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        .monitoring-badge strong {
+            display: block;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
         }
 
         /* Features Section */
         .features {
-            padding: 6rem 2rem;
-            background: var(--bg-secondary);
+            padding: 8rem 2rem;
+            background: white;
         }
 
         .features-container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .section-header {
+        .section-intro {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
         }
 
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 3rem;
+            font-weight: 800;
             color: var(--primary);
-            margin-bottom: 1rem;
-            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
-        .section-subtitle {
-            font-size: 1.125rem;
+        .section-description {
+            font-size: 1.25rem;
             color: var(--text-secondary);
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .features-grid-bottom {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
 
         .feature-card {
             background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .feature-card:hover {
             box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            border-color: var(--border);
         }
 
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-accent);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
+        .feature-card.large {
+            padding: 3rem;
+        }
+
+        .feature-header {
             margin-bottom: 1.5rem;
         }
 
         .feature-title {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-title.small {
+            font-size: 1.25rem;
         }
 
         .feature-description {
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
             line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .feature-badge.free {
+            background: var(--success);
         }
 
         .feature-list {
@@ -359,11 +435,11 @@
 
         .feature-list li {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            align-items: flex-start;
+            gap: 0.75rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
         }
 
         .feature-list li::before {
@@ -371,99 +447,173 @@
             color: var(--success);
             font-weight: 700;
             font-size: 0.875rem;
+            margin-top: 0.1rem;
         }
 
         /* How It Works */
         .how-it-works {
-            padding: 6rem 2rem;
-            background: white;
+            padding: 8rem 2rem;
+            background: var(--bg-secondary);
         }
 
         .how-it-works-container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .steps-grid {
+        .process-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
         }
 
-        .step-card {
-            text-align: center;
-            padding: 2rem 1rem;
+        .process-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .process-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .process-badge {
+            display: inline-block;
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .process-title {
             font-size: 1.5rem;
             font-weight: 700;
-            margin: 0 auto 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
         }
 
-        .step-title {
-            font-size: 1.25rem;
+        .process-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .process-image {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .process-image img {
+            width: 100%;
+            height: auto;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 8rem 2rem;
+            background: white;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
             font-weight: 600;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .plan-header {
+            margin-bottom: 2rem;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
         }
 
-        .step-description {
+        .plan-description {
             color: var(--text-secondary);
             line-height: 1.6;
         }
 
-        /* Social Proof */
-        .social-proof {
-            padding: 4rem 2rem;
-            background: var(--bg-tertiary);
+        .plan-features {
+            flex: 1;
+            margin-bottom: 2rem;
         }
 
-        .social-proof-container {
-            max-width: 1280px;
-            margin: 0 auto;
+        .coming-soon {
+            color: #6B9EFF;
+            font-weight: 600;
             text-align: center;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .metric-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            border: 1px solid var(--border);
-        }
-
-        .metric-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-label {
-            color: var(--text-secondary);
+            background: rgba(107, 158, 255, 0.1);
+            padding: 0.75rem;
+            border-radius: 8px;
             font-size: 0.9rem;
         }
 
         /* CTA Section */
         .cta-section {
-            padding: 6rem 2rem;
-            background: var(--gradient-primary);
+            padding: 8rem 2rem;
+            background: var(--primary);
             color: white;
             text-align: center;
         }
@@ -474,16 +624,17 @@
         }
 
         .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -0.025em;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
         }
 
         .cta-section p {
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
             opacity: 0.9;
+            line-height: 1.6;
         }
 
         .cta-buttons {
@@ -500,9 +651,9 @@
         }
 
         .btn-white:hover {
-            background: var(--bg-tertiary);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            background: var(--bg-secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-outline {
@@ -520,33 +671,34 @@
         .footer {
             background: var(--primary);
             color: white;
-            padding: 3rem 2rem 2rem;
+            padding: 4rem 2rem 2rem;
         }
 
         .footer-container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 2rem;
+            gap: 4rem;
+            margin-bottom: 3rem;
         }
 
         .footer-brand h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
         }
 
         .footer-brand p {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
         .footer-section h4 {
             font-weight: 600;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
         }
 
         .footer-section ul {
@@ -556,10 +708,11 @@
         .footer-section a {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             transition: color 0.2s ease;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
         }
 
         .footer-section a:hover {
@@ -571,86 +724,35 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.875rem;
         }
 
-        /* Pricing Styles */
-        .pricing-card {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 1rem;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            display: flex;
-            flex-direction: column;
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid-bottom {
+                grid-template-columns: 1fr;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .pricing-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .pricing-card.featured {
-            border-color: var(--accent);
-            transform: scale(1.02);
-        }
-
-        .plan-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .plan-header {
-            margin-bottom: 2rem;
-        }
-
-        .plan-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.75rem;
-        }
-
-        .plan-description {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .plan-features {
-            flex: 1;
-            margin-bottom: 2rem;
-        }
-
-        .plan-features .feature-list {
-            margin: 0;
-        }
-
-        .plan-features .feature-list li {
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-        }
         @media (max-width: 768px) {
             .nav {
                 padding: 1rem;
             }
 
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .nav-links a {
+            .nav-links a:not(.btn) {
                 display: none;
             }
 
@@ -658,37 +760,8 @@
                 padding: 6rem 1rem 4rem;
             }
 
-            .hero-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-
             .hero-content h1 {
                 font-size: 2.5rem;
-            }
-
-            .hero-cta {
-                justify-content: center;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .features-grid,
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
             }
 
             .section-title {
@@ -698,6 +771,12 @@
             .cta-section h2 {
                 font-size: 2rem;
             }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -705,9 +784,7 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="/" class="logo">
-                <img src="/logo-full-black-blue.png" alt="Aquamark" style="height: 32px;">
-            </a>
+            <a href="/" class="logo">Aquamark</a>
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How it works</a>
@@ -733,235 +810,187 @@
                     <a href="/signup.html" class="btn btn-primary btn-lg">Start free trial</a>
                     <a href="/api-docs.html" class="btn btn-secondary btn-lg">View API docs</a>
                 </div>
-
             </div>
             <div class="hero-visual">
-                <div class="compliance-urgency">
-                    <div class="urgency-header">
-                        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 1rem;">
-                            Regulatory Expansion Accelerating
-                        </h3>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-                            State regulations expanding rapidly across the US
-                        </p>
+                <div class="compliance-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Regulatory Expansion Accelerating</h3>
+                        <p class="card-subtitle">State regulations expanding rapidly across the US</p>
                     </div>
                     
-                    <div class="states-tracker">
-                        <div class="tracker-section">
-                            <div class="section-label">
-                                <span style="font-size: 0.75rem; font-weight: 600; color: #1e40af; text-transform: uppercase;">Enacted</span>
-                                <span style="font-size: 1.25rem; font-weight: 700; color: #1e40af;">9 States</span>
-                            </div>
-                            <div class="state-list">
-                                <span class="state-pill active">CA</span>
-                                <span class="state-pill active">CT</span>
-                                <span class="state-pill active">FL</span>
-                                <span class="state-pill active">GA</span>
-                                <span class="state-pill active">KS</span>
-                                <span class="state-pill active">MO</span>
-                                <span class="state-pill active">NY</span>
-                                <span class="state-pill active">UT</span>
-                                <span class="state-pill active">VA</span>
-                            </div>
+                    <div class="states-section enacted">
+                        <div class="section-header">
+                            <span class="section-label">Enacted</span>
+                            <span class="section-count">9 States</span>
                         </div>
-                        
-                        <div class="tracker-section">
-                            <div class="section-label">
-                                <span style="font-size: 0.75rem; font-weight: 600; color: #60a5fa; text-transform: uppercase;">Proposed Legislation</span>
-                                <span style="font-size: 1.25rem; font-weight: 700; color: #60a5fa;">7 States</span>
-                            </div>
-                            <div class="state-list">
-                                <span class="state-pill pending">TX</span>
-                                <span class="state-pill pending">MS</span>
-                                <span class="state-pill pending">IL</span>
-                                <span class="state-pill pending">NC</span>
-                                <span class="state-pill pending">PA</span>
-                                <span class="state-pill pending">NJ</span>
-                                <span class="state-pill pending">MD</span>
-                            </div>
+                        <div class="state-grid">
+                            <span class="state-pill enacted">CA</span>
+                            <span class="state-pill enacted">CT</span>
+                            <span class="state-pill enacted">FL</span>
+                            <span class="state-pill enacted">GA</span>
+                            <span class="state-pill enacted">KS</span>
+                            <span class="state-pill enacted">MO</span>
+                            <span class="state-pill enacted">NY</span>
+                            <span class="state-pill enacted">UT</span>
+                            <span class="state-pill enacted">VA</span>
                         </div>
-                        
-                        <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 0.5rem; margin-top: 1.5rem; text-align: center;">
-                            <p style="font-size: 0.875rem; color: var(--text-secondary);">
-                                <strong>Comprehensive 50-State Monitoring</strong><br/>
-                                Stay ahead of regulatory changes
-                            </p>
+                    </div>
+                    
+                    <div class="states-section pending">
+                        <div class="section-header">
+                            <span class="section-label">Proposed Legislation</span>
+                            <span class="section-count">7 States</span>
                         </div>
+                        <div class="state-grid">
+                            <span class="state-pill pending">TX</span>
+                            <span class="state-pill pending">MS</span>
+                            <span class="state-pill pending">IL</span>
+                            <span class="state-pill pending">NC</span>
+                            <span class="state-pill pending">PA</span>
+                            <span class="state-pill pending">NJ</span>
+                            <span class="state-pill pending">MD</span>
+                        </div>
+                    </div>
+                    
+                    <div class="monitoring-badge">
+                        <strong>Comprehensive 50-State Monitoring</strong>
+                        Stay ahead of regulatory changes
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-<!-- Features Section -->
-<section class="features" id="features">
-    <div class="features-container" style="max-width: 1400px;">
-        <div class="section-header">
-            <h2 class="section-title">Unified Platform for Compliance and Document Security</h2>
-            <p class="section-subtitle" style="max-width: 900px;">
-                Watermarking, compliance alerts, API integration, and broker license verification.<br>
-                Built to support modern fintech operations.
-            </p>
-        </div>
-
-
-   <!-- Top Row (2 Cards) -->
-<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem;">
-    <div class="feature-card" style="width: 400px;">
-        <h3 class="feature-title">Broker License Archive</h3>
-        <p class="feature-description">
-            <span style="color: var(--accent); font-weight: 600;">Free</span> public database containing verified license information for alternative finance brokers across the United States.
-        </p>
-        <ul class="feature-list">
-            <li>Public verification database</li>
-            <li>Verified before publication</li>
-            <li>Open access for anyone</li>
-            <li>Request inclusion anytime</li>
-        </ul>
-    </div>
-
-    <div class="feature-card" style="width: 400px;">
-        <h3 class="feature-title">Document Protection</h3>
-        <p class="feature-description">
-            Tamper-resistant watermarks with complete audit trails. Deter theft and ensure accountability.
-        </p>
-        <ul class="feature-list">
-            <li>Instant watermarking</li>
-             <li>Your branding</li>
-            <li>OCR-compatible</li>
-            <li>QR code with access trail</li>
-           
-        </ul>
-    </div>
-</div>
-
-
-        <!-- Bottom Row (3 Cards) -->
-        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem;">
-            <div class="feature-card" style="width: 350px;">
-                <h3 class="feature-title">Compliance Monitoring</h3>
-                <p class="feature-description">
-                    CRM alerts for state-specific requirements. Stay ahead of regulations automatically.
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-intro">
+                <h2 class="section-title">Unified Platform for Compliance and Document Security</h2>
+                <p class="section-description">
+                    Watermarking, compliance alerts, API integration, and broker license verification. Built to support modern fintech operations.
                 </p>
-                <ul class="feature-list">
-                    <li>All 50 states monitored</li>
-                    <li>Latest regulation</li>
-                    <li>CRM integration</li>
-                    <li>Automated flagging</li>
-                </ul>
             </div>
 
-            <div class="feature-card" style="width: 350px;">
-                <h3 class="feature-title">Seamless Integration</h3>
-                <p class="feature-description">
-                    Open API for developers. Bulk processing portal. Works with your existing workflow.
-                </p>
-                <ul class="feature-list">
-                    <li>Open API</li>
-                    <li>Developer-friendly</li>
-                    <li>Simple setup</li>
-                    <li>Basic support</li>
+            <!-- Top Row (2 Large Cards) -->
+            <div class="features-grid">
+                <div class="feature-card large">
+                    <div class="feature-header">
+                        <span class="feature-badge free">Free</span>
+                        <h3 class="feature-title">Broker License Archive</h3>
+                        <p class="feature-description">
+                            Public database containing verified license information for alternative finance brokers across the United States.
+                        </p>
+                    </div>
+                    <ul class="feature-list">
+                        <li>Public verification database</li>
+                        <li>Verified before publication</li>
+                        <li>Open access for anyone</li>
+                        <li>Request inclusion anytime</li>
+                    </ul>
+                </div>
 
-                </ul>
+                <div class="feature-card large">
+                    <div class="feature-header">
+                        <h3 class="feature-title">Document Protection</h3>
+                        <p class="feature-description">
+                            Tamper-resistant watermarks with complete audit trails. Deter theft and ensure accountability.
+                        </p>
+                    </div>
+                    <ul class="feature-list">
+                        <li>Instant watermarking</li>
+                        <li>Your branding</li>
+                        <li>OCR-compatible</li>
+                        <li>QR code with access trail</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="feature-card" style="width: 350px;">
-                <h3 class="feature-title">Coming Soon</h3>
-                <p class="feature-description">
-                    Working with lenders to introduce underwriter QR codes—to track access and reduce file leaks.
-                </p>
-                <ul class="feature-list">
-                    <li>Underwriter-level accountability</li>
-                    <li>Built for lender workflows</li>
-                </ul>
+ leaks.
+                        </p>
+                    </div>
+                    <ul class="feature-list">
+                        <li>Underwriter-level accountability</li>
+                        <li>Built for lender workflows</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="how-it-works-container">
+            <div class="section-intro">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-description">Three core functions to protect your pipeline and stay compliant</p>
+            </div>
 
+            <div class="process-grid">
+                <!-- Document Protection -->
+                <div class="process-card">
+                    <span class="process-badge">Document Protection</span>
+                    <h3 class="process-title">Tamper-Resistant Watermarks</h3>
+                    <p class="process-description">
+                        Upload documents via portal or API. Your brand is applied instantly as a tiled, semi-transparent watermark—fully OCR-compatible.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Prevents backdooring</li>
+                        <li>Maintains readability for lenders</li>
+                        <li>Custom branding supported</li>
+                    </ul>
+                    <div class="process-image">
+                        <img src="watermark-sample.png" alt="Sample Watermarked Statement">
+                    </div>
+                </div>
 
-<!-- How It Works Section - 3 Column Layout -->
-<section class="how-it-works" id="how-it-works">
-  <div class="how-it-works-container">
-    <div class="section-header">
-      <h2 class="section-title">How It Works</h2>
-      <p class="section-subtitle">Three core functions to protect your pipeline and stay compliant</p>
-    </div>
+                <!-- Access Intelligence -->
+                <div class="process-card">
+                    <span class="process-badge">Access Intelligence</span>
+                    <h3 class="process-title">Power up your QR codes</h3>
+                    <p class="process-description">
+                        Each QR code acts as a digital breadcrumb, showing exactly who accessed the document — lender, salesperson, or processor.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Embed QR with access metadata</li>
+                        <li>Breadcrumb trail across your CRM</li>
+                        <li>No blind spots in the funnel</li>
+                    </ul>
+                    <div class="process-image">
+                        <img src="qr.png" alt="QR Code Sample" style="height: 140px; width: auto; margin: 0 auto; display: block;">
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <a href="https://www.aquamark.io/watermark-sample.png" target="_blank" class="btn btn-secondary">View sample</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="steps-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-
-      <!-- Watermarking -->
-      <div class="step-card" style="text-align: left;">
-        <span style="display: inline-block; background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;">Document Protection</span>
-        <h3 class="step-title">Tamper-Resistant Watermarks</h3>
-        <p class="step-description">
-          Upload documents via portal or API. Your brand is applied instantly as a tiled, semi-transparent watermark—fully OCR-compatible.
-        </p>
-        <ul class="feature-list" style="margin-top: 1rem;">
-          <li>Prevents backdooring</li>
-          <li>Maintains readability for lenders</li>
-          <li>Custom branding supported</li>
-        </ul>
-        <div style="margin-top: 1.5rem;">
-          <img src="watermark-sample.png" alt="Sample Watermarked Statement" style="max-width: 100%; border: 1px solid #e2e8f0; border-radius: 0.5rem;">
+                <!-- State Compliance -->
+                <div class="process-card">
+                    <span class="process-badge">State Compliance</span>
+                    <h3 class="process-title">CRM-Powered Disclaimers</h3>
+                    <p class="process-description">
+                        Pass the borrower's state via API and get back real-time disclaimers. Instantly flag deals that shouldn't move forward until compliant.
+                    </p>
+                    <ul class="feature-list">
+                        <li>50-state monitoring</li>
+                        <li>Returns disclaimers via API</li>
+                        <li>Push alerts into your CRM</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- QR Code Tracking -->
-      <div class="step-card" style="text-align: left;">
-        <span style="display: inline-block; background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;">Access Intelligence</span>
-        <h3 class="step-title">Power up your QR codes</h3>
-        <p class="step-description">
-          Each QR code acts as a digital breadcrumb, showing exactly who accessed the document — lender, salesperson, or processor.
-        </p>
-        <ul class="feature-list" style="margin-top: 1rem;">
-          <li>Embed QR with access metadata</li>
-          <li>Breadcrumb trail across your CRM</li>
-          <li>No blind spots in the funnel</li>
-        </ul>
-        <div style="margin-top: 1.5rem;">
-          <img src="qr.png" alt="QR Code Sample" style="height: 140px; border-radius: 0.5rem; margin-bottom: 1rem;">
-          <br>
-          <a href="https://www.aquamark.io/watermark-sample.png" target="_blank" class="btn btn-secondary" style="margin-top: 0.5rem; display: inline-block;">View sample</a>
-        </div>
-      </div>
-
-      <!-- Compliance Alerts -->
-      <div class="step-card" style="text-align: left;">
-        <span style="display: inline-block; background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;">State Compliance</span>
-        <h3 class="step-title">CRM-Powered Disclaimers</h3>
-        <p class="step-description">
-          Pass the borrower’s state via API and get back real-time disclaimers. Instantly flag deals that shouldn’t move forward until compliant.
-        </p>
-        <ul class="feature-list" style="margin-top: 1rem;">
-          <li>50-state monitoring</li>
-          <li>Returns disclaimers via API</li>
-          <li>Push alerts into your CRM</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-
+    </section>
 
     <!-- Pricing Section -->
-    <section class="pricing" id="pricing" style="padding: 6rem 2rem; background: white;">
-        <div style="max-width: 1400px; margin: 0 auto;">
-            <div class="section-header">
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <div class="section-intro">
                 <h2 class="section-title">Flexible Models. Built for How You Work.</h2>
-                <p class="section-subtitle">
+                <p class="section-description">
                     From individual brokers to enterprise solutions, we have a plan that fits your needs.
                 </p>
             </div>
             
-<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem;">
-                
+            <div class="pricing-grid">
                 <!-- Broker Shop Plan -->
                 <div class="pricing-card featured">
                     <div class="plan-badge">Most Popular</div>
@@ -1000,25 +1029,23 @@
                     <a href="/contact.html" class="btn btn-primary" style="width: 100%; justify-content: center;">Request pricing</a>
                 </div>
 
-<!-- Compliance A La Carte -->
-<div class="pricing-card">
-    <div class="plan-header">
-        <h3 class="plan-name">Compliance A La Carte</h3>
-        <p class="plan-description">Stay informed on regulatory changes and trigger compliance alerts when you need them.</p>
-    </div>
-    <div class="plan-features">
-        <ul class="feature-list">
-            <li>Compliance API access</li>
-            <li>On-demand alerts</li>
-            <li>State update notifications</li>
-            <li>Regulatory monitoring</li>
-            <li>Email updates</li>
-        </ul>
-    </div>
-    <p style="color: #3b82f6; font-weight: 500; text-align: center;">Coming July 2025</p>
-</div>
-
-
+                <!-- Compliance A La Carte -->
+                <div class="pricing-card">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Compliance A La Carte</h3>
+                        <p class="plan-description">Stay informed on regulatory changes and trigger compliance alerts when you need them.</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Compliance API access</li>
+                            <li>On-demand alerts</li>
+                            <li>State update notifications</li>
+                            <li>Regulatory monitoring</li>
+                            <li>Email updates</li>
+                        </ul>
+                    </div>
+                    <div class="coming-soon">Coming July 2025</div>
+                </div>
 
                 <!-- Affiliate Plan -->
                 <div class="pricing-card">
@@ -1037,11 +1064,9 @@
                     </div>
                     <a href="/contact.html" class="btn btn-secondary" style="width: 100%; justify-content: center;">Join program</a>
                 </div>
-                
             </div>
         </div>
     </section>
-
 
     <!-- CTA Section -->
     <section class="cta-section">
