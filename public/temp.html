@@ -173,8 +173,15 @@
             margin: 0 auto;
             background: white;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 16px;
             padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .compliance-visual:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .visual-header {
