@@ -670,220 +670,79 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="features-container">
-            <div class="section-intro">
-                <h2 class="section-title">Compliance and security in one place</h2>
-                <p class="section-description">
-                    Document protection, compliance alerts, and broker verification. Built for modern fintech operations.
-                </p>
-            </div>
+  <section class="features" id="features">
+    <div class="features-container">
+      <div class="section-intro">
+        <h2 class="section-title">Compliance and security in one place</h2>
+        <p class="section-description">
+          Document protection, compliance alerts, and broker verification. Built for modern fintech operations.
+        </p>
+      </div>
 
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-badge">Free</span>
-                    <h3 class="feature-title">Broker License Lookup</h3>
-                    <p class="feature-description">
-                        Public database of verified license information for alternative finance brokers across the United States.
-                    </p>
-                    <ul class="feature-list">
-                        <li>Public verification database</li>
-                        <li>Verified before publication</li>
-                        <li>Open access for anyone</li>
-                        <li>Request inclusion anytime</li>
-                    </ul>
-                </div>
-
-                <div class="feature-card watermark-demo" style="grid-column: span 2;">
-                    <h3 class="feature-title">Document Protection</h3>
-                    <p class="feature-description">
-                        Tamper-resistant watermarks with complete audit trails. Deter theft and ensure accountability.
-                    </p>
-                    
-                    <!-- Sample Bank Statement -->
-                    <div class="bank-statement-sample" style="background: white; border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; position: relative; font-family: 'Courier New', monospace; font-size: 0.75rem; line-height: 1.4;">
-                        <!-- Watermark overlay -->
-                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; opacity: 0.1; background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, var(--blue) 35px, var(--blue) 37px); z-index: 1;"></div>
-                        
-                        <!-- Header -->
-                        <div style="text-align: center; margin-bottom: 1rem; position: relative; z-index: 2;">
-                            <div style="font-weight: bold; font-size: 0.9rem;">FIRST NATIONAL BANK</div>
-                            <div style="font-size: 0.7rem; color: var(--text-secondary);">Monthly Statement</div>
-                        </div>
-                        
-                        <!-- Account Info -->
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; position: relative; z-index: 2;">
-                            <div>
-                                <div><strong>John Smith</strong></div>
-                                <div>123 Main Street</div>
-                                <div>City, ST 12345</div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div>Account: ****1234</div>
-                                <div>Statement Period: 01/01/25 - 01/31/25</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Balance Info -->
-                        <div style="border-top: 1px solid var(--border); padding-top: 0.75rem; margin-bottom: 0.75rem; position: relative; z-index: 2;">
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>Beginning Balance:</span>
-                                <span>$15,247.83</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>Ending Balance:</span>
-                                <span><strong>$18,456.91</strong></span>
-                            </div>
-                        </div>
-                        
-                        <!-- Watermark text overlay -->
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-25deg); font-size: 1rem; font-weight: bold; color: var(--blue); opacity: 0.15; z-index: 1; white-space: nowrap;">
-                            AQUAMARK PROTECTED • BROKER: ABC LENDING
-                        </div>
-                        
-                        <!-- QR code in corner -->
-                        <div style="position: absolute; bottom: 0.5rem; right: 0.5rem; z-index: 2;">
-                            <svg width="40" height="40" viewBox="0 0 40 40" style="border: 1px solid var(--border-light);">
-                                <rect width="40" height="40" fill="white"/>
-                                <g fill="black">
-                                    <rect x="2" y="2" width="10" height="10"/>
-                                    <rect x="4" y="4" width="6" height="6" fill="white"/>
-                                    <rect x="6" y="6" width="2" height="2"/>
-                                    <rect x="28" y="2" width="10" height="10"/>
-                                    <rect x="30" y="4" width="6" height="6" fill="white"/>
-                                    <rect x="32" y="6" width="2" height="2"/>
-                                    <rect x="2" y="28" width="10" height="10"/>
-                                    <rect x="4" y="30" width="6" height="6" fill="white"/>
-                                    <rect x="6" y="32" width="2" height="2"/>
-                                    <rect x="16" y="4" width="2" height="2"/>
-                                    <rect x="20" y="4" width="2" height="2"/>
-                                    <rect x="24" y="4" width="2" height="2"/>
-                                    <rect x="16" y="16" width="2" height="2"/>
-                                    <rect x="20" y="16" width="2" height="2"/>
-                                    <rect x="24" y="16" width="2" height="2"/>
-                                    <rect x="28" y="16" width="2" height="2"/>
-                                    <rect x="32" y="16" width="2" height="2"/>
-                                    <rect x="36" y="16" width="2" height="2"/>
-                                    <rect x="16" y="20" width="2" height="2"/>
-                                    <rect x="24" y="20" width="2" height="2"/>
-                                    <rect x="32" y="20" width="2" height="2"/>
-                                    <rect x="16" y="24" width="2" height="2"/>
-                                    <rect x="20" y="24" width="2" height="2"/>
-                                    <rect x="28" y="24" width="2" height="2"/>
-                                    <rect x="36" y="24" width="2" height="2"/>
-                                    <rect x="16" y="28" width="2" height="2"/>
-                                    <rect x="20" y="28" width="2" height="2"/>
-                                    <rect x="24" y="28" width="2" height="2"/>
-                                    <rect x="32" y="28" width="2" height="2"/>
-                                    <rect x="36" y="28" width="2" height="2"/>
-                                    <rect x="16" y="32" width="2" height="2"/>
-                                    <rect x="24" y="32" width="2" height="2"/>
-                                    <rect x="28" y="32" width="2" height="2"/>
-                                    <rect x="16" y="36" width="2" height="2"/>
-                                    <rect x="20" y="36" width="2" height="2"/>
-                                    <rect x="28" y="36" width="2" height="2"/>
-                                    <rect x="32" y="36" width="2" height="2"/>
-                                    <rect x="36" y="36" width="2" height="2"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    
-                    <ul class="feature-list">
-                        <li>Instant watermarking</li>
-                        <li>Custom branding</li>
-                        <li>OCR-compatible</li>
-                        <li>QR code tracking</li>
-                        <li>Access audit trails</li>
-                    </ul>
-                </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Compliance Monitoring</h3>
-                    <p class="feature-description">
-                        Automated alerts for state-specific requirements. Stay ahead of regulations automatically.
-                    </p>
-                    <ul class="feature-list">
-                        <li>All 50 states monitored</li>
-                        <li>Latest regulations</li>
-                        <li>CRM integration</li>
-                        <li>Automated flagging</li>
-                    </ul>
-                </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">QR Code Tracking</h3>
-                    <p class="feature-description">
-                        Each QR code acts as a digital breadcrumb, showing exactly who accessed the document — lender, salesperson, or processor.
-                    </p>
-                    <div class="qr-visual" style="text-align: center; margin: 1.5rem 0;">
-                        <svg width="80" height="80" viewBox="0 0 80 80" style="border: 1px solid var(--border); border-radius: 4px;">
-                            <rect width="80" height="80" fill="white"/>
-                            <!-- QR Code pattern -->
-                            <g fill="black">
-                                <!-- Corner squares -->
-                                <rect x="4" y="4" width="20" height="20"/>
-                                <rect x="8" y="8" width="12" height="12" fill="white"/>
-                                <rect x="12" y="12" width="4" height="4"/>
-                                
-                                <rect x="56" y="4" width="20" height="20"/>
-                                <rect x="60" y="8" width="12" height="12" fill="white"/>
-                                <rect x="64" y="12" width="4" height="4"/>
-                                
-                                <rect x="4" y="56" width="20" height="20"/>
-                                <rect x="8" y="60" width="12" height="12" fill="white"/>
-                                <rect x="12" y="64" width="4" height="4"/>
-                                
-                                <!-- Data pattern -->
-                                <rect x="32" y="8" width="4" height="4"/>
-                                <rect x="40" y="8" width="4" height="4"/>
-                                <rect x="48" y="8" width="4" height="4"/>
-                                <rect x="8" y="32" width="4" height="4"/>
-                                <rect x="16" y="32" width="4" height="4"/>
-                                <rect x="32" y="32" width="4" height="4"/>
-                                <rect x="40" y="32" width="4" height="4"/>
-                                <rect x="48" y="32" width="4" height="4"/>
-                                <rect x="56" y="32" width="4" height="4"/>
-                                <rect x="64" y="32" width="4" height="4"/>
-                                <rect x="72" y="32" width="4" height="4"/>
-                                <rect x="32" y="40" width="4" height="4"/>
-                                <rect x="48" y="40" width="4" height="4"/>
-                                <rect x="64" y="40" width="4" height="4"/>
-                                <rect x="32" y="48" width="4" height="4"/>
-                                <rect x="40" y="48" width="4" height="4"/>
-                                <rect x="56" y="48" width="4" height="4"/>
-                                <rect x="72" y="48" width="4" height="4"/>
-                                <rect x="32" y="56" width="4" height="4"/>
-                                <rect x="40" y="56" width="4" height="4"/>
-                                <rect x="48" y="56" width="4" height="4"/>
-                                <rect x="64" y="56" width="4" height="4"/>
-                                <rect x="72" y="56" width="4" height="4"/>
-                                <rect x="32" y="64" width="4" height="4"/>
-                                <rect x="48" y="64" width="4" height="4"/>
-                                <rect x="56" y="64" width="4" height="4"/>
-                                <rect x="32" y="72" width="4" height="4"/>
-                                <rect x="40" y="72" width="4" height="4"/>
-                                <rect x="56" y="72" width="4" height="4"/>
-                                <rect x="64" y="72" width="4" height="4"/>
-                                <rect x="72" y="72" width="4" height="4"/>
-                            </g>
-                        </svg>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
-                            Sample tracking QR
-                        </div>
-                    </div>
-                    <ul class="feature-list">
-                        <li>Embed QR with access metadata</li>
-                        <li>Breadcrumb trail across your CRM</li>
-                        <li>No blind spots in the funnel</li>
-                        <li>Track document access in real-time</li>
-                        <li>Prevent unauthorized sharing</li>
-                    </ul>
-                </div>
-            </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-badge">Free</span>
+          <h3 class="feature-title">Broker License Lookup</h3>
+          <p class="feature-description">
+            Public database of verified license information for alternative finance brokers across the United States.
+          </p>
+          <ul class="feature-list">
+            <li>Public verification database</li>
+            <li>Verified before publication</li>
+            <li>Open access for anyone</li>
+            <li>Request inclusion anytime</li>
+          </ul>
         </div>
-    </section>
 
+        <div class="feature-card watermark-demo" style="grid-column: span 2;">
+          <h3 class="feature-title">Document Protection</h3>
+          <p class="feature-description">
+            Tamper-resistant watermarks with complete audit trails. Deter theft and ensure accountability.
+          </p>
+          <ul class="feature-list">
+            <li>Instant watermarking</li>
+            <li>Custom branding</li>
+            <li>OCR-compatible</li>
+            <li>QR code tracking</li>
+            <li>Access audit trails</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <h3 class="feature-title">Compliance Monitoring</h3>
+          <p class="feature-description">
+            Automated alerts for state-specific requirements. Stay ahead of regulations automatically.
+          </p>
+          <ul class="feature-list">
+            <li>All 50 states monitored</li>
+            <li>Latest regulations</li>
+            <li>CRM integration</li>
+            <li>Automated flagging</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <h3 class="feature-title">QR Code Tracking</h3>
+          <p class="feature-description">
+            Each QR code acts as a digital breadcrumb, showing exactly who accessed the document — lender, salesperson, or processor.
+          </p>
+          <div class="qr-visual" style="text-align: center; margin: 1.5rem 0;">
+            <!-- ... preserved QR SVG ... -->
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+              Sample tracking QR
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Embed QR with access metadata</li>
+            <li>Breadcrumb trail across your CRM</li>
+            <li>No blind spots in the funnel</li>
+            <li>Track document access in real-time</li>
+            <li>Prevent unauthorized sharing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
         <div class="pricing-container">
