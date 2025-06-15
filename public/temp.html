@@ -300,7 +300,7 @@
             font-weight: 700;
         }
 
-        /* Pricing Section */
+        /* Pricing Section - IMPROVED */
         .pricing {
             padding: 6rem 2rem;
             background: var(--bg-primary);
@@ -324,6 +324,9 @@
             border-radius: 8px;
             padding: 2.5rem;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 450px;
         }
 
         .pricing-card.featured {
@@ -340,25 +343,60 @@
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 12px;
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             font-weight: 600;
         }
 
         .plan-name {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .plan-description {
             color: var(--text-secondary);
             margin-bottom: 2rem;
-            font-size: 0.875rem;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         .plan-features {
             margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .plan-features .feature-list {
+            list-style: none;
+        }
+
+        .plan-features .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .plan-features .feature-list li::before {
+            content: '•';
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .plan-cta {
+            margin-top: auto;
+        }
+
+        .plan-cta .btn {
+            width: 100%;
+            justify-content: center;
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .coming-soon {
@@ -468,14 +506,14 @@
         }
 
         .footer-section a:hover {
-            color: var(--primary);
+            color: #2563eb;
         }
 
         .footer-bottom {
             padding-top: 2rem;
             border-top: 1px solid var(--border);
             text-align: center;
-            color: var(--text-muted);
+            color: white;
             font-size: 0.875rem;
         }
 
@@ -521,10 +559,13 @@
                 align-items: center;
             }
 
-
             .pricing-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+
+            .pricing-card {
+                min-height: auto;
             }
         }
     </style>
@@ -711,53 +752,57 @@
             </p>
         </div>
 
-
-
-            <div class="pricing-grid">
-                <div class="pricing-card featured">
-                    <div class="plan-badge">Popular</div>
-                    <h3 class="plan-name">Broker Shop</h3>
-                    <p class="plan-description">For brokers and small teams who want instant protection and compliance automation.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Unlimited watermarking</li>
-                            <li>Compliance alerts</li>
-                            <li>Portal access</li>
-                            <li>Basic support</li>
-                        </ul>
-                    </div>
-                    <a class="btn btn-blue" href="/signup.html" style="width: 100%; justify-content: center;">Start free trial</a>
+        <div class="pricing-grid">
+            <div class="pricing-card featured">
+                <div class="plan-badge">Popular</div>
+                <h3 class="plan-name">Broker Shop</h3>
+                <p class="plan-description">For brokers and small teams who want instant protection and compliance automation.</p>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li>Unlimited watermarking</li>
+                        <li>Compliance alerts</li>
+                        <li>Portal access</li>
+                        <li>Basic support</li>
+                    </ul>
                 </div>
-
-                <div class="pricing-card">
-                    <h3 class="plan-name">Wholesale</h3>
-                    <p class="plan-description">For CRMs and software companies looking to incorporate Aquamark at scale.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Everything in Broker Shop</li>
-                            <li>Volume processing</li>
-                            <li>Priority support</li>
-                        </ul>
-                    </div>
-                    <a class="btn btn-primary" href="/contact.html" style="width: 100%; justify-content: center;">Request pricing</a>
+                <div class="plan-cta">
+                    <a class="btn btn-blue" href="/signup.html">Start free trial</a>
                 </div>
+            </div>
 
-                <div class="pricing-card">
-                    <h3 class="plan-name">Affiliate</h3>
-                    <p class="plan-description">Refer brokers and earn recurring monthly commissions with no cap or commitment.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Recurring commissions</li>
-                            <li>No referral cap</li>
-                            <li>Marketing materials</li>
-                            <li>Monthly reporting</li>
-                        </ul>
-                    </div>
-                    <a class="btn btn-secondary" href="/contact.html" style="width: 100%; justify-content: center;">Join program</a>
+            <div class="pricing-card">
+                <h3 class="plan-name">Wholesale</h3>
+                <p class="plan-description">For CRMs and software companies looking to incorporate Aquamark at scale.</p>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li>Everything in Broker Shop</li>
+                        <li>Volume processing</li>
+                        <li>Priority support</li>
+                    </ul>
+                </div>
+                <div class="plan-cta">
+                    <a class="btn btn-primary" href="/contact.html">Request pricing</a>
+                </div>
+            </div>
+
+            <div class="pricing-card">
+                <h3 class="plan-name">Affiliate</h3>
+                <p class="plan-description">Refer brokers and earn recurring monthly commissions with no cap or commitment.</p>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li>Recurring commissions</li>
+                        <li>No referral cap</li>
+                        <li>Marketing materials</li>
+                        <li>Monthly reporting</li>
+                    </ul>
+                </div>
+                <div class="plan-cta">
+                    <a class="btn btn-secondary" href="/contact.html">Join program</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- CTA Section -->
     <section class="cta-section">
