@@ -289,7 +289,8 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
             gap: 2rem;
         }
 
@@ -570,6 +571,11 @@
 
             .features-grid {
                 grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .feature-card[style*="grid-column"] {
+                grid-column: span 1 !important;
             }
 
             .pricing-grid {
@@ -681,7 +687,7 @@
                     </ul>
                 </div>
 
-                <div class="feature-card watermark-demo">
+                <div class="feature-card watermark-demo" style="grid-column: span 2;">
                     <h3 class="feature-title">Document Protection</h3>
                     <p class="feature-description">
                         Tamper-resistant watermarks with complete audit trails. Deter theft and ensure accountability.
