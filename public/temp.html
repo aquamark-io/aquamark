@@ -262,13 +262,13 @@
             color: var(--text-secondary);
         }
 
-        /* Features Section */
-        .features {
+        /* Compliance Section */
+        .compliance-section {
             padding: 6rem 2rem;
             background: var(--bg-secondary);
         }
 
-        .features-container {
+        .compliance-container {
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -292,14 +292,14 @@
             margin: 0 auto;
         }
 
-        .features-grid {
+        .compliance-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
+            margin-bottom: 4rem;
         }
 
-        .feature-card {
+        .compliance-card {
             background: white;
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -307,23 +307,25 @@
             transition: all 0.2s ease;
         }
 
-        .feature-card:hover {
+        .compliance-card:hover {
             border-color: var(--blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
         }
 
-        .feature-title {
+        .compliance-title {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 0.75rem;
         }
 
-        .feature-description {
+        .compliance-description {
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
         }
 
-        .feature-badge {
+        .compliance-badge {
             display: inline-block;
             background: var(--blue);
             color: white;
@@ -334,11 +336,11 @@
             margin-bottom: 1rem;
         }
 
-        .feature-list {
+        .compliance-list {
             list-style: none;
         }
 
-        .feature-list li {
+        .compliance-list li {
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -347,10 +349,73 @@
             font-size: 0.875rem;
         }
 
-        .feature-list li::before {
+        .compliance-list li::before {
             content: '•';
             color: var(--blue);
             font-weight: 700;
+        }
+
+        .newsletter-section {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .newsletter-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .compliance-cta {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .compliance-cta-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .compliance-cta-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
         }
 
         /* Pricing Section */
@@ -412,6 +477,25 @@
 
         .plan-features {
             margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .feature-list li::before {
+            content: '•';
+            color: var(--blue);
+            font-weight: 700;
         }
 
         .coming-soon {
@@ -574,18 +658,17 @@
                 align-items: center;
             }
 
-            .features-grid {
+            .compliance-grid {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto;
-            }
-
-            .feature-card[style*="grid-column"] {
-                grid-column: span 1 !important;
             }
 
             .pricing-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
             }
         }
     </style>
@@ -598,7 +681,7 @@
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
             <div class="nav-links">
-                <a href="#features">Features</a>
+                <a href="#compliance">Compliance</a>
                 <a href="#pricing">Pricing</a>
                 <a href="/compliance.html">Compliance</a>
                 <a class="btn btn-secondary" href="/login.html">Sign in</a>
@@ -613,7 +696,7 @@
             <div class="hero-content">
                 <h1>The <span class="highlight">compliance and security platform</span> fintech trusts</h1>
                 <p class="hero-subtitle">
-                    Built for brokers. We monitor compliance so you don’t have to—and protect your documents so you can fund more deals.
+                    Built for brokers. We monitor compliance so you don't have to—and protect your documents so you can fund more deals.
                 </p>
                 <div class="hero-cta">
                     <a class="btn btn-blue btn-lg" href="/signup.html">Start free trial</a>
@@ -759,217 +842,73 @@
     </ul>
   </div>
 </div>
-<section>
-
-    
-<!-- Features Section -->
-<section class="features" id="features">
-  <div class="features-container" style="max-width: 1600px; margin: 0 auto;">
-    <div class="section-intro" style="max-width: 100%;">
-      <h2 class="section-title" style="font-size: 2.75rem;">Compliance and security in one place</h2>
-      <p class="section-description" style="font-size: 1.25rem;">
-        Document protection, compliance alerts, and broker verification. Built for modern fintech operations.
-      </p>
-    </div>
-
-    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: stretch;">
-      <!-- Left: 2x2 feature cards -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-        <!-- Card 1 -->
-        <div class="feature-card">
-          <span class="feature-badge">Free</span>
-          <h3 class="feature-title">Broker License Lookup</h3>
-          <p class="feature-description">
-            Public database of verified license information for alternative finance brokers across the United States.
-          </p>
-          <ul class="feature-list">
-            <li>Public verification database</li>
-            <li>Verified before publication</li>
-            <li>Open access for anyone</li>
-            <li>Request inclusion anytime</li>
-          </ul>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="feature-card">
-          <h3 class="feature-title">Document Protection</h3>
-          <p class="feature-description">
-            Tamper-resistant watermarks with complete audit trails. Deter theft and ensure accountability.
-          </p>
-          <ul class="feature-list">
-            <li>Instant watermarking</li>
-            <li>Custom branding</li>
-            <li>OCR-compatible</li>
-            <li>QR code tracking</li>
-            <li>Access audit trails</li>
-          </ul>
-        </div>
-
-<!-- Container 3: Power up your QR code -->
-<div style="
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 1rem;
-  text-align: center;
-  color: #1e293b;
-  border: 1px solid #e5e7eb;
-  box-shadow: 
-    0 25px 50px -12px rgba(37, 99, 235, 0.5), 
-    0 15px 25px -5px rgba(37, 99, 235, 0.35),
-    0 4px 6px -1px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100%;
-">
-  <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #2563eb;">
-    Power up your QR code
-  </h3>
-  <img src="qr.png" alt="QR Code"
-       style="max-width: 180px; width: 100%; border-radius: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.2);">
-</div>
-
-        <!-- Card 4 -->
-        <div class="feature-card">
-          <h3 class="feature-title">QR Code Tracking</h3>
-          <p class="feature-description">
-            Each QR code acts as a digital breadcrumb, showing exactly who accessed the document — lender, salesperson, or processor.
-          </p>
-          <ul class="feature-list">
-            <li>Embed QR with access metadata</li>
-            <li>Breadcrumb trail across your CRM</li>
-            <li>No blind spots in the funnel</li>
-            <li>Track document access in real-time</li>
-            <li>Prevent unauthorized sharing</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Right: enlarged bank statement image -->
-      <div style="padding: 0.5rem; border: 1px solid #e5e7eb; border-radius: 8px; background: white; display: flex; align-items: center; justify-content: center;">
-        <img src="https://www.aquamark.io/watermark-sample.png" alt="Watermarked Bank Statement"
-             style="width: 100%; height: auto; max-height: 100%; display: block; border-radius: 4px;" />
-      </div>
-    </div>
-  </div>
 </section>
 
+    <!-- Compliance Section -->
+    <section class="compliance-section" id="compliance">
+        <div class="compliance-container">
+            <div class="section-intro">
+                <h2 class="section-title">Stay compliant with confidence</h2>
+                <p class="section-description">
+                    From broker verification to real-time compliance alerts, we've got you covered with the tools you need to operate safely and compliantly.
+                </p>
+            </div>
 
+            <div class="compliance-grid">
+                <!-- Free Broker Directory -->
+                <div class="compliance-card">
+                    <span class="compliance-badge">Free</span>
+                    <h3 class="compliance-title">Broker License Directory</h3>
+                    <p class="compliance-description">
+                        Public database of verified license and registration information for alternative finance brokers across the United States.
+                    </p>
+                    <ul class="compliance-list">
+                        <li>Verified license information</li>
+                        <li>Registration status by state</li>
+                        <li>Public access for verification</li>
+                        <li>Updated regularly</li>
+                    </ul>
+                </div>
 
-    
+                <!-- Compliance API -->
+                <div class="compliance-card">
+                    <h3 class="compliance-title">Compliance API</h3>
+                    <p class="compliance-description">
+                        Automatically push state-specific disclaimers to your CRM. Show proof of good-faith compliance during audits and know exactly what's required before pursuing deals.
+                    </p>
+                    <ul class="compliance-list">
+                        <li>State-specific disclaimers</li>
+                        <li>Audit-ready compliance proof</li>
+                        <li>Deal qualification guidance</li>
+                        <li>CRM integration ready</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="newsletter-section">
+                <h3 class="newsletter-title">Join our mailing list for up-to-date compliance news</h3>
+                <p class="newsletter-subtitle">No spam. Just compliance.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-blue">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- Compliance CTA -->
+            <div class="compliance-cta">
+                <h3 class="compliance-cta-title">Fintech's preferred go-to for the latest compliance info by state</h3>
+                <p class="compliance-cta-description">
+                    Written for brokers, not lawyers. Get clear, actionable compliance guidance that helps you make better business decisions.
+                </p>
+                <a class="btn btn-blue btn-lg" href="/compliance.html">View Compliance Resources</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
 <section class="pricing" id="pricing">
     <div class="pricing-container">
         <div class="section-intro">
             <h2 class="section-title">Flexible pricing. Built for your workflow.</h2>
             <p class="section-description">
-                Designed to be affordable for everyone, around the cost of your 
-                <span style="color:#007BFF; font-weight:600;">monthly cell phone bill</span>.
-            </p>
-        </div>
-
-
-
-            <div class="pricing-grid">
-                <div class="pricing-card featured">
-                    <div class="plan-badge">Popular</div>
-                    <h3 class="plan-name">Broker Shop</h3>
-                    <p class="plan-description">For brokers and small teams who want instant protection and compliance automation.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Unlimited watermarking</li>
-                            <li>Compliance alerts</li>
-                            <li>Portal access</li>
-                            <li>Basic support</li>
-                        </ul>
-                    </div>
-                    <a class="btn btn-blue" href="/signup.html" style="width: 100%; justify-content: center;">Start free trial</a>
-                </div>
-
-                <div class="pricing-card">
-                    <h3 class="plan-name">Wholesale</h3>
-                    <p class="plan-description">For CRMs and software companies looking to incorporate Aquamark at scale.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Everything in Broker Shop</li>
-                            <li>Volume processing</li>
-                            <li>Priority support</li>
-                        </ul>
-                    </div>
-                    <a class="btn btn-primary" href="/contact.html" style="width: 100%; justify-content: center;">Request pricing</a>
-                </div>
-
-                <div class="pricing-card">
-                    <h3 class="plan-name">Compliance a la carte</h3>
-                    <p class="plan-description">Stay informed on regulatory changes and trigger compliance alerts when needed.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Compliance API</li>
-                            <li>Regulatory monitoring</li>
-                            <li>Compliance updates</li>
-                            <li>No watermarking</li>
-                        </ul>
-                    </div>
-                    <div class="coming-soon">Coming July 2025</div>
-                </div>
-
-                <div class="pricing-card">
-                    <h3 class="plan-name">Affiliate</h3>
-                    <p class="plan-description">Refer brokers and earn recurring monthly commissions with no cap or commitment.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Recurring commissions</li>
-                            <li>No referral cap</li>
-                            <li>Marketing materials</li>
-                            <li>Monthly reporting</li>
-                        </ul>
-                    </div>
-                    <a class="btn btn-secondary" href="/contact.html" style="width: 100%; justify-content: center;">Join program</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-container">
-            <h2>Ready to protect your business?</h2>
-            <p>Join hundreds of companies using Aquamark to stay compliant and protect their deals.</p>
-            <div class="cta-buttons">
-                <a class="btn btn-white btn-lg" href="/signup.html">Start free trial</a>
-                <a class="btn btn-outline btn-lg" href="/contact.html">Talk to sales</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-brand">
-                <h3>Aquamark</h3>
-                <p>The compliance platform fintech trusts. Document protection, regulatory monitoring, and automated compliance for alternative finance.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Product</h4>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="/api-docs.html">API Documentation</a></li>
-                    <li><a href="/compliance.html">Compliance</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/contact.html">Contact</a></li>
-                    <li><a href="/privacy.html">Privacy</a></li>
-                    <li><a href="/terms.html">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2025 Aquamark. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-</html>
