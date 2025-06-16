@@ -732,25 +732,41 @@
                 text-align: center !important;
             }
 
-            /* Mobile-only: Reorder compliance API section - content above visual */
+            /* Mobile-only: Reorder compliance API section for proper flow */
             .compliance-section .compliance-two-col:last-child {
                 display: flex !important;
                 flex-direction: column !important;
             }
 
+            /* Move the entire text content div above the visual */
             .compliance-section .compliance-two-col:last-child > div:last-child {
-                order: -1 !important;
+                order: 1 !important;
+                display: flex !important;
+                flex-direction: column !important;
             }
 
-            /* Mobile-only: Move API visual after subtext but before checkmarks */
-            .compliance-section .compliance-two-col:last-child > div:last-child h3,
-            .compliance-section .compliance-two-col:last-child > div:last-child > p:first-of-type {
-                order: -2 !important;
-            }
-
-            .compliance-section .compliance-two-col:last-child .api-visual {
-                order: -1 !important;
+            /* Move the API visual div to order 2 */
+            .compliance-section .compliance-two-col:last-child > div:first-child {
+                order: 2 !important;
                 margin: 2rem 0 !important;
+            }
+
+            /* Within the text content, order the elements properly */
+            .compliance-section .compliance-two-col:last-child > div:last-child h3 {
+                order: 1 !important;
+            }
+
+            .compliance-section .compliance-two-col:last-child > div:last-child > p:first-of-type {
+                order: 2 !important;
+                margin-bottom: 2rem !important;
+            }
+
+            .compliance-section .compliance-two-col:last-child > div:last-child > div:nth-child(3) {
+                order: 4 !important;
+            }
+
+            .compliance-section .compliance-two-col:last-child > div:last-child .section-cta-links {
+                order: 5 !important;
             }
 
             /* Mobile pricing intro */
