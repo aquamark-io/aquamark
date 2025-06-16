@@ -202,36 +202,73 @@
             border-radius: 16px;
             padding: 2rem;
             box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
+        }
+
+        .growth-chart {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: end;
+            padding: 2rem;
+            gap: 1rem;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .chart-bar:nth-child(1) { height: 30%; }
+        .chart-bar:nth-child(2) { height: 50%; }
+        .chart-bar:nth-child(3) { height: 70%; }
+        .chart-bar:nth-child(4) { height: 90%; }
+        .chart-bar:nth-child(5) { height: 100%; }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .growth-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
             text-align: center;
+            border: 1px solid var(--border);
         }
 
-        .hero-image img {
-            width: 100%;
-            max-width: 400px;
-            height: 300px;
-            background: var(--bg-tertiary);
-            border-radius: 12px;
-            border: 2px dashed var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        .metric-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
         }
 
-        .hero-image::before {
-            content: "Strategic Growth Visualization";
-            display: block;
-            width: 100%;
-            height: 300px;
-            background: var(--bg-tertiary);
-            border-radius: 12px;
-            border: 2px dashed var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
         }
 
         /* Services Section */
@@ -655,7 +692,30 @@
                 </div>
             </div>
             <div class="hero-image">
-                <!-- Placeholder for hero image -->
+                <div class="growth-chart">
+                    <div class="chart-bar">Q1</div>
+                    <div class="chart-bar">Q2</div>
+                    <div class="chart-bar">Q3</div>
+                    <div class="chart-bar">Q4</div>
+                    <div class="chart-bar">Q5</div>
+                </div>
+                <div class="chart-labels">
+                    <span>Launch</span>
+                    <span>Scale</span>
+                    <span>Optimize</span>
+                    <span>Expand</span>
+                    <span>Dominate</span>
+                </div>
+                <div class="growth-metrics">
+                    <div class="metric-card">
+                        <div class="metric-number">300%</div>
+                        <div class="metric-label">Growth Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">$50M</div>
+                        <div class="metric-label">Revenue Impact</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
