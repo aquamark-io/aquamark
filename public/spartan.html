@@ -343,15 +343,15 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
         }
 
         .service-card {
             background: white;
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.5rem;
             transition: all 0.3s ease;
         }
 
@@ -382,15 +382,17 @@
         }
 
         .service-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-primary);
+            line-height: 1.3;
         }
 
         .service-desc {
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
             line-height: 1.6;
+            font-size: 0.9rem;
         }
 
         .service-features {
@@ -402,7 +404,7 @@
             align-items: center;
             margin-bottom: 0.5rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .service-features li::before {
@@ -628,6 +630,29 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+            
+            .service-card {
+                padding: 2rem;
+            }
+            
+            .service-title {
+                font-size: 1.25rem;
+            }
+            
+            .service-desc {
+                font-size: 1rem;
+            }
+            
+            .service-features li {
+                font-size: 0.9rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block;
@@ -944,7 +969,7 @@
                     Strategic growth partners for fintech companies. Discretion guaranteed.
                 </p>
 </div>
-<div class="footer-section">
+        <div class="footer-section">
 <h4>Services</h4>
 <ul>
 <li><a href="#services">Strategic Planning</a></li>
