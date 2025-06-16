@@ -85,9 +85,67 @@
             color: var(--primary);
         }
 
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 2rem;
+            gap: 1rem;
+        }
+
+        .mobile-menu-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: color 0.2s ease;
+        }
+
+        .mobile-menu-links a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             padding: 0.5rem 1rem;
             border-radius: 6px;
             font-weight: 600;
@@ -96,6 +154,7 @@
             transition: all 0.2s ease;
             border: 1px solid transparent;
             cursor: pointer;
+            text-align: center;
         }
 
         .btn-primary {
@@ -555,24 +614,14 @@
         @media (max-width: 768px) {
             .nav {
                 padding: 1rem;
-                flex-wrap: wrap;
-                gap: 1rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
 
             .nav-links {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                gap: 1rem;
-                margin-top: 1rem;
-            }
-
-            .nav-links a:not(.btn) {
-                font-size: 0.8rem;
-            }
-
-            .logo {
-                order: 1;
+                display: none;
             }
 
             .hero {
@@ -670,6 +719,12 @@
                 width: 100% !important;
                 text-align: center !important;
                 max-width: 250px !important;
+                justify-content: center !important;
+            }
+
+            /* Mobile compliance section title centering */
+            .compliance-section .compliance-two-col h3 {
+                text-align: center !important;
             }
 
             /* Mobile pricing intro */
@@ -798,6 +853,18 @@
                 <a href="/compliance">Compliance</a>
                 <a class="btn btn-secondary" href="/login.html">Sign in</a>
                 <a class="btn btn-primary" href="/signup.html">Get started</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-links">
+                    <a href="/broker-directory">Broker Directory</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="/compliance">Compliance</a>
+                    <div class="mobile-menu-buttons">
+                        <a class="btn btn-secondary" href="/login.html">Sign in</a>
+                        <a class="btn btn-primary" href="/signup.html">Get started</a>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -1362,5 +1429,22 @@ We host a free, public directory of licensed alternative finance brokers nationw
      <div class="footer-bottom">
             <p>© 2025 Aquamark. All rights reserved.</p>
         </div>
+
+<script>
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (!mobileMenu.contains(event.target) && !menuBtn.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+    }
+});
+</script>
 </body>
 </html>
