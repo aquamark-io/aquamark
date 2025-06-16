@@ -727,6 +727,21 @@
                 text-align: center !important;
             }
 
+            /* Mobile-only: Center the "Free" tag above Broker Directory */
+            .compliance-section .compliance-two-col > div:first-child {
+                text-align: center !important;
+            }
+
+            /* Mobile-only: Reorder compliance API section - content above visual */
+            .compliance-section .compliance-two-col:last-child {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .compliance-section .compliance-two-col:last-child > div:last-child {
+                order: -1 !important;
+            }
+
             /* Mobile pricing intro */
             .pricing .section-description {
                 font-size: 1rem;
