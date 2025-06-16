@@ -742,6 +742,17 @@
                 order: -1 !important;
             }
 
+            /* Mobile-only: Move API visual after subtext but before checkmarks */
+            .compliance-section .compliance-two-col:last-child > div:last-child h3,
+            .compliance-section .compliance-two-col:last-child > div:last-child > p:first-of-type {
+                order: -2 !important;
+            }
+
+            .compliance-section .compliance-two-col:last-child .api-visual {
+                order: -1 !important;
+                margin: 2rem 0 !important;
+            }
+
             /* Mobile pricing intro */
             .pricing .section-description {
                 font-size: 1rem;
