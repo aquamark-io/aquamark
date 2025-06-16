@@ -690,14 +690,27 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+    
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .logo img {
+        height: 48px !important;
+    }
+    .footer-brand img {
+        height: 48px !important;
+    }
+}
+</style>
 </head>
 <body>
 <!-- Header -->
 <header class="header">
 <nav class="nav">
 <a class="logo" href="/">
-<img alt="Spartan Projects" src="/spartans.png" style="height: 160px; width: auto;"/>
+<img alt="Spartan Projects" src="/spartans.png" style="height: 64px; width: auto;"/>
 </a>
 <div class="nav-links">
 <a href="#services">Services</a>
@@ -924,7 +937,7 @@
 <div class="footer-container">
 <div>
 <div class="footer-brand">
-<img alt="Spartan Projects" src="/spartans.png" style="height: 160px; width: auto;"/>
+<img alt="Spartan Projects" src="/spartans.png" style="height: 64px; width: auto;"/>
 <h3>Spartan Projects</h3>
 </div>
 <p style="color: var(--text-secondary); font-size: 0.9rem;">
