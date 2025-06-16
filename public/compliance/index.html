@@ -441,34 +441,60 @@
 </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <nav class="nav">
-      <div class="logo">
-        <a href="/">
-          <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 30px;">
-        </a>
-      </div>
-      <div class="nav-links">
-        <a href="/" class="btn btn-secondary">Home</a>
-        <a href="/partners.html" class="btn btn-secondary">Partner</a>
-        <a href="/login.html" class="btn btn-primary">Sign In</a>
-      </div>
+
+ <!-- Replace this entire header and hero section in compliance.html with the following -->
+
+<!-- Header -->
+<header class="header">
+  <div class="header-content" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+    <a href="/" class="logo"><img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;"></a>
+    <nav>
+      <a href="/" class="nav-home" style="
+        background: #2563EB;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+        border: none;
+      ">← Back to Home</a>
     </nav>
-  </header>
+  </div>
+</header>
 
 <!-- Hero Section -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>Compliance Made Simple</h1>
-    <p style="color: #64748b; font-size: 1.25rem; margin-top: .5rem;">
-Each time you watermark, we flag state-specific rules and post to your CRM.
+<section class="hero" style="background: #FFFFFF; padding: 6rem 0 4rem; text-align: center;">
+  <div class="hero-content" style="max-width: 800px; margin: 0 auto; padding: 0 2rem;">
+    <div class="hero-badge" style="
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #F8FAFC;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      border: 1px solid #E2E8F0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #64748B;
+      margin-bottom: 2rem;
+    ">
+      <div class="status-dot" style="
+        width: 8px;
+        height: 8px;
+        background: #10B981;
+        border-radius: 50%;
+      "></div>
+      Compliance Overview
+    </div>
+    <h1 style="font-size: 3rem; font-weight: 700; color: #1E293B; margin-bottom: 1rem;">U.S. State Compliance</h1>
+    <p class="hero-subtitle" style="font-size: 1.25rem; color: #64748B; margin-bottom: 1rem; font-weight: 400;">
+      We inject high-level state disclaimers into your CRM so you stay informed, automatically.
     </p>
-    <p style="color: #64748b; font-size: 1.25rem; margin-top: .25em;">
-Aquamark gives you independent, verifiable proof of compliance tracking.
-</p>
   </div>
 </section>
+
 
   <!-- Main Content -->
   <div class="compliance-content">
