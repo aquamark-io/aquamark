@@ -201,7 +201,21 @@
             background: white;
             border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
+            box-shadow: 
+                0 25px 50px rgba(37, 99, 235, 0.15),
+                0 15px 30px rgba(37, 99, 235, 0.1),
+                0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: all 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(-8px);
+            box-shadow: 
+                0 35px 70px rgba(37, 99, 235, 0.2),
+                0 20px 40px rgba(37, 99, 235, 0.15),
+                0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .growth-chart {
@@ -214,11 +228,11 @@
             align-items: end;
             padding: 2rem;
             gap: 1rem;
+            border: 1px solid rgba(37, 99, 235, 0.1);
         }
 
         .chart-bar {
             flex: 1;
-            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
             border-radius: 4px 4px 0 0;
             position: relative;
             display: flex;
@@ -228,27 +242,37 @@
             font-weight: 600;
             font-size: 0.75rem;
             padding-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar:hover {
+            transform: translateY(-4px);
         }
 
         .chart-bar:nth-child(1) { 
             height: 30%; 
-            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
         }
         .chart-bar:nth-child(2) { 
             height: 50%; 
-            background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+            background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
         }
         .chart-bar:nth-child(3) { 
             height: 70%; 
-            background: linear-gradient(180deg, #eab308 0%, #ca8a04 100%);
+            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
         }
         .chart-bar:nth-child(4) { 
             height: 90%; 
-            background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
         }
         .chart-bar:nth-child(5) { 
             height: 100%; 
-            background: linear-gradient(180deg, #15803d 0%, #166534 100%);
+            background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 100%);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
         }
 
         .chart-labels {
