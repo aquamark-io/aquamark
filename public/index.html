@@ -509,31 +509,82 @@
             color: #2563eb;
         }
 
-.footer-bottom {
-    width: 100%;
-    background: var(--blue);
-    padding: 1.5rem 2rem;
-    text-align: center;
-    color: white;
-    font-size: 0.875rem;
-    border-top: none;
-}
+        .footer-bottom {
+            width: 100%;
+            background: var(--blue);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: white;
+            font-size: 0.875rem;
+            border-top: none;
+        }
+
+        /* Document Protection Grid */
+        .doc-protection-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        /* Compliance Two-Column Layout */
+        .compliance-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .doc-protection-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .compliance-two-col {
+                gap: 3rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav {
                 padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: 1rem;
             }
 
             .nav-links a:not(.btn) {
-                display: none;
+                font-size: 0.8rem;
+            }
+
+            .logo {
+                order: 1;
             }
 
             .hero {
-                padding: 6rem 1rem 3rem;
+                padding: 7rem 1rem 3rem;
             }
 
             .hero-content h1 {
                 font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
             }
 
             .section-title {
@@ -567,42 +618,170 @@
 
             .pricing-card {
                 min-height: auto;
+                padding: 2rem;
             }
-            @media (max-width: 768px) {
-  .nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
-  }
 
-  .logo img {
-    height: 28px;
-    max-width: 100%;
-  }
+            .doc-protection-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
 
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-  }
+            .compliance-two-col {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
 
-  .nav-links a {
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-    white-space: nowrap;
-  }
+            /* Document Protection Section Mobile */
+            .doc-protection-section {
+                padding: 3rem 1rem !important;
+            }
 
-  .btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-  }
+            .doc-protection-section h2 {
+                font-size: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
 
-  .btn-lg {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.95rem;
-  }
-}
+            .doc-protection-section .section-description {
+                font-size: 1rem !important;
+                margin-bottom: 2rem !important;
+            }
+
+            /* Compliance Section Mobile */
+            .compliance-section {
+                padding: 4rem 1rem !important;
+            }
+
+            .compliance-section h2 {
+                font-size: 2rem !important;
+            }
+
+            .compliance-section .section-description {
+                font-size: 1rem !important;
+            }
+
+            /* Mobile CTA Links in sections */
+            .section-cta-links {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 0.75rem !important;
+            }
+
+            .section-cta-links a {
+                width: 100% !important;
+                text-align: center !important;
+                max-width: 250px !important;
+            }
+
+            /* Mobile pricing intro */
+            .pricing .section-description {
+                font-size: 1rem;
+            }
+
+            /* Mobile Visual Cards */
+            .visual-card {
+                padding: 1.5rem !important;
+            }
+
+            .visual-card h3 {
+                font-size: 1.25rem !important;
+            }
+
+            .visual-card p {
+                font-size: 0.9rem !important;
+            }
+
+            .visual-card ul li {
+                font-size: 0.9rem !important;
+            }
+
+            /* Mobile API Visual */
+            .api-visual {
+                padding: 1.5rem !important;
+                font-size: 0.75rem !important;
+            }
+
+            /* Mobile Directory Visual */
+            .directory-visual {
+                padding: 1.5rem !important;
+            }
+
+            .directory-visual h4 {
+                font-size: 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav {
+                padding: 0.75rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .nav-links .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .compliance-visual {
+                padding: 1.5rem;
+            }
+
+            .visual-title {
+                font-size: 1rem;
+            }
+
+            .visual-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.75rem;
+            }
+
+            .doc-protection-section h2 {
+                font-size: 1.75rem !important;
+            }
+
+            .compliance-section h2 {
+                font-size: 1.75rem !important;
+            }
+
+            .btn-lg {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.9rem;
+            }
+
+            .pricing-card {
+                padding: 1.5rem;
+            }
+
+            .plan-name {
+                font-size: 1.25rem;
+            }
+
+            .plan-description {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -685,19 +864,19 @@
     </section>
 
 <!-- Document Protection -->
-<section style="padding: 5rem 2rem; background: #ffffff; margin-bottom: 3rem;">
+<section class="doc-protection-section" style="padding: 5rem 2rem; background: #ffffff; margin-bottom: 3rem;">
     <div style="max-width: 1600px; margin: 0 auto; text-align: center;">
         <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: .25rem;">
             Advanced <span style="color: #2563eb;">Document Protection</span> Technology
         </h2>    
-        <p style="font-size: 1.25rem; color: #64748b; margin-bottom: 3.5rem;">
+        <p class="section-description" style="font-size: 1.25rem; color: #64748b; margin-bottom: 3.5rem;">
             Deal theft costs the industry millions every year.<br>
             Our tamper-resistant watermarks can't stop everyone, but we can make it harder for them, together.
         </p>
 
-       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; align-items: stretch;">
+       <div class="doc-protection-grid">
   <!-- Card 1: Watermarks -->
-  <div style="
+  <div class="visual-card" style="
     background: #f8fafc;
     padding: 2rem;
     border-radius: 1rem;
@@ -761,7 +940,7 @@
   </div>
 
   <!-- Card 4: QR Metadata -->
-  <div style="
+  <div class="visual-card" style="
     background: #f8fafc;
     padding: 2rem;
     border-radius: 1rem;
@@ -803,20 +982,20 @@
 
 
 <!-- Compliance Section -->
-<section style="padding: 6rem 2rem; background: #f8fafc;">
+<section class="compliance-section" style="padding: 6rem 2rem; background: #f8fafc;">
   <div style="max-width: 1400px; margin: 0 auto;">
     <!-- Section Header -->
     <div style="text-align: center; margin-bottom: 4rem;">
 <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
         Fintech's Trusted <span style="color: #2563eb;">Compliance</span> Partner
       </h2>      
-        <p style="font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto;">
+        <p class="section-description" style="font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto;">
 Your trusted partner through the complex world of finance compliance. We simplify regulations so you can focus on funding more deals.
         </p>
     </div>
 
     <!-- Two Column Layout -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem;">
+    <div class="compliance-two-col" style="margin-bottom: 6rem;">
       
 <!-- Broker Directory Content -->
 <div>
@@ -853,7 +1032,7 @@ We host a free, public directory of licensed alternative finance brokers nationw
     </ul>
   </div>
 
-  <div style="display: flex; gap: 1rem;">
+  <div class="section-cta-links" style="display: flex; gap: 1rem;">
     <a href="/broker-directory" style="
       display: inline-flex;
       align-items: center;
@@ -888,7 +1067,7 @@ We host a free, public directory of licensed alternative finance brokers nationw
 
 
       <!-- Directory Visual -->
-      <div style="
+      <div class="directory-visual" style="
         background: white;
         border-radius: 16px;
         padding: 2rem;
@@ -964,10 +1143,10 @@ We host a free, public directory of licensed alternative finance brokers nationw
     </div>
 
     <!-- Compliance API Section -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+    <div class="compliance-two-col">
       
 <!-- API Visual -->
-<div style="
+<div class="api-visual" style="
   background: #1e293b;
   border-radius: 16px;
   padding: 2rem;
@@ -1017,7 +1196,7 @@ We host a free, public directory of licensed alternative finance brokers nationw
 </h3>
 
 <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
-  Our API delivers state-specific disclaimers directly into your CRM—so you know what’s required before pursuing a deal. Fast and always up to date.
+  Our API delivers state-specific disclaimers directly into your CRM—so you know what's required before pursuing a deal. Fast and always up to date.
 </p>
 
 <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
@@ -1028,7 +1207,7 @@ We host a free, public directory of licensed alternative finance brokers nationw
     </li>
     <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
       <span style="color: #2563eb; font-weight: 700;">✓</span>
-      Know what’s required before submitting a deal
+      Know what's required before submitting a deal
     </li>
     <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
       <span style="color: #2563eb; font-weight: 700;">✓</span>
@@ -1041,7 +1220,7 @@ We host a free, public directory of licensed alternative finance brokers nationw
   </ul>
 </div>
 
-<div style="display: flex; gap: 1rem;">
+<div class="section-cta-links" style="display: flex; gap: 1rem;">
   <a href="/api" style="
     display: inline-flex;
     align-items: center;
