@@ -816,44 +816,267 @@
             font-size: 0.9rem;
         }
 
-        /* Testimonials */
-        .testimonials {
+        /* Pricing Section */
+        .pricing {
             padding: 5rem 2rem;
             background: var(--bg-primary);
         }
 
-        .testimonials-container {
-            max-width: 1200px;
+        .pricing-container {
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        .testimonials-grid {
+        .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .testimonial-card {
+        .pricing-card {
             background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .testimonial-quote {
-            font-size: 1rem;
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .pricing-card.premium {
+            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .standard .pricing-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .premium .pricing-icon {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .icon-graphic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Clock Icon for Standard */
+        .clock-face {
+            width: 32px;
+            height: 32px;
+            border: 3px solid white;
+            border-radius: 50%;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .clock-hand {
+            position: absolute;
+            background: white;
+            border-radius: 2px;
+            transform-origin: bottom center;
+        }
+
+        .clock-hand.hour {
+            width: 2px;
+            height: 8px;
+            top: 6px;
+            left: 50%;
+            margin-left: -1px;
+            transform: rotate(45deg);
+        }
+
+        .clock-hand.minute {
+            width: 1px;
+            height: 12px;
+            top: 2px;
+            left: 50%;
+            margin-left: -0.5px;
+            transform: rotate(90deg);
+        }
+
+        /* Rocket Icon for Premium */
+        .rocket-boost {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boost-body {
+            width: 12px;
+            height: 28px;
+            background: white;
+            border-radius: 6px 6px 0 0;
+            position: relative;
+        }
+
+        .boost-body::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 12px solid white;
+        }
+
+        .boost-flame {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, transparent 100%);
+            border-radius: 0 0 4px 4px;
+            animation: flicker 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            font-style: italic;
+            margin-bottom: 0.5rem;
         }
 
-        .testimonial-author {
-            font-size: 0.9rem;
+        .pricing-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .pricing-amount {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .currency {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            vertical-align: top;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .period {
+            font-size: 1rem;
             color: var(--text-secondary);
             font-weight: 500;
+        }
+
+        .pricing-commitment {
+            text-align: center;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+
+        .premium .pricing-commitment {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .pricing-features ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            margin-right: 0.75rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .pricing-note {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .pricing-note p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
         }
 
         /* CTA Section */
@@ -1017,6 +1240,11 @@
                 gap: 3rem;
             }
 
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
             .footer-container {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -1081,7 +1309,7 @@
 <div class="nav-links">
 <a href="#services">Services</a>
 <a href="#results">How It Works</a>
-<a href="#testimonials">Clients</a>
+<a href="#pricing">Pricing</a>
 <a class="btn btn-secondary" href="#contact">Get Started</a>
 </div>
 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
@@ -1089,7 +1317,7 @@
 <div class="mobile-menu-links">
 <a href="#services">Services</a>
 <a href="#results">Results</a>
-<a href="#testimonials">Clients</a>
+<a href="#pricing">Pricing</a>
 <a class="btn btn-primary" href="#contact">Get Started</a>
 </div>
 </div>
@@ -1299,48 +1527,90 @@ We know the fintech journey is full of high-stakes moments—from rapid growth t
   </div>
 </section>
 
-<!-- Testimonials Section -->
-<section class="testimonials" id="testimonials">
-<div class="testimonials-container">
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+<div class="pricing-container">
 <div class="section-header">
-<h2 class="section-title">Client Success</h2>
+<h2 class="section-title">Flexible Engagement Models</h2>
 <p class="section-subtitle">
-                    What fintech leaders say about working with us.
-                </p>
+Choose the level of partnership that fits your growth stage and needs.
+</p>
 </div>
-<div class="testimonials-grid">
-<div class="testimonial-card">
-<p class="testimonial-quote">
-                        "Instead of scaling I had to scale back before starting over. Spartan helped me refocus our sales direction completely."
-                    </p>
-<p class="testimonial-author">
-                        Sales Office, New York City
-                    </p>
+<div class="pricing-grid">
+<div class="pricing-card standard">
+<div class="pricing-header">
+<div class="pricing-icon">
+<div class="icon-graphic standard-icon">
+<div class="clock-face">
+<div class="clock-hand hour"></div>
+<div class="clock-hand minute"></div>
 </div>
-<div class="testimonial-card">
-<p class="testimonial-quote">
-                        "We had a good product but were getting ignored. Spartan helped us build a brand presence that brought us partners."
-                    </p>
-<p class="testimonial-author">
-                        Funding Company, Miami
-                    </p>
 </div>
-<div class="testimonial-card">
-<p class="testimonial-quote">
-                        "We knew what we needed but couldn't execute. Now I have a clear direction and roadmap that works."
-                    </p>
-<p class="testimonial-author">
-                        FinTech SaaS, California
-                    </p>
 </div>
-<div class="testimonial-card">
-<p class="testimonial-quote">
-                        "I've referred two companies already. They give hard truths and find practical ways to reach your goals."
-                    </p>
-<p class="testimonial-author">
-                        Independent Agent, New York
-                    </p>
+<h3 class="pricing-title">Strategic Advisory</h3>
+<p class="pricing-subtitle">Perfect for focused initiatives and ongoing guidance</p>
 </div>
+<div class="pricing-amount">
+<span class="currency">$</span>
+<span class="price">8,500</span>
+<span class="period">/month</span>
+</div>
+<div class="pricing-commitment">Up to 20 hours per month</div>
+<div class="pricing-features">
+<ul>
+<li>Strategic planning sessions</li>
+<li>Monthly performance reviews</li>
+<li>Email & call support</li>
+<li>Market intelligence updates</li>
+<li>Partnership introductions</li>
+<li>Quarterly business reviews</li>
+</ul>
+</div>
+<div class="pricing-cta">
+<a href="#contact" class="btn btn-secondary pricing-btn">Get Started</a>
+</div>
+</div>
+
+<div class="pricing-card premium">
+<div class="pricing-badge">Most Popular</div>
+<div class="pricing-header">
+<div class="pricing-icon">
+<div class="icon-graphic premium-icon">
+<div class="rocket-boost">
+<div class="boost-body"></div>
+<div class="boost-flame"></div>
+</div>
+</div>
+</div>
+<h3 class="pricing-title">Growth Partnership</h3>
+<p class="pricing-subtitle">Full-scale execution and hands-on implementation</p>
+</div>
+<div class="pricing-amount">
+<span class="currency">$</span>
+<span class="price">15,000</span>
+<span class="period">/month</span>
+</div>
+<div class="pricing-commitment">20+ hours per month</div>
+<div class="pricing-features">
+<ul>
+<li>Everything in Strategic Advisory</li>
+<li>Direct execution support</li>
+<li>Team training & development</li>
+<li>Sales process optimization</li>
+<li>Technology stack guidance</li>
+<li>Weekly strategy sessions</li>
+<li>Priority partner network access</li>
+<li>Custom reporting & analytics</li>
+</ul>
+</div>
+<div class="pricing-cta">
+<a href="#contact" class="btn btn-primary pricing-btn">Start Partnership</a>
+</div>
+</div>
+</div>
+
+<div class="pricing-note">
+<p>All engagements include a comprehensive onboarding process and 30-day satisfaction guarantee. Custom enterprise packages available for larger organizations.</p>
 </div>
 </div>
 </section>
@@ -1382,7 +1652,7 @@ We know the fintech journey is full of high-stakes moments—from rapid growth t
 <h4>Company</h4>
 <ul>
 <li><a href="#results">Track Record</a></li>
-<li><a href="#testimonials">Client Stories</a></li>
+<li><a href="#pricing">Pricing</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
 </div>
