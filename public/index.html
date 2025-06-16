@@ -3,11 +3,10 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta name="description" content="Fintech compliance and document security for brokers. More regulation is on the horizon.">
-<link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
-    <title>Aquamark.io</title>
-    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <meta content="The leading compliance platform for fintech and alternative finance. Automated compliance, document protection, and regulatory monitoring." name="description"/>
+    <link href="/logo-icon-black-blue.png" rel="icon" type="image/png"/>
+    <title>Aquamark</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <style>
         * {
             margin: 0;
@@ -15,965 +14,1173 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.6;
-            overflow-x: hidden;
+        :root {
+            --primary: #000000;
+            --blue: #2563eb;
+            --blue-light: #3b82f6;
+            --text-primary: #000000;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --border: #e5e7eb;
+            --border-light: #f3f4f6;
         }
 
-        html {
-  overflow-x: hidden;
-}
-
-        img {
-  max-width: 100%;
-  height: auto;
-}
-
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
         /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             position: fixed;
             top: 0;
-            width: 100%;
-            z-index: 1000;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 100;
         }
 
         .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-}
-
-        .nav-links a.btn-secondary {
-    color: #467EFF !important;
-    border: 2px solid #467EFF;
-    background: white;
-}
-
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #467EFF;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
             align-items: center;
+            gap: 2rem;
         }
 
         .nav-links a {
-            color: #64748b;
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.2s;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
         }
-
-        .nav-links a.btn-primary {
-    color: white !important;
-}
 
         .nav-links a:hover {
-            color: #467EFF;
+            color: var(--primary);
         }
 
-        .cta-button {
-            background: #467EFF;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
             font-weight: 600;
-            transition: all 0.2s;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
         }
 
-        .cta-button:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
+        .btn-primary {
+            background: var(--primary);
+            color: white !important;
+        }
+
+        .btn-primary:hover {
+            background: #1a1a1a;
+            color: white !important;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border-color: #C2C2C2;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            color: var(--primary);
+        }
+
+        .btn-blue {
+            background: var(--blue);
+            color: white;
+        }
+
+        .btn-blue:hover {
+            background: var(--blue-light);
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
         }
 
         /* Hero Section */
         .hero {
             padding: 8rem 2rem 4rem;
-            text-align: center;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: var(--bg-primary);
         }
 
-        .hero-content {
-            max-width: 1200px;
+        .hero-container {
+            max-width: 1000px;
             margin: 0 auto;
+            text-align: center;
         }
 
-.hero h1 {
-    font-size: 3.2rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    color: #000000;
-}
-
-.hero .subtitle {
-    font-size: 1.5rem;
-    color: #64748b;
-    margin-bottom: 2rem;
-}
-
-        .hero .tagline {
-            font-size: 1.125rem;
-            color: #467EFF;
-            font-weight: 600;
-            margin-bottom: 3rem;
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
         }
 
-        .hero-buttons {
+        .hero-content .highlight {
+            color: var(--blue);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
             display: flex;
             gap: 1rem;
             justify-content: center;
-            flex-wrap: wrap;
+            margin-bottom: 4rem;
         }
 
-        .btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #467EFF;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
-
-        .btn-lightblue {
-  background: #e0f0ff;
-  color: #1d4ed8;
-  border: 2px solid #1d4ed8;
-}
-
-.btn-lightblue:hover {
-  background: #1d4ed8;
-  color: white;
-}
-
-
-        .btn-secondary {
-            background: white;
-            color: #467EFF;
-            border: 2px solid #467EFF;
-        }
-
-        .btn-secondary:hover {
-            background: #467EFF;
-            color: white;
-        }
-
-        /* Core Values */
-        .values {
-            padding: 5rem 2rem;
-            background: white;
-        }
-
-        .values-container {
-            max-width: 1200px;
+        .compliance-visual {
+            max-width: 500px;
             margin: 0 auto;
-            text-align: center;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 
+                0 25px 50px -12px rgba(37, 99, 235, 0.4), 
+                0 15px 25px -5px rgba(37, 99, 235, 0.25),
+                0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .values h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 3rem;
-            color: #1e293b;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .value-card {
-    background: #f8fafc;
-    padding: 2.5rem 2rem;
-    border-radius: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-        .value-card:hover {
+        .compliance-visual:hover {
             transform: translateY(-4px);
+            box-shadow: 
+                0 35px 60px -12px rgba(37, 99, 235, 0.5), 
+                0 25px 35px -5px rgba(37, 99, 235, 0.3),
+                0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        .value-icon {
-            width: 3rem;
-            height: 3rem;
-            background: #467EFF;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .value-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #1e293b;
-        }
-
-        .value-card p {
-            color: #64748b;
-            font-size: 1rem;
-        }
-
-        /* Mission Section */
-        .mission {
-            padding: 5rem 2rem;
-            background: linear-gradient(135deg, #467EFF, #1d4ed8);
-            color: white;
+        .visual-header {
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .mission-container {
+        .visual-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .visual-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .states-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .section-count {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--blue);
+        }
+
+        .state-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .state-pill {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .monitoring-note {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .section-intro {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
             max-width: 800px;
             margin: 0 auto;
         }
 
-        .mission h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
+        .feature-list {
+            list-style: none;
         }
 
-        .mission p {
-            font-size: 1.5rem;
-            opacity: 0.9;
-            line-height: 1.8;
-        }
-
-
-.compliance-image {
-  flex: 1 1 500px;
-  max-width: 100%;
-  text-align: center;
-}
-
-.compliance-image img {
-  width: 100%;
-  max-width: 500px;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  margin-bottom: 0; /* remove any inherited spacing */
-}
-        
-        /* Features */
-        .features {
-            padding: 5rem 2rem;
-            background: #f8fafc;
-        }
-
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 3rem;
-            color: #1e293b;
-        }
-
-       .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 3rem;
-    align-items: stretch;
-}
-
-      .feature-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100%;
-    padding: 1rem;
-    background: white;
-    border-radius: 1rem;
-}
-
-        .feature-icon {
-            width: 3rem;
-            height: 3rem;
-            background: #467EFF;
-            border-radius: 0.75rem;
+        .feature-list li {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .feature-content h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
+            gap: 0.5rem;
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
-            color: #1e293b;
+            font-size: 0.875rem;
         }
 
-        .feature-content p {
-            color: #64748b;
+        .feature-list li::before {
+            content: '•';
+            color: var(--blue);
+            font-weight: 700;
         }
 
-        /* Stats */
-        .stats {
-            padding: 4rem 2rem;
-            background: white;
-        }
-
-        .stats-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #467EFF;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* Pricing */
+        /* Pricing Section - IMPROVED */
         .pricing {
-            padding: 5rem 2rem;
-            background: #f8fafc;
+            padding: 6rem 2rem;
+            background: var(--bg-primary);
         }
 
         .pricing-container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
-            text-align: center;
-        }
-
-        .pricing h2 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: #1e293b;
-        }
-
-        .pricing .subtitle {
-            font-size: 1.5rem;
-            color: #64748b;
-            margin-bottom: 3rem;
         }
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin-top: 3rem;
         }
 
         .pricing-card {
             background: white;
-            padding: 2.5rem 2rem;
-            border-radius: 1rem;
-            border: 2px solid #e2e8f0;
-            transition: all 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem;
             position: relative;
-        }
-
-        .pricing-card:hover {
-            border-color: #467EFF;
-            transform: translateY(-4px);
+            display: flex;
+            flex-direction: column;
+            min-height: 450px;
         }
 
         .pricing-card.featured {
-            border-color: #467EFF;
-            transform: scale(1.05);
+            border-color: var(--blue);
+            border-width: 2px;
         }
 
-        .pricing-card.featured::before {
-            content: 'Most Popular';
+        .plan-badge {
             position: absolute;
-            top: -20px;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
-            background: #A5FCFF;
-            color: black;
-            padding: 0.5rem 1rem;
-            border-radius: 1rem;
+            background: var(--blue);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
             font-size: 0.875rem;
             font-weight: 600;
         }
 
         .plan-name {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #1e293b;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
         }
 
-        .plan-price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #467EFF;
-            margin-bottom: 0.5rem;
-        }
-
-        .plan-period {
-            color: #64748b;
+        .plan-description {
+            color: var(--text-secondary);
             margin-bottom: 2rem;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
-      .plan-feature {
-    color: #64748b;
-    margin-top: -1rem; /* pulls it up */
-    margin-bottom: 2rem; /* creates space above button */
-}
+        .plan-features {
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
 
-        /* Footer */
-        .footer {
-            background: #467EFF;
+        .plan-features .feature-list {
+            list-style: none;
+        }
+
+        .plan-features .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .plan-features .feature-list li::before {
+            content: '•';
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .plan-cta {
+            margin-top: auto;
+        }
+
+        .plan-cta .btn {
+            width: 100%;
+            justify-content: center;
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .coming-soon {
+            color: var(--text-muted);
+            text-align: center;
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: var(--primary);
             color: white;
-            padding: 3rem 2rem 2rem;
             text-align: center;
         }
 
-        .footer-content {
-            max-width: 1200px;
+        .cta-container {
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
 
-       .footer-links a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.2s;
-}
+        .cta-section p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
 
-.footer-links a:hover {
-    color: white;
-}
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            background: var(--bg-secondary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-section h4 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: #2563eb;
+        }
 
 .footer-bottom {
-    border-top: 1px solid white;
-    padding-top: 2rem;
+    width: 100%;
+    background: var(--blue);
+    padding: 1.5rem 2rem;
+    text-align: center;
     color: white;
     font-size: 0.875rem;
+    border-top: none;
 }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
 
-        /* Mobile Responsive */
-      @media (max-width: 768px) {
-  .nav {
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-  }
+            .nav-links a:not(.btn) {
+                display: none;
+            }
 
-  .hero {
-  padding: 9rem 1rem 3rem;
-}
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
 
-  .hero h1 {
-    font-size: 2.25rem;
-  }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
 
-  .hero .subtitle {
-    font-size: 1.2rem;
-  }
+            .section-title {
+                font-size: 2rem;
+            }
 
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
+            .cta-section h2 {
+                font-size: 2rem;
+            }
 
-  .btn {
-    width: 100%;
-    max-width: 280px;
-    margin-bottom: 1rem;
-  }
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
 
-  .values,
-  .mission,
-  .features,
-  .pricing,
-  .stats {
-    padding: 3rem 1rem;
-    text-align: center;
-  }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
 
-  .values h2,
-  .mission h2,
-  .features h2,
-  .pricing h2 {
-    font-size: 2rem;
-  }
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
 
-  .values-grid,
-  .features-grid,
-  .pricing-grid,
-  .stats-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    justify-items: center;
-  }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
 
-@media (max-width: 768px) {
-  .compliance-section {
-    gap: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  .compliance-image {
-    margin-bottom: -10px !important; /* force upward collapse */
-    padding-bottom: 0 !important;
-    line-height: 0 !important;
-  }
-
-  .compliance-image img {
-    margin-bottom: -10px !important; /* force image to sit tight */
-    display: block !important;
-    line-height: 0 !important;
-  }
-
-  .compliance-text {
-    margin-top: -5px !important; /* pulls text up if needed */
-  }
-
-  .compliance-text h2 {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-  }
-          
-  .feature-item {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .pricing-card.featured {
-    transform: none;
-  }
-
-  .plan-price {
-    font-size: 2rem;
-  }
-
-  .plan-feature {
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Impact Section */
-  section[style*="padding: 5rem 2rem; background: #ffffff;"] > div {
-    flex-direction: column;
-    gap: 2rem;
-    text-align: center;
-    padding: 0 1rem;
-  }
-
-  section[style*="padding: 5rem 2rem; background: #ffffff;"] h2 {
-    font-size: 1.75rem;
-  }
-
-  section[style*="padding: 5rem 2rem; background: #ffffff;"] p {
-    font-size: 1rem;
-    text-align: center;
-  }
-
-  section[style*="padding: 5rem 2rem; background: #ffffff;"] img {
-    width: 100%;
-    height: auto;
-  }
-
-  .footer-links {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .footer-bottom {
-    font-size: 0.8rem;
-  }
-}
+            .pricing-card {
+                min-height: auto;
+            }
+        }
     </style>
 </head>
 <body>
-    
     <!-- Header -->
-   <header class="header">
-  <nav class="nav">
-    <div class="logo">
-      <a href="/">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="height: 30px;">
-      </a>
-    </div>
-    <div class="nav-links">
-  <a href="/partners.html" class="btn btn-secondary">Partner</a>
-  <a href="/login.html" class="btn btn-primary">Sign In</a>
-</div>
-  </nav>
-</header>
+    <header class="header">
+        <nav class="nav">
+            <a class="logo" href="/">
+                <img src="/logo-full-black-blue.png" alt="Aquamark">
+            </a>
+            <div class="nav-links">
+                <a href="/broker-directory">Broker Directory</a>
+                <a href="#pricing">Pricing</a>
+                <a href="/compliance">Compliance</a>
+                <a class="btn btn-secondary" href="/login.html">Sign in</a>
+                <a class="btn btn-primary" href="/signup.html">Get started</a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Document Security & Compliance for Fintech</h1>
-<p class="subtitle">Proof. Protection. Peace of Mind.</p>
-            <div class="hero-buttons">
-  <a href="/signup.html" class="btn btn-primary">Start Free Trial</a>
-  <a href="/api" class="btn btn-secondary">Open API</a>
-  <a href="/compliance" class="btn btn-lightblue">Compliance</a>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>The <span class="highlight">compliance and security platform</span> fintech trusts</h1>
+                <p class="hero-subtitle">
+                    Built for brokers. We monitor compliance so you don't have to—and protect your documents so you can fund more deals.
+                </p>
+                <div class="hero-cta">
+                    <a class="btn btn-blue btn-lg" href="/signup.html">Start free trial</a>
+                    <a class="btn btn-secondary btn-lg" href="/api">View API docs</a>
+                </div>
+            </div>
+
+            <div class="compliance-visual">
+                <div class="visual-header">
+                    <h3 class="visual-title">Regulatory Expansion Accelerating</h3>
+                    <p class="visual-subtitle">State regulations expanding rapidly across the US</p>
+                </div>
+                
+                <div class="states-section">
+                    <div class="section-header">
+                        <span class="section-label">Enacted</span>
+                        <span class="section-count">9 States</span>
+                    </div>
+                    <div class="state-grid">
+                        <span class="state-pill">CA</span>
+                        <span class="state-pill">CT</span>
+                        <span class="state-pill">FL</span>
+                        <span class="state-pill">GA</span>
+                        <span class="state-pill">KS</span>
+                        <span class="state-pill">MO</span>
+                        <span class="state-pill">NY</span>
+                        <span class="state-pill">UT</span>
+                        <span class="state-pill">VA</span>
+                    </div>
+                </div>
+
+                <div class="states-section">
+                    <div class="section-header">
+                        <span class="section-label">Proposed</span>
+                        <span class="section-count">7 States</span>
+                    </div>
+                    <div class="state-grid">
+                        <span class="state-pill">TX</span>
+                        <span class="state-pill">MS</span>
+                        <span class="state-pill">IL</span>
+                        <span class="state-pill">NC</span>
+                        <span class="state-pill">PA</span>
+                        <span class="state-pill">NJ</span>
+                        <span class="state-pill">MD</span>
+                    </div>
+                </div>
+
+                <div class="monitoring-note">
+                    50-State Monitoring • Stay ahead of regulatory changes
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Document Protection -->
+<section style="padding: 5rem 2rem; background: #ffffff; margin-bottom: 3rem;">
+    <div style="max-width: 1600px; margin: 0 auto; text-align: center;">
+        <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: .25rem;">
+            Advanced <span style="color: #2563eb;">Document Protection</span> Technology
+        </h2>    
+        <p style="font-size: 1.25rem; color: #64748b; margin-bottom: 3.5rem;">
+            Deal theft costs the industry millions every year.<br>
+            Our tamper-resistant watermarks can't stop everyone, but we can make it harder for them, together.
+        </p>
+
+       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; align-items: stretch;">
+  <!-- Card 1: Watermarks -->
+  <div style="
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: left;
+    align-self: center;
+  ">
+    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">Watermarks</h3>
+    <p style="color: #64748b; margin-bottom: 1rem;">Each page includes a full-page overlay of tamper-resistant watermarks</p>
+    <ul style="color: #64748b; list-style: none; padding-left: 0;">
+      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Deters theft at scale</li>
+      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> OCR-safe</li>
+      <li><span style="color: #467EFF;">✓</span> Your branding</li>
+    </ul>
+  </div>
+
+  <!-- Card 2: Watermark Sample -->
+  <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 
+      0 25px 50px -12px rgba(37, 99, 235, 0.5), 
+      0 15px 25px -5px rgba(37, 99, 235, 0.35),
+      0 4px 6px -1px rgba(0, 0, 0, 0.15);
+  ">
+    <img src="watermark-sample.png" alt="Watermarked Bank Statement"
+         style="width: 100%; max-width: 360px; border-radius: 1rem;">
+  </div>
+
+  <!-- Card 3: QR Code -->
+  <div style="
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    color: #1e293b;
+    border: 1px solid #e5e7eb;
+    box-shadow: 
+      0 25px 50px -12px rgba(37, 99, 235, 0.5), 
+      0 15px 25px -5px rgba(37, 99, 235, 0.35),
+      0 4px 6px -1px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+  ">
+<h3 style="
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #2563eb;
+">
+  Powered QR Codes
+</h3>
+   <img src="qr.png" alt="QR Code"
+     style="max-width: 160px; width: 100%; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.5), 0 15px 25px -5px rgba(37, 99, 235, 0.35), 0 4px 6px -1px rgba(0, 0, 0, 0.15);">
+  </div>
+
+  <!-- Card 4: QR Metadata -->
+  <div style="
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: left;
+    align-self: center;
+  ">
+    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">QR code metadata</h3>
+    <p style="color: #64748b; margin-bottom: 1rem;">See exactly who had access to your files</p>
+    <ul style="color: #64748b; list-style: none; padding-left: 0;">
+      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Accountability at every level</li>
+      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> No more blind spots</li>
+      <li><span style="color: #467EFF;">✓</span> Digital breadcrumbs</li>
+    </ul>
+  </div>
 </div>
-        </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stat-item">
-                <h3>10k+</h3>
-                <p>Submissions Protected</p>
-            </div>
-            <div class="stat-item">
-                <h3>1M+</h3>
-                <p>Pages Watermarked</p>
-            </div>
-            <div class="stat-item">
-                <h3>4.89</h3>
-                <p>User Rating</p>
-            </div>
-        </div>
-    </section>
-
-<!-- Build Trust Section -->
-<section style="padding: 4rem 2rem; background: #f8fafc; text-align: center;">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <img src="trust.png" alt="Trust Icon" style="width: 60px; margin-bottom: .25rem;">
-    <h2 style="font-size: 2.25rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
-      Built on Trust
-    </h2>
-    <p style="font-size: 1.25rem; color: #64748b; margin-bottom: 0.25rem;">
-      Every feature—including our API—is available to test before making a decision.
-    </p>
-    <p style="font-size: 1.25rem; color: #64748b; margin-bottom: 2rem;">
-      No payment info required.
-    </p>
-    <a href="/signup.html" class="btn btn-primary">Start Free Trial</a>
-  </div>
+<!-- Option 3: Clean and minimal -->
+<div style="
+  text-align: center;
+  margin-top: 4rem;
+  margin-bottom: 0;
+  padding-top: 1rem;
+  padding-bottom: 0;
+  border-top: 1px solid #e5e7eb;
+">
+      <p style="color: #64748b; margin-bottom: 1rem;">
+        Want to see how it works? Our API is fast and simple to integrate.
+      </p>
+      <a href="/api" style="
+        color: #2563eb;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 1rem;
+      ">
+        View API Documentation →
+      </a>
+    </div>
+    </div>
 </section>
 
 
-<!-- How It Works Section -->
-<section style="padding: 5rem 2rem; background: #ffffff;">
-  <div style="max-width: 1100px; margin: 0 auto; text-align: center;">
-    <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
-      How It Works
-    </h2>
+<!-- Compliance Section -->
+<section style="padding: 6rem 2rem; background: #f8fafc;">
+  <div style="max-width: 1400px; margin: 0 auto;">
+    <!-- Section Header -->
+    <div style="text-align: center; margin-bottom: 4rem;">
+<h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
+        Fintech's Trusted <span style="color: #2563eb;">Compliance</span> Partner
+      </h2>      
+        <p style="font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto;">
+Your trusted partner through the complex world of finance compliance. We simplify regulations so you can focus on funding more deals.
+        </p>
+    </div>
 
-    <!-- Combined Compliance Message -->
-    <p style="font-size: 1.25rem; color: #64748b; margin-bottom: 3rem;">
-Watermarks deter theft. Alerts keep you compliant. Both are becoming non-negotiable.
-    </p>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; align-items: stretch; text-align: center;">
+    <!-- Two Column Layout -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem;">
       
-      <!-- Step 1 -->
-      <div style="background: #f8fafc; padding: 2rem; border-radius: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-        <div>
-          <div style="font-size: 2rem; font-weight: 800; color: #467EFF; margin-bottom: 1rem;">1</div>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">Deter Theft</h3>
-          <p style="color: #64748b;">Your brand, on every page.</p>
-          <ul style="margin-top: 1rem; color: #64748b; list-style: none; padding-left: 0;">
-            <li><span style="color: #467EFF;">✓</span> Tamper-resistant watermarks</li>
-            <li><span style="color: #467EFF;">✓</span> Breaks theft at scale</li>
-            <li><span style="color: #467EFF;">✓</span> OCR-safe</li>
+<!-- Broker Directory Content -->
+<div>
+  <div style="margin-bottom: 0.5rem;">
+    <span style="
+      background: #dcfce7;
+      color: #166534;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    ">Free</span>
+  </div>
+  <h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: .2rem;">
+    Broker Directory
+  </h3>
+  <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
+We host a free, public directory of licensed alternative finance brokers nationwide. All listings are thoroughly vetted for legitimacy and compliance.  </p>
+
+  <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+        <span style="color: #2563eb; font-weight: 700;">✓</span>
+        Nationwide coverage
+      </li>
+      <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+        <span style="color: #2563eb; font-weight: 700;">✓</span>
+        Resource for lenders to validate brokers in one place
+      </li>
+        <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+        <span style="color: #2563eb; font-weight: 700;">✓</span>
+        Requests published within 72 hours
+      </li>
+    </ul>
+  </div>
+
+  <div style="display: flex; gap: 1rem;">
+    <a href="/broker-directory" style="
+      display: inline-flex;
+      align-items: center;
+      padding: 0.875rem 1.5rem;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    ">
+      Search Directory
+    </a>
+    <a href="/contact" style="
+      display: inline-flex;
+      align-items: center;
+      padding: 0.875rem 1.5rem;
+      background: transparent;
+      color: #2563eb;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid #2563eb;
+      transition: all 0.2s ease;
+    ">
+      Get Listed Free
+    </a>
+  </div>
+</div>
+
+
+      <!-- Directory Visual -->
+      <div style="
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 
+          0 25px 50px -12px rgba(37, 99, 235, 0.4), 
+          0 15px 25px -5px rgba(37, 99, 235, 0.25),
+          0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      ">
+        <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+          <h4 style="font-size: 1.125rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">
+            Broker License Lookup
+          </h4>
+          <div style="
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            font-family: monospace;
+            font-size: 0.875rem;
+            color: #64748b;
+          ">
+            Search by name, license #, or state...
+          </div>
+        </div>
+        
+        <div style="space-y: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
+            <div>
+              <div style="font-weight: 600; color: #1e293b;">John Smith</div>
+              <div style="font-size: 0.875rem; color: #64748b;">License #MB123456</div>
+            </div>
+            <span style="
+              background: #dcfce7;
+              color: #166534;
+              padding: 0.25rem 0.75rem;
+              border-radius: 12px;
+              font-size: 0.75rem;
+              font-weight: 600;
+            ">Active</span>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
+            <div>
+              <div style="font-weight: 600; color: #1e293b;">Sarah Johnson</div>
+              <div style="font-size: 0.875rem; color: #64748b;">License #MB789012</div>
+            </div>
+            <span style="
+              background: #dcfce7;
+              color: #166534;
+              padding: 0.25rem 0.75rem;
+              border-radius: 12px;
+              font-size: 0.75rem;
+              font-weight: 600;
+            ">Active</span>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+            <div>
+              <div style="font-weight: 600; color: #1e293b;">Mike Davis</div>
+              <div style="font-size: 0.875rem; color: #64748b;">License #MB345678</div>
+            </div>
+            <span style="
+              background: #fef3c7;
+              color: #92400e;
+              padding: 0.25rem 0.75rem;
+              border-radius: 12px;
+              font-size: 0.75rem;
+              font-weight: 600;
+            ">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compliance API Section -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+      
+      <!-- API Visual -->
+      <div style="
+        background: #1e293b;
+        border-radius: 16px;
+        padding: 2rem;
+        color: white;
+        box-shadow: 
+          0 25px 50px -12px rgba(30, 41, 59, 0.5), 
+          0 15px 25px -5px rgba(30, 41, 59, 0.35),
+          0 4px 6px -1px rgba(0, 0, 0, 0.15);
+      ">
+        <div style="margin-bottom: 1.5rem;">
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+            <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></div>
+            <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%;"></div>
+            <div style="width: 12px; height: 12px; background: #10b981; border-radius: 50%;"></div>
+          </div>
+          <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">
+            POST /api/compliance/disclaimers
+          </div>
+        </div>
+        
+        <div style="font-family: monospace; font-size: 0.875rem; line-height: 1.6;">
+          <div style="color: #f59e0b;">POST</div>
+          <div style="color: #64748b;">{</div>
+          <div style="margin-left: 1rem;">
+            <span style="color: #38bdf8;">"state"</span>: <span style="color: #a3e635;">"CA"</span>,
+          </div>
+          <div style="margin-left: 1rem;">
+            <span style="color: #38bdf8;">"loan_type"</span>: <span style="color: #a3e635;">"commercial"</span>
+          </div>
+          <div style="color: #64748b;">}</div>
+          <br>
+          <div style="color: #10b981;">Response:</div>
+          <div style="color: #64748b;">{</div>
+          <div style="margin-left: 1rem;">
+            <span style="color: #38bdf8;">"disclaimers"</span>: [
+          </div>
+          <div style="margin-left: 2rem; color: #a3e635;">
+            "California requires disclosure of..."
+          </div>
+          <div style="margin-left: 1rem;">],</div>
+          <div style="margin-left: 1rem;">
+            <span style="color: #38bdf8;">"compliance_score"</span>: <span style="color: #f59e0b;">95</span>
+          </div>
+          <div style="color: #64748b;">}</div>
+        </div>
+      </div>
+
+      <!-- Compliance API Content -->
+      <div>
+        <h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: 1.5rem;">
+          Compliance API
+        </h3>
+        <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
+          Automatically inject state-specific disclaimers directly into your CRM. Our API delivers the exact compliance requirements for each deal, helping you make informed decisions and demonstrate good-faith compliance during audits.
+        </p>
+        
+        <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+              <span style="color: #2563eb; font-weight: 700;">✓</span>
+              State-specific disclaimer injection
+            </li>
+            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+              <span style="color: #2563eb; font-weight: 700;">✓</span>
+              Audit-ready compliance proof
+            </li>
+            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+              <span style="color: #2563eb; font-weight: 700;">✓</span>
+              Deal risk assessment
+            </li>
+            <li style="display: flex; align-items: center; gap: 0.75rem; font-size: 1rem; color: #374151;">
+              <span style="color: #2563eb; font-weight: 700;">✓</span>
+              Real-time regulatory updates
+            </li>
           </ul>
         </div>
-      </div>
-      
-      <!-- Step 2 -->
-      <div style="background: #f8fafc; padding: 2rem; border-radius: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-        <div>
-          <div style="font-size: 2rem; font-weight: 800; color: #467EFF; margin-bottom: 1rem;">2</div>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">Stay Compliant</h3>
-          <p style="color: #64748b;">Know before you submit.</p>
-          <ul style="margin-top: 1rem; color: #64748b; list-style: none; padding-left: 0;">
-            <li><span style="color: #467EFF;">✓</span> State-specific CRM disclaimers</li>
-            <li><span style="color: #467EFF;">✓</span> Flags risky deals early</li>
-            <li><span style="color: #467EFF;">✓</span> Proves good-faith compliance</li>
-          </ul>
-        </div>
-      </div>
 
-      <!-- Step 3 -->
-      <div style="background: #f8fafc; padding: 2rem; border-radius: 1rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-        <div>
-          <div style="font-size: 2rem; font-weight: 800; color: #467EFF; margin-bottom: 1rem;">3</div>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">Run the Math</h3>
-          <p style="color: #64748b;">Avg commission: $3,000–$5,000</p>
-          <p style="color: #64748b;">Aquamark: $299/month</p>
-        </div>
-        <p style="margin-top: 1.5rem; font-weight: 600; color: #1e293b;">Save one deal, pay for the year.</p>
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <div style="margin-top: 2rem;">
-      <a href="/api-docs.html" class="btn btn-primary">Try Free API</a>
-    </div>
-  </div>
-</section>
-
-
-
-    
-    
-    <!-- Core Values -->
-    <section class="values">
-        <div class="values-container">
-            <h2>Our Core Principles</h2>
-<p style="font-size: 1.25rem; color: #64748b; margin-top: -2rem;">
-  Deal theft is far too common in alternative finance, and tighter compliance is on the horizon.
-</p>
-            <div class="values-grid">
-                <div class="value-card">
-                    <h3>Transparency</h3>
-                    <p>Know exactly who had access to your files.</p>
-                </div>
-                <div class="value-card">
-                    <h3>Accountability</h3>
-                    <p>Deter deal theft and raise the standard across the industry.</p>
-                </div>
-                <div class="value-card">
-                    <h3>Integrity</h3>
-                    <p>Aligned with a culture of compliance and doing the right thing.</p>
-                </div>
+        <div style="
+          background: #f0f9ff;
+          border: 1px solid #bae6fd;
+          border-radius: 8px;
+          padding: 1.5rem;
+          margin-bottom: 2rem;
+        ">
+          <div style="display: flex; align-items: start; gap: 0.75rem;">
+            <div style="
+              background: #0ea5e9;
+              color: white;
+              border-radius: 50%;
+              width: 20px;
+              height: 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 0.75rem;
+              font-weight: 700;
+              flex-shrink: 0;
+            ">i</div>
+            <div>
+              <p style="font-weight: 600; color: #0c4a6e; margin-bottom: 0.5rem;">Know Before You Go</p>
+              <p style="color: #0c4a6e; font-size: 0.875rem; margin: 0;">
+                Our disclaimers don't just ensure compliance—they tell you exactly what's required so you can decide whether to pursue a deal or walk away.
+              </p>
             </div>
+          </div>
         </div>
-    </section>
 
-<!-- Impact Section -->
-<section style="padding: 5rem 2rem; background: #ffffff;">
-  <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 5rem;">
-    
-    <!-- Left Column -->
-    <div style="flex: 1 1 450px; max-width: 100%; text-align: center;">
-      <h2 style="font-size: 2.25rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
-        Watermarking + Automated Compliance Alerts
-      </h2>
-      <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem;">
-Each time you watermark, we flag state-specific rules and post to your CRM.
-Every file includes a QR code with the lender, salesperson, and processor—ensuring accountability at every level.     
-          <img src="roi_breakdown.png" alt="Aquamark ROI"
-     style="width: 450px; border-radius: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.12); margin-top: 2rem;">
+        <div style="display: flex; gap: 1rem;">
+          <a href="/api" style="
+            display: inline-flex;
+            align-items: center;
+            padding: 0.875rem 1.5rem;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+          ">
+            View API Docs
+          </a>
+          <a href="/contact" style="
+            display: inline-flex;
+            align-items: center;
+            padding: 0.875rem 1.5rem;
+            background: transparent;
+            color: #2563eb;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid #2563eb;
+            transition: all 0.2s ease;
+          ">
+            Request Demo
+          </a>
+        </div>
+      </div>
     </div>
-
-    <!-- Right Column -->
-    <div style="flex: 1 1 500px; max-width: 100%;">
-      <img src="watermark-sample.png" alt="Watermarked Bank Statement"
-           style="width: 100%; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
-    </div>
-
   </div>
 </section>
-
 
     
-    <!-- Mission -->
-    <section class="mission">
-        <div class="mission-container">
-            <h2>Our Mission</h2>
-            <p>Aquamark’s mission is to bring visibility, accountability and compliance into every submission. We help protect pipelines, deter theft, and ensure sensitive documents are shared responsibly and in compliance with today's regulations.</p>
-        </div>
-    </section>
-
-  </div>
-</section>
-
-
     
-
-    <!-- Features -->
-    <section class="features" id="features">
-        <div class="features-container">
-            <h2>Built With Brokers and Lenders In Mind</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">✓</div>
-                    <div class="feature-content">
-                        <h3>Complete Visibility</h3>
-                        <p>Know exactly who had access to your files.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">✓</div>
-                    <div class="feature-content">
-                        <h3>Theft Deterrent</h3>
-                        <p>Watermarking serves as a security system: deterring bad behavior.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">✓</div>
-                    <div class="feature-content">
-                        <h3>Streamlined Workflow</h3>
-                        <p>Seamless integration via our open API, or bulk PDF processing through our portal.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">✓</div>
-                    <div class="feature-content">
-                        <h3>Compliance Alerts</h3>
-                        <p>We flag files tied to states with compliance requirements, and push to your CRM (must be on API).</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">✓</div>
-                    <div class="feature-content">
-                        <h3>OCR Compatible</h3>
-                        <p>Built to not interfere with parsing. Tested with Ocrolus, MoneyThumb, and DocPanda.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">✓</div>
-                    <div class="feature-content">
-                        <h3>Instant Processing</h3>
-                        <p>Patent pending engine that processes encrypted PDFs, embeds QR codes, and applies watermarks in seconds.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<!-- Pro Tip Section -->
-<section style="padding: 4rem 2rem; background: #f8fafc; text-align: center;">
-  <div style="max-width: 800px; margin: 0 auto;">
-    <img src="pro-tip.png" alt="Pro Tip Lightbulb" style="width: 60px; margin-bottom: 1.5rem;">
-    <h3 style="font-size: 1.75rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">Pro Tip:</h3>
-    <p style="font-size: 1.125rem; color: #64748b;">
-      Our users let their teams know Aquamark is in use.<br/>
-      Often, simply knowing you're being tracked is enough to deter bad behavior.
-    </p>
-  </div>
-</section>
-
+    
     <!-- Pricing Section -->
-
 <section class="pricing" id="pricing">
-  <div class="pricing-container">
-    <h2>Built for Brokers. Ready for Scale.</h2>
-    <p class="subtitle">Pricing is based on your role and usage—always simple, always affordable.</p>
+    <div class="pricing-container">
+        <div class="section-intro">
+            <h2 class="section-title">Flexible pricing. Built for your workflow.</h2>
+            <p class="section-description">
+                Designed to be affordable for everyone, around the cost of your 
+                <span style="color:#007BFF; font-weight:600;">monthly cell phone bill</span>.
+            </p>
+        </div>
 
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <div class="plan-name">Retail</div>
-        <p style="color:#64748b; font-size:1rem; margin: 1rem 0 2rem;">
-          For brokers and small teams who want instant protection and compliance automation.
-        </p>
-        <a href="/signup.html" class="btn btn-primary">Start Free Trial</a>
-      </div>
+        <div class="pricing-grid">
+            <div class="pricing-card featured">
+                <div class="plan-badge">Popular</div>
+                <h3 class="plan-name">Broker Shop</h3>
+                <p class="plan-description">For brokers and small teams who want instant protection and compliance automation.</p>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li>Unlimited watermarking</li>
+                        <li>Compliance alerts</li>
+                        <li>Portal access</li>
+                        <li>Basic support</li>
+                    </ul>
+                </div>
+                <div class="plan-cta">
+                    <a class="btn btn-blue" href="/signup.html">Start free trial</a>
+                </div>
+            </div>
 
-      <div class="pricing-card featured">
-        <div class="plan-name">Wholesale</div>
-        <p style="color:#64748b; font-size:1rem; margin: 1rem 0 2rem;">
-          Designed for CRMs and OCR software looking to incorporate Aquamark at scale.
-        </p>
-<a href="/contact.html" target="_blank" rel="noopener" class="btn btn-primary">Request Pricing</a>
-      </div>
+            <div class="pricing-card">
+                <h3 class="plan-name">Wholesale</h3>
+                <p class="plan-description">For CRMs and OCR software companies looking to incorporate Aquamark at scale.</p>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li>Everything in Broker Shop</li>
+                        <li>Volume processing</li>
+                        <li>Priority support</li>
+                    </ul>
+                </div>
+                <div class="plan-cta">
+                    <a class="btn btn-primary" href="/contact">Request pricing</a>
+                </div>
+            </div>
 
-      <div class="pricing-card">
-        <div class="plan-name">Affiliate</div>
-        <p style="color:#64748b; font-size:1rem; margin: 1rem 0 2rem;">
-          Refer brokers and earn recurring monthly commissions—no cap, no commitment.
-        </p>
-<a href="/contact.html" target="_blank" rel="noopener" class="btn btn-primary">Join Program</a>
-      </div>
+            <div class="pricing-card">
+                <h3 class="plan-name">Affiliate</h3>
+                <p class="plan-description">For lenders and individuals. Refer brokers and earn recurring monthly commissions with no cap or commitment.</p>
+                <div class="plan-features">
+                    <ul class="feature-list">
+                        <li>Recurring commissions</li>
+                        <li>No referral cap</li>
+                        <li>Marketing materials</li>
+                        <li>Monthly reporting</li>
+                    </ul>
+                </div>
+                <div class="plan-cta">
+                    <a class="btn btn-secondary" href="/contact">Join program</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
-
-
-    <!-- Partner CTA -->
-    <section style="padding: 4rem 2rem; background: white; text-align: center;">
-        <div style="max-width: 1000px; margin: 0 auto;">
-            <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
-                Become an Aquamark Partner
-            </h2>
-            <p style="font-size: 1.5rem; color: #64748b; margin-bottom: 2rem;">
-                Together, we can reshape the industry to better serve the small business community.
-            </p>
-            <a href="/partners.html" class="btn btn-primary">See Programs</a>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to protect your business?</h2>
+            <p>Join hundreds of companies using Aquamark to stay compliant and protect their deals.</p>
+            <div class="cta-buttons">
+                <a class="btn btn-white btn-lg" href="/signup.html">Start free trial</a>
+                <a class="btn btn-outline btn-lg" href="/contact">Contact Us</a>
+            </div>
         </div>
     </section>
 
-    
     <!-- Footer -->
-    <footer class="footer" id="contact">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
-                <a href="tel:+14155001117">(415) 500-1117</a>
-                <a href="/privacy.html">Privacy</a>
-                <a href="/terms.html">Terms</a>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Aquamark</h3>
+                <p>San Francisco, CA</p>
             </div>
-            <div class="footer-bottom">
-                <p>© 2025 Aquamark. All rights reserved.</p>
-                <p>1 Bristol Court, Suite 112, San Francisco CA 94130</p>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="/api">API Documentation</a></li>
+                    <li><a href="/compliance">Compliance</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                  <li><a href="/broker-directory">Broker Directory</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/privacy.html">Privacy</a></li>
+                    <li><a href="/terms.html">Terms</a></li>
+                </ul>
             </div>
         </div>
     </footer>
-
-    <script>
-        // Simple mobile menu toggle if needed
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add any interactive functionality here
-        });
-    </script>
+     <div class="footer-bottom">
+            <p>© 2025 Aquamark. All rights reserved.</p>
+        </div>
 </body>
 </html>
