@@ -321,6 +321,27 @@
             color: var(--text-secondary);
         }
 
+        .percentage-section {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .percentage-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .percentage-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
         .section-intro {
             text-align: center;
             margin-bottom: 4rem;
@@ -680,6 +701,22 @@
                 gap: 2rem;
             }
 
+            .compliance-visual {
+                padding: 1.5rem;
+            }
+
+            .visual-title {
+                font-size: 1rem;
+            }
+
+            .visual-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .percentage-display {
+                font-size: 1.75rem;
+            }
+
             /* Document Protection Section Mobile */
             .doc-protection-section {
                 padding: 3rem 1rem !important;
@@ -879,6 +916,10 @@
             .plan-description {
                 font-size: 0.9rem;
             }
+
+            .percentage-display {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -934,7 +975,6 @@
                 <div class="states-section">
                     <div class="section-header">
                         <span class="section-label">Enacted</span>
-                        <span class="section-count">9 States</span>
                     </div>
                     <div class="state-grid">
                         <span class="state-pill">CA</span>
@@ -942,27 +982,19 @@
                         <span class="state-pill">FL</span>
                         <span class="state-pill">GA</span>
                         <span class="state-pill">KS</span>
+                        <span class="state-pill">LA</span>
                         <span class="state-pill">MO</span>
+                        <span class="state-pill">ND</span>
                         <span class="state-pill">NY</span>
+                        <span class="state-pill">TX</span>
                         <span class="state-pill">UT</span>
                         <span class="state-pill">VA</span>
                     </div>
                 </div>
 
-                <div class="states-section">
-                    <div class="section-header">
-                        <span class="section-label">Proposed</span>
-                        <span class="section-count">7 States</span>
-                    </div>
-                    <div class="state-grid">
-                        <span class="state-pill">TX</span>
-                        <span class="state-pill">MS</span>
-                        <span class="state-pill">IL</span>
-                        <span class="state-pill">NC</span>
-                        <span class="state-pill">PA</span>
-                        <span class="state-pill">NJ</span>
-                        <span class="state-pill">MD</span>
-                    </div>
+                <div class="percentage-section">
+                    <div class="percentage-display">12 / 50 states</div>
+                    <div class="percentage-label">50-State Monitoring</div>
                 </div>
 
                 <div class="monitoring-note">
