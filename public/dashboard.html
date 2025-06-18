@@ -1411,7 +1411,8 @@ console.error("Error handling subscription reopen:", err);
 
 });
 
-Outseta.getUser().then(async (profile) => {
+  
+Outseta.getUser({ expand: 'CustomFields' }).then(async (profile) => {
   if (profile) {
     console.log("PersonUid:", profile.Uid);
     console.log("Email:", profile.Email);
@@ -1421,9 +1422,12 @@ Outseta.getUser().then(async (profile) => {
     // Try to get referral code from CustomFields
     let referral_code = null;
     if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
-      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'referral_code');
-      if (refField) {
-        referral_code = refField.FieldValue || null;
+      const refField = profile.CustomFields.find(f => f.Field?.systemName === 'referral_code');
+      if (refField && refField.FieldValue) {
+        referral_code = refField.FieldValue;
+        console.log("Referral code found:", referral_code);
+      } else {
+        console.log("Referral code not provided.");
       }
     }
 
@@ -1455,16 +1459,20 @@ Outseta.getUser().then(async (profile) => {
 
     const userData = {
       user_email: profile.Email,
-      pages_used: pages_used,
-      pages_remaining: pages_remaining,
-      plan_name: plan_name,
-      page_credits: page_credits,
-      referral_code: referral_code
+      pages_used,
+      pages_remaining,
+      plan_name,
+      page_credits,
     };
+
+    if (referral_code) {
+      userData.referral_code = referral_code;
+    }
 
     if (!rowId && billing_cycle_start) {
       userData.billing_cycle_start = billing_cycle_start;
     }
+
     if (rowId) {
       userData.id = rowId;
     }
@@ -1473,14 +1481,17 @@ Outseta.getUser().then(async (profile) => {
       .from('usage')
       .upsert(userData);
 
-    if (error) throw error;
-
-    console.log("Supabase update successful", data);
-    fetchUserUsageData(profile.Email);
+    if (error) {
+      console.error("Supabase update error:", error);
+    } else {
+      console.log("Supabase update successful", data);
+      fetchUserUsageData(profile.Email);
+    }
   }
 }).catch(err => {
   console.error("Error getting Outseta user:", err);
 });
+
 
 });
 
