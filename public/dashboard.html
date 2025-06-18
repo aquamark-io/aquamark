@@ -1411,33 +1411,19 @@ console.error("Error handling subscription reopen:", err);
 
 });
 
-
-
-// Add this helper near top of <script> section
-async function waitForOutsetaUser(maxAttempts = 10, interval = 500) {
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const profile = await Outseta.getUser({ expand: 'CustomFields' });
-    if (profile && profile.Email) return profile;
-    await new Promise(resolve => setTimeout(resolve, interval));
-  }
-  return null;
-}
-
-// Replace your entire getUser logic with this
-waitForOutsetaUser().then(async (profile) => {
+Outseta.getUser().then(async (profile) => {
   if (profile) {
     console.log("PersonUid:", profile.Uid);
     console.log("Email:", profile.Email);
     console.log("AccountUid:", profile.Account.Uid);
     console.log("CustomFields:", profile.CustomFields);
 
-    // Try to get referral code
+    // Try to get referral code from CustomFields
     let referral_code = null;
     if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
-      const refField = profile.CustomFields.find(f => f.Field?.systemName === 'referral_code');
-      if (refField?.FieldValue) {
-        referral_code = refField.FieldValue;
-        console.log("Referral code found:", referral_code);
+      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'referral_code');
+      if (refField) {
+        referral_code = refField.FieldValue || null;
       }
     }
 
@@ -1453,36 +1439,32 @@ waitForOutsetaUser().then(async (profile) => {
     let rowId = null;
     let billing_cycle_start;
 
-    if (existingUser?.length > 0) {
+    if (existingUser && existingUser.length > 0) {
       pages_used = existingUser[0].pages_used || 0;
       page_credits = existingUser[0].page_credits || 100;
       plan_name = existingUser[0].plan_name || 'Free Trial';
       rowId = existingUser[0].id;
       console.log("Found existing user with ID:", rowId);
     } else {
+      console.log("No existing user found, will create new record");
       const today = new Date();
       billing_cycle_start = today.toISOString().split('T')[0];
-      console.log("Creating new usage row.");
     }
 
     const pages_remaining = page_credits - pages_used;
 
     const userData = {
       user_email: profile.Email,
-      pages_used,
-      pages_remaining,
-      plan_name,
-      page_credits,
+      pages_used: pages_used,
+      pages_remaining: pages_remaining,
+      plan_name: plan_name,
+      page_credits: page_credits,
+      referral_code: referral_code
     };
-
-    if (referral_code) {
-      userData.referral_code = referral_code;
-    }
 
     if (!rowId && billing_cycle_start) {
       userData.billing_cycle_start = billing_cycle_start;
     }
-
     if (rowId) {
       userData.id = rowId;
     }
@@ -1491,18 +1473,14 @@ waitForOutsetaUser().then(async (profile) => {
       .from('usage')
       .upsert(userData);
 
-    if (error) {
-      console.error("Supabase update error:", error);
-    } else {
-      console.log("Supabase update successful", data);
-      fetchUserUsageData(profile.Email);
-    }
-  } else {
-    console.error("Outseta user could not be loaded after multiple attempts.");
-  }
-});
+    if (error) throw error;
 
-  
+    console.log("Supabase update successful", data);
+    fetchUserUsageData(profile.Email);
+  }
+}).catch(err => {
+  console.error("Error getting Outseta user:", err);
+});
 
 });
 
