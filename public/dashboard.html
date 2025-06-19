@@ -1105,7 +1105,7 @@ async function fetchUserUsageData(email) {
 }
 
 // Enhanced referral code extraction function
-function extractReferralCode(profile) {
+async function extractReferralCode(profile) {
   console.log("=== REFERRAL CODE EXTRACTION DEBUG ===");
   console.log("Full profile object:", profile);
   
@@ -1135,7 +1135,57 @@ function extractReferralCode(profile) {
     }
   }
   
-  // Method 3: Check CustomFields array (original approach)
+  // Method 3: Use REST API to fetch custom fields
+  if (!referral_code) {
+    console.log("Custom fields not in getUser() response, trying REST API...");
+    try {
+      // Get JWT token to make authenticated requests
+      const jwt = await Outseta.getJwtPayload();
+      if (jwt) {
+        console.log("JWT payload:", jwt);
+        
+        // Try to fetch user data with custom fields using REST API
+        const response = await fetch(`https://aquamark.outseta.com/api/v1/crm/people/${profile.Uid}`, {
+          headers: {
+            'Authorization': `Bearer ${await Outseta.getAccessToken()}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const userData = await response.json();
+          console.log("REST API user data:", userData);
+          
+          // Look for referral_code in the REST API response
+          if (userData.referral_code !== undefined) {
+            referral_code = userData.referral_code;
+            console.log("✅ Found referral_code via REST API:", referral_code);
+          }
+          
+          // Also check all properties
+          Object.keys(userData).forEach(key => {
+            const value = userData[key];
+            if (typeof value === 'string' && value.length > 0 && value.length < 50) {
+              console.log(`REST API Property "${key}": "${value}"`);
+              // Check if this looks like a referral code
+              if (value.includes('FUNDKITE') || value.includes('AQUA') || /^[A-Z0-9]{5,20}$/.test(value)) {
+                console.log(`🎯 Potential referral code found via REST API in "${key}": "${value}"`);
+                if (!referral_code) {
+                  referral_code = value;
+                }
+              }
+            }
+          });
+        } else {
+          console.log("REST API request failed:", response.status, response.statusText);
+        }
+      }
+    } catch (error) {
+      console.log("Error fetching from REST API:", error);
+    }
+  }
+  
+  // Method 4: Check CustomFields array (original approach)
   if (!referral_code && profile.CustomFields) {
     console.log("Checking CustomFields array...");
     
@@ -1171,7 +1221,7 @@ function extractReferralCode(profile) {
     }
   }
   
-  // Method 4: Check all properties that might contain the referral code
+  // Method 5: Check all properties that might contain the referral code
   if (!referral_code) {
     console.log("Searching all profile properties for referral code...");
     Object.keys(profile).forEach(key => {
@@ -1181,6 +1231,9 @@ function extractReferralCode(profile) {
         // Check if this looks like a referral code (contains some known patterns)
         if (value.includes('FUNDKITE') || value.includes('AQUA') || /^[A-Z0-9]{5,20}$/.test(value)) {
           console.log(`🎯 Potential referral code found in "${key}": "${value}"`);
+          if (!referral_code) {
+            referral_code = value;
+          }
         }
       }
     });
@@ -1312,7 +1365,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("AccountUid:", profile.Account?.Uid);
       
       // Extract referral code with enhanced debugging
-      const referral_code = extractReferralCode(profile);
+      const referral_code = await extractReferralCode(profile);
       
       // Check if user already exists
       let { data: existingUser, error: fetchError } = await supabase
