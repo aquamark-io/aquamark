@@ -1116,49 +1116,77 @@ function extractReferralCode(profile) {
     return null;
   }
   
-  if (!profile.CustomFields) {
-    console.log("❌ No CustomFields property found in profile");
-    console.log("Available profile properties:", Object.keys(profile));
-    return null;
+  console.log("Available profile properties:", Object.keys(profile));
+  
+  // Method 1: Try accessing directly by system name
+  if (profile.referral_code !== undefined) {
+    referral_code = profile.referral_code;
+    console.log("✅ Found referral_code directly on profile:", referral_code);
   }
   
-  if (!Array.isArray(profile.CustomFields)) {
-    console.log("❌ CustomFields is not an array:", typeof profile.CustomFields);
-    console.log("CustomFields value:", profile.CustomFields);
-    return null;
+  // Method 2: Try common variations
+  const possibleKeys = ['referral_code', 'ReferralCode', 'referralCode', 'Referral_Code'];
+  
+  for (const key of possibleKeys) {
+    if (profile[key] !== undefined) {
+      referral_code = profile[key];
+      console.log(`✅ Found referral code with key "${key}":`, referral_code);
+      break;
+    }
   }
   
-  console.log("✅ CustomFields is an array with", profile.CustomFields.length, "items");
+  // Method 3: Check CustomFields array (original approach)
+  if (!referral_code && profile.CustomFields) {
+    console.log("Checking CustomFields array...");
+    
+    if (Array.isArray(profile.CustomFields)) {
+      console.log("✅ CustomFields is an array with", profile.CustomFields.length, "items");
+      
+      // Log each custom field in detail
+      profile.CustomFields.forEach((field, index) => {
+        console.log(`CustomField[${index}]:`, {
+          fullField: field,
+          hasField: !!field.Field,
+          fieldName: field.Field?.name,
+          fieldValue: field.FieldValue,
+          fieldValueType: typeof field.FieldValue
+        });
+      });
+      
+      // Look for the referral_code field
+      const refField = profile.CustomFields.find(f => {
+        const hasField = f.Field && f.Field.name;
+        const isReferralCode = hasField && f.Field.name === 'referral_code';
+        console.log(`Checking field "${f.Field?.name}": hasField=${hasField}, isReferralCode=${isReferralCode}`);
+        return isReferralCode;
+      });
+      
+      if (refField) {
+        referral_code = refField.FieldValue;
+        console.log("✅ Found referral_code in CustomFields:", refField);
+      }
+    } else {
+      console.log("❌ CustomFields is not an array:", typeof profile.CustomFields);
+      console.log("CustomFields value:", profile.CustomFields);
+    }
+  }
   
-  // Log each custom field in detail
-  profile.CustomFields.forEach((field, index) => {
-    console.log(`CustomField[${index}]:`, {
-      fullField: field,
-      hasField: !!field.Field,
-      fieldName: field.Field?.name,
-      fieldValue: field.FieldValue,
-      fieldValueType: typeof field.FieldValue
+  // Method 4: Check all properties that might contain the referral code
+  if (!referral_code) {
+    console.log("Searching all profile properties for referral code...");
+    Object.keys(profile).forEach(key => {
+      const value = profile[key];
+      if (typeof value === 'string' && value.length > 0 && value.length < 50) {
+        console.log(`Property "${key}": "${value}"`);
+        // Check if this looks like a referral code (contains some known patterns)
+        if (value.includes('FUNDKITE') || value.includes('AQUA') || /^[A-Z0-9]{5,20}$/.test(value)) {
+          console.log(`🎯 Potential referral code found in "${key}": "${value}"`);
+        }
+      }
     });
-  });
-  
-  // Look for the referral_code field
-  const refField = profile.CustomFields.find(f => {
-    const hasField = f.Field && f.Field.name;
-    const isReferralCode = hasField && f.Field.name === 'referral_code';
-    console.log(`Checking field "${f.Field?.name}": hasField=${hasField}, isReferralCode=${isReferralCode}`);
-    return isReferralCode;
-  });
-  
-  if (refField) {
-    referral_code = refField.FieldValue;
-    console.log("✅ Found referral_code field:", refField);
-    console.log("✅ Referral code value:", `"${referral_code}"`);
-    console.log("✅ Referral code type:", typeof referral_code);
-    console.log("✅ Referral code length:", referral_code?.length);
-  } else {
-    console.log("❌ No referral_code field found");
   }
   
+  console.log("Final referral code value:", referral_code);
   console.log("=== END REFERRAL CODE EXTRACTION DEBUG ===");
   return referral_code;
 }
