@@ -1412,78 +1412,86 @@ console.error("Error handling subscription reopen:", err);
 });
 
 
-Outseta.on("user", async (profile) => {
-  if (!profile || !profile.Email) {
-    console.error("No user profile available");
-    return;
-  }
+document.addEventListener('DOMContentLoaded', function () {
+  console.log("Waiting for Outseta user event...");
 
-  console.log("PersonUid:", profile.Uid);
-  console.log("Email:", profile.Email);
-  console.log("AccountUid:", profile.Account?.Uid);
-  console.log("CustomFields:", profile.CustomFields);
+  Outseta.on("user", async (basicProfile) => {
+    console.log("User event fired. Basic profile:", basicProfile);
 
-  let referral_code = null;
+    const profile = await Outseta.getUser({ expand: 'CustomFields' });
 
-  if (Array.isArray(profile.CustomFields)) {
-    const refField = profile.CustomFields.find(f => f.Field?.systemName === 'referral_code');
-    if (refField?.FieldValue) {
-      referral_code = refField.FieldValue;
-      console.log("Referral code found:", referral_code);
-    } else {
-      console.log("Referral code not provided.");
+    if (!profile || !profile.Email) {
+      console.error("Expanded profile not available");
+      return;
     }
-  }
 
-  // Check if user exists
-  let { data: existingUser, error: fetchError } = await supabase
-    .from('usage')
-    .select('*')
-    .eq('user_email', profile.Email);
+    console.log("Expanded profile:", profile);
+    console.log("PersonUid:", profile.Uid);
+    console.log("Email:", profile.Email);
+    console.log("AccountUid:", profile.Account?.Uid);
+    console.log("CustomFields:", profile.CustomFields);
 
-  let pages_used = 0;
-  let page_credits = 100;
-  let plan_name = 'Free Trial';
-  let rowId = null;
-  let billing_cycle_start;
+    let referral_code = null;
 
-  if (existingUser?.length > 0) {
-    pages_used = existingUser[0].pages_used || 0;
-    page_credits = existingUser[0].page_credits || 100;
-    plan_name = existingUser[0].plan_name || 'Free Trial';
-    rowId = existingUser[0].id;
-    console.log("Found existing user with ID:", rowId);
-  } else {
-    const today = new Date();
-    billing_cycle_start = today.toISOString().split('T')[0];
-  }
+    if (Array.isArray(profile.CustomFields)) {
+      const refField = profile.CustomFields.find(f => f.Field?.systemName === 'referral_code');
+      if (refField?.FieldValue) {
+        referral_code = refField.FieldValue;
+        console.log("Referral code found:", referral_code);
+      } else {
+        console.log("Referral code not provided.");
+      }
+    }
 
-  const pages_remaining = page_credits - pages_used;
+    // Check if user exists
+    let { data: existingUser, error: fetchError } = await supabase
+      .from('usage')
+      .select('*')
+      .eq('user_email', profile.Email);
 
-  const userData = {
-    user_email: profile.Email,
-    pages_used,
-    pages_remaining,
-    plan_name,
-    page_credits
-  };
+    let pages_used = 0;
+    let page_credits = 100;
+    let plan_name = 'Free Trial';
+    let rowId = null;
+    let billing_cycle_start;
 
-  if (referral_code) userData.referral_code = referral_code;
-  if (!rowId && billing_cycle_start) userData.billing_cycle_start = billing_cycle_start;
-  if (rowId) userData.id = rowId;
+    if (existingUser?.length > 0) {
+      pages_used = existingUser[0].pages_used || 0;
+      page_credits = existingUser[0].page_credits || 100;
+      plan_name = existingUser[0].plan_name || 'Free Trial';
+      rowId = existingUser[0].id;
+      console.log("Found existing user with ID:", rowId);
+    } else {
+      const today = new Date();
+      billing_cycle_start = today.toISOString().split('T')[0];
+    }
 
-  const { data, error } = await supabase.from('usage').upsert(userData);
-  if (error) {
-    console.error("Supabase update error:", error);
-  } else {
-    console.log("Supabase update successful", data);
-    fetchUserUsageData(profile.Email);
-  }
+    const pages_remaining = page_credits - pages_used;
+
+    const userData = {
+      user_email: profile.Email,
+      pages_used,
+      pages_remaining,
+      plan_name,
+      page_credits
+    };
+
+    if (referral_code) userData.referral_code = referral_code;
+    if (!rowId && billing_cycle_start) userData.billing_cycle_start = billing_cycle_start;
+    if (rowId) userData.id = rowId;
+
+    console.log("Prepared Supabase userData:", userData);
+
+    const { data, error } = await supabase.from('usage').upsert(userData);
+
+    if (error) {
+      console.error("Supabase update error:", error);
+    } else {
+      console.log("Supabase update successful:", data);
+      fetchUserUsageData(profile.Email);
+    }
+  });
 });
-
-  
-  
-
   
 });
 
