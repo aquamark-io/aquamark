@@ -3,264 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partnership Announcement</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f1f5f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        .announcement-card {
-            width: 700px;
-            height: 550px;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 24px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 50px;
-            box-sizing: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.12),
-                0 0 0 1px rgba(255, 255, 255, 0.8),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
-        }
-        
-        .announcement-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8, #2563eb);
-        }
-        
-        .bg-pattern {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 300px;
-            background: 
-                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.04) 0%, transparent 40%);
-            opacity: 0.6;
-        }
-        
-        .bg-dots {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 100px;
-            height: 100px;
-            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-            background-size: 12px 12px;
-        }
-        
-        .content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .header {
-            text-align: center;
-        }
-        
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            color: #1f2937;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            margin-bottom: 32px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-        
-        .badge::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border-radius: 50%;
-            box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-        }
-        
-        .main-title {
-            font-size: 48px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 0 0 16px 0;
-            line-height: 1.1;
-            text-align: center;
-            letter-spacing: -1px;
-        }
-        
-        .subtitle {
-            font-size: 20px;
-            color: #64748b;
-            margin: 0;
-            font-weight: 400;
-            text-align: center;
-            letter-spacing: 0.25px;
-        }
-        
-        .logo-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            margin: 30px 0;
-        }
-        
-        .logo-placeholder {
-            width: 250px;
-            height: 100px;
-            border: 2px solid rgba(0, 0, 0, 0.08);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 50%, rgba(241, 245, 249, 0.9) 100%);
-            backdrop-filter: blur(20px);
-            color: #64748b;
-            font-size: 12px;
-            font-weight: 500;
-            text-align: center;
-            position: relative;
-            box-shadow: 
-                0 8px 25px rgba(0, 0, 0, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
-        }
-        
-        .partnership-symbol {
-            font-size: 36px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 600;
-        }
-        
-        .discount-section {
-            text-align: center;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
-            color: white;
-            padding: 20px 24px;
-            border-radius: 16px;
-            margin-top: 15px;
-            box-shadow: 
-                0 12px 32px rgba(59, 130, 246, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        
-        .discount-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0 0 8px 0;
-            letter-spacing: 0.5px;
-        }
-        
-        .discount-details {
-            font-size: 14px;
-            margin: 0 0 12px 0;
-            opacity: 0.9;
-            font-weight: 400;
-        }
-        
-        .discount-code {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-top: 4px;
-        }
-        
-        .tagline {
-            font-size: 14px;
-            color: #64748b;
-            text-align: center;
-            margin: 20px 0 0 0;
-            font-weight: 400;
-        }
-        
-        @media (max-width: 800px) {
-            .announcement-card {
-                width: 90%;
-                height: auto;
-                padding: 40px 30px;
-            }
-            
-            .logo-section {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .main-title {
-                font-size: 36px;
-            }
-        }
-    </style>
+    <title>Stop Losing Deals to File Theft</title>
 </head>
-<body>
-    <div class="announcement-card">
-        <div class="bg-pattern"></div>
-        <div class="bg-dots"></div>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; color: #1a202c;">
+    
+    <!-- Email Container -->
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         
-        <div class="content">
-            <div class="header">
-                <div class="badge">Announcement</div>
-                <h1 class="main-title">New Partnership</h1>
-                <p class="subtitle">No setup costs. Start in minutes.</p>
-            </div>
-            
- <div class="logo-section">
-  <img src="/logo-full-black-blue.png" alt="Aquamark Logo" style="max-height: 50px;" />
-  <div class="partnership-symbol">×</div>
-  <img src="/fundkites.png" alt="FundKite Logo" style="max-height: 150px;" />
-</div>
+        <!-- Header -->
+        <div style="background-color: #3b82f6; color: white; padding: 40px 30px; text-align: center;">
+            <h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">
+                Your Bank Statements Are Being Stolen
+            </h1>
+            <p style="margin: 15px 0 0 0; font-size: 18px; opacity: 0.9;">
+                It happens every day. A you're paying for it.
+            </p>
+        </div>
 
-
+        <!-- Main Content -->
+        <div style="padding: 40px 30px;">
             
-            <div class="discount-section">
-                <div class="discount-title">🎉 Celebrate with 20% Off</div>
-                <div class="discount-details">Start today</div>
-                <div class="discount-code">FUNDKITEAQUA</div>
-            </div>
+            <!-- Problem Section -->
+            <div style="background-color: #f8f9fa; border-left: 4px solid #6b7280; padding: 30px; margin-bottom: 40px; border-radius: 8px; text-align: center;">
+                <h2 style="margin: 0 0 25px 0; font-size: 22px; color: #374151; font-weight: 600;">
+                    The Hidden Cost of File Theft
+                </h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto;">
+                    <div style="padding: 15px; background-color: white; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-size: 16px; font-weight: 600; color: #374151; margin-bottom: 5px;">
+                            You pay for the lead
+                        </div>
+                        <div style="font-size: 14px; color: #6b7280;">
+                            Your investment, gone.
+                        </div>
                     </div>
+                    <div style="padding: 15px; background-color: white; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-size: 16px; font-weight: 600; color: #374151; margin-bottom: 5px;">
+                            Each deal worth ~$4,000
+                        </div>
+                        <div style="font-size: 14px; color: #6b7280;">
+                            Commission at stake.
+                        </div>
+                    </div>
+                    <div style="padding: 15px; background-color: white; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-size: 16px; font-weight: 600; color: #374151; margin-bottom: 5px;">
+                            Files stolen daily
+                        </div>
+                        <div style="font-size: 14px; color: #6b7280;">
+                            Resold multiple times
+                        </div>
+                    </div>
+                    <div style="padding: 15px; background-color: white; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-size: 16px; font-weight: 600; color: #374151; margin-bottom: 5px;">
+                            Thousands lost monthly.
+                        </div>
+                        <div style="font-size: 14px; color: #6b7280;">
+                            Real impact on your business.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution Section -->
+            <div style="background-color: #3b82f6; color: white; padding: 40px; border-radius: 8px; margin-bottom: 40px; text-align: center;">
+                <h2 style="margin: 0 0 15px 0; font-size: 24px; font-weight: 600;">
+                    Aquamark Stops It
+                </h2>
+                <p style="margin: 0 0 25px 0; font-size: 18px; opacity: 0.9;">
+                    Deter theft at scale
+                </p>
+                <div style="background-color: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 8px; margin-bottom: 25px;">
+                    <div style="font-size: 36px; font-weight: 700; margin-bottom: 8px;">
+                        $299/month
+                    </div>
+                    <div style="font-size: 16px; opacity: 0.8;">
+                        No file storage. No friction.
+                    </div>
+                </div>
+                <div style="font-size: 16px; opacity: 0.9;">
+                    Save one deal, pay for the year.
+                </div>
+            </div>
+
+            <!-- Value Proposition -->
+            <div style="background-color: #f8f9fa; padding: 30px; border-radius: 8px; margin-bottom: 40px;">
+                <h3 style="margin: 0 0 25px 0; font-size: 20px; color: #1e293b; font-weight: 600;">
+                    Your brand, on every page. Know before you submit.
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                    <div style="background-color: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Deter theft with watermarks</div>
+                        <div style="color: #6b7280; font-size: 14px;">Each file includes QR codes ensuring accountability</div>
+                    </div>
+                    <div style="background-color: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Track file access</div>
+                        <div style="color: #6b7280; font-size: 14px;">Know exactly who had access to your files</div>
+                    </div>
+                    <div style="background-color: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Seamless integration</div>
+                        <div style="color: #6b7280; font-size: 14px;">API or bulk processing - your choice</div>
+                    </div>
+                    <div style="background-color: white; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                        <div style="font-weight: 600; color: #374151; margin-bottom: 8px;">Compliance ready</div>
+                        <div style="color: #6b7280; font-size: 14px;">Auto-flag state requirements and CRM integration</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div style="text-align: center; padding: 30px 0;">
+                <h3 style="margin: 0 0 25px 0; font-size: 24px; color: #1e293b; font-weight: 600;">
+                    Why wouldn't you use it?
+                </h3>
+                <a href="https://aquamark.io" style="display: inline-block; background-color: #3b82f6; color: white; text-decoration: none; padding: 16px 32px; border-radius: 6px; font-size: 18px; font-weight: 600; margin-bottom: 15px;">
+                    Start Free Trial
+                </a>
+                <p style="margin: 15px 0 0 0; font-size: 14px; color: #6b7280;">
+                    No payment info required. Test every feature—including our API.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div style="background-color: #1e293b; color: #cbd5e1; padding: 30px; text-align: center;">
+            <div style="margin-bottom: 15px;">
+                <strong style="color: white; font-size: 18px;">Aquamark</strong>
+            </div>
+            <p style="margin: 0 0 15px 0; font-size: 14px;">
+                Proof. Protection. Peace of Mind.
+            </p>
+            <div style="font-size: 12px; opacity: 0.7;">
+                Bringing visibility, accountability and compliance into every submission.
+            </div>
+        </div>
+
     </div>
+
 </body>
 </html>
