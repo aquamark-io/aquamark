@@ -7,33 +7,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
   <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
   <style>
-  body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background-color: #f9fafb;
-    color: #111827;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-  }
-  .container {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    cursor: default;
-  }
-  footer {
-    margin-top: 2rem;
-    font-size: 0.875rem;
-    color: #6b7280;
-    text-align: center;
-  }
-</style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-align: center;
+    }
+    .auth-wrapper {
+      position: relative;
+      min-height: 400px;
+    }
+    #loading-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1rem;
+      color: #374151;
+      background: #f3f4f6;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
 
@@ -44,20 +60,35 @@
     </a>
   </div>
 
-<div id="auth-wrapper" style="cursor: default; pointer-events: auto;">
-  <div data-o-auth="1"
-       data-widget-mode="register"
-       data-plan-uid="aWxLDdWV"
-       data-skip-plan-options="true"
-       data-mode="embed"
-       data-custom-fields="ReferralCode">
+  <div class="auth-wrapper">
+    <div id="loading-message">Loading secure form...</div>
+    <div id="auth-embed"
+         data-o-auth="1"
+         data-widget-mode="register"
+         data-plan-uid="aWxLDdWV"
+         data-skip-plan-options="true"
+         data-mode="embed"
+         data-custom-fields="ReferralCode">
+    </div>
   </div>
 </div>
-
 
 <footer>
   &copy; 2025 Aquamark. All rights reserved.
 </footer>
+
+<!-- Hide loading message once Outseta loads -->
+<script>
+  const observer = new MutationObserver(() => {
+    const loading = document.getElementById('loading-message');
+    if (loading) loading.remove();
+  });
+
+  observer.observe(document.getElementById('auth-embed'), {
+    childList: true,
+    subtree: true
+  });
+</script>
 
 <!-- Outseta Embed -->
 <script>
