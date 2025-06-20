@@ -32,23 +32,6 @@
       color: #6b7280;
       text-align: center;
     }
-    .auth-wrapper {
-      position: relative;
-      min-height: 400px;
-    }
-    #loading-message {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1rem;
-      color: #374151;
-      background: #f9fafb;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      z-index: 9999;
-    }
   </style>
 </head>
 <body>
@@ -60,35 +43,18 @@
     </a>
   </div>
 
-  <div class="auth-wrapper">
-    <div id="loading-message">Loading secure form...</div>
-    <div id="auth-embed"
-         data-o-auth="1"
-         data-widget-mode="register"
-         data-plan-uid="aWxLDdWV"
-         data-skip-plan-options="true"
-         data-mode="embed"
-         data-custom-fields="ReferralCode">
-    </div>
-  </div>
+<div data-o-auth="1"
+     data-widget-mode="register"
+     data-plan-uid="aWxLDdWV"
+     data-skip-plan-options="true"
+     data-mode="embed"
+     data-custom-fields="ReferralCode">
+</div>
 </div>
 
 <footer>
   &copy; 2025 Aquamark. All rights reserved.
 </footer>
-
-<!-- Hide loading message once Outseta loads -->
-<script>
-  const observer = new MutationObserver(() => {
-    const loading = document.getElementById('loading-message');
-    if (loading) loading.remove();
-  });
-
-  observer.observe(document.getElementById('auth-embed'), {
-    childList: true,
-    subtree: true
-  });
-</script>
 
 <!-- Outseta Embed -->
 <script>
