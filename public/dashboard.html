@@ -605,33 +605,52 @@
             }
         }
 
-        // Load usage data from API
-        async function loadUsageData() {
-            try {
-                if (!userToken) {
-                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
-                    return;
-                }
-
-                const response = await fetch(`${API_BASE_URL}/api/usage`, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    const userData = await response.json();
-                    displayUsageData(userData);
-                } else {
-                    const error = await response.json();
-                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
-                }
-            } catch (error) {
-                console.error('Error loading usage data:', error);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
-            }
+// Load usage data from API
+async function loadUsageData() {
+    try {
+        if (!userToken) {
+            document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
+            return;
         }
+
+        // Check for pending referral code from signup
+        const pendingReferralCode = sessionStorage.getItem('pendingReferralCode');
+        if (pendingReferralCode) {
+            console.log('Found pending referral code:', pendingReferralCode);
+            sessionStorage.removeItem('pendingReferralCode'); // Clear it
+        }
+
+        // Also check URL for referral code
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlReferralCode = urlParams.get('ref') || urlParams.get('referral');
+        
+        const referralCode = pendingReferralCode || urlReferralCode;
+
+        // Build request URL with referral code if present
+        let requestUrl = `${API_BASE_URL}/api/usage`;
+        if (referralCode) {
+            requestUrl += `?referral_code=${encodeURIComponent(referralCode)}`;
+        }
+
+        const response = await fetch(requestUrl, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const userData = await response.json();
+            displayUsageData(userData);
+        } else {
+            const error = await response.json();
+            document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
+        }
+    } catch (error) {
+        console.error('Error loading usage data:', error);
+        document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+    }
+}
 
         // Display usage data in the UI
         function displayUsageData(userData) {
