@@ -592,25 +592,28 @@
             }
         }
 
-        // Load usage data
-        async function loadUsageData() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/usage`, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Loading usage data:', data);
-document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
-                }
-            } catch (error) {
-                console.error('Error loading usage data:', error);
+// Load usage data
+async function loadUsageData() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`,
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
             }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Fresh usage data loaded:', data);
+            document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
+        } else {
+            console.error('Failed to load usage data');
         }
+    } catch (error) {
+        console.error('Error loading usage data:', error);
+    }
+}
 
         // Upload logo function
         async function uploadLogo() {
