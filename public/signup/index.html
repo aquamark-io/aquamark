@@ -32,6 +32,13 @@
       color: #6b7280;
       text-align: center;
     }
+    .form-field {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
@@ -43,20 +50,35 @@
     </a>
   </div>
 
-<div data-o-auth="1"
-     data-widget-mode="register"
-     data-plan-uid="aWxLDdWV"
-     data-skip-plan-options="true"
-     data-mode="embed"
-     data-custom-fields="ReferralCode">
+  <div data-o-auth="1"
+       data-widget-mode="register"
+       data-plan-uid="aWxLDdWV"
+       data-skip-plan-options="true"
+       data-mode="custom"
+       data-custom-fields="ReferralCode">
 
-  <input type="text"
-         name="ReferralCode"
-         placeholder="Referral Code (optional)"
-         style="width: 100%; padding: 0.5rem; margin-top: 1rem; border-radius: 6px; border: 1px solid #ccc;" />
+    <input type="text"
+           name="ReferralCode"
+           placeholder="Referral Code (optional)"
+           class="form-field" />
 
+    <input type="email"
+           name="email"
+           placeholder="Email"
+           class="form-field"
+           required />
+
+    <input type="password"
+           name="password"
+           placeholder="Password"
+           class="form-field"
+           required />
+
+    <button type="submit" class="form-field" style="background: #467EFF; color: white; font-weight: 600; cursor: pointer;">
+      Create Account
+    </button>
+  </div>
 </div>
-
 
 <footer>
   &copy; 2025 Aquamark. All rights reserved.
