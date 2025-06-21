@@ -32,6 +32,16 @@
       color: #6b7280;
       text-align: center;
     }
+    .referral-info {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #0369a1;
+    }
   </style>
 </head>
 <body>
@@ -43,12 +53,19 @@
     </a>
   </div>
 
-<div data-o-auth="1"
-     data-widget-mode="register"
-     data-plan-uid="aWxLDdWV"
-     data-skip-plan-options="true"
-     data-mode="embed">
-</div>
+  <!-- Show referral info if present -->
+  <div id="referralInfo" style="display: none;" class="referral-info">
+    <strong>🎉 Referral Code Applied!</strong><br>
+    <span id="referralCode"></span>
+  </div>
+
+  <div id="outsetaAuth"
+       data-o-auth="1"
+       data-widget-mode="register"
+       data-plan-uid="aWxLDdWV"
+       data-skip-plan-options="true"
+       data-mode="embed">
+  </div>
 </div>
 
 <footer>
@@ -57,12 +74,43 @@
 
 <!-- Outseta Embed -->
 <script>
+  // Extract referral code from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const referralCode = urlParams.get('ref') || urlParams.get('referral');
+  
+  console.log('Detected referral code:', referralCode);
+  
+  // Show referral info if present
+  if (referralCode) {
+    document.getElementById('referralInfo').style.display = 'block';
+    document.getElementById('referralCode').textContent = referralCode;
+  }
+  
   var o_options = {
     domain: 'aquamark.outseta.com',
     load: 'auth'
   };
 </script>
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+<script>
+  // Handle successful registration
+  document.addEventListener('DOMContentLoaded', function() {
+    // Listen for successful registration
+    if (window.Outseta) {
+      Outseta.on('user.register', function(user) {
+        console.log('User registered:', user);
+        
+        // If there's a referral code, we need to store it
+        if (referralCode) {
+          console.log('Storing referral code for user:', referralCode);
+          // The referral code will be handled when they first visit the dashboard
+          sessionStorage.setItem('pendingReferralCode', referralCode);
+        }
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
