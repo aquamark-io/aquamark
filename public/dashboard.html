@@ -1,1505 +1,677 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<title>Aquamark Dashboard</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-
-<link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
-
-<style>
-
-:root {
-
---primary-color: #467EFF;
-
---primary-light: #f8fafc;
-
---primary-dark: #1d4ed8;
-
---accent-color: #467EFF;
-
---success-color: #10b981;
-
---warning-color: #f59e0b;
-
---danger-color: #ef4444;
-
---text-primary: #1a1a1a;
-
---text-secondary: #64748b;
-
---bg-color: #ffffff
-
---card-bg: #ffffff;
-
---border-color: #e2e8f0;
-
---shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-
---shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
---shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
---radius: 12px;
-
-}
-
-* {
-
-margin: 0;
-
-padding: 0;
-
-box-sizing: border-box;
-
-}
-
-body {
-
-font-family: 'Inter', sans-serif;
-
-background: var(--bg-color);
-
-color: var(--text-primary);
-
-min-height: 100vh;
-
-display: flex;
-
-flex-direction: column;
-
-}
-
-/* Header */
-
-.aqua-header {
-
-display: flex;
-
-justify-content: space-between;
-
-align-items: center;
-
-padding: 1rem 2rem;
-
-background: var(--primary-light);
-
-box-shadow: var(--shadow-md);
-
-position: sticky;
-
-top: 0;
-
-z-index: 100;
-
-}
-
-.aqua-logo {
-
-height: 32px;
-
-}
-
-.aqua-nav {
-
-display: flex;
-
-align-items: center;
-
-}
-
-.aqua-nav a {
-
-margin-left: 2rem;
-
-text-decoration: none;
-
-font-weight: 500;
-
-color: var(--text-primary);
-
-transition: all 0.2s ease;
-
-position: relative;
-
-}
-
-.aqua-nav a:hover {
-
-color: var(--accent-color);
-
-}
-
-.aqua- a.active {
-
-color: var(--accent-color);
-
-}
-
-.aqua- a.active:after {
-
-content: '';
-
-position: absolute;
-
-bottom: -8px;
-
-left: 0;
-
-height: 3px;
-
-width: 100%;
-
-background: #467EFF;
-
-border-radius: 3px;
-
-}
-
-  .action-buttons a {
-    text-decoration: none;
-}
-
-  .btn-demo {
-  background: linear-gradient(90deg, #a855f7, #ec4899);
-  color: white;
-  border: none;
-}
-
-.btn-demo:hover {
-  opacity: 0.9;
-}
-
-
-
-/* Main Content */
-
-.aqua-panel {
-
-max-width: 1400px;
-
-width: 95%;
-
-margin: 2rem auto;
-
-flex: 1;
-
-}
-
-h1.greeting {
-
-font-size: 2rem;
-
-margin-bottom: 2rem;
-
-font-weight: 600;
-
-color: var(--text-primary);
-
-}
-
-/* Main Layout */
-
-.aqua-layout {
-
-display: grid;
-
-grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-
-gap: 2rem;
-
-}
-
-/* Cards */
-
-.aqua-card {
-
-background: var(--card-bg);
-
-border-radius: var(--radius);
-
-box-shadow: var(--shadow-md);
-
-overflow: hidden;
-
-transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-height: 100%;
-
-}
-
-.aqua-card:hover {
-
-transform: translateY(-5px);
-
-box-shadow: var(--shadow-lg);
-
-}
-
-.card-header {
-
-padding: 1.25rem 1.5rem;
-
-border-bottom: 1px solid var(--border-color);
-
-display: flex;
-
-align-items: center;
-
-justify-content: space-between;
-
-}
-
-.card-header h2 {
-
-font-size: 1.25rem;
-
-font-weight: 600;
-
-color: var(--text-primary);
-
-display: flex;
-
-align-items: center;
-
-gap: 0.5rem;
-
-}
-
-.card-header h2::before {
-
-content: '';
-
-display: inline-block;
-
-width: 10px;
-
-height: 10px;
-
-background-color: var(--accent-color);
-
-border-radius: 50%;
-
-}
-
-.card-body {
-
-padding: 1.5rem;
-
-}
-
-/* Action Buttons */
-
-.btn {
-
-display: inline-flex;
-
-align-items: center;
-
-justify-content: center;
-
-height: 40px;
-
-padding: 0 1.25rem;
-
-border-radius: 8px;
-
-font-weight: 600;
-
-font-size: 0.95rem;
-
-transition: all 0.2s ease;
-
-cursor: pointer;
-
-border: none;
-
-gap: 0.5rem;
-
-}
-
-.btn-primary {
-
-background: var(--primary-color);
-
-color: white;
-
-}
-
-.btn-primary:hover {
-
-background: #1d4ed8;
-
-}
-
-.btn-accent {
-
-background: #467EFF;
-
-color: white;
-
-}
-  
-  .btn-danger {
-  background: var(--danger-color);
-  color: white;
-}
-.btn-danger:hover {
-  background: #dc2626;
-}
-
-.btn-watermark {
-  background: #467EFF;
-  color: white;
-}
-
-.btn-watermark:hover {
-  background: #95cbea;
-}
-
-.btn-success {
-  background: white;
-  color: #467EFF;
-  border: 2px solid #467EFF;
-}
-
-.btn-accent:hover {
-
-background: #1d4ed8;
-
-}
-
-.btn-outline {
-
-background: transparent;
-
-border: 1px solid var(--border-color);
-
-color: var(--text-primary);
-
-}
-
-.btn-outline:hover {
-
-background: var(--primary-light);
-
-border-color: var(--primary-color);
-
-}
-
-/* Announcement Banner */
-
-.announcement-banner {
-  background: linear-gradient(90deg, #3B82F6, #1E3A8A);
-  color: white;
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: var(--shadow-md);
-}
-
-
-.announcement-content {
-
-display: flex;
-
-align-items: center;
-
-gap: 1rem;
-
-}
-
-.announcement-icon {
-
-background: white;
-
-width: 40px;
-
-height: 40px;
-
-border-radius: 50%;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-color: var(--primary-color);
-
-font-size: 1.5rem;
-
-}
-
-.announcement-text h3 {
-
-font-weight: 600;
-
-margin-bottom: 0.25rem;
-
-}
-
-.announcement-text p {
-
-color: white;
-   line-height: 1.6;
-
-}
-
-/* Profile Section */
-
-.profile-section {
-
-margin-top: 1.5rem;
-
-}
-
-.profile-item {
-
-display: flex;
-
-justify-content: space-between;
-
-padding: 1rem 0;
-
-border-bottom: 1px solid var(--border-color);
-
-}
-
-.profile-item:last-child {
-
-border-bottom: none;
-
-}
-
-.profile-label {
-
-color: var(--text-secondary);
-
-font-weight: 500;
-
-}
-
-.profile-value {
-
-font-weight: 500;
-
-}
-
-.profile-action {
-
-color: var(--accent-color);
-
-text-decoration: none;
-
-margin-left: 0.5rem;
-
-font-size: 0.9rem;
-
-font-weight: 500;
-
-}
-
-.profile-action:hover {
-
-text-decoration: underline;
-
-}
-
-.profile-photo {
-
-width: 80px;
-
-height: 80px;
-
-border-radius: 50%;
-
-background: var(--border-color);
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-margin-bottom: 1rem;
-
-overflow: hidden;
-
-}
-
-.profile-photo img {
-
-width: 100%;
-
-height: 100%;
-
-object-fit: cover;
-
-}
-
-.upload-btn {
-
-background: #467EFF;
-
-color: white;
-
-border: none;
-
-border-radius: 6px;
-
-padding: 0.4rem 0.75rem;
-
-font-size: 0.75rem;
-
-font-weight: 500;
-
-cursor: pointer;
-
-transition: all 0.2s ease;
-
-margin-top: 0.75rem;
-
-}
-
-.upload-btn:hover {
-
-background: #1d4ed8;
-
-}
-
-/* Usage Stats */
-
-.usage-stat {
-
-display: flex;
-
-justify-content: space-between;
-
-margin-bottom: 0.75rem;
-
-}
-
-.usage-label {
-
-color: var(--text-secondary);
-
-font-weight: 500;
-
-}
-
-.usage-value {
-
-font-weight: 600;
-
-}
-
-.progress-bar {
-
-background: #f3f4f6;
-
-border-radius: 8px;
-
-height: 8px;
-
-overflow: hidden;
-
-margin-top: 1rem;
-
-}
-
-.progress-fill {
-
-background: #467EFF;
-
-height: 100%;
-
-width: 0%; /* Will be set by JavaScript */
-
-}
-
-/* Action Card */
-
-.action-card {
-
-padding: 1.5rem;
-
-border-radius: var(--radius);
-
-background: white;
-
-box-shadow: var(--shadow-md);
-
-display: flex;
-
-flex-direction: column;
-
-gap: 1rem;
-
-margin-bottom: 2rem;
-
-}
-
-.action-buttons {
-
-display: flex;
-
-gap: 1rem;
-
-flex-wrap: wrap;
-
-}
-
-/* Footer */
-
-.aqua-footer {
-
-background: var(--primary-light);
-
-padding: 1.5rem 2rem;
-
-margin-top: 3rem;
-
-display: flex;
-
-justify-content: space-between;
-
-align-items: center;
-
-}
-
-.footer-logo {
-
-height: 24px;
-
-}
-
-.footer-nav {
-
-display: flex;
-
-gap: 2rem;
-
-}
-
-.footer-nav a {
-
-color: var(--text-primary);
-
-text-decoration: none;
-
-font-size: 0.9rem;
-
-font-weight: 500;
-
-transition: color 0.2s ease;
-
-}
-
-.footer-nav a:hover {
-
-color: var(--accent-color);
-
-}
-
-.footer-copyright {
-
-color: var(--text-secondary);
-
-font-size: 0.9rem;
-
-}
-
-/* Responsive adjustments */
-
-@media (max-width: 768px) {
-
-.aqua-layout {
-
-grid-template-columns: 1fr;
-
-}
-
-.announcement-banner {
-
-flex-direction: column;
-
-align-items: flex-start;
-
-gap: 1rem;
-
-}
-
-.action-buttons {
-
-flex-direction: column;
-
-}
-
-.aqua-footer {
-
-flex-direction: column;
-
-gap: 1rem;
-
-text-align: center;
-
-}
-
-.footer-nav {
-
-flex-direction: column;
-
-gap: 0.5rem;
-
-}
-
-}
-
-</style>
-
-<!-- Outseta integration -->
-
-<script>
-
-var o_options = {
-
-domain: 'aquamark.outseta.com',
-
-load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-
-};
-
-</script>
-
-<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
-
-<!-- Supabase integration -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+    <meta charset="UTF-8">
+    <title>Aquamark Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
+    <style>
+        :root {
+            --primary-color: #467EFF;
+            --primary-light: #f8fafc;
+            --primary-dark: #1d4ed8;
+            --accent-color: #467EFF;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1a1a1a;
+            --text-secondary: #64748b;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .aqua-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--primary-light);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .aqua-logo {
+            height: 32px;
+        }
+
+        .aqua-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .aqua-nav a {
+            margin-left: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .aqua-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .aqua-nav a.active {
+            color: var(--accent-color);
+        }
+
+        .aqua-nav a.active:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: #467EFF;
+            border-radius: 3px;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+        }
+
+        .btn-demo {
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            color: white;
+            border: none;
+        }
+
+        .btn-demo:hover {
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .aqua-panel {
+            max-width: 1400px;
+            width: 95%;
+            margin: 2rem auto;
+            flex: 1;
+        }
+
+        h1.greeting {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Main Layout */
+        .aqua-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .aqua-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+        }
+
+        .aqua-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-header h2::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-accent {
+            background: #467EFF;
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-watermark {
+            background: #467EFF;
+            color: white;
+        }
+
+        .btn-watermark:hover {
+            background: #95cbea;
+        }
+
+        .btn-success {
+            background: white;
+            color: #467EFF;
+            border: 2px solid #467EFF;
+        }
+
+        .btn-accent:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background: linear-gradient(90deg, #3B82F6, #1E3A8A);
+            color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+        }
+
+        .announcement-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .announcement-icon {
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .announcement-text h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .announcement-text p {
+            color: white;
+            line-height: 1.6;
+        }
+
+        /* Usage Stats */
+        .usage-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .usage-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .usage-value {
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #f3f4f6;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            background: #467EFF;
+            height: 100%;
+            width: 0%;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .aqua-footer {
+            background: var(--primary-light);
+            padding: 1.5rem 2rem;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            height: 24px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .aqua-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .announcement-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .aqua-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+
+    <!-- Outseta integration -->
+    <script>
+        var o_options = {
+            domain: 'aquamark.outseta.com',
+            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+        };
+    </script>
+    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
 
 <body>
-
-<header class="aqua-header">
-
-<img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
-
-<nav class="aqua-nav">
-  <a href="/dashboard.html" class="active">Dashboard</a>
-  <a href="/watermark.html" id="watermarkLink">Watermark</a>
-  <a href="https://www.aquamark.io/login.html">Log Out</a>
-</nav>
-
-</header>
-
-<main class="aqua-panel">
-
-<h1 class="greeting">My Dashboard</h1>
-
-<!-- Announcement Banner -->
-
-<div class="announcement-banner">
-
-<div class="announcement-content">
-
-<div class="announcement-icon">
-  <img src="logo-icon-black-blue.png" alt="Money Bag Icon" style="width: 28px; height: 28px;">
-</div>
-
-<div class="announcement-text">
-
-<h3>State-specific compliance alerts</h3>
-  <p>
-        Must be on API for this feature. Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM.<br>
-        <strong>Request your API key:</strong> <a href="mailto:hey@aquamark.io" style="color: white; text-decoration: underline;">hey@aquamark.io</a>
-      </p>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- Action Buttons Card -->
-<div class="action-buttons">
-  <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-success">Upgrade Plan</a>
-  <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
-  <a href="https://app.supademo.com/demo/cmc4x4nx60p8wllpn4din0fcy" target="_blank" class="btn btn-demo">1-minute demo</a>
-</div>
-
-
-
-<!-- Main Layout -->
-
-<div class="aqua-layout">
-
-<!-- Profile Card -->
-
-<div class="aqua-card">
-
-<div class="card-header">
-
-<h2>My Profile</h2>
-
-</div>
-
-<div class="card-body">
-
-<div data-o-profile="1" data-mode="embed"></div>
-
-</div>
-
-</div>
-
-<!-- Usage Card -->
-
-<div class="aqua-card">
-
-<div class="card-header">
-
-<h2>Your Usage</h2>
-
-</div>
-
-<div class="card-body" id="usage-stats">
-
-<p>Loading your usage data...</p>
-
-</div>
-</div>
-
-</div>
-  
-</main>
-
-<footer class="aqua-footer">
-
-<img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
-
-<div class="footer-nav">
-<a href="https://www.aquamark.io/terms.html">Terms of Service</a>
-<a href="https://www.aquamark.io/privacy.html">Privacy Policy</a>
-<a href="mailto:hey@aquamark.io">Contact Us</a>
-</div>
-
-<div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
-
-</footer>
-
-<!-- Preserve URL parameters for all internal links -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = window.location.search;
-    const hashParams = window.location.hash;
-
-    // List of internal paths you want to preserve parameters for
-    const pathsToUpdate = ["/watermark.html", "/dashboard.html", "/lenders.html"];
-
-    document.querySelectorAll("a[href]").forEach(link => {
-      const href = link.getAttribute("href");
-      if (href && pathsToUpdate.some(path => href.startsWith(path))) {
-        // Strip any existing query/hash to avoid duplicates
-        const cleanHref = href.split('?')[0].split('#')[0];
-        link.href = cleanHref + urlParams + hashParams;
-      }
-    });
-  });
-</script>
-
-<script>
-
-// Handle logout redirection
-
-if (window.location.hash === '#o-logout-link') {
-
-window.location.href = '/login.html';
-
-}
-
-// Initialize Supabase client
-
-const SUPABASE_URL = 'https://dvzmnikrvkvgragzhrof.supabase.co';
-
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2em1uaWtydmt2Z3JhZ3pocm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5Njg5NzUsImV4cCI6MjA1OTU0NDk3NX0.FaHsjIRNlgf6YWbe5foz0kJFtCO4FuVFo7KVcfhKPEk';
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// Function to get page credits based on plan name
-
-function getPageCreditsByPlan(planName) {
-
-const planCredits = {
-  'Riding Solo': 1000,
-  'Small Teams': 5000,
-  'ISO Shops': 1000000,
-  'Enterprise': 1000000,
-  'The Broker Shop': 1000000
-};
-
-return planCredits[planName] || 100; // Default to 100 if plan not found
-
-}
-
-// Function to update user plan in Supabase
-
-async function updateUserPlan(email, planName) {
-
-try {
-
-console.log(`Updating plan for ${email} to ${planName}`);
-
-// Get the current date for billing cycle
-
-const today = new Date();
-
-const billing_cycle_start = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-
-// Get page credits based on plan
-
-const page_credits = getPageCreditsByPlan(planName);
-
-// First, check if user exists
-
-let { data: existingUser, error: fetchError } = await supabase
-
-.from('usage')
-
-.select('*')
-
-.eq('user_email', email);
-
-if (fetchError) throw fetchError;
-
-// Set initial values
-
-let rowId = null;
-
-// If user exists, get their ID
-
-if (existingUser && existingUser.length > 0) {
-
-rowId = existingUser[0].id;
-
-console.log("Found existing user with ID:", rowId);
-
-} else {
-
-console.log("No existing user found, will create new record");
-
-}
-
-// Prepare the data object with updated plan details
-
-const userData = {
-
-user_email: email,
-
-pages_used: 0, // Reset to 0 when plan changes
-
-pages_remaining: page_credits,
-
-plan_name: planName,
-
-page_credits: page_credits,
-
-billing_cycle_start: billing_cycle_start
-
-};
-
-// Include ID if we have one
-
-if (rowId) {
-
-userData.id = rowId;
-
-}
-
-// Upsert the data
-
-const { data, error } = await supabase
-
-.from('usage')
-
-.upsert(userData);
-
-if (error) throw error;
-
-console.log("Plan update successful:", data);
-
-// Refresh the dashboard display
-
-fetchUserUsageData(email);
-
-return true;
-
-} catch (err) {
-
-console.error("Error updating plan:", err);
-
-return false;
-
-}
-
-}
-
-// Function to check and update billing cycle
-
-async function checkBillingCycle(email) {
-
-try {
-
-// Get user data
-
-const { data, error } = await supabase
-
-.from('usage')
-
-.select('*')
-
-.eq('user_email', email);
-
-if (error) throw error;
-
-// If no user or no billing cycle, exit
-
-if (!data || data.length === 0 || !data[0].billing_cycle_start) {
-
-return;
-
-}
-
-const userData = data[0];
-
-const today = new Date();
-
-const billingStart = new Date(userData.billing_cycle_start);
-
-// Calculate next billing date (1 month from billing start)
-
-const nextBillingDate = new Date(billingStart);
-
-nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
-
-// If today is on or after the next billing date, reset credits
-
-if (today >= nextBillingDate) {
-
-console.log("Billing cycle renewal detected");
-
-// Update billing cycle start to today
-
-const newBillingStart = today.toISOString().split('T')[0];
-
-// Reset pages_used and update billing_cycle_start
-
-const { data: updateData, error: updateError } = await supabase
-
-.from('usage')
-
-.update({
-
-pages_used: 0,
-
-pages_remaining: userData.page_credits,
-
-billing_cycle_start: newBillingStart
-
-})
-
-.eq('id', userData.id);
-
-if (updateError) throw updateError;
-
-console.log("Billing cycle updated:", updateData);
-
-// Refresh the usage display
-
-fetchUserUsageData(email);
-
-}
-
-} catch (err) {
-
-console.error("Error checking billing cycle:", err);
-
-}
-
-}
-
-// Function to fetch and display user usage data
-
-async function fetchUserUsageData(email) {
-
-try {
-
-// Get rows for this user
-
-const { data, error } = await supabase
-
-.from('usage')
-
-.select('*')
-
-.eq('user_email', email);
-
-if (error) throw error;
-
-// Get the first row if multiple exist
-
-const userData = data && data.length > 0 ? data[0] : null;
-
-// Update the UI with the data
-
-const usageStatsElement = document.getElementById('usage-stats');
-
-if (userData) {
-
-const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
-
-usageStatsElement.innerHTML = `
-
-<div class="usage-stats-container">
-
-<div class="usage-stat">
-
-<span class="usage-label">Plan:</span>
-
-<span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
-
-</div>
-
-<div class="usage-stat">
-
-<span class="usage-label">Pages Used:</span>
-
-<span class="usage-value">${userData.pages_used || 0}</span>
-
-</div>
-
-<div class="usage-stat">
-
-<span class="usage-label">Pages Remaining:</span>
-
-<span class="usage-value">${userData.pages_remaining || 100}</span>
-
-</div>
-
-<div class="usage-stat">
-
-<span class="usage-label">Total Credits:</span>
-
-<span class="usage-value">${userData.page_credits || 100}</span>
-
-</div>
-
-<div class="progress-bar">
-
-<div class="progress-fill" style="width: ${usagePercentage}%;"></div>
-
-</div>
-
-</div>
-
-`;
-
-// Also check if billing cycle needs to be updated
-
-checkBillingCycle(email);
-
-} else {
-
-usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
-
-}
-
-} catch (err) {
-
-console.error("Error fetching usage data:", err);
-
-document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
-
-}
-
-}
-
-// Get user profile and update Supabase
-
-document.addEventListener('DOMContentLoaded', function() {
-
-// Initialize debug logging for Outseta events
-
-const enableDebugLogging = true;
-
-// Function to log event data for debugging
-
-function logEventData(eventName, params) {
-
-if (enableDebugLogging) {
-
-console.log(`${eventName} event received:`, params);
-
-// Try to identify where the plan data might be
-
-if (params) {
-
-if (params.Plan) console.log("Plan data found at params.Plan:", params.Plan);
-
-if (params.plan) console.log("Plan data found at params.plan:", params.plan);
-
-if (params.subscription && params.subscription.plan) {
-
-console.log("Plan data found at params.subscription.plan:", params.subscription.plan);
-
-}
-
-if (params.subscription && params.subscription.Plan) {
-
-console.log("Plan data found at params.subscription.Plan:", params.subscription.Plan);
-
-}
-
-}
-
-}
-
-}
-
-// Improved handler for subscription.update events
-
-Outseta.on("subscription.update", async (params) => {
-
-logEventData("subscription.update", params);
-
-try {
-
-const profile = await Outseta.getUser();
-
-if (!profile || !profile.Email) {
-
-console.error("Could not get user profile");
-
-return;
-
-}
-
-// Extract plan name - checking all possible locations
-
-let planName = "Free Trial"; // Default fallback
-
-if (params) {
-
-// Direct Plan property at the root (seen in your console logs)
-
-if (params.Plan && params.Plan.Name) {
-
-planName = params.Plan.Name;
-
-}
-
-// Lowercase alternative
-
-else if (params.plan && params.plan.name) {
-
-planName = params.plan.name;
-
-}
-
-// Check within subscription object
-
-else if (params.subscription) {
-
-if (params.subscription.Plan && params.subscription.Plan.Name) {
-
-planName = params.subscription.Plan.Name;
-
-}
-
-else if (params.subscription.plan && params.subscription.plan.name) {
-
-planName = params.subscription.plan.name;
-
-}
-
-}
-
-}
-
-console.log(`Updating plan for ${profile.Email} to ${planName}`);
-
-// Update user plan in Supabase
-
-await updateUserPlan(profile.Email, planName);
-
-} catch (err) {
-
-console.error("Error handling subscription update:", err);
-
-}
-
-});
-
-// Improved handler for subscription.reopen events (same logic)
-
-Outseta.on("subscription.reopen", async (params) => {
-
-logEventData("subscription.reopen", params);
-
-try {
-
-const profile = await Outseta.getUser();
-
-if (!profile || !profile.Email) {
-
-console.error("Could not get user profile");
-
-return;
-
-}
-
-// Extract plan name - checking all possible locations
-
-let planName = "Free Trial"; // Default fallback
-
-if (params) {
-
-// Direct Plan property at the root
-
-if (params.Plan && params.Plan.Name) {
-
-planName = params.Plan.Name;
-
-}
-
-// Lowercase alternative
-
-else if (params.plan && params.plan.name) {
-
-planName = params.plan.name;
-
-}
-
-// Check within subscription object
-
-else if (params.subscription) {
-
-if (params.subscription.Plan && params.subscription.Plan.Name) {
-
-planName = params.subscription.Plan.Name;
-
-}
-
-else if (params.subscription.plan && params.subscription.plan.name) {
-
-planName = params.subscription.plan.name;
-
-}
-
-}
-
-}
-
-console.log(`Updating plan for ${profile.Email} to ${planName}`);
-
-// Update user plan in Supabase
-
-await updateUserPlan(profile.Email, planName);
-
-} catch (err) {
-
-console.error("Error handling subscription reopen:", err);
-
-}
-
-});
-
-// Get user profile and handle referral code
-Outseta.getUser().then(async (profile) => {
-  if (profile) {
-    console.log("PersonUid:", profile.Uid);
-    console.log("Email:", profile.Email);
-    console.log("AccountUid:", profile.Account.Uid);
-
-    // Get referral code - FIXED: It's a direct property on the profile object!
-    let referral_code = profile.ref_code || null;
-    console.log("Found referral code:", referral_code);
-
-    // Check if user already exists
-    let { data: existingUser, error: fetchError } = await supabase
-      .from('usage')
-      .select('*')
-      .eq('user_email', profile.Email);
-
-    let pages_used = 0;
-    let page_credits = 100;
-    let plan_name = 'Free Trial';
-    let rowId = null;
-    let billing_cycle_start;
-
-    if (existingUser && existingUser.length > 0) {
-      pages_used = existingUser[0].pages_used || 0;
-      page_credits = existingUser[0].page_credits || 100;
-      plan_name = existingUser[0].plan_name || 'Free Trial';
-      rowId = existingUser[0].id;
-      console.log("Found existing user with ID:", rowId);
-    } else {
-      console.log("No existing user found, will create new record");
-      const today = new Date();
-      billing_cycle_start = today.toISOString().split('T')[0];
-    }
-
-    const pages_remaining = page_credits - pages_used;
-
-    const userData = {
-      user_email: profile.Email,
-      pages_used: pages_used,
-      pages_remaining: pages_remaining,
-      plan_name: plan_name,
-      page_credits: page_credits,
-      ref_code: referral_code  // FIXED: Use 'ref_code' to match Supabase column name
-    };
-
-    if (!rowId && billing_cycle_start) {
-      userData.billing_cycle_start = billing_cycle_start;
-    }
-    if (rowId) {
-      userData.id = rowId;
-    }
-
-    console.log("About to upsert user data:", userData);
-
-    const { data, error } = await supabase
-      .from('usage')
-      .upsert(userData);
-
-    if (error) {
-      console.error("Supabase error:", error);
-      throw error;
-    }
-
-    console.log("Supabase update successful", data);
-    fetchUserUsageData(profile.Email);
-  }
-}).catch(err => {
-  console.error("Error getting Outseta user:", err);
-});
-
-});
-
-</script>
-
+    <header class="aqua-header">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
+        <nav class="aqua-nav">
+            <a href="/dashboard.html" class="active">Dashboard</a>
+            <a href="/watermark.html" id="watermarkLink">Watermark</a>
+            <a href="https://www.aquamark.io/login.html">Log Out</a>
+        </nav>
+    </header>
+
+    <main class="aqua-panel">
+        <h1 class="greeting">My Dashboard</h1>
+
+        <!-- Announcement Banner -->
+        <div class="announcement-banner">
+            <div class="announcement-content">
+                <div class="announcement-icon">
+                    <img src="logo-icon-black-blue.png" alt="Money Bag Icon" style="width: 28px; height: 28px;">
+                </div>
+                <div class="announcement-text">
+                    <h3>State-specific compliance alerts</h3>
+                    <p>
+                        Must be on API for this feature. Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM.<br>
+                        <strong>Request your API key:</strong> <a href="mailto:hey@aquamark.io" style="color: white; text-decoration: underline;">hey@aquamark.io</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-success">Upgrade Plan</a>
+            <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
+            <a href="https://app.supademo.com/demo/cmc4x4nx60p8wllpn4din0fcy" target="_blank" class="btn btn-demo">1-minute demo</a>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="aqua-layout">
+            <!-- Profile Card -->
+            <div class="aqua-card">
+                <div class="card-header">
+                    <h2>My Profile</h2>
+                </div>
+                <div class="card-body">
+                    <div data-o-profile="1" data-mode="embed"></div>
+                </div>
+            </div>
+
+            <!-- Usage Card -->
+            <div class="aqua-card">
+                <div class="card-header">
+                    <h2>Your Usage</h2>
+                </div>
+                <div class="card-body" id="usage-stats">
+                    <p>Loading your usage data...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="aqua-footer">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
+        <div class="footer-nav">
+            <a href="https://www.aquamark.io/terms.html">Terms of Service</a>
+            <a href="https://www.aquamark.io/privacy.html">Privacy Policy</a>
+            <a href="mailto:hey@aquamark.io">Contact Us</a>
+        </div>
+        <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Configuration - YOUR SECURE BACKEND
+        const API_BASE_URL = 'https://aquamark-backend.onrender.com';
+        
+        // Global variables
+        let currentUser = null;
+        let userToken = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            preserveUrlParameters();
+        });
+
+        // Initialize the page
+        async function initializePage() {
+            try {
+                // Get user from Outseta
+                currentUser = await Outseta.getUser();
+                if (!currentUser) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+
+                console.log("User loaded:", currentUser.Email);
+
+                // Get auth token for API calls
+                userToken = await getAuthToken();
+                
+                // Load usage data
+                await loadUsageData();
+                
+                // Set up Outseta event listeners for plan changes
+                setupOutsetaEventListeners();
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                document.getElementById('usage-stats').innerHTML = '<p>Error loading dashboard. Please refresh the page.</p>';
+            }
+        }
+
+        // Preserve URL parameters for navigation
+        function preserveUrlParameters() {
+            const urlParams = window.location.search;
+            const hashParams = window.location.hash;
+
+            const pathsToUpdate = ["/watermark.html", "/dashboard.html"];
+
+            document.querySelectorAll("a[href]").forEach(link => {
+                const href = link.getAttribute("href");
+                if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+                    const cleanHref = href.split('?')[0].split('#')[0];
+                    link.href = cleanHref + urlParams + hashParams;
+                }
+            });
+        }
+
+        // Get auth token for API calls
+        async function getAuthToken() {
+            try {
+                const token = await Outseta.getAccessToken();
+                return token;
+            } catch (error) {
+                console.error('Error getting auth token:', error);
+                return null;
+            }
+        }
+
+        // Set up Outseta event listeners
+        function setupOutsetaEventListeners() {
+            // Listen for subscription updates
+            Outseta.on("subscription.update", async (params) => {
+                console.log("Subscription update event:", params);
+                await handlePlanChange(params);
+            });
+
+            // Listen for subscription reopens
+            Outseta.on("subscription.reopen", async (params) => {
+                console.log("Subscription reopen event:", params);
+                await handlePlanChange(params);
+            });
+        }
+
+        // Handle plan changes from Outseta events
+        async function handlePlanChange(params) {
+            try {
+                let planName = "Free Trial";
+
+                if (params) {
+                    if (params.Plan && params.Plan.Name) {
+                        planName = params.Plan.Name;
+                    } else if (params.plan && params.plan.name) {
+                        planName = params.plan.name;
+                    } else if (params.subscription) {
+                        if (params.subscription.Plan && params.subscription.Plan.Name) {
+                            planName = params.subscription.Plan.Name;
+                        } else if (params.subscription.plan && params.subscription.plan.name) {
+                            planName = params.subscription.plan.name;
+                        }
+                    }
+                }
+
+                console.log(`Plan change detected: ${planName}`);
+                
+                // Update plan via API
+                await updateUserPlan(planName);
+                
+                // Refresh usage data
+                await loadUsageData();
+
+            } catch (error) {
+                console.error('Error handling plan change:', error);
+            }
+        }
+
+        // Update user plan via API
+        async function updateUserPlan(planName) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/update-plan`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: currentUser.Email,
+                        planName: planName,
+                        webhookSecret: 'aquamark-secure-protection-string-101813'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Plan update failed');
+                }
+
+                console.log('Plan updated successfully');
+            } catch (error) {
+                console.error('Error updating plan:', error);
+            }
+        }
+
+        // Load usage data from API
+        async function loadUsageData() {
+            try {
+                if (!userToken) {
+                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE_URL}/api/usage`, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    displayUsageData(userData);
+                } else {
+                    const error = await response.json();
+                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Error loading usage data:', error);
+                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+            }
+        }
+
+        // Display usage data in the UI
+        function displayUsageData(userData) {
+            const usageStatsElement = document.getElementById('usage-stats');
+
+            if (userData) {
+                const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
+
+                usageStatsElement.innerHTML = `
+                    <div class="usage-stats-container">
+                        <div class="usage-stat">
+                            <span class="usage-label">Plan:</span>
+                            <span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Pages Used:</span>
+                            <span class="usage-value">${userData.pages_used || 0}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Pages Remaining:</span>
+                            <span class="usage-value">${userData.pages_remaining || 100}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Total Credits:</span>
+                            <span class="usage-value">${userData.page_credits || 100}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${usagePercentage}%;"></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+            }
+        }
+
+        // Handle logout redirection
+        if (window.location.hash === '#o-logout-link') {
+            window.location.href = '/login.html';
+        }
+    </script>
 </body>
-
 </html>
