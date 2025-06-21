@@ -1433,32 +1433,68 @@ Outseta.getUser().then(async (profile) => {
     console.log("AccountUid:", profile.Account.Uid);
     console.log("CustomFields:", profile.CustomFields);
 
-    // Try to get referral code from CustomFields - FIXED TO USE 'ref_code'
-    let referral_code = null;
-    if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
-      // Look for field with system name 'ref_code' (matching your Outsetta setup)
-      const refField = profile.CustomFields.find(f => {
-        if (f.Field) {
-          // Check both the name and Name properties (case variations)
-          const fieldName = f.Field.name || f.Field.Name;
-          return fieldName === 'ref_code';
-        }
-        return false;
-      });
-      
-      if (refField) {
-        referral_code = refField.FieldValue || null;
-        console.log("Found referral code:", referral_code);
-      } else {
-        console.log("No referral code field found in CustomFields");
-        // Debug: log all field names to help troubleshoot
-        profile.CustomFields.forEach(field => {
-          if (field.Field) {
-            console.log("Available field:", field.Field.name || field.Field.Name);
-          }
-        });
-      }
+  // Replace the referral code lookup section in your dashboard with this debug version:
+
+// Try to get referral code from CustomFields - ENHANCED DEBUG VERSION
+let referral_code = null;
+if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
+  console.log("=== FULL CUSTOMFIELDS DEBUG ===");
+  console.log("CustomFields array length:", profile.CustomFields.length);
+  
+  // Log the complete structure of each custom field
+  profile.CustomFields.forEach((field, index) => {
+    console.log(`CustomField ${index}:`, JSON.stringify(field, null, 2));
+  });
+  
+  // Try multiple ways to find the referral code field
+  console.log("=== SEARCHING FOR REFERRAL CODE ===");
+  
+  // Method 1: Look for field with system name 'ref_code'
+  const refField1 = profile.CustomFields.find(f => {
+    if (f.Field) {
+      const fieldName = f.Field.name || f.Field.Name;
+      console.log("Checking field name:", fieldName);
+      return fieldName === 'ref_code';
     }
+    return false;
+  });
+  
+  // Method 2: Look for field with label 'Referral Code'
+  const refField2 = profile.CustomFields.find(f => {
+    if (f.Field) {
+      const fieldLabel = f.Field.label || f.Field.Label;
+      console.log("Checking field label:", fieldLabel);
+      return fieldLabel === 'Referral Code';
+    }
+    return false;
+  });
+  
+  // Method 3: Look for any field containing 'referral' (case insensitive)
+  const refField3 = profile.CustomFields.find(f => {
+    if (f.Field) {
+      const fieldName = (f.Field.name || f.Field.Name || '').toLowerCase();
+      const fieldLabel = (f.Field.label || f.Field.Label || '').toLowerCase();
+      return fieldName.includes('referral') || fieldLabel.includes('referral');
+    }
+    return false;
+  });
+  
+  console.log("Method 1 result (ref_code):", refField1);
+  console.log("Method 2 result (Referral Code):", refField2);
+  console.log("Method 3 result (contains referral):", refField3);
+  
+  // Use whichever method found the field
+  const refField = refField1 || refField2 || refField3;
+  
+  if (refField) {
+    referral_code = refField.FieldValue || refField.Value || null;
+    console.log("🎉 FOUND REFERRAL CODE:", referral_code);
+  } else {
+    console.log("❌ NO REFERRAL CODE FIELD FOUND");
+  }
+} else {
+  console.log("❌ No CustomFields found or not an array");
+}
 
     // Check if user already exists
     let { data: existingUser, error: fetchError } = await supabase
