@@ -604,7 +604,8 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
+                    console.log('Loading usage data:', data);
+document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
                 }
             } catch (error) {
                 console.error('Error loading usage data:', error);
