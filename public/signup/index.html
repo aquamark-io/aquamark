@@ -60,7 +60,11 @@
        data-widget-mode="register"
        data-plan-uid="aWxLDdWV"
        data-skip-plan-options="true"
-       data-mode="embed">
+       data-mode="custom"
+       data-custom-fields="ReferralCode">
+
+    <input type="text" name="ReferralCode" placeholder="Referral Code (optional)" class="form-field" />
+
     <input type="email" name="email" placeholder="Email" class="form-field" required />
     <input type="password" name="password" placeholder="Password" class="form-field" required />
     <button type="submit" class="form-field submit-button">Create Account</button>
@@ -71,21 +75,10 @@
   &copy; 2025 Aquamark. All rights reserved.
 </footer>
 
-<!-- Outseta Embed -->
 <script>
-  const urlParams = new URLSearchParams(window.location.search);
-  const referralFromUrl = urlParams.get('ref') || '';
-
   var o_options = {
     domain: 'aquamark.outseta.com',
-    load: 'auth',
-    auth: {
-      registrationDefaults: {
-        Person: {
-          ReferralCode: referralFromUrl
-        }
-      }
-    }
+    load: 'auth'
   };
 </script>
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
