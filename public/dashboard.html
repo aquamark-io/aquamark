@@ -506,51 +506,73 @@
             }
         }
 
-        // Load usage data from API - UPDATED VERSION
-        async function loadUsageData() {
-            try {
-                if (!userToken) {
-                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
-                    return;
-                }
 
-                // Check for pending referral code from signup
-                const pendingReferralCode = sessionStorage.getItem('pendingReferralCode');
-                
-                // Prepare request body
-                const requestBody = {};
-                if (pendingReferralCode) {
-                    requestBody.referralCode = pendingReferralCode;
-                    console.log('Sending referral code to backend:', pendingReferralCode);
-                }
-
-                const response = await fetch(`${API_BASE_URL}/api/usage`, {
-                    method: 'POST', // Change to POST to send referral code
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-
-                if (response.ok) {
-                    const userData = await response.json();
-                    displayUsageData(userData);
-                    
-                    // Clear the pending referral code after successful creation
-                    if (pendingReferralCode) {
-                        sessionStorage.removeItem('pendingReferralCode');
-                        console.log('Referral code processed and cleared from session storage');
-                    }
-                } else {
-                    const error = await response.json();
-                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
-                }
-            } catch (error) {
-                console.error('Error loading usage data:', error);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
-            }
+// Load usage data from API - ENHANCED DEBUG VERSION
+async function loadUsageData() {
+    try {
+        if (!userToken) {
+            document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
+            return;
         }
+
+        // Check for pending referral code from signup with detailed logging
+        const pendingReferralCode = sessionStorage.getItem('pendingReferralCode');
+        console.log('🔍 DEBUG: sessionStorage contents:', {
+            pendingReferralCode: pendingReferralCode,
+            allSessionStorageKeys: Object.keys(sessionStorage),
+            sessionStorageLength: sessionStorage.length
+        });
+
+        // Log all sessionStorage items for debugging
+        for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            console.log(`SessionStorage[${key}] = ${sessionStorage.getItem(key)}`);
+        }
+        
+        // Prepare request body with detailed logging
+        const requestBody = {};
+        if (pendingReferralCode) {
+            requestBody.referralCode = pendingReferralCode;
+            console.log('✅ Sending referral code to backend:', pendingReferralCode);
+        } else {
+            console.log('❌ No referral code found in sessionStorage');
+        }
+
+        console.log('📤 Request body being sent:', JSON.stringify(requestBody));
+
+        const response = await fetch(`${API_BASE_URL}/api/usage`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${userToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        console.log('📥 Response status:', response.status);
+
+        if (response.ok) {
+            const userData = await response.json();
+            console.log('📊 User data received:', userData);
+            displayUsageData(userData);
+            
+            // Clear the pending referral code after successful creation
+            if (pendingReferralCode) {
+                sessionStorage.removeItem('pendingReferralCode');
+                console.log('🧹 Referral code processed and cleared from session storage');
+            }
+        } else {
+            const error = await response.json();
+            console.error('❌ API Error:', error);
+            document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
+        }
+    } catch (error) {
+        console.error('💥 Error loading usage data:', error);
+        document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+    }
+}
+
+        
 
         // Preserve URL parameters for navigation
         function preserveUrlParameters() {
