@@ -1004,20 +1004,15 @@ console.log("No existing user found, will create new record");
 // Prepare the data object with updated plan details
 
 const userData = {
-
-user_email: email,
-
-pages_used: 0, // Reset to 0 when plan changes
-
-pages_remaining: page_credits,
-
-plan_name: planName,
-
-page_credits: page_credits,
-
-billing_cycle_start: billing_cycle_start
-
+  user_email: email,
+  pages_used: 0, // Reset to 0 when plan changes
+  pages_remaining: page_credits,
+  plan_name: planName,
+  page_credits: page_credits,
+  billing_cycle_start: billing_cycle_start,
+  ref_code: ReferralCode
 };
+
 
 // Include ID if we have one
 
@@ -1468,13 +1463,13 @@ Outseta.getUser().then(async (profile) => {
     const pages_remaining = page_credits - pages_used;
 
     const userData = {
-      user_email: profile.Email,
-      pages_used: pages_used,
-      pages_remaining: pages_remaining,
-      plan_name: plan_name,
-      page_credits: page_credits,
-      ReferralCode: ReferralCode
-    };
+  user_email: profile.Email,
+  pages_used: pages_used,
+  pages_remaining: pages_remaining,
+  plan_name: plan_name,
+  page_credits: page_credits,
+  ref_code: ReferralCode
+};
 
     if (!rowId && billing_cycle_start) {
       userData.billing_cycle_start = billing_cycle_start;
