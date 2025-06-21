@@ -1425,9 +1425,7 @@ console.error("Error handling subscription reopen:", err);
 
 });
 
-
-// Replace the entire Outseta.getUser() section in your dashboard.html with this corrected version:
-
+// CORRECTED: Outseta.getUser() code is now INSIDE the DOMContentLoaded event
 Outseta.getUser().then(async (profile) => {
   if (profile) {
     console.log("PersonUid:", profile.Uid);
@@ -1522,11 +1520,6 @@ Outseta.getUser().then(async (profile) => {
   console.error("Error getting Outseta user:", err);
 });
 
-
-
-
-
-  
 });
 
 </script>
