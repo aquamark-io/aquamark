@@ -1004,15 +1004,20 @@ console.log("No existing user found, will create new record");
 // Prepare the data object with updated plan details
 
 const userData = {
-  user_email: email,
-  pages_used: 0, // Reset to 0 when plan changes
-  pages_remaining: page_credits,
-  plan_name: planName,
-  page_credits: page_credits,
-  billing_cycle_start: billing_cycle_start,
-  ref_code: ReferralCode
-};
 
+user_email: email,
+
+pages_used: 0, // Reset to 0 when plan changes
+
+pages_remaining: page_credits,
+
+plan_name: planName,
+
+page_credits: page_credits,
+
+billing_cycle_start: billing_cycle_start
+
+};
 
 // Include ID if we have one
 
@@ -1428,11 +1433,11 @@ Outseta.getUser().then(async (profile) => {
     console.log("CustomFields:", profile.CustomFields);
 
     // Try to get referral code from CustomFields
-    let ReferralCode = null;
+    let referral_code = null;
     if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
-      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'ReferralCode');
+      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'referral_code');
       if (refField) {
-        ReferralCode = refField.FieldValue || null;
+        referral_code = refField.FieldValue || null;
       }
     }
 
@@ -1463,13 +1468,13 @@ Outseta.getUser().then(async (profile) => {
     const pages_remaining = page_credits - pages_used;
 
     const userData = {
-  user_email: profile.Email,
-  pages_used: pages_used,
-  pages_remaining: pages_remaining,
-  plan_name: plan_name,
-  page_credits: page_credits,
-  ref_code: ReferralCode
-};
+      user_email: profile.Email,
+      pages_used: pages_used,
+      pages_remaining: pages_remaining,
+      plan_name: plan_name,
+      page_credits: page_credits,
+      referral_code: referral_code
+    };
 
     if (!rowId && billing_cycle_start) {
       userData.billing_cycle_start = billing_cycle_start;
