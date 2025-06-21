@@ -507,7 +507,8 @@
         }
 
 
-// Load usage data from API - ENHANCED DEBUG VERSION
+
+// Load usage data from API - FIXED VERSION
 async function loadUsageData() {
     try {
         if (!userToken) {
@@ -515,27 +516,59 @@ async function loadUsageData() {
             return;
         }
 
-        // Check for pending referral code from signup with detailed logging
-        const pendingReferralCode = sessionStorage.getItem('pendingReferralCode');
-        console.log('🔍 DEBUG: sessionStorage contents:', {
-            pendingReferralCode: pendingReferralCode,
-            allSessionStorageKeys: Object.keys(sessionStorage),
-            sessionStorageLength: sessionStorage.length
-        });
-
-        // Log all sessionStorage items for debugging
-        for (let i = 0; i < sessionStorage.length; i++) {
-            const key = sessionStorage.key(i);
-            console.log(`SessionStorage[${key}] = ${sessionStorage.getItem(key)}`);
+        // Check multiple sources for referral code
+        let referralCode = null;
+        
+        // 1. Check sessionStorage for our key
+        referralCode = sessionStorage.getItem('pendingReferralCode');
+        console.log('🔍 Method 1 - pendingReferralCode:', referralCode);
+        
+        // 2. Check current URL parameters
+        if (!referralCode) {
+            const urlParams = new URLSearchParams(window.location.search);
+            referralCode = urlParams.get('ref') || urlParams.get('referral');
+            console.log('🔍 Method 2 - URL params:', referralCode);
         }
         
-        // Prepare request body with detailed logging
+        // 3. Check if there's a referral code in the original signup URL stored anywhere
+        if (!referralCode) {
+            // Look for any sessionStorage keys that might contain referral info
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                const value = sessionStorage.getItem(key);
+                if (value && value.includes('ref=')) {
+                    const match = value.match(/[?&]ref=([^&]+)/);
+                    if (match) {
+                        referralCode = match[1];
+                        console.log('🔍 Method 3 - Found in sessionStorage key:', key, 'value:', referralCode);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        // 4. Last resort - check localStorage
+        if (!referralCode) {
+            referralCode = localStorage.getItem('pendingReferralCode');
+            console.log('🔍 Method 4 - localStorage:', referralCode);
+        }
+
+        console.log('🎯 Final referral code to send:', referralCode);
+        
+        // Prepare request body
         const requestBody = {};
-        if (pendingReferralCode) {
-            requestBody.referralCode = pendingReferralCode;
-            console.log('✅ Sending referral code to backend:', pendingReferralCode);
+        if (referralCode) {
+            requestBody.referralCode = referralCode;
+            console.log('✅ Sending referral code to backend:', referralCode);
         } else {
-            console.log('❌ No referral code found in sessionStorage');
+            console.log('❌ No referral code found from any method');
+            
+            // Debug: Log all sessionStorage contents
+            console.log('📦 All sessionStorage contents:');
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                console.log(`  ${key}:`, sessionStorage.getItem(key));
+            }
         }
 
         console.log('📤 Request body being sent:', JSON.stringify(requestBody));
@@ -556,10 +589,11 @@ async function loadUsageData() {
             console.log('📊 User data received:', userData);
             displayUsageData(userData);
             
-            // Clear the pending referral code after successful creation
-            if (pendingReferralCode) {
+            // Clear the referral code from all possible locations after successful creation
+            if (referralCode) {
                 sessionStorage.removeItem('pendingReferralCode');
-                console.log('🧹 Referral code processed and cleared from session storage');
+                localStorage.removeItem('pendingReferralCode');
+                console.log('🧹 Referral code processed and cleared');
             }
         } else {
             const error = await response.json();
@@ -571,6 +605,8 @@ async function loadUsageData() {
         document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
     }
 }
+
+        
 
         
 
