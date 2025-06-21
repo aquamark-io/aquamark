@@ -688,10 +688,10 @@
                 if (response.ok) {
                     const data = await response.json();
                     
-                    // Download each file
-                    data.files.forEach(file => {
-                        const blob = new Blob([Uint8Array.from(atob(file.data), c => c.charCodeAt(0))], 
-                                            { type: 'application/pdf' });
+                  // Download each file
+data.files.forEach(file => {
+  const blob = new Blob([new Uint8Array(file.data)], 
+                      { type: 'application/pdf' });
                         const url = URL.createObjectURL(blob);
                         const a = document.createElement('a');
                         a.href = url;
