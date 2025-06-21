@@ -592,28 +592,28 @@
             }
         }
 
-// Load usage data
-async function loadUsageData() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
-            headers: {
-                'Authorization': `Bearer ${userToken}`,
-                'Content-Type': 'application/json',
-                'Cache-Control': 'no-cache'
-            }
-        });
+        // Load usage data with cache busting
+        async function loadUsageData() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Fresh usage data loaded:', data);
-            document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
-        } else {
-            console.error('Failed to load usage data');
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Fresh usage data loaded:', data);
+                    document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
+                } else {
+                    console.error('Failed to load usage data');
+                }
+            } catch (error) {
+                console.error('Error loading usage data:', error);
+            }
         }
-    } catch (error) {
-        console.error('Error loading usage data:', error);
-    }
-}
 
         // Upload logo function
         async function uploadLogo() {
@@ -692,10 +692,10 @@ async function loadUsageData() {
                 if (response.ok) {
                     const data = await response.json();
                     
-              // Download each file
-data.files.forEach(file => {
-  const blob = new Blob([Uint8Array.from(atob(file.data), c => c.charCodeAt(0))], 
-                      { type: 'application/pdf' });
+                    // Download each file
+                    data.files.forEach(file => {
+                        const blob = new Blob([Uint8Array.from(atob(file.data), c => c.charCodeAt(0))], 
+                                            { type: 'application/pdf' });
                         const url = URL.createObjectURL(blob);
                         const a = document.createElement('a');
                         a.href = url;
@@ -706,7 +706,7 @@ data.files.forEach(file => {
                         setTimeout(() => URL.revokeObjectURL(url), 100);
                     });
 
-                    // Update page counter
+                    // Update page counter immediately
                     const currentPages = parseInt(document.getElementById('pagesWatermarked').textContent) || 0;
                     document.getElementById('pagesWatermarked').textContent = currentPages + data.pagesProcessed;
 
