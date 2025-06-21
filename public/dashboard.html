@@ -1433,11 +1433,11 @@ Outseta.getUser().then(async (profile) => {
     console.log("CustomFields:", profile.CustomFields);
 
     // Try to get referral code from CustomFields
-    let referral_code = null;
+    let ReferralCode = null;
     if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
-      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'referral_code');
+      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'ReferralCode');
       if (refField) {
-        referral_code = refField.FieldValue || null;
+        ReferralCode = refField.FieldValue || null;
       }
     }
 
@@ -1473,7 +1473,7 @@ Outseta.getUser().then(async (profile) => {
       pages_remaining: pages_remaining,
       plan_name: plan_name,
       page_credits: page_credits,
-      referral_code: referral_code
+      ReferralCode: ReferralCode
     };
 
     if (!rowId && billing_cycle_start) {
