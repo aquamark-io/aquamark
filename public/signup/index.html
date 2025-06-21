@@ -39,6 +39,12 @@
       border-radius: 6px;
       border: 1px solid #ccc;
     }
+    .submit-button {
+      background: #467EFF;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -54,29 +60,10 @@
        data-widget-mode="register"
        data-plan-uid="aWxLDdWV"
        data-skip-plan-options="true"
-       data-mode="custom"
-       data-custom-fields="ReferralCode">
-
-    <input type="text"
-           name="ReferralCode"
-           placeholder="Referral Code (optional)"
-           class="form-field" />
-
-    <input type="email"
-           name="email"
-           placeholder="Email"
-           class="form-field"
-           required />
-
-    <input type="password"
-           name="password"
-           placeholder="Password"
-           class="form-field"
-           required />
-
-    <button type="submit" class="form-field" style="background: #467EFF; color: white; font-weight: 600; cursor: pointer;">
-      Create Account
-    </button>
+       data-mode="embed">
+    <input type="email" name="email" placeholder="Email" class="form-field" required />
+    <input type="password" name="password" placeholder="Password" class="form-field" required />
+    <button type="submit" class="form-field submit-button">Create Account</button>
   </div>
 </div>
 
@@ -86,9 +73,19 @@
 
 <!-- Outseta Embed -->
 <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const referralFromUrl = urlParams.get('ref') || '';
+
   var o_options = {
     domain: 'aquamark.outseta.com',
-    load: 'auth'
+    load: 'auth',
+    auth: {
+      registrationDefaults: {
+        Person: {
+          ReferralCode: referralFromUrl
+        }
+      }
+    }
   };
 </script>
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
