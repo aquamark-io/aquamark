@@ -494,51 +494,63 @@
                 // Get auth token for API calls
                 userToken = await getAuthToken();
                 
-// Load usage data from API - UPDATED VERSION
-async function loadUsageData() {
-    try {
-        if (!userToken) {
-            document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
-            return;
-        }
-
-        // Check for pending referral code from signup
-        const pendingReferralCode = sessionStorage.getItem('pendingReferralCode');
-        
-        // Prepare request body
-        const requestBody = {};
-        if (pendingReferralCode) {
-            requestBody.referralCode = pendingReferralCode;
-            console.log('Sending referral code to backend:', pendingReferralCode);
-        }
-
-        const response = await fetch(`${API_BASE_URL}/api/usage`, {
-            method: 'POST', // Change to POST to send referral code
-            headers: {
-                'Authorization': `Bearer ${userToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        });
-
-        if (response.ok) {
-            const userData = await response.json();
-            displayUsageData(userData);
-            
-            // Clear the pending referral code after successful creation
-            if (pendingReferralCode) {
-                sessionStorage.removeItem('pendingReferralCode');
-                console.log('Referral code processed and cleared from session storage');
+                // Load usage data
+                await loadUsageData();
+                
+                // Set up Outseta event listeners for plan changes
+                setupOutsetaEventListeners();
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+                document.getElementById('usage-stats').innerHTML = '<p>Error loading dashboard. Please refresh the page.</p>';
             }
-        } else {
-            const error = await response.json();
-            document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
         }
-    } catch (error) {
-        console.error('Error loading usage data:', error);
-        document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
-    }
-}
+
+        // Load usage data from API - UPDATED VERSION
+        async function loadUsageData() {
+            try {
+                if (!userToken) {
+                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
+                    return;
+                }
+
+                // Check for pending referral code from signup
+                const pendingReferralCode = sessionStorage.getItem('pendingReferralCode');
+                
+                // Prepare request body
+                const requestBody = {};
+                if (pendingReferralCode) {
+                    requestBody.referralCode = pendingReferralCode;
+                    console.log('Sending referral code to backend:', pendingReferralCode);
+                }
+
+                const response = await fetch(`${API_BASE_URL}/api/usage`, {
+                    method: 'POST', // Change to POST to send referral code
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    displayUsageData(userData);
+                    
+                    // Clear the pending referral code after successful creation
+                    if (pendingReferralCode) {
+                        sessionStorage.removeItem('pendingReferralCode');
+                        console.log('Referral code processed and cleared from session storage');
+                    }
+                } else {
+                    const error = await response.json();
+                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Error loading usage data:', error);
+                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+            }
+        }
 
         // Preserve URL parameters for navigation
         function preserveUrlParameters() {
@@ -636,34 +648,6 @@ async function loadUsageData() {
                 console.log('Plan updated successfully');
             } catch (error) {
                 console.error('Error updating plan:', error);
-            }
-        }
-
-        // Load usage data from API
-        async function loadUsageData() {
-            try {
-                if (!userToken) {
-                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
-                    return;
-                }
-
-                const response = await fetch(`${API_BASE_URL}/api/usage`, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    const userData = await response.json();
-                    displayUsageData(userData);
-                } else {
-                    const error = await response.json();
-                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
-                }
-            } catch (error) {
-                console.error('Error loading usage data:', error);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
             }
         }
 
