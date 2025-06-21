@@ -1433,6 +1433,30 @@ Outseta.getUser().then(async (profile) => {
     console.log("AccountUid:", profile.Account.Uid);
     console.log("CustomFields:", profile.CustomFields);
 
+    // Add this debug code right after console.log("CustomFields:", profile.CustomFields);
+
+console.log("=== FULL PROFILE OBJECT DEBUG ===");
+console.log("Complete profile object:", JSON.stringify(profile, null, 2));
+
+console.log("=== SEARCHING ALL PROFILE PROPERTIES ===");
+// Check if custom fields might be stored under different property names
+Object.keys(profile).forEach(key => {
+  console.log(`Profile.${key}:`, profile[key]);
+  
+  // Check if this property contains our referral code
+  if (profile[key] && typeof profile[key] === 'object') {
+    console.log(`  -> Checking ${key} for referral code...`);
+    if (JSON.stringify(profile[key]).toLowerCase().includes('testcode123')) {
+      console.log(`  🎯 FOUND TESTCODE123 in profile.${key}!`);
+    }
+  }
+});
+
+console.log("=== CHECKING ACCOUNT OBJECT ===");
+if (profile.Account) {
+  console.log("Account object:", JSON.stringify(profile.Account, null, 2));
+}
+
   // Replace the referral code lookup section in your dashboard with this debug version:
 
 // Try to get referral code from CustomFields - ENHANCED DEBUG VERSION
