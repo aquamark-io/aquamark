@@ -1425,6 +1425,9 @@ console.error("Error handling subscription reopen:", err);
 
 });
 
+
+// Replace the entire Outseta.getUser() section in your dashboard.html with this corrected version:
+
 Outseta.getUser().then(async (profile) => {
   if (profile) {
     console.log("PersonUid:", profile.Uid);
@@ -1432,12 +1435,30 @@ Outseta.getUser().then(async (profile) => {
     console.log("AccountUid:", profile.Account.Uid);
     console.log("CustomFields:", profile.CustomFields);
 
-    // Try to get referral code from CustomFields
-    let ref_code = null;
+    // Try to get referral code from CustomFields - FIXED TO USE 'ref_code'
+    let referral_code = null;
     if (profile.CustomFields && Array.isArray(profile.CustomFields)) {
-      const refField = profile.CustomFields.find(f => f.Field && f.Field.name === 'ref_code');
+      // Look for field with system name 'ref_code' (matching your Outsetta setup)
+      const refField = profile.CustomFields.find(f => {
+        if (f.Field) {
+          // Check both the name and Name properties (case variations)
+          const fieldName = f.Field.name || f.Field.Name;
+          return fieldName === 'ref_code';
+        }
+        return false;
+      });
+      
       if (refField) {
-        ref_code = refField.FieldValue || null;
+        referral_code = refField.FieldValue || null;
+        console.log("Found referral code:", referral_code);
+      } else {
+        console.log("No referral code field found in CustomFields");
+        // Debug: log all field names to help troubleshoot
+        profile.CustomFields.forEach(field => {
+          if (field.Field) {
+            console.log("Available field:", field.Field.name || field.Field.Name);
+          }
+        });
       }
     }
 
@@ -1473,7 +1494,7 @@ Outseta.getUser().then(async (profile) => {
       pages_remaining: pages_remaining,
       plan_name: plan_name,
       page_credits: page_credits,
-      ref_code: ref_code
+      ref_code: referral_code  // FIXED: Use 'ref_code' to match Supabase column name
     };
 
     if (!rowId && billing_cycle_start) {
@@ -1483,11 +1504,16 @@ Outseta.getUser().then(async (profile) => {
       userData.id = rowId;
     }
 
+    console.log("About to upsert user data:", userData);
+
     const { data, error } = await supabase
       .from('usage')
       .upsert(userData);
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase error:", error);
+      throw error;
+    }
 
     console.log("Supabase update successful", data);
     fetchUserUsageData(profile.Email);
@@ -1496,6 +1522,11 @@ Outseta.getUser().then(async (profile) => {
   console.error("Error getting Outseta user:", err);
 });
 
+
+
+
+
+  
 });
 
 </script>
