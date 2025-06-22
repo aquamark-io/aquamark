@@ -508,7 +508,8 @@
 
 
 
-// Simplified loadUsageData - back to GET request
+// Replace your loadUsageData function with this version that gets referral code from Outseta profile
+
 async function loadUsageData() {
     try {
         if (!userToken) {
@@ -516,13 +517,32 @@ async function loadUsageData() {
             return;
         }
 
-        // Simple GET request - server will get referral code from Outseta profile
+        // Get referral code from Outseta profile - JUST LIKE THE OLD WORKING CODE
+        let referralCode = null;
+        try {
+            const profile = await Outseta.getUser();
+            if (profile && profile.ref_code) {
+                referralCode = profile.ref_code;
+                console.log('🎯 Got referral code from Outseta profile:', referralCode);
+            }
+        } catch (error) {
+            console.error('Error getting Outseta profile:', error);
+        }
+
+        // Send to your existing /api/usage endpoint
+        const requestBody = {};
+        if (referralCode) {
+            requestBody.referralCode = referralCode;
+            console.log('✅ Sending referral code to backend:', referralCode);
+        }
+
         const response = await fetch(`${API_BASE_URL}/api/usage`, {
-            method: 'GET',  // Back to GET since server handles referral code
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${userToken}`,
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(requestBody)
         });
 
         if (response.ok) {
