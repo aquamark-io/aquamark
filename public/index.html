@@ -411,6 +411,91 @@
             text-decoration: none;
         }
 
+        /* Watermark Only Highlight Section */
+        .watermark-highlight {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 2px solid var(--blue);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 3rem auto;
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .watermark-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .watermark-highlight-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .watermark-highlight h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .watermark-highlight .question {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 0.75rem;
+        }
+
+        .watermark-highlight .answer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 1rem;
+        }
+
+        .watermark-highlight p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn-green-gradient {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.875rem 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            border: none;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-green-gradient:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 12px -1px rgba(16, 185, 129, 0.4);
+        }
+
         .section-intro {
             text-align: center;
             margin-bottom: 4rem;
@@ -814,6 +899,34 @@
                 font-size: 0.95rem;
             }
 
+            /* Watermark Highlight Mobile */
+            .watermark-highlight {
+                margin: 2rem 1rem;
+                padding: 2rem;
+            }
+
+            .watermark-highlight h3 {
+                font-size: 1.5rem;
+            }
+
+            .watermark-highlight .question {
+                font-size: 1.125rem;
+            }
+
+            .watermark-highlight .answer {
+                font-size: 1.25rem;
+            }
+
+            .watermark-highlight p {
+                font-size: 1rem;
+            }
+
+            .btn-green-gradient {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+                margin-top: 1.25rem;
+            }
+
             /* Document Protection Section Mobile */
             .doc-protection-section {
                 padding: 3rem 1rem !important;
@@ -1031,6 +1144,28 @@
             .announcement-text p {
                 font-size: 0.875rem;
             }
+
+            /* Watermark Highlight Mobile Small */
+            .watermark-highlight {
+                margin: 1.5rem 0.5rem;
+                padding: 1.5rem;
+            }
+
+            .watermark-highlight h3 {
+                font-size: 1.25rem;
+            }
+
+            .watermark-highlight .question {
+                font-size: 1rem;
+            }
+
+            .watermark-highlight .answer {
+                font-size: 1.125rem;
+            }
+
+            .watermark-highlight p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -1130,6 +1265,19 @@
                         <strong>Request your API key:</strong> <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Watermark Only Highlight Section -->
+    <section style="padding: 0 2rem;">
+        <div class="watermark-highlight">
+            <div class="watermark-highlight-content">
+                <h3>Our most frequently asked question:</h3>
+                <p class="question">"Can I just watermark and not do the compliance or QR code stuff?"</p>
+                <p class="answer">Absolutely!</p>
+                <p>Use just the watermarking features if that's all you need. No compliance monitoring required—total flexibility to protect your documents your way.</p>
+                <a href="/signup" class="btn-green-gradient">Start Free Trial - No Payment Info Required</a>
             </div>
         </div>
     </section>
@@ -1637,12 +1785,6 @@ We host a free, public directory of licensed alternative finance brokers nationw
 <script>
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('active');
-}
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', function(event) {
-    const mobileMenu = document.getElementById('mobileMenu');
     const menuBtn = document.querySelector('.mobile-menu-btn');
     
     if (!mobileMenu.contains(event.target) && !menuBtn.contains(event.target)) {
@@ -1651,4 +1793,10 @@ document.addEventListener('click', function(event) {
 });
 </script>
 </body>
-</html>
+</html>');
+    mobileMenu.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu
