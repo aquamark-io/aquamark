@@ -469,7 +469,7 @@
         .watermark-highlight p {
             font-size: 1.125rem;
             color: var(--text-secondary);
-            max-width: 620px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
@@ -1258,8 +1258,8 @@
                 <div class="announcement-text">
                     <h3>State-specific compliance alerts</h3>
                     <p>
-        Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM.<br>
-                        <strong>API key:</strong> <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
+        Must be on API for this feature. Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM.<br>
+                        <strong>Request your API key:</strong> <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
                     </p>
                 </div>
             </div>
@@ -1698,7 +1698,7 @@ We host a free, public directory of licensed alternative finance brokers nationw
                         Cancel anytime • 🚀 ROI in first month
                     </div>
                 </div>
-                <p class="plan-description">For brokers who want instant access.</p>
+                <p class="plan-description">For brokers and small teams who want instant access.</p>
                 <div class="plan-features">
                     <ul class="feature-list">
                         <li>Unlimited watermarking</li>
@@ -1706,8 +1706,6 @@ We host a free, public directory of licensed alternative finance brokers nationw
                         <li>Smart QR codes (optional)</li>
                         <li>Portal access</li>
                         <li>Basic support</li>
-
-
                     </ul>
                 </div>
                 <div class="plan-cta">
@@ -1793,6 +1791,12 @@ We host a free, public directory of licensed alternative finance brokers nationw
 <script>
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('active');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
     const menuBtn = document.querySelector('.mobile-menu-btn');
     
     if (!mobileMenu.contains(event.target) && !menuBtn.contains(event.target)) {
@@ -1801,10 +1805,4 @@ function toggleMobileMenu() {
 });
 </script>
 </body>
-</html>');
-    mobileMenu.classList.toggle('active');
-}
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', function(event) {
-    const mobileMenu = document.getElementById('mobileMenu
+</html>
