@@ -233,18 +233,18 @@
         }
 
         .btn-demo {
-  background: linear-gradient(90deg, #a855f7, #ec4899);
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  border: none;
-  transition: all 0.2s ease;
-}
-.btn-demo:hover {
-  opacity: 0.9;
-}
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s ease;
+        }
 
+        .btn-demo:hover {
+            opacity: 0.9;
+        }
 
         .compliance-visual {
             max-width: 500px;
@@ -323,16 +323,6 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             color: var(--text-primary);
-        }
-
-        .monitoring-note {
-            background: var(--bg-secondary);
-            padding: 1rem;
-            border-radius: 6px;
-            text-align: center;
-            border: 1px solid var(--border);
-            font-size: 0.875rem;
-            color: var(--text-secondary);
         }
 
         .percentage-section {
@@ -496,6 +486,100 @@
             box-shadow: 0 8px 12px -1px rgba(16, 185, 129, 0.4);
         }
 
+        /* Urgent CTA Section */
+        .urgent-cta {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid var(--blue);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            margin: 4rem auto;
+            max-width: 880px;
+            text-align: center;
+            color: white;
+            box-shadow: 
+                0 25px 50px -12px rgba(37, 99, 235, 0.4), 
+                0 15px 25px -5px rgba(37, 99, 235, 0.25),
+                0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .urgent-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        .urgent-cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .urgent-cta h3 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .urgent-cta .warning-text {
+            font-size: 1.375rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+        }
+
+        .urgent-cta .cost-text {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            color: #cbd5e1;
+        }
+
+        .btn-urgent {
+            background: linear-gradient(135deg, var(--blue), var(--blue-light));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            padding: 1rem 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .btn-urgent:hover {
+            background: linear-gradient(135deg, var(--blue-light), #1d4ed8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px -1px rgba(37, 99, 235, 0.5);
+        }
+
+        /* Document Protection Grid */
+        .doc-protection-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        /* Compliance Two-Column Layout */
+        .compliance-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
         .section-intro {
             text-align: center;
             margin-bottom: 4rem;
@@ -534,7 +618,7 @@
             font-weight: 700;
         }
 
-        /* Pricing Section - IMPROVED */
+        /* Pricing Section */
         .pricing {
             padding: 6rem 2rem;
             background: var(--bg-primary);
@@ -632,15 +716,6 @@
             padding: 0.875rem 1.5rem;
             font-size: 1rem;
             font-weight: 600;
-        }
-
-        .coming-soon {
-            color: var(--text-muted);
-            text-align: center;
-            background: var(--bg-secondary);
-            padding: 0.75rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
         }
 
         /* CTA Section */
@@ -752,22 +827,6 @@
             color: white;
             font-size: 0.875rem;
             border-top: none;
-        }
-
-        /* Document Protection Grid */
-        .doc-protection-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            align-items: stretch;
-        }
-
-        /* Compliance Two-Column Layout */
-        .compliance-two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
         }
 
         /* Responsive Design */
@@ -928,152 +987,31 @@
                 margin-top: 1.25rem;
             }
 
-            /* Document Protection Section Mobile */
-            .doc-protection-section {
-                padding: 3rem 1rem !important;
+            /* Urgent CTA Mobile */
+            .urgent-cta {
+                margin: 2rem 1rem;
+                padding: 2rem 1.5rem;
             }
 
-            .doc-protection-section h2 {
-                font-size: 2rem !important;
-                margin-bottom: 1rem !important;
+            .urgent-cta h3 {
+                font-size: 1.75rem;
             }
 
-            .doc-protection-section .section-description {
-                font-size: 1rem !important;
-                margin-bottom: 2rem !important;
+            .urgent-cta .warning-text {
+                font-size: 1.125rem;
             }
 
-            /* Compliance Section Mobile */
-            .compliance-section {
-                padding: 4rem 1rem !important;
-            }
-
-            .compliance-section h2 {
-                font-size: 2rem !important;
-            }
-
-            .compliance-section .section-description {
-                font-size: 1rem !important;
-            }
-
-            /* Mobile CTA Links in sections */
-            .section-cta-links {
-                flex-direction: column !important;
-                align-items: center !important;
-                gap: 0.75rem !important;
-            }
-
-            .section-cta-links a {
-                width: 100% !important;
-                text-align: center !important;
-                max-width: 250px !important;
-                justify-content: center !important;
-            }
-
-            /* Mobile compliance section title centering */
-            .compliance-section .compliance-two-col h3 {
-                text-align: center !important;
-            }
-
-            /* Mobile-only: Center the "Free" tag above Broker Directory */
-            .compliance-section .compliance-two-col > div:first-child {
-                text-align: center !important;
-            }
-
-            /* Mobile-only: Reorder compliance API section for proper flow */
-            .compliance-section .compliance-two-col:last-child {
-                display: flex !important;
-                flex-direction: column !important;
-            }
-
-            /* Move the entire text content div above the visual */
-            .compliance-section .compliance-two-col:last-child > div:last-child {
-                order: 1 !important;
-                display: flex !important;
-                flex-direction: column !important;
-            }
-
-            /* Move the API visual div to order 2 */
-            .compliance-section .compliance-two-col:last-child > div:first-child {
-                order: 2 !important;
-                margin: 2rem 0 !important;
-            }
-
-            /* Within the text content, order the elements properly */
-            .compliance-section .compliance-two-col:last-child > div:last-child h3 {
-                order: 1 !important;
-            }
-
-            .compliance-section .compliance-two-col:last-child > div:last-child > p:first-of-type {
-                order: 2 !important;
-                margin-bottom: 2rem !important;
-            }
-
-            .compliance-section .compliance-two-col:last-child > div:last-child > div:nth-child(3) {
-                order: 4 !important;
-            }
-
-            .compliance-section .compliance-two-col:last-child > div:last-child .section-cta-links {
-                order: 5 !important;
-            }
-
-            /* Mobile pricing intro */
-            .pricing .section-description {
+            .urgent-cta .cost-text {
                 font-size: 1rem;
             }
 
-            /* Mobile Visual Cards */
-            .visual-card {
-                padding: 1.5rem !important;
-            }
-
-            .visual-card h3 {
-                font-size: 1.25rem !important;
-            }
-
-            .visual-card p {
-                font-size: 0.9rem !important;
-            }
-
-            .visual-card ul li {
-                font-size: 0.9rem !important;
-            }
-
-            /* Mobile API Visual */
-            .api-visual {
-                padding: 1.5rem !important;
-                font-size: 0.75rem !important;
-            }
-
-            /* Mobile Directory Visual */
-            .directory-visual {
-                padding: 1.5rem !important;
-            }
-
-            .directory-visual h4 {
-                font-size: 1rem !important;
+            .btn-urgent {
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
             }
         }
 
         @media (max-width: 480px) {
-            .nav {
-                padding: 0.75rem;
-            }
-
-            .nav-links {
-                gap: 0.5rem;
-                flex-wrap: wrap;
-            }
-
-            .nav-links .btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
-            }
-
-            .hero {
-                padding: 6rem 1rem 2rem;
-            }
-
             .hero-content h1 {
                 font-size: 2rem;
                 line-height: 1.2;
@@ -1083,32 +1021,12 @@
                 font-size: 1rem;
             }
 
-            .compliance-visual {
-                padding: 1.5rem;
-            }
-
-            .visual-title {
-                font-size: 1rem;
-            }
-
-            .visual-subtitle {
-                font-size: 0.8rem;
-            }
-
             .section-title {
                 font-size: 1.75rem;
             }
 
             .cta-section h2 {
                 font-size: 1.75rem;
-            }
-
-            .doc-protection-section h2 {
-                font-size: 1.75rem !important;
-            }
-
-            .compliance-section h2 {
-                font-size: 1.75rem !important;
             }
 
             .btn-lg {
@@ -1132,39 +1050,26 @@
                 font-size: 1.5rem;
             }
 
-            /* Announcement Banner Mobile Small */
-            .announcement-banner {
-                margin: 1.5rem 0.5rem;
-                padding: 1.25rem;
-            }
-
-            .announcement-text h3 {
-                font-size: 1rem;
-            }
-
-            .announcement-text p {
-                font-size: 0.875rem;
-            }
-
-            /* Watermark Highlight Mobile Small */
-            .watermark-highlight {
+            /* Urgent CTA Mobile Small */
+            .urgent-cta {
                 margin: 1.5rem 0.5rem;
                 padding: 1.5rem;
             }
 
-            .watermark-highlight h3 {
-                font-size: 1.25rem;
+            .urgent-cta h3 {
+                font-size: 1.5rem;
             }
 
-            .watermark-highlight .question {
+            .urgent-cta .warning-text {
                 font-size: 1rem;
             }
 
-            .watermark-highlight .answer {
-                font-size: 1.125rem;
+            .urgent-cta .cost-text {
+                font-size: 0.9rem;
             }
 
-            .watermark-highlight p {
+            .btn-urgent {
+                padding: 0.75rem 1.5rem;
                 font-size: 0.9rem;
             }
         }
@@ -1208,11 +1113,11 @@
                     Built for brokers. We monitor compliance so you don't have to—and protect your documents so you can fund more deals.
                 </p>
                <div class="hero-cta">
-  <a class="btn btn-blue btn-lg" href="/signup">Start free trial</a>
-  <a class="btn btn-secondary btn-lg" href="/api">View API docs</a>
-  <a class="btn btn-demo btn-lg" href="https://app.supademo.com/demo/cmc4x4nx60p8wllpn4din0fcy" target="_blank">1-minute demo</a>
-</div>
- </div>
+                    <a class="btn btn-blue btn-lg" href="/signup">Start free trial</a>
+                    <a class="btn btn-secondary btn-lg" href="/api">View API docs</a>
+                    <a class="btn btn-demo btn-lg" href="https://app.supademo.com/demo/cmc4x4nx60p8wllpn4din0fcy" target="_blank">1-minute demo</a>
+                </div>
+            </div>
 
             <div class="compliance-visual">
                 <div class="visual-header">
@@ -1258,7 +1163,7 @@
                 <div class="announcement-text">
                     <h3>State compliance alerts</h3>
                     <p>
-        Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM. <strong>API key:</strong> <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
+                        Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM. <strong>API key:</strong> <a href="mailto:hey@aquamark.io">hey@aquamark.io</a>
                     </p>
                 </div>
             </div>
@@ -1277,473 +1182,455 @@
         </div>
     </section>
 
-<!-- Document Protection -->
-<section class="doc-protection-section" style="padding: 5rem 2rem; background: #ffffff; margin-bottom: 3rem;">
-    <div style="max-width: 1600px; margin: 0 auto; text-align: center;">
-        <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: .25rem;">
-            Advanced <span style="color: #2563eb;">Document Protection</span> Technology
-        </h2>    
-        <p class="section-description" style="font-size: 1.25rem; color: #64748b; margin-bottom: 3.5rem;">
-            Deal theft costs the industry millions every year.<br>
-            Our tamper-resistant watermarks deter theft at scale.
-        </p>
-
-       <div class="doc-protection-grid">
-  <!-- Card 1: Watermarks -->
-  <div class="visual-card" style="
-    background: #f8fafc;
-    padding: 2rem;
-    border-radius: 1rem;
-    text-align: left;
-    align-self: center;
-  ">
-    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">Watermarks</h3>
-    <p style="color: #64748b; margin-bottom: 1rem;">Each page includes a full-page overlay of tamper-resistant watermarks</p>
-    <ul style="color: #64748b; list-style: none; padding-left: 0;">
-      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Deters theft at scale</li>
-      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> OCR-safe</li>
-      <li><span style="color: #467EFF;">✓</span> Your branding</li>
-    </ul>
-  </div>
-
-  <!-- Card 2: Watermark Sample -->
-  <div style="
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    border-radius: 1rem;
-    background: #ffffff;
-    box-shadow: 
-      0 25px 50px -12px rgba(37, 99, 235, 0.5), 
-      0 15px 25px -5px rgba(37, 99, 235, 0.35),
-      0 4px 6px -1px rgba(0, 0, 0, 0.15);
-  ">
-    <img src="watermark-sample.png" alt="Watermarked Bank Statement"
-         style="width: 100%; max-width: 360px; border-radius: 1rem;">
-  </div>
-
-  <!-- Card 3: QR Code -->
-  <div style="
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 1rem;
-    text-align: center;
-    color: #1e293b;
-    border: 1px solid #e5e7eb;
-    box-shadow: 
-      0 25px 50px -12px rgba(37, 99, 235, 0.5), 
-      0 15px 25px -5px rgba(37, 99, 235, 0.35),
-      0 4px 6px -1px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100%;
-  ">
-<h3 style="
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #2563eb;
-">
-  Powered QR Codes
-</h3>
-   <img src="qr.png" alt="QR Code"
-     style="max-width: 160px; width: 100%; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.5), 0 15px 25px -5px rgba(37, 99, 235, 0.35), 0 4px 6px -1px rgba(0, 0, 0, 0.15);">
-  </div>
-
-  <!-- Card 4: QR Metadata -->
-  <div class="visual-card" style="
-    background: #f8fafc;
-    padding: 2rem;
-    border-radius: 1rem;
-    text-align: left;
-    align-self: center;
-  ">
-    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">QR code metadata</h3>
-    <p style="color: #64748b; margin-bottom: 1rem;">See exactly who had access to your files</p>
-    <ul style="color: #64748b; list-style: none; padding-left: 0;">
-      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Accountability at every level</li>
-      <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> No more blind spots</li>
-      <li><span style="color: #467EFF;">✓</span> Digital breadcrumbs</li>
-    </ul>
-  </div>
-</div>
-<!-- Option 3: Clean and minimal -->
-<div style="
-  text-align: center;
-  margin-top: 4rem;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  border-top: none;
-">
-      <p style="color: #64748b; margin-bottom: 1rem;">
-        Want to see how it works? Our API is fast and simple to integrate.
-      </p>
-      <a href="/api" style="
-        color: #2563eb;
-        font-weight: 600;
-        text-decoration: none;
-        font-size: 1rem;
-      ">
-        View API Documentation →
-      </a>
-    </div>
-    </div>
-</section>
-
-
-<!-- Compliance Section -->
-<section class="compliance-section" style="padding: 6rem 2rem; background: #f8fafc;">
-  <div style="max-width: 1400px; margin: 0 auto;">
-    <!-- Section Header -->
-    <div style="text-align: center; margin-bottom: 4rem;">
-<h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
-        Fintech's Trusted <span style="color: #2563eb;">Compliance</span> Partner
-      </h2>      
-        <p class="section-description" style="font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto;">
-Your partner through the complex world of finance compliance. We simplify regulations so you can focus on funding more deals.
-        </p>
-    </div>
-
-    <!-- Two Column Layout -->
-    <div class="compliance-two-col" style="margin-bottom: 6rem;">
-      
-<!-- Broker Directory Content -->
-<div>
-  <div style="margin-bottom: 0.5rem;">
-    <span style="
-      background: #dcfce7;
-      color: #166534;
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      font-weight: 600;
-    ">Free</span>
-  </div>
-  <h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: .2rem;">
-    Broker Directory
-  </h3>
-  <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
-We host a free, public directory of licensed alternative finance brokers nationwide. All listings are thoroughly vetted for legitimacy and compliance.  </p>
-
-  <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
-    <ul style="list-style: none; padding: 0; margin: 0;">
-      <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-        <span style="color: #2563eb; font-weight: 700;">✓</span>
-        Nationwide coverage
-      </li>
-      <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-        <span style="color: #2563eb; font-weight: 700;">✓</span>
-        Everything in one place
-      </li>
-        <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-        <span style="color: #2563eb; font-weight: 700;">✓</span>
-        Requests published within 72 hours
-      </li>
-    </ul>
-  </div>
-
-  <div class="section-cta-links" style="display: flex; gap: 1rem;">
-    <a href="/broker-directory" style="
-      display: inline-flex;
-      align-items: center;
-      padding: 0.875rem 1.5rem;
-      background: #2563eb;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-    ">
-      Search Directory
-    </a>
-    <a href="/contact" style="
-      display: inline-flex;
-      align-items: center;
-      padding: 0.875rem 1.5rem;
-      background: transparent;
-      color: #2563eb;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      border: 2px solid #2563eb;
-      transition: all 0.2s ease;
-    ">
-      Get Listed Free
-    </a>
-  </div>
-</div>
-
-
-      <!-- Directory Visual -->
-      <div class="directory-visual" style="
-        background: white;
-        border-radius: 16px;
-        padding: 2rem;
-        box-shadow: 
-          0 25px 50px -12px rgba(37, 99, 235, 0.4), 
-          0 15px 25px -5px rgba(37, 99, 235, 0.25),
-          0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      ">
-        <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem; margin-bottom: 1.5rem;">
-          <h4 style="font-size: 1.125rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">
-            Broker License Lookup
-          </h4>
-          <div style="
-            background: #f8fafc;
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            border: 1px solid #e5e7eb;
-            font-family: monospace;
-            font-size: 0.875rem;
-            color: #64748b;
-          ">
-            Search by name, license #, or state...
-          </div>
-        </div>
-        
-        <div style="space-y: 1rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
-            <div>
-              <div style="font-weight: 600; color: #1e293b;">Summit Capital Partners</div>
-              <div style="font-size: 0.875rem; color: #64748b;">License #MB123456</div>
-            </div>
-            <span style="
-              background: #dcfce7;
-              color: #166534;
-              padding: 0.25rem 0.75rem;
-              border-radius: 12px;
-              font-size: 0.75rem;
-              font-weight: 600;
-            ">Active</span>
-          </div>
-          
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
-            <div>
-              <div style="font-weight: 600; color: #1e293b;">Blue Rock Funding Group</div>
-              <div style="font-size: 0.875rem; color: #64748b;">License #MB789012</div>
-            </div>
-            <span style="
-              background: #dcfce7;
-              color: #166534;
-              padding: 0.25rem 0.75rem;
-              border-radius: 12px;
-              font-size: 0.75rem;
-              font-weight: 600;
-            ">Active</span>
-          </div>
-          
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
-            <div>
-              <div style="font-weight: 600; color: #1e293b;">Next Wave Financial</div>
-              <div style="font-size: 0.875rem; color: #64748b;">License #MB345678</div>
-            </div>
-            <span style="
-              background: #fef3c7;
-              color: #92400e;
-              padding: 0.25rem 0.75rem;
-              border-radius: 12px;
-              font-size: 0.75rem;
-              font-weight: 600;
-            ">Pending</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Compliance API Section -->
-    <div class="compliance-two-col">
-      
-<!-- API Visual -->
-<div class="api-visual" style="
-  background: #1e293b;
-  border-radius: 16px;
-  padding: 2rem;
-  color: white;
-  box-shadow: 
-    0 25px 50px -12px rgba(30, 41, 59, 0.5), 
-    0 15px 25px -5px rgba(30, 41, 59, 0.35),
-    0 4px 6px -1px rgba(0, 0, 0, 0.15);
-">
-  <div style="margin-bottom: 1.5rem;">
-    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-      <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></div>
-      <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%;"></div>
-      <div style="width: 12px; height: 12px; background: #10b981; border-radius: 50%;"></div>
-    </div>
-    <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">
-      POST /api/compliance/disclaimers
-    </div>
-  </div>
-  
-  <div style="font-family: monospace; font-size: 0.875rem; line-height: 1.6;">
-    <div style="color: #f59e0b;">POST</div>
-    <div style="color: #64748b;">{</div>
-    <div style="margin-left: 1rem;">
-      <span style="color: #38bdf8;">"state"</span>: <span style="color: #a3e635;">"CA"</span>
-    </div>
-    <div style="color: #64748b;">}</div>
-    <br>
-    <div style="color: #10b981;">Response:</div>
-    <div style="color: #64748b;">{</div>
-    <div style="margin-left: 1rem;">
-      <span style="color: #38bdf8;">"disclaimers"</span>: [
-    </div>
-    <div style="margin-left: 2rem; color: #a3e635;">
-      "CFL License and Disclosure required..."
-    </div>
-    <div style="margin-left: 1rem;">]</div>
-    <div style="color: #64748b;">}</div>
-  </div>
-</div>
-
-
-      <!-- Compliance API Content -->
-      <div>
-<h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: 1.5rem;">
-  CRM-Ready <span style="color: #2563eb;">Compliance</span> Disclaimers
-</h3>
-
-<p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
-  Our API delivers state-specific disclaimers directly into your CRM—so you know what's required before pursuing a deal. Fast and always up to date.
-</p>
-
-<div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
-  <ul style="list-style: none; padding: 0; margin: 0;">
-    <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-      <span style="color: #2563eb; font-weight: 700;">✓</span>
-      Automatically inject disclaimers into your CRM
-    </li>
-    <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-      <span style="color: #2563eb; font-weight: 700;">✓</span>
-      Know what's required before submitting a deal
-    </li>
-    <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-      <span style="color: #2563eb; font-weight: 700;">✓</span>
-      Covers licensing, disclosure, and registration rules
-    </li>
-    <li style="display: flex; align-items: center; gap: 0.75rem; font-size: 1rem; color: #374151;">
-      <span style="color: #2563eb; font-weight: 700;">✓</span>
-      Updated as regulations evolve
-    </li>
-  </ul>
-</div>
-
-<div class="section-cta-links" style="display: flex; gap: 1rem;">
-  <a href="/api" style="
-    display: inline-flex;
-    align-items: center;
-    padding: 0.875rem 1.5rem;
-    background: #2563eb;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.2s ease;
-  ">
-    View API Docs
-  </a>
-  <a href="/compliance" style="
-    display: inline-flex;
-    align-items: center;
-    padding: 0.875rem 1.5rem;
-    background: transparent;
-    color: #2563eb;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    border: 2px solid #2563eb;
-    transition: all 0.2s ease;
-  ">
-    Compliance Hub
-  </a>
-</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-    
-    
-    
-    <!-- Pricing Section -->
-<section class="pricing" id="pricing">
-    <div class="pricing-container">
-        <div class="section-intro">
-            <h2 class="section-title">Priced like a tool, not a service.</h2>
-            <p class="section-description">
-                Designed to be affordable for everyone, around the cost of your 
-                <span style="color:#007BFF; font-weight:600;">monthly cell phone bill</span>.
+    <!-- Document Protection -->
+    <section class="doc-protection-section" style="padding: 5rem 2rem; background: #ffffff; margin-bottom: 3rem;">
+        <div style="max-width: 1600px; margin: 0 auto; text-align: center;">
+            <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: .25rem;">
+                Advanced <span style="color: #2563eb;">Document Protection</span> Technology
+            </h2>    
+            <p class="section-description" style="font-size: 1.25rem; color: #64748b; margin-bottom: 3.5rem;">
+                Deal theft costs the industry millions every year.<br>
+                Our tamper-resistant watermarks deter theft at scale.
             </p>
+
+            <div class="doc-protection-grid">
+                <!-- Card 1: Watermarks -->
+                <div class="visual-card" style="
+                    background: #f8fafc;
+                    padding: 2rem;
+                    border-radius: 1rem;
+                    text-align: left;
+                    align-self: center;
+                ">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">Watermarks</h3>
+                    <p style="color: #64748b; margin-bottom: 1rem;">Each page includes a full-page overlay of tamper-resistant watermarks</p>
+                    <ul style="color: #64748b; list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Deters theft at scale</li>
+                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> OCR-safe</li>
+                        <li><span style="color: #467EFF;">✓</span> Your branding</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Watermark Sample -->
+                <div style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 2rem;
+                    border-radius: 1rem;
+                    background: #ffffff;
+                    box-shadow: 
+                        0 25px 50px -12px rgba(37, 99, 235, 0.5), 
+                        0 15px 25px -5px rgba(37, 99, 235, 0.35),
+                        0 4px 6px -1px rgba(0, 0, 0, 0.15);
+                ">
+                    <img src="watermark-sample.png" alt="Watermarked Bank Statement"
+                         style="width: 100%; max-width: 360px; border-radius: 1rem;">
+                </div>
+
+                <!-- Card 3: QR Code -->
+                <div style="
+                    background: #ffffff;
+                    padding: 2rem;
+                    border-radius: 1rem;
+                    text-align: center;
+                    color: #1e293b;
+                    border: 1px solid #e5e7eb;
+                    box-shadow: 
+                        0 25px 50px -12px rgba(37, 99, 235, 0.5), 
+                        0 15px 25px -5px rgba(37, 99, 235, 0.35),
+                        0 4px 6px -1px rgba(0, 0, 0, 0.15);
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100%;
+                ">
+                    <h3 style="
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                        margin-bottom: 1rem;
+                        color: #2563eb;
+                    ">
+                        Powered QR Codes
+                    </h3>
+                    <img src="qr.png" alt="QR Code"
+                         style="max-width: 160px; width: 100%; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.5), 0 15px 25px -5px rgba(37, 99, 235, 0.35), 0 4px 6px -1px rgba(0, 0, 0, 0.15);">
+                </div>
+
+                <!-- Card 4: QR Metadata -->
+                <div class="visual-card" style="
+                    background: #f8fafc;
+                    padding: 2rem;
+                    border-radius: 1rem;
+                    text-align: left;
+                    align-self: center;
+                ">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">QR code metadata</h3>
+                    <p style="color: #64748b; margin-bottom: 1rem;">See exactly who had access to your files</p>
+                    <ul style="color: #64748b; list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Accountability at every level</li>
+                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> No more blind spots</li>
+                        <li><span style="color: #467EFF;">✓</span> Digital breadcrumbs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Urgent CTA Section -->
+            <div style="padding: 0 2rem;">
+                <div class="urgent-cta">
+                    <h3>Stop The Backdooring Today</h3>
+                    <p class="warning-text">Every stolen deal is costing you $4,000* in commission</p>
+                    <p class="cost-text">*Average broker commission per deal</p>
+                    <a href="/signup" class="btn-urgent">Watermark for Free</a>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="pricing-grid">
-            <div class="pricing-card featured">
-                <div class="plan-badge">Popular</div>
-                <h3 class="plan-name">Broker Shop</h3>
-                <div style="margin-bottom: 1rem;">
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--blue); margin-bottom: 0.25rem;">
-                        Starts at $299
+    <!-- Compliance Section -->
+    <section class="compliance-section" style="padding: 6rem 2rem; background: #f8fafc;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <!-- Section Header -->
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
+                    Fintech's Trusted <span style="color: #2563eb;">Compliance</span> Partner
+                </h2>      
+                <p class="section-description" style="font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto;">
+                    Your partner through the complex world of finance compliance. We simplify regulations so you can focus on funding more deals.
+                </p>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="compliance-two-col" style="margin-bottom: 6rem;">
+                <!-- Broker Directory Content -->
+                <div>
+                    <div style="margin-bottom: 0.5rem;">
+                        <span style="
+                            background: #dcfce7;
+                            color: #166534;
+                            padding: 0.25rem 0.75rem;
+                            border-radius: 12px;
+                            font-size: 1.2rem;
+                            font-weight: 600;
+                        ">Free</span>
                     </div>
-                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
-                        Cancel anytime • 🚀 ROI in first month
+                    <h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: .2rem;">
+                        Broker Directory
+                    </h3>
+                    <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
+                        We host a free, public directory of licensed alternative finance brokers nationwide. All listings are thoroughly vetted for legitimacy and compliance.
+                    </p>
+
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+                                <span style="color: #2563eb; font-weight: 700;">✓</span>
+                                Nationwide coverage
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+                                <span style="color: #2563eb; font-weight: 700;">✓</span>
+                                Everything in one place
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+                                <span style="color: #2563eb; font-weight: 700;">✓</span>
+                                Requests published within 72 hours
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="section-cta-links" style="display: flex; gap: 1rem;">
+                        <a href="/broker-directory" style="
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 0.875rem 1.5rem;
+                            background: #2563eb;
+                            color: white;
+                            text-decoration: none;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            font-size: 1rem;
+                            transition: all 0.2s ease;
+                        ">
+                            Search Directory
+                        </a>
+                        <a href="/contact" style="
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 0.875rem 1.5rem;
+                            background: transparent;
+                            color: #2563eb;
+                            text-decoration: none;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            font-size: 1rem;
+                            border: 2px solid #2563eb;
+                            transition: all 0.2s ease;
+                        ">
+                            Get Listed Free
+                        </a>
                     </div>
                 </div>
-                <p class="plan-description">For brokers who want instant access.</p>
-                <div class="plan-features">
-                    <ul class="feature-list">
-                        <li>Unlimited watermarking</li>
-                        <li>Compliance alerts (optional)</li>
-                        <li>Smart QR codes (optional)</li>
-                        <li>Portal access</li>
-                        <li>Basic support</li>
-                    </ul>
-                </div>
-                <div class="plan-cta">
-                    <a class="btn btn-blue" href="/signup">Start free trial</a>
+
+                <!-- Directory Visual -->
+                <div class="directory-visual" style="
+                    background: white;
+                    border-radius: 16px;
+                    padding: 2rem;
+                    box-shadow: 
+                        0 25px 50px -12px rgba(37, 99, 235, 0.4), 
+                        0 15px 25px -5px rgba(37, 99, 235, 0.25),
+                        0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                ">
+                    <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                        <h4 style="font-size: 1.125rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">
+                            Broker License Lookup
+                        </h4>
+                        <div style="
+                            background: #f8fafc;
+                            padding: 0.75rem 1rem;
+                            border-radius: 6px;
+                            border: 1px solid #e5e7eb;
+                            font-family: monospace;
+                            font-size: 0.875rem;
+                            color: #64748b;
+                        ">
+                            Search by name, license #, or state...
+                        </div>
+                    </div>
+                    
+                    <div style="space-y: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
+                            <div>
+                                <div style="font-weight: 600; color: #1e293b;">Summit Capital Partners</div>
+                                <div style="font-size: 0.875rem; color: #64748b;">License #MB123456</div>
+                            </div>
+                            <span style="
+                                background: #dcfce7;
+                                color: #166534;
+                                padding: 0.25rem 0.75rem;
+                                border-radius: 12px;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                            ">Active</span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
+                            <div>
+                                <div style="font-weight: 600; color: #1e293b;">Blue Rock Funding Group</div>
+                                <div style="font-size: 0.875rem; color: #64748b;">License #MB789012</div>
+                            </div>
+                            <span style="
+                                background: #dcfce7;
+                                color: #166534;
+                                padding: 0.25rem 0.75rem;
+                                border-radius: 12px;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                            ">Active</span>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+                            <div>
+                                <div style="font-weight: 600; color: #1e293b;">Next Wave Financial</div>
+                                <div style="font-size: 0.875rem; color: #64748b;">License #MB345678</div>
+                            </div>
+                            <span style="
+                                background: #fef3c7;
+                                color: #92400e;
+                                padding: 0.25rem 0.75rem;
+                                border-radius: 12px;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                            ">Pending</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="pricing-card">
-                <h3 class="plan-name">Wholesale</h3>
-                <p class="plan-description">For CRMs and OCR software companies looking to incorporate Aquamark at scale.</p>
-                <div class="plan-features">
-                    <ul class="feature-list">
-                        <li>Everything in Broker Shop</li>
-                        <li>Volume processing</li>
-                        <li>Priority support</li>
-                    </ul>
+            <!-- Compliance API Section -->
+            <div class="compliance-two-col">
+                <!-- API Visual -->
+                <div class="api-visual" style="
+                    background: #1e293b;
+                    border-radius: 16px;
+                    padding: 2rem;
+                    color: white;
+                    box-shadow: 
+                        0 25px 50px -12px rgba(30, 41, 59, 0.5), 
+                        0 15px 25px -5px rgba(30, 41, 59, 0.35),
+                        0 4px 6px -1px rgba(0, 0, 0, 0.15);
+                ">
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></div>
+                            <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%;"></div>
+                            <div style="width: 12px; height: 12px; background: #10b981; border-radius: 50%;"></div>
+                        </div>
+                        <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">
+                            POST /api/compliance/disclaimers
+                        </div>
+                    </div>
+                    
+                    <div style="font-family: monospace; font-size: 0.875rem; line-height: 1.6;">
+                        <div style="color: #f59e0b;">POST</div>
+                        <div style="color: #64748b;">{</div>
+                        <div style="margin-left: 1rem;">
+                            <span style="color: #38bdf8;">"state"</span>: <span style="color: #a3e635;">"CA"</span>
+                        </div>
+                        <div style="color: #64748b;">}</div>
+                        <br>
+                        <div style="color: #10b981;">Response:</div>
+                        <div style="color: #64748b;">{</div>
+                        <div style="margin-left: 1rem;">
+                            <span style="color: #38bdf8;">"disclaimers"</span>: [
+                        </div>
+                        <div style="margin-left: 2rem; color: #a3e635;">
+                            "CFL License and Disclosure required..."
+                        </div>
+                        <div style="margin-left: 1rem;">]</div>
+                        <div style="color: #64748b;">}</div>
+                    </div>
                 </div>
-                <div class="plan-cta">
-                    <a class="btn btn-primary" href="/contact">Request pricing</a>
-                </div>
-            </div>
 
-            <div class="pricing-card">
-                <h3 class="plan-name">Affiliate</h3>
-                <p class="plan-description">For lenders and individuals. Refer brokers and earn recurring monthly commissions with no cap or commitment.</p>
-                <div class="plan-features">
-                    <ul class="feature-list">
-                        <li>Recurring commissions</li>
-                        <li>No referral cap</li>
-                        <li>Marketing materials</li>
-                        <li>Monthly reporting</li>
-                    </ul>
-                </div>
-                <div class="plan-cta">
-                    <a class="btn btn-secondary" href="https://aquamark.fillout.com/affiliate">Join program</a>
+                <!-- Compliance API Content -->
+                <div>
+                    <h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: 1.5rem;">
+                        CRM-Ready <span style="color: #2563eb;">Compliance</span> Disclaimers
+                    </h3>
+
+                    <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
+                        Our API delivers state-specific disclaimers directly into your CRM—so you know what's required before pursuing a deal. Fast and always up to date.
+                    </p>
+
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+                                <span style="color: #2563eb; font-weight: 700;">✓</span>
+                                Automatically inject disclaimers into your CRM
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+                                <span style="color: #2563eb; font-weight: 700;">✓</span>
+                                Know what's required before submitting a deal
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
+                                <span style="color: #2563eb; font-weight: 700;">✓</span>
+                                Covers licensing, disclosure, and registration rules
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 0.75rem; font-size: 1rem; color: #374151;">
+                                <span style="color: #2563eb; font-weight: 700;">✓</span>
+                                Updated as regulations evolve
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="section-cta-links" style="display: flex; gap: 1rem;">
+                        <a href="/api" style="
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 0.875rem 1.5rem;
+                            background: #2563eb;
+                            color: white;
+                            text-decoration: none;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            font-size: 1rem;
+                            transition: all 0.2s ease;
+                        ">
+                            View API Docs
+                        </a>
+                        <a href="/compliance" style="
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 0.875rem 1.5rem;
+                            background: transparent;
+                            color: #2563eb;
+                            text-decoration: none;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            font-size: 1rem;
+                            border: 2px solid #2563eb;
+                            transition: all 0.2s ease;
+                        ">
+                            Compliance Hub
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+        
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <div class="section-intro">
+                <h2 class="section-title">Priced like a tool, not a service.</h2>
+                <p class="section-description">
+                    Designed to be affordable for everyone, around the cost of your 
+                    <span style="color:#007BFF; font-weight:600;">monthly cell phone bill</span>.
+                </p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <div class="plan-badge">Popular</div>
+                    <h3 class="plan-name">Broker Shop</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--blue); margin-bottom: 0.25rem;">
+                            Starts at $299
+                        </div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                            Cancel anytime • 🚀 ROI in first month
+                        </div>
+                    </div>
+                    <p class="plan-description">For brokers who want instant access.</p>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Unlimited watermarking</li>
+                            <li>Compliance alerts (optional)</li>
+                            <li>Smart QR codes (optional)</li>
+                            <li>Portal access</li>
+                            <li>Basic support</li>
+                        </ul>
+                    </div>
+                    <div class="plan-cta">
+                        <a class="btn btn-blue" href="/signup">Start free trial</a>
+                    </div>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="plan-name">Wholesale</h3>
+                    <p class="plan-description">For CRMs and OCR software companies looking to incorporate Aquamark at scale.</p>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Everything in Broker Shop</li>
+                            <li>Volume processing</li>
+                            <li>Priority support</li>
+                        </ul>
+                    </div>
+                    <div class="plan-cta">
+                        <a class="btn btn-primary" href="/contact">Request pricing</a>
+                    </div>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="plan-name">Affiliate</h3>
+                    <p class="plan-description">For lenders and individuals. Refer brokers and earn recurring monthly commissions with no cap or commitment.</p>
+                    <div class="plan-features">
+                        <ul class="feature-list">
+                            <li>Recurring commissions</li>
+                            <li>No referral cap</li>
+                            <li>Marketing materials</li>
+                            <li>Monthly reporting</li>
+                        </ul>
+                    </div>
+                    <div class="plan-cta">
+                        <a class="btn btn-secondary" href="https://aquamark.fillout.com/affiliate">Join program</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- CTA Section -->
     <section class="cta-section">
@@ -1774,7 +1661,7 @@ We host a free, public directory of licensed alternative finance brokers nationw
             <div class="footer-section">
                 <h4>Company</h4>
                 <ul>
-                  <li><a href="/broker-directory">Broker Directory</a></li>
+                    <li><a href="/broker-directory">Broker Directory</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li><a href="/privacy.html">Privacy</a></li>
                     <li><a href="/terms.html">Terms</a></li>
@@ -1782,9 +1669,9 @@ We host a free, public directory of licensed alternative finance brokers nationw
             </div>
         </div>
     </footer>
-     <div class="footer-bottom">
-            <p>© 2025 Aquamark. All rights reserved.</p>
-        </div>
+    <div class="footer-bottom">
+        <p>© 2025 Aquamark. All rights reserved.</p>
+    </div>
 
 <script>
 function toggleMobileMenu() {
