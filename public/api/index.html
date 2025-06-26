@@ -87,7 +87,6 @@ body {
   color: white;
 }
 
-
 /* Hero Section */
 .hero {
   background: var(--bg-primary);
@@ -181,6 +180,77 @@ body {
   padding: 1.5rem;
 }
 
+/* Endpoint Cards */
+.endpoint-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.endpoint-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.endpoint-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.endpoint-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.endpoint-badge {
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.endpoint-badge.retail {
+  background: var(--primary);
+}
+
+.endpoint-badge.crm {
+  background: var(--accent);
+}
+
+.endpoint-badge.ocr {
+  background: #8B5CF6;
+}
+
+.endpoint-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.endpoint-url {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  background: var(--bg-accent);
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  margin: 0.5rem 0;
+  word-break: break-all;
+}
+
+.endpoint-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
 /* Authentication */
 .auth-section {
   background: var(--bg-secondary);
@@ -244,21 +314,6 @@ body {
   line-height: 1.6;
   margin: 1rem 0;
   position: relative;
-}
-
-.code-header {
-  display: flex;
-  justify-content: between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.code-language {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .inline-code {
@@ -338,7 +393,6 @@ body {
   background: rgba(253, 224, 71, 0.2);
   color: #ca8a04;
 }
-
 
 .param-description {
   font-size: 0.875rem;
@@ -554,7 +608,7 @@ strong {
       API Documentation
     </div>
     <h1>Developer API</h1>
-    <p class="hero-subtitle">Seamlessly integrate Aquamark in minutes</p>
+    <p class="hero-subtitle">Seamlessly integrate Aquamark document watermarking</p>
   </div>
 </section>
 
@@ -571,7 +625,7 @@ strong {
           <div class="step-number">1</div>
           <div class="step-content">
             <h4>Request API Key</h4>
-            <p>Contact <a href="mailto:hey@aquamark.io">hey@aquamark.io</a> for your personalized API key</p>
+            <p>Contact <a href="mailto:hey@aquamark.io">hey@aquamark.io</a> for retail access, or <a href="mailto:partners@aquamark.io">partners@aquamark.io</a> for wholesale partnerships</p>
           </div>
         </div>
         
@@ -588,17 +642,45 @@ strong {
     </div>
   </div>
 
-  <!-- Endpoint -->
+  <!-- Endpoints -->
   <div class="section">
-    <h2 class="section-title">Endpoint</h2>
-    <div class="card">
-      <p><span class="method">POST</span> <span class="inline-code">https://aquamark-decrypt.onrender.com/watermark</span></p>
+    <h2 class="section-title">Endpoints</h2>
+    <p class="section-subtitle">Choose the endpoint that fits your integration needs</p>
+    
+    <div class="endpoint-grid">
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <span class="endpoint-badge retail">Retail</span>
+          <h3 class="endpoint-title">Direct Customer Access</h3>
+        </div>
+        <div class="endpoint-url">POST https://aquamark-decrypt.onrender.com/watermark</div>
+        <p class="endpoint-description">For individual users and small businesses accessing Aquamark directly</p>
+      </div>
+
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <span class="endpoint-badge crm">CRM</span>
+          <h3 class="endpoint-title">CRM Integration</h3>
+        </div>
+        <div class="endpoint-url">POST https://aquamark-cloudsquare.onrender.com/watermark</div>
+        <p class="endpoint-description">For CRM platforms like CloudSquare BrokerSuite, Salesforce integrations, and lending software</p>
+      </div>
+
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <span class="endpoint-badge ocr">OCR</span>
+          <h3 class="endpoint-title">OCR & Processing</h3>
+        </div>
+        <div class="endpoint-url">POST https://aquamark-ocr.onrender.com/watermark</div>
+        <p class="endpoint-description">For document processing companies, OCR services, and automated workflow systems</p>
+      </div>
     </div>
   </div>
 
   <!-- Parameters -->
   <div class="section">
     <h2 class="section-title">Parameters</h2>
+    <p class="section-subtitle">All endpoints use the same parameter structure</p>
 
     <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Required</h3>
     <div class="param-grid">
@@ -610,7 +692,7 @@ strong {
             <span class="status status-required">Required</span>
           </div>
         </div>
-        <div class="param-description">Your Aquamark account email</div>
+        <div class="param-description">Email address - your Aquamark account email (retail) or end user's email (wholesale)</div>
       </div>
       
       <div class="param-card">
@@ -635,13 +717,13 @@ strong {
             <span class="status status-recommended">Recommended</span>
           </div>
         </div>
-<div class="param-description">
-  For state compliance disclaimers – accepts state names or abbreviations (e.g. "CA", "California"). Returned in response header. To store or display this value, create a custom field in your CRM called <code class="inline-code">Compliance</code> and push the value there automatically.
-</div>
+        <div class="param-description">
+          For state compliance disclaimers – accepts state names or abbreviations (e.g. "CA", "California"). Returned in response header. To store or display this value, create a custom field in your CRM called <code class="inline-code">Compliance</code> and push the value there automatically.
+        </div>
       </div>
     </div>
 
-    <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Advanced</h3>
+    <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Advanced Tracking</h3>
     
     <div class="qr-section">
       <div class="qr-preview">
@@ -694,62 +776,28 @@ strong {
 
   <!-- Examples -->
   <div class="section">
-    <h2 class="section-title">Examples</h2>
+    <h2 class="section-title">Postman Example</h2>
     
     <div class="card">
-      <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">cURL</h3>
-      <div class="code-block">curl -X POST "https://aquamark-decrypt.onrender.com/watermark" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -F "user_email=john@example.com" \
-  -F "file=@statement1.pdf" \
-  -F "state=CA" \
-  -F "lender=OnDeck" \
-  -F "salesperson=Jack Dawson" \
-  -F "processor=Rose DeWitt" \
-  --output "protected.pdf"</div>
-    </div>
+      <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Postman Setup</h3>
+      <div class="code-block">POST {{endpoint}}
 
-    <div class="card">
-      <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Node.js</h3>
-      <div class="code-block">const axios = require("axios");
-const fs = require("fs");
-const FormData = require("form-data");
+Headers:
+Authorization: Bearer YOUR_API_KEY
+Content-Type: multipart/form-data
 
-const form = new FormData();
-form.append("user_email", "john@example.com");
-form.append("file", fs.createReadStream("./statement1.pdf"));
-form.append("state", "CA");
-form.append("lender", "OnDeck");
+Body (form-data):
+user_email: john@example.com
+file: [Select File] statement1.pdf
+state: CA
+salesperson: Jack Dawson
+processor: Rose DeWitt
+lender: OnDeck
 
-axios.post("https://aquamark-decrypt.onrender.com/watermark", form, {
-  headers: {
-    ...form.getHeaders(),
-    Authorization: "Bearer YOUR_API_KEY"
-  },
-  responseType: "arraybuffer"
-}).then(response => {
-  fs.writeFileSync("protected.pdf", response.data);
-}).catch(console.error);</div>
-    </div>
-
-    <div class="card">
-      <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Python</h3>
-      <div class="code-block">import requests
-
-with open("statement1.pdf", "rb") as f:
-    response = requests.post(
-        "https://aquamark-decrypt.onrender.com/watermark",
-        data={
-            "user_email": "john@example.com",
-            "state": "CA",
-            "lender": "OnDeck"
-        },
-        files={"file": f},
-        headers={"Authorization": "Bearer YOUR_API_KEY"}
-    )
-
-with open("protected.pdf", "wb") as out:
-    out.write(response.content)</div>
+Endpoints:
+Retail: https://aquamark-decrypt.onrender.com/watermark
+CRM: https://aquamark-cloudsquare.onrender.com/watermark
+OCR: https://aquamark-ocr.onrender.com/watermark</div>
     </div>
   </div>
 
@@ -757,8 +805,9 @@ with open("protected.pdf", "wb") as out:
   <div class="section">
     <h2 class="section-title">Response</h2>
     <div class="card">
-      <p>Returns a protected PDF file with optional compliance header:</p>
-      <div class="code-block">X-State-Disclaimer: CFL license and Disclosure required.</div>
+      <p>All endpoints return a protected PDF file with optional compliance header:</p>
+      <div class="code-block">Content-Type: application/pdf
+X-State-Disclaimer: CFL license and Disclosure required.</div>
     </div>
   </div>
 
@@ -767,9 +816,10 @@ with open("protected.pdf", "wb") as out:
     <h2 class="section-title">Workflow</h2>
     <div class="card">
       <ol class="steps">
+        <li>Choose the appropriate endpoint for your use case</li>
         <li>Send a POST request with your PDF and metadata</li>
         <li>Receive a protected PDF + optional state disclaimer header</li>
-        <li>Save the PDF and push state disclaimers to CRM</li>
+        <li>Save the PDF and push state disclaimers to your system</li>
       </ol>
     </div>
   </div>
@@ -779,9 +829,10 @@ with open("protected.pdf", "wb") as out:
     <h2 class="section-title">Important Notes</h2>
     <div class="card">
       <ul class="feature-list">
-        <li>PDF only. One file per request</li>
+        <li>PDF only. One file per request across all endpoints</li>
         <li>Retail users must upload logo in portal before using the API</li>
-        <li>Questions? Email <a href="mailto:hey@aquamark.io">hey@aquamark.io</a></li>
+        <li>Wholesale partners receive dedicated onboarding and integration support</li>
+        <li>Questions? Email <a href="mailto:hey@aquamark.io">hey@aquamark.io</a> (retail) or <a href="mailto:partners@aquamark.io">partners@aquamark.io</a> (wholesale)</li>
       </ul>
     </div>
   </div>
