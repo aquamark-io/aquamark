@@ -145,6 +145,64 @@
             padding: 1.5rem;
         }
 
+        /* Section Cards - NEW */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .section-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .section-icon.logo { background: #467EFF; }
+        .section-icon.smart { background: #467EFF; }
+        .section-icon.watermark { background: #467EFF; }
+
+        .section-body {
+            padding: 1.5rem;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
         /* Instructions */
         .instructions {
             background: var(--primary-light);
@@ -191,6 +249,22 @@
             font-family: inherit;
         }
 
+        input[type="text"] {
+            padding: 0.5rem;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            font-family: inherit;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(70, 126, 255, 0.1);
+        }
+
         /* Logo Preview */
         .logo-preview {
             margin-top: 1rem;
@@ -214,6 +288,12 @@
             border: 4px dashed var(--border-color);
             background-color: var(--bg-color);
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #pdfInput:hover {
+            border-color: var(--accent-color);
+            background-color: #f0f7ff;
         }
 
         /* Button */
@@ -295,6 +375,73 @@
             color: var(--text-secondary);
         }
 
+        /* Subscribe Section */
+        .subscribe-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            text-align: center;
+        }
+
+        .subscribe-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscribe-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .subscribe-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .subscribe-btn:hover::before {
+            left: 100%;
+        }
+
+        .subscribe-price {
+            font-size: 1.1rem;
+            color: var(--success-color);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .value-proposition {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 0rem;
+        }
+
+        .cost-highlight {
+            color: var(--success-color);
+            font-weight: 700;
+        }
+
         /* Upgrade Button */
         .upgrade-btn {
             display: inline-flex;
@@ -329,7 +476,30 @@
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
-            margin-bottom: 4.0rem;
+        }
+
+        /* Smart Tags Grid */
+        .smart-tags-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .smart-tag-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .smart-tag-field label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .smart-tag-field .optional {
+            font-weight: 400;
+            color: var(--text-secondary);
         }
 
         /* Footer */
@@ -393,8 +563,22 @@
                 gap: 1rem;
             }
 
+            .subscribe-section {
+                align-self: stretch;
+                align-items: stretch;
+            }
+
+            .subscribe-btn {
+                width: 100%;
+                text-align: center;
+            }
+
             .logo-actions {
                 flex-direction: column;
+            }
+
+            .smart-tags-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -428,53 +612,89 @@
                 <h3>Pages Watermarked</h3>
                 <div class="counter-value" id="pagesWatermarked">0</div>
             </div>
-            <a href="/dashboard.html" id="upgradePlanLink" class="upgrade-btn">
-                Upgrade Plan
-            </a>
+            <div class="subscribe-section">
+                <a href="/dashboard.html" id="upgradePlanLink" class="subscribe-btn">
+                    Subscribe Now
+                </a>
+                <div class="subscribe-price">$299 for unlimited use</div>
+                <div class="value-proposition">
+                    One stolen deal costs you <span class="cost-highlight">$4,000</span>*
+                </div>
+            </div>
         </div>
 
-        <div class="aqua-card">
-            <div class="card-header">
+        <!-- Tips Section -->
+        <div class="instructions">
+            <strong>Tips:</strong>
+            <ul>
+                <li>Upload your logo once — change anytime (PNG)</li>
+                <li>Drag & drop PDFs for fast processing</li>
+                <li>Upload multiple files at once</li>
+            </ul>
+        </div>
+
+        <!-- Section 1: Stored Logo -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon logo">1</div>
+                <h2>Stored Logo</h2>
             </div>
-            <div class="card-body">
-                <div class="instructions">
-                    <strong>Tips:</strong>
-                    <ul>
-                        <li>Upload your logo once — change anytime (PNG)</li>
-                        <li>Drag & drop PDFs for fast processing</li>
-                        <li>Upload multiple files at once</li>
-                    </ul>
+            <div class="section-body">
+                <p class="section-description">
+                    Upload your company logo once and use it across future sessions.
+                </p>
+                
+                <div class="logo-preview">
+                    <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
                 </div>
 
+                <div class="logo-actions">
+                    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" style="display: none;" />
+                    <button class="change-logo-btn" onclick="document.getElementById('logoInput').click()">Change Logo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Smart Tags -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon smart">2</div>
+                <h2>Optional Smart Tags</h2>
+            </div>
+            <div class="section-body">
+                <p class="section-description">
+                    Personalize your QR codes. These optional fields help identify individuals who were given access to your files.
+                </p>
+                
+                <div class="smart-tags-grid">
+                    <div class="smart-tag-field">
+                        <label for="lenderTag">Lender</label>
+                        <input type="text" id="lenderTag" placeholder="Lender name" />
+                    </div>
+                    <div class="smart-tag-field">
+                        <label for="salespersonTag">Salesperson</label>
+                        <input type="text" id="salespersonTag" placeholder="Salesperson name" />
+                    </div>
+                    <div class="smart-tag-field">
+                        <label for="processorTag">Processor</label>
+                        <input type="text" id="processorTag" placeholder="Processor name" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Watermark -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon watermark">3</div>
+                <h2>Watermark</h2>
+            </div>
+            <div class="section-body">
+                <p class="section-description">
+                    Upload your PDF files to apply watermarks in seconds. Multiple files can be processed simultaneously.
+                </p>
+                
                 <div class="upload-group">
-                    <h2>Stored Logo</h2>
-                    <div class="logo-preview">
-                        <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
-                    </div>
-
-                    <div class="logo-actions">
-                        <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" style="display: none;" />
-                        <button class="change-logo-btn" onclick="document.getElementById('logoInput').click()">Change Logo</button>
-                    </div>
-                </div>
-
-                <!-- Optional Inputs -->
-                <div class="upload-group" style="display: flex; gap: 2rem;">
-                    <div style="flex: 1;">
-                        <label for="lenderTag" style="font-weight: 600;">Lender <span style="font-weight: 400;">(optional)</span></label>
-                        <input type="text" id="lenderTag" placeholder="Lender name" style="margin-top: 0.15rem; padding: 0.5rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="salespersonTag" style="font-weight: 600;">Salesperson <span style="font-weight: 400;">(optional)</span></label>
-                        <input type="text" id="salespersonTag" placeholder="Salesperson name" style="margin-top: 0.15rem; padding: 0.5rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="processorTag" style="font-weight: 600;">Processor <span style="font-weight: 400;">(optional)</span></label>
-                        <input type="text" id="processorTag" placeholder="Processor name" style="margin-top: 0.15rem; padding: 0.5rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
-                    </div>
-                </div>
-
-                <div class="upload-group" style="margin-top: 2rem;">
                     <h2>Drag & Drop File(s) or choose below</h2>
                     <input type="file" id="pdfInput" accept="application/pdf" multiple />
                 </div>
@@ -482,17 +702,6 @@
                 <div class="action-row">
                     <button onclick="processFiles()" id="watermarkBtn">Watermark</button>
                     <div class="status" id="status"></div>
-                </div>
-
-                <!-- API Upgrade Prompt -->
-                <div style="background: #fffbe6; border: 1px solid #ffe58f; padding: 1.25rem 1.5rem; border-radius: 12px; margin-top: 1.5rem; box-shadow: var(--shadow-md);">
-                    <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 600;">Want state-compliance alerts? Need faster processing?</h3>
-                    <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem;">
-                        Integrate instantly through our open API.
-                    </p>
-                    <a href="mailto:hey@aquamark.io?subject=API%20Key%20Request" target="_blank" class="upgrade-btn" style="background: #ffd666; color: black;">
-                        🚀 Request API Key
-                    </a>
                 </div>
             </div>
         </div>
@@ -535,23 +744,22 @@
                 userToken = await getAuthToken();
 
                 // ✅ Smart plan sync: Only update if changed
-if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
-    const livePlanName = currentUser.Subscription.Plan.Name;
-    const cachedPlan = localStorage.getItem('aquaPlanName');
+                if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
+                    const livePlanName = currentUser.Subscription.Plan.Name;
+                    const cachedPlan = localStorage.getItem('aquaPlanName');
 
-    console.log("📦 Live plan from Outseta:", livePlanName);
-    console.log("📦 Cached plan from localStorage:", cachedPlan);
+                    console.log("📦 Live plan from Outseta:", livePlanName);
+                    console.log("📦 Cached plan from localStorage:", cachedPlan);
 
-    if (livePlanName !== cachedPlan) {
-        console.log("🔁 Plan changed — updating Supabase");
-        await updateUserPlan(livePlanName);
-        localStorage.setItem('aquaPlanName', livePlanName);
-    } else {
-        console.log("✅ Plan unchanged — skipping update");
-    }
-}
+                    if (livePlanName !== cachedPlan) {
+                        console.log("🔁 Plan changed — updating Supabase");
+                        await updateUserPlan(livePlanName);
+                        localStorage.setItem('aquaPlanName', livePlanName);
+                    } else {
+                        console.log("✅ Plan unchanged — skipping update");
+                    }
+                }
 
-                
                 // Load user's logo and usage data
                 await loadUserLogo();
                 await loadUsageData();
