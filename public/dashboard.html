@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <title>Aquamark Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aquamark Watermarking</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
     <style>
@@ -17,7 +17,7 @@
             --danger-color: #ef4444;
             --text-primary: #1a1a1a;
             --text-secondary: #64748b;
-            --bg-color: #f8f9fb;
+            --bg-color: #ffffff;
             --card-bg: #ffffff;
             --border-color: #e2e8f0;
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -87,32 +87,59 @@
             left: 0;
             height: 3px;
             width: 100%;
-            background: var(--accent-color);
+            background: #467EFF;
             border-radius: 3px;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+        }
+
+        .btn-demo {
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            color: white;
+            border: none;
+        }
+
+        .btn-demo:hover {
+            opacity: 0.9;
         }
 
         /* Main Content */
         .aqua-panel {
-            max-width: 800px;
+            max-width: 1400px;
             width: 95%;
             margin: 2rem auto;
             flex: 1;
         }
 
-        h1.page-title {
+        h1.greeting {
             font-size: 2rem;
             margin-bottom: 2rem;
             font-weight: 600;
             color: var(--text-primary);
         }
 
-        /* Card */
+        /* Main Layout */
+        .aqua-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Cards */
         .aqua-card {
             background: var(--card-bg);
             border-radius: var(--radius);
             box-shadow: var(--shadow-md);
             overflow: hidden;
-            margin-bottom: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+        }
+
+        .aqua-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-header {
@@ -145,361 +172,161 @@
             padding: 1.5rem;
         }
 
-        /* Section Cards - NEW */
-        .section-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-color);
+        /* Action Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            gap: 0.5rem;
         }
 
-        .section-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
         }
 
-        .section-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-accent {
+            background: #467EFF;
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-watermark {
+            background: #467EFF;
+            color: white;
+        }
+
+        .btn-watermark:hover {
+            background: #95cbea;
+        }
+
+        .btn-success {
+            background: white;
+            color: #467EFF;
+            border: 2px solid #467EFF;
+        }
+
+        .btn-accent:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
             background: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+
+        .btn-black {
+    background: #000000;
+    color: #ffffff;
+}
+
+.btn-black:hover {
+    background: #333333;
+}
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background: linear-gradient(90deg, #3B82F6, #1E3A8A);
+            color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
         }
 
-        .section-header h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin: 0;
+        .announcement-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .section-icon {
-            width: 28px;
-            height: 28px;
+        .announcement-icon {
+            background: white;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            font-weight: 700;
-            color: white;
+            color: var(--primary-color);
+            font-size: 1.5rem;
         }
 
-        .section-icon.logo { background: #467EFF; }
-        .section-icon.smart { background: #467EFF; }
-        .section-icon.watermark { background: #467EFF; }
-
-        .section-body {
-            padding: 1.5rem;
-        }
-
-        .section-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
-
-        /* Instructions */
-        .instructions {
-            background: var(--primary-light);
-            border-left: 5px solid var(--primary-color);
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: var(--radius);
-        }
-
-        .instructions ul {
-            padding-left: 1.5rem;
-            margin-top: 0.75rem;
-        }
-
-        .instructions li {
-            margin-bottom: 0.5rem;
-        }
-
-        .instructions small {
-            display: block;
-            margin-top: 1rem;
-            color: var(--text-secondary);
-        }
-
-        /* Upload Group */
-        .upload-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .upload-group h2 {
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
+        .announcement-text h3 {
             font-weight: 600;
-        }
-
-        input[type="file"] {
-            display: block;
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            margin-top: 0.5rem;
-            font-family: inherit;
-        }
-
-        input[type="text"] {
-            padding: 0.5rem;
-            width: 100%;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background: var(--bg-color);
-            font-family: inherit;
-            transition: border-color 0.2s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(70, 126, 255, 0.1);
-        }
-
-        /* Logo Preview */
-        .logo-preview {
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .logo-preview img {
-            max-height: 100px;
-            border-radius: 8px;
-            background: white;
-            border: 1px solid var(--border-color);
-            max-width: 100%;
-            object-fit: contain;
-        }
-
-        #pdfInput {
-            height: 150px;
-            padding: 1rem;
-            text-align: center;
-            font-size: .85rem;
-            border: 4px dashed var(--border-color);
-            background-color: var(--bg-color);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #pdfInput:hover {
-            border-color: var(--accent-color);
-            background-color: #f0f7ff;
-        }
-
-        /* Button */
-        button {
-            background: var(--accent-color);
-            border: none;
-            color: white;
-            padding: 0.75rem 1.25rem;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        button:hover {
-            background: var(--primary-dark);
-        }
-
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .change-logo-btn {
-            background-color: white;
-            color: #467EFF;
-            border: 2px solid #467EFF;
-            border-radius: 6px;
-            padding: 0.75rem 1.25rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .change-logo-btn:hover {
-            background-color: #e0ecff;
-            color: #1d4ed8;
-        }
-
-        /* Status */
-        .status {
-            margin-top: 1.5rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        /* Pages Used Counter */
-        .pages-counter {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--primary-light);
-            border-radius: var(--radius);
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .counter-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .counter-info h3 {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .counter-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        .counter-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Subscribe Section */
-        .subscribe-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            text-align: center;
-        }
-
-        .subscribe-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .subscribe-btn:hover {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
-        }
-
-        .subscribe-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .subscribe-btn:hover::before {
-            left: 100%;
-        }
-
-        .subscribe-price {
-            font-size: 1.1rem;
-            color: var(--success-color);
-            font-weight: 700;
             margin-bottom: 0.25rem;
         }
 
-        .value-proposition {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-top: 0rem;
-        }
-
-        .cost-highlight {
-            color: var(--success-color);
-            font-weight: 700;
-        }
-
-        /* Upgrade Button */
-        .upgrade-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: #467EFF;
+        .announcement-text p {
             color: white;
-            border: none;
-            padding: 0.75rem 1.25rem;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
+            line-height: 1.6;
         }
 
-        .upgrade-btn:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
-
-        /* Action Row */
-        .action-row {
+        /* Usage Stats */
+        .usage-stat {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-top: 2rem;
+            margin-bottom: 0.75rem;
         }
 
-        .logo-actions {
-            display: flex;
-            gap: 1rem;
+        .usage-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .usage-value {
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #f3f4f6;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
             margin-top: 1rem;
         }
 
-        /* Smart Tags Grid */
-        .smart-tags-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+        .progress-fill {
+            background: #467EFF;
+            height: 100%;
+            width: 0%;
         }
 
-        .smart-tag-field {
+        /* Action Buttons */
+        .action-buttons {
             display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .smart-tag-field label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .smart-tag-field .optional {
-            font-weight: 400;
-            color: var(--text-secondary);
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
         }
 
         /* Footer */
@@ -540,10 +367,18 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .action-row {
+            .aqua-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .announcement-banner {
                 flex-direction: column;
-                gap: 1rem;
                 align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
             }
 
             .aqua-footer {
@@ -555,30 +390,6 @@
             .footer-nav {
                 flex-direction: column;
                 gap: 0.5rem;
-            }
-
-            .pages-counter {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .subscribe-section {
-                align-self: stretch;
-                align-items: stretch;
-            }
-
-            .subscribe-btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .logo-actions {
-                flex-direction: column;
-            }
-
-            .smart-tags-grid {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -597,111 +408,59 @@
     <header class="aqua-header">
         <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
         <nav class="aqua-nav">
-            <a href="/dashboard.html" id="dashboardLink">Dashboard</a>
-            <a href="/watermark.html" class="active">Watermark</a>
+            <a href="/dashboard.html" class="active">Dashboard</a>
+            <a href="/watermark.html" id="watermarkLink">Watermark</a>
             <a href="https://www.aquamark.io/login.html">Log Out</a>
         </nav>
     </header>
 
     <main class="aqua-panel">
-        <h1 class="page-title">Watermark Console</h1>
+        <h1 class="greeting">My Dashboard</h1>
 
-        <!-- Pages Used Counter -->
-        <div class="pages-counter">
-            <div class="counter-info">
-                <h3>Pages Watermarked</h3>
-                <div class="counter-value" id="pagesWatermarked">0</div>
-            </div>
-            <div class="subscribe-section">
-                <a href="/dashboard.html" id="upgradePlanLink" class="subscribe-btn">
-                    Subscribe Now
-                </a>
-                <div class="subscribe-price">$299 for unlimited use</div>
-                <div class="value-proposition">
-                    One stolen deal costs you <span class="cost-highlight">$4,000</span>*
+        <!-- Announcement Banner -->
+        <div class="announcement-banner">
+            <div class="announcement-content">
+                <div class="announcement-icon">
+                    <img src="logo-icon-black-blue.png" alt="Money Bag Icon" style="width: 28px; height: 28px;">
+                </div>
+                <div class="announcement-text">
+                    <h3>State-specific compliance alerts</h3>
+                    <p>
+                        Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM.<br>
+                        <strong>API key:</strong> <a href="mailto:hey@aquamark.io" style="color: white; text-decoration: underline;">hey@aquamark.io</a>
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Tips Section -->
-        <div class="instructions">
-            <strong>Tips:</strong>
-            <ul>
-                <li>Upload your logo once — change anytime (PNG)</li>
-                <li>Drag & drop PDFs for fast processing</li>
-                <li>Upload multiple files at once</li>
-            </ul>
-        </div>
+      <!-- Action Buttons -->
+<div class="action-buttons">
+    <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-success">Subscribe</a>
+    <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
+    <a href="https://app.supademo.com/demo/cmc4x4nx60p8wllpn4din0fcy" target="_blank" class="btn btn-demo">1-minute demo</a>
+    <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
+</div>
 
-        <!-- Section 1: Stored Logo -->
-        <div class="section-card">
-            <div class="section-header">
-                <div class="section-icon logo">1</div>
-                <h2>Stored Logo</h2>
-            </div>
-            <div class="section-body">
-                <p class="section-description">
-                    Upload your company logo once and use it for future sessions.
-                </p>
-                
-                <div class="logo-preview">
-                    <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
+
+        <!-- Main Layout -->
+        <div class="aqua-layout">
+            <!-- Profile Card -->
+            <div class="aqua-card">
+                <div class="card-header">
+                    <h2>My Profile</h2>
                 </div>
-
-                <div class="logo-actions">
-                    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" style="display: none;" />
-                    <button class="change-logo-btn" onclick="document.getElementById('logoInput').click()">Change Logo</button>
+                <div class="card-body">
+                    <div data-o-profile="1" data-mode="embed"></div>
                 </div>
             </div>
-        </div>
 
-        <!-- Section 2: Smart Tags -->
-        <div class="section-card">
-            <div class="section-header">
-                <div class="section-icon smart">2</div>
-                <h2>Optional Smart Tags</h2>
-            </div>
-            <div class="section-body">
-                <p class="section-description">
-                    Personalize your QR codes. These (optional) fields help identify individuals who were given access to your files.
-                </p>
-                
-                <div class="smart-tags-grid">
-                    <div class="smart-tag-field">
-                  <label for="lenderTag">Lender</label>
-                        <input type="text" id="lenderTag" placeholder="Lender name" />
-                    </div>
-                    <div class="smart-tag-field">
-                        <label for="salespersonTag">Salesperson</span></label>
-                        <input type="text" id="salespersonTag" placeholder="Salesperson name" />
-                    </div>
-                    <div class="smart-tag-field">
-                        <label for="processorTag">Processor</span></label>
-                        <input type="text" id="processorTag" placeholder="Processor name" />
-                    </div>
+            <!-- Usage Card -->
+            <div class="aqua-card">
+                <div class="card-header">
+                    <h2>Your Usage</h2>
                 </div>
-            </div>
-        </div>
-
-        <!-- Section 3: Watermark -->
-        <div class="section-card">
-            <div class="section-header">
-                <div class="section-icon watermark">3</div>
-                <h2>Watermark</h2>
-            </div>
-            <div class="section-body">
-                <p class="section-description">
-                    Upload your PDF files to apply watermarks in seconds. Multiple files can be processed simultaneously.
-                </p>
-                
-                <div class="upload-group">
-                    <h2>Drag & Drop File(s) or choose below</h2>
-                    <input type="file" id="pdfInput" accept="application/pdf" multiple />
-                </div>
-                
-                <div class="action-row">
-                    <button onclick="processFiles()" id="watermarkBtn">Watermark</button>
-                    <div class="status" id="status"></div>
+                <div class="card-body" id="usage-stats">
+                    <p>Loading your usage data...</p>
                 </div>
             </div>
         </div>
@@ -728,6 +487,7 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             initializePage();
+            preserveUrlParameters();
         });
 
         // Initialize the page
@@ -740,42 +500,97 @@
                     return;
                 }
 
+                console.log("User loaded:", currentUser.Email);
+
                 // Get auth token for API calls
                 userToken = await getAuthToken();
-
-                // ✅ Smart plan sync: Only update if changed
-                if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
-                    const livePlanName = currentUser.Subscription.Plan.Name;
-                    const cachedPlan = localStorage.getItem('aquaPlanName');
-
-                    console.log("📦 Live plan from Outseta:", livePlanName);
-                    console.log("📦 Cached plan from localStorage:", cachedPlan);
-
-                    if (livePlanName !== cachedPlan) {
-                        console.log("🔁 Plan changed — updating Supabase");
-                        await updateUserPlan(livePlanName);
-                        localStorage.setItem('aquaPlanName', livePlanName);
-                    } else {
-                        console.log("✅ Plan unchanged — skipping update");
-                    }
-                }
-
-                // Load user's logo and usage data
-                await loadUserLogo();
+                
+                // Load usage data
                 await loadUsageData();
                 
-                // Set up event listeners
-                setupEventListeners();
+                // Set up Outseta event listeners for plan changes
+                setupOutsetaEventListeners();
+                
             } catch (error) {
                 console.error('Initialization error:', error);
-                document.getElementById('status').textContent = '❌ Error loading page. Please refresh.';
+                document.getElementById('usage-stats').innerHTML = '<p>Error loading dashboard. Please refresh the page.</p>';
             }
+        }
+
+
+
+// Replace your loadUsageData function with this version that gets referral code from Outseta profile
+
+async function loadUsageData() {
+    try {
+        if (!userToken) {
+            document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
+            return;
+        }
+
+        // Get referral code from Outseta profile - JUST LIKE THE OLD WORKING CODE
+        let referralCode = null;
+        try {
+            const profile = await Outseta.getUser();
+            if (profile && profile.ref_code) {
+                referralCode = profile.ref_code;
+                console.log('🎯 Got referral code from Outseta profile:', referralCode);
+            }
+        } catch (error) {
+            console.error('Error getting Outseta profile:', error);
+        }
+
+        // Send to your existing /api/usage endpoint
+        const requestBody = {};
+        if (referralCode) {
+            requestBody.referralCode = referralCode;
+            console.log('✅ Sending referral code to backend:', referralCode);
+        }
+
+        const response = await fetch(`${API_BASE_URL}/api/usage`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${userToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (response.ok) {
+            const userData = await response.json();
+            displayUsageData(userData);
+        } else {
+            const error = await response.json();
+            document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
+        }
+    } catch (error) {
+        console.error('Error loading usage data:', error);
+        document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+    }
+}
+        
+
+        
+
+        // Preserve URL parameters for navigation
+        function preserveUrlParameters() {
+            const urlParams = window.location.search;
+            const hashParams = window.location.hash;
+
+            const pathsToUpdate = ["/watermark.html", "/dashboard.html"];
+
+            document.querySelectorAll("a[href]").forEach(link => {
+                const href = link.getAttribute("href");
+                if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+                    const cleanHref = href.split('?')[0].split('#')[0];
+                    link.href = cleanHref + urlParams + hashParams;
+                }
+            });
         }
 
         // Get auth token for API calls
         async function getAuthToken() {
             try {
-                // Get token from Outseta
                 const token = await Outseta.getAccessToken();
                 return token;
             } catch (error) {
@@ -784,179 +599,114 @@
             }
         }
 
-        // Set up event listeners
-        function setupEventListeners() {
-            // Logo file input change
-            document.getElementById('logoInput').addEventListener('change', uploadLogo);
-            
-            // Preserve URL parameters for navigation
-            const urlParams = window.location.search;
-            const hashParams = window.location.hash;
-            
-            document.getElementById('dashboardLink').href = "/dashboard.html" + urlParams + hashParams;
-            document.getElementById('upgradePlanLink').href = "/dashboard.html" + urlParams + hashParams;
+        // Set up Outseta event listeners
+        function setupOutsetaEventListeners() {
+            // Listen for subscription updates
+            Outseta.on("subscription.update", async (params) => {
+                console.log("Subscription update event:", params);
+                await handlePlanChange(params);
+            });
+
+            // Listen for subscription reopens
+            Outseta.on("subscription.reopen", async (params) => {
+                console.log("Subscription reopen event:", params);
+                await handlePlanChange(params);
+            });
         }
 
-        // Load user's stored logo
-        async function loadUserLogo() {
+        // Handle plan changes from Outseta events
+        async function handlePlanChange(params) {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/logo`, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
+                let planName = "Free Trial";
 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.logoUrl) {
-                        document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
+                if (params) {
+                    if (params.Plan && params.Plan.Name) {
+                        planName = params.Plan.Name;
+                    } else if (params.plan && params.plan.name) {
+                        planName = params.plan.name;
+                    } else if (params.subscription) {
+                        if (params.subscription.Plan && params.subscription.Plan.Name) {
+                            planName = params.subscription.Plan.Name;
+                        } else if (params.subscription.plan && params.subscription.plan.name) {
+                            planName = params.subscription.plan.name;
+                        }
                     }
                 }
-            } catch (error) {
-                console.error('Error loading logo:', error);
-            }
-        }
 
-        // Load usage data with cache busting
-        async function loadUsageData() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json',
-                        'Cache-Control': 'no-cache'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Fresh usage data loaded:', data);
-                    document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
-                } else {
-                    console.error('Failed to load usage data');
-                }
-            } catch (error) {
-                console.error('Error loading usage data:', error);
-            }
-        }
-
-        // Upload logo function
-        async function uploadLogo() {
-            const fileInput = document.getElementById('logoInput');
-            const status = document.getElementById('status');
-
-            if (!fileInput.files[0]) {
-                status.textContent = "Please select an image to upload.";
-                return;
-            }
-
-            status.textContent = "⏳ Uploading logo...";
-
-            try {
-                const formData = new FormData();
-                formData.append('logo', fileInput.files[0]);
-
-                const response = await fetch(`${API_BASE_URL}/api/logo`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`
-                    },
-                    body: formData
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
-                    status.textContent = "✅ Logo uploaded successfully!";
-                } else {
-                    const error = await response.json();
-                    status.textContent = `❌ ${error.error || 'Logo upload failed'}`;
-                }
-            } catch (error) {
-                console.error('Upload error:', error);
-                status.textContent = "❌ Upload failed. Please try again.";
-            }
-        }
-
-        // Process files function
-        async function processFiles() {
-            const status = document.getElementById('status');
-            const pdfInput = document.getElementById('pdfInput');
-            const watermarkBtn = document.getElementById('watermarkBtn');
-
-            if (pdfInput.files.length === 0) {
-                status.textContent = "Please upload at least one PDF.";
-                return;
-            }
-
-            watermarkBtn.disabled = true;
-            watermarkBtn.textContent = "Processing...";
-            status.textContent = "⏳ Processing files...";
-
-            try {
-                const formData = new FormData();
+                console.log(`Plan change detected: ${planName}`);
                 
-                // Add PDF files
-                for (let i = 0; i < pdfInput.files.length; i++) {
-                    formData.append('pdfs', pdfInput.files[i]);
-                }
+                // Update plan via API
+                await updateUserPlan(planName);
+                
+                // Refresh usage data
+                await loadUsageData();
 
-                // Add optional data
-                formData.append('lender', document.getElementById('lenderTag').value || '');
-                formData.append('salesperson', document.getElementById('salespersonTag').value || '');
-                formData.append('processor', document.getElementById('processorTag').value || '');
-
-                const response = await fetch(`${API_BASE_URL}/api/watermark`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`
-                    },
-                    body: formData
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    // Download each file
-                    data.files.forEach(file => {
-                        const blob = new Blob([Uint8Array.from(atob(file.data), c => c.charCodeAt(0))], 
-                                            { type: 'application/pdf' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = file.fileName;
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        setTimeout(() => URL.revokeObjectURL(url), 100);
-                    });
-
-                    // Update page counter immediately
-                    const currentPages = parseInt(document.getElementById('pagesWatermarked').textContent) || 0;
-                    document.getElementById('pagesWatermarked').textContent = currentPages + data.pagesProcessed;
-
-                    status.textContent = `✅ ${data.message}`;
-                } else {
-                    const error = await response.json();
-                    status.textContent = `❌ ${error.error || 'Processing failed'}`;
-                    
-                    if (error.error && error.error.includes('Not enough page credits')) {
-                        const upgradeBtn = document.getElementById('upgradePlanLink');
-                        upgradeBtn.style.animation = 'pulse 1.5s infinite';
-                        upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
-                    }
-                }
             } catch (error) {
-                console.error('Processing error:', error);
-                status.textContent = "❌ Processing failed. Please try again.";
-            } finally {
-                watermarkBtn.disabled = false;
-                watermarkBtn.textContent = "Watermark";
+                console.error('Error handling plan change:', error);
             }
         }
 
-        // Handle logout
+        // Update user plan via API
+        async function updateUserPlan(planName) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/update-plan`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: currentUser.Email,
+                        planName: planName,
+                        webhookSecret: 'aquamark-secure-protection-string-101813'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Plan update failed');
+                }
+
+                console.log('Plan updated successfully');
+            } catch (error) {
+                console.error('Error updating plan:', error);
+            }
+        }
+
+        // Display usage data in the UI
+        function displayUsageData(userData) {
+            const usageStatsElement = document.getElementById('usage-stats');
+
+            if (userData) {
+                const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
+
+                usageStatsElement.innerHTML = `
+                    <div class="usage-stats-container">
+                        <div class="usage-stat">
+                            <span class="usage-label">Plan:</span>
+                            <span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Pages Used:</span>
+                            <span class="usage-value">${userData.pages_used || 0}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Pages Remaining:</span>
+                            <span class="usage-value">${userData.pages_remaining || 100}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Total Credits:</span>
+                            <span class="usage-value">${userData.page_credits || 100}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${usagePercentage}%;"></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+            }
+        }
+
+        // Handle logout redirection
         if (window.location.hash === '#o-logout-link') {
             window.location.href = '/login.html';
         }
