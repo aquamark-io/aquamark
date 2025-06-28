@@ -424,6 +424,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: stretch;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .product-detail-card {
@@ -434,9 +436,10 @@
             transition: all 0.3s ease;
             border: none;
             overflow: hidden;
-            min-height: 500px;
+            min-height: 600px;
             display: flex;
             flex-direction: column;
+            aspect-ratio: 3/4;
         }
 
         .product-detail-card:hover {
