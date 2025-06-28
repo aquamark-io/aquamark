@@ -242,53 +242,86 @@
         }
 
         .btn-black {
-    background: #000000;
-    color: #ffffff;
-}
+            background: #000000;
+            color: #ffffff;
+        }
 
-.btn-black:hover {
-    background: #333333;
-}
+        .btn-black:hover {
+            background: #333333;
+        }
 
-        /* Announcement Banner */
+        /* Announcement Banner - Clean & Minimal with Urgency */
         .announcement-banner {
-            background: linear-gradient(90deg, #3B82F6, #1E3A8A);
-            color: white;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            color: var(--text-primary);
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 2rem;
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .announcement-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #467EFF, #1d4ed8);
         }
 
         .announcement-content {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
+            flex: 1;
         }
 
         .announcement-icon {
-            background: white;
-            width: 40px;
-            height: 40px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-color);
-            font-size: 1.5rem;
+            color: #467EFF;
+            font-size: 1.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
         }
 
         .announcement-text h3 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.025em;
         }
 
         .announcement-text p {
-            color: white;
-            line-height: 1.6;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+
+        .announcement-text .highlight {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .announcement-text .disclaimer {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-style: italic;
+            margin-top: 0.25rem;
         }
 
         /* Usage Stats */
@@ -375,6 +408,11 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
+                padding: 1.5rem;
+            }
+
+            .announcement-text h3 {
+                font-size: 1.25rem;
             }
 
             .action-buttons {
@@ -417,31 +455,28 @@
     <main class="aqua-panel">
         <h1 class="greeting">My Dashboard</h1>
 
-        <!-- Announcement Banner -->
+        <!-- Updated Announcement Banner -->
         <div class="announcement-banner">
             <div class="announcement-content">
                 <div class="announcement-icon">
-                    <img src="logo-icon-black-blue.png" alt="Money Bag Icon" style="width: 28px; height: 28px;">
+                    💰
                 </div>
                 <div class="announcement-text">
-                    <h3>State-specific compliance alerts</h3>
+                    <h3>Stop Backdooring Today</h3>
                     <p>
-                        Test for <span style="font-weight: 700; font-size: 1.05rem;">FREE</span>. Alerts sent directly to your CRM.<br>
-                        <strong>API key:</strong> <a href="mailto:info@aquamark.io" style="color: white; text-decoration: underline;">info@aquamark.io</a>
+                        One stolen deal costs you <span class="highlight">$4,000*</span> in commission on average
                     </p>
+                    <p class="disclaimer">*Based on industry research of average real estate commission values</p>
                 </div>
             </div>
         </div>
 
-<!-- Action Buttons -->
-<div class="action-buttons">
-    <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn" style="background-color: #10b981; color: white;">Subscribe</a>
-    <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
-    <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
-</div>
-
-
-
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn" style="background-color: #10b981; color: white;">Subscribe</a>
+            <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
+            <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
+        </div>
 
         <!-- Main Layout -->
         <div class="aqua-layout">
@@ -518,60 +553,54 @@
             }
         }
 
+        // Replace your loadUsageData function with this version that gets referral code from Outseta profile
+        async function loadUsageData() {
+            try {
+                if (!userToken) {
+                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
+                    return;
+                }
 
+                // Get referral code from Outseta profile - JUST LIKE THE OLD WORKING CODE
+                let referralCode = null;
+                try {
+                    const profile = await Outseta.getUser();
+                    if (profile && profile.ref_code) {
+                        referralCode = profile.ref_code;
+                        console.log('🎯 Got referral code from Outseta profile:', referralCode);
+                    }
+                } catch (error) {
+                    console.error('Error getting Outseta profile:', error);
+                }
 
-// Replace your loadUsageData function with this version that gets referral code from Outseta profile
+                // Send to your existing /api/usage endpoint
+                const requestBody = {};
+                if (referralCode) {
+                    requestBody.referralCode = referralCode;
+                    console.log('✅ Sending referral code to backend:', referralCode);
+                }
 
-async function loadUsageData() {
-    try {
-        if (!userToken) {
-            document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
-            return;
-        }
+                const response = await fetch(`${API_BASE_URL}/api/usage`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
 
-        // Get referral code from Outseta profile - JUST LIKE THE OLD WORKING CODE
-        let referralCode = null;
-        try {
-            const profile = await Outseta.getUser();
-            if (profile && profile.ref_code) {
-                referralCode = profile.ref_code;
-                console.log('🎯 Got referral code from Outseta profile:', referralCode);
+                if (response.ok) {
+                    const userData = await response.json();
+                    displayUsageData(userData);
+                } else {
+                    const error = await response.json();
+                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Error loading usage data:', error);
+                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
             }
-        } catch (error) {
-            console.error('Error getting Outseta profile:', error);
         }
-
-        // Send to your existing /api/usage endpoint
-        const requestBody = {};
-        if (referralCode) {
-            requestBody.referralCode = referralCode;
-            console.log('✅ Sending referral code to backend:', referralCode);
-        }
-
-        const response = await fetch(`${API_BASE_URL}/api/usage`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${userToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        });
-
-        if (response.ok) {
-            const userData = await response.json();
-            displayUsageData(userData);
-        } else {
-            const error = await response.json();
-            document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
-        }
-    } catch (error) {
-        console.error('Error loading usage data:', error);
-        document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
-    }
-}
-        
-
-        
 
         // Preserve URL parameters for navigation
         function preserveUrlParameters() {
