@@ -257,57 +257,40 @@
         }
 
         .products-hero {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
-        }
-
-        .products-content {
-            background: white;
-            border-radius: 12px;
-            padding: 3rem;
-            border: 1px solid #f3f4f6;
-            transition: all 0.2s ease;
-        }
-
-        .products-content:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            text-align: center;
         }
 
         .products-content h2 {
             font-size: 2.5rem;
             color: #111827;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             font-weight: 600;
             letter-spacing: -0.02em;
         }
 
         .hero-benefits {
             list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
             margin-top: 2rem;
         }
 
         .hero-benefits li {
-            padding: 1rem 0;
             position: relative;
-            padding-left: 2.5rem;
+            padding-left: 2rem;
             font-size: 1.1rem;
             color: #374151;
             font-weight: 400;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .hero-benefits li:last-child {
-            border-bottom: none;
+            white-space: nowrap;
         }
 
         .hero-benefits li::before {
             content: '✓';
             position: absolute;
             left: 0;
-            top: 1rem;
+            top: 0;
             width: 20px;
             height: 20px;
             background: #111827;
@@ -318,17 +301,6 @@
             justify-content: center;
             font-weight: bold;
             font-size: 12px;
-        }
-
-        .products-visual {
-            text-align: center;
-        }
-
-        .products-visual img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         /* Reviews Section */
@@ -675,23 +647,17 @@
             }
 
             .products-hero {
-                grid-template-columns: 1fr;
-                gap: 3rem;
+                text-align: center;
             }
 
-            .products-content {
-                padding: 2rem;
+            .hero-benefits {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
             }
 
             .hero-benefits li {
-                font-size: 1rem;
-                padding-left: 2rem;
-            }
-
-            .hero-benefits li::before {
-                width: 18px;
-                height: 18px;
-                font-size: 11px;
+                white-space: normal;
             }
 
             .partner-carousel {
@@ -862,9 +828,6 @@
                         <li>OCR-safe</li>
                         <li>Ends access to "clean", sellable files</li>
                     </ul>
-                </div>
-                <div class="products-visual">
-                    <img src="watermarked-image.png" alt="Watermarked Document Example" />
                 </div>
             </div>
         </div>
