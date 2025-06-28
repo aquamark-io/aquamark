@@ -347,6 +347,19 @@
             border: 1px solid var(--border-color);
         }
 
+        /* Clean Urgency Text */
+        .urgency-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+
+        .urgency-highlight {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
         .counter-info {
             display: flex;
             flex-direction: column;
@@ -390,6 +403,13 @@
             background: var(--success-dark);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .subscribe-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
         }
 
         /* Action Row */
@@ -517,6 +537,11 @@
                 gap: 1rem;
             }
 
+            .subscribe-container {
+                align-items: stretch;
+                text-align: center;
+            }
+
             .logo-actions {
                 flex-direction: column;
             }
@@ -552,9 +577,12 @@
                 <h3>Pages Watermarked</h3>
                 <div class="counter-value" id="pagesWatermarked">0</div>
             </div>
-            <a href="/dashboard.html" id="subscribeNowLink" class="subscribe-btn">
-                Subscribe Now
-            </a>
+            <div class="subscribe-container">
+                <a href="/dashboard.html" id="subscribeNowLink" class="subscribe-btn">
+                    Subscribe Now
+                </a>
+                <div class="urgency-text">One stolen deal costs <span class="urgency-highlight">$4,000</span> in commission</div>
+            </div>
         </div>
 
         <!-- Section 1: Stored Logo -->
