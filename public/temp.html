@@ -1,423 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark - Bringing Transparency and Accountability to FinTech</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquamark - Bringing Transparency and Accountability to FinTech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.6;
-      color: #1a1a1a;
-      background: #ffffff;
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #e5e7eb;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-    }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #2563eb;
-      text-decoration: none;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
 
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-      align-items: center;
-    }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
 
-    .nav-links a {
-      text-decoration: none;
-      color: #4b5563;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
 
-    .nav-links a:hover {
-      color: #2563eb;
-    }
+        .nav-links a:hover {
+            color: #2563eb;
+        }
 
-    .sign-in-btn {
-      background: #2563eb;
-      color: white !important;
-      padding: 0.5rem 1.5rem;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
+        .sign-in-btn {
+            background: #2563eb;
+            color: white !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
 
-    .sign-in-btn:hover {
-      background: #1d4ed8;
-      transform: translateY(-1px);
-    }
+        .sign-in-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
 
-    .hero {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 120px 0 80px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #c084fc 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-      opacity: 0.3;
-    }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
 
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
 
-    .hero p {
-      font-size: 1.25rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
 
-    .cta-button {
-      background: #ffffff;
-      color: #2563eb;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
+        .cta-button {
+            background: #ffffff;
+            color: #2563eb;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
 
-    .partners {
-      padding: 60px 0;
-      background: #f8fafc;
-    }
+        /* Partners Section */
+        .partners {
+            padding: 60px 0;
+            background: #f8fafc;
+        }
 
-    .partners h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #374151;
-      font-size: 1.5rem;
-    }
+        .partners h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #374151;
+            font-size: 1.5rem;
+        }
 
-    .partner-carousel {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      padding: 1rem 0;
-    }
+        .partner-carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
 
-    .partner-carousel img {
-      height: 40px;
-      object-fit: contain;
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.1));
-      transition: transform 0.2s ease;
-    }
+        .partner-logo {
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
 
-    .partner-carousel img:hover {
-      transform: scale(1.05);
-    }
+        .partner-logo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
 
-    .problem-section {
-      padding: 80px 0;
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-      color: white;
-    }
+        /* Problem Section */
+        .problem-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+        }
 
-    .problem-content {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
+        .problem-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    .problem-section h2 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-    }
+        .problem-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
 
-    .problem-section p {
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-      opacity: 0.9;
-    }
+        .problem-section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
 
-    .products {
-      padding: 80px 0;
-    }
+        /* Products Section */
+        .products {
+            padding: 80px 0;
+        }
 
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-      color: #1f2937;
-    }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1f2937;
+        }
 
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 3rem;
-      margin-top: 3rem;
-    }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
 
-    .product-card {
-      background: white;
-      border-radius: 16px;
-      padding: 2.5rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      border: 1px solid #e5e7eb;
-    }
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
 
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
 
-    .product-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #2563eb;
-    }
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2563eb;
+        }
 
-    .product-features {
-      list-style: none;
-      margin-top: 1.5rem;
-    }
+        .product-features {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
 
-    .product-features li {
-      padding: 0.5rem 0;
-      position: relative;
-      padding-left: 1.5rem;
-    }
+        .product-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
 
-    .product-features li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: #10b981;
-      font-weight: bold;
-    }
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
 
-    .pricing {
-      padding: 80px 0;
-      background: #f8fafc;
-    }
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
 
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
-    .pricing-card {
-      background: white;
-      border-radius: 16px;
-      padding: 2.5rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
 
-    .pricing-card:hover {
-      transform: translateY(-5px);
-    }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
 
-    .pricing-card.featured {
-      border: 2px solid #2563eb;
-      transform: scale(1.05);
-    }
+        .pricing-card.featured {
+            border: 2px solid #2563eb;
+            transform: scale(1.05);
+        }
 
-    .price {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #2563eb;
-      margin: 1rem 0;
-    }
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin: 1rem 0;
+        }
 
-    .price-note {
-      color: #6b7280;
-      font-size: 0.9rem;
-    }
+        .price-note {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
 
-    .reviews {
-      padding: 80px 0;
-    }
+        /* Reviews Section */
+        .reviews {
+            padding: 80px 0;
+        }
 
-    .review-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
-    .review-card {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    }
+        .review-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
 
-    .stars {
-      color: #fbbf24;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
+        .stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
 
-    .reviewer {
-      font-weight: 600;
-      color: #374151;
-      margin-top: 1rem;
-    }
+        .reviewer {
+            font-weight: 600;
+            color: #374151;
+            margin-top: 1rem;
+        }
 
-    footer {
-      background: #1f2937;
-      color: white;
-      padding: 60px 0 30px;
-    }
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 60px 0 30px;
+        }
 
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 3rem;
-      margin-bottom: 2rem;
-    }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
 
-    .footer-section h3 {
-      margin-bottom: 1rem;
-      color: #2563eb;
-    }
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #2563eb;
+        }
 
-    .footer-section p,
-    .footer-section a {
-      color: #d1d5db;
-      text-decoration: none;
-      margin-bottom: 0.5rem;
-      display: block;
-    }
+        .footer-section p, .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
 
-    .footer-section a:hover {
-      color: #2563eb;
-    }
+        .footer-section a:hover {
+            color: #2563eb;
+        }
 
-    .footer-bottom {
-      border-top: 1px solid #374151;
-      padding-top: 2rem;
-      text-align: center;
-      color: #9ca3af;
-    }
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 2rem;
+            text-align: center;
+            color: #9ca3af;
+        }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        gap: 1rem;
-      }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
 
-      .hero h1 {
-        font-size: 2.5rem;
-      }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
 
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
 
-      .partner-carousel {
-        gap: 1rem;
-      }
+            .partner-carousel {
+                gap: 1rem;
+            }
 
-      .pricing-card.featured {
-        transform: none;
-      }
-    }
-  </style>
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <nav class="container">
-      <a href="#" class="logo">Aquamark</a>
-      <ul class="nav-links">
-        <li><a href="#products">Products</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#" class="sign-in-btn">Sign In</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">Aquamark</a>
+            <ul class="nav-links">
+                <li><a href="#products">Products</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" class="sign-in-btn">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Bringing Transparency and Accountability to FinTech — One File at a Time</h1>
-        <p>We protect your documents so they stay your documents.</p>
-        <a href="#" class="cta-button">Start Free Trial</a>
-      </div>
-    </div>
-  </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Bringing Transparency and Accountability to FinTech — One File at a Time</h1>
+                <p>We protect your documents so they stay your documents.</p>
+                <a href="#" class="cta-button">Start Free Trial</a>
+            </div>
+        </div>
+    </section>
 
-  <section class="partners">
-    <div class="container">
-      <h2>Tested and Compatible with Leading OCR Platforms</h2>
-      <div class="partner-carousel">
-        <img src="docpanda.png" alt="PandaDoc" />
-        <img src="heron.png" alt="Heron" />
-        <img src="docsumo1.png" alt="Docsumo" />
-        <img src="ocrolus1.png" alt="Ocrolus" />
-        <img src="cloudsquare.png" alt="Cloudsquare" />
-        <img src="moneythumb.png" alt="MoneyThumb" />
-      </div>
-    </div>
-  </section>
+    <!-- Partners Section -->
+    <section class="partners">
+        <div class="container">
+            <h2>Tested and Compatible with Leading OCR Platforms</h2>
+            <div class="partner-carousel">
+                <div class="partner-logo">MoneyThumb</div>
+                <div class="partner-logo">CloudSquare</div>
+                <div class="partner-logo">Ocrolous</div>
+                <div class="partner-logo">DocSumo</div>
+                <div class="partner-logo">Heron</div>
+                <div class="partner-logo">DocPanda</div>
+            </div>
+        </div>
+    </section>
 
     <!-- Problem Section -->
     <section class="problem-section">
