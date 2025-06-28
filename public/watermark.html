@@ -13,6 +13,7 @@
             --primary-dark: #1d4ed8;
             --accent-color: #467EFF;
             --success-color: #10b981;
+            --success-dark: #059669;
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
             --text-primary: #1a1a1a;
@@ -368,13 +369,13 @@
             color: var(--text-secondary);
         }
 
-        /* Upgrade Button */
-        .upgrade-btn {
+        /* Subscribe Button (formerly Upgrade Button) */
+        .subscribe-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            background: #467EFF;
+            background: var(--success-color);
             color: white;
             border: none;
             padding: 0.75rem 1.25rem;
@@ -385,9 +386,10 @@
             transition: all 0.2s ease;
         }
 
-        .upgrade-btn:hover {
-            background: #1d4ed8;
+        .subscribe-btn:hover {
+            background: var(--success-dark);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
         /* Action Row */
@@ -550,8 +552,8 @@
                 <h3>Pages Watermarked</h3>
                 <div class="counter-value" id="pagesWatermarked">0</div>
             </div>
-            <a href="/dashboard.html" id="upgradePlanLink" class="upgrade-btn">
-                Upgrade Plan
+            <a href="/dashboard.html" id="subscribeNowLink" class="subscribe-btn">
+                Subscribe Now
             </a>
         </div>
 
@@ -715,7 +717,7 @@
             const hashParams = window.location.hash;
             
             document.getElementById('dashboardLink').href = "/dashboard.html" + urlParams + hashParams;
-            document.getElementById('upgradePlanLink').href = "/dashboard.html" + urlParams + hashParams;
+            document.getElementById('subscribeNowLink').href = "/dashboard.html" + urlParams + hashParams;
         }
 
         // Show status with proper styling
@@ -886,9 +888,9 @@
                     showStatus(`❌ ${error.error || 'Processing failed'}`, 'error');
                     
                     if (error.error && error.error.includes('Not enough page credits')) {
-                        const upgradeBtn = document.getElementById('upgradePlanLink');
-                        upgradeBtn.style.animation = 'pulse 1.5s infinite';
-                        upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
+                        const subscribeBtn = document.getElementById('subscribeNowLink');
+                        subscribeBtn.style.animation = 'pulse 1.5s infinite';
+                        subscribeBtn.style.boxShadow = '0 0 15px var(--success-color)';
                     }
                 }
             } catch (error) {
