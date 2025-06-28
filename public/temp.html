@@ -457,7 +457,7 @@
         .review-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             margin-top: 3rem;
         }
 
@@ -485,6 +485,23 @@
             font-weight: 600;
             color: #374151;
             margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
         }
 
         /* Footer - Light Theme */
@@ -713,7 +730,10 @@
                         <div class="stars">★★★★★</div>
                         <p>"We were one of Aquamark's first customers and within the first couple weeks, we noticed less merchants calling us upset about getting a bunch of random calls."</p>
                     </div>
-                    <div class="reviewer"><strong>- Matt, Sales Manager, Broker</strong></div>
+                    <div class="reviewer">
+                        <div class="avatar">M</div>
+                        <strong>- Matt, Sales Manager, Broker</strong>
+                    </div>
                 </div>
 
                 <div class="review-card">
@@ -721,7 +741,10 @@
                         <div class="stars">★★★★★</div>
                         <p>"Exactly what the industry needs. As a lender, we now have a way to show our ISOs that we take document security seriously and their documents are safe with us. That helps our reputation big time."</p>
                     </div>
-                    <div class="reviewer"><strong>- Daniel, CEO, Lender</strong></div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>- Daniel, CEO, Lender</strong>
+                    </div>
                 </div>
 
                 <div class="review-card">
@@ -729,7 +752,10 @@
                         <div class="stars">★★★★★</div>
                         <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
                     </div>
-                    <div class="reviewer"><strong>- Diana, Underwriter, Lender</strong></div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>- Diana, Underwriter, Lender</strong>
+                    </div>
                 </div>
             </div>
         </div>
