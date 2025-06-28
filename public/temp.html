@@ -40,7 +40,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 1.5rem 0;
         }
 
         .logo {
@@ -59,26 +59,50 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #4b5563;
-            font-weight: 500;
+            color: #6b7280;
+            font-weight: 400;
             transition: color 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
-            color: #2563eb;
+            color: #374151;
         }
 
         .sign-in-btn {
-            background: #2563eb;
-            color: white !important;
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
+            background: transparent !important;
+            color: #6b7280 !important;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-weight: 400;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
         }
 
         .sign-in-btn:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
+            background: #f9fafb !important;
+            color: #374151 !important;
+            border-color: #9ca3af;
+            transform: none;
+        }
+
+        .get-started-btn {
+            background: #000000 !important;
+            color: #ffffff !important;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-left: 0.5rem;
+        }
+
+        .get-started-btn:hover {
+            background: #1f2937 !important;
+            transform: none;
         }
 
         /* Hero Section */
@@ -430,7 +454,8 @@
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#" class="sign-in-btn">Sign In</a></li>
+                <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign in</a></li>
+                <li><a href="https://www.aquamark.io/signup" class="get-started-btn">Get started</a></li>
             </ul>
         </nav>
     </header>
