@@ -238,6 +238,37 @@
             padding: 80px 0;
         }
 
+        .products-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .products-content h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .products-content p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .products-visual {
+            text-align: center;
+        }
+
+        .products-visual img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
         /* Section Titles - Consistent Sizing */
         .section-title, .partners h2, .problem-section h2, .reviews h2 {
             text-align: center;
@@ -285,7 +316,7 @@
 
         .product-features {
             list-style: none;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .product-features li {
@@ -427,6 +458,11 @@
                 font-size: 2.5rem;
             }
 
+            .products-hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
             .product-grid {
                 grid-template-columns: 1fr;
             }
@@ -526,34 +562,13 @@
     <!-- Products Section -->
     <section class="products" id="products">
         <div class="container">
-            <h2 class="section-title">Watermarking That Works</h2>
-            <p style="text-align: center; font-size: 1.1rem; color: #6b7280; max-width: 600px; margin: 0 auto;">We provide document protection for brokers and lenders in the fintech industry, specifically the Merchant Cash Advance industry.</p>
-            
-            <div class="product-grid">
-                <div class="product-card">
-                    <h3>Watermarking for Brokers</h3>
-                    <p>Full page overlay using your branding on every page. Tamper-resistant and OCR-safe watermarking that makes documents no longer "clean and sellable," deterring deal theft and backdooring.</p>
-                    
-                    <ul class="product-features">
-                        <li>Custom branded watermarks on every page</li>
-                        <li>Tamper-resistant and OCR-safe technology</li>
-                        <li>Optional smart tags via QR code</li>
-                        <li>Track lender, salesperson, and processor access</li>
-                        <li>Deters deal theft and backdooring</li>
-                    </ul>
+            <div class="products-hero">
+                <div class="products-content">
+                    <h2>Watermarking That Works</h2>
+                    <p>We provide document protection for brokers and lenders in the fintech industry, specifically the Merchant Cash Advance industry. Our tamper-resistant, OCR-safe watermarking makes documents no longer "clean and sellable," deterring deal theft and backdooring.</p>
                 </div>
-
-                <div class="product-card">
-                    <h3>Watermarking for Lenders</h3>
-                    <p>Intercepts CRM downloads and marks each PDF page with "For Internal use only" plus underwriter name and email. Shows brokers you use Aquamark instead of just saying "trust us."</p>
-                    
-                    <ul class="product-features">
-                        <li>Automatic CRM download interception</li>
-                        <li>Internal use stamps with user identification</li>
-                        <li>Tamper-resistant, OCR-safe marking</li>
-                        <li>Builds trust with broker partners</li>
-                        <li>Protects company reputation</li>
-                    </ul>
+                <div class="products-visual">
+                    <img src="watermarked-document.png" alt="Watermarked Document Example" />
                 </div>
             </div>
         </div>
