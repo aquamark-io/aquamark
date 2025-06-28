@@ -406,7 +406,80 @@
             font-weight: bold;
         }
 
-        /* Pricing Section */
+        /* Product Details Section */
+        .product-details {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .product-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .product-detail-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .product-detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-detail-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .product-detail-card p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .detail-features {
+            list-style: none;
+            text-align: left;
+        }
+
+        .detail-features li {
+            padding: 0.75rem 0;
+            position: relative;
+            padding-left: 2rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .detail-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2563eb;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .product-detail-visual {
+            text-align: center;
+        }
+
+        .product-detail-visual img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
         .pricing {
             padding: 80px 0;
             background: #f8fafc;
@@ -459,8 +532,9 @@
             overflow: hidden;
             white-space: nowrap;
             position: relative;
-            margin: 0 auto;
-            max-width: 100%;
+            margin: 0;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
             margin-top: 3rem;
         }
 
@@ -862,6 +936,39 @@
                         <div class="avatar">Z</div>
                         <strong>- Zack, Founder, Lender</strong>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Section -->
+    <section class="product-details">
+        <div class="container">
+            <div class="product-details-grid">
+                <div class="product-detail-card">
+                    <h3>For Brokers</h3>
+                    <p>Protect your deal flow and prevent document theft with watermarking that actually works.</p>
+                    <ul class="detail-features">
+                        <li>Unlimited watermarking</li>
+                        <li>Track document access</li>
+                        <li>Stop deal theft</li>
+                        <li>OCR-safe technology</li>
+                    </ul>
+                </div>
+
+                <div class="product-detail-visual">
+                    <img src="watermarked-image.png" alt="Watermarked Document Example" />
+                </div>
+
+                <div class="product-detail-card">
+                    <h3>For Lenders</h3>
+                    <p>Build trust with your broker network and protect your reputation in the marketplace.</p>
+                    <ul class="detail-features">
+                        <li>Show document security commitment</li>
+                        <li>Build broker trust</li>
+                        <li>Protect your reputation</li>
+                        <li>Custom enterprise solutions</li>
+                    </ul>
                 </div>
             </div>
         </div>
