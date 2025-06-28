@@ -1,1697 +1,254 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Strategic growth partners for fintech companies. Expert consulting for scaling, operations, and market penetration." name="description"/>
-<link href="/spartans.png" rel="icon" type="image/png"/>
-<title>Spartan Projects</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #2563eb;
-            --primary-light: #3b82f6;
-            --primary-dark: #1e40af;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --text-muted: #9ca3af;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #f1f5f9;
-            --border: #e5e7eb;
-            --border-light: #f3f4f6;
-        }
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquamark for Lenders</title>
+    <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
-            z-index: 100;
-        }
-
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            margin-right: 0.75rem;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        .mobile-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .mobile-menu.active {
-            display: block;
-        }
-
-        .mobile-menu-links {
-            display: flex;
-            flex-direction: column;
-            padding: 1rem 2rem;
-            gap: 1rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 8rem 2rem 5rem;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-content h1 {
-            font-size: 3.25rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .hero-content .highlight {
-            color: var(--primary);
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .hero-image {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 
-                0 25px 50px rgba(37, 99, 235, 0.15),
-                0 15px 30px rgba(37, 99, 235, 0.1),
-                0 5px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(37, 99, 235, 0.1);
-            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
-            transition: all 0.3s ease;
-        }
-
-        .hero-image:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(-8px);
-            box-shadow: 
-                0 35px 70px rgba(37, 99, 235, 0.2),
-                0 20px 40px rgba(37, 99, 235, 0.15),
-                0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .growth-chart {
-            position: relative;
-            height: 300px;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            align-items: end;
-            padding: 2rem;
-            gap: 1rem;
-            border: 1px solid rgba(37, 99, 235, 0.1);
-        }
-
-        .chart-bar {
-            flex: 1;
-            border-radius: 4px 4px 0 0;
-            position: relative;
-            display: flex;
-            align-items: end;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 0.75rem;
-            padding-bottom: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .chart-bar:hover {
-            transform: translateY(-4px);
-        }
-
-        .chart-bar:nth-child(1) { 
-            height: 30%; 
-            background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);
-            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
-        }
-        .chart-bar:nth-child(2) { 
-            height: 50%; 
-            background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%);
-            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
-        }
-        .chart-bar:nth-child(3) { 
-            height: 70%; 
-            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
-            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
-        }
-        .chart-bar:nth-child(4) { 
-            height: 90%; 
-            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
-        }
-        .chart-bar:nth-child(5) { 
-            height: 100%; 
-            background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 100%);
-            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
-        }
-
-        .chart-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .growth-metrics {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .metric-card {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .metric-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .metric-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        /* Services Section */
-        .services {
-            padding: 5rem 2rem;
-            background: var(--bg-primary);
-        }
-
-        .services-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-
-        .service-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
-        }
-
-        .service-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .service-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary);
-            border-radius: 8px;
-            margin-right: 1rem;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .service-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.3;
-        }
-
-        .service-desc {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            font-size: 0.9rem;
-        }
-
-        .service-features {
-            list-style: none;
-        }
-
-        .service-features li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .service-features li::before {
-            content: '✓';
-            color: var(--primary);
-            font-weight: 600;
-            margin-right: 0.75rem;
-        }
-
-        /* How It Works Section */
-        .how-it-works-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .work-step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-visual {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 2rem;
-            background: #f8fafc;
-            border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-
-        .step-visual:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
-        }
-
-        .step-number {
-            position: absolute;
-            top: -16px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-            border: 3px solid white;
-        }
-
-        .work-step h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .work-step p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Consultation Visual */
-        .consultation-visual {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .chat-bubbles {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .chat-bubble {
-            width: 24px;
-            height: 12px;
-            border-radius: 12px;
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .chat-bubble.purple {
-            background: #f3f4f6;
-            align-self: flex-end;
-            animation-delay: 0s;
-        }
-
-        .chat-bubble.blue {
-            background: rgba(255, 255, 255, 0.8);
-            align-self: flex-start;
-            animation-delay: 0.3s;
-        }
-
-        .person-icon {
-            width: 32px;
-            height: 32px;
-            background: white;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .person-icon::before {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
-            background: #667eea;
-            border-radius: 50%;
-        }
-
-        .person-icon::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 12px;
-            background: #667eea;
-            border-radius: 8px 8px 0 0;
-        }
-
-        /* Analysis Visual */
-        .analysis-visual {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .magnifying-glass {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .glass-lens {
-            width: 24px;
-            height: 24px;
-            border: 3px solid white;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .glass-handle {
-            position: absolute;
-            right: -8px;
-            bottom: -8px;
-            width: 16px;
-            height: 3px;
-            background: white;
-            border-radius: 2px;
-            transform: rotate(45deg);
-        }
-
-        .data-dots {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .data-dots .dot {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        .data-dots .dot:nth-child(1) { top: 20px; left: 30px; animation-delay: 0s; }
-        .data-dots .dot:nth-child(2) { top: 35px; right: 25px; animation-delay: 0.3s; }
-        .data-dots .dot:nth-child(3) { bottom: 25px; left: 25px; animation-delay: 0.6s; }
-        .data-dots .dot:nth-child(4) { bottom: 30px; right: 30px; animation-delay: 0.9s; }
-
-        /* Planning Visual */
-        .planning-visual {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .target-board {
-            position: relative;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .target-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-
-        .target-ring.outer {
-            width: 48px;
-            height: 48px;
-            opacity: 0.4;
-        }
-
-        .target-ring.middle {
-            width: 32px;
-            height: 32px;
-            opacity: 0.6;
-        }
-
-        .target-ring.center {
-            width: 16px;
-            height: 16px;
-            background: white;
-            border: none;
-        }
-
-        .arrow {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%) rotate(45deg);
-            width: 16px;
-            height: 16px;
-            border-right: 3px solid white;
-            border-top: 3px solid white;
-        }
-
-        /* Execution Visual */
-        .execution-visual {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        }
-
-        .rocket {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .rocket-body {
-            width: 8px;
-            height: 32px;
-            background: white;
-            border-radius: 4px 4px 0 0;
-            position: relative;
-        }
-
-        .rocket-body::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 8px solid white;
-        }
-
-        .rocket-wing {
-            position: absolute;
-            bottom: 8px;
-            width: 6px;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .rocket-wing.left {
-            left: -6px;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .rocket-wing.right {
-            right: -6px;
-            border-radius: 0 3px 3px 0;
-        }
-
-        .launch-trail {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .trail-dot {
-            width: 3px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: trail 1.5s ease-in-out infinite;
-        }
-
-        .trail-dot:nth-child(1) { animation-delay: 0s; }
-        .trail-dot:nth-child(2) { animation-delay: 0.2s; }
-        .trail-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-4px); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        @keyframes trail {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(12px); }
-        }
-
-        /* Results Section */
-        .results {
-            padding: 5rem 2rem;
-            background: var(--bg-secondary);
-        }
-
-        .results-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .results-content h2 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .results-content p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .results-image {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
-        }
-
-        .results-image::before {
-            content: "Client Success Metrics";
-            display: block;
-            width: 100%;
-            height: 300px;
-            background: var(--bg-tertiary);
-            border-radius: 8px;
-            border: 2px dashed var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 5rem 2rem;
-            background: var(--bg-primary);
-        }
-
-        .pricing-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .pricing-card {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            position: relative;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
-        }
-
-        .pricing-card.premium {
-            border-color: var(--primary);
-            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
-        }
-
-        .pricing-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        .pricing-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .standard .pricing-icon {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .premium .pricing-icon {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .icon-graphic {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Clock Icon for Standard */
-        .clock-face {
-            width: 32px;
-            height: 32px;
-            border: 3px solid white;
-            border-radius: 50%;
-            position: relative;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .clock-hand {
-            position: absolute;
-            background: white;
-            border-radius: 2px;
-            transform-origin: bottom center;
-        }
-
-        .clock-hand.hour {
-            width: 2px;
-            height: 8px;
-            top: 6px;
-            left: 50%;
-            margin-left: -1px;
-            transform: rotate(45deg);
-        }
-
-        .clock-hand.minute {
-            width: 1px;
-            height: 12px;
-            top: 2px;
-            left: 50%;
-            margin-left: -0.5px;
-            transform: rotate(90deg);
-        }
-
-        /* Rocket Icon for Premium */
-        .rocket-boost {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .boost-body {
-            width: 12px;
-            height: 28px;
-            background: white;
-            border-radius: 6px 6px 0 0;
-            position: relative;
-        }
-
-        .boost-body::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 12px solid white;
-        }
-
-        .boost-flame {
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 12px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, transparent 100%);
-            border-radius: 0 0 4px 4px;
-            animation: flicker 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes flicker {
-            0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-        }
-
-        .pricing-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .pricing-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .pricing-amount {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .currency {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            vertical-align: top;
-        }
-
-        .price {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            line-height: 1;
-        }
-
-        .period {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .pricing-commitment {
-            text-align: center;
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 2rem;
-        }
-
-        .premium .pricing-commitment {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
-        }
-
-        .pricing-features ul {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-features li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .pricing-features li::before {
-            content: '✓';
-            color: var(--primary);
-            font-weight: 700;
-            margin-right: 0.75rem;
-            width: 16px;
-            text-align: center;
-        }
-
-        .pricing-btn {
-            width: 100%;
-            padding: 1rem;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .pricing-note {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .pricing-note p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
             margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-
-        /* CTA Section */
-        .cta {
-            padding: 5rem 2rem;
-            background: var(--bg-tertiary);
+        
+        .infographic {
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            border: 1px solid #e8eaed;
         }
-
-        .cta-container {
-            max-width: 800px;
-            margin: 0 auto;
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .logo {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        
+        .tagline {
+            font-size: 28px;
+            color: #1a365d;
+            font-weight: 600;
+            background: #f0f9ff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 2px solid #0ea5e9;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+        
+        .section {
+            background: #fafbfc;
+            padding: 40px 35px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 30px;
             text-align: center;
         }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        /* Footer */
-        .footer {
-            background: white;
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem 2rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .footer-brand {
+        
+        .step {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
         }
-
-        .footer-brand img {
-            height: 32px;
-            margin-right: 0.75rem;
+        
+        .step:last-child {
+            margin-bottom: 0;
         }
-
-        .footer-brand h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary);
+        
+        .step-bullet {
+            background: #3b82f6;
+            color: white;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 20px;
+            flex-shrink: 0;
         }
-
-        .footer-section h4 {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
+        
+        .step-text {
+            font-size: 18px;
+            color: #334155;
+            line-height: 1.5;
+            font-weight: 500;
         }
-
-        .footer-section ul {
-            list-style: none;
+        
+        .benefit {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
         }
-
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-            display: block;
-            margin-bottom: 0.5rem;
+        
+        .benefit:last-child {
+            margin-bottom: 0;
         }
-
-        .footer-section a:hover {
-            color: var(--primary);
+        
+        .benefit-check {
+            color: #059669;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
         }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border);
-            padding: 1.5rem 0;
+        
+        .benefit-text {
+            font-size: 18px;
+            color: #334155;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .watermark-example {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-top: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #0c4a6e;
+            font-weight: 600;
+            line-height: 1.6;
         }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-            
-            .service-card {
-                padding: 2rem;
-            }
-            
-            .service-title {
-                font-size: 1.25rem;
-            }
-            
-            .service-desc {
-                font-size: 1rem;
-            }
-            
-            .service-features li {
-                font-size: 0.9rem;
-            }
-
-            .how-it-works-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 3rem;
-            }
+        
+        .cta {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: #1e40af;
+            border-radius: 12px;
+            color: white;
         }
-
+        
+        .cta-text {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .website {
+            font-size: 20px;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+        
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero-container {
+            .main-content {
                 grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
+                gap: 40px;
             }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
+            
+            .infographic {
+                padding: 30px 25px;
             }
-
-            .results-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            
+            .logo {
+                font-size: 36px;
             }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .how-it-works-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
-            }
-
-            .cta-buttons,
-            .hero-cta {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-
+            
             .section-title {
-                font-size: 2rem;
+                font-size: 24px;
             }
-
-            .cta h2 {
-                font-size: 2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .how-it-works-grid {
-                gap: 2rem;
-            }
-
-            .step-visual {
-                width: 100px;
-                height: 100px;
+            
+            .step-text, .benefit-text {
+                font-size: 16px;
             }
         }
-    
-        @media (max-width: 768px) {
-            .nav {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .logo img {
-                height: 48px !important;
-            }
-            .footer-brand img {
-                height: 48px !important;
-            }
-        }
-</style>
+    </style>
 </head>
 <body>
-<!-- Header -->
-<header class="header">
-<nav class="nav">
-<a class="logo" href="/">
-<img alt="Spartan Projects" src="/spartans.png" style="height: 88px; width: auto; display: block;"/>
-</a>
-<div class="nav-links">
-<a href="#services">Services</a>
-<a href="#results">How It Works</a>
-<a href="#pricing">Pricing</a>
-<a class="btn btn-secondary" href="#contact">Get Started</a>
-</div>
-<button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-<div class="mobile-menu" id="mobileMenu">
-<div class="mobile-menu-links">
-<a href="#services">Services</a>
-<a href="#results">Results</a>
-<a href="#pricing">Pricing</a>
-<a class="btn btn-primary" href="#contact">Get Started</a>
-</div>
-</div>
-</nav>
-</header>
-
-<!-- Hero Section -->
-<section class="hero">
-<div class="hero-container">
-<div class="hero-content">
-<h1>Strategic <span class="highlight">Growth Partners</span> for Fintech</h1>
-<p class="hero-subtitle">
-                    Industry veterans helping fintech companies navigate critical junctures—from rapid scaling to strategic execution.
-                </p>
-<div class="hero-cta">
-<a class="btn btn-primary" href="#contact">Free Consultation</a>
-<a class="btn btn-secondary" href="#services">Our Solutions</a>
-</div>
-</div>
-<div class="hero-image">
-<div class="growth-chart">
-<div class="chart-bar">Q1</div>
-<div class="chart-bar">Q2</div>
-<div class="chart-bar">Q3</div>
-<div class="chart-bar">Q4</div>
-<div class="chart-bar">Q5</div>
-</div>
-<div class="chart-labels">
-<span>Launch</span>
-<span>Scale</span>
-<span>Optimize</span>
-<span>Expand</span>
-<span>Dominate</span>
-</div>
-<div class="growth-metrics">
-<div class="metric-card">
-<div class="metric-number">300%</div>
-<div class="metric-label">Growth Rate</div>
-</div>
-<div class="metric-card">
-<div class="metric-number">$50M</div>
-<div class="metric-label">Revenue Impact</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- Services Section -->
-<section class="services" id="services">
-<div class="services-container">
-<div class="section-header">
-<h2 class="section-title">Solutions Built for Fintech Success</h2>
-<p class="section-subtitle">
-We know the fintech journey is full of high-stakes moments—from rapid growth to strategic pivots. That's why our solutions are purpose-built to help you scale with confidence, align your operations, and outpace the competition. With deep industry expertise and a hands-on approach, we equip you with the clarity and execution to lead.
-                </p>
-</div>
-<div class="services-grid">
-<div class="service-card">
-<div class="service-header">
-<div class="service-icon">✓</div>
-<h3 class="service-title">Planning</h3>
-</div>
-<p class="service-desc">
-                        Build and execute growth strategies that work in competitive fintech markets.
-                    </p>
-<ul class="service-features">
-<li>Market positioning</li>
-<li>Go-to-market strategy</li>
-<li>Growth roadmaps</li>
-</ul>
-</div>
-<div class="service-card">
-<div class="service-header">
-<div class="service-icon">✓</div>
-<h3 class="service-title">Operations</h3>
-</div>
-<p class="service-desc">
-                        Scale efficiently with proven frameworks and processes.
-                    </p>
-<ul class="service-features">
-<li>Process optimization</li>
-<li>Team structuring</li>
-<li>System integration</li>
-<li>Tech stacks</li>
-</ul>
-</div>
-<div class="service-card">
-<div class="service-header">
-<div class="service-icon">✓</div>
-<h3 class="service-title">Partnerships</h3>
-</div>
-<p class="service-desc">
-                        Exclusive access to our network to forge strategic relationships that accelerate growth.
-                    </p>
-<ul class="service-features">
-<li>Partner identification</li>
-<li>Network introductions</li>
-<li>Deal structuring</li>
-</ul>
-</div>
-<div class="service-card">
-<div class="service-header">
-<div class="service-icon">✓</div>
-<h3 class="service-title">Sales</h3>
-</div>
-<p class="service-desc">
-                        Build high-performing sales teams and processes that deliver results.
-                    </p>
-<ul class="service-features">
-<li>Sales strategy</li>
-<li>Team training</li>
-<li>Performance systems</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-
-<!-- Reference Banner Section -->
-<section style="background: var(--primary); padding: 3rem 2rem; text-align: center; color: white;">
-  <div style="max-width: 1000px; margin: 0 auto;">
-    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">
-      Trusted by Leaders in Alternative Finance
-    </h2>
-    <p style="font-size: 1.15rem; line-height: 1.6;">
-      We've helped the biggest names in the space—platforms, lenders, and originators.
-      <br />
-      <span style="opacity: 0.85;">Want references? Just ask.</span>
-    </p>
-  </div>
-</section>
-
-<!-- How It Works Section -->
-<section class="results" id="results">
-  <div class="results-container">
-    <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
-      <h2 class="section-title">The Spartan Process</h2>
-      <p class="section-subtitle">
-  From initial consultation to execution—we'll uncover what's working, fix what isn't, and build for what's next.
-      </p>
+    <div class="infographic">
+        <div class="header">
+            <div class="logo">AQUAMARK</div>
+            <div class="tagline">for Lenders</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <div class="section-title">How It Works</div>
+                
+                <div class="step">
+                    <div class="step-bullet"></div>
+                    <div class="step-text">Intercepts PDF downloads</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-bullet"></div>
+                    <div class="step-text">Watermarks every page</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-bullet"></div>
+                    <div class="step-text">Adds tracking information</div>
+                </div>
+                
+                <div class="watermark-example">
+                    "For Internal Use Only<br>
+                    Underwriter Name<br>
+                    Date Downloaded"
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">What It Does</div>
+                
+                <div class="benefit">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">Stop access to clean, sellable files</div>
+                </div>
+                
+                <div class="benefit">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">Protect your company from reputational and legal risk</div>
+                </div>
+                
+                <div class="benefit">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">Build trust with your ISOs</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta">
+            <div class="cta-text">Ready to protect your business?</div>
+            <div class="website">www.aquamark.io</div>
+        </div>
     </div>
-    <div class="how-it-works-grid">
-      <div class="work-step">
-        <div class="step-visual consultation-visual">
-          <div class="chat-bubbles">
-            <div class="chat-bubble purple"></div>
-            <div class="chat-bubble blue"></div>
-          </div>
-          <div class="person-icon"></div>
-        </div>
-        <div class="step-number">01</div>
-        <h3>Free Consultation</h3>
-        <p>We start with a no-pressure call to understand your business, goals, and current challenges.</p>
-      </div>
-      
-      <div class="work-step">
-        <div class="step-visual analysis-visual">
-          <div class="magnifying-glass">
-            <div class="glass-handle"></div>
-            <div class="glass-lens"></div>
-          </div>
-          <div class="data-dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-          </div>
-        </div>
-        <div class="step-number">02</div>
-        <h3>Assess & Analyze</h3>
-        <p>We dig into what's working, what's not, and what's missing—across strategy, ops, and sales.</p>
-      </div>
-      
-      <div class="work-step">
-        <div class="step-visual planning-visual">
-          <div class="target-board">
-            <div class="target-ring outer"></div>
-            <div class="target-ring middle"></div>
-            <div class="target-ring center"></div>
-          </div>
-          <div class="arrow"></div>
-        </div>
-        <div class="step-number">03</div>
-        <h3>Strategic Planning</h3>
-        <p>We collaborate on a plan of attack—tailored to your goals and built on industry insight.</p>
-      </div>
-      
-      <div class="work-step">
-        <div class="step-visual execution-visual">
-          <div class="rocket">
-            <div class="rocket-body"></div>
-            <div class="rocket-wing left"></div>
-            <div class="rocket-wing right"></div>
-          </div>
-          <div class="launch-trail">
-            <div class="trail-dot"></div>
-            <div class="trail-dot"></div>
-            <div class="trail-dot"></div>
-          </div>
-        </div>
-        <div class="step-number">04</div>
-        <h3>Execute & Optimize</h3>
-        <p>We guide implementation, refine in real-time, and ensure your strategy gets results.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Pricing Section -->
-<section class="pricing" id="pricing">
-<div class="pricing-container">
-<div class="section-header">
-<h2 class="section-title">Flexible Engagement Models</h2>
-<p class="section-subtitle">
-Choose the level of partnership that fits your growth stage and needs.
-</p>
-</div>
-<div class="pricing-grid">
-<div class="pricing-card standard">
-<div class="pricing-header">
-<div class="pricing-icon">
-<div class="icon-graphic standard-icon">
-<div class="clock-face">
-<div class="clock-hand hour"></div>
-<div class="clock-hand minute"></div>
-</div>
-</div>
-</div>
-<h3 class="pricing-title">Strategic Advisory</h3>
-<p class="pricing-subtitle">Perfect for focused initiatives and ongoing guidance</p>
-</div>
-<div class="pricing-amount">
-<span class="currency">$</span>
-<span class="price">8,500</span>
-<span class="period">/month</span>
-</div>
-<div class="pricing-commitment">Up to 20 hours per month</div>
-<div class="pricing-features">
-<ul>
-<li>Strategic planning sessions</li>
-<li>Monthly performance reviews</li>
-<li>Email & call support</li>
-<li>Market intelligence updates</li>
-<li>Partnership introductions</li>
-<li>Quarterly business reviews</li>
-</ul>
-</div>
-<div class="pricing-cta">
-<a href="#contact" class="btn btn-secondary pricing-btn">Get Started</a>
-</div>
-</div>
-
-<div class="pricing-card premium">
-<div class="pricing-badge">Most Popular</div>
-<div class="pricing-header">
-<div class="pricing-icon">
-<div class="icon-graphic premium-icon">
-<div class="rocket-boost">
-<div class="boost-body"></div>
-<div class="boost-flame"></div>
-</div>
-</div>
-</div>
-<h3 class="pricing-title">Growth Partnership</h3>
-<p class="pricing-subtitle">Full-scale execution and hands-on implementation</p>
-</div>
-<div class="pricing-amount">
-<span class="currency">$</span>
-<span class="price">15,000</span>
-<span class="period">/month</span>
-</div>
-<div class="pricing-commitment">20+ hours per month</div>
-<div class="pricing-features">
-<ul>
-<li>Everything in Strategic Advisory</li>
-<li>Direct execution support</li>
-<li>Team training & development</li>
-<li>Sales process optimization</li>
-<li>Technology stack guidance</li>
-<li>Weekly strategy sessions</li>
-<li>Priority partner network access</li>
-<li>Custom reporting & analytics</li>
-</ul>
-</div>
-<div class="pricing-cta">
-<a href="#contact" class="btn btn-primary pricing-btn">Start Partnership</a>
-</div>
-</div>
-</div>
-
-<div class="pricing-note">
-<p>All engagements include a comprehensive onboarding process and 30-day satisfaction guarantee. Custom enterprise packages available for larger organizations.</p>
-</div>
-</div>
-</section>
-
-<!-- CTA Section -->
-<section class="cta" id="contact">
-<div class="cta-container">
-<h2>Ready to Scale?</h2>
-<p>Let's discuss how we can help your fintech company reach the next level.</p>
-<div class="cta-buttons">
-<a class="btn btn-primary" href="mailto:contact@spartan-projects.com">Contact Us</a>
-<a class="btn btn-secondary" href="tel:+1-555-0123">Schedule Call</a>
-</div>
-</div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-<div class="footer-container">
-<div>
-<div class="footer-brand">
-<img alt="Spartan Projects" src="/spartans.png" style="height: 64px; width: auto; display: block;"/>
-</div>
-<p style="color: var(--text-secondary); font-size: 0.9rem;">
-                    Strategic growth partners for fintech companies. Discretion guaranteed.
-                </p>
-</div>
-        <div class="footer-section">
-<h4>Services</h4>
-<ul>
-<li><a href="#services">Strategic Planning</a></li>
-<li><a href="#services">Operations</a></li>
-<li><a href="#services">Partnerships</a></li>
-<li><a href="#services">Sales Excellence</a></li>
-</ul>
-</div>
-<div class="footer-section">
-<h4>Company</h4>
-<ul>
-<li><a href="#results">Track Record</a></li>
-<li><a href="#pricing">Pricing</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</div>
-</div>
-<div class="footer-bottom">
-<p>© 2025 Spartan Projects. Strategic consulting for fintech leaders.</p>
-</div>
-</footer>
-
-<script>
-function toggleMobileMenu() {
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('active');
-}
-
-document.addEventListener('click', function(event) {
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (!mobileMenu.contains(event.target) && !menuBtn.contains(event.target)) {
-        mobileMenu.classList.remove('active');
-    }
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const headerOffset = 80;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-</script>
 </body>
 </html>
