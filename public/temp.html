@@ -466,6 +466,13 @@
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .review-content {
+            flex-grow: 1;
         }
 
         .stars {
@@ -702,21 +709,27 @@
             
             <div class="review-grid">
                 <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Aquamark has completely transformed how we handle document security. No more worrying about deal theft - our documents are protected and our ROI improved immediately."</p>
-                    <div class="reviewer">- Sarah M., MCA Broker</div>
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We were one of Aquamark's first customers and within the first couple weeks, we noticed less merchants calling us upset about getting a bunch of random calls."</p>
+                    </div>
+                    <div class="reviewer"><strong>- Matt, Sales Manager, Broker</strong></div>
                 </div>
 
                 <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Finally, a way to show our broker partners that we take document security seriously. Aquamark builds trust and protects our reputation."</p>
-                    <div class="reviewer">- David R., Lender</div>
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Exactly what the industry needs. As a lender, we now have a way to show our ISOs that we take document security seriously and their documents are safe with us. That helps our reputation big time."</p>
+                    </div>
+                    <div class="reviewer"><strong>- Daniel, CEO, Lender</strong></div>
                 </div>
 
                 <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"The OCR compatibility was crucial for us. Aquamark works seamlessly with our existing workflow without disrupting our processes."</p>
-                    <div class="reviewer">- Jennifer L., Operations Manager</div>
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
+                    </div>
+                    <div class="reviewer"><strong>- Diana, Underwriter, Lender</strong></div>
                 </div>
             </div>
         </div>
