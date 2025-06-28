@@ -179,11 +179,31 @@
         }
 
         .partner-carousel {
-            display: flex;
-            justify-content: center;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .partner-track {
+            display: inline-flex;
             align-items: center;
             gap: 3rem;
-            flex-wrap: wrap;
+            animation: scroll 30s linear infinite;
+        }
+
+        .partner-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         .partner-logo {
@@ -535,7 +555,13 @@
             }
 
             .partner-carousel {
-                gap: 1rem;
+                overflow: visible;
+            }
+
+            .partner-track {
+                flex-wrap: wrap;
+                justify-content: center;
+                animation: none;
             }
 
             .pricing-card.featured {
@@ -594,23 +620,44 @@
         <div class="container">
             <h2>Compatible with Leading OCR Platforms</h2>
             <div class="partner-carousel">
-                <div class="partner-logo">
-                    <img src="moneythumb.png" alt="MoneyThumb" />
-                </div>
-                <div class="partner-logo">
-                    <img src="cloudsquare.png" alt="CloudSquare" />
-                </div>
-                <div class="partner-logo">
-                    <img src="ocrolus1.png" alt="Ocrolous" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docsumo1.png" alt="DocSumo" />
-                </div>
-                <div class="partner-logo">
-                    <img src="heron.png" alt="Heron" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docpanda.png" alt="DocPanda" />
+                <div class="partner-track">
+                    <div class="partner-logo">
+                        <img src="moneythumb.png" alt="MoneyThumb" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="cloudsquare.png" alt="CloudSquare" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="ocrolus1.png" alt="Ocrolous" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="docsumo1.png" alt="DocSumo" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="heron.png" alt="Heron" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="docpanda.png" alt="DocPanda" />
+                    </div>
+                    <!-- Duplicate set for seamless loop -->
+                    <div class="partner-logo">
+                        <img src="moneythumb.png" alt="MoneyThumb" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="cloudsquare.png" alt="CloudSquare" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="ocrolus1.png" alt="Ocrolous" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="docsumo1.png" alt="DocSumo" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="heron.png" alt="Heron" />
+                    </div>
+                    <div class="partner-logo">
+                        <img src="docpanda.png" alt="DocPanda" />
+                    </div>
                 </div>
             </div>
         </div>
