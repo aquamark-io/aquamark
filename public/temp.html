@@ -345,7 +345,7 @@
         /* Reviews Section */
         .reviews {
             padding: 80px 0;
-            background: #f8fafc;
+            background: white;
         }
 
         .section-title, .partners h2, .problem-section h2, .reviews h2 {
@@ -397,81 +397,49 @@
 
         .review-card {
             background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15), 0 0 0 1px rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-width: 380px;
-            max-width: 380px;
+            min-width: 350px;
+            max-width: 350px;
             white-space: normal;
             flex-shrink: 0;
-            position: relative;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(37, 99, 235, 0.1);
-        }
-
-        .review-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(59, 130, 246, 0.05) 50%, rgba(147, 197, 253, 0.03) 100%);
-            border-radius: 20px;
-            z-index: 0;
-        }
-
-        .review-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.25), 0 0 0 1px rgba(37, 99, 235, 0.15);
         }
 
         .review-content {
             flex-grow: 1;
-            position: relative;
-            z-index: 1;
         }
 
         .stars {
             color: #fbbf24;
             font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .review-content p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #374151;
-            font-style: italic;
+            margin-bottom: 1rem;
         }
 
         .reviewer {
             font-weight: 600;
             color: #374151;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             display: flex;
             align-items: center;
             gap: 1rem;
-            position: relative;
-            z-index: 1;
         }
 
         .avatar {
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            background: #f3f4f6;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            font-weight: 700;
-            color: white;
-            border: 3px solid rgba(37, 99, 235, 0.2);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            font-weight: 600;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
         }
 
         /* Broker and Lender Sections */
@@ -982,124 +950,15 @@
                     </div>
                 </div>
 
-                <div class="review-card">
+
+
+                     <div class="review-card">
                     <div class="review-content">
                         <div class="stars">★★★★★</div>
                         <p>"Can't stop everyone, but this is a great start. There are more good than bad people. If enough of us get on board, I think it will make a difference."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">A</div>
-                        <strong>Anthony, Operations Manager, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">K</div>
-                        <strong>Kelly, CEO, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">A</div>
-                        <strong>Anonymous, Processor, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more of these "bad actors" are gone because they can't make money from stealing anymore."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">E</div>
-                        <strong>Eric, Team Leader, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Lenders need to partner with Aquamark and build a database of everyone caught, on both sides - lender and broker. How we do that? I don't know yet, but this is a good start."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">P</div>
-                        <strong>Peter, President, Lender</strong>
-                    </div>
-                </div>
-
-                <!-- Duplicate set for seamless loop -->
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We were one of Aquamark's first customers and within the first couple weeks, we noticed less merchants calling us upset about getting a bunch of random calls."</p>
                     </div>
                     <div class="reviewer">
                         <div class="avatar">M</div>
-                        <strong>Matt, Sales Manager, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Exactly what the industry needs. As a lender, we now have a way to show our ISOs that we take document security seriously and their documents are safe with us. That helps our reputation big time."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Daniel, CEO, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Diana, Underwriter, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Unfortunately and fortunately we caught the person stealing."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">C</div>
-                        <strong>Chris, COO, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"I hate to think our own employees would steal, but this is so necessary to repair the damage that's been done over the years. I'm hopeful things will look much different in the future."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">Z</div>
-                        <strong>Zack, Founder, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Can't stop everyone, but this is a great start. There are more good than bad people. If enough of us get on board, I think it will make a difference."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">A</div>
                         <strong>Anthony, Operations Manager, Broker</strong>
                     </div>
                 </div>
@@ -1110,7 +969,7 @@
                         <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
                     </div>
                     <div class="reviewer">
-                        <div class="avatar">K</div>
+                        <div class="avatar">D</div>
                         <strong>Kelly, CEO, Broker</strong>
                     </div>
                 </div>
@@ -1121,7 +980,7 @@
                         <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
                     </div>
                     <div class="reviewer">
-                        <div class="avatar">A</div>
+                        <div class="avatar">D</div>
                         <strong>Anonymous, Processor, Lender</strong>
                     </div>
                 </div>
@@ -1132,7 +991,7 @@
                         <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more of these "bad actors" are gone because they can't make money from stealing anymore."</p>
                     </div>
                     <div class="reviewer">
-                        <div class="avatar">E</div>
+                        <div class="avatar">C</div>
                         <strong>Eric, Team Leader, Broker</strong>
                     </div>
                 </div>
@@ -1143,6 +1002,202 @@
                         <p>"Lenders need to partner with Aquamark and build a database of everyone caught, on both sides - lender and broker. How we do that? I don't know yet, but this is a good start."</p>
                     </div>
                     <div class="reviewer">
-                        <div class="avatar">P</div>
+                        <div class="avatar">Z</div>
                         <strong>Peter, President, Lender</strong>
                     </div>
+                </div>
+
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- For Brokers Section -->
+    <section class="broker-section">
+        <div class="container">
+            <div class="product-section-grid">
+                <div class="product-section-content">
+                    <div class="product-section-header">
+                        <h2>For Brokers</h2>
+                        <p class="section-subtitle">Protect your deals and reputation</p>
+                    </div>
+                    <p class="section-description">Stop document theft and protect your commission flow with watermarking technology that actually works.</p>
+                    
+                    <div class="how-it-works">
+                        <h3>How It Works:</h3>
+                        <p>Upload your documents to our secure platform, and we'll apply invisible watermarks that identify who has access. When documents are shared or leaked, you'll know exactly who was responsible. The watermarks are OCR-safe and won't interfere with your existing workflows.</p>
+                    </div>
+
+                    <ul class="section-features">
+                        <li>Unlimited document watermarking</li>
+                        <li>Real-time access tracking</li>
+                        <li>Instant theft alerts</li>
+                        <li>OCR-compatible technology</li>
+                        <li>No workflow disruption</li>
+                    </ul>
+                </div>
+                <div class="product-section-visual">
+                    <img src="watermarked-image.png" alt="Watermarked Document Example for Brokers" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Lenders Section -->
+    <section class="lender-section">
+        <div class="container">
+            <div class="product-section-grid reverse">
+                <div class="product-section-visual">
+                    <img src="watermarked-image.png" alt="Watermarked Document Example for Lenders" />
+                </div>
+                <div class="product-section-content">
+                    <div class="product-section-header">
+                        <h2>For Lenders</h2>
+                        <p class="section-subtitle">Build trust and protect your reputation</p>
+                    </div>
+                    <p class="section-description">Show your broker network that you take document security seriously and protect your reputation in the marketplace.</p>
+                    
+                    <div class="how-it-works">
+                        <h3>How It Works:</h3>
+                        <p>Integrate our watermarking technology into your document workflow. Every document you receive or share gets automatically protected with unique identifiers. This builds trust with your ISO partners and helps you maintain a clean reputation in the industry.</p>
+                    </div>
+
+                    <ul class="section-features">
+                        <li>Enterprise-grade security</li>
+                        <li>Automated document protection</li>
+                        <li>ISO trust building</li>
+                        <li>Reputation protection</li>
+                        <li>Custom integration options</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <h3>For Brokers</h3>
+                    <div class="price">$299<span style="font-size: 1rem; color: #6b7280;">/month</span></div>
+                    <p class="price-note">ROI in first month guaranteed</p>
+                    
+                    <ul class="product-features" style="text-align: left; margin-top: 2rem;">
+                        <li>No setup costs</li>
+                        <li>Cancel anytime</li>
+                        <li>Unlimited watermarking</li>
+                        <li>Optional smart tracking</li>
+                        <li>Optional compliance alerts</li>
+                    </ul>
+                    
+                    <a href="#" class="cta-button" style="margin-top: 2rem;">Start Free Trial</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>For Lenders</h3>
+                    <div class="price">Custom<span style="font-size: 1rem; color: #6b7280;"> pricing</span></div>
+                    <p class="price-note">Tailored to your needs</p>
+                    
+                    <ul class="product-features" style="text-align: left; margin-top: 2rem;">
+                        <li>No setup costs</li>
+                        <li>Cancel anytime</li>
+                        <li>Build broker trust</li>
+                        <li>Flush out theft</li>
+                        <li>Protect investments & reputation</li>
+                    </ul>
+                    
+                    <a href="#" class="cta-button" style="margin-top: 2rem;">Contact Sales</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px;">
+                <h3 style="margin-bottom: 1rem;">Additional Opportunities</h3>
+                <p style="color: #6b7280;">Free trial available • Wholesale partnerships • Affiliate opportunities</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Phone: (415) 500-1117</p>
+                    <p>Email: info@aquamark.io</p>
+                    <p>490 Post Street<br>Suite 500<br>San Francisco, CA 94102</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#products">Products</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="#">Compliance Hub</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="#">Document Protection</a>
+                    <a href="#">Broker Solutions</a>
+                    <a href="#">Lender Solutions</a>
+                    <a href="#">Free Trial</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Partnerships</h3>
+                    <a href="#">Wholesale Opportunities</a>
+                    <a href="#">Affiliate Program</a>
+                    <a href="#">Contact Sales</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Footer Bottom - Full Width -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Mobile menu toggle (if needed)
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>
