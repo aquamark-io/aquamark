@@ -258,6 +258,39 @@
             line-height: 1.6;
         }
 
+        .hero-benefits {
+            list-style: none;
+            margin-top: 2.5rem;
+        }
+
+        .hero-benefits li {
+            padding: 1rem 0;
+            position: relative;
+            padding-left: 3rem;
+            font-size: 1.3rem;
+            color: #4b5563;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .hero-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #c084fc 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            transform: translateY(-50%);
+        }
+
         .products-visual {
             text-align: center;
         }
@@ -565,7 +598,12 @@
             <div class="products-hero">
                 <div class="products-content">
                     <h2>Watermarking That Works</h2>
-                    <p>We provide document protection for brokers and lenders in the fintech industry, specifically the Merchant Cash Advance industry. Our tamper-resistant, OCR-safe watermarking makes documents no longer "clean and sellable," deterring deal theft and backdooring.</p>
+                    <ul class="hero-benefits">
+                        <li>Watermarking for Brokers and Lenders</li>
+                        <li>Tamper-resistant</li>
+                        <li>OCR-safe</li>
+                        <li>End access to clean, sellable files</li>
+                    </ul>
                 </div>
                 <div class="products-visual">
                     <img src="watermarked-document.png" alt="Watermarked Document Example" />
