@@ -24,36 +24,34 @@
             padding: 0 20px;
         }
 
-        /* Header */
+        /* Header - Ultra Minimal */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e5e7eb;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f3f4f6;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            min-height: 80px;
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 0;
-            min-height: 80px;
+            padding: 1.5rem 0;
         }
 
         .logo img {
-            height: 35px;
+            height: 32px;
             width: auto;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
             align-items: center;
         }
 
@@ -61,70 +59,54 @@
             text-decoration: none;
             color: #6b7280;
             font-weight: 400;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: #374151;
+            color: #111827;
         }
 
         .sign-in-btn {
             background: transparent !important;
             color: #6b7280 !important;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid #9ca3af;
-            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
             font-weight: 400;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         .sign-in-btn:hover {
             background: #f9fafb !important;
-            color: #374151 !important;
-            border-color: #6b7280;
-            transform: none;
+            color: #111827 !important;
+            border-color: #d1d5db;
         }
 
         .get-started-btn {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%) !important;
+            background: #111827 !important;
             color: #ffffff !important;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 400;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
             text-decoration: none;
-            margin-left: 0.5rem;
+            margin-left: 0.75rem;
         }
 
         .get-started-btn:hover {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%) !important;
+            background: #1f2937 !important;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
         }
 
-        /* Hero Section - Updated with Blue Gradient */
+        /* Hero Section - Minimal White */
         .hero {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%);
-            color: white;
-            padding: 180px 0 80px;
+            background: #ffffff;
+            padding: 180px 0 120px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
         }
 
         .hero-content {
@@ -134,48 +116,58 @@
 
         .hero h1 {
             font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: #111827;
+            letter-spacing: -0.02em;
         }
 
         .hero p {
-            font-size: 1.50rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
         }
 
         .cta-button {
-            background: #ffffff;
-            color: #1e3a8a;
+            background: #111827;
+            color: #ffffff;
             padding: 1rem 2rem;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
             display: inline-block;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.3);
-            background: #f8fafc;
+            background: #1f2937;
+            transform: translateY(-1px);
         }
 
         /* Partners Section */
         .partners {
-            padding: 60px 0;
-            background: #f8fafc;
+            padding: 80px 0;
+            background: #fafafa;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
         }
 
         .partners h2 {
             text-align: center;
-            margin-bottom: 2rem;
-            color: #374151;
-            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #6b7280;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         .partner-carousel {
@@ -208,88 +200,88 @@
         }
 
         .partner-logo {
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            font-weight: 600;
-            color: #6b7280;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            border: 1px solid #f3f4f6;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .partner-logo img {
-            height: 40px;
-            width: auto;
-            max-width: 120px;
-            object-fit: contain;
+            opacity: 0.6;
+            transition: all 0.2s ease;
         }
 
         .partner-logo:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            opacity: 0.8;
+            transform: translateY(-1px);
         }
 
-        /* Problem Section */
+        .partner-logo img {
+            height: 32px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+            filter: grayscale(100%);
+        }
+
+        /* Problem Section - Minimal */
         .problem-section {
-            padding: 40px 0;
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: white;
+            padding: 120px 0;
+            background: #ffffff;
         }
 
         .problem-content {
             text-align: center;
-            max-width: 1150px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .problem-section h2 {
             font-size: 2.5rem;
             margin-bottom: 2rem;
+            color: #111827;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
 
         .problem-section p {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.7;
         }
 
         /* Products Section */
         .products {
-            padding: 80px 0;
-            background: #f8fafc;
+            padding: 120px 0;
+            background: #fafafa;
         }
 
         .products-hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 6rem;
             align-items: center;
-            margin-bottom: 4rem;
         }
 
         .products-content {
             background: white;
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 3rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-            min-width: 650px;
+            border: 1px solid #f3f4f6;
+            transition: all 0.2s ease;
         }
 
         .products-content:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         .products-content h2 {
             font-size: 2.5rem;
-            color: #1f2937;
+            color: #111827;
             margin-bottom: 2rem;
-            font-weight: 700;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
 
         .hero-benefits {
@@ -298,13 +290,12 @@
         }
 
         .hero-benefits li {
-            padding: 1.2rem 0;
+            padding: 1rem 0;
             position: relative;
-            padding-left: 4rem;
-            font-size: 1.2rem;
+            padding-left: 2.5rem;
+            font-size: 1.1rem;
             color: #374151;
-            font-weight: 500;
-            line-height: 1.5;
+            font-weight: 400;
             border-bottom: 1px solid #f3f4f6;
         }
 
@@ -316,19 +307,17 @@
             content: '✓';
             position: absolute;
             left: 0;
-            top: 50%;
-            width: 40px;
-            height: 40px;
-            background: #2563eb;
+            top: 1rem;
+            width: 20px;
+            height: 20px;
+            background: #111827;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 20px;
-            transform: translateY(-50%);
-            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+            font-size: 12px;
         }
 
         .products-visual {
@@ -339,30 +328,36 @@
             max-width: 100%;
             height: auto;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         /* Reviews Section */
         .reviews {
-            padding: 80px 0;
-            background: white;
+            padding: 120px 0;
+            background: #ffffff;
         }
 
         .section-title, .partners h2, .problem-section h2, .reviews h2 {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: #1f2937;
+            color: #111827;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
 
         .problem-section h2 {
-            color: white;
+            color: #111827;
             margin-bottom: 2rem;
         }
 
         .partners h2 {
-            color: #374151;
-            margin-bottom: 2rem;
+            color: #6b7280;
+            margin-bottom: 3rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         .review-grid {
@@ -378,7 +373,7 @@
         .review-track {
             display: inline-flex;
             align-items: stretch;
-            gap: 3rem;
+            gap: 2rem;
             animation: scrollReviews 40s linear infinite;
         }
 
@@ -397,9 +392,9 @@
 
         .review-card {
             background: white;
+            border: 1px solid #f3f4f6;
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -407,6 +402,12 @@
             max-width: 350px;
             white-space: normal;
             flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         .review-content {
@@ -415,49 +416,55 @@
 
         .stars {
             color: #fbbf24;
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin-bottom: 1rem;
         }
 
-        .reviewer {
-            font-weight: 600;
+        .review-card p {
             color: #374151;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .reviewer {
+            font-weight: 500;
+            color: #111827;
             margin-top: 1rem;
             display: flex;
             align-items: center;
             gap: 1rem;
+            font-size: 0.9rem;
         }
 
         .avatar {
-            width: 50px;
-            height: 50px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: #f3f4f6;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 14px;
             font-weight: 600;
             color: #6b7280;
-            border: 2px solid #e5e7eb;
         }
 
         /* Broker and Lender Sections */
         .broker-section {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%);
-            color: white;
+            padding: 120px 0;
+            background: #ffffff;
         }
 
         .lender-section {
-            padding: 80px 0;
-            background: #f8fafc;
+            padding: 120px 0;
+            background: #fafafa;
         }
 
         .product-section-grid {
             display: grid;
             grid-template-columns: 1fr 400px;
-            gap: 4rem;
+            gap: 6rem;
             align-items: center;
         }
 
@@ -466,75 +473,40 @@
         }
 
         .product-section-header h2 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 600;
             margin-bottom: 1rem;
             line-height: 1.2;
-        }
-
-        .broker-section .product-section-header h2 {
-            color: white;
-        }
-
-        .lender-section .product-section-header h2 {
-            color: #1f2937;
+            color: #111827;
+            letter-spacing: -0.02em;
         }
 
         .section-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             margin-bottom: 2rem;
-            opacity: 0.9;
+            color: #6b7280;
             font-weight: 400;
         }
 
-        .broker-section .section-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .lender-section .section-subtitle {
-            color: #6b7280;
-        }
-
         .section-description {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 2.5rem;
             line-height: 1.6;
-        }
-
-        .broker-section .section-description {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .lender-section .section-description {
             color: #374151;
         }
 
         .how-it-works h3 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
             font-weight: 600;
-        }
-
-        .broker-section .how-it-works h3 {
-            color: white;
-        }
-
-        .lender-section .how-it-works h3 {
-            color: #1f2937;
+            color: #111827;
         }
 
         .how-it-works p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 2rem;
             line-height: 1.6;
-        }
-
-        .broker-section .how-it-works p {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .lender-section .how-it-works p {
-            color: #4b5563;
+            color: #6b7280;
         }
 
         .section-features {
@@ -543,18 +515,11 @@
         }
 
         .section-features li {
-            padding: 0.75rem 0;
+            padding: 0.5rem 0;
             position: relative;
-            padding-left: 2rem;
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-
-        .broker-section .section-features li {
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        .lender-section .section-features li {
+            padding-left: 1.5rem;
+            font-weight: 400;
+            font-size: 1rem;
             color: #374151;
         }
 
@@ -563,15 +528,8 @@
             position: absolute;
             left: 0;
             font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .broker-section .section-features li::before {
-            color: #ffffff;
-        }
-
-        .lender-section .section-features li::before {
-            color: #2563eb;
+            font-size: 1rem;
+            color: #111827;
         }
 
         .product-section-visual {
@@ -582,94 +540,102 @@
             max-width: 100%;
             height: auto;
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        }
-
-        .lender-section .product-section-visual img {
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         /* Pricing Section */
         .pricing {
-            padding: 80px 0;
-            background: #f8fafc;
+            padding: 120px 0;
+            background: #ffffff;
         }
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
 
         .pricing-card {
             background: white;
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 3rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .pricing-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         .pricing-card.featured {
-            border: 2px solid #2563eb;
-            transform: scale(1.05);
+            border: 1px solid #111827;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
         }
 
         .price {
             font-size: 2.5rem;
-            font-weight: 700;
-            color: #2563eb;
+            font-weight: 600;
+            color: #111827;
             margin: 1rem 0;
         }
 
         .price-note {
             color: #6b7280;
             font-size: 0.9rem;
+            margin-bottom: 2rem;
         }
 
         .product-features {
             list-style: none;
-            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
         }
 
         .product-features li {
             padding: 0.5rem 0;
             position: relative;
             padding-left: 1.5rem;
+            font-size: 0.95rem;
+            color: #374151;
         }
 
         .product-features li::before {
             content: '✓';
             position: absolute;
             left: 0;
-            color: #10b981;
+            color: #111827;
             font-weight: bold;
         }
 
-        /* Footer - Light Theme */
+        /* Footer */
         footer {
-            background: #f8fafc;
-            color: #374151;
-            padding: 60px 0 30px;
-            border-top: 1px solid #e5e7eb;
+            background: #fafafa;
+            color: #6b7280;
+            padding: 80px 0 40px;
+            border-top: 1px solid #f3f4f6;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 3rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #1f2937;
+            margin-bottom: 1.5rem;
+            color: #111827;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .footer-section p, .footer-section a {
@@ -677,34 +643,40 @@
             text-decoration: none;
             margin-bottom: 0.5rem;
             display: block;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
         }
 
         .footer-section a:hover {
-            color: #2563eb;
+            color: #111827;
         }
 
         .footer-bottom {
-            background: #1f2937;
-            color: #d1d5db;
+            background: #111827;
+            color: #9ca3af;
             text-align: center;
             padding: 2rem 0;
-            margin-top: 2rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
-                gap: 1rem;
+                gap: 1.5rem;
             }
 
             .hero h1 {
                 font-size: 2.5rem;
             }
 
+            .hero p {
+                font-size: 1.1rem;
+            }
+
             .products-hero {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 3rem;
             }
 
             .products-content {
@@ -712,14 +684,14 @@
             }
 
             .hero-benefits li {
-                font-size: 1.1rem;
-                padding-left: 3.5rem;
+                font-size: 1rem;
+                padding-left: 2rem;
             }
 
             .hero-benefits li::before {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
+                width: 18px;
+                height: 18px;
+                font-size: 11px;
             }
 
             .partner-carousel {
@@ -730,6 +702,7 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 animation: none;
+                gap: 1rem;
             }
 
             .pricing-card.featured {
@@ -744,6 +717,7 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 animation: none;
+                gap: 1rem;
             }
 
             .review-card {
@@ -760,22 +734,31 @@
             .product-section-visual {
                 order: -1;
             }
-        }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .section-title, .problem-section h2, .products-content h2, .product-section-header h2 {
+                font-size: 2rem;
             }
         }
 
-        .animate-on-scroll {
-            animation: fadeInUp 0.6s ease-out forwards;
+        /* Additional Info Box */
+        .additional-info {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            background: #fafafa;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+        }
+
+        .additional-info h3 {
+            margin-bottom: 1rem;
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .additional-info p {
+            color: #6b7280;
+            font-size: 0.95rem;
         }
     </style>
 </head>
@@ -1193,7 +1176,7 @@
                     <div class="price">$299<span style="font-size: 1rem; color: #6b7280;">/month</span></div>
                     <p class="price-note">ROI in first month guaranteed</p>
                     
-                    <ul class="product-features" style="text-align: left; margin-top: 2rem;">
+                    <ul class="product-features">
                         <li>No setup costs</li>
                         <li>Cancel anytime</li>
                         <li>Unlimited watermarking</li>
@@ -1201,7 +1184,7 @@
                         <li>Optional compliance alerts</li>
                     </ul>
                     
-                    <a href="#" class="cta-button" style="margin-top: 2rem;">Start Free Trial</a>
+                    <a href="#" class="cta-button">Start Free Trial</a>
                 </div>
 
                 <div class="pricing-card">
@@ -1209,7 +1192,7 @@
                     <div class="price">Custom<span style="font-size: 1rem; color: #6b7280;"> pricing</span></div>
                     <p class="price-note">Tailored to your needs</p>
                     
-                    <ul class="product-features" style="text-align: left; margin-top: 2rem;">
+                    <ul class="product-features">
                         <li>No setup costs</li>
                         <li>Cancel anytime</li>
                         <li>Build broker trust</li>
@@ -1217,13 +1200,13 @@
                         <li>Protect investments & reputation</li>
                     </ul>
                     
-                    <a href="#" class="cta-button" style="margin-top: 2rem;">Contact Sales</a>
+                    <a href="#" class="cta-button">Contact Sales</a>
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px;">
-                <h3 style="margin-bottom: 1rem;">Additional Opportunities</h3>
-                <p style="color: #6b7280;">Free trial available • Wholesale partnerships • Affiliate opportunities</p>
+            <div class="additional-info">
+                <h3>Additional Opportunities</h3>
+                <p>Free trial available • Wholesale partnerships • Affiliate opportunities</p>
             </div>
         </div>
     </section>
