@@ -712,17 +712,24 @@
         }
 
         /* Pricing Section */
+
+        .pricing .container {
+    max-width: 100%;
+    padding: 0 40px;
+}
+
         .pricing {
             padding: 120px 0;
             background: #fafafa;
         }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 4rem;
-        }
+       .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-top: 4rem;
+}
+
 
         .pricing-card {
             background: white;
