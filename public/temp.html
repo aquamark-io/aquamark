@@ -717,11 +717,20 @@
     max-width: 100%;
     padding: 0 40px;
 }
-        
-.pricing-card {
-  max-width: 420px;
-  margin: 0 auto;
+
+.pricing-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
+
+.pricing-card {
+  flex: 1 1 280px;
+  max-width: 320px;
+}
+
+
 
 
         
@@ -730,12 +739,7 @@
             background: #fafafa;
         }
 
-       .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2.5rem;
-    margin-top: 4rem;
-}
+
 
 
         .pricing-card {
