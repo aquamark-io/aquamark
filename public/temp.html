@@ -952,6 +952,9 @@
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .nav-links.active {
@@ -971,6 +974,7 @@
                 width: 100%;
                 text-align: center;
                 display: block;
+                box-sizing: border-box;
             }
 
             .hero {
@@ -1003,11 +1007,15 @@
 
             .partner-carousel {
                 margin-top: 2rem;
+                width: 100%;
+                overflow: hidden;
             }
 
             .partner-track {
                 gap: 3rem;
-                animation-duration: 30s;
+                animation: scroll 30s linear infinite;
+                display: flex;
+                width: max-content;
             }
 
             .partner-logo img {
@@ -1047,6 +1055,110 @@
             .brokers-solution h3,
             .lenders-problem h3,
             .lenders-solution h3 {
+                font-size: 1.5rem;
+            }
+
+            .feature,
+            .step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .feature p,
+            .step p {
+                text-align: center;
+            }
+
+            .watermark-sample,
+            .watermark-example {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .brokers-benefits h3,
+            .lenders-benefits h3 {
+                font-size: 1.8rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .review-grid {
+                overflow: hidden;
+                width: 100%;
+                margin-top: 2rem;
+            }
+
+            .review-track {
+                gap: 1rem;
+                animation: scrollReviews 40s linear infinite;
+                display: flex;
+                width: max-content;
+            }
+
+            .review-card {
+                min-width: 280px;
+                max-width: 300px;
+                padding: 1.5rem;
+            }
+
+            .review-card p {
+                font-size: 1rem;
+            }
+
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: center;
+                width: 100%;
+            }
+
+            .pricing-card {
+                width: 100%;
+                max-width: 350px;
+                padding: 2rem;
+            }
+
+            .pricing .container {
+                padding: 0 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title,
+            .problem-section h2,
+            .products-content h2,
+            .brokers-content h2,
+            .lenders-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .brokers-problem h3,
+            .brokers-solution h3,
+            .lenders-problem h3,
+            .lenders-solution h3 {
                 font-size: 1.3rem;
             }
 
@@ -1075,6 +1187,20 @@
             .price {
                 font-size: 2.5rem;
             }
+
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                width: 100%;
+            }
+
+            .pricing-card {
+                width: 100%;
+                max-width: none;
+                padding: 1.5rem;
+            }
         }
 
         /* Fix for seamless carousel scrolling */
@@ -1101,9 +1227,6 @@
                 animation: none;
             }
         }
-    </style>
-</head>
-<body>
     </style>
 </head>
 <body>
@@ -1358,7 +1481,6 @@
                             <h4>Protect Your Reputation</h4>
                             <p>Stop theft before it destroys ISO relationships</p>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -1537,7 +1659,6 @@
                         <strong>Peter, President, Lender</strong>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -1663,24 +1784,26 @@
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
         
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenuBtn.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            navLinks.addEventListener('click', () => {
                 mobileMenuBtn.classList.remove('active');
                 navLinks.classList.remove('active');
-            }
-        });
-
-        // Close mobile menu when clicking on nav links
-        navLinks.addEventListener('click', () => {
-            mobileMenuBtn.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
+            });
+        }
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1702,12 +1825,14 @@
         // Add scroll effect to header
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.boxShadow = 'none';
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
             }
         });
 
