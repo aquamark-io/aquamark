@@ -288,6 +288,145 @@
             white-space: nowrap;
         }
 
+        /* Aquamark for Lenders Section */
+        .lenders-section {
+            padding: 120px 0;
+            background: #ffffff;
+        }
+
+        .lenders-content h2 {
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .lenders-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            align-items: start;
+        }
+
+        .lenders-problem h3,
+        .lenders-solution h3 {
+            font-size: 1.8rem;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .lenders-problem p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .solution-steps {
+            margin-bottom: 2.5rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            background: #111827;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .step p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .watermark-example {
+            background: #f9fafb;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .example-box {
+            position: relative;
+        }
+
+        .watermark-text {
+            font-size: 1rem;
+            color: #374151;
+            font-family: 'Courier New', monospace;
+            background: rgba(17, 24, 39, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0;
+            border: 1px dashed #d1d5db;
+        }
+
+        .example-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .lenders-benefits {
+            border-top: 1px solid #f3f4f6;
+            padding-top: 4rem;
+        }
+
+        .lenders-benefits h3 {
+            font-size: 2.2rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+        }
+
+        .benefit-item h4 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .benefit-item p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
         /* Protection Solutions Section - Updated with Black Shadows and Grid */
         .protection-section {
             padding: 120px 0;
@@ -724,6 +863,24 @@
                 white-space: normal;
             }
 
+            .lenders-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .lenders-content h2 {
+                font-size: 2.5rem;
+            }
+
+            .lenders-benefits h3 {
+                font-size: 1.8rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
             .protection-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -892,6 +1049,66 @@
                         <li> OCR-safe</li>
                         <li> Ends access to "clean", sellable files</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aquamark for Lenders Section -->
+    <section class="lenders-section">
+        <div class="container">
+            <div class="lenders-content">
+                <h2>Aquamark for Lenders</h2>
+                <div class="lenders-grid">
+                    <div class="lenders-problem">
+                        <h3>The Problem</h3>
+                        <p>Underwriters steal, too. Arguably more than brokers because they have more access to sensitive documents and "clean" files that can be easily resold.</p>
+                    </div>
+                    <div class="lenders-solution">
+                        <h3>The Solution</h3>
+                        <div class="solution-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <p>Aquamark intercepts PDF downloads from your CRM</p>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <p>Applies tamper-resistant, OCR-safe watermarks to every page</p>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <p>Returns watermarked PDF via download</p>
+                            </div>
+                        </div>
+                        <div class="watermark-example">
+                            <div class="example-box">
+                                <p class="watermark-text">"For Internal Use Only - Christina Duncan - christina@aquamark.io - 06/29/2025"</p>
+                                <span class="example-label">Example Watermark</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lenders-benefits">
+                    <h3>Build Trust with Your ISOs</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <h4>Send a Clear Message</h4>
+                            <p>Show your ISOs that you take document security seriously</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Beyond Words</h4>
+                            <p>Don't just tell your ISOs "you can trust me" — tell them you use Aquamark</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Protect Your Reputation</h4>
+                            <p>Prevent internal theft from damaging your relationships and business</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>End Clean Files</h4>
+                            <p>Eliminate access to "clean", sellable documents that fuel the black market</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
