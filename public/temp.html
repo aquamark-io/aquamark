@@ -290,13 +290,14 @@
             white-space: nowrap;
         }
 
-       .hero-benefits li::before {
+      .hero-benefits li::before {
     content: '✓';
     position: absolute;
     left: 0;
-    top: 0;
-    width: 28px;         /* was 20px */
-    height: 28px;        /* was 20px */
+    top: 50%;
+    transform: translateY(-50%); /* This centers it vertically */
+    width: 28px;
+    height: 28px;
     background: #111827;
     color: white;
     border-radius: 50%;
@@ -304,9 +305,8 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 16px;     /* was 12px */
+    font-size: 16px;
 }
-
 
         /* Reviews Section */
         .reviews {
