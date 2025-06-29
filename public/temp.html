@@ -719,7 +719,7 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
             margin-top: 4rem;
         }
@@ -758,7 +758,7 @@
 
         .price-note {
             color: #6b7280;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             margin-bottom: 2rem;
         }
 
@@ -772,7 +772,7 @@
             padding: 0.5rem 0;
             position: relative;
             padding-left: 1.5rem;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             color: #374151;
         }
 
@@ -782,6 +782,48 @@
             left: 0;
             color: #111827;
             font-weight: bold;
+        }
+
+        /* Partnership cards specific styles */
+        .partnership-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+        }
+
+        .partnership-card h3 {
+            color: #475569;
+        }
+
+        .partnership-card .price {
+            color: #475569;
+            font-size: 2rem;
+        }
+
+        .partnership-description {
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .contact-button {
+            background: #475569;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contact-button:hover {
+            background: #334155;
+            transform: translateY(-1px);
         }
 
         /* Footer */
@@ -828,28 +870,14 @@
             font-size: 0.9rem;
         }
 
-        .additional-info {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 2rem;
-            background: #fafafa;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-        }
-
-        .additional-info h3 {
-            margin-bottom: 1rem;
-            color: #111827;
-            font-weight: 600;
-            font-size: 1.4rem;
-        }
-
-        .additional-info p {
-            color: #6b7280;
-            font-size: 1.4rem;
-        }
-
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 gap: 1.5rem;
@@ -925,6 +953,15 @@
 
             .section-title, .problem-section h2, .products-content h2 {
                 font-size: 2.5rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .pricing-card {
+                padding: 2rem;
             }
         }
     </style>
@@ -1346,8 +1383,8 @@
             <div class="pricing-grid">
                 <div class="pricing-card featured">
                     <h3>For Brokers</h3>
-                    <div class="price">$299<span style="font-size: 1rem; color: #6b7280;">/month</span></div>
-                    <p class="price-note">ROI in first month guaranteed</p>
+                    <div class="price">$299<span style="font-size: 1rem; color: #6b7280;">*</span></div>
+                    <p class="price-note">per month - ROI guaranteed</p>
                     
                     <ul class="product-features">
                         <li>No setup costs</li>
@@ -1361,10 +1398,10 @@
                     <a href="#" class="cta-button">Start Free Trial</a>
                 </div>
 
-                <div class="pricing-card">
+                <div class="pricing-card featured">
                     <h3>For Lenders</h3>
-                    <div class="price">Custom<span style="font-size: 1rem; color: #6b7280;"> pricing</span></div>
-                    <p class="price-note">Tailored to your needs</p>
+                    <div class="price">$999<span style="font-size: 1rem; color: #6b7280;">+</span></div>
+                    <p class="price-note">per month - custom pricing available</p>
                     
                     <ul class="product-features">
                         <li>No setup costs</li>
@@ -1377,11 +1414,30 @@
                     
                     <a href="#" class="cta-button">Contact Sales</a>
                 </div>
-            </div>
 
-            <div class="additional-info">
-                <h3>Additional Opportunities</h3>
-                <p>Free trial available • Wholesale partnerships • Affiliate opportunities</p>
+                <div class="pricing-card partnership-card">
+                    <h3>Wholesale Partnership</h3>
+                    <div class="price">Partner<span style="font-size: 1rem; color: #475569;"> with us</span></div>
+                    <p class="price-note">Revenue sharing opportunities</p>
+                    
+                    <div class="partnership-description">
+                        <p>Join our wholesale partner program and offer Aquamark's document protection services to your clients. Perfect for technology providers, consultants, and industry solutions companies.</p>
+                    </div>
+                    
+                    <a href="#" class="contact-button">Learn More</a>
+                </div>
+
+                <div class="pricing-card partnership-card">
+                    <h3>Affiliate Program</h3>
+                    <div class="price">Earn<span style="font-size: 1rem; color: #475569;"> commissions</span></div>
+                    <p class="price-note">Refer and get rewarded</p>
+                    
+                    <div class="partnership-description">
+                        <p>Earn ongoing commissions by referring brokers and lenders to Aquamark. Simple referral process with competitive commission structure and dedicated support.</p>
+                    </div>
+                    
+                    <a href="#" class="contact-button">Join Program</a>
+                </div>
             </div>
         </div>
     </section>
@@ -1420,7 +1476,6 @@
                     <a href="#">Contact Sales</a>
                 </div>
             </div>
-
         </div>
     </footer>
 
