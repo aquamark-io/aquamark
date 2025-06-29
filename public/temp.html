@@ -430,6 +430,32 @@
             font-weight: bold;
         }
 
+        /* Tags Section - New addition */
+        .protection-tags {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .protection-tag {
+            background: #111827;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .protection-tag:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
         /* Reviews Section */
         .reviews {
             padding: 120px 0;
@@ -711,6 +737,16 @@
                 padding: 2rem;
             }
 
+            .protection-tags {
+                gap: 0.5rem;
+                margin-top: 3rem;
+            }
+
+            .protection-tag {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
             .partner-carousel {
                 overflow: visible;
             }
@@ -921,6 +957,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Protection Tags -->
+            <div class="protection-tags">
+                <span class="protection-tag">Free Trial</span>
+                <span class="protection-tag">No Payment Info Required</span>
+                <span class="protection-tag">No Setup Costs</span>
+                <span class="protection-tag">Cancel Anytime</span>
+                <span class="protection-tag">ROI First Month</span>
             </div>
         </div>
     </section>
