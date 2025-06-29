@@ -373,7 +373,7 @@
             margin: 0;
         }
 
-        .features-showcase {
+        .watermark-sample {
             background: #f9fafb;
             border: 1px solid #f3f4f6;
             border-radius: 12px;
@@ -383,28 +383,19 @@
             margin: 0 auto;
         }
 
-        .features-list {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            font-size: 1rem;
-            color: #374151;
-            font-family: 'Courier New', monospace;
-            background: rgba(17, 24, 39, 0.1);
-            padding: 1rem;
+        .sample-box {
+            position: relative;
+        }
+
+        .sample-image {
+            max-width: 100%;
+            height: auto;
             border-radius: 8px;
-            border: 1px dashed #d1d5db;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .features-list li {
-            margin-bottom: 0.5rem;
-        }
-
-        .features-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        .showcase-label {
+        .sample-label {
             font-size: 0.8rem;
             color: #6b7280;
             font-weight: 500;
@@ -478,7 +469,7 @@
                 gap: 1rem;
             }
 
-            .features-showcase {
+            .watermark-sample {
                 padding: 2rem;
             }
         }
@@ -1075,15 +1066,11 @@
                                 <p>Clearly shows who originated the file</p>
                             </div>
                         </div>
-                        <div class="features-showcase">
-                            <div class="features-list">
-                                <li>✓ Smart QR Tracking</li>
-                                <li>✓ Compliance Alerts</li>
-                                <li>✓ Flexible Integration</li>
-                                <li>✓ Open API</li>
-                                <li>✓ Customer Portal</li>
+                        <div class="watermark-sample">
+                            <div class="sample-box">
+                                <img src="/watermark-sample.png" alt="Watermark Sample" class="sample-image" />
+                                <span class="sample-label">Sample Watermarked Document</span>
                             </div>
-                            <span class="showcase-label">Key Features</span>
                         </div>
                     </div>
                 </div>
