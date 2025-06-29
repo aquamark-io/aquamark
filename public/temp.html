@@ -304,7 +304,7 @@
             font-size: 16px;
         }
 
-        /* Protection Solutions Section */
+        /* Protection Solutions Section - Updated */
         .protection-section {
             padding: 120px 0;
             background: #ffffff;
@@ -346,7 +346,7 @@
             font-size: 1.8rem;
             font-weight: 600;
             color: #111827;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .protection-card .subtitle {
@@ -356,41 +356,65 @@
             font-weight: 500;
         }
 
-        .protection-card p {
+        .protection-summary {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .protection-summary p {
             font-size: 1.1rem;
             color: #374151;
             line-height: 1.6;
-            margin-bottom: 2rem;
+            margin: 0;
         }
 
         .how-it-works {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
         }
 
         .how-it-works h4 {
             font-size: 1.2rem;
             font-weight: 600;
             color: #111827;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
-        .how-it-works p {
+        .process-list p {
             font-size: 1rem;
             color: #6b7280;
             line-height: 1.6;
-            margin-bottom: 1rem;
+            margin: 0;
+        }
+
+        .features-section h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
 
         .protection-features {
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .protection-features li {
-            padding: 0.4rem 0;
+            padding: 0.5rem 0;
             position: relative;
             padding-left: 1.5rem;
             font-size: 1rem;
             color: #374151;
+            line-height: 1.4;
         }
 
         .protection-features li::before {
@@ -673,6 +697,15 @@
                 gap: 2rem;
             }
 
+            .features-columns {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .protection-card {
+                padding: 2rem;
+            }
+
             .partner-carousel {
                 overflow: visible;
             }
@@ -832,42 +865,66 @@
                 <div class="protection-card">
                     <h3>Broker Protection</h3>
                     <p class="subtitle">Stop internal theft and lender backdooring</p>
-                    <p>Protect your deals from theft by salesreps, processors, and any lenders you send documents to. Our full-page overlay watermarks deter theft at scale.</p>
+                    
+                    <div class="protection-summary">
+                        <p>Protect your deals from theft by salesreps, processors, and any lenders you send documents to. Our full-page overlay watermarks deter theft at scale.</p>
+                    </div>
                     
                     <div class="how-it-works">
-                        <h4>How It Works:</h4>
-                        <p>Upload documents and we apply your branded full-page overlay with tamper-resistant, OCR-safe smart QR codes. Names of those given access are embedded, creating individual accountability.</p>
+                        <h4>How It Works</h4>
+                        <div class="process-list">
+                            <p>Upload documents and we apply your branded full-page overlay with tamper-resistant, OCR-safe smart QR codes. Names of those given access are embedded, creating individual accountability.</p>
+                        </div>
                     </div>
 
-                    <ul class="protection-features">
-                        <li>Branded full-page overlays</li>
-                        <li>Smart QR code tracking</li>
-                        <li>Individual access logging</li>
-                        <li>Unlimited watermarking</li>
-                        <li>Real-time theft alerts</li>
-                        <li>No workflow disruption</li>
-                    </ul>
+                    <div class="features-section">
+                        <h4>Key Features</h4>
+                        <div class="features-columns">
+                            <ul class="protection-features">
+                                <li>Branded full-page overlays</li>
+                                <li>Smart QR code tracking</li>
+                                <li>Individual access logging</li>
+                            </ul>
+                            <ul class="protection-features">
+                                <li>Unlimited watermarking</li>
+                                <li>Real-time theft alerts</li>
+                                <li>No workflow disruption</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- For Lenders -->
                 <div class="protection-card">
                     <h3>Lender Protection</h3>
                     <p class="subtitle">Stop underwriter theft and build ISO trust</p>
-                    <p>Protect your reputation and reduce legal liability while showing your ISO network that you take document security seriously.</p>
+                    
+                    <div class="protection-summary">
+                        <p>Protect your reputation and reduce legal liability while showing your ISO network that you take document security seriously.</p>
+                    </div>
                     
                     <div class="how-it-works">
-                        <h4>How It Works:</h4>
-                        <p>Our system intercepts PDF downloads from your CRM and automatically stamps every page with "For Internal Use Only" plus the underwriter's name and download date.</p>
+                        <h4>How It Works</h4>
+                        <div class="process-list">
+                            <p>Our system intercepts PDF downloads from your CRM and automatically stamps every page with "For Internal Use Only" plus the underwriter's name and download date.</p>
+                        </div>
                     </div>
 
-                    <ul class="protection-features">
-                        <li>Automatic CRM integration</li>
-                        <li>Internal use only stamps</li>
-                        <li>Individual underwriter tracking</li>
-                        <li>ISO trust building</li>
-                        <li>Reputation protection</li>
-                        <li>Legal liability reduction</li>
-                    </ul>
+                    <div class="features-section">
+                        <h4>Key Features</h4>
+                        <div class="features-columns">
+                            <ul class="protection-features">
+                                <li>Automatic CRM integration</li>
+                                <li>Internal use only stamps</li>
+                                <li>Individual underwriter tracking</li>
+                            </ul>
+                            <ul class="protection-features">
+                                <li>ISO trust building</li>
+                                <li>Reputation protection</li>
+                                <li>Legal liability reduction</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -880,61 +937,6 @@
         </div>
         <div class="review-grid">
             <div class="review-track">
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We were one of Aquamark's first customers and within the first couple weeks, we noticed less merchants calling us upset about getting a bunch of random calls."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">M</div>
-                        <strong>Matt, Sales Manager, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Exactly what the industry needs. As a lender, we now have a way to show our ISOs that we take document security seriously and their documents are safe with us. That helps our reputation big time."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Daniel, CEO, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Unfortunately and fortunately we caught the person stealing."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">C</div>
-                        <strong>Chris, COO, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"I hate to think our own employees would steal, but this is so necessary to repair the damage that's been done over the years. I'm hopeful things will look much different in the future."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">Z</div>
-                        <strong>Zack, Founder, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Diana, Underwriter, Lender</strong>
-                    </div>
-                </div>
-
                 <div class="review-card">
                     <div class="review-content">
                         <div class="stars">★★★★★</div>
