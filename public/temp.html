@@ -183,7 +183,7 @@
         .partner-track {
             display: inline-flex;
             align-items: center;
-            gap: 6rem; /* Increased gap for larger logos */
+            gap: 6rem;
             animation: scroll 30s linear infinite;
         }
 
@@ -200,32 +200,28 @@
             }
         }
 
-        /* Updated partner-logo styles - removes white cards */
         .partner-logo {
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
-            /* Removed: padding, background, border-radius, border */
         }
 
         .partner-logo:hover {
             transform: translateY(-2px);
-            /* Removed: box-shadow */
         }
 
-        /* Updated logo image styles - significantly increased size */
         .partner-logo img {
-            height: 160px; /* Doubled from 80px */
+            height: 160px;
             width: auto;
-            max-width: 600px; /* Doubled from 300px */
+            max-width: 600px;
             object-fit: contain;
-            opacity: 0.8; /* Slightly less transparent */
+            opacity: 0.8;
             transition: opacity 0.2s ease;
         }
 
         .partner-logo:hover img {
-            opacity: 1; /* Full opacity on hover */
+            opacity: 1;
         }
 
         /* Problem Section - Minimal */
@@ -290,51 +286,134 @@
             white-space: nowrap;
         }
 
-      .hero-benefits li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%); /* This centers it vertically */
-    width: 28px;
-    height: 28px;
-    background: #111827;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 16px;
-}
+        .hero-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #111827;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
 
-        /* Reviews Section */
-        .reviews {
+        /* Protection Solutions Section */
+        .protection-section {
             padding: 120px 0;
             background: #ffffff;
         }
 
-        .section-title, .partners h2, .problem-section h2, .reviews h2 {
+        .protection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .protection-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 16px;
+            padding: 3rem;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .protection-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+        }
+
+        .protection-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #111827 0%, #374151 100%);
+        }
+
+        .protection-card h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .protection-card .subtitle {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .protection-card p {
+            font-size: 1.1rem;
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .how-it-works {
+            margin-bottom: 2rem;
+        }
+
+        .how-it-works h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.75rem;
+        }
+
+        .how-it-works p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .protection-features {
+            list-style: none;
+        }
+
+        .protection-features li {
+            padding: 0.4rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 1rem;
+            color: #374151;
+        }
+
+        .protection-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #111827;
+            font-weight: bold;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 120px 0;
+            background: #fafafa;
+        }
+
+        .section-title {
             text-align: center;
             font-size: 3rem;
             margin-bottom: 3rem;
             color: #111827;
             font-weight: 600;
             letter-spacing: -0.02em;
-        }
-
-        .problem-section h2 {
-            color: #111827;
-            margin-bottom: 2rem;
-        }
-
-        .partners h2 {
-            color: #6b7280;
-            margin-bottom: 3rem;
-            font-size: 1rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
         }
 
         .review-grid {
@@ -425,99 +504,6 @@
             font-size: 14px;
             font-weight: 600;
             color: #6b7280;
-        }
-
-        /* Broker and Lender Sections */
-        .broker-section {
-            padding: 120px 0;
-            background: #ffffff;
-        }
-
-        .lender-section {
-            padding: 120px 0;
-            background: #fafafa;
-        }
-
-        .product-section-grid {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 6rem;
-            align-items: center;
-        }
-
-        .product-section-grid.reverse {
-            grid-template-columns: 400px 1fr;
-        }
-
-        .product-section-header h2 {
-            font-size: 3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            color: #111827;
-            letter-spacing: -0.02em;
-        }
-
-        .section-subtitle {
-            font-size: 1.4rem;
-            margin-bottom: 2rem;
-            color: #6b7280;
-            font-weight: 400;
-        }
-
-        .section-description {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-            color: #374151;
-        }
-
-        .how-it-works h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: #111827;
-        }
-
-        .how-it-works p {
-            font-size: 1.4rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            color: #6b7280;
-        }
-
-        .section-features {
-            list-style: none;
-            margin-top: 2rem;
-        }
-
-        .section-features li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 1.5rem;
-            font-weight: 400;
-            font-size: 1.4rem;
-            color: #374151;
-        }
-
-        .section-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-            font-size: 1rem;
-            color: #111827;
-        }
-
-        .product-section-visual {
-            text-align: center;
-        }
-
-        .product-section-visual img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         /* Pricing Section */
@@ -637,86 +623,6 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .products-hero {
-                text-align: center;
-            }
-
-            .hero-benefits {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .hero-benefits li {
-                white-space: normal;
-            }
-
-            .partner-carousel {
-                overflow: visible;
-            }
-
-            .partner-track {
-                flex-wrap: wrap;
-                justify-content: center;
-                animation: none;
-                gap: 2rem; /* Updated gap for mobile */
-            }
-
-            .partner-logo img {
-                height: 120px; /* Doubled from 60px */
-                max-width: 440px; /* Doubled from 220px */
-            }
-
-            .pricing-card.featured {
-                transform: none;
-            }
-
-            .review-grid {
-                overflow: visible;
-            }
-
-            .review-track {
-                flex-wrap: wrap;
-                justify-content: center;
-                animation: none;
-                gap: 1rem;
-            }
-
-            .review-card {
-                min-width: 280px;
-                max-width: 300px;
-            }
-
-            .product-section-grid,
-            .product-section-grid.reverse {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .product-section-visual {
-                order: -1;
-            }
-
-            .section-title, .problem-section h2, .products-content h2, .product-section-header h2 {
-                font-size: 2.5rem;
-            }
-        }
-
-        /* Additional Info Box */
         .additional-info {
             text-align: center;
             margin-top: 4rem;
@@ -736,6 +642,72 @@
         .additional-info p {
             color: #6b7280;
             font-size: 1.4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .hero-benefits {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero-benefits li {
+                white-space: normal;
+            }
+
+            .protection-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .partner-carousel {
+                overflow: visible;
+            }
+
+            .partner-track {
+                flex-wrap: wrap;
+                justify-content: center;
+                animation: none;
+                gap: 2rem;
+            }
+
+            .partner-logo img {
+                height: 120px;
+                max-width: 440px;
+            }
+
+            .review-grid {
+                overflow: visible;
+            }
+
+            .review-track {
+                flex-wrap: wrap;
+                justify-content: center;
+                animation: none;
+                gap: 1rem;
+            }
+
+            .review-card {
+                min-width: 280px;
+                max-width: 300px;
+            }
+
+            .section-title, .problem-section h2, .products-content h2 {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
@@ -769,72 +741,71 @@
     </section>
 
     <!-- Partners Section -->
-<section class="partners">
-    <div class="container">
-        <h2>Compatible with Leading OCR Platforms</h2>
-    </div>
-    <div class="partner-carousel">
-        <div class="partner-track">
-            <div class="partner-logo">
-                <img src="ocro.png" alt="Ocrolus" />
-            </div>
-            <div class="partner-logo">
-                <img src="text.png" alt="Textract" />
-            </div>
-            <div class="partner-logo">
-                <img src="heronn.png" alt="Heron" />
-            </div>
-            <div class="partner-logo">
-                <img src="cloud.png" alt="Cloudsquare" />
-            </div>
-            <div class="partner-logo">
-                <img src="docpipe.png" alt="Docupipe" />
-            </div>
-            <div class="partner-logo">
-                <img src="docs.png" alt="Docsumo" />
-            </div>
-            <div class="partner-logo">
-                <img src="mt.png" alt="MoneyThumb" />
-            </div>
-            <!-- Duplicate set for seamless loop -->
-            <div class="partner-logo">
-                <img src="ocro.png" alt="Ocrolus" />
-            </div>
-            <div class="partner-logo">
-                <img src="text.png" alt="Textract" />
-            </div>
-            <div class="partner-logo">
-                <img src="heronn.png" alt="Heron" />
-            </div>
-            <div class="partner-logo">
-                <img src="cloud.png" alt="Cloudsquare" />
-            </div>
-            <div class="partner-logo">
-                <img src="docpipe.png" alt="Docupipe" />
-            </div>
-            <div class="partner-logo">
-                <img src="docs.png" alt="Docsumo" />
-            </div>
-            <div class="partner-logo">
-                <img src="mt.png" alt="MoneyThumb" />
+    <section class="partners">
+        <div class="container">
+            <h2>Compatible with Leading OCR Platforms</h2>
+        </div>
+        <div class="partner-carousel">
+            <div class="partner-track">
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 
     <!-- Problem Section -->
     <section class="problem-section">
         <div class="container">
             <div class="problem-content">
                 <h2>Impact of Backdooring</h2>
-                <p>Document theft is destroying trust in FinTech. It's even fueling new regulations nationwide and pushing merchants to back out of deals or fall into dangerous stacking cycles. Aquamark’s mission is to end these practices and restore transparency and accountability to the industry.</p>
+                <p>Document theft is destroying trust in FinTech. It's even fueling new regulations nationwide and pushing merchants to back out of deals or fall into dangerous stacking cycles. Aquamark's mission is to end these practices and restore transparency and accountability to the industry.</p>
             </div>
         </div>
     </section>
 
     <!-- Products Section -->
-    <section class="products" id="products">
+    <section class="products">
         <div class="container">
             <div class="products-hero">
                 <div class="products-content">
@@ -851,6 +822,57 @@
         </div>
     </section>
 
+    <!-- Protection Solutions Section -->
+    <section class="protection-section" id="products">
+        <div class="container">
+            <h2 class="section-title">How Aquamark Protects Both Sides</h2>
+            
+            <div class="protection-grid">
+                <!-- For Brokers -->
+                <div class="protection-card">
+                    <h3>Broker Protection</h3>
+                    <p class="subtitle">Stop internal theft and lender backdooring</p>
+                    <p>Protect your deals from theft by salesreps, processors, and any lenders you send documents to. Our full-page overlay watermarks deter theft at scale.</p>
+                    
+                    <div class="how-it-works">
+                        <h4>How It Works:</h4>
+                        <p>Upload documents and we apply your branded full-page overlay with tamper-resistant, OCR-safe smart QR codes. Names of those given access are embedded, creating individual accountability.</p>
+                    </div>
+
+                    <ul class="protection-features">
+                        <li>Branded full-page overlays</li>
+                        <li>Smart QR code tracking</li>
+                        <li>Individual access logging</li>
+                        <li>Unlimited watermarking</li>
+                        <li>Real-time theft alerts</li>
+                        <li>No workflow disruption</li>
+                    </ul>
+                </div>
+
+                <!-- For Lenders -->
+                <div class="protection-card">
+                    <h3>Lender Protection</h3>
+                    <p class="subtitle">Stop underwriter theft and build ISO trust</p>
+                    <p>Protect your reputation and reduce legal liability while showing your ISO network that you take document security seriously.</p>
+                    
+                    <div class="how-it-works">
+                        <h4>How It Works:</h4>
+                        <p>Our system intercepts PDF downloads from your CRM and automatically stamps every page with "For Internal Use Only" plus the underwriter's name and download date.</p>
+                    </div>
+
+                    <ul class="protection-features">
+                        <li>Automatic CRM integration</li>
+                        <li>Internal use only stamps</li>
+                        <li>Individual underwriter tracking</li>
+                        <li>ISO trust building</li>
+                        <li>Reputation protection</li>
+                        <li>Legal liability reduction</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Reviews Section -->
     <section class="reviews" id="reviews">
         <div class="container">
@@ -858,7 +880,6 @@
         </div>
         <div class="review-grid">
             <div class="review-track">
-               
                 <div class="review-card">
                     <div class="review-content">
                         <div class="stars">★★★★★</div>
@@ -884,17 +905,6 @@
                 <div class="review-card">
                     <div class="review-content">
                         <div class="stars">★★★★★</div>
-                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Diana, Underwriter, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
                         <p>"Unfortunately and fortunately we caught the person stealing."</p>
                     </div>
                     <div class="reviewer">
@@ -911,6 +921,17 @@
                     <div class="reviewer">
                         <div class="avatar">Z</div>
                         <strong>Zack, Founder, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>Diana, Underwriter, Lender</strong>
                     </div>
                 </div>
 
@@ -995,17 +1016,6 @@
                 <div class="review-card">
                     <div class="review-content">
                         <div class="stars">★★★★★</div>
-                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Diana, Underwriter, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
                         <p>"Unfortunately and fortunately we caught the person stealing."</p>
                     </div>
                     <div class="reviewer">
@@ -1028,11 +1038,22 @@
                 <div class="review-card">
                     <div class="review-content">
                         <div class="stars">★★★★★</div>
+                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>Diana, Underwriter, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
                         <p>"Can't stop everyone, but this is a great start. There are more good than bad people. If enough of us get on board, I think it will make a difference."</p>
                     </div>
                     <div class="reviewer">
                         <div class="avatar">A</div>
-                        <strong>Anthony, Operations Manager, Broker</strong>
+                        <strong>Anthony, Ops Manager, Broker</strong>
                     </div>
                 </div>
 
@@ -1084,68 +1105,6 @@
         </div>
     </section>
 
-    <!-- For Brokers Section -->
-    <section class="broker-section">
-        <div class="container">
-            <div class="product-section-grid">
-                <div class="product-section-content">
-                    <div class="product-section-header">
-                        <h2>For Brokers</h2>
-                        <p class="section-subtitle">Protect your deals and reputation</p>
-                    </div>
-                    <p class="section-description">Stop document theft and protect your commission flow with watermarking technology that actually works.</p>
-                    
-                    <div class="how-it-works">
-                        <h3>How It Works:</h3>
-                        <p>Upload your documents to our secure platform, and we'll apply invisible watermarks that identify who has access. When documents are shared or leaked, you'll know exactly who was responsible. The watermarks are OCR-safe and won't interfere with your existing workflows.</p>
-                    </div>
-
-                    <ul class="section-features">
-                        <li>Unlimited document watermarking</li>
-                        <li>Real-time access tracking</li>
-                        <li>Instant theft alerts</li>
-                        <li>OCR-compatible technology</li>
-                        <li>No workflow disruption</li>
-                    </ul>
-                </div>
-                <div class="product-section-visual">
-                    <img src="watermarked-image.png" alt="Watermarked Document Example for Brokers" />
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- For Lenders Section -->
-    <section class="lender-section">
-        <div class="container">
-            <div class="product-section-grid reverse">
-                <div class="product-section-visual">
-                    <img src="watermarked-image.png" alt="Watermarked Document Example for Lenders" />
-                </div>
-                <div class="product-section-content">
-                    <div class="product-section-header">
-                        <h2>For Lenders</h2>
-                        <p class="section-subtitle">Build trust and protect your reputation</p>
-                    </div>
-                    <p class="section-description">Show your broker network that you take document security seriously and protect your reputation in the marketplace.</p>
-                    
-                    <div class="how-it-works">
-                        <h3>How It Works:</h3>
-                        <p>Integrate our watermarking technology into your document workflow. Every document you receive or share gets automatically protected with unique identifiers. This builds trust with your ISO partners and helps you maintain a clean reputation in the industry.</p>
-                    </div>
-
-                    <ul class="section-features">
-                        <li>Enterprise-grade security</li>
-                        <li>Automated document protection</li>
-                        <li>ISO trust building</li>
-                        <li>Reputation protection</li>
-                        <li>Custom integration options</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
         <div class="container">
@@ -1161,8 +1120,9 @@
                         <li>No setup costs</li>
                         <li>Cancel anytime</li>
                         <li>Unlimited watermarking</li>
-                        <li>Optional smart tracking</li>
-                        <li>Optional compliance alerts</li>
+                        <li>Branded overlays</li>
+                        <li>Smart QR tracking</li>
+                        <li>Real-time alerts</li>
                     </ul>
                     
                     <a href="#" class="cta-button">Start Free Trial</a>
@@ -1176,9 +1136,10 @@
                     <ul class="product-features">
                         <li>No setup costs</li>
                         <li>Cancel anytime</li>
-                        <li>Build broker trust</li>
-                        <li>Flush out theft</li>
-                        <li>Protect investments & reputation</li>
+                        <li>CRM integration</li>
+                        <li>Build ISO trust</li>
+                        <li>Stop underwriter theft</li>
+                        <li>Protect reputation</li>
                     </ul>
                     
                     <a href="#" class="cta-button">Contact Sales</a>
