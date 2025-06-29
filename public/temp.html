@@ -304,11 +304,20 @@
         }
 
         .lenders-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 4rem;
             margin-bottom: 5rem;
-            align-items: start;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .lenders-problem,
+        .lenders-solution {
+            text-align: center;
+            width: 100%;
         }
 
         .lenders-problem h3,
@@ -864,7 +873,7 @@
             }
 
             .lenders-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
                 gap: 3rem;
             }
 
