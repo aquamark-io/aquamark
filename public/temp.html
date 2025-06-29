@@ -1091,19 +1091,22 @@
                 overflow: hidden;
                 width: 100%;
                 margin-top: 2rem;
+                white-space: nowrap;
             }
 
             .review-track {
                 gap: 1rem;
-                animation: scrollReviews 40s linear infinite;
-                display: flex;
-                width: max-content;
+                animation: scrollReviews 40s linear infinite !important;
+                display: inline-flex !important;
+                width: max-content !important;
+                align-items: stretch;
             }
 
             .review-card {
                 min-width: 280px;
                 max-width: 300px;
                 padding: 1.5rem;
+                flex-shrink: 0;
             }
 
             .review-card p {
@@ -1131,6 +1134,16 @@
             .footer-content {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
+            }
+
+            /* Force animation restart on mobile */
+            @keyframes scrollReviews {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-50%));
+                }
             }
         }
 
