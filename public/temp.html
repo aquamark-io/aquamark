@@ -183,7 +183,7 @@
         .partner-track {
             display: inline-flex;
             align-items: center;
-            gap: 3rem;
+            gap: 4rem;
             animation: scroll 30s linear infinite;
         }
 
@@ -200,27 +200,32 @@
             }
         }
 
+        /* Updated partner-logo styles - removes white cards */
         .partner-logo {
-            padding: 1.5rem 2rem;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #f3f4f6;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
+            /* Removed: padding, background, border-radius, border */
         }
 
         .partner-logo:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+            /* Removed: box-shadow */
         }
 
+        /* Updated logo image styles - increased size */
         .partner-logo img {
-            height: 32px;
+            height: 48px; /* Increased from 32px */
             width: auto;
-            max-width: 120px;
+            max-width: 180px; /* Increased from 120px */
             object-fit: contain;
+            opacity: 0.7; /* Optional: slight transparency for clean look */
+            transition: opacity 0.2s ease;
+        }
+
+        .partner-logo:hover img {
+            opacity: 1; /* Full opacity on hover */
         }
 
         /* Problem Section - Minimal */
@@ -667,7 +672,12 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 animation: none;
-                gap: 1rem;
+                gap: 2rem; /* Updated gap for mobile */
+            }
+
+            .partner-logo img {
+                height: 40px; /* Slightly smaller on mobile but still larger than original */
+                max-width: 140px;
             }
 
             .pricing-card.featured {
@@ -817,7 +827,7 @@
         <div class="container">
             <div class="problem-content">
                 <h2>Impact of Backdooring</h2>
-                <p>Document theft is destroying FinTech's reputation. It’s gotten so bad that it’s now driving new regulations across the U.S. — and it's breaking trust between lenders, brokers, and merchants. In many cases, merchants back out of funding after their documents are shared without consent, or they end up trapped in dangerous stacking cycles. Aquamark’s mission is to put an end to these harmful practices and bring transparency and accountability back to the industry.</p>
+                <p>Document theft is destroying FinTech's reputation. It's gotten so bad that it's now driving new regulations across the U.S. — and it's breaking trust between lenders, brokers, and merchants. In many cases, merchants back out of funding after their documents are shared without consent, or they end up trapped in dangerous stacking cycles. Aquamark's mission is to put an end to these harmful practices and bring transparency and accountability back to the industry.</p>
             </div>
         </div>
     </section>
