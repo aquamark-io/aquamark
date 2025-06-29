@@ -749,13 +749,17 @@
         }
 
         .pricing-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 3rem;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
+  background: white;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 
         .pricing-card:hover {
             transform: translateY(-2px);
@@ -1468,7 +1472,7 @@
                     <a href="#" class="cta-button">Contact Sales</a>
                 </div>
 
-                <div class="pricing-card dark">
+               <div class="pricing-card dark">
   <h3>Wholesale</h3>
   <div class="price">Partner</div>
   <p class="price-note">Revenue sharing opportunities</p>
@@ -1484,7 +1488,7 @@
 </div>
 
 
-               <div class="pricing-card dark">
+<div class="pricing-card dark">
   <h3>Affiliate</h3>
   <div class="price">Earn</div>
   <p class="price-note">Refer and get rewarded</p>
@@ -1495,8 +1499,10 @@
     <li>Simple and fast setup</li>
     <li>Track referrals easily</li>
   </ul>
+
   <a href="#" class="cta-button">Join Program</a>
 </div>
+
 
             </div>
         </div>
