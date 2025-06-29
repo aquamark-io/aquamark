@@ -714,52 +714,46 @@
         /* Pricing Section */
 
         .pricing .container {
-    max-width: 100%;
-    padding: 0 40px;
-}
+            max-width: 100%;
+            padding: 0 40px;
+        }
 
-.pricing-subheadline {
-  font-size: 1.3rem;
-  color: #6b7280;
-  line-height: 1.7;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  margin-top: -1rem;
-  margin-bottom: 4.5rem;
-}
+        .pricing-subheadline {
+            font-size: 1.3rem;
+            color: #6b7280;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: -1rem;
+            margin-bottom: 4.5rem;
+        }
 
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
 
-        
-.pricing-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
+        .pricing-card {
+            flex: 1 1 320px;
+            max-width: 400px;
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-.pricing-card {
-  flex: 1 1 320px;
-  max-width: 400px;
-}
-        
         .pricing {
             padding: 120px 0;
             background: #fafafa;
         }
-
-        .pricing-card {
-  background: white;
-  border: 1px solid #f3f4f6;
-  border-radius: 12px;
-  padding: 3rem;
-  text-align: center;
-  transition: all 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 
         .pricing-card:hover {
             transform: translateY(-2px);
@@ -770,34 +764,33 @@
             border: 1px solid #111827;
         }
 
-.pricing-card.dark {
-  background: #111827;
-  color: white;
-  border: 1px solid #1f2937;
-}
+        .pricing-card.dark {
+            background: #111827;
+            color: white;
+            border: 1px solid #1f2937;
+        }
 
-.pricing-card.dark h3,
-.pricing-card.dark .price,
-.pricing-card.dark .price-note,
-.pricing-card.dark .partnership-description,
-.pricing-card.dark .product-features li {
-  color: white;
-}
+        .pricing-card.dark h3,
+        .pricing-card.dark .price,
+        .pricing-card.dark .price-note,
+        .pricing-card.dark .partnership-description,
+        .pricing-card.dark .product-features li {
+            color: white;
+        }
 
-.pricing-card.dark .product-features li::before {
-  color: white;
-}
+        .pricing-card.dark .product-features li::before {
+            color: white;
+        }
 
-.pricing-card.dark .cta-button {
-  background: white;
-  color: #111827;
-}
+        .pricing-card.dark .cta-button {
+            background: white;
+            color: #111827;
+        }
 
-.pricing-card.dark .cta-button:hover {
-  background: #e5e7eb;
-}
+        .pricing-card.dark .cta-button:hover {
+            background: #e5e7eb;
+        }
 
-        
         .pricing-card h3 {
             font-size: 1.4rem;
             font-weight: 600;
@@ -805,11 +798,27 @@
             margin-bottom: 1rem;
         }
 
+        /* Fixed price container to ensure consistent height */
+        .price-container {
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
         .price {
             font-size: 3rem;
             font-weight: 600;
             color: #111827;
-            margin: 1rem 0;
+            line-height: 1;
+        }
+
+        .price-symbol {
+            font-size: 1rem;
+            color: #6b7280;
+            margin-left: 4px;
         }
 
         .price-note {
@@ -850,6 +859,10 @@
             color: #475569;
         }
 
+        .partnership-card .price {
+            color: #475569;
+            font-size: 2rem;
+        }
 
         .partnership-description {
             color: #64748b;
@@ -1008,12 +1021,22 @@
             }
 
             .pricing-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
                 gap: 1.5rem;
             }
 
             .pricing-card {
                 padding: 2rem;
+                max-width: 350px;
+            }
+
+            .price-container {
+                height: 70px;
+            }
+
+            .price {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -1054,28 +1077,6 @@
         </div>
         <div class="partner-carousel">
             <div class="partner-track">
-                <div class="partner-logo">
-                    <img src="ocro.png" alt="Ocrolus" />
-                </div>
-                <div class="partner-logo">
-                    <img src="text.png" alt="Textract" />
-                </div>
-                <div class="partner-logo">
-                    <img src="heronn.png" alt="Heron" />
-                </div>
-                <div class="partner-logo">
-                    <img src="cloud.png" alt="Cloudsquare" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docpipe.png" alt="Docupipe" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docs.png" alt="Docsumo" />
-                </div>
-                <div class="partner-logo">
-                    <img src="mt.png" alt="MoneyThumb" />
-                </div>
-                <!-- Duplicate set for seamless loop -->
                 <div class="partner-logo">
                     <img src="ocro.png" alt="Ocrolus" />
                 </div>
@@ -1436,7 +1437,9 @@
             <div class="pricing-grid">
                 <div class="pricing-card featured">
                     <h3>Brokers</h3>
-                    <div class="price">$299<span style="font-size: 1rem; color: #6b7280;">*</span></div>
+                    <div class="price-container">
+                        <div class="price">$299<span class="price-symbol">*</span></div>
+                    </div>
                     <p class="price-note">per month - ROI guaranteed</p>
                     
                     <ul class="product-features">
@@ -1453,7 +1456,9 @@
 
                 <div class="pricing-card featured">
                     <h3>Lenders</h3>
-                    <div class="price">$999<span style="font-size: 1rem; color: #6b7280;">+</span></div>
+                    <div class="price-container">
+                        <div class="price">$999<span class="price-symbol">+</span></div>
+                    </div>
                     <p class="price-note">per month - custom pricing available</p>
                     
                     <ul class="product-features">
@@ -1468,38 +1473,39 @@
                     <a href="#" class="cta-button">Contact Sales</a>
                 </div>
 
-               <div class="pricing-card dark">
-  <h3>Wholesale</h3>
-  <div class="price">Partner</div>
-  <p class="price-note">Revenue sharing opportunities</p>
+                <div class="pricing-card dark">
+                    <h3>Wholesale</h3>
+                    <div class="price-container">
+                        <div class="price">Partner</div>
+                    </div>
+                    <p class="price-note">Revenue sharing opportunities</p>
 
-  <ul class="product-features">
-    <li>Offer to your clients</li>
-    <li>Great for tech providers</li>
-    <li>Full support from Aquamark</li>
-    <li>Earn monthly revenue</li>
-  </ul>
+                    <ul class="product-features">
+                        <li>Offer to your clients</li>
+                        <li>Great for tech providers</li>
+                        <li>Full support from Aquamark</li>
+                        <li>Earn monthly revenue</li>
+                    </ul>
 
-  <a href="#" class="cta-button">Learn More</a>
-</div>
+                    <a href="#" class="cta-button">Learn More</a>
+                </div>
 
+                <div class="pricing-card dark">
+                    <h3>Affiliate</h3>
+                    <div class="price-container">
+                        <div class="price">Earn</div>
+                    </div>
+                    <p class="price-note">Refer and get rewarded</p>
 
-<div class="pricing-card dark">
-  <h3>Affiliate</h3>
-  <div class="price">Earn</div>
-  <p class="price-note">Refer and get rewarded</p>
+                    <ul class="product-features">
+                        <li>Earn ongoing commissions</li>
+                        <li>Refer brokers and lenders</li>
+                        <li>Simple and fast setup</li>
+                        <li>Track referrals easily</li>
+                    </ul>
 
-  <ul class="product-features">
-    <li>Earn ongoing commissions</li>
-    <li>Refer brokers and lenders</li>
-    <li>Simple and fast setup</li>
-    <li>Track referrals easily</li>
-  </ul>
-
-  <a href="#" class="cta-button">Join Program</a>
-</div>
-
-
+                    <a href="#" class="cta-button">Join Program</a>
+                </div>
             </div>
         </div>
     </section>
