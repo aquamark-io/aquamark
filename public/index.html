@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="The leading compliance platform for fintech and alternative finance. Automated compliance, document protection, and regulatory monitoring." name="description"/>
-    <link href="/logo-icon-black-blue.png" rel="icon" type="image/png"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aquamark</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+
     <style>
         * {
             margin: 0;
@@ -14,1664 +13,1962 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #000000;
-            --blue: #2563eb;
-            --blue-light: #3b82f6;
-            --text-primary: #000000;
-            --text-secondary: #6b7280;
-            --text-muted: #9ca3af;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --border: #e5e7eb;
-            --border-light: #f3f4f6;
+        html {
+            overflow-x: hidden;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
         }
 
-        /* Header */
-        .header {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .protection-section .container {
+            max-width: 1400px;
+        }
+
+        /* Header - Ultra Minimal */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f3f4f6;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
-            z-index: 100;
+            z-index: 1000;
+            padding: 1rem 0;
         }
 
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
+            padding: 0;
         }
 
         .logo img {
-            height: 32px;
+            height: 40px;
             width: auto;
         }
 
         .nav-links {
             display: flex;
+            list-style: none;
+            gap: 2.5rem;
             align-items: center;
-            gap: 2rem;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 500;
+            color: #6b7280;
+            font-weight: 400;
             font-size: 0.9rem;
             transition: color 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: var(--primary);
+            color: #111827;
         }
 
-        /* Mobile Menu */
+        .sign-in-btn {
+            background: transparent !important;
+            color: #6b7280 !important;
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .sign-in-btn:hover {
+            background: #f9fafb !important;
+            color: #111827 !important;
+            border-color: #d1d5db;
+        }
+
+        .get-started-btn {
+            background: #111827 !important;
+            color: #ffffff !important;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            margin-left: 0.75rem;
+        }
+
+        .get-started-btn:hover {
+            background: #1f2937 !important;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile menu */
         .mobile-menu-btn {
             display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
+            flex-direction: column;
             cursor: pointer;
-            color: var(--text-primary);
+            padding: 0.5rem;
+            gap: 3px;
         }
 
-        .mobile-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        .mobile-menu-btn span {
+            width: 20px;
+            height: 2px;
+            background: #6b7280;
+            transition: all 0.2s ease;
         }
 
-        .mobile-menu.active {
-            display: block;
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
         }
 
-        .mobile-menu-links {
-            display: flex;
-            flex-direction: column;
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* Hero Section - Minimal White */
+        .hero {
+            background: #ffffff;
+            padding: 140px 0 120px;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.6rem;
+            margin-bottom: 3rem;
+            color: #6b7280;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            background: #111827;
+            color: #ffffff;
             padding: 1rem 2rem;
-            gap: 1rem;
-        }
-
-        .mobile-menu-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
+            border: none;
+            border-radius: 8px;
             font-size: 1rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border-light);
-            transition: color 0.2s ease;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .mobile-menu-links a:last-child {
-            border-bottom: none;
+        .cta-button:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
         }
 
-        .mobile-menu-links a:hover {
-            color: var(--primary);
+        .api-docs-button {
+    background: white;
+    color: #111827;
+    padding: 1rem 2rem;
+    border: 1px solid #111827;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 1rem;
+    transition: all 0.2s ease;
+}
+
+.api-docs-button:hover {
+    background: #f9fafb;
+    transform: translateY(-1px);
+}
+
+
+        /* Partners Section */
+        .partners {
+            padding: 80px 0;
+            background: #fafafa;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
         }
 
-        .mobile-menu-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-top: 1rem;
+        .partners h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #6b7280;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
-        .btn {
+        .partner-carousel {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin: 0;
+            width: 100%;
+        }
+
+        .partner-track {
             display: inline-flex;
             align-items: center;
+            gap: 6rem;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+        }
+
+        .partner-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-100% + 100vw));
+            }
+        }
+
+        .partner-logo {
+            display: flex;
+            align-items: center;
             justify-content: center;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-decoration: none;
             transition: all 0.2s ease;
-            border: 1px solid transparent;
-            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .partner-logo img {
+            height: 160px;
+            width: auto;
+            max-width: 600px;
+            object-fit: contain;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+
+        .partner-logo:hover img {
+            opacity: 1;
+        }
+
+        /* Problem Section - Minimal */
+        .problem-section {
+            padding: 120px 0;
+            background: #ffffff;
+        }
+
+        .problem-content {
             text-align: center;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white !important;
-        }
-
-        .btn-primary:hover {
-            background: #1a1a1a;
-            color: white !important;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-secondary);
-            border-color: #C2C2C2;
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-secondary);
-            color: var(--primary);
-        }
-
-        .btn-blue {
-            background: var(--blue);
-            color: white;
-        }
-
-        .btn-blue:hover {
-            background: var(--blue-light);
-        }
-
-        .btn-lg {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 8rem 2rem 4rem;
-            background: var(--bg-primary);
-        }
-
-        .hero-container {
-            max-width: 1000px;
+            max-width: 1050px;
             margin: 0 auto;
+        }
+
+        .problem-section h2 {
+            font-size: 3.0rem;
+            margin-bottom: 2rem;
+            color: #111827;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .problem-section p {
+            font-size: 1.3rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 120px 0;
+            background: #fafafa;
+        }
+
+        .products-hero {
             text-align: center;
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+        .products-content h2 {
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
 
-        .hero-content .highlight {
-            color: var(--blue);
+        .hero-benefits {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
+        .hero-benefits li {
+            font-size: 1.3rem;
+            color: #6b7280;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        /* Aquamark for Brokers Section */
+       
+  .red-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  margin: 1.25rem auto 2rem; /* better spacing */
+  animation: pulseDot 2s ease-in-out infinite;
+  opacity: 0.9;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+  .green-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #00e600;
+  border-radius: 50%;
+  margin: 1.25rem auto 2rem; /* better spacing */
+  animation: pulseDot 2s ease-in-out infinite;
+  opacity: 0.9;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+        
+        .brokers-section {
+            padding: 120px 0;
+            background: #ffffff;
+        }
+
+        .brokers-content h2 {
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .brokers-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 5rem;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .hero-cta {
+        .brokers-problem,
+        .brokers-solution {
+            text-align: center;
+            width: 100%;
+        }
+
+        .brokers-problem h3,
+        .brokers-solution h3 {
+            font-size: 1.8rem;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .brokers-problem p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .solution-features {
+            margin-bottom: 2.5rem;
             display: flex;
+            flex-direction: column;
             gap: 1rem;
-            justify-content: center;
-            margin-bottom: 4rem;
-        }
-
-        .btn-demo {
-            background: linear-gradient(90deg, #a855f7, #ec4899);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            border: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-demo:hover {
-            opacity: 0.9;
-        }
-
-        .compliance-visual {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 
-                0 25px 50px -12px rgba(37, 99, 235, 0.4), 
-                0 15px 25px -5px rgba(37, 99, 235, 0.25),
-                0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .compliance-visual:hover {
-            transform: translateY(-4px);
-            box-shadow: 
-                0 35px 60px -12px rgba(37, 99, 235, 0.5), 
-                0 25px 35px -5px rgba(37, 99, 235, 0.3),
-                0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .visual-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .visual-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .visual-subtitle {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .states-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.75rem;
         }
 
-        .section-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .section-count {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--blue);
-        }
-
-        .state-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .state-pill {
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-        }
-
-        .percentage-section {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
+        .feature {
+            background: white;
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
         }
 
-        .percentage-display {
-            font-size: 2.25rem;
-            font-weight: 1000;
-            color: var(--blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .percentage-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        /* Announcement Banner */
-        .announcement-banner {
-            background: linear-gradient(90deg, #3B82F6, #1E3A8A);
+        .feature-number {
+            background: #111827;
             color: white;
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 3rem auto;
-            max-width: 1000px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .announcement-content {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .announcement-icon {
-            background: white;
-            width: 48px;
-            height: 48px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--blue);
-            font-size: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
             flex-shrink: 0;
         }
 
-        .announcement-text h3 {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1.25rem;
-        }
-
-        .announcement-text p {
-            color: white;
+        .feature p {
+            font-size: 1.1rem;
+            color: #6b7280;
             line-height: 1.6;
-            font-size: 1rem;
+            margin: 0;
         }
 
-        .announcement-text a {
-            color: white;
-            text-decoration: underline;
-            font-weight: 600;
-        }
-
-        .announcement-text a:hover {
-            text-decoration: none;
-        }
-
-        /* Watermark Only Highlight Section */
-        .watermark-highlight {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            border: 2px solid var(--blue);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin: 3rem auto;
-            max-width: 880px;
+        .watermark-sample {
+            background: #f9fafb;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem 3rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .watermark-highlight::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .watermark-highlight-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .watermark-highlight h3 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .watermark-highlight .question {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-bottom: 0.75rem;
-        }
-
-        .watermark-highlight .answer {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--blue);
-            margin-bottom: 1rem;
-        }
-
-        .watermark-highlight p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            max-width: 620px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        .btn-green-gradient {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            text-decoration: none;
+        .sample-box {
+            position: relative;
+        }
+
+        .sample-image {
+            max-width: 100%;
+            height: auto;
             border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 0.875rem 2rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            border: none;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-green-gradient:hover {
-            background: linear-gradient(135deg, #059669, #047857);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 12px -1px rgba(16, 185, 129, 0.4);
-        }
-
-        /* Urgent CTA Section */
-        .urgent-cta {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 2px solid var(--blue);
-            border-radius: 16px;
-            padding: 3rem 2rem;
-            margin: 4rem auto;
-            max-width: 880px;
-            text-align: center;
-            color: white;
-            box-shadow: 
-                0 25px 50px -12px rgba(37, 99, 235, 0.4), 
-                0 15px 25px -5px rgba(37, 99, 235, 0.25),
-                0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .urgent-cta::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        .urgent-cta-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .urgent-cta h3 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .urgent-cta .warning-text {
-            font-size: 1.375rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #e2e8f0;
-        }
-
-        .urgent-cta .cost-text {
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
-            color: #cbd5e1;
-        }
-
-        .btn-urgent {
-            background: linear-gradient(135deg, var(--blue), var(--blue-light));
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.125rem;
-            padding: 1rem 2.5rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            border: none;
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
+        .sample-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.025em;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+            display: block;
         }
 
-        .btn-urgent:hover {
-            background: linear-gradient(135deg, var(--blue-light), #1d4ed8);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 12px -1px rgba(37, 99, 235, 0.5);
+        .brokers-benefits {
+            border-top: 1px solid #939799;
+            padding-top: 4rem;
         }
 
-        /* Document Protection Grid */
-        .doc-protection-grid {
+        .brokers-benefits h3 {
+            font-size: 2.2rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            align-items: stretch;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
         }
 
-        /* Compliance Two-Column Layout */
-        .compliance-two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .benefit-item {
+            text-align: center;
+        }
+
+        .benefit-item h4 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .benefit-item p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Aquamark for Lenders Section */
+        .lenders-section {
+            padding: 120px 0;
+            background: #fafafa;
+        }
+
+        .lenders-content h2 {
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .lenders-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 4rem;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .lenders-problem,
+        .lenders-solution {
+            text-align: center;
+            width: 100%;
+        }
+
+        .lenders-problem h3,
+        .lenders-solution h3 {
+            font-size: 1.8rem;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .lenders-problem p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .solution-steps {
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
             align-items: center;
         }
 
-        .section-intro {
+        .step {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .step-number {
+            background: #111827;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .step p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .watermark-example {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem 3rem;
             text-align: center;
-            margin-bottom: 4rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .example-box {
+            position: relative;
+        }
+
+        .watermark-text {
+            font-size: 1rem;
+            color: #374151;
+            font-family: 'Courier New', monospace;
+            background: rgba(219, 234, 254, 0.4);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0;
+            border: 1px solid rgba(147, 197, 253, 0.4);
+        }
+
+        .example-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .lenders-benefits {
+            border-top: 1px solid #939799;
+            padding-top: 4rem;
+        }
+
+        .lenders-benefits h3 {
+            font-size: 2.2rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 120px 0;
+            background: #ffffff;
         }
 
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #111827;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .review-grid {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin: 0;
+            width: 100%;
+            margin-top: 3rem;
+        }
+
+        .review-track {
+            display: inline-flex;
+            align-items: stretch;
+            gap: 2rem;
+            animation: scrollReviews 60s linear infinite;
+            width: max-content;
+        }
+
+        .review-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollReviews {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-50%));
+            }
+        }
+
+        .review-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 350px;
+            max-width: 350px;
+            white-space: normal;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .review-content {
+            flex-grow: 1;
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1rem;
             margin-bottom: 1rem;
         }
 
-        .section-description {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto;
+        .review-card p {
+            color: #374151;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
+        .reviewer {
+            font-weight: 500;
+            color: #111827;
+            margin-top: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
+            gap: 1rem;
+            font-size: 0.9rem;
         }
 
-        .feature-list li::before {
-            content: '•';
-            color: var(--blue);
-            font-weight: 700;
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
         }
 
         /* Pricing Section */
         .pricing {
-            padding: 6rem 2rem;
-            background: var(--bg-primary);
+            padding: 120px 0;
+            background: #fafafa;
         }
 
-        .pricing-container {
-            max-width: 1400px;
+        .pricing .container {
+            max-width: 100%;
+            padding: 0 40px;
+        }
+
+        .pricing-subheadline {
+            font-size: 1.3rem;
+            color: #6b7280;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 800px;
             margin: 0 auto;
+            margin-top: 1rem;
+            margin-bottom: 4.5rem;
         }
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         .pricing-card {
             background: white;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2.5rem;
-            position: relative;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
-            min-height: 450px;
+            justify-content: space-between;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
         .pricing-card.featured {
-            border-color: var(--blue);
-            border-width: 2px;
+            border: 1px solid #111827;
         }
 
-        .plan-badge {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(90deg, #a855f7, #ec4899);
+        .pricing-card.dark {
+            background: #111827;
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.4);
+            border: 1px solid #1f2937;
         }
 
-        .plan-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.75rem;
-        }
-
-        .plan-description {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        .plan-features {
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .plan-features .feature-list {
-            list-style: none;
-        }
-
-        .plan-features .feature-list li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        .plan-features .feature-list li::before {
-            content: '•';
-            color: var(--blue);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .plan-cta {
-            margin-top: auto;
-        }
-
-        .plan-cta .btn {
-            width: 100%;
-            justify-content: center;
-            padding: 0.875rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 6rem 2rem;
-            background: var(--primary);
+        .pricing-card.dark h3,
+        .pricing-card.dark .price,
+        .pricing-card.dark .price-note,
+        .pricing-card.dark .partnership-description,
+        .pricing-card.dark .product-features li {
             color: white;
-            text-align: center;
         }
 
-        .cta-container {
-            max-width: 800px;
-            margin: 0 auto;
+        .pricing-card.dark .product-features li::before {
+            color: white;
         }
 
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
+        .pricing-card.dark .cta-button {
+            background: white;
+            color: #111827;
+        }
+
+        .pricing-card.dark .cta-button:hover {
+            background: #e5e7eb;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #111827;
             margin-bottom: 1rem;
         }
 
-        .cta-section p {
-            font-size: 1.125rem;
+        .price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 1rem 0;
+}
+
+        .price-note {
+            color: #6b7280;
+            font-size: 1.1rem;
             margin-bottom: 2rem;
-            opacity: 0.9;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
         }
 
-        .btn-white {
-            background: white;
-            color: var(--primary);
+        .product-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 1.1rem;
+            color: #374151;
         }
 
-        .btn-white:hover {
-            background: var(--bg-secondary);
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #111827;
+            font-weight: bold;
         }
 
-        .btn-outline {
-            background: transparent;
+        .partnership-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+        }
+
+        .partnership-card h3 {
+            color: #475569;
+        }
+
+        .partnership-description {
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .contact-button {
+            background: #475569;
             color: white;
-            border-color: rgba(255, 255, 255, 0.3);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
+        .contact-button:hover {
+            background: #334155;
+            transform: translateY(-1px);
         }
 
         /* Footer */
-        .footer {
-            background: var(--bg-secondary);
-            padding: 3rem 2rem 2rem;
+        footer {
+            background: #ffffff;
+            color: #6b7280;
+            padding: 40px 0 10px;
+            border-top: 1px solid #f3f4f6;
         }
 
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .footer-content {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 3rem;
             margin-bottom: 2rem;
         }
 
-        .footer-brand h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--primary);
-        }
-
-        .footer-brand p {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .footer-section h4 {
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: #111827;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
+            font-size: 0.9rem;
         }
 
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section a {
-            color: var(--text-secondary);
+        .footer-section p, .footer-section a {
+            color: #6b7280;
             text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s ease;
-            display: block;
             margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
         }
 
         .footer-section a:hover {
-            color: #2563eb;
+            color: #111827;
         }
 
         .footer-bottom {
-            width: 100%;
-            background: var(--blue);
-            padding: 1.5rem 2rem;
+            background: #111827;
+            color: #9ca3af;
             text-align: center;
-            color: white;
-            font-size: 0.875rem;
-            border-top: none;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+            overflow: hidden;
         }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
             .pricing-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .doc-protection-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
             }
-            
-            .compliance-two-col {
-                gap: 3rem;
+
+            .partner-logo img {
+                height: 140px;
+                max-width: 500px;
             }
         }
 
         @media (max-width: 768px) {
-            .nav {
-                padding: 1rem;
-            }
-
             .mobile-menu-btn {
-                display: block;
+                display: flex;
             }
 
             .nav-links {
-                display: none;
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem;
+                border-top: 1px solid #f3f4f6;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .sign-in-btn,
+            .get-started-btn {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+                display: block;
+                box-sizing: border-box;
             }
 
             .hero {
-                padding: 7rem 1rem 3rem;
+                padding: 120px 0 80px;
             }
 
-            .hero-content h1 {
+            .hero h1 {
                 font-size: 2.5rem;
+                line-height: 1.2;
             }
 
-            .hero-subtitle {
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .hero-benefits {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero-benefits li {
+                white-space: normal;
                 font-size: 1.1rem;
             }
 
-            .section-title {
-                font-size: 2rem;
+            .partners {
+                padding: 60px 0;
             }
 
-            .cta-section h2 {
-                font-size: 2rem;
+            .partner-carousel {
+                margin-top: 2rem;
+                width: 100%;
+                overflow: hidden;
             }
 
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
+            .partner-track {
+                gap: 3rem;
+                animation: scroll 30s linear infinite;
+                display: flex;
+                width: max-content;
             }
 
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
+            .partner-logo img {
+                height: 100px;
+                max-width: 300px;
             }
 
-            .hero-cta {
-                flex-direction: column;
-                align-items: center;
+            .problem-section,
+            .products,
+            .brokers-section,
+            .lenders-section,
+            .reviews,
+            .pricing {
+                padding: 80px 0;
             }
 
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .section-title,
+            .problem-section h2,
+            .products-content h2,
+            .brokers-content h2,
+            .lenders-content h2 {
+                font-size: 2.2rem;
+                line-height: 1.2;
             }
 
-            .pricing-card {
-                min-height: auto;
-                padding: 2rem;
+            .problem-section p {
+                font-size: 1.1rem;
             }
 
-            .doc-protection-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+  
+            .brokers-grid,
+            .lenders-grid {
+                gap: 3rem;
+                margin-bottom: 3rem;
             }
 
-            .compliance-two-col {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .compliance-visual {
-                padding: 1.5rem;
-            }
-
-            .visual-title {
-                font-size: 1rem;
-            }
-
-            .visual-subtitle {
-                font-size: 0.8rem;
-            }
-
-            .percentage-display {
-                font-size: 1.75rem;
-            }
-
-            /* Announcement Banner Mobile */
-            .announcement-banner {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-                margin: 2rem 1rem;
-                padding: 1.5rem;
-            }
-
-            .announcement-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-
-            .announcement-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .announcement-text h3 {
-                font-size: 1.125rem;
-            }
-
-            .announcement-text p {
-                font-size: 0.95rem;
-            }
-
-            /* Watermark Highlight Mobile */
-            .watermark-highlight {
-                margin: 2rem 1rem;
-                padding: 2rem;
-            }
-
-            .watermark-highlight h3 {
+            .brokers-problem h3,
+            .brokers-solution h3,
+            .lenders-problem h3,
+            .lenders-solution h3 {
                 font-size: 1.5rem;
             }
 
-            .watermark-highlight .question {
-                font-size: 1.125rem;
+            .feature,
+            .step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+                max-width: 100%;
             }
 
-            .watermark-highlight .answer {
-                font-size: 1.25rem;
+            .feature p,
+            .step p {
+                text-align: center;
             }
 
-            .watermark-highlight p {
+            .watermark-sample,
+            .watermark-example {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .brokers-benefits h3,
+            .lenders-benefits h3 {
+                font-size: 1.8rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .review-grid {
+                overflow: hidden;
+                width: 100%;
+                margin-top: 2rem;
+                white-space: nowrap;
+            }
+
+            .review-track {
+                gap: 1rem;
+                animation: scrollReviews 40s linear infinite !important;
+                display: inline-flex !important;
+                width: max-content !important;
+                align-items: stretch;
+            }
+
+            .review-card {
+                min-width: 280px;
+                max-width: 300px;
+                padding: 1.5rem;
+                flex-shrink: 0;
+            }
+
+            .review-card p {
                 font-size: 1rem;
             }
 
-            .btn-green-gradient {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.9rem;
-                margin-top: 1.25rem;
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: center;
+                width: 100%;
             }
 
-            /* Urgent CTA Mobile */
-            .urgent-cta {
-                margin: 2rem 1rem;
-                padding: 2rem 1.5rem;
+            .pricing-card {
+                width: 100%;
+                max-width: 350px;
+                padding: 2rem;
             }
 
-            .urgent-cta h3 {
-                font-size: 1.75rem;
+            .pricing .container {
+                padding: 0 20px;
             }
 
-            .urgent-cta .warning-text {
-                font-size: 1.125rem;
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+                text-align: center;
             }
 
-            .urgent-cta .cost-text {
-                font-size: 1rem;
+            .footer-section {
+                text-align: center;
             }
 
-            .btn-urgent {
-                padding: 0.875rem 2rem;
-                font-size: 1rem;
+            .footer-section h3 {
+                text-align: center;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                text-align: center;
+            }
+
+            /* Force animation restart on mobile */
+            @keyframes scrollReviews {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-50%));
+                }
             }
         }
 
         @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 2rem;
-                line-height: 1.2;
+            .container {
+                padding: 0 15px;
             }
 
-            .hero-subtitle {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title,
+            .problem-section h2,
+            .products-content h2,
+            .brokers-content h2,
+            .lenders-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .brokers-problem h3,
+            .brokers-solution h3,
+            .lenders-problem h3,
+            .lenders-solution h3 {
+                font-size: 1.3rem;
+            }
+
+            .brokers-benefits h3,
+            .lenders-benefits h3 {
+                font-size: 1.5rem;
+            }
+
+            .benefit-item h4 {
+                font-size: 1.1rem;
+            }
+
+            .benefit-item p {
                 font-size: 1rem;
             }
 
-            .section-title {
-                font-size: 1.75rem;
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
             }
 
-            .cta-section h2 {
-                font-size: 1.75rem;
+            .footer-section {
+                text-align: center;
             }
 
-            .btn-lg {
-                padding: 0.65rem 1.25rem;
-                font-size: 0.9rem;
+            .footer-section h3 {
+                text-align: center;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                text-align: center;
+            }
+
+            .pricing-subheadline {
+                font-size: 1.1rem;
+            }
+
+            .price {
+                font-size: 2.5rem;
+            }
+
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                width: 100%;
             }
 
             .pricing-card {
+                width: 100%;
+                max-width: none;
                 padding: 1.5rem;
             }
+        }
 
-            .plan-name {
-                font-size: 1.25rem;
+        /* Fix for seamless carousel scrolling */
+        .partner-track {
+            will-change: transform;
+        }
+
+        .review-track {
+            will-change: transform;
+        }
+
+        /* Ensure smooth scrolling performance */
+        @media (prefers-reduced-motion: no-preference) {
+            .partner-track,
+            .review-track {
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
             }
+        }
 
-            .plan-description {
-                font-size: 0.9rem;
-            }
-
-            .percentage-display {
-                font-size: 1.5rem;
-            }
-
-            /* Urgent CTA Mobile Small */
-            .urgent-cta {
-                margin: 1.5rem 0.5rem;
-                padding: 1.5rem;
-            }
-
-            .urgent-cta h3 {
-                font-size: 1.5rem;
-            }
-
-            .urgent-cta .warning-text {
-                font-size: 1rem;
-            }
-
-            .urgent-cta .cost-text {
-                font-size: 0.9rem;
-            }
-
-            .btn-urgent {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.9rem;
+        @media (prefers-reduced-motion: reduce) {
+            .partner-track,
+            .review-track {
+                animation: none;
             }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <a class="logo" href="/">
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
-            <div class="nav-links">
-                <a href="#pricing">Pricing</a>
-                <a href="/compliance">Compliance</a>
-                <a class="btn btn-secondary" href="/login.html">Sign in</a>
-                <a class="btn btn-primary" href="/signup">Get started</a>
-            </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-            <div class="mobile-menu" id="mobileMenu">
-                <div class="mobile-menu-links">
-                    <a href="/broker-directory">Broker Directory</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="/compliance">Compliance</a>
-                    <div class="mobile-menu-buttons">
-                        <a class="btn btn-secondary" href="/login.html">Sign in</a>
-                        <a class="btn btn-primary" href="/signup">Get started</a>
-                    </div>
-                </div>
+            <ul class="nav-links">
+    <li><a href="#brokers">Brokers</a></li>
+    <li><a href="#lenders">Lenders</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+<li><a href="https://www.aquamark.io/contact">Contact</a></li>
+    <li><a href="https://www.aquamark.io/compliance">Compliance</a></li>
+    <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign in</a></li>
+    <li><a href="https://www.aquamark.io/signup" class="get-started-btn">Get started</a></li>
+</ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-container">
+        <div class="container">
             <div class="hero-content">
-                <h1>The <span class="highlight">compliance and security tool</span> fintech trusts.</h1>
-                <p class="hero-subtitle">
-                    We protect your documents so they stay your documents.
-                </p>
-               <div class="hero-cta">
-                    <a class="btn btn-blue btn-lg" href="/signup">Start free trial</a>
-                    <a class="btn btn-secondary btn-lg" href="/api">View API docs</a>
-                    <a class="btn btn-demo btn-lg" href="https://app.supademo.com/demo/cmc4x4nx60p8wllpn4din0fcy" target="_blank">1-minute demo</a>
+                <h1>Bringing Transparency and Accountability to FinTech — One File at a Time</h1>
+                <p>We protect your documents so they stay your documents.</p>
+                <a href="https://www.aquamark.io/signup" class="cta-button">Start Free Trial</a>
+                <a href="https://www.aquamark.io/api" class="api-docs-button">API Docs</a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners">
+        <div class="container">
+            <h2>Compatible with Leading OCR Platforms</h2>
+        </div>
+        <div class="partner-carousel">
+            <div class="partner-track">
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
+                </div>
+                <!-- Third set for extra smoothness -->
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="compliance-visual">
-                <div class="visual-header">
-                    <h3 class="visual-title">Regulatory Accelerating</h3>
-                    <p class="visual-subtitle">State regulations expanding rapidly across the US</p>
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="problem-content">
+                <h2>Impact of Backdooring </h2>
+                <p>Document theft is destroying trust in FinTech. It's even fueling new regulations nationwide and pushing merchants to back out of deals or fall into dangerous stacking cycles. Aquamark's mission is to end these practices and restore transparency and accountability to the industry.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="products-hero">
+                <div class="products-content">
+                    <h2>Watermarking That Works</h2>
+                    <ul class="hero-benefits">
+                        <li> For Brokers and Lenders</li>
+                        <li> Logs individuals given access</li>
+                        <li> Tamper-resistant</li>
+                        <li> OCR-safe</li>
+                        <li> Ends access to "clean", sellable files</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aquamark for Brokers Section -->
+<section class="brokers-section" id="brokers">
+        <div class="container">
+            <div class="brokers-content">
+                <h2>Aquamark for Brokers</h2>
+                <div class="red-dot"></div>
+                <div class="brokers-grid">
+                    <div class="brokers-problem">
+                        <h3>The Problem</h3>
+                        <p>Generating leads is hard — and expensive. That's why some bad actors take shortcuts and steal. Backdooring has become normalized and has had no consequences and no accountability — until now. Take back control of your documents and commissions.</p>
+                    </div>
+                    <div class="brokers-solution">
+                        <div class="green-dot"></div>
+                        <h3>The Solution</h3>
+                        <div class="solution-features">
+                            <div class="feature">
+                                <span class="feature-number">1</span>
+                                <p>Branded watermarks, tamper-resistant, OCR-safe</p>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-number">2</span>
+                                <p>Smart QR codes — logs who was given access </p>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-number">3</span>
+                                <p>Clearly shows who originated the file</p>
+                            </div>
+                        </div>
+                        <div class="watermark-sample">
+                            <div class="sample-box">
+                                <img src="/watermark-sample.png" alt="Watermark Sample" class="sample-image" />
+                                <span class="sample-label">Sample Watermarked Document</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="states-section">
-                    <div class="section-header">
-                        <span class="section-label">Enacted</span>
-                    </div>
-                    <div class="state-grid">
-                        <span class="state-pill">CA</span>
-                        <span class="state-pill">CT</span>
-                        <span class="state-pill">FL</span>
-                        <span class="state-pill">GA</span>
-                        <span class="state-pill">KS</span>
-                        <span class="state-pill">LA</span>
-                        <span class="state-pill">MO</span>
-                        <span class="state-pill">ND</span>
-                        <span class="state-pill">NY</span>
-                        <span class="state-pill">TX</span>
-                        <span class="state-pill">UT</span>
-                        <span class="state-pill">VA</span>
-                    </div>
-                </div>
-
-                <div class="percentage-section">
-                    <div class="percentage-display">12 / 50 states</div>
-                    <div class="percentage-label">50-State Monitoring</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Watermark Only Highlight Section -->
-    <section style="padding: 0 2rem;">
-        <div class="watermark-highlight">
-            <div class="watermark-highlight-content">
-                <h3>Our most frequently asked question:</h3>
-                <p class="question">"Can I just watermark and not do compliance or QR code stuff?"</p>
-                <p class="answer">Absolutely!</p>
-                <a href="/signup" class="btn-green-gradient">Start Free - No Payment Info Required</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Document Protection -->
-    <section class="doc-protection-section" style="padding: 5rem 2rem; background: #ffffff; margin-bottom: 3rem;">
-        <div style="max-width: 1600px; margin: 0 auto; text-align: center;">
-            <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: .25rem;">
-                Advanced <span style="color: #2563eb;">Document Protection</span> Technology
-            </h2>    
-            <p class="section-description" style="font-size: 1.25rem; color: #64748b; margin-bottom: 3.5rem;">
-                Deal theft costs the industry millions every year.<br>
-                Our tamper-resistant watermarks deter theft at scale.
-            </p>
-
-            <div class="doc-protection-grid">
-                <!-- Card 1: Watermarks -->
-                <div class="visual-card" style="
-                    background: #f8fafc;
-                    padding: 2rem;
-                    border-radius: 1rem;
-                    text-align: left;
-                    align-self: center;
-                ">
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">Watermarks</h3>
-                    <p style="color: #64748b; margin-bottom: 1rem;">Each page includes a full-page overlay of tamper-resistant watermarks</p>
-                    <ul style="color: #64748b; list-style: none; padding-left: 0;">
-                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Deters theft at scale</li>
-                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> OCR-safe</li>
-                        <li><span style="color: #467EFF;">✓</span> Your branding</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2: Watermark Sample -->
-                <div style="
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    padding: 2rem;
-                    border-radius: 1rem;
-                    background: #ffffff;
-                    box-shadow: 
-                        0 25px 50px -12px rgba(37, 99, 235, 0.5), 
-                        0 15px 25px -5px rgba(37, 99, 235, 0.35),
-                        0 4px 6px -1px rgba(0, 0, 0, 0.15);
-                ">
-                    <img src="watermark-sample.png" alt="Watermarked Bank Statement"
-                         style="width: 100%; max-width: 360px; border-radius: 1rem;">
-                </div>
-
-                <!-- Card 3: QR Code -->
-                <div style="
-                    background: #ffffff;
-                    padding: 2rem;
-                    border-radius: 1rem;
-                    text-align: center;
-                    color: #1e293b;
-                    border: 1px solid #e5e7eb;
-                    box-shadow: 
-                        0 25px 50px -12px rgba(37, 99, 235, 0.5), 
-                        0 15px 25px -5px rgba(37, 99, 235, 0.35),
-                        0 4px 6px -1px rgba(0, 0, 0, 0.15);
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    min-height: 100%;
-                ">
-                    <h3 style="
-                        font-size: 1.5rem;
-                        font-weight: 700;
-                        margin-bottom: 1rem;
-                        color: #2563eb;
-                    ">
-                        Powered QR Codes
-                    </h3>
-                    <img src="qr.png" alt="QR Code"
-                         style="max-width: 160px; width: 100%; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.5), 0 15px 25px -5px rgba(37, 99, 235, 0.35), 0 4px 6px -1px rgba(0, 0, 0, 0.15);">
-                </div>
-
-                <!-- Card 4: QR Metadata -->
-                <div class="visual-card" style="
-                    background: #f8fafc;
-                    padding: 2rem;
-                    border-radius: 1rem;
-                    text-align: left;
-                    align-self: center;
-                ">
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem;">QR code metadata</h3>
-                    <p style="color: #64748b; margin-bottom: 1rem;">See exactly who had access to your files</p>
-                    <ul style="color: #64748b; list-style: none; padding-left: 0;">
-                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> Accountability at every level</li>
-                        <li style="margin-bottom: 0.5rem;"><span style="color: #467EFF;">✓</span> No more blind spots</li>
-                        <li><span style="color: #467EFF;">✓</span> Digital breadcrumbs</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Urgent CTA Section -->
-            <div style="padding: 0 2rem;">
-                <div class="urgent-cta">
-                    <div class="urgent-cta-content">
-                        <h3>Stop The Backdooring Today</h3>
-                        <p class="warning-text">Every stolen deal is costing you $4,000* in commission</p>
-                        <p class="cost-text">*Average broker commission per deal</p>
-                        <a href="/signup" class="btn-urgent">Watermark for Free</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Compliance Section -->
-    <section class="compliance-section" style="padding: 6rem 2rem; background: #f8fafc;">
-        <div style="max-width: 1400px; margin: 0 auto;">
-            <!-- Section Header -->
-            <div style="text-align: center; margin-bottom: 4rem;">
-                <h2 style="font-size: 3rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem;">
-                    Fintech's Trusted <span style="color: #2563eb;">Compliance</span> Partner
-                </h2>      
-                <p class="section-description" style="font-size: 1.25rem; color: #64748b; max-width: 800px; margin: 0 auto;">
-                    Your partner through the complex world of finance compliance. We simplify regulations so you can focus on funding more deals.
-                </p>
-            </div>
-
-            <!-- Two Column Layout -->
-            <div class="compliance-two-col" style="margin-bottom: 6rem;">
-                <!-- Broker Directory Content -->
-                <div>
-                    <div style="margin-bottom: 0.5rem;">
-                        <span style="
-                            background: #dcfce7;
-                            color: #166534;
-                            padding: 0.25rem 0.75rem;
-                            border-radius: 12px;
-                            font-size: 1.2rem;
-                            font-weight: 600;
-                        ">Free</span>
-                    </div>
-                    <h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: .2rem;">
-                        Broker Directory
-                    </h3>
-                    <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
-                        We host a free, public directory of licensed alternative finance brokers nationwide. All listings are thoroughly vetted for legitimacy and compliance.
-                    </p>
-
-                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-                                <span style="color: #2563eb; font-weight: 700;">✓</span>
-                                Nationwide coverage
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-                                <span style="color: #2563eb; font-weight: 700;">✓</span>
-                                Everything in one place
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-                                <span style="color: #2563eb; font-weight: 700;">✓</span>
-                                Requests published within 72 hours
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="section-cta-links" style="display: flex; gap: 1rem;">
-                        <a href="/broker-directory" style="
-                            display: inline-flex;
-                            align-items: center;
-                            padding: 0.875rem 1.5rem;
-                            background: #2563eb;
-                            color: white;
-                            text-decoration: none;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            font-size: 1rem;
-                            transition: all 0.2s ease;
-                        ">
-                            Search Directory
-                        </a>
-                        <a href="/contact" style="
-                            display: inline-flex;
-                            align-items: center;
-                            padding: 0.875rem 1.5rem;
-                            background: transparent;
-                            color: #2563eb;
-                            text-decoration: none;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            font-size: 1rem;
-                            border: 2px solid #2563eb;
-                            transition: all 0.2s ease;
-                        ">
-                            Get Listed Free
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Directory Visual -->
-                <div class="directory-visual" style="
-                    background: white;
-                    border-radius: 16px;
-                    padding: 2rem;
-                    box-shadow: 
-                        0 25px 50px -12px rgba(37, 99, 235, 0.4), 
-                        0 15px 25px -5px rgba(37, 99, 235, 0.25),
-                        0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                ">
-                    <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem; margin-bottom: 1.5rem;">
-                        <h4 style="font-size: 1.125rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">
-                            Broker License Lookup
-                        </h4>
-                        <div style="
-                            background: #f8fafc;
-                            padding: 0.75rem 1rem;
-                            border-radius: 6px;
-                            border: 1px solid #e5e7eb;
-                            font-family: monospace;
-                            font-size: 0.875rem;
-                            color: #64748b;
-                        ">
-                            Search by name, license #, or state...
+                <div class="brokers-benefits">
+                    <h3>Prevent Backdooring At Scale</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <h4>Deter Silent Theft</h4>
+                            <p>Backdooring is quiet, constant, and costly</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Create Friction</h4>
+                            <p>Thieves will think twice when it’s marked</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Protect Commissions</h4>
+                            <p>Unmarked files are easy targets — practically a giveaway</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Stop the Cycle</h4>
+                            <p>Backdooring fuels stacking and kills deals</p>
                         </div>
                     </div>
-                    
-                    <div style="space-y: 1rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
-                            <div>
-                                <div style="font-weight: 600; color: #1e293b;">Summit Capital Partners</div>
-                                <div style="font-size: 0.875rem; color: #64748b;">License #MB123456</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aquamark for Lenders Section -->
+<section class="lenders-section" id="lenders">
+        <div class="container">
+            <div class="lenders-content">
+                <h2>Aquamark for Lenders</h2>
+                <div class="red-dot"></div>
+
+                <div class="lenders-grid">
+                    <div class="lenders-problem">
+                        <h3>The Problem</h3>
+                        <p>Underwriters steal too — arguably more than brokers because of their access. It's not your fault. But it is if you choose to ignore it.</p>
+                    </div>
+                    <div class="lenders-solution">
+                     <div class="green-dot"></div>
+                        <h3>The Solution</h3>
+                        <div class="solution-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <p>Aquamark intercepts PDF downloads from your CRM</p>
                             </div>
-                            <span style="
-                                background: #dcfce7;
-                                color: #166534;
-                                padding: 0.25rem 0.75rem;
-                                border-radius: 12px;
-                                font-size: 0.75rem;
-                                font-weight: 600;
-                            ">Active</span>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6;">
-                            <div>
-                                <div style="font-weight: 600; color: #1e293b;">Blue Rock Funding Group</div>
-                                <div style="font-size: 0.875rem; color: #64748b;">License #MB789012</div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <p>Tamper-resistant, OCR-safe watermarks — every page</p>
                             </div>
-                            <span style="
-                                background: #dcfce7;
-                                color: #166534;
-                                padding: 0.25rem 0.75rem;
-                                border-radius: 12px;
-                                font-size: 0.75rem;
-                                font-weight: 600;
-                            ">Active</span>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
-                            <div>
-                                <div style="font-weight: 600; color: #1e293b;">Next Wave Financial</div>
-                                <div style="font-size: 0.875rem; color: #64748b;">License #MB345678</div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <p>Returns watermarked PDF, no more access to "clean" files</p>
                             </div>
-                            <span style="
-                                background: #fef3c7;
-                                color: #92400e;
-                                padding: 0.25rem 0.75rem;
-                                border-radius: 12px;
-                                font-size: 0.75rem;
-                                font-weight: 600;
-                            ">Pending</span>
+                        </div>
+                        <div class="watermark-example">
+                            <div class="example-box">
+                                <p class="watermark-text">Protected by Aquamark - John Doe - john@underwriter.com - MM/DD/YYYY</p>
+                                <span class="example-label">Example Watermark</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Compliance API Section -->
-            <div class="compliance-two-col">
-                <!-- API Visual -->
-                <div class="api-visual" style="
-                    background: #1e293b;
-                    border-radius: 16px;
-                    padding: 2rem;
-                    color: white;
-                    box-shadow: 
-                        0 25px 50px -12px rgba(30, 41, 59, 0.5), 
-                        0 15px 25px -5px rgba(30, 41, 59, 0.35),
-                        0 4px 6px -1px rgba(0, 0, 0, 0.15);
-                ">
-                    <div style="margin-bottom: 1.5rem;">
-                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-                            <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></div>
-                            <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%;"></div>
-                            <div style="width: 12px; height: 12px; background: #10b981; border-radius: 50%;"></div>
+                
+                <div class="lenders-benefits">
+                    <h3>Build Trust with Your ISOs</h3>
+                    <div class="benefits-grid">
+                       <div class="benefit-item">
+                            <h4>Stop Backdooring</h4>
+                            <p>Eliminate access to "clean", sellable documents</p>
                         </div>
-                        <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">
-                            POST /api/compliance/disclaimers
+                        <div class="benefit-item">
+                            <h4>Send a Clear Message</h4>
+                            <p>Show your ISOs you take document security seriously</p>
                         </div>
-                    </div>
-                    
-                    <div style="font-family: monospace; font-size: 0.875rem; line-height: 1.6;">
-                        <div style="color: #f59e0b;">POST</div>
-                        <div style="color: #64748b;">{</div>
-                        <div style="margin-left: 1rem;">
-                            <span style="color: #38bdf8;">"state"</span>: <span style="color: #a3e635;">"CA"</span>
+                        <div class="benefit-item">
+                            <h4>Beyond Words</h4>
+                            <p>Don't tell your ISOs "trust us" — tell them you use Aquamark</p>
                         </div>
-                        <div style="color: #64748b;">}</div>
-                        <br>
-                        <div style="color: #10b981;">Response:</div>
-                        <div style="color: #64748b;">{</div>
-                        <div style="margin-left: 1rem;">
-                            <span style="color: #38bdf8;">"disclaimers"</span>: [
+                        <div class="benefit-item">
+                            <h4>Protect Your Reputation</h4>
+                            <p>Theft ruins trust — and exposes you to legal risk</p>
                         </div>
-                        <div style="margin-left: 2rem; color: #a3e635;">
-                            "CFL License and Disclosure required..."
-                        </div>
-                        <div style="margin-left: 1rem;">]</div>
-                        <div style="color: #64748b;">}</div>
-                    </div>
-                </div>
-
-                <!-- Compliance API Content -->
-                <div>
-                    <h3 style="font-size: 2.25rem; font-weight: 700; color: #1e293b; margin-bottom: 1.5rem;">
-                        CRM-Ready <span style="color: #2563eb;">Compliance</span> Disclaimers
-                    </h3>
-
-                    <p style="font-size: 1.125rem; color: #64748b; margin-bottom: 2rem; line-height: 1.7;">
-                        Our API delivers state-specific disclaimers directly into your CRM—so you know what's required before pursuing a deal. Fast and always up to date.
-                    </p>
-
-                    <div style="background: white; padding: 2rem; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 2rem;">
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-                                <span style="color: #2563eb; font-weight: 700;">✓</span>
-                                Automatically inject disclaimers into your CRM
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-                                <span style="color: #2563eb; font-weight: 700;">✓</span>
-                                Know what's required before submitting a deal
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-size: 1rem; color: #374151;">
-                                <span style="color: #2563eb; font-weight: 700;">✓</span>
-                                Covers licensing, disclosure, and registration rules
-                            </li>
-                            <li style="display: flex; align-items: center; gap: 0.75rem; font-size: 1rem; color: #374151;">
-                                <span style="color: #2563eb; font-weight: 700;">✓</span>
-                                Updated as regulations evolve
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="section-cta-links" style="display: flex; gap: 1rem;">
-                        <a href="/api" style="
-                            display: inline-flex;
-                            align-items: center;
-                            padding: 0.875rem 1.5rem;
-                            background: #2563eb;
-                            color: white;
-                            text-decoration: none;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            font-size: 1rem;
-                            transition: all 0.2s ease;
-                        ">
-                            View API Docs
-                        </a>
-                        <a href="/compliance" style="
-                            display: inline-flex;
-                            align-items: center;
-                            padding: 0.875rem 1.5rem;
-                            background: transparent;
-                            color: #2563eb;
-                            text-decoration: none;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            font-size: 1rem;
-                            border: 2px solid #2563eb;
-                            transition: all 0.2s ease;
-                        ">
-                            Compliance Hub
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-        
+
+    <!-- Reviews Section -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Trusted by Brokers and Lenders Nationwide</h2>
+        </div>
+        <div class="review-grid">
+            <div class="review-track">
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Can't stop everyone, but this is a great start."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anthony, Ops Manager, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">K</div>
+                        <strong>Kelly, CEO, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anonymous, Processor, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more join."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">E</div>
+                        <strong>Eric, Team Leader, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We need a public database of everyone caught stealing files. It's time for big-box lenders to lead by example — a push from them could reshape the entire industry."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">P</div>
+                        <strong>Peter, President, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We were one of Aquamark's first customers and within the first couple weeks, we noticed less merchants calling us upset about getting a bunch of random calls."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">M</div>
+                        <strong>Matt, Sales Manager, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Exactly what the industry needs. As a lender, we now have a way to show our ISOs their documents are safe with us."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>Daniel, CEO, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Unfortunately and fortunately we caught the person stealing."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">C</div>
+                        <strong>Chris, COO, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"I hate to think our own employees would steal, but this is so necessary to repair the damage that's been done over the years."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">Z</div>
+                        <strong>Zack, Founder, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>Diana, Underwriter, Lender</strong>
+                    </div>
+                </div>
+
+                <!-- Duplicate set for seamless loop -->
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Can't stop everyone, but this is a great start."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anthony, Ops Manager, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">K</div>
+                        <strong>Kelly, CEO, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anonymous, Processor, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more join."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">E</div>
+                        <strong>Eric, Team Leader, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We need a public database of everyone caught stealing files. It's time for big-box lenders to lead by example — a push from them could reshape the entire industry."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">P</div>
+                        <strong>Peter, President, Lender</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
-        <div class="pricing-container">
-            <div class="section-intro">
-                <h2 class="section-title">Priced like a tool, not a service.</h2>
-                <p class="section-description">
-                    Designed to be affordable for everyone, around the cost of your 
-                    <span style="color:#007BFF; font-weight:600;">monthly cell phone bill</span>.
-                </p>
-            </div>
-
+        <div class="container">
+            <h2 class="section-title">Join the Fight Against Backdooring</h2>
+            <p class="pricing-subheadline">No hidden fees. No setup costs. Pays for itself. Affordable for everyone.</p>
+            
             <div class="pricing-grid">
                 <div class="pricing-card featured">
-                    <div class="plan-badge">Popular</div>
-                    <h3 class="plan-name">Broker Shop</h3>
-                    <div style="margin-bottom: 1rem;">
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--blue); margin-bottom: 0.25rem;">
-                            Starts at $299
-                        </div>
-                        <div style="font-size: 0.875rem; color: var(--text-secondary);">
-                            Cancel anytime • 🚀 ROI in first month
-                        </div>
-                    </div>
-                    <p class="plan-description">For brokers who want instant access.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Unlimited watermarking</li>
-                            <li>Compliance alerts (optional)</li>
-                            <li>Smart QR codes (optional)</li>
-                            <li>Portal access</li>
-                            <li>Basic support</li>
-                        </ul>
-                    </div>
-                    <div class="plan-cta">
-                        <a class="btn btn-blue" href="/signup">Start free trial</a>
-                    </div>
+                    <h3>Brokers</h3>
+                    <div class="price">$299*</div>
+                    <p class="price-note">per month</p>
+                    
+                    <ul class="product-features">
+                        <li>Unlimited watermarking</li>
+                        <li>Branded overlays</li>
+                        <li>Smart QR codes</li>
+                        <li>Basic support</li>
+                    </ul>
+                    
+<a href="https://www.aquamark.io/signup" class="cta-button">100 Free Pages</a>
                 </div>
 
-                <div class="pricing-card">
-                    <h3 class="plan-name">Wholesale</h3>
-                    <p class="plan-description">For CRMs and OCR software companies looking to incorporate Aquamark at scale.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Everything in Broker Shop</li>
-                            <li>Volume processing</li>
-                            <li>Priority support</li>
-                        </ul>
-                    </div>
-                    <div class="plan-cta">
-                        <a class="btn btn-primary" href="/contact">Request pricing</a>
-                    </div>
+                <div class="pricing-card featured">
+                    <h3>Lenders</h3>
+                    <div class="price">$999*</div>
+                    <p class="price-note">per month</p>
+                    
+                    <ul class="product-features">
+                        <li>Simple integration</li>
+                        <li>Dedicated server</li>
+                        <li>Independent protection</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    
+<a href="https://www.aquamark.io/contact" class="cta-button">Coming Soon</a>
                 </div>
 
-                <div class="pricing-card">
-                    <h3 class="plan-name">Affiliate</h3>
-                    <p class="plan-description">For lenders and individuals. Refer brokers and earn recurring monthly commissions with no cap or commitment.</p>
-                    <div class="plan-features">
-                        <ul class="feature-list">
-                            <li>Recurring commissions</li>
-                            <li>No referral cap</li>
-                            <li>Marketing materials</li>
-                            <li>Monthly reporting</li>
-                        </ul>
-                    </div>
-                    <div class="plan-cta">
-                        <a class="btn btn-secondary" href="https://aquamark.fillout.com/affiliate">Join program</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+               <div class="pricing-card dark">
+                  <h3>Wholesale</h3>
+                  <div class="price">Partner</div>
+                  <p class="price-note">Revenue share</p>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-container">
-            <h2>Ready to protect your business?</h2>
-            <p>Join hundreds of companies using Aquamark to stay compliant and protect their deals.</p>
-            <div class="cta-buttons">
-                <a class="btn btn-white btn-lg" href="/signup">Start free trial</a>
-                <a class="btn btn-outline btn-lg" href="/contact">Contact Us</a>
+                  <ul class="product-features">
+                    <li>Offer to your users</li>
+                    <li>Great for tech providers</li>
+                    <li>Full support</li>
+                    <li>Recurring monthly revenue</li>
+                  </ul>
+
+<a href="https://www.aquamark.io/contact" class="cta-button">Learn More</a>
+                </div>
+
+                <div class="pricing-card dark">
+                  <h3>Affiliate</h3>
+                  <div class="price">Earn</div>
+                  <p class="price-note">Refer and get rewarded</p>
+
+                  <ul class="product-features">
+                    <li>Recurring monthly commissions</li>
+                    <li>Dedicated affiliate code</li>
+                    <li>Simple and fast setup</li>
+                    <li>Monthly reporting</li>
+                  </ul>
+
+                 <a href="https://www.aquamark.io/contact" class="cta-button">Join Program</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-brand">
-                <h3>Aquamark</h3>
-                <p>San Francisco, CA</p>
-            </div>
-            <div class="footer-section">
-                <h4>Product</h4>
-                <ul>
-                    <li><a href="/api">API Documentation</a></li>
-                    <li><a href="/compliance">Compliance</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/broker-directory">Broker Directory</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/privacy.html">Privacy</a></li>
-                    <li><a href="/terms.html">Terms</a></li>
-                </ul>
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Phone: (415) 500-1117</p>
+                    <p>Email: info@aquamark.io</p>
+                    <p>490 Post Street<br>Suite 500<br>San Francisco, CA 94102</p>
+                </div>
+
+                <div class="footer-section">
+    <h3>Quick Links</h3>
+    <a href="#brokers">Brokers</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#reviews">Reviews</a>
+ <a href="https://www.aquamark.io/contact">Contact</a>
+</div>
+
+
+        <div class="footer-section">
+    <h3>Services</h3>
+    <a href="#brokers">Broker Solutions</a>
+    <a href="#lenders">Lender Solutions</a>
+    <a href="https://www.aquamark.io/compliance" target="_blank" rel="noopener">Free Compliance Hub</a>
+</div>
+
+
+    <div class="footer-section">
+    <h3>Partnerships</h3>
+    <a href="https://www.aquamark.io/wholesale" target="_blank" rel="noopener">Wholesale Opportunities</a>
+    <a href="https://www.aquamark.io/affiliate" target="_blank" rel="noopener">Affiliate Opportunities</a>
+</div>
+
             </div>
         </div>
     </footer>
+
+    <!-- Footer Bottom - Full Width -->
     <div class="footer-bottom">
-        <p>© 2025 Aquamark. All rights reserved.</p>
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
     </div>
 
-<script>
-function toggleMobileMenu() {
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('active');
-}
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
 
-// Close mobile menu when clicking outside
-document.addEventListener('click', function(event) {
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (!mobileMenu.contains(event.target) && !menuBtn.contains(event.target)) {
-        mobileMenu.classList.remove('active');
-    }
-});
-</script>
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            navLinks.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
+
+        // Pause animations when tab is not visible for performance
+        document.addEventListener('visibilitychange', function() {
+            const tracks = document.querySelectorAll('.partner-track, .review-track');
+            tracks.forEach(track => {
+                if (document.visibilityState === 'hidden') {
+                    track.style.animationPlayState = 'paused';
+                } else {
+                    track.style.animationPlayState = 'running';
+                }
+            });
+        });
+
+        // Intersection Observer for performance optimization
+        const observerOptions = {
+            root: null,
+            rootMargin: '50px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                } else {
+                    entry.target.style.animationPlayState = 'paused';
+                }
+            });
+        }, observerOptions);
+
+        // Observe carousel tracks
+        document.querySelectorAll('.partner-track, .review-track').forEach(track => {
+            observer.observe(track);
+        });
+    </script>
 </body>
 </html>
