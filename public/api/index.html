@@ -1,788 +1,858 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Aquamark API</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-:root {
-  --primary: #2563EB;
-  --primary-light: #3B82F6;
-  --primary-dark: #1D4ED8;
-  --accent: #10B981;
-  --text-primary: #1E293B;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F8FAFC;
-  --bg-accent: #F1F5F9;
-  --border: #E2E8F0;
-  --border-light: #F1F5F9;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --radius: 8px;
-  --radius-lg: 12px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  font-feature-settings: 'kern' 1, 'liga' 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Header */
-.header {
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(20px);
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-decoration: none;
-}
-
-.nav-home {
-  background: var(--primary);
-  color: white;
-  padding: 8px 16px;
-  border-radius: var(--radius);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
-  border: none;
-}
-
-.nav-home:hover {
-  background: var(--primary-dark);
-  color: white;
-}
-
-/* Hero Section */
-.hero {
-  background: var(--bg-primary);
-  padding: 6rem 0 4rem;
-  text-align: center;
-}
-
-.hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-  letter-spacing: -0.025em;
-}
-
-.hero-subtitle {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-  font-weight: 400;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--bg-secondary);
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  border: 1px solid var(--border);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-}
-
-/* Main Content */
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.section {
-  margin-bottom: 4rem;
-}
-
-.section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-}
-
-.section-subtitle {
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  font-size: 1rem;
-}
-
-/* Cards */
-.card {
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-  transition: all 0.2s ease;
-}
-
-.card:hover {
-  box-shadow: var(--shadow);
-}
-
-.card-minimal {
-  background: var(--bg-secondary);
-  border: none;
-  padding: 1.5rem;
-}
-
-/* Endpoint Cards */
-.endpoint-grid {
-  display: grid;
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
-.endpoint-card {
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  transition: all 0.2s ease;
-}
-
-.endpoint-card:hover {
-  box-shadow: var(--shadow);
-}
-
-.endpoint-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.endpoint-badge {
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.endpoint-badge.retail {
-  background: var(--primary);
-}
-
-.endpoint-badge.crm {
-  background: var(--accent);
-}
-
-.endpoint-badge.ocr {
-  background: #8B5CF6;
-}
-
-.endpoint-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.endpoint-url {
-  font-family: 'SF Mono', Monaco, monospace;
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  background: var(--bg-accent);
-  padding: 0.5rem;
-  border-radius: var(--radius);
-  margin: 0.5rem 0;
-  word-break: break-all;
-}
-
-.endpoint-description {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-/* Authentication */
-.auth-section {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  margin-bottom: 3rem;
-}
-
-.auth-steps {
-  display: grid;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.auth-step {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--bg-primary);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
-
-.step-number {
-  background: var(--primary);
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 0.75rem;
-  flex-shrink: 0;
-}
-
-.step-content h4 {
-  margin: 0 0 0.25rem 0;
-  color: var(--text-primary);
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.step-content p {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
-
-/* Code Blocks */
-.code-block {
-  background: white;
-  color: #808080;
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  overflow-x: auto;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
-  font-size: 0.8125rem;
-  line-height: 1.6;
-  margin: 1rem 0;
-  position: relative;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.inline-code {
-  background: var(--bg-accent);
-  color: var(--primary);
-  padding: 0.125rem 0.375rem;
-  border-radius: 4px;
-  font-family: 'SF Mono', Monaco, monospace;
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-/* Parameters */
-.param-grid {
-  display: grid;
-  gap: 0.75rem;
-  margin: 1.5rem 0;
-}
-
-.param-card {
-  background: var(--bg-primary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
-}
-
-.param-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-}
-
-.param-name {
-  font-family: 'SF Mono', Monaco, monospace;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.param-meta {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.param-type {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  background: var(--bg-accent);
-  padding: 0.125rem 0.375rem;
-  border-radius: 4px;
-}
-
-.status {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.125rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-}
-
-.status-required {
-  background: rgba(239, 68, 68, 0.1);
-  color: #DC2626;
-}
-
-.status-recommended {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--accent);
-}
-
-.status-optional {
-  background: rgba(253, 224, 71, 0.2);
-  color: #ca8a04;
-}
-
-.param-description {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-/* Method badge */
-.method {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--primary);
-  color: white;
-  margin-right: 0.5rem;
-}
-
-/* Info boxes */
-.info-box {
-  background: var(--bg-accent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
-  margin: 1.5rem 0;
-}
-
-.info-box-title {
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  font-size: 0.875rem;
-}
-
-.info-box p {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin: 0 0 0.5rem 0;
-  line-height: 1.5;
-}
-
-.info-box p:last-child {
-  margin-bottom: 0;
-}
-
-/* QR Preview */
-.qr-section {
-  text-align: center;
-  margin: 2rem 0;
-  padding: 2rem;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-}
-
-.qr-preview {
-  display: inline-block;
-  padding: 1rem;
-  background: var(--bg-primary);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 1rem;
-}
-
-.qr-code {
-  width: 120px;
-  height: 120px;
-  background: var(--text-primary);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.75rem;
-  text-align: center;
-}
-
-.qr-caption {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  font-style: italic;
-}
-
-/* Lists */
-.feature-list {
-  list-style: none;
-  margin: 1.5rem 0;
-}
-
-.feature-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
-.feature-list li::before {
-  content: '✓';
-  background: var(--accent);
-  color: white;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.625rem;
-  font-weight: bold;
-  flex-shrink: 0;
-  margin-top: 0.125rem;
-}
-
-/* Steps */
-.steps {
-  counter-reset: step;
-  list-style: none;
-  margin: 2rem 0;
-}
-
-.steps li {
-  counter-increment: step;
-  position: relative;
-  padding-left: 2.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
-.steps li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 0;
-  background: var(--primary);
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 0.75rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  
-  .container {
-    padding: 1rem;
-  }
-  
-  .card {
-    padding: 1.5rem;
-  }
-  
-  .header-content {
-    padding: 0 1rem;
-  }
-}
-
-/* Link styles */
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Emphasis */
-strong {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.qr-img {
-  max-width: 120px;
-  height: auto;
-  border-radius: 4px;
-  box-shadow: var(--shadow-sm);
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquamark API</title>
+    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f3f4f6;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-home {
+            background: #111827;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-home:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #ffffff;
+            padding: 140px 0 80px;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f9fafb;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #6b7280;
+            margin-bottom: 3rem;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+            background: #fafafa;
+        }
+
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        /* Authentication Section */
+        .auth-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid #f3f4f6;
+        }
+
+        .auth-steps {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .auth-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .step-number {
+            background: #111827;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            margin: 0 0 0.25rem 0;
+            color: #111827;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Endpoint Cards */
+        .endpoint-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .endpoint-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .endpoint-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .endpoint-badge {
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .endpoint-badge.retail {
+            background: #111827;
+        }
+
+        .endpoint-badge.crm {
+            background: #10b981;
+        }
+
+        .endpoint-badge.ocr {
+            background: #8b5cf6;
+        }
+
+        .endpoint-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
+
+        .endpoint-url {
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8125rem;
+            color: #6b7280;
+            background: #f9fafb;
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            word-break: break-all;
+        }
+
+        .endpoint-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        /* Parameters */
+        .param-grid {
+            display: grid;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .param-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .param-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .param-name {
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .param-meta {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .param-type {
+            font-size: 0.75rem;
+            color: #6b7280;
+            background: #f9fafb;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .status-required {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        .status-recommended {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .status-optional {
+            background: rgba(253, 224, 71, 0.2);
+            color: #ca8a04;
+        }
+
+        .param-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: white;
+            color: #6b7280;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+            position: relative;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid #e5e7eb;
+        }
+
+        .inline-code {
+            background: #f9fafb;
+            color: #111827;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+
+        /* QR Section */
+        .qr-section {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .qr-preview {
+            display: inline-block;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .qr-img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .qr-caption {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .info-box p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.5;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            background: #10b981;
+            color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .steps li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #111827;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin: 2rem 0 1rem;
+            color: #111827;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Links */
+        a {
+            color: #111827;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Emphasis */
+        strong {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            color: #6b7280;
+            padding: 40px 0 10px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: #111827;
+        }
+
+        .footer-bottom {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .main-content {
+                padding: 60px 0;
+            }
+
+            .main-container {
+                padding: 0 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .endpoint-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .param-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <img src="/logo-full-black-blue.png" alt="Aquamark">
+            </a>
+            <a class="nav-home" href="/">← Back to Home</a>
+        </nav>
+    </header>
 
-<header class="header">
-  <div class="header-content">
-    <a href="/" class="logo"><img src="logo-full-black-blue.png" alt="Aquamark Logo" style="height: 40px;"></a>
-    <nav>
-      <a href="/" class="nav-home">← Back to Home</a>
-    </nav>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <div class="status-dot"></div>
-      API Documentation
-    </div>
-    <h1>Simple Open API</h1>
-    <p class="hero-subtitle">Your System, Your Logic - How We Plug In</p>
-  </div>
-</section>
-
-<main class="container">
-  
-  <!-- Authentication -->
-  <div class="section">
-    <h2 class="section-title">Authentication</h2>
-    <p class="section-subtitle">Secure API access with Bearer tokens</p>
-    
-    <div class="auth-section">
-      <div class="auth-steps">
-        <div class="auth-step">
-          <div class="step-number">1</div>
-          <div class="step-content">
-            <h4>Request API Key</h4>
-            <p>Contact <a href="mailto:info@aquamark.io">info@aquamark.io</a> for endpoints and keys</p>
-          </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <div class="status-dot"></div>
+                    API Documentation
+                </div>
+                <h1>Simple Open API</h1>
+                <p class="hero-subtitle">Your System, Your Logic - How We Plug In</p>
+            </div>
         </div>
-        
-        <div class="auth-step">
-          <div class="step-number">2</div>
-          <div class="step-content">
-            <h4>Add to Headers</h4>
-            <p>Include your API key in the Authorization header for all requests</p>
-          </div>
-        </div>
-      </div>
+    </section>
 
-      <div class="code-block">Authorization: Bearer YOUR_API_KEY</div>
-    </div>
-  </div>
+    <!-- Main Content -->
+    <section class="main-content">
+        <div class="main-container">
+            
+            <!-- Authentication -->
+            <div class="section">
+                <h2 class="section-title">Authentication</h2>
+                <p class="section-subtitle">Secure API access with Bearer tokens</p>
+                
+                <div class="auth-section">
+                    <div class="auth-steps">
+                        <div class="auth-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Request API Key</h4>
+                                <p>Contact <a href="mailto:info@aquamark.io">info@aquamark.io</a> for endpoints and keys</p>
+                            </div>
+                        </div>
+                        
+                        <div class="auth-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Add to Headers</h4>
+                                <p>Include your API key in the Authorization header for all requests</p>
+                            </div>
+                        </div>
+                    </div>
 
-  <!-- Endpoints -->
-  <div class="section">
-    <h2 class="section-title">Endpoints</h2>
-    <p class="section-subtitle">Choose the endpoint that fits your integration needs</p>
-    
-    <div class="endpoint-grid">
-      <div class="endpoint-card">
-        <div class="endpoint-header">
-          <span class="endpoint-badge retail">Retail</span>
-          <h3 class="endpoint-title">Direct Customer Access</h3>
-        </div>
-        <div class="endpoint-url">POST https://aquamark-decrypt.onrender.com/watermark</div>
-        <p class="endpoint-description">For broker shops accessing Aquamark directly</p>
-      </div>
+                    <div class="code-block">Authorization: Bearer YOUR_API_KEY</div>
+                </div>
+            </div>
 
-      <div class="endpoint-card">
-        <div class="endpoint-header">
-          <span class="endpoint-badge crm">CRM</span>
-          <h3 class="endpoint-title">CRM Integration</h3>
-        </div>
-        <div class="endpoint-url">POST https://aquamark-crm.onrender.com/watermark</div>
-        <p class="endpoint-description">For CRM platforms like Salesforce, Zoho, Close</p>
-      </div>
+            <!-- Endpoints -->
+            <div class="section">
+                <h2 class="section-title">Endpoints</h2>
+                <p class="section-subtitle">Choose the endpoint that fits your integration needs</p>
+                
+                <div class="endpoint-grid">
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="endpoint-badge retail">Retail</span>
+                            <h3 class="endpoint-title">Direct Customer Access</h3>
+                        </div>
+                        <div class="endpoint-url">POST https://aquamark-decrypt.onrender.com/watermark</div>
+                        <p class="endpoint-description">For broker shops accessing Aquamark directly</p>
+                    </div>
 
-      <div class="endpoint-card">
-        <div class="endpoint-header">
-          <span class="endpoint-badge ocr">OCR</span>
-          <h3 class="endpoint-title">OCR Integration</h3>
-        </div>
-        <div class="endpoint-url">POST https://aquamark-ocr.onrender.com/watermark</div>
-        <p class="endpoint-description">For document processing companies providing OCR services</p>
-      </div>
-    </div>
-  </div>
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="endpoint-badge crm">CRM</span>
+                            <h3 class="endpoint-title">CRM Integration</h3>
+                        </div>
+                        <div class="endpoint-url">POST https://aquamark-crm.onrender.com/watermark</div>
+                        <p class="endpoint-description">For CRM platforms like Salesforce, Zoho, Close</p>
+                    </div>
 
-  <!-- Parameters -->
-  <div class="section">
-    <h2 class="section-title">Parameters</h2>
-    <p class="section-subtitle">All endpoints use the same parameter structure</p>
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="endpoint-badge ocr">OCR</span>
+                            <h3 class="endpoint-title">OCR Integration</h3>
+                        </div>
+                        <div class="endpoint-url">POST https://aquamark-ocr.onrender.com/watermark</div>
+                        <p class="endpoint-description">For document processing companies providing OCR services</p>
+                    </div>
+                </div>
+            </div>
 
-    <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Required</h3>
-    <div class="param-grid">
-      <div class="param-card">
-        <div class="param-header">
-          <span class="param-name">user_email</span>
-          <div class="param-meta">
-            <span class="param-type">string</span>
-            <span class="status status-required">Required</span>
-          </div>
-        </div>
-        <div class="param-description">Email address - your Aquamark account email (retail) or end user's email (wholesale)</div>
-      </div>
-      
-      <div class="param-card">
-        <div class="param-header">
-          <span class="param-name">file</span>
-          <div class="param-meta">
-            <span class="param-type">file</span>
-            <span class="status status-required">Required</span>
-          </div>
-        </div>
-        <div class="param-description">One PDF file (max 25MB)</div>
-      </div>
-    </div>
+            <!-- Parameters -->
+            <div class="section">
+                <h2 class="section-title">Parameters</h2>
+                <p class="section-subtitle">All endpoints use the same parameter structure</p>
 
-    <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Recommended</h3>
-    <div class="param-grid">
-      <div class="param-card">
-        <div class="param-header">
-          <span class="param-name">state</span>
-          <div class="param-meta">
-            <span class="param-type">string</span>
-            <span class="status status-recommended">Recommended</span>
-          </div>
-        </div>
-        <div class="param-description">
-          For state compliance disclaimers – accepts state names or abbreviations (e.g. "CA", "California"). Returned in response header. To store or display this value, create a custom field in your CRM called <code class="inline-code">Compliance</code> and push the value there automatically.
-        </div>
-      </div>
-    </div>
+                <h3 class="section-header">Required</h3>
+                <div class="param-grid">
+                    <div class="param-card">
+                        <div class="param-header">
+                            <span class="param-name">user_email</span>
+                            <div class="param-meta">
+                                <span class="param-type">string</span>
+                                <span class="status status-required">Required</span>
+                            </div>
+                        </div>
+                        <div class="param-description">Email address - your Aquamark account email (retail) or end user's email (wholesale)</div>
+                    </div>
+                    
+                    <div class="param-card">
+                        <div class="param-header">
+                            <span class="param-name">file</span>
+                            <div class="param-meta">
+                                <span class="param-type">file</span>
+                                <span class="status status-required">Required</span>
+                            </div>
+                        </div>
+                        <div class="param-description">One PDF file (max 25MB)</div>
+                    </div>
+                </div>
 
-    <h3 style="margin: 2rem 0 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">(Optional) Advanced Tracking</h3>
-    
-    <div class="qr-section">
-      <div class="qr-preview">
-        <img src="qr.png" alt="QR Preview" class="qr-img"/>
-      </div>
-      <div class="qr-caption">Tamper-resistant QR code on every page with embedded access information</div>
-    </div>
+                <h3 class="section-header">Recommended</h3>
+                <div class="param-grid">
+                    <div class="param-card">
+                        <div class="param-header">
+                            <span class="param-name">state</span>
+                            <div class="param-meta">
+                                <span class="param-type">string</span>
+                                <span class="status status-recommended">Recommended</span>
+                            </div>
+                        </div>
+                        <div class="param-description">
+                            For state compliance disclaimers – accepts state names or abbreviations (e.g. "CA", "California"). Returned in response header. To store or display this value, create a custom field in your CRM called <code class="inline-code">Compliance</code> and push the value there automatically.
+                        </div>
+                    </div>
+                </div>
 
-    <div class="info-box">
-      <div class="info-box-title">Power up your QR codes</div>
-      <p>These fields act as digital breadcrumbs that show exactly who had access to each file — lender, salesperson, processor.</p>
-      <p>They only apply if your CRM enforces <strong>curtaining</strong>, where users can only access records assigned to them. Curtaining is strongly recommended as a best practice.</p>
-    </div>
+                <h3 class="section-header">(Optional) Advanced Tracking</h3>
+                
+                <div class="qr-section">
+                    <div class="qr-preview">
+                        <img src="/qr.png" alt="QR Preview" class="qr-img"/>
+                    </div>
+                    <div class="qr-caption">Tamper-resistant QR code on every page with embedded access information</div>
+                </div>
 
-    <div class="param-grid">
-      <div class="param-card">
-        <div class="param-header">
-          <span class="param-name">salesperson</span>
-          <div class="param-meta">
-            <span class="param-type">string</span>
-            <span class="status status-optional">Optional</span>
-          </div>
-        </div>
-        <div class="param-description">Internal salesperson associated with the deal. Typically your CRM account owner or assigned rep.</div>
-      </div>
+                <div class="info-box">
+                    <div class="info-box-title">Power up your QR codes</div>
+                    <p>These fields act as digital breadcrumbs that show exactly who had access to each file — lender, salesperson, processor.</p>
+                    <p>They only apply if your CRM enforces <strong>curtaining</strong>, where users can only access records assigned to them. Curtaining is strongly recommended as a best practice.</p>
+                </div>
 
-      <div class="param-card">
-        <div class="param-header">
-          <span class="param-name">processor</span>
-          <div class="param-meta">
-            <span class="param-type">string</span>
-            <span class="status status-optional">Optional</span>
-          </div>
-        </div>
-        <div class="param-description">Team member responsible for preparing and submitting files. Only useful if you assign dedicated processors.</div>
-      </div>
+                <div class="param-grid">
+                    <div class="param-card">
+                        <div class="param-header">
+                            <span class="param-name">salesperson</span>
+                            <div class="param-meta">
+                                <span class="param-type">string</span>
+                                <span class="status status-optional">Optional</span>
+                            </div>
+                        </div>
+                        <div class="param-description">Internal salesperson associated with the deal. Typically your CRM account owner or assigned rep.</div>
+                    </div>
 
-      <div class="param-card">
-        <div class="param-header">
-          <span class="param-name">lender</span>
-          <div class="param-meta">
-            <span class="param-type">string</span>
-            <span class="status status-optional">Optional</span>
-          </div>
-        </div>
-        <div class="param-description">Users submit a separate version of the file for each lender, then delete them after submission to reduce storage costs. Most set up a simple automated deletion—using tools like timed scripts, CRM schedulers (e.g. Apex Scheduler in Salesforce), or external automation platforms like Zapier or Make.</div>
-      </div>
-    </div>
-  </div>
+                    <div class="param-card">
+                        <div class="param-header">
+                            <span class="param-name">processor</span>
+                            <div class="param-meta">
+                                <span class="param-type">string</span>
+                                <span class="status status-optional">Optional</span>
+                            </div>
+                        </div>
+                        <div class="param-description">Team member responsible for preparing and submitting files. Only useful if you assign dedicated processors.</div>
+                    </div>
 
-  <!-- Examples -->
-  <div class="section">
-    <h2 class="section-title">Postman Example</h2>
-    
-    <div class="card">
-      <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1rem; font-weight: 600;">Postman Setup</h3>
-      <div class="code-block">POST {{endpoint}}
+                    <div class="param-card">
+                        <div class="param-header">
+                            <span class="param-name">lender</span>
+                            <div class="param-meta">
+                                <span class="param-type">string</span>
+                                <span class="status status-optional">Optional</span>
+                            </div>
+                        </div>
+                        <div class="param-description">Users submit a separate version of the file for each lender, then delete them after submission to reduce storage costs. Most set up a simple automated deletion—using tools like timed scripts, CRM schedulers (e.g. Apex Scheduler in Salesforce), or external automation platforms like Zapier or Make.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examples -->
+            <div class="section">
+                <h2 class="section-title">Postman Example</h2>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem; color: #111827; font-size: 1rem; font-weight: 600;">Postman Setup</h3>
+                    <div class="code-block">POST {{endpoint}}
 
 Headers:
 Authorization: Bearer YOUR_API_KEY
@@ -800,45 +870,78 @@ Endpoints:
 Retail: https://aquamark-decrypt.onrender.com/watermark
 CRM: https://aquamark-crm.onrender.com/watermark
 OCR: https://aquamark-ocr.onrender.com/watermark</div>
-    </div>
-  </div>
+                </div>
+            </div>
 
-  <!-- Response -->
-  <div class="section">
-    <h2 class="section-title">Response</h2>
-    <div class="card">
-      <p>All endpoints return a protected PDF file with optional compliance header:</p>
-      <div class="code-block">Content-Type: application/pdf
+            <!-- Response -->
+            <div class="section">
+                <h2 class="section-title">Response</h2>
+                <div class="card">
+                    <p>All endpoints return a protected PDF file with optional compliance header:</p>
+                    <div class="code-block">Content-Type: application/pdf
 X-State-Disclaimer: CFL license and Disclosure required.</div>
+                </div>
+            </div>
+
+            <!-- Workflow -->
+            <div class="section">
+                <h2 class="section-title">Workflow</h2>
+                <div class="card">
+                    <ol class="steps">
+                        <li>Choose the appropriate endpoint for your use case</li>
+                        <li>Send a POST request with your PDF and metadata</li>
+                        <li>Receive a protected PDF + optional state disclaimer header</li>
+                        <li>Save the PDF and push state disclaimers to your system</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="section">
+                <h2 class="section-title">Important Notes</h2>
+                <div class="card">
+                    <ul class="feature-list">
+                        <li>PDF only. One file per request across all endpoints</li>
+                        <li>Retail users must upload logo in portal before using the API</li>
+                        <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="mailto:info@aquamark.io">info@aquamark.io</a>
+                <a href="tel:+14155001117">(415) 500-1117</a>
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer Bottom - Full Width -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
     </div>
-  </div>
 
-  <!-- Workflow -->
-  <div class="section">
-    <h2 class="section-title">Workflow</h2>
-    <div class="card">
-      <ol class="steps">
-        <li>Choose the appropriate endpoint for your use case</li>
-        <li>Send a POST request with your PDF and metadata</li>
-        <li>Receive a protected PDF + optional state disclaimer header</li>
-        <li>Save the PDF and push state disclaimers to your system</li>
-      </ol>
-    </div>
-  </div>
-
-  <!-- Notes -->
-  <div class="section">
-    <h2 class="section-title">Important Notes</h2>
-    <div class="card">
-      <ul class="feature-list">
-        <li>PDF only. One file per request across all endpoints</li>
-        <li>Retail users must upload logo in portal before using the API</li>
-        <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
-      </ul>
-    </div>
-  </div>
-
-</main>
-
+    <script>
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
