@@ -33,7 +33,7 @@
             width: 100%;
         }
 
-        /* Header - Ultra Minimal */
+        /* Header */
         header {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
@@ -59,8 +59,8 @@
         }
 
         .nav-home {
-            background: #111827 !important;
-            color: #ffffff !important;
+            background: #111827;
+            color: #ffffff;
             padding: 0.5rem 1rem;
             border: none;
             border-radius: 8px;
@@ -72,11 +72,11 @@
         }
 
         .nav-home:hover {
-            background: #1f2937 !important;
+            background: #1f2937;
             transform: translateY(-1px);
         }
 
-        /* Hero Section - Minimal White */
+        /* Hero Section */
         .hero {
             background: #ffffff;
             padding: 140px 0 80px;
@@ -236,7 +236,7 @@
             height: 1rem;
         }
 
-        /* Collapsible Summary Styles */
+        /* Summary Styles */
         .summary-section {
             margin-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
@@ -245,16 +245,16 @@
 
         .summary-toggle {
             background: #f9fafb;
-            color: #111827 !important;
+            color: #111827;
             font-weight: 600;
             border-radius: 0.5rem;
             padding: 0.75rem 1rem;
             font-size: 0.9rem;
-            justify-content: center;
             border: 1px solid #e5e7eb;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             width: 100%;
             text-align: center;
@@ -263,7 +263,7 @@
 
         .summary-toggle:hover {
             background: #e5e7eb;
-            color: #111827 !important;
+            color: #111827;
         }
 
         .summary-toggle svg {
@@ -286,7 +286,7 @@
         }
 
         .summary-content.expanded {
-            max-height: 200px;
+            max-height: 300px;
         }
 
         .summary-text {
@@ -357,7 +357,7 @@
             overflow: hidden;
         }
 
-        /* Responsive Design */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero {
                 padding: 120px 0 60px;
@@ -414,6 +414,10 @@
             .state-card h2 {
                 font-size: 1.3rem;
             }
+
+            .summary-content.expanded {
+                max-height: 400px;
+            }
         }
     </style>
 </head>
@@ -421,7 +425,7 @@
     <!-- Header -->
     <header>
         <nav class="container">
-            <a href="#" class="logo">
+            <a href="/" class="logo">
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
             <a class="nav-home" href="/">← Back to Home</a>
@@ -432,17 +436,13 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <!-- Badge -->
                 <div class="hero-badge">
                     <div class="status-dot"></div>
                     Compliance Overview
                 </div>
-                <!-- Title -->
                 <h1>Compliance Resource Center</h1>
-                <!-- Subtitle -->
                 <p class="hero-subtitle">Written for brokers, not lawyers</p>
                 
-                <!-- Announcement Bar -->
                 <div class="announcement-bar">
                     Coming soon: next steps for licensing and registration—so you know exactly what to do.
                 </div>
@@ -470,6 +470,156 @@
                             <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
                         </svg>
                         SB-869
+                    </a>
+                    <div class="summary-section">
+                        <button class="summary-toggle" onclick="toggleSummary(this)">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+                            </svg>
+                            Simple Summary
+                        </button>
+                        <div class="summary-content">
+                            <div class="summary-text">CFL license required to broker loans. Disclosure must be signed by the recipient before the transaction is finalized - funding amount, finance charge, total repayment, prepayment policies, APR.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="state-card">
+                    <h2><span class="state-icon">CT</span>Connecticut</h2>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Brokers</div>
+                        <div class="requirement-text">Registration and Disclosure required.</div>
+                    </div>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Providers</div>
+                        <div class="requirement-text">Registration and Disclosure required.</div>
+                    </div>
+                    <a class="bill-link" href="https://www.cga.ct.gov/2023/amd/S/pdf/2023SB-01032-R00SB-AMD.pdf" target="_blank">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
+                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
+                        </svg>
+                        SB 1032
+                    </a>
+                    <div class="summary-section">
+                        <button class="summary-toggle" onclick="toggleSummary(this)">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+                            </svg>
+                            Simple Summary
+                        </button>
+                        <div class="summary-content">
+                            <div class="summary-text">Providers and brokers must register with the state. For transactions ≤ $250,000 - must disclose total funding, cost of borrowing, repayment schedule, and broker compensation. APR is not required.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="state-card">
+                    <h2><span class="state-icon">FL</span>Florida</h2>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Brokers</div>
+                        <div class="requirement-text">Comply with Broker Code of Conduct.</div>
+                    </div>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Providers</div>
+                        <div class="requirement-text">Disclosure required.</div>
+                    </div>
+                    <a class="bill-link" href="https://www.flsenate.gov/Session/Bill/2023/1353/BillText/er/PDF" target="_blank">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
+                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
+                        </svg>
+                        HB 1353
+                    </a>
+                    <div class="summary-section">
+                        <button class="summary-toggle" onclick="toggleSummary(this)">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+                            </svg>
+                            Simple Summary
+                        </button>
+                        <div class="summary-content">
+                            <div class="summary-text">Providers must disclose terms for deals ≤ $500,000 - funding amount, finance charge, total repayment, prepayment policies, APR. Brokers must comply with code of conduct: no false adverstising or upfront fees, address and phone number must be included in all advertising.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="state-card">
+                    <h2><span class="state-icon">GA</span>Georgia</h2>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Brokers</div>
+                        <div class="requirement-text">Disclosure required.</div>
+                    </div>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Providers</div>
+                        <div class="requirement-text">Disclosure required.</div>
+                    </div>
+                    <a class="bill-link" href="https://www.legis.ga.gov/api/legislation/document/20232024/219440" target="_blank">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
+                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
+                        </svg>
+                        SB 90
+                    </a>
+                    <div class="summary-section">
+                        <button class="summary-toggle" onclick="toggleSummary(this)">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+                            </svg>
+                            Simple Summary
+                        </button>
+                        <div class="summary-content">
+                            <div class="summary-text">Providers and brokers must disclouse terms for deals ≤ $500,000 - total funding amount, net funds disbursed, total repayment, total dollar cost, and payment schedule. APR is not required.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="state-card">
+                    <h2><span class="state-icon">KS</span>Kansas</h2>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Brokers</div>
+                        <div class="requirement-text">Disclosure required.</div>
+                    </div>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Providers</div>
+                        <div class="requirement-text">Disclosure required.</div>
+                    </div>
+                    <a class="bill-link" href="https://www.kslegislature.gov/li_2024/b2023_24/measures/documents/sb345_00_0000.pdf" target="_blank">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
+                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
+                        </svg>
+                        SB 345
+                    </a>
+                    <div class="summary-section">
+                        <button class="summary-toggle" onclick="toggleSummary(this)">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
+                            </svg>
+                            Simple Summary
+                        </button>
+                        <div class="summary-content">
+                            <div class="summary-text">Registration is not required. For transactions ≤ $500,000 - terms must be clearly disclosed before closing - total funds provided and disbursed, total repayment, cost of financing, payment frequency and schedule.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="state-card">
+                    <h2><span class="state-icon">LA</span>Louisiana</h2>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Brokers</div>
+                        <div class="requirement-text">Disclosure required. Cannot collect upfront fees.</div>
+                    </div>
+                    <div class="requirement-section">
+                        <div class="requirement-title">Providers</div>
+                        <div class="requirement-text">Disclose reuquired.</div>
+                    </div>
+                    <a class="bill-link" href="https://www.legis.la.gov/Legis/ViewDocument.aspx?d=1352748" target="_blank">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path clip-rule="evenodd" fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"></path>
+                            <path clip-rule="evenodd" fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"></path>
+                        </svg>
+                        SB 335
                     </a>
                     <div class="summary-section">
                         <button class="summary-toggle" onclick="toggleSummary(this)">
@@ -719,153 +869,3 @@
     </script>
 </body>
 </html>
-                            <svg fill="currentColor" viewBox="0 0 20 20">
-                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
-                            </svg>
-                            Simple Summary
-                        </button>
-                        <div class="summary-content">
-                            <div class="summary-text">CFL license required to broker loans. Disclosure must be signed by the recipient before the transaction is finalized - funding amount, finance charge, total repayment, prepayment policies, APR.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="state-card">
-                    <h2><span class="state-icon">CT</span>Connecticut</h2>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Brokers</div>
-                        <div class="requirement-text">Registration and Disclosure required.</div>
-                    </div>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Providers</div>
-                        <div class="requirement-text">Registration and Disclosure required.</div>
-                    </div>
-                    <a class="bill-link" href="https://www.cga.ct.gov/2023/amd/S/pdf/2023SB-01032-R00SB-AMD.pdf" target="_blank">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
-                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
-                        </svg>
-                        SB 1032
-                    </a>
-                    <div class="summary-section">
-                        <button class="summary-toggle" onclick="toggleSummary(this)">
-                            <svg fill="currentColor" viewBox="0 0 20 20">
-                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
-                            </svg>
-                            Simple Summary
-                        </button>
-                        <div class="summary-content">
-                            <div class="summary-text">Providers and brokers must register with the state. For transactions ≤ $250,000 - must disclose total funding, cost of borrowing, repayment schedule, and broker compensation. APR is not required.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="state-card">
-                    <h2><span class="state-icon">FL</span>Florida</h2>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Brokers</div>
-                        <div class="requirement-text">Comply with Broker Code of Conduct.</div>
-                    </div>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Providers</div>
-                        <div class="requirement-text">Disclosure required.</div>
-                    </div>
-                    <a class="bill-link" href="https://www.flsenate.gov/Session/Bill/2023/1353/BillText/er/PDF" target="_blank">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
-                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
-                        </svg>
-                        HB 1353
-                    </a>
-                    <div class="summary-section">
-                        <button class="summary-toggle" onclick="toggleSummary(this)">
-                            <svg fill="currentColor" viewBox="0 0 20 20">
-                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
-                            </svg>
-                            Simple Summary
-                        </button>
-                        <div class="summary-content">
-                            <div class="summary-text">Providers must disclose terms for deals ≤ $500,000 - funding amount, finance charge, total repayment, prepayment policies, APR. Brokers must comply with code of conduct: no false adverstising or upfront fees, address and phone number must be included in all advertising.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="state-card">
-                    <h2><span class="state-icon">GA</span>Georgia</h2>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Brokers</div>
-                        <div class="requirement-text">Disclosure required.</div>
-                    </div>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Providers</div>
-                        <div class="requirement-text">Disclosure required.</div>
-                    </div>
-                    <a class="bill-link" href="https://www.legis.ga.gov/api/legislation/document/20232024/219440" target="_blank">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
-                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
-                        </svg>
-                        SB 90
-                    </a>
-                    <div class="summary-section">
-                        <button class="summary-toggle" onclick="toggleSummary(this)">
-                            <svg fill="currentColor" viewBox="0 0 20 20">
-                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
-                            </svg>
-                            Simple Summary
-                        </button>
-                        <div class="summary-content">
-                            <div class="summary-text">Providers and brokers must disclouse terms for deals ≤ $500,000 - total funding amount, net funds disbursed, total repayment, total dollar cost, and payment schedule. APR is not required.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="state-card">
-                    <h2><span class="state-icon">KS</span>Kansas</h2>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Brokers</div>
-                        <div class="requirement-text">Disclosure required.</div>
-                    </div>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Providers</div>
-                        <div class="requirement-text">Disclosure required.</div>
-                    </div>
-                    <a class="bill-link" href="https://www.kslegislature.gov/li_2024/b2023_24/measures/documents/sb345_00_0000.pdf" target="_blank">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path clip-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" fill-rule="evenodd"></path>
-                            <path clip-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" fill-rule="evenodd"></path>
-                        </svg>
-                        SB 345
-                    </a>
-                    <div class="summary-section">
-                        <button class="summary-toggle" onclick="toggleSummary(this)">
-                            <svg fill="currentColor" viewBox="0 0 20 20">
-                                <path clip-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" fill-rule="evenodd"></path>
-                            </svg>
-                            Simple Summary
-                        </button>
-                        <div class="summary-content">
-                            <div class="summary-text">Registration is not required. For transactions ≤ $500,000 - terms must be clearly disclosed before closing - total funds provided and disbursed, total repayment, cost of financing, payment frequency and schedule.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="state-card">
-                    <h2><span class="state-icon">LA</span>Louisiana</h2>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Brokers</div>
-                        <div class="requirement-text">Disclosure required. Cannot collect upfront fees.</div>
-                    </div>
-                    <div class="requirement-section">
-                        <div class="requirement-title">Providers</div>
-                        <div class="requirement-text">Disclose reuquired.</div>
-                    </div>
-                    <a class="bill-link" href="https://www.legis.la.gov/Legis/ViewDocument.aspx?d=1352748" target="_blank">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"></path>
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"></path>
-                        </svg>
-                        SB 335
-                    </a>
-                    <div class="summary-section">
-                        <button class="summary-toggle" onclick="toggleSummary(this)">
