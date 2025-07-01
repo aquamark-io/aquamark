@@ -196,25 +196,24 @@
         }
 
         .api-docs-button {
-    background: white;
-    color: #111827;
-    padding: 1rem 2rem;
-    border: 1px solid #111827;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    margin-left: 1rem;
-    transition: all 0.2s ease;
-}
+            background: white;
+            color: #111827;
+            padding: 1rem 2rem;
+            border: 1px solid #111827;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 1rem;
+            transition: all 0.2s ease;
+        }
 
-.api-docs-button:hover {
-    background: #f9fafb;
-    transform: translateY(-1px);
-}
-
+        .api-docs-button:hover {
+            background: #f9fafb;
+            transform: translateY(-1px);
+        }
 
         /* Partners Section */
         .partners {
@@ -350,27 +349,27 @@
 
         /* Aquamark for Brokers Section */
        
-  .red-dot {
-  width: 10px;
-  height: 10px;
-  background-color: #ff0000;
-  border-radius: 50%;
-  margin: 1.25rem auto 2rem; /* better spacing */
-  animation: pulseDot 2s ease-in-out infinite;
-  opacity: 0.9;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-}
+        .red-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            margin: 1.25rem auto 2rem;
+            animation: pulseDot 2s ease-in-out infinite;
+            opacity: 0.9;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
 
-  .green-dot {
-  width: 10px;
-  height: 10px;
-  background-color: #00e600;
-  border-radius: 50%;
-  margin: 1.25rem auto 2rem; /* better spacing */
-  animation: pulseDot 2s ease-in-out infinite;
-  opacity: 0.9;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-}
+        .green-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #00e600;
+            border-radius: 50%;
+            margin: 1.25rem auto 2rem;
+            animation: pulseDot 2s ease-in-out infinite;
+            opacity: 0.9;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
         
         .brokers-section {
             padding: 120px 0;
@@ -665,6 +664,13 @@
             text-align: center;
         }
 
+        /* This is the key fix - ensure lenders benefits also use the grid layout */
+        .lenders-benefits .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
         /* Reviews Section */
         .reviews {
             padding: 120px 0;
@@ -794,9 +800,9 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
             gap: 2rem;
-            max-width: 1600px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
@@ -848,11 +854,6 @@
             background: #e5e7eb;
         }
 
-        .pricing-card.wide {
-            grid-column: span 2;
-            max-width: 100%;
-        }
-
         .pricing-card h3 {
             font-size: 1.4rem;
             font-weight: 600;
@@ -861,11 +862,11 @@
         }
 
         .price {
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 1rem 0;
-}
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 1rem 0;
+        }
 
         .price-note {
             color: #6b7280;
@@ -931,37 +932,6 @@
             transform: translateY(-1px);
         }
 
-        .partnership-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-
-        .partnership-section {
-            text-align: center;
-        }
-
-        .partnership-section h4 {
-            font-size: 1.6rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .partnership-section .price {
-            font-size: 2rem;
-            margin: 0.5rem 0;
-        }
-
-        .partnership-section .price-note {
-            margin-bottom: 1.5rem;
-        }
-
-        .partnership-section .product-features {
-            margin-bottom: 1.5rem;
-        }
-
         /* Footer */
         footer {
             background: #ffffff;
@@ -1012,15 +982,6 @@
         @media (max-width: 1024px) {
             .pricing-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .pricing-card.wide {
-                grid-column: span 2;
-            }
-
-            .partnership-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
             }
 
             .partner-logo img {
@@ -1142,7 +1103,6 @@
                 font-size: 1.1rem;
             }
 
-  
             .brokers-grid,
             .lenders-grid {
                 gap: 3rem;
@@ -1224,16 +1184,6 @@
                 width: 100%;
                 max-width: 350px;
                 padding: 2rem;
-            }
-
-            .pricing-card.wide {
-                grid-column: span 1;
-                max-width: 350px;
-            }
-
-            .partnership-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
             }
 
             .pricing .container {
@@ -1351,15 +1301,6 @@
                 max-width: none;
                 padding: 1.5rem;
             }
-
-            .pricing-card.wide {
-                max-width: none;
-            }
-
-            .partnership-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
         }
 
         /* Fix for seamless carousel scrolling */
@@ -1396,14 +1337,13 @@
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
             <ul class="nav-links">
-    <li><a href="#brokers">Brokers</a></li>
-    <li><a href="#lenders">Lenders</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-<li><a href="https://www.aquamark.io/contact">Contact</a></li>
-    <li><a href="https://www.aquamark.io/compliance">Compliance</a></li>
-    <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign in</a></li>
-    <li><a href="https://www.aquamark.io/signup" class="get-started-btn">Get started</a></li>
-</ul>
+                <li><a href="#brokers">Brokers</a></li>
+                <li><a href="#lenders">Lenders</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="https://www.aquamark.io/compliance">Compliance</a></li>
+                <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign in</a></li>
+                <li><a href="https://www.aquamark.io/signup" class="get-started-btn">Get started</a></li>
+            </ul>
             <div class="mobile-menu-btn">
                 <span></span>
                 <span></span>
@@ -1420,7 +1360,6 @@
                 <p>We protect your documents so they stay your documents.</p>
                 <a href="https://www.aquamark.io/signup" class="cta-button">Start Free Trial</a>
                 <a href="https://www.aquamark.io/api" class="api-docs-button">API Docs</a>
-
             </div>
         </div>
     </section>
@@ -1505,8 +1444,8 @@
     <section class="problem-section">
         <div class="container">
             <div class="problem-content">
-                <h2>Impact of Unathorized Document Sharing </h2>
-                <p>Unauthorized document sharing is triggering regulatory attention, breaking trust between ISOs and Lenders, and pushing merchants to back out of deals or fall into dangerous cycles. Aquamark was built to break that cycle by giving companies the tools to secure documents and rebuild trust.</p>
+                <h2>Impact of Unauthorized Document Sharing </h2>
+                <p>Unauthorized document sharing is triggering regulatory attention, breaking trust between ISOs and Lenders, and pushing merchants to back out of deals or fall into dangerous stacking cycles. Aquamark was built to break that cycle by giving companies the tools to secure documents and rebuild trust.</p>
             </div>
         </div>
     </section>
@@ -1519,10 +1458,9 @@
                     <h2>Watermarking That Works</h2>
                     <ul class="hero-benefits">
                         <li> For Brokers and Lenders</li>
-                        <li> Logs individuals given access</li>
                         <li> Tamper-resistant</li>
                         <li> OCR-safe</li>
-                        <li> Ends access to "clean," sellable files</li>
+                        <li> Built for accountability</li>
                     </ul>
                 </div>
             </div>
@@ -1530,7 +1468,7 @@
     </section>
 
     <!-- Aquamark for Brokers Section -->
-<section class="brokers-section" id="brokers">
+    <section class="brokers-section" id="brokers">
         <div class="container">
             <div class="brokers-content">
                 <h2>Aquamark for Brokers</h2>
@@ -1560,11 +1498,15 @@
                         <div class="watermark-sample">
                             <div class="sample-box">
                                 <img src="/watermark-sample.png" alt="Watermark Sample" class="sample-image" />
-                                <span class="sample-label">Sample Watermarked Document</span>
+                                <span class="sample-label">Broker Sample</span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+               <p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin: 2.5rem 0 2.5rem;">
+                  One stolen deal can cost you up to <span style="color: #22c55e; font-weight: 600;">$4,000*</span> in commissions</p>
+
                 
                 <div class="brokers-benefits">
                     <h3>Prevent Unauthorized Document Sharing At Scale</h3>
@@ -1592,7 +1534,7 @@
     </section>
 
     <!-- Aquamark for Lenders Section -->
-<section class="lenders-section" id="lenders">
+    <section class="lenders-section" id="lenders">
         <div class="container">
             <div class="lenders-content">
                 <h2>Aquamark for Lenders</h2>
@@ -1604,7 +1546,7 @@
                         <p>Underwriters steal too — arguably more than ISOs because of their access. It's not the lenders fault, but it becomes the lenders fault if they choose to ignore it.</p>
                     </div>
                     <div class="lenders-solution">
-                     <div class="green-dot"></div>
+                        <div class="green-dot"></div>
                         <h3>The Solution</h3>
                         <div class="solution-steps">
                             <div class="step">
@@ -1615,18 +1557,26 @@
                                 <span class="step-number">2</span>
                                 <p>Tamper-resistant, OCR-safe watermarks — every page</p>
                             </div>
+
                             <div class="step">
                                 <span class="step-number">3</span>
                                 <p>Returns watermarked PDF, no more access to "clean" files</p>
                             </div>
-                        </div>
-                        <div class="watermark-example">
-                            <div class="example-box">
-                                <p class="watermark-text">Protected by Aquamark - John Doe - john@underwriter.com - MM/DD/YYYY</p>
-                                <span class="example-label">Sample Watermark</span>
-                            </div>
-                         <p style="margin-top: 1.5rem; font-size: .9rem; color: #6488EA; font-style: bold;">Independent Protection by a Trusted Brand</p>
 
+                            <!-- NEW: Inserted image preview -->
+                            <div class="watermark-sample">
+                              <div class="sample-box">
+                                <img src="/lender_sample.png" alt="Lender Sample Watermark" class="sample-image" />
+                                <span class="sample-label">Lender Sample</span>
+                              </div>
+                            </div>
+
+                            <div class="watermark-example">
+                                <div class="example-box">
+                                    <p class="watermark-text">Protected by Aquamark - Capital Funding Group - Jane Underwriter- MM/DD/YYYY</p>
+                                </div>
+                                <p style="margin-top: 1.5rem; font-size: .9rem; color: #6488EA; font-style: bold;">Independent Protection by a Trusted Brand</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1851,7 +1801,7 @@
                         <li>Basic support</li>
                     </ul>
                     
-<a href="https://www.aquamark.io/signup" class="cta-button">100 Free Pages</a>
+                    <a href="https://www.aquamark.io/signup" class="cta-button">100 Free Pages</a>
                 </div>
 
                 <div class="pricing-card featured">
@@ -1866,42 +1816,22 @@
                         <li>Priority Support</li>
                     </ul>
                     
-<a href="https://www.aquamark.io/contact" class="cta-button">In BETA</a>
+                    <a href="https://www.aquamark.io/contact" class="cta-button">In BETA</a>
                 </div>
 
-               <div class="pricing-card dark wide">
-                  <h3>Partnerships & Opportunities</h3>
-                  <div class="partnership-grid">
-                    <div class="partnership-section">
-                      <h4>Wholesale</h4>
-                      <div class="price">Partner</div>
-                      <p class="price-note">Revenue share</p>
+               <div class="pricing-card dark">
+                  <h3>Wholesale</h3>
+                  <div class="price">Partner</div>
+                  <p class="price-note">Revenue share</p>
 
-                      <ul class="product-features">
-                        <li>Offer to your users</li>
-                        <li>Great for tech providers</li>
-                        <li>Priority support</li>
-                        <li>Recurring monthly revenue</li>
-                      </ul>
+                  <ul class="product-features">
+                    <li>Offer to your users</li>
+                    <li>Great for tech providers</li>
+                    <li>Priority support</li>
+                    <li>Recurring monthly revenue</li>
+                  </ul>
 
-                      <a href="https://www.aquamark.io/contact" class="cta-button">Learn More</a>
-                    </div>
-
-                    <div class="partnership-section">
-                      <h4>Affiliate</h4>
-                      <div class="price">Earn</div>
-                      <p class="price-note">Refer and get rewarded</p>
-
-                      <ul class="product-features">
-                        <li>Recurring monthly commissions</li>
-                        <li>Dedicated affiliate code</li>
-                        <li>Simple and fast setup</li>
-                        <li>Monthly reporting</li>
-                      </ul>
-
-                     <a href="https://www.aquamark.io/contact" class="cta-button">Join Program</a>
-                    </div>
-                  </div>
+                 <a href="https://www.aquamark.io/contact" class="cta-button">Join Program</a>
                 </div>
             </div>
         </div>
@@ -1919,28 +1849,24 @@
                 </div>
 
                 <div class="footer-section">
-    <h3>Quick Links</h3>
-    <a href="#pricing">Pricing</a>
-    <a href="#reviews">Reviews</a>
- <a href="https://www.aquamark.io/contact">Contact</a>
-</div>
+                    <h3>Quick Links</h3>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="https://www.aquamark.io/contact">Contact</a>
+                </div>
 
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="#brokers">Broker Solutions</a>
+                    <a href="#lenders">Lender Solutions</a>
+                    <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
+                </div>
 
-        <div class="footer-section">
-    <h3>Services</h3>
-    <a href="#brokers">Broker Solutions</a>
-    <a href="#lenders">Lender Solutions</a>
-    <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
-</div>
-
-
-    <div class="footer-section">
-    <h3>Partnerships</h3>
-    <a href="https://www.aquamark.io/contact">Wholesale Opportunities</a>
-<a href="https://www.aquamark.io/contact">Affiliate Opportunities</a>
-
-</div>
-
+                <div class="footer-section">
+                    <h3>Partnerships</h3>
+                    <a href="https://www.aquamark.io/contact">Wholesale Opportunities</a>
+                    <a href="https://www.aquamark.io/contact">Affiliate Opportunities</a>
+                </div>
             </div>
         </div>
     </footer>
