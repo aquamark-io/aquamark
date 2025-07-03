@@ -691,23 +691,6 @@
                 // Get auth token for API calls
                 userToken = await getAuthToken();
 
-                // ✅ Smart plan sync: Only update if changed
-                if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
-                    const livePlanName = currentUser.Subscription.Plan.Name;
-                    const cachedPlan = localStorage.getItem('aquaPlanName');
-
-                    console.log("📦 Live plan from Outseta:", livePlanName);
-                    console.log("📦 Cached plan from localStorage:", cachedPlan);
-
-                    if (livePlanName !== cachedPlan) {
-                        console.log("🔁 Plan changed — updating Supabase");
-                        await updateUserPlan(livePlanName);
-                        localStorage.setItem('aquaPlanName', livePlanName);
-                    } else {
-                        console.log("✅ Plan unchanged — skipping update");
-                    }
-                }
-
                 // Load user's logo and usage data
                 await loadUserLogo();
                 await loadUsageData();
@@ -791,15 +774,22 @@
             }
         }
 
-        // Load usage data with cache busting
+        // UPDATED: Load usage data with current plan
         async function loadUsageData() {
             try {
+                // Get current plan from Outseta
+                const currentPlan = currentUser?.Subscription?.Plan?.Name || 'Free Trial';
+                
                 const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
+                    method: 'POST', // Change to POST to send data
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Content-Type': 'application/json',
                         'Cache-Control': 'no-cache'
-                    }
+                    },
+                    body: JSON.stringify({
+                        currentPlan: currentPlan // Send current plan
+                    })
                 });
 
                 if (response.ok) {
