@@ -173,6 +173,46 @@
             padding: 1.5rem;
         }
 
+        /* Usage Notice Styles */
+        .usage-notice {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .usage-notice-icon {
+            background: #f59e0b;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .usage-notice-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .usage-notice-content p {
+            color: #92400e;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
         /* Action Buttons */
         .btn {
             display: inline-flex;
@@ -496,6 +536,13 @@
                     <h2>Your Usage</h2>
                 </div>
                 <div class="card-body" id="usage-stats">
+                    <div class="usage-notice">
+                        <div class="usage-notice-icon">!</div>
+                        <div class="usage-notice-content">
+                            <h4>Usage Tracking Temporarily Unavailable</h4>
+                            <p>Our data provider is experiencing temporary issues that are affecting usage tracking. The issue is being resolved on their end and your usage data will be restored shortly. All watermarking functionality continues to work normally.</p>
+                        </div>
+                    </div>
                     <p>Loading your usage data...</p>
                 </div>
             </div>
@@ -549,7 +596,10 @@
                 
             } catch (error) {
                 console.error('Initialization error:', error);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading dashboard. Please refresh the page.</p>';
+                // Keep the notice visible and show a generic error message
+                const usageStatsElement = document.getElementById('usage-stats');
+                const noticeHtml = usageStatsElement.querySelector('.usage-notice').outerHTML;
+                usageStatsElement.innerHTML = noticeHtml + '<p>Error loading dashboard. Please refresh the page.</p>';
             }
         }
 
@@ -557,7 +607,9 @@
         async function loadUsageData() {
             try {
                 if (!userToken) {
-                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
+                    const usageStatsElement = document.getElementById('usage-stats');
+                    const noticeHtml = usageStatsElement.querySelector('.usage-notice').outerHTML;
+                    usageStatsElement.innerHTML = noticeHtml + '<p>Unable to load usage data - authentication required</p>';
                     return;
                 }
 
@@ -594,11 +646,15 @@
                     displayUsageData(userData);
                 } else {
                     const error = await response.json();
-                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
+                    const usageStatsElement = document.getElementById('usage-stats');
+                    const noticeHtml = usageStatsElement.querySelector('.usage-notice').outerHTML;
+                    usageStatsElement.innerHTML = noticeHtml + `<p>Error loading usage: ${error.error}</p>`;
                 }
             } catch (error) {
                 console.error('Error loading usage data:', error);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
+                const usageStatsElement = document.getElementById('usage-stats');
+                const noticeHtml = usageStatsElement.querySelector('.usage-notice').outerHTML;
+                usageStatsElement.innerHTML = noticeHtml + '<p>Error loading usage data. Please refresh the page.</p>';
             }
         }
 
@@ -710,6 +766,13 @@
                 const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
 
                 usageStatsElement.innerHTML = `
+                    <div class="usage-notice">
+                        <div class="usage-notice-icon">!</div>
+                        <div class="usage-notice-content">
+                            <h4>Usage Tracking Temporarily Unavailable</h4>
+                            <p>We're experiencing a temporary issue with our usage tracking system. Our team is actively working to resolve this and your usage data will be restored shortly. All watermarking functionality continues to work normally.</p>
+                        </div>
+                    </div>
                     <div class="usage-stats-container">
                         <div class="usage-stat">
                             <span class="usage-label">Plan:</span>
@@ -733,7 +796,17 @@
                     </div>
                 `;
             } else {
-                usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+                usageStatsElement.innerHTML = `
+                    <div class="usage-notice">
+                        <div class="usage-notice-icon">!</div>
+                        <div class="usage-notice-content">
+                            <h4>Usage Tracking Temporarily Unavailable</h4>
+                            <p>Our data provider is experiencing temporary issues that are affecting usage tracking. 
+Your usage data will be restored shortly. All watermarking functionality continues to work normally.</p>
+                        </div>
+                    </div>
+                    <p>No usage data available yet.</p>
+                `;
             }
         }
 
