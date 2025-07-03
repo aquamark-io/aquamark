@@ -332,11 +332,7 @@
         }
 
         .api-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -345,6 +341,7 @@
             border: 1px solid #f3f4f6;
             border-radius: 12px;
             padding: 2rem;
+            margin-bottom: 2rem;
         }
 
         .api-details h3 {
@@ -666,11 +663,6 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .api-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
             .pricing-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -867,7 +859,7 @@
                 <h1>Aquamark for Lenders</h1>
                 <p>Intercept PDF downloads from your CRM and return tamper-resistant, traceable versions. Protect your pipeline and maintain compliance with automated watermarking.</p>
 
-                <div class="free-test-badge">🚀 Test the API for FREE before subscribing</div>
+                <div class="free-test-badge">Test the API for FREE before subscribing</div>
             </div>
         </div>
     </section>
@@ -942,6 +934,25 @@
                         <li>In <strong>custom or proprietary CRMs</strong>, intercept the click/download event and POST the file via the API.</li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Test CTA -->
+    <section class="free-test-cta">
+        <div class="container">
+            <h3>Ready to Test?</h3>
+            <p>Get your free API test key and try Aquamark with your CRM before subscribing. No commitment required.</p>
+            <a href="mailto:support@aquamark.io?subject=Free API Test Key Request - Lenders" class="contact-button">Get Free Test Key</a>
+        </div>
+    </section>
+
+    <!-- JavaScript Example Section -->
+    <section style="padding: 80px 0; background: #ffffff;">
+        <div class="container">
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <h2 style="font-size: 2.5rem; color: #111827; margin-bottom: 1rem; font-weight: 600; letter-spacing: -0.02em; text-align: center;">JavaScript Example</h2>
+                <p style="font-size: 1.2rem; color: #6b7280; text-align: center; max-width: 600px; margin: 0 auto 3rem auto;">Here's a complete example of how to integrate the API into your application:</p>
                 
                 <div class="code-block">
 <span class="comment">// Example (JavaScript)</span>
