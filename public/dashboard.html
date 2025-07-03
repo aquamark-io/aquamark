@@ -682,6 +682,7 @@
                 const response = await fetch(`${API_BASE_URL}/api/update-plan`, {
                     method: 'POST',
                     headers: {
+                        'Authorization': `Bearer ${userToken}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
