@@ -341,52 +341,78 @@
         }
 
         .api-details {
-            background: #fafafa;
-            border: 1px solid #e5e7eb;
+            background: white;
+            border: 1px solid #f3f4f6;
             border-radius: 12px;
             padding: 2rem;
         }
 
         .api-details h3 {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #111827;
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
         .endpoint {
-            background: #f1f5f9;
+            background: #f9fafb;
+            color: #6b7280;
             padding: 1rem;
             border-radius: 8px;
             margin: 1rem 0;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-weight: 600;
-            color: #1e293b;
-            font-size: 0.9rem;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8125rem;
+            border: 1px solid #e5e7eb;
+            word-break: break-all;
         }
 
         .params-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
         }
 
         .params-table th,
         .params-table td {
             padding: 0.75rem;
             text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .params-table th {
-            background: #f8fafc;
+            background: #f9fafb;
             font-weight: 600;
-            color: #1e293b;
+            color: #111827;
+        }
+
+        .params-table code {
+            background: #f9fafb;
+            color: #111827;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.8125rem;
+            font-weight: 500;
         }
 
         .required {
             color: #dc2626;
+            font-weight: 600;
+        }
+
+        .section-note {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .section-note strong {
+            color: #111827;
             font-weight: 600;
         }
 
@@ -856,18 +882,18 @@
             
             <div class="api-content">
                 <div class="api-details">
-                    <h3>🔧 How to Integrate (for Developers)</h3>
+                    <h3>How to Integrate (for Developers)</h3>
                     <p style="margin-bottom: 2rem; color: #6b7280; line-height: 1.6;">
                         Every CRM is different. Your only job is to intercept the PDF download, send it to the Aquamark API, and return the processed file to the user.
                     </p>
                     
-                    <h3>✅ API Endpoint</h3>
+                    <h3>API Endpoint</h3>
                     <div class="endpoint">POST https://aquamark-lenders.onrender.com/watermark</div>
                     
-                    <h3>🔐 Headers</h3>
+                    <h3>Headers</h3>
                     <div class="endpoint">Authorization: Bearer YOUR_API_KEY</div>
                     
-                    <h3>📦 Request Format</h3>
+                    <h3>Request Format</h3>
                     <p style="margin-bottom: 1rem; color: #6b7280;">Use multipart/form-data with the following fields:</p>
                     <table class="params-table">
                         <thead>
@@ -882,45 +908,43 @@
                             <tr>
                                 <td><code>file</code></td>
                                 <td>File</td>
-                                <td class="required">✅</td>
+                                <td class="required">Required</td>
                                 <td>The original PDF to protect</td>
                             </tr>
                             <tr>
                                 <td><code>name</code></td>
                                 <td>String</td>
-                                <td class="required">✅</td>
+                                <td class="required">Required</td>
                                 <td>The CRM user's full name (the person signed in and downloading)</td>
                             </tr>
                             <tr>
                                 <td><code>company</code></td>
                                 <td>String</td>
-                                <td class="required">✅</td>
+                                <td class="required">Required</td>
                                 <td>The company name (e.g., "Acme Lending")</td>
                             </tr>
                         </tbody>
                     </table>
                     
-                    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 1rem; margin: 1.5rem 0;">
-                        <p style="margin: 0; color: #92400e; font-weight: 500;">
-                            💡 <strong>name</strong> must reflect the CRM user who is initiating the download.
-                        </p>
+                    <div class="section-note">
+                        <strong>Important:</strong> The <strong>name</strong> field must reflect the CRM user who is initiating the download.
                     </div>
                     
-                    <h3>🔁 Response</h3>
-                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem;">
+                    <h3>Response</h3>
+                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; font-size: 0.875rem;">
                         <li>Returns a <strong>200 OK</strong> with the protected PDF as binary data.</li>
                         <li>Client should treat it as a file download.</li>
                     </ul>
                     
-                    <h3>🛠 Common CRM Implementation Notes</h3>
-                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6;">
+                    <h3>Common CRM Implementation Notes</h3>
+                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6; font-size: 0.875rem;">
                         <li>In <strong>Salesforce</strong>, override the download button or embed a Visualforce/Apex page to fetch and return the protected file.</li>
                         <li>In <strong>custom or proprietary CRMs</strong>, intercept the click/download event and POST the file via the API.</li>
                     </ul>
                 </div>
                 
                 <div class="code-block">
-<span class="comment">// 🧠 Example (JavaScript)</span>
+<span class="comment">// Example (JavaScript)</span>
 <span class="keyword">async function</span> downloadProtectedPDF(originalFile, userName, companyName) {
     <span class="keyword">const</span> formData = <span class="keyword">new</span> FormData();
     formData.append(<span class="string">'file'</span>, originalFile);
