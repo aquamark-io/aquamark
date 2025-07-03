@@ -508,19 +508,6 @@
             font-size: 0.9rem;
         }
 
-        /* Debug Panel */
-        .debug-panel {
-            background: #1a1a1a;
-            color: #00ff00;
-            padding: 1rem;
-            border-radius: var(--radius);
-            margin: 1rem 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .tracking-inputs {
@@ -582,12 +569,7 @@
     </header>
 
     <main class="aqua-panel">
-        <h1 class="page-title">Watermark Console (DEBUG)</h1>
-
-        <!-- DEBUG PANEL -->
-        <div class="debug-panel" id="debugLog">
-            DEBUG LOG:<br>
-        </div>
+        <h1 class="page-title">Watermark Console</h1>
 
         <!-- Pages Used Counter -->
         <div class="pages-counter">
@@ -691,64 +673,48 @@
         let currentUser = null;
         let userToken = null;
 
-        // Debug logging function
-        function debugLog(message) {
-            console.log(message);
-            const debugPanel = document.getElementById('debugLog');
-            debugPanel.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
-            debugPanel.scrollTop = debugPanel.scrollHeight;
-        }
-
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            debugLog('🚀 Page loaded, starting initialization...');
             initializePage();
         });
 
         // Initialize the page
         async function initializePage() {
             try {
-                debugLog('🔍 Getting user from Outseta...');
                 // Get user from Outseta
                 currentUser = await Outseta.getUser();
                 if (!currentUser) {
-                    debugLog('❌ No user found, redirecting to login');
                     window.location.href = '/login.html';
                     return;
                 }
 
-                debugLog('👤 User found: ' + currentUser.Email);
-                debugLog('📦 Full user object: ' + JSON.stringify(currentUser, null, 2));
+                // Get auth token for API calls
+                userToken = await getAuthToken();
 
-                // Check subscription details
-                if (currentUser.Subscription) {
-                    debugLog('💳 Subscription found: ' + JSON.stringify(currentUser.Subscription, null, 2));
-                    if (currentUser.Subscription.Plan) {
-                        debugLog('📋 Plan found: ' + currentUser.Subscription.Plan.Name);
+                // ✅ Smart plan sync: Only update if changed
+                if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
+                    const livePlanName = currentUser.Subscription.Plan.Name;
+                    const cachedPlan = localStorage.getItem('aquaPlanName');
+
+                    console.log("📦 Live plan from Outseta:", livePlanName);
+                    console.log("📦 Cached plan from localStorage:", cachedPlan);
+
+                    if (livePlanName !== cachedPlan) {
+                        console.log("🔁 Plan changed — updating Supabase");
+                        await updateUserPlan(livePlanName);
+                        localStorage.setItem('aquaPlanName', livePlanName);
                     } else {
-                        debugLog('⚠️ No plan found in subscription');
+                        console.log("✅ Plan unchanged — skipping update");
                     }
-                } else {
-                    debugLog('⚠️ No subscription found');
                 }
 
-                // Get auth token for API calls
-                debugLog('🔑 Getting auth token...');
-                userToken = await getAuthToken();
-                debugLog('🔑 Token obtained: ' + (userToken ? 'YES' : 'NO'));
-
                 // Load user's logo and usage data
-                debugLog('🖼️ Loading logo...');
                 await loadUserLogo();
-                
-                debugLog('📊 Loading usage data...');
                 await loadUsageData();
                 
                 // Set up event listeners
                 setupEventListeners();
-                debugLog('✅ Initialization complete');
             } catch (error) {
-                debugLog('💥 Initialization error: ' + error.message);
                 console.error('Initialization error:', error);
                 showStatus('❌ Error loading page. Please refresh.', 'error');
             }
@@ -759,10 +725,8 @@
             try {
                 // Get token from Outseta
                 const token = await Outseta.getAccessToken();
-                debugLog('🔑 Token from Outseta: ' + (token ? token.substring(0, 20) + '...' : 'NULL'));
                 return token;
             } catch (error) {
-                debugLog('❌ Error getting auth token: ' + error.message);
                 console.error('Error getting auth token:', error);
                 return null;
             }
@@ -820,56 +784,32 @@
                     const data = await response.json();
                     if (data.logoUrl) {
                         document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
-                        debugLog('🖼️ Logo loaded successfully');
-                    } else {
-                        debugLog('🖼️ No logo URL in response');
                     }
-                } else {
-                    debugLog('❌ Logo load failed: ' + response.status);
                 }
             } catch (error) {
-                debugLog('❌ Logo load error: ' + error.message);
                 console.error('Error loading logo:', error);
             }
         }
 
-        // UPDATED: Load usage data with current plan
+        // Load usage data with cache busting
         async function loadUsageData() {
             try {
-                // Get current plan from Outseta
-                const currentPlan = currentUser?.Subscription?.Plan?.Name || 'Free Trial';
-                debugLog('📋 Current plan detected: "' + currentPlan + '"');
-                
-                const requestBody = {
-                    currentPlan: currentPlan
-                };
-                
-                debugLog('📡 Sending usage request with body: ' + JSON.stringify(requestBody));
-                
                 const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
-                    method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Content-Type': 'application/json',
                         'Cache-Control': 'no-cache'
-                    },
-                    body: JSON.stringify(requestBody)
+                    }
                 });
-
-                debugLog('📡 Usage API response status: ' + response.status);
 
                 if (response.ok) {
                     const data = await response.json();
-                    debugLog('📊 Usage data received: ' + JSON.stringify(data, null, 2));
+                    console.log('Fresh usage data loaded:', data);
                     document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
-                    debugLog('✅ Pages counter updated to: ' + (data.pages_used || 0));
                 } else {
-                    const errorText = await response.text();
-                    debugLog('❌ Usage API failed: ' + response.status + ' - ' + errorText);
                     console.error('Failed to load usage data');
                 }
             } catch (error) {
-                debugLog('💥 Usage data error: ' + error.message);
                 console.error('Error loading usage data:', error);
             }
         }
@@ -914,4 +854,83 @@
         // Process files function
         async function processFiles() {
             const pdfInput = document.getElementById('pdfInput');
-            const watermarkBtn = document.getElementByI
+            const watermarkBtn = document.getElementById('watermarkBtn');
+
+            if (pdfInput.files.length === 0) {
+                showStatus("Please upload at least one PDF.", 'warning');
+                return;
+            }
+
+            watermarkBtn.disabled = true;
+            watermarkBtn.textContent = "Processing...";
+            showStatus("⏳ Processing files...", 'info');
+
+            try {
+                const formData = new FormData();
+                
+                // Add PDF files
+                for (let i = 0; i < pdfInput.files.length; i++) {
+                    formData.append('pdfs', pdfInput.files[i]);
+                }
+
+                // Add optional data
+                formData.append('lender', document.getElementById('lenderTag').value || '');
+                formData.append('salesperson', document.getElementById('salespersonTag').value || '');
+                formData.append('processor', document.getElementById('processorTag').value || '');
+
+                const response = await fetch(`${API_BASE_URL}/api/watermark`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Download each file
+                    data.files.forEach(file => {
+                        const blob = new Blob([Uint8Array.from(atob(file.data), c => c.charCodeAt(0))], 
+                                            { type: 'application/pdf' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = file.fileName;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        setTimeout(() => URL.revokeObjectURL(url), 100);
+                    });
+
+                    // Update page counter immediately
+                    const currentPages = parseInt(document.getElementById('pagesWatermarked').textContent) || 0;
+                    document.getElementById('pagesWatermarked').textContent = currentPages + data.pagesProcessed;
+
+                    showStatus(`✅ ${data.message}`, 'success');
+                } else {
+                    const error = await response.json();
+                    showStatus(`❌ ${error.error || 'Processing failed'}`, 'error');
+                    
+                    if (error.error && error.error.includes('Not enough page credits')) {
+                        const subscribeBtn = document.getElementById('subscribeNowLink');
+                        subscribeBtn.style.animation = 'pulse 1.5s infinite';
+                        subscribeBtn.style.boxShadow = '0 0 15px var(--success-color)';
+                    }
+                }
+            } catch (error) {
+                console.error('Processing error:', error);
+                showStatus("❌ Processing failed. Please try again.", 'error');
+            } finally {
+                watermarkBtn.disabled = false;
+                watermarkBtn.textContent = "Watermark Files";
+            }
+        }
+
+        // Handle logout
+        if (window.location.hash === '#o-logout-link') {
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>
