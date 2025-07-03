@@ -682,7 +682,7 @@
         
             <div class="api-content">
                 <div class="api-details">
-                    <h3>Simple API Integration</h3>
+<h3 style="font-size: 2.2rem;">Simple API Integration</h3>
 <p style="margin-bottom: 2rem; color: #6b7280; line-height: 1.6;">
   Aquamark's integration is lightweight and straightforward.<br>
   Simply intercept the PDF download event, send the file to the API endpoint, and return the watermarked version to the user.
@@ -728,16 +728,16 @@
                     </table>
                     
                     
-                    <h3>Response</h3>
+<h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Response</h3>
                     <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; font-size: 0.875rem;">
                         <li>Returns a <strong>200 OK</strong> with the protected PDF as binary data.</li>
                         <li>Client should treat it as a file download.</li>
                     </ul>
                     
-                    <h3>Common CRM Implementation Notes</h3>
+<h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Common Implementations</h3>
                     <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6; font-size: 0.875rem;">
-                        <li>In <strong>Salesforce</strong>, override the download button or embed a Visualforce/Apex page to fetch and return the protected file.</li>
-                        <li>In <strong>custom or proprietary CRMs</strong>, intercept the click/download event and POST the file via the API.</li>
+                        <li><strong>Salesforce</strong> - override the download button or embed a Visualforce page to return the protected file.</li>
+                        <li><strong>Custom or proprietary CRMs</strong> - intercept the click/download event and POST the file via the API.</li>
                     </ul>
                 </div>
             </div>
