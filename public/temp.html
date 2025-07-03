@@ -141,17 +141,6 @@
             margin-bottom: 3rem;
         }
 
-        .free-test-badge {
-            background: #22c55e;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            display: inline-block;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-
         .cta-button {
             background: #111827;
             color: #ffffff;
@@ -168,6 +157,79 @@
 
         .cta-button:hover {
             background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* Free Test CTA */
+        .free-test-cta {
+            background: #22c55e;
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+            margin: 0;
+        }
+
+        .free-test-cta h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .free-test-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 2rem;
+        }
+
+        .test-params {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 500px;
+            text-align: left;
+        }
+
+        .test-params h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .test-params div {
+            margin-bottom: 0.75rem;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .test-params strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .contact-button {
+            background: white;
+            color: #22c55e;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .contact-button:hover {
+            background: #f0fdf4;
             transform: translateY(-1px);
         }
 
@@ -274,79 +336,6 @@
         .section-note strong {
             color: #111827;
             font-weight: 600;
-        }
-
-        /* Free Test CTA */
-        .free-test-cta {
-            background: #22c55e;
-            padding: 4rem 0;
-            text-align: center;
-            color: white;
-            margin: 2rem 0;
-        }
-
-        .free-test-cta h3 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .free-test-cta p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 2rem;
-        }
-
-        .test-params {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 500px;
-            text-align: left;
-        }
-
-        .test-params h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .test-params div {
-            margin-bottom: 0.75rem;
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.9rem;
-            color: white;
-        }
-
-        .test-params strong {
-            color: white;
-            font-weight: 600;
-        }
-
-        .contact-button {
-            background: white;
-            color: #22c55e;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s ease;
-        }
-
-        .contact-button:hover {
-            background: #f0fdf4;
-            transform: translateY(-1px);
         }
 
         /* Pricing Section */
@@ -699,8 +688,20 @@
             <div class="hero-content">
                 <h1>Aquamark for Lenders</h1>
                 <p>When brokers know you're watermarking, they know they can trust you — and trust leads to stronger relationships, a better reputation, and long-term growth.</p>
+            </div>
+        </div>
+    </section>
 
-                <div class="free-test-badge">Test before subscribing</div>
+    <!-- Free Test CTA -->
+    <section class="free-test-cta">
+        <div class="container">
+            <h3>Test 100 API calls for FREE</h3>
+            <p>One stolen submission is costing you thousands, and your reputation.</p>
+            
+            <div class="test-params">
+                <h4>Testing Parameters</h4>
+                <div><strong>User Email:</strong> test@aquamark.io</div>
+                <div><strong>API Key:</strong> api-aqua-lender-test-4423101813</div>
             </div>
         </div>
     </section>
@@ -779,20 +780,6 @@
         </div>
     </section>
 
-    <!-- Free Test CTA -->
-    <section class="free-test-cta">
-        <div class="container">
-            <h3>Test 100 API calls for FREE</h3>
-            <p>One stolen submission is costing you thousands, and your reputation.</p>
-            
-            <div class="test-params">
-                <h4>Testing Parameters</h4>
-                <div><strong>User Email:</strong> test@aquamark.io</div>
-                <div><strong>API Key:</strong> api-aqua-lender-test-4423101813</div>
-            </div>
-        </div>
-    </section>
-
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
         <div class="container">
@@ -812,7 +799,7 @@
                         <li>API access</li>
                     </ul>
                     
-<a href="https://buy.stripe.com/fZu7sM1w22Xx0vz2GY8ww01" class="cta-button">Subscribe</a>
+<a href="https://buy.stripe.com/fZu7sM1w32Xx0vz2GY8ww01" class="cta-button">Subscribe</a>
                 </div>
                 
                 <div class="pricing-card featured">
