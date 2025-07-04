@@ -642,24 +642,17 @@
                             const subscription = await detailResponse.json();
                             console.log('📋 Detailed subscription data:', subscription);
                             
-                            // Try different possible plan name fields
-                            let planName = null;
-                            if (subscription.BillingRenewalTerm && subscription.BillingRenewalTerm.Plan && subscription.BillingRenewalTerm.Plan.Name) {
-                                planName = subscription.BillingRenewalTerm.Plan.Name;
-                                console.log('✅ Found plan via BillingRenewalTerm.Plan.Name:', planName);
-                            } else if (subscription.Plan && subscription.Plan.Name) {
-                                planName = subscription.Plan.Name;
-                                console.log('✅ Found plan via Plan.Name:', planName);
-                            } else if (subscription.SubscriptionPlan && subscription.SubscriptionPlan.Name) {
-                                planName = subscription.SubscriptionPlan.Name;
-                                console.log('✅ Found plan via SubscriptionPlan.Name:', planName);
-                            }
-                            
-                            if (planName) {
+                            // Based on the documentation, plan name should be in Plan.Name
+                            if (subscription.Plan && subscription.Plan.Name) {
+                                const planName = subscription.Plan.Name;
+                                console.log('✅ Found plan name:', planName);
                                 return { planName: planName, subscription: subscription };
                             } else {
-                                console.log('⚠️ Subscription found but no plan name in any expected field');
+                                console.log('⚠️ No Plan.Name found in subscription');
                                 console.log('Available fields:', Object.keys(subscription));
+                                if (subscription.Plan) {
+                                    console.log('Plan fields:', Object.keys(subscription.Plan));
+                                }
                             }
                         } else {
                             const errorText = await detailResponse.text();
