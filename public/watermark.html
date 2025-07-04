@@ -907,6 +907,7 @@
                     const currentPages = parseInt(document.getElementById('pagesWatermarked').textContent) || 0;
                     document.getElementById('pagesWatermarked').textContent = currentPages + data.pagesProcessed;
 
+                    await loadUsageData();
                     showStatus(`✅ ${data.message}`, 'success');
                 } else {
                     const error = await response.json();
