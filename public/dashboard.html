@@ -695,28 +695,28 @@
                 let subscriptionStartDate = null;
                 
                 // Check if user has Account with Subscriptions
-                if (user && user.Account && user.Account.Subscriptions && user.Account.Subscriptions.length > 0) {
-                    const subscription = user.Account.Subscriptions[0];
-                    console.log('📋 Subscription found:', subscription);
-                    
-                    if (subscription.Plan && subscription.Plan.Name) {
-                        planName = subscription.Plan.Name;
-                    }
-                    startDateValue = subscription.StartDate || subscription.CreatedDate;
-                    
-                    // Look for subscription start date
-                    if (subscription.SubscriptionStartDate) {
-                        subscriptionStartDate = subscription.SubscriptionStartDate;
-                    } else if (subscription.StartDate && planName !== 'Free Trial') {
-                        subscriptionStartDate = subscription.StartDate;
-                    }
-                } else {
-                    console.log('🔍 No direct subscriptions found, checking account created date');
-                    
-                    // Use account created date as fallback
-                    if (user && user.Account && user.Account.Created) {
-                        startDateValue = user.Account.Created;
-                    }
+               const token = await Outseta.getAccessToken();
+const accountRes = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    }
+});
+const accountData = await accountRes.json();
+const subscription = accountData.Subscriptions?.[0];
+
+if (subscription) {
+    if (subscription.Plan && subscription.Plan.Name) {
+        planName = subscription.Plan.Name;
+    }
+    startDateValue = subscription.StartDate || subscription.CreatedDate;
+    if (subscription.SubscriptionStartDate) {
+        subscriptionStartDate = subscription.SubscriptionStartDate;
+    } else if (subscription.StartDate && planName !== 'Free Trial') {
+        subscriptionStartDate = subscription.StartDate;
+    }
+}
+
                     
                     // Try API calls only if we don't have fast data already
                     try {
