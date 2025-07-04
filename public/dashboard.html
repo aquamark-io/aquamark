@@ -660,10 +660,26 @@
                             if (subscriptionData.items && subscriptionData.items.length > 0) {
                                 const subscription = subscriptionData.items[0];
                                 console.log('Found subscription via billing API:', subscription);
+                                console.log('Full subscription object keys:', Object.keys(subscription));
                                 
-                                if (subscription.Plan && subscription.Plan.Name) {
+                                // Check for original plan before cancellation
+                                if (subscription.Plan && subscription.Plan.Name && subscription.Plan.Name !== 'Free Trial') {
                                     planName = subscription.Plan.Name;
                                 }
+                                
+                                // Look for various start date fields
+                                const possibleStartDates = {
+                                    StartDate: subscription.StartDate,
+                                    SubscriptionStartDate: subscription.SubscriptionStartDate,
+                                    SubscriptionStart: subscription.SubscriptionStart,
+                                    BillingStartDate: subscription.BillingStartDate,
+                                    CreatedDate: subscription.CreatedDate,
+                                    ActivatedDate: subscription.ActivatedDate,
+                                    FirstBillDate: subscription.FirstBillDate
+                                };
+                                
+                                console.log('All possible start date fields:', possibleStartDates);
+                                
                                 if (subscription.StartDate) {
                                     startDateValue = subscription.StartDate;
                                 }
@@ -675,8 +691,12 @@
                                     subscriptionStartDate = subscription.SubscriptionStart;
                                 } else if (subscription.BillingStartDate) {
                                     subscriptionStartDate = subscription.BillingStartDate;
-                                } else if (subscription.StartDate && planName !== 'Free Trial') {
+                                } else if (subscription.StartDate && subscription.Plan && subscription.Plan.Name !== 'Free Trial') {
                                     subscriptionStartDate = subscription.StartDate;
+                                } else if (subscription.ActivatedDate) {
+                                    subscriptionStartDate = subscription.ActivatedDate;
+                                } else if (subscription.FirstBillDate) {
+                                    subscriptionStartDate = subscription.FirstBillDate;
                                 }
                                 
                                 console.log('Billing API subscription details:', {
@@ -684,8 +704,11 @@
                                     SubscriptionStart: subscription.SubscriptionStart,
                                     BillingStartDate: subscription.BillingStartDate,
                                     StartDate: subscription.StartDate,
+                                    ActivatedDate: subscription.ActivatedDate,
+                                    FirstBillDate: subscription.FirstBillDate,
                                     Plan: subscription.Plan,
-                                    fullSubscription: subscription
+                                    BillingState: subscription.BillingState,
+                                    Status: subscription.Status
                                 });
                             }
                         }
