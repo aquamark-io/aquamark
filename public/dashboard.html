@@ -537,7 +537,7 @@
             preserveUrlParameters();
         });
 
-        // Simple initialization
+        // Initialize dashboard
         async function initializePage() {
             try {
                 console.log('🚀 Starting dashboard initialization...');
@@ -557,7 +557,7 @@
                 // Get auth token for API calls
                 userToken = await getAuthToken();
                 
-                // Load subscription info using simple method
+                // Load subscription info
                 await loadSubscriptionInfo();
                 
                 // Set up Outseta event listeners for plan changes
@@ -591,129 +591,60 @@
             });
         }
 
-        // Simple function to get current plan - just returns the plan name
-        async function getCurrentPlan() {
-            try {
-                const user = await Outseta.getUser();
-                const token = await Outseta.getAccessToken();
-                
-                if (!user || !token) {
-                    console.log('❌ No user or token found');
-                    return { planName: 'Free Trial', subscription: null };
-                }
-
-                console.log('🔍 Looking for subscriptions for account:', user.Account.Uid);
-
-                // Step 1: Get the list of subscriptions to find the subscription UID
-                const listResponse = await fetch(
-                    `https://aquamark.outseta.com/api/v1/billing/subscriptions?Account=${user.Account.Uid}`,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    }
-                );
-
-                console.log('📡 List API Response status:', listResponse.status);
-
-                if (listResponse.ok) {
-                    const listData = await listResponse.json();
-                    console.log('📊 Subscription list response:', listData);
-                    
-                    if (listData.items && listData.items.length > 0) {
-                        const subscriptionUid = listData.items[0].Uid;
-                        console.log('🎯 Found subscription UID:', subscriptionUid);
-                        
-                        // Step 2: Get the detailed subscription info using the specific endpoint
-                        const detailResponse = await fetch(
-                            `https://aquamark.outseta.com/api/v1/billing/subscriptions/${subscriptionUid}`,
-                            {
-                                headers: {
-                                    'Authorization': `Bearer ${token}`,
-                                    'Content-Type': 'application/json'
-                                }
-                            }
-                        );
-                        
-                        console.log('📡 Detail API Response status:', detailResponse.status);
-                        
-                        if (detailResponse.ok) {
-                            const subscription = await detailResponse.json();
-                            console.log('📋 Detailed subscription data:', subscription);
-                            
-                            // Based on the documentation, plan name should be in Plan.Name
-                            if (subscription.Plan && subscription.Plan.Name) {
-                                const planName = subscription.Plan.Name;
-                                console.log('✅ Found plan name:', planName);
-                                return { planName: planName, subscription: subscription };
-                            } else {
-                                console.log('⚠️ No Plan.Name found in subscription');
-                                console.log('Available fields:', Object.keys(subscription));
-                                if (subscription.Plan) {
-                                    console.log('Plan fields:', Object.keys(subscription.Plan));
-                                }
-                            }
-                        } else {
-                            const errorText = await detailResponse.text();
-                            console.log('❌ Detail API call failed:', detailResponse.status, errorText);
-                        }
-                    } else {
-                        console.log('⚠️ List API returned successfully but no subscription items found');
-                    }
-                } else {
-                    const errorText = await listResponse.text();
-                    console.log('❌ List API call failed:', listResponse.status, errorText);
-                }
-
-                // Fallback: default to Free Trial
-                console.log('ℹ️ No active subscription found, defaulting to Free Trial');
-                return { planName: 'Free Trial', subscription: null };
-
-            } catch (error) {
-                console.error('❌ Error getting plan:', error);
-                return { planName: 'Free Trial', subscription: null };
-            }
-        }
-
-        // Simple subscription info loading
+        // Load subscription information
         async function loadSubscriptionInfo() {
             try {
                 console.log('📊 Loading subscription data...');
                 
-                const planData = await getCurrentPlan();
-                const planName = planData.planName;
-                const subscription = planData.subscription;
-                
-                console.log('📋 Plan data received:', { planName, subscription });
-                
-                // Update plan display
-                updatePlanDisplay(planName);
-                
-                // Get user for dates
-                const user = await Outseta.getUser();
-                let startDate = null;
+                let planName = 'Free Trial';
+                let startDateValue = null;
                 let subscriptionStartDate = null;
                 
-                // Try to get subscription start date first
-                if (subscription) {
-                    if (subscription.StartDate) {
-                        subscriptionStartDate = new Date(subscription.StartDate);
-                        console.log('📅 Subscription start date:', subscriptionStartDate);
-                    }
-                    if (subscription.CreatedDate) {
-                        startDate = new Date(subscription.CreatedDate);
-                        console.log('📅 Subscription created date:', startDate);
+                // Get auth token and fetch subscription details
+                const token = await Outseta.getAccessToken();
+                if (token) {
+                    try {
+                        // Get subscriptions list
+                        const subscriptionsResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
+                            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+                        });
+                        
+                        if (subscriptionsResponse.ok) {
+                            const subscriptionsData = await subscriptionsResponse.json();
+                            
+                            if (subscriptionsData.items && subscriptionsData.items.length > 0) {
+                                const subscriptionUid = subscriptionsData.items[0].Uid;
+                                
+                                // Get detailed subscription
+                                const detailedResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions/${subscriptionUid}`, {
+                                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+                                });
+                                
+                                if (detailedResponse.ok) {
+                                    const subscription = await detailedResponse.json();
+                                    if (subscription.Plan?.Name) planName = subscription.Plan.Name;
+                                    if (subscription.StartDate) {
+                                        startDateValue = subscription.StartDate;
+                                        subscriptionStartDate = subscription.StartDate;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.log('API call failed:', error);
                     }
                 }
                 
-                // Fallback to account creation date
-                if (!startDate && user && user.Account && user.Account.Created) {
-                    startDate = new Date(user.Account.Created);
-                    console.log('📅 Using account created date:', startDate);
+                // Fallback to account created date if no subscription data
+                if (!startDateValue && currentUser?.Account?.Created) {
+                    startDateValue = currentUser.Account.Created;
                 }
                 
-                if (startDate) {
+                // Update UI
+                updatePlanDisplay(planName);
+                
+                if (startDateValue) {
+                    const startDate = new Date(startDateValue);
                     const today = new Date();
                     const diffTime = today.getTime() - startDate.getTime();
                     const diffDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
@@ -726,51 +657,32 @@
                         const trialEndDate = new Date(startDate);
                         trialEndDate.setDate(startDate.getDate() + 7);
                         
-                        const trialEndElement = document.getElementById('trialEndDate');
-                        if (trialEndElement) {
-                            trialEndElement.textContent = trialEndDate.toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                            });
-                        }
-                        
-                        const trialEndItem = document.getElementById('trialEndItem');
-                        if (trialEndItem) {
-                            trialEndItem.style.display = 'flex';
-                        }
+                        document.getElementById('trialEndDate').textContent = trialEndDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
+                        document.getElementById('trialEndItem').style.display = 'flex';
                     } else {
-                        const trialEndItem = document.getElementById('trialEndItem');
-                        if (trialEndItem) {
-                            trialEndItem.style.display = 'none';
-                        }
+                        document.getElementById('trialEndItem').style.display = 'none';
                     }
                     
-                    // Set subscription start date
+                    // Update subscription start date
                     const subscriptionStartElement = document.getElementById('subscriptionStartDate');
-                    if (subscriptionStartElement) {
-                        subscriptionStartElement.classList.remove('loading-text');
-                        if (subscriptionStartDate) {
-                            subscriptionStartElement.textContent = subscriptionStartDate.toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                            });
-                        } else if (planName !== 'Free Trial') {
-                            subscriptionStartElement.textContent = startDate.toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                            });
-                        } else {
-                            subscriptionStartElement.textContent = 'N/A';
-                        }
+                    subscriptionStartElement.classList.remove('loading-text');
+                    if (subscriptionStartDate) {
+                        const subStartDate = new Date(subscriptionStartDate);
+                        subscriptionStartElement.textContent = subStartDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
+                    } else {
+                        subscriptionStartElement.textContent = 'N/A';
                     }
                 } else {
                     showFallbackData();
                 }
-                
-                console.log('✅ Subscription data loaded');
                 
             } catch (error) {
                 console.error('❌ Error loading subscription info:', error);
@@ -813,10 +725,8 @@
             startDateElement.textContent = 'N/A';
             
             const subscriptionStartElement = document.getElementById('subscriptionStartDate');
-            if (subscriptionStartElement) {
-                subscriptionStartElement.classList.remove('loading-text');
-                subscriptionStartElement.textContent = 'N/A';
-            }
+            subscriptionStartElement.classList.remove('loading-text');
+            subscriptionStartElement.textContent = 'N/A';
         }
 
         // Preserve URL parameters for navigation
@@ -852,14 +762,14 @@
             Outseta.on("subscription.update", async (params) => {
                 console.log("Subscription update event:", params);
                 await handlePlanChange(params);
-                await loadSubscriptionInfo();
+                await loadSubscriptionInfo(); // Refresh subscription info
             });
 
             // Listen for subscription reopens
             Outseta.on("subscription.reopen", async (params) => {
                 console.log("Subscription reopen event:", params);
                 await handlePlanChange(params);
-                await loadSubscriptionInfo();
+                await loadSubscriptionInfo(); // Refresh subscription info
             });
         }
 
