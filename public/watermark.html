@@ -1,87 +1,104 @@
+<!-- Full updated watermark.html with REST API-based plan check -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Aquamark Watermark</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Aquamark Watermark</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    var o_options = {
+      domain: 'aquamark.outseta.com',
+      load: 'auth,nocode'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+    .hidden { display: none; }
+    .status-error {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .plan-info {
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <h1>Watermark Console</h1>
-    <div>
-        <strong>Plan:</strong> <span id="planName">Loading...</span><br />
-        <strong>Trial Ends:</strong> <span id="trialEndDate" style="display:none;"></span><br />
-    </div>
+  <h1>Watermark PDF</h1>
+  <div id="planDetails" class="plan-info">
+    <strong>Plan:</strong> <span id="planName">Loading...</span><br />
+    <strong>Trial Ends:</strong> <span id="trialEndDate" class="hidden"></span>
+  </div>
+  <div id="trialExpiredGate" class="status-error hidden">🚫 Your trial has expired. Please upgrade your plan to continue watermarking.</div>
 
-    <script>
-        const API_BASE_URL = 'https://aquamark-backend.onrender.com';
-        let currentUser = null;
+  <div id="watermarkSection">
+    <!-- Upload, preview, and watermarking UI -->
+    <input type="file" id="pdfInput" accept="application/pdf" multiple />
+    <button id="watermarkBtn">Watermark Files</button>
+  </div>
 
-        document.addEventListener('DOMContentLoaded', async function() {
-            await waitForOutseta();
-            currentUser = await Outseta.getUser();
-            const token = await Outseta.getAccessToken();
+  <script>
+    let currentUser = null;
 
-            if (!currentUser || !currentUser.Account || !token) {
-                alert("User not authenticated.");
-                return;
-            }
+    document.addEventListener("DOMContentLoaded", async () => {
+      await waitForOutseta();
+      currentUser = await Outseta.getUser();
+      if (!currentUser) {
+        alert("Please log in again.");
+        window.location.href = "/login.html";
+        return;
+      }
 
-            try {
-                const res = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${currentUser.Account.Uid}?fields=*`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const data = await res.json();
-                const subscription = data.Subscriptions?.[0];
-                const planName = subscription?.Plan?.Name || 'Free Trial';
-                const startDateRaw = subscription?.StartDate || subscription?.CreatedDate || data?.Created;
-                const startDate = new Date(startDateRaw);
-                const trialEnd = new Date(startDate);
-                trialEnd.setDate(startDate.getDate() + 7);
-
-                document.getElementById('planName').textContent = planName;
-
-                if (planName === 'Free Trial') {
-                    document.getElementById('trialEndDate').textContent = trialEnd.toDateString();
-                    document.getElementById('trialEndDate').style.display = 'inline';
-                }
-
-                // Disable watermarking if trial expired
-                if (planName === 'Free Trial' && new Date() > trialEnd) {
-                    alert("Your trial has expired. Please upgrade your plan to continue watermarking.");
-                    document.body.innerHTML += "<p style='color:red'>🚫 Trial expired. Upgrade required to watermark.</p>";
-                }
-            } catch (e) {
-                console.error("Error fetching subscription info", e);
-            }
-        });
-
-        function waitForOutseta() {
-            return new Promise(resolve => {
-                if (window.Outseta && typeof Outseta.getUser === 'function') {
-                    resolve();
-                } else {
-                    const check = setInterval(() => {
-                        if (window.Outseta && typeof Outseta.getUser === 'function') {
-                            clearInterval(check);
-                            resolve();
-                        }
-                    }, 100);
-                }
-            });
+      const token = await Outseta.getAccessToken();
+      const res = await fetch(\`https://aquamark.outseta.com/api/v1/crm/accounts/\${currentUser.Account.Uid}?fields=*\`, {
+        headers: {
+          'Authorization': \`Bearer \${token}\`,
+          'Content-Type': 'application/json'
         }
-    </script>
+      });
 
-    <!-- Outseta Script -->
-    <script>
-        var o_options = {
-            domain: 'aquamark.outseta.com',
-            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-        };
-    </script>
-    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+      const data = await res.json();
+      const subscription = data.Subscriptions?.[0];
+      const planName = subscription?.Plan?.Name || "Free Trial";
+      const startDateRaw = subscription?.StartDate || subscription?.CreatedDate || data?.Created;
+      const startDate = new Date(startDateRaw);
+      const trialEnd = new Date(startDate);
+      trialEnd.setDate(startDate.getDate() + 7);
+
+      document.getElementById("planName").textContent = planName;
+
+      if (planName === "Free Trial") {
+        const trialEndEl = document.getElementById("trialEndDate");
+        trialEndEl.textContent = trialEnd.toDateString();
+        trialEndEl.classList.remove("hidden");
+
+        if (new Date() > trialEnd) {
+          document.getElementById("trialExpiredGate").classList.remove("hidden");
+          document.getElementById("watermarkSection").classList.add("hidden");
+        }
+      }
+    });
+
+    function waitForOutseta() {
+      return new Promise(resolve => {
+        if (window.Outseta && typeof Outseta.getUser === "function") {
+          resolve();
+        } else {
+          const interval = setInterval(() => {
+            if (window.Outseta && typeof Outseta.getUser === "function") {
+              clearInterval(interval);
+              resolve();
+            }
+          }, 100);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
