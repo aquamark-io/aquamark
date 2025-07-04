@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aquamark Dashboard</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css">
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 </head>
 <body>
-  <header>
-    <div class="container header">
-      <img src="/logo.png" alt="Aquamark Logo" class="logo" />
+  <header class="header">
+    <div class="container">
+      <img src="/logo.png" alt="Aquamark Logo" class="logo">
       <h1>Welcome back, <span id="user-name">User</span> 👋</h1>
     </div>
   </header>
 
-  <main class="container">
-    <!-- Plan Info -->
+  <main class="container dashboard-grid">
     <section class="card">
       <h2>Your Current Plan</h2>
       <p><strong id="plan-name">Loading...</strong></p>
     </section>
 
-    <!-- Profile Embed -->
     <section class="card">
       <h2>Your Account</h2>
       <div id="outseta-profile"></div>
@@ -31,15 +29,19 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      Outseta.init({ 
-        domain: "aquamark.outseta.com", 
-        loadProfile: true 
-      });
+      if (typeof Outseta !== "undefined") {
+        Outseta.init({
+          domain: "aquamark.outseta.com",
+          loadProfile: true
+        });
 
-      Outseta.on('userLoaded', function(user) {
-        document.getElementById("user-name").textContent = user.firstName || "User";
-        document.getElementById("plan-name").textContent = user.account.plan.name || "N/A";
-      });
+        Outseta.on("userLoaded", function(user) {
+          document.getElementById("user-name").textContent = user.firstName || "User";
+          document.getElementById("plan-name").textContent = user.account.plan.name || "N/A";
+        });
+      } else {
+        console.error("Outseta not loaded");
+      }
     });
   </script>
 </body>
