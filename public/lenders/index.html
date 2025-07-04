@@ -59,14 +59,14 @@
         }
 
         .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 2.5rem;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        width: 100%;
-    }
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            width: 100%;
+        }
 
         .nav-links a {
             text-decoration: none;
@@ -581,14 +581,14 @@
             }
 
             .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 2.5rem;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        width: 100%;
-    }
+                display: flex;
+                list-style: none;
+                gap: 1.5rem;
+                align-items: center;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                width: 100%;
+            }
 
             .nav-links.active {
                 transform: translateY(0);
@@ -597,21 +597,19 @@
             }
 
             .nav-links li {
-                width: 100%;
-                text-align: center;
+                white-space: nowrap;
             }
 
             .back-home-btn {
                 background: #000000 !important;
                 color: #ffffff !important;
-                padding: 0.8rem 1.5rem;
+                padding: 0.6rem 1.2rem;
                 border: none;
                 border-radius: 6px;
                 font-weight: 500;
-                font-size: 1.1rem;
+                font-size: 0.9rem;
                 transition: all 0.2s ease;
                 text-decoration: none;
-                margin-left: auto;
                 white-space: nowrap;
             }
 
@@ -677,6 +675,19 @@
         @media (max-width: 480px) {
             .container {
                 padding: 0 15px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+
+            .back-home-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
             }
 
             .hero h1 {
