@@ -610,7 +610,21 @@
                     console.log('🏢 User account object:', currentUser.Account);
                     
                     // Check if user object already has subscription data
-                    if (currentUser.Account && currentUser.Account.Subscriptions) {
+                    if (currentUser.Account && currentUser.Account.CurrentSubscription) {
+                        console.log('📋 Current subscription in user object:', currentUser.Account.CurrentSubscription);
+                        
+                        const currentSubscription = currentUser.Account.CurrentSubscription;
+                        
+                        console.log('🎯 Using current subscription from user object:', currentSubscription.Plan?.Name);
+                        
+                        // Extract plan name and start date directly
+                        if (currentSubscription.Plan?.Name) planName = currentSubscription.Plan.Name;
+                        if (currentSubscription.StartDate) {
+                            startDateValue = currentSubscription.StartDate;
+                            subscriptionStartDate = currentSubscription.StartDate;
+                        }
+                        
+                    } else if (currentUser.Account && currentUser.Account.Subscriptions) {
                         console.log('📋 Subscriptions in user object:', currentUser.Account.Subscriptions);
                         
                         const userSubscriptions = currentUser.Account.Subscriptions;
