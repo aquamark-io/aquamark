@@ -334,55 +334,7 @@
             border-left: 4px solid var(--accent-color);
         }
 
-        /* Pages Used Counter */
-        .pages-counter {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-        }
-
-        /* Clean Urgency Text */
-        .urgency-text {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-            font-weight: 400;
-        }
-
-        .urgency-highlight {
-            color: var(--success-color);
-            font-weight: 600;
-        }
-
-        .counter-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .counter-info h3 {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .counter-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        .counter-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Subscribe Button (formerly Upgrade Button) */
+        /* Subscribe Button (for trial expired gate) */
         .subscribe-btn {
             display: inline-flex;
             align-items: center;
@@ -403,13 +355,6 @@
             background: var(--success-dark);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-
-        .subscribe-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            text-align: right;
         }
 
         /* Action Row */
@@ -585,17 +530,6 @@
                 gap: 0.5rem;
             }
 
-            .pages-counter {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .subscribe-container {
-                align-items: stretch;
-                text-align: center;
-            }
-
             .logo-actions {
                 flex-direction: column;
             }
@@ -641,17 +575,6 @@
                     Subscribe Now
                 </a>
             </div>
-        </div>
-
-        <!-- Pages Used Counter -->
-        <div class="pages-counter">
-            <div class="counter-info">
-                <h3>Pages Watermarked</h3>
-                <div class="counter-value" id="pagesWatermarked">0</div>
-            </div>
-            <a href="/dashboard.html" id="subscribeNowLink" class="subscribe-btn">
-                Subscribe
-            </a>
         </div>
 
         <!-- Section 1: Stored Logo -->
@@ -795,10 +718,9 @@
                     }
                 }
 
-                // Load user's logo and usage data (if trial is not expired)
+                // Load user's logo (if trial is not expired)
                 if (!isTrialExpired) {
                     await loadUserLogo();
-                    await loadUsageData(); // This now just shows 0 since we're not tracking
                 }
                 
                 // Set up event listeners
@@ -815,7 +737,7 @@
                 if (window.Outseta && typeof Outseta.getUser === 'function') {
                     resolve();
                 } else {
-                    // Wait for Outseta to load
+                                            // Wait for Outseta to load
                     const checkOutseta = setInterval(() => {
                         if (window.Outseta && typeof Outseta.getUser === 'function') {
                             clearInterval(checkOutseta);
@@ -1055,7 +977,6 @@
             const hashParams = window.location.hash;
             
             document.getElementById('dashboardLink').href = "/dashboard.html" + urlParams + hashParams;
-            document.getElementById('subscribeNowLink').href = "/dashboard.html" + urlParams + hashParams;
         }
 
         // Show status with proper styling
@@ -1137,40 +1058,6 @@
             } catch (error) {
                 console.error('❌ Error loading logo:', error);
                 console.log('ℹ️ Will use placeholder logo');
-            }
-        }
-
-        // Load usage data (simplified - backend returns mock data)
-        async function loadUsageData() {
-            try {
-                console.log('📊 Loading usage data for user:', currentUser.Email);
-                
-                if (!userToken) {
-                    console.error('❌ No auth token available for loading usage data');
-                    document.getElementById('pagesWatermarked').textContent = '0';
-                    return;
-                }
-
-                const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json',
-                        'Cache-Control': 'no-cache'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('✅ Usage data loaded:', data);
-                    // Show 0 since we're not tracking pages anymore - frontend handles trial logic
-                    document.getElementById('pagesWatermarked').textContent = '0';
-                } else {
-                    console.log('ℹ️ Usage endpoint returned error, setting to 0');
-                    document.getElementById('pagesWatermarked').textContent = '0';
-                }
-            } catch (error) {
-                console.error('❌ Error loading usage data:', error);
-                document.getElementById('pagesWatermarked').textContent = '0';
             }
         }
 
@@ -1295,8 +1182,7 @@
                         setTimeout(() => URL.revokeObjectURL(url), 100);
                     });
 
-                    // Don't update page counter since we're not tracking usage anymore
-                    // Just show success message
+                    // Show success message
                     showStatus(`✅ ${data.message}`, 'success');
                 } else {
                     const errorText = await response.text();
@@ -1314,12 +1200,6 @@
                         }
                         
                         showStatus(`❌ ${errorObj.error || 'Processing failed'}`, 'error');
-                        
-                        if (errorObj.error && errorObj.error.includes('Not enough page credits')) {
-                            const subscribeBtn = document.getElementById('subscribeNowLink');
-                            subscribeBtn.style.animation = 'pulse 1.5s infinite';
-                            subscribeBtn.style.boxShadow = '0 0 15px var(--success-color)';
-                        }
                     }
                 }
             } catch (error) {
