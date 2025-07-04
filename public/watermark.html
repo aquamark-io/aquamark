@@ -870,88 +870,53 @@
         // Check trial status
         async function checkTrialStatus() {
             try {
-                // Get user data which should include subscription info
-                const user = await Outseta.getUser();
-                console.log('Checking trial status for user:', user.Email);
+                console.log('📊 Loading subscription data...');
                 
                 let planName = 'Free Trial';
                 let startDateValue = null;
                 
-                // Check if user has Account with Subscriptions
-                if (user && user.Account && user.Account.Subscriptions && user.Account.Subscriptions.length > 0) {
-                    const subscription = user.Account.Subscriptions[0];
-                    console.log('Subscription found:', subscription);
+                // Check if user object already has subscription data
+                if (currentUser.Account && currentUser.Account.CurrentSubscription) {
+                    console.log('📋 Current subscription in user object:', currentUser.Account.CurrentSubscription);
                     
-                    if (subscription.Plan && subscription.Plan.Name) {
-                        planName = subscription.Plan.Name;
+                    const currentSubscription = currentUser.Account.CurrentSubscription;
+                    
+                    console.log('🎯 Using current subscription from user object:', currentSubscription.Plan?.Name);
+                    
+                    // Extract plan name and start date directly
+                    if (currentSubscription.Plan?.Name) planName = currentSubscription.Plan.Name;
+                    if (currentSubscription.StartDate) {
+                        startDateValue = currentSubscription.StartDate;
                     }
-                    startDateValue = subscription.StartDate || subscription.CreatedDate;
+                    
+                } else if (currentUser.Account && currentUser.Account.Subscriptions) {
+                    console.log('📋 Subscriptions in user object:', currentUser.Account.Subscriptions);
+                    
+                    const userSubscriptions = currentUser.Account.Subscriptions;
+                    if (userSubscriptions.length > 0) {
+                        // Find the active subscription (not Free Trial and not ended)
+                        let activeSubscription = userSubscriptions.find(sub => {
+                            return sub.Plan && sub.Plan.Name !== 'Free Trial' && !sub.EndDate;
+                        });
+                        
+                        // If no active paid subscription found, fall back to the most recent one
+                        if (!activeSubscription) {
+                            activeSubscription = userSubscriptions[0];
+                        }
+                        
+                        console.log('🎯 Using subscription from user object:', activeSubscription.Plan?.Name);
+                        
+                        // Extract plan name and start date directly
+                        if (activeSubscription.Plan?.Name) planName = activeSubscription.Plan.Name;
+                        if (activeSubscription.StartDate) {
+                            startDateValue = activeSubscription.StartDate;
+                        }
+                    }
                 } else {
-                    console.log('No subscriptions found, checking account created date');
+                    console.log('⚠️ No subscription data in user object, using fallback...');
                     
-                    // Use account created date as fallback
-                    if (user && user.Account && user.Account.Created) {
-                        startDateValue = user.Account.Created;
+                        startDateValue = currentUser.Account.Created;
                         console.log('Using Account Created date:', startDateValue);
-                    }
-                    
-                    // Try direct API call for current subscription
-                    try {
-                        const token = await Outseta.getAccessToken();
-                        console.log('Trying direct API call with token');
-                        
-                        // Try getting the account details with subscription info
-                        const accountResponse = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Content-Type': 'application/json'
-                            }
-                        });
-                        
-                        if (accountResponse.ok) {
-                            const accountData = await accountResponse.json();
-                            console.log('Account API data:', accountData);
-                            
-                            if (accountData.Subscriptions && accountData.Subscriptions.length > 0) {
-                                const subscription = accountData.Subscriptions[0];
-                                console.log('Found subscription via account API:', subscription);
-                                
-                                if (subscription.Plan && subscription.Plan.Name) {
-                                    planName = subscription.Plan.Name;
-                                }
-                                if (subscription.StartDate) {
-                                    startDateValue = subscription.StartDate;
-                                }
-                            }
-                        }
-                        
-                        // Also try the billing subscriptions endpoint
-                        const subResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Content-Type': 'application/json'
-                            }
-                        });
-                        
-                        if (subResponse.ok) {
-                            const subscriptionData = await subResponse.json();
-                            console.log('Billing API subscription data:', subscriptionData);
-                            
-                            if (subscriptionData.items && subscriptionData.items.length > 0) {
-                                const subscription = subscriptionData.items[0];
-                                console.log('Found subscription via billing API:', subscription);
-                                
-                                if (subscription.Plan && subscription.Plan.Name && subscription.Plan.Name !== 'Free Trial') {
-                                    planName = subscription.Plan.Name;
-                                }
-                                
-                                if (subscription.StartDate) {
-                                    startDateValue = subscription.StartDate;
-                                }
-                            }
-                        }
-                    } catch (apiError) {
-                        console.error('Direct API call failed:', apiError);
                     }
                 }
                 
