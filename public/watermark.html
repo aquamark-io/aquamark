@@ -793,27 +793,9 @@
                 // Check trial status first
                 await checkTrialStatus();
 
-                // ✅ Smart plan sync: Only update if changed
-                if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
-                    const livePlanName = currentUser.Subscription.Plan.Name;
-                    const cachedPlan = localStorage.getItem('aquaPlanName');
-
-                    console.log("📦 Live plan from Outseta:", livePlanName);
-                    console.log("📦 Cached plan from localStorage:", cachedPlan);
-
-                    if (livePlanName !== cachedPlan) {
-                        console.log("🔁 Plan changed — updating Supabase");
-                        await updateUserPlan(livePlanName);
-                        localStorage.setItem('aquaPlanName', livePlanName);
-                    } else {
-                        console.log("✅ Plan unchanged — skipping update");
-                    }
-                }
-
-                // Load user's logo and usage data (if trial is not expired)
+                // Load user's logo (if trial is not expired)
                 if (!isTrialExpired) {
                     await loadUserLogo();
-                    await loadUsageData(); // This now just shows 0 since we're not tracking
                 }
                 
                 // Set up event listeners
@@ -1060,19 +1042,6 @@
             }
         }
 
-        // Set up event listeners
-        function setupEventListeners() {
-            // Logo file input change
-            document.getElementById('logoInput').addEventListener('change', uploadLogo);
-            
-            // Preserve URL parameters for navigation
-            const urlParams = window.location.search;
-            const hashParams = window.location.hash;
-            
-            document.getElementById('dashboardLink').href = "/dashboard.html" + urlParams + hashParams;
-            document.getElementById('subscribeNowLink').href = "/dashboard.html" + urlParams + hashParams;
-        }
-
         // Show status with proper styling
         function showStatus(message, type = 'info') {
             const status = document.getElementById('status');
@@ -1098,7 +1067,7 @@
             }
         }
 
-        // Load user's stored logo (optimized)
+        // Load user's stored logo (optimized with visual feedback)
         async function loadUserLogo() {
             try {
                 console.log('🎨 Loading stored logo for user:', currentUser.Email);
@@ -1108,42 +1077,54 @@
                     return;
                 }
 
-                // Show loading state (optional)
                 const logoImg = document.getElementById('logoImg');
                 const originalSrc = logoImg.src;
 
+                // Add subtle loading indicator
+                logoImg.style.opacity = '0.7';
+
+                const startTime = performance.now();
+                
                 const response = await fetch(`${API_BASE_URL}/api/logo`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
                         'Content-Type': 'application/json'
                     },
-                    // Remove cache-busting from here since backend handles caching
                     mode: 'cors'
                 });
 
-                console.log('🔍 Logo response status:', response.status);
+                const apiTime = performance.now() - startTime;
+                console.log(`🕐 API response time: ${apiTime.toFixed(0)}ms`);
 
                 if (response.ok) {
                     const data = await response.json();
                     
                     if (data.logoUrl) {
                         console.log('✅ Found stored logo');
-                        // Cache-bust only the image itself, not the API call
-                        logoImg.src = data.logoUrl + '?t=' + new Date().getTime();
-                        logoImg.onerror = function() {
+                        
+                        // Preload the image for faster display
+                        const tempImg = new Image();
+                        tempImg.onload = function() {
+                            const totalTime = performance.now() - startTime;
+                            console.log(`🕐 Total logo load time: ${totalTime.toFixed(0)}ms`);
+                            logoImg.src = data.logoUrl + '?t=' + new Date().getTime();
+                            logoImg.style.opacity = '1';
+                        };
+                        tempImg.onerror = function() {
                             console.error('❌ Failed to load logo image');
-                            logoImg.src = originalSrc; // Fallback to placeholder
+                            logoImg.src = originalSrc;
+                            logoImg.style.opacity = '1';
                         };
-                        logoImg.onload = function() {
-                            console.log('✅ Logo image loaded successfully');
-                        };
+                        tempImg.src = data.logoUrl + '?t=' + new Date().getTime();
                     } else {
                         console.log('ℹ️ No stored logo found - showing placeholder');
+                        logoImg.style.opacity = '1';
                     }
                 } else {
                     const errorText = await response.text();
                     console.log('⚠️ Logo loading failed:', response.status, errorText);
+                    logoImg.style.opacity = '1';
                     
                     if (response.status === 401) {
                         console.error('❌ Authentication failed for logo loading');
@@ -1151,41 +1132,8 @@
                 }
             } catch (error) {
                 console.error('❌ Error loading logo:', error);
+                document.getElementById('logoImg').style.opacity = '1';
                 console.log('ℹ️ Will use placeholder logo');
-            }
-        }
-
-        // Load usage data (simplified - backend returns mock data)
-        async function loadUsageData() {
-            try {
-                console.log('📊 Loading usage data for user:', currentUser.Email);
-                
-                if (!userToken) {
-                    console.error('❌ No auth token available for loading usage data');
-                    document.getElementById('pagesWatermarked').textContent = '0';
-                    return;
-                }
-
-                const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json',
-                        'Cache-Control': 'no-cache'
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('✅ Usage data loaded:', data);
-                    // Show 0 since we're not tracking pages anymore - frontend handles trial logic
-                    document.getElementById('pagesWatermarked').textContent = '0';
-                } else {
-                    console.log('ℹ️ Usage endpoint returned error, setting to 0');
-                    document.getElementById('pagesWatermarked').textContent = '0';
-                }
-            } catch (error) {
-                console.error('❌ Error loading usage data:', error);
-                document.getElementById('pagesWatermarked').textContent = '0';
             }
         }
 
@@ -1343,31 +1291,6 @@
             } finally {
                 watermarkBtn.disabled = false;
                 watermarkBtn.textContent = "Watermark Files";
-            }
-        }
-
-        // Update user plan via API
-        async function updateUserPlan(planName) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/update-plan`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: currentUser.Email,
-                        planName: planName,
-                        webhookSecret: 'aquamark-secure-protection-string-101813'
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Plan update failed');
-                }
-
-                console.log('Plan updated successfully');
-            } catch (error) {
-                console.error('Error updating plan:', error);
             }
         }
 
