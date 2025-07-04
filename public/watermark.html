@@ -718,9 +718,12 @@
                     }
                 }
 
-                // Load user's logo (if trial is not expired)
+                // Load user's logo (if trial is not expired) - start early
                 if (!isTrialExpired) {
-                    await loadUserLogo();
+                    // Start logo loading immediately without waiting
+                    loadUserLogo().catch(error => {
+                        console.error('Logo loading failed during init:', error);
+                    });
                 }
                 
                 // Set up event listeners
@@ -1004,8 +1007,11 @@
             }
         }
 
-        // Load user's stored logo (optimized)
+        // Load user's stored logo (optimized for speed)
         async function loadUserLogo() {
+            const logoImg = document.getElementById('logoImg');
+            const originalSrc = logoImg.src;
+            
             try {
                 console.log('🎨 Loading stored logo for user:', currentUser.Email);
                 
@@ -1014,54 +1020,82 @@
                     return;
                 }
 
-                // Show loading state (optional)
-                const logoImg = document.getElementById('logoImg');
-                const originalSrc = logoImg.src;
+                // Show loading state
+                logoImg.style.opacity = '0.6';
+                logoImg.style.filter = 'blur(1px)';
+
+                // Fast fetch with timeout and optimized headers
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
                 const response = await fetch(`${API_BASE_URL}/api/logo`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
+                        'Accept': 'application/json',
+                        'Cache-Control': 'max-age=300' // Cache for 5 minutes
                     },
-                    // Remove cache-busting from here since backend handles caching
-                    mode: 'cors'
+                    mode: 'cors',
+                    signal: controller.signal
                 });
 
+                clearTimeout(timeoutId);
                 console.log('🔍 Logo response status:', response.status);
 
                 if (response.ok) {
                     const data = await response.json();
                     
                     if (data.logoUrl) {
-                        console.log('✅ Found stored logo');
-                        // Cache-bust only the image itself, not the API call
-                        logoImg.src = data.logoUrl + '?t=' + new Date().getTime();
-                        logoImg.onerror = function() {
-                            console.error('❌ Failed to load logo image');
-                            logoImg.src = originalSrc; // Fallback to placeholder
-                        };
-                        logoImg.onload = function() {
+                        console.log('✅ Found stored logo, loading image...');
+                        
+                        // Preload the image for faster display
+                        const img = new Image();
+                        img.onload = function() {
+                            logoImg.src = data.logoUrl;
+                            logoImg.style.opacity = '1';
+                            logoImg.style.filter = 'none';
                             console.log('✅ Logo image loaded successfully');
                         };
+                        img.onerror = function() {
+                            console.error('❌ Failed to load logo image');
+                            logoImg.src = originalSrc;
+                            logoImg.style.opacity = '1';
+                            logoImg.style.filter = 'none';
+                        };
+                        // Start loading (no cache-busting on initial load for speed)
+                        img.src = data.logoUrl;
                     } else {
                         console.log('ℹ️ No stored logo found - showing placeholder');
+                        logoImg.style.opacity = '1';
+                        logoImg.style.filter = 'none';
                     }
+                } else if (response.status === 404) {
+                    // No logo found - this is normal for new users
+                    console.log('ℹ️ No logo stored yet - showing placeholder');
+                    logoImg.style.opacity = '1';
+                    logoImg.style.filter = 'none';
                 } else {
                     const errorText = await response.text();
                     console.log('⚠️ Logo loading failed:', response.status, errorText);
-                    
-                    if (response.status === 401) {
-                        console.error('❌ Authentication failed for logo loading');
-                    }
+                    logoImg.style.opacity = '1';
+                    logoImg.style.filter = 'none';
                 }
             } catch (error) {
-                console.error('❌ Error loading logo:', error);
-                console.log('ℹ️ Will use placeholder logo');
+                if (error.name === 'AbortError') {
+                    console.error('❌ Logo loading timed out after 5 seconds');
+                    showStatus('⚠️ Logo loading is slow. Using placeholder.', 'warning');
+                } else {
+                    console.error('❌ Error loading logo:', error);
+                }
+                
+                // Always restore the UI
+                logoImg.src = originalSrc;
+                logoImg.style.opacity = '1';
+                logoImg.style.filter = 'none';
             }
         }
 
-        // Upload logo function
+        // Upload logo function (optimized)
         async function uploadLogo() {
             // Check if trial is expired
             if (isTrialExpired) {
@@ -1095,7 +1129,11 @@
                 if (response.ok) {
                     const data = await response.json();
                     console.log('✅ Logo uploaded successfully:', data.logoUrl);
-                    document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
+                    
+                    // Cache-bust only when uploading new logo
+                    const logoImg = document.getElementById('logoImg');
+                    logoImg.src = data.logoUrl + '?t=' + new Date().getTime();
+                    
                     showStatus("✅ Logo uploaded successfully!", 'success');
                 } else {
                     const errorText = await response.text();
