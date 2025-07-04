@@ -717,26 +717,7 @@ if (subscription) {
     }
 }
 
-                    
-                    // Try API calls only if we don't have fast data already
-                    try {
-                        const token = await Outseta.getAccessToken();
-                        
-                        // Quick parallel API calls with timeout
-                        const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
-                        
-                        const [accountResponse, billingResponse] = await Promise.allSettled([
-                            fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
-                                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-                                signal: controller.signal
-                            }),
-                            fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
-                                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-                                signal: controller.signal
-                            })
-                        ]);
-                        
+                
                         clearTimeout(timeoutId);
                         
                         // Process account data
