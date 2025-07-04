@@ -1098,7 +1098,7 @@
             }
         }
 
-        // Load user's stored logo
+        // Load user's stored logo (optimized)
         async function loadUserLogo() {
             try {
                 console.log('🎨 Loading stored logo for user:', currentUser.Email);
@@ -1108,39 +1108,38 @@
                     return;
                 }
 
-                console.log('🔑 Using token for logo request (length):', userToken.length);
+                // Show loading state (optional)
+                const logoImg = document.getElementById('logoImg');
+                const originalSrc = logoImg.src;
 
-                const response = await fetch(`${API_BASE_URL}/api/logo?t=${Date.now()}`, {
+                const response = await fetch(`${API_BASE_URL}/api/logo`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json',
-                        'Cache-Control': 'no-cache'
+                        'Content-Type': 'application/json'
                     },
+                    // Remove cache-busting from here since backend handles caching
                     mode: 'cors'
                 });
 
                 console.log('🔍 Logo response status:', response.status);
-                console.log('🔍 Logo response headers:', Object.fromEntries(response.headers.entries()));
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('📄 Logo response data:', data);
                     
                     if (data.logoUrl) {
-                        console.log('✅ Found stored logo:', data.logoUrl);
-                        const logoImg = document.getElementById('logoImg');
+                        console.log('✅ Found stored logo');
+                        // Cache-bust only the image itself, not the API call
                         logoImg.src = data.logoUrl + '?t=' + new Date().getTime();
                         logoImg.onerror = function() {
-                            console.error('❌ Failed to load logo image from URL:', data.logoUrl);
-                            // Keep placeholder on error
+                            console.error('❌ Failed to load logo image');
+                            logoImg.src = originalSrc; // Fallback to placeholder
                         };
                         logoImg.onload = function() {
                             console.log('✅ Logo image loaded successfully');
                         };
                     } else {
                         console.log('ℹ️ No stored logo found - showing placeholder');
-                        // Keep the default placeholder image
                     }
                 } else {
                     const errorText = await response.text();
@@ -1148,23 +1147,10 @@
                     
                     if (response.status === 401) {
                         console.error('❌ Authentication failed for logo loading');
-                        console.log('🔑 Token being used:', userToken ? userToken.substring(0, 20) + '...' : 'null');
-                        // Don't redirect for now, just log the issue
-                    } else if (response.status === 0) {
-                        console.error('❌ Network error - CORS or server unreachable');
                     }
                 }
             } catch (error) {
                 console.error('❌ Error loading logo:', error);
-                
-                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-                    console.error('❌ This looks like a CORS or network connectivity issue');
-                    console.log('🔧 Possible solutions:');
-                    console.log('   1. Check if backend server is running');
-                    console.log('   2. Verify CORS configuration');
-                    console.log('   3. Check network connectivity');
-                }
-                
                 console.log('ℹ️ Will use placeholder logo');
             }
         }
