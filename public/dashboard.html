@@ -607,7 +607,7 @@
                 if (token) {
                     try {
                         console.log('🌐 Fetching subscriptions list...');
-                        // Get subscriptions list
+                        // Get subscriptions list filtered by current user's email
                         const subscriptionsResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
                             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
                         });
@@ -616,11 +616,33 @@
                         
                         if (subscriptionsResponse.ok) {
                             const subscriptionsData = await subscriptionsResponse.json();
-                            console.log('📋 Subscriptions data:', subscriptionsData);
+                            console.log('📋 All subscriptions data:', subscriptionsData);
+                            console.log('👤 Current user email:', currentUser.Email);
                             
                             if (subscriptionsData.items && subscriptionsData.items.length > 0) {
-                                const subscriptionUid = subscriptionsData.items[0].Uid;
-                                console.log('🎯 Found subscription Uid:', subscriptionUid);
+                                // Filter subscriptions for the current user's email
+                                const userSubscriptions = subscriptionsData.items.filter(sub => {
+                                    // Check if the subscription belongs to current user
+                                    return sub.Account && 
+                                           sub.Account.PrimaryContact && 
+                                           sub.Account.PrimaryContact.Email === currentUser.Email;
+                                });
+                                
+                                console.log('🔍 User subscriptions:', userSubscriptions);
+                                
+                                if (userSubscriptions.length > 0) {
+                                    // Find the active subscription (not Free Trial and not ended)
+                                    let activeSubscription = userSubscriptions.find(sub => {
+                                        return sub.Plan && sub.Plan.Name !== 'Free Trial' && !sub.EndDate;
+                                    });
+                                    
+                                    // If no active paid subscription found, fall back to the most recent one
+                                    if (!activeSubscription) {
+                                        activeSubscription = userSubscriptions[0];
+                                    }
+                                    
+                                    const subscriptionUid = activeSubscription.Uid;
+                                    console.log('🎯 Using subscription:', activeSubscription.Plan?.Name, 'Uid:', subscriptionUid);
                                 
                                 // Get detailed subscription
                                 const detailedResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions/${subscriptionUid}`, {
@@ -640,9 +662,9 @@
                                 } else {
                                     console.error('❌ Detailed subscription fetch failed:', detailedResponse.statusText);
                                 }
-                            } else {
-                                console.log('ℹ️ No subscriptions found, user likely on free trial');
-                            }
+                                } else {
+                                    console.log('ℹ️ No subscriptions found for current user email');
+                                }
                         } else {
                             console.error('❌ Subscriptions list fetch failed:', subscriptionsResponse.status, subscriptionsResponse.statusText);
                         }
