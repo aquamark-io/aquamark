@@ -532,28 +532,65 @@
             try {
                 // Get subscription data from Outseta
                 const subscriptions = await Outseta.getSubscriptions();
+                console.log('Raw subscription data:', subscriptions);
                 
                 if (subscriptions && subscriptions.length > 0) {
                     const subscription = subscriptions[0];
+                    console.log('First subscription:', subscription);
                     
-                    // Update plan name
-                    const planName = subscription.Plan ? subscription.Plan.Name : 'Free Trial';
+                    // Update plan name - try multiple possible locations
+                    let planName = 'Free Trial';
+                    if (subscription.Plan && subscription.Plan.Name) {
+                        planName = subscription.Plan.Name;
+                    } else if (subscription.plan && subscription.plan.name) {
+                        planName = subscription.plan.name;
+                    } else if (subscription.PlanName) {
+                        planName = subscription.PlanName;
+                    } else if (subscription.planName) {
+                        planName = subscription.planName;
+                    }
+                    
+                    console.log('Plan name found:', planName);
                     document.getElementById('planName').textContent = planName;
                     
-                    // Update start date and calculate days
+                    // Update start date and calculate days - try multiple date field names
+                    let startDateValue = null;
                     if (subscription.StartDate) {
-                        const startDate = new Date(subscription.StartDate);
+                        startDateValue = subscription.StartDate;
+                    } else if (subscription.startDate) {
+                        startDateValue = subscription.startDate;
+                    } else if (subscription.CreatedDate) {
+                        startDateValue = subscription.CreatedDate;
+                    } else if (subscription.createdDate) {
+                        startDateValue = subscription.createdDate;
+                    } else if (subscription.BillingRenewalTerm) {
+                        startDateValue = subscription.BillingRenewalTerm;
+                    }
+                    
+                    console.log('Start date found:', startDateValue);
+                    
+                    if (startDateValue) {
+                        const startDate = new Date(startDateValue);
                         const today = new Date();
-                        const diffTime = Math.abs(today - startDate);
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        
+                        // Calculate difference in days
+                        const diffTime = today.getTime() - startDate.getTime();
+                        const diffDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+                        
+                        console.log('Days calculated:', diffDays);
                         
                         document.getElementById('daysCounter').textContent = diffDays;
-                        document.getElementById('startDate').textContent = startDate.toLocaleDateString();
+                        document.getElementById('startDate').textContent = startDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
                     } else {
                         document.getElementById('daysCounter').textContent = '0';
                         document.getElementById('startDate').textContent = 'N/A';
                     }
                 } else {
+                    console.log('No subscriptions found');
                     // No active subscription
                     document.getElementById('planName').textContent = 'Free Trial';
                     document.getElementById('daysCounter').textContent = '0';
