@@ -93,7 +93,7 @@
 
         /* Main Content */
         .aqua-panel {
-            max-width: 800px;
+            max-width: 1200px;
             width: 95%;
             margin: 2rem auto;
             flex: 1;
@@ -129,6 +129,74 @@
 
         .card-body {
             padding: 1.5rem;
+        }
+
+        /* Two-column layout for profile section */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .profile-section {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        /* Subscription info styling */
+        .subscription-info {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .subscription-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .days-counter {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--success-color);
+            margin: 1rem 0;
+        }
+
+        .subscription-details {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .plan-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
         /* Action Buttons */
@@ -288,6 +356,11 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
             .announcement-banner {
                 flex-direction: column;
                 align-items: flex-start;
@@ -312,6 +385,10 @@
             .footer-nav {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+
+            .days-counter {
+                font-size: 2rem;
             }
         }
     </style>
@@ -361,13 +438,41 @@
             <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
         </div>
 
-        <!-- Profile Card -->
-        <div class="aqua-card">
-            <div class="card-header">
-                <h2>My Profile</h2>
+        <!-- Profile Section with Two Columns -->
+        <div class="profile-container">
+            <!-- Profile Card -->
+            <div class="profile-section">
+                <div class="card-header">
+                    <h2>My Profile</h2>
+                </div>
+                <div class="card-body">
+                    <div data-o-profile="1" data-mode="embed"></div>
+                </div>
             </div>
-            <div class="card-body">
-                <div data-o-profile="1" data-mode="embed"></div>
+
+            <!-- Subscription Info Card -->
+            <div class="profile-section">
+                <div class="card-header">
+                    <h2>Subscription Status</h2>
+                </div>
+                <div class="subscription-info">
+                    <h3>You've been protecting your commissions for</h3>
+                    <div class="days-counter" id="daysCounter">-</div>
+                    <p>days</p>
+                    
+                    <div class="subscription-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Plan:</span>
+                            <span class="detail-value">
+                                <span class="plan-badge" id="planName">Loading...</span>
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Started:</span>
+                            <span class="detail-value" id="startDate">Loading...</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -411,11 +516,54 @@
                 // Get auth token for API calls
                 userToken = await getAuthToken();
                 
+                // Load subscription info
+                await loadSubscriptionInfo();
+                
                 // Set up Outseta event listeners for plan changes
                 setupOutsetaEventListeners();
                 
             } catch (error) {
                 console.error('Initialization error:', error);
+            }
+        }
+
+        // Load subscription information
+        async function loadSubscriptionInfo() {
+            try {
+                // Get subscription data from Outseta
+                const subscriptions = await Outseta.getSubscriptions();
+                
+                if (subscriptions && subscriptions.length > 0) {
+                    const subscription = subscriptions[0];
+                    
+                    // Update plan name
+                    const planName = subscription.Plan ? subscription.Plan.Name : 'Free Trial';
+                    document.getElementById('planName').textContent = planName;
+                    
+                    // Update start date and calculate days
+                    if (subscription.StartDate) {
+                        const startDate = new Date(subscription.StartDate);
+                        const today = new Date();
+                        const diffTime = Math.abs(today - startDate);
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        
+                        document.getElementById('daysCounter').textContent = diffDays;
+                        document.getElementById('startDate').textContent = startDate.toLocaleDateString();
+                    } else {
+                        document.getElementById('daysCounter').textContent = '0';
+                        document.getElementById('startDate').textContent = 'N/A';
+                    }
+                } else {
+                    // No active subscription
+                    document.getElementById('planName').textContent = 'Free Trial';
+                    document.getElementById('daysCounter').textContent = '0';
+                    document.getElementById('startDate').textContent = 'N/A';
+                }
+            } catch (error) {
+                console.error('Error loading subscription info:', error);
+                document.getElementById('planName').textContent = 'Free Trial';
+                document.getElementById('daysCounter').textContent = '0';
+                document.getElementById('startDate').textContent = 'N/A';
             }
         }
 
@@ -452,12 +600,14 @@
             Outseta.on("subscription.update", async (params) => {
                 console.log("Subscription update event:", params);
                 await handlePlanChange(params);
+                await loadSubscriptionInfo(); // Refresh subscription info
             });
 
             // Listen for subscription reopens
             Outseta.on("subscription.reopen", async (params) => {
                 console.log("Subscription reopen event:", params);
                 await handlePlanChange(params);
+                await loadSubscriptionInfo(); // Refresh subscription info
             });
         }
 
