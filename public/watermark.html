@@ -1108,24 +1108,39 @@
                     return;
                 }
 
-                const response = await fetch(`${API_BASE_URL}/api/logo`, {
+                const response = await fetch(`${API_BASE_URL}/api/logo?t=${Date.now()}`, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
                     }
                 });
 
+                console.log('🔍 Logo response status:', response.status);
+
                 if (response.ok) {
                     const data = await response.json();
+                    console.log('📄 Logo response data:', data);
+                    
                     if (data.logoUrl) {
                         console.log('✅ Found stored logo:', data.logoUrl);
-                        document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
+                        const logoImg = document.getElementById('logoImg');
+                        logoImg.src = data.logoUrl + '?t=' + new Date().getTime();
+                        logoImg.onerror = function() {
+                            console.error('❌ Failed to load logo image from URL:', data.logoUrl);
+                            // Keep placeholder on error
+                        };
+                        logoImg.onload = function() {
+                            console.log('✅ Logo image loaded successfully');
+                        };
                     } else {
                         console.log('ℹ️ No stored logo found - showing placeholder');
                         // Keep the default placeholder image
                     }
                 } else {
-                    console.log('ℹ️ Could not load logo (likely new user)');
+                    const errorText = await response.text();
+                    console.log('⚠️ Logo loading failed:', response.status, errorText);
+                    
                     if (response.status === 401) {
                         console.error('❌ Authentication failed for logo loading');
                         window.location.href = '/dashboard.html';
