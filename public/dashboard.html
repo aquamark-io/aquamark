@@ -607,8 +607,8 @@
                 if (token) {
                     try {
                         console.log('🌐 Fetching subscriptions list...');
-                        // Get subscriptions list
-                        const subscriptionsResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
+                        // Get subscriptions list with Account data included
+                        const subscriptionsResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=Account.PersonAccount,Plan,StartDate,EndDate,Uid`, {
                             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
                         });
                         
