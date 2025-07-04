@@ -696,26 +696,30 @@
                 
                 // Check if user has Account with Subscriptions
                
-                const token = await Outseta.getAccessToken();
-const accountRes = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
+              try {
+  const token = await Outseta.getAccessToken();
+  const accountRes = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
     headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
-});
-const accountData = await accountRes.json();
-const subscription = accountData.Subscriptions?.[0];
+  });
+  const accountData = await accountRes.json();
+  const subscription = accountData.Subscriptions?.[0];
 
-if (subscription) {
+  if (subscription) {
     if (subscription.Plan && subscription.Plan.Name) {
-        planName = subscription.Plan.Name;
+      planName = subscription.Plan.Name;
     }
     startDateValue = subscription.StartDate || subscription.CreatedDate;
     if (subscription.SubscriptionStartDate) {
-        subscriptionStartDate = subscription.SubscriptionStartDate;
+      subscriptionStartDate = subscription.SubscriptionStartDate;
     } else if (subscription.StartDate && planName !== 'Free Trial') {
-        subscriptionStartDate = subscription.StartDate;
+      subscriptionStartDate = subscription.StartDate;
     }
+  }
+} catch (error) {
+  console.error("Error loading subscription info via REST API:", error);
 }
 
                     
