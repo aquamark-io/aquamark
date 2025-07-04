@@ -607,7 +607,7 @@
                 if (token) {
                     try {
                         console.log('🌐 Fetching subscriptions list...');
-                        // Get subscriptions list filtered by current user's email
+                        // Get subscriptions list
                         const subscriptionsResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
                             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
                         });
@@ -622,7 +622,6 @@
                             if (subscriptionsData.items && subscriptionsData.items.length > 0) {
                                 // Filter subscriptions for the current user's email
                                 const userSubscriptions = subscriptionsData.items.filter(sub => {
-                                    // Check if the subscription belongs to current user
                                     return sub.Account && 
                                            sub.Account.PrimaryContact && 
                                            sub.Account.PrimaryContact.Email === currentUser.Email;
@@ -643,28 +642,31 @@
                                     
                                     const subscriptionUid = activeSubscription.Uid;
                                     console.log('🎯 Using subscription:', activeSubscription.Plan?.Name, 'Uid:', subscriptionUid);
-                                
-                                // Get detailed subscription
-                                const detailedResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions/${subscriptionUid}`, {
-                                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
-                                });
-                                
-                                console.log('📊 Detailed response status:', detailedResponse.status);
-                                
-                                if (detailedResponse.ok) {
-                                    const subscription = await detailedResponse.json();
-                                    console.log('📊 Subscription details:', subscription);
-                                    if (subscription.Plan?.Name) planName = subscription.Plan.Name;
-                                    if (subscription.StartDate) {
-                                        startDateValue = subscription.StartDate;
-                                        subscriptionStartDate = subscription.StartDate;
+                                    
+                                    // Get detailed subscription
+                                    const detailedResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions/${subscriptionUid}`, {
+                                        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+                                    });
+                                    
+                                    console.log('📊 Detailed response status:', detailedResponse.status);
+                                    
+                                    if (detailedResponse.ok) {
+                                        const subscription = await detailedResponse.json();
+                                        console.log('📊 Subscription details:', subscription);
+                                        if (subscription.Plan?.Name) planName = subscription.Plan.Name;
+                                        if (subscription.StartDate) {
+                                            startDateValue = subscription.StartDate;
+                                            subscriptionStartDate = subscription.StartDate;
+                                        }
+                                    } else {
+                                        console.error('❌ Detailed subscription fetch failed:', detailedResponse.statusText);
                                     }
-                                } else {
-                                    console.error('❌ Detailed subscription fetch failed:', detailedResponse.statusText);
-                                }
                                 } else {
                                     console.log('ℹ️ No subscriptions found for current user email');
                                 }
+                            } else {
+                                console.log('ℹ️ No subscriptions found in response');
+                            }
                         } else {
                             console.error('❌ Subscriptions list fetch failed:', subscriptionsResponse.status, subscriptionsResponse.statusText);
                         }
