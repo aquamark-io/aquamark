@@ -769,15 +769,26 @@
         // Initialize the page
         async function initializePage() {
             try {
-                // Get user from Outseta
-                currentUser = await Outseta.getUser();
-                if (!currentUser) {
+                console.log('🚀 Starting watermark page initialization...');
+                
+                // Wait for Outseta to fully load
+                await waitForOutseta();
+                
+                // Check authentication status
+                const authStatus = await checkAuthenticationStatus();
+                
+                if (authStatus === 'not_authenticated') {
+                    console.log('❌ User not authenticated, redirecting to login');
                     window.location.href = '/login.html';
                     return;
+                } else if (authStatus === 'incomplete_setup') {
+                    console.log('⚠️ User has incomplete account setup, redirecting to dashboard');
+                    window.location.href = '/dashboard.html';
+                    return;
+                } else if (authStatus === 'authenticated') {
+                    console.log('✅ User fully authenticated');
+                    // Continue with initialization
                 }
-
-                // Get auth token for API calls
-                userToken = await getAuthToken();
 
                 // Check trial status first
                 await checkTrialStatus();
@@ -808,9 +819,95 @@
                 // Set up event listeners
                 setupEventListeners();
             } catch (error) {
-                console.error('Initialization error:', error);
-                showStatus('❌ Error loading page. Please refresh.', 'error');
+                console.error('❌ Initialization error:', error);
+                handleAuthError(error);
             }
+        }
+
+        // Wait for Outseta to fully load
+        function waitForOutseta() {
+            return new Promise((resolve) => {
+                if (window.Outseta && typeof Outseta.getUser === 'function') {
+                    resolve();
+                } else {
+                    // Wait for Outseta to load
+                    const checkOutseta = setInterval(() => {
+                        if (window.Outseta && typeof Outseta.getUser === 'function') {
+                            clearInterval(checkOutseta);
+                            resolve();
+                        }
+                    }, 100);
+                    
+                    // Timeout after 10 seconds
+                    setTimeout(() => {
+                        clearInterval(checkOutseta);
+                        resolve();
+                    }, 10000);
+                }
+            });
+        }
+
+        // Check authentication status more thoroughly
+        async function checkAuthenticationStatus() {
+            try {
+                console.log('🔍 Checking authentication status...');
+                
+                // Try to get user
+                currentUser = await Outseta.getUser();
+                console.log('👤 User object:', currentUser);
+                
+                if (!currentUser || !currentUser.Email) {
+                    console.log('❌ No user or email found');
+                    return 'not_authenticated';
+                }
+                
+                // Check if user has completed password setup
+                const hasPassword = await checkIfUserHasPassword();
+                console.log('🔐 User has password:', hasPassword);
+                
+                if (!hasPassword) {
+                    console.log('⚠️ User needs to complete password setup');
+                    return 'incomplete_setup';
+                }
+                
+                // Try to get auth token
+                userToken = await getAuthToken();
+                console.log('🎫 Auth token obtained:', !!userToken);
+                
+                if (!userToken) {
+                    console.log('❌ Could not obtain auth token');
+                    return 'incomplete_setup';
+                }
+                
+                return 'authenticated';
+                
+            } catch (error) {
+                console.error('❌ Error checking auth status:', error);
+                return 'not_authenticated';
+            }
+        }
+
+        // Check if user has completed password setup
+        async function checkIfUserHasPassword() {
+            try {
+                // Try to get an access token - this will fail if password isn't set
+                const token = await Outseta.getAccessToken();
+                return !!token;
+            } catch (error) {
+                console.log('🔐 User has not completed password setup:', error.message);
+                return false;
+            }
+        }
+
+        // Handle authentication errors
+        function handleAuthError(error) {
+            console.error('🚨 Authentication error:', error);
+            showStatus('❌ Authentication error. Redirecting to login...', 'error');
+            
+            // Redirect to login after a short delay
+            setTimeout(() => {
+                window.location.href = '/login.html';
+            }, 2000);
         }
 
         // Check trial status
@@ -1004,6 +1101,13 @@
         // Load user's stored logo
         async function loadUserLogo() {
             try {
+                console.log('🎨 Loading user logo...');
+                
+                if (!userToken) {
+                    console.error('❌ No auth token available for loading logo');
+                    return;
+                }
+
                 const response = await fetch(`${API_BASE_URL}/api/logo`, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
@@ -1015,16 +1119,31 @@
                     const data = await response.json();
                     if (data.logoUrl) {
                         document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
+                        console.log('✅ Logo loaded successfully');
+                    }
+                } else {
+                    console.error('❌ Failed to load logo:', response.status);
+                    if (response.status === 401) {
+                        console.error('❌ Authentication failed for logo loading');
+                        window.location.href = '/dashboard.html';
                     }
                 }
             } catch (error) {
-                console.error('Error loading logo:', error);
+                console.error('❌ Error loading logo:', error);
             }
         }
 
         // Load usage data with cache busting
         async function loadUsageData() {
             try {
+                console.log('📊 Loading usage data for user:', currentUser.Email);
+                
+                if (!userToken) {
+                    console.error('❌ No auth token available for loading usage data');
+                    showStatus('❌ Authentication error. Please refresh the page.', 'error');
+                    return;
+                }
+
                 const response = await fetch(`${API_BASE_URL}/api/usage?t=${Date.now()}`, {
                     headers: {
                         'Authorization': `Bearer ${userToken}`,
@@ -1035,13 +1154,22 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('Fresh usage data loaded:', data);
+                    console.log('✅ Fresh usage data loaded:', data);
                     document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
                 } else {
-                    console.error('Failed to load usage data');
+                    const errorText = await response.text();
+                    console.error('❌ Failed to load usage data:', response.status, errorText);
+                    
+                    if (response.status === 401) {
+                        console.error('❌ Authentication failed - redirecting to dashboard');
+                        window.location.href = '/dashboard.html';
+                    } else {
+                        showStatus('❌ Could not load usage data. Please refresh the page.', 'warning');
+                    }
                 }
             } catch (error) {
-                console.error('Error loading usage data:', error);
+                console.error('❌ Error loading usage data:', error);
+                showStatus('❌ Network error loading usage data.', 'warning');
             }
         }
 
@@ -1104,6 +1232,12 @@
                 return;
             }
 
+            // Check authentication before processing
+            if (!userToken) {
+                showStatus("❌ Authentication error. Please refresh the page.", 'error');
+                return;
+            }
+
             watermarkBtn.disabled = true;
             watermarkBtn.textContent = "Processing...";
             showStatus("⏳ Processing files...", 'info');
@@ -1120,6 +1254,8 @@
                 formData.append('lender', document.getElementById('lenderTag').value || '');
                 formData.append('salesperson', document.getElementById('salespersonTag').value || '');
                 formData.append('processor', document.getElementById('processorTag').value || '');
+
+                console.log('🚀 Sending watermark request for user:', currentUser.Email);
 
                 const response = await fetch(`${API_BASE_URL}/api/watermark`, {
                     method: 'POST',
@@ -1152,17 +1288,31 @@
 
                     showStatus(`✅ ${data.message}`, 'success');
                 } else {
-                    const error = await response.json();
-                    showStatus(`❌ ${error.error || 'Processing failed'}`, 'error');
+                    const errorText = await response.text();
+                    console.error('❌ Watermark request failed:', response.status, errorText);
                     
-                    if (error.error && error.error.includes('Not enough page credits')) {
-                        const subscribeBtn = document.getElementById('subscribeNowLink');
-                        subscribeBtn.style.animation = 'pulse 1.5s infinite';
-                        subscribeBtn.style.boxShadow = '0 0 15px var(--success-color)';
+                    if (response.status === 401) {
+                        showStatus("❌ Authentication failed. Please refresh the page.", 'error');
+                        setTimeout(() => window.location.href = '/dashboard.html', 2000);
+                    } else {
+                        let errorObj;
+                        try {
+                            errorObj = JSON.parse(errorText);
+                        } catch (e) {
+                            errorObj = { error: 'Processing failed' };
+                        }
+                        
+                        showStatus(`❌ ${errorObj.error || 'Processing failed'}`, 'error');
+                        
+                        if (errorObj.error && errorObj.error.includes('Not enough page credits')) {
+                            const subscribeBtn = document.getElementById('subscribeNowLink');
+                            subscribeBtn.style.animation = 'pulse 1.5s infinite';
+                            subscribeBtn.style.boxShadow = '0 0 15px var(--success-color)';
+                        }
                     }
                 }
             } catch (error) {
-                console.error('Processing error:', error);
+                console.error('❌ Processing error:', error);
                 showStatus("❌ Processing failed. Please try again.", 'error');
             } finally {
                 watermarkBtn.disabled = false;
