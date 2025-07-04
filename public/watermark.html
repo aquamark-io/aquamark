@@ -205,7 +205,7 @@
             font-family: inherit;
         }
 
-        /* Logo Preview */
+        /* Logo Preview with Loading */
         .logo-preview {
             margin: 1.5rem 0;
             text-align: center;
@@ -213,6 +213,11 @@
             background: var(--bg-color);
             border-radius: var(--radius);
             border: 2px dashed var(--border-color);
+            position: relative;
+            min-height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .logo-preview img {
@@ -223,6 +228,38 @@
             max-width: 100%;
             object-fit: contain;
             box-shadow: var(--shadow-sm);
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .logo-loading p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Tracking Inputs */
@@ -589,6 +626,10 @@
                 <p class="section-subheader">Upload your company logo once and use it across future sessions.</p>
                 
                 <div class="logo-preview">
+                    <div class="logo-loading" id="logoLoading" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Loading your logo...</p>
+                    </div>
                     <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
                 </div>
 
@@ -698,7 +739,13 @@
                     // Continue with initialization
                 }
 
-                // Check trial status first
+                // 🚀 Start loading logo IMMEDIATELY (before trial check for speed)
+                console.log('🎨 Starting logo load early...');
+                const logoLoadPromise = loadUserLogo().catch(error => {
+                    console.error('Early logo loading failed:', error);
+                });
+
+                // Check trial status
                 await checkTrialStatus();
 
                 // ✅ Smart plan sync: Only update if changed
@@ -718,12 +765,12 @@
                     }
                 }
 
-                // Load user's logo (if trial is not expired) - start early
+                // Load user's logo (if trial is not expired) - wait for completion
                 if (!isTrialExpired) {
-                    // Start logo loading immediately without waiting
-                    loadUserLogo().catch(error => {
-                        console.error('Logo loading failed during init:', error);
-                    });
+                    await logoLoadPromise; // Wait for the logo load we started earlier
+                } else {
+                    // Even if trial expired, let logo finish loading in background
+                    logoLoadPromise.catch(() => {}); // Ignore errors for expired trials
                 }
                 
                 // Set up event listeners
@@ -1007,9 +1054,10 @@
             }
         }
 
-        // Load user's stored logo (optimized for speed)
+        // Load user's stored logo (optimized for speed with visible loading)
         async function loadUserLogo() {
             const logoImg = document.getElementById('logoImg');
+            const logoLoading = document.getElementById('logoLoading');
             const originalSrc = logoImg.src;
             
             try {
@@ -1020,14 +1068,15 @@
                     return;
                 }
 
-                // Show loading state
-                logoImg.style.opacity = '0.6';
-                logoImg.style.filter = 'blur(1px)';
+                // Show loading spinner immediately
+                logoLoading.style.display = 'flex';
+                logoImg.style.opacity = '0.3';
 
                 // Fast fetch with timeout and optimized headers
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
 
+                const startTime = Date.now();
                 const response = await fetch(`${API_BASE_URL}/api/logo`, {
                     method: 'GET',
                     headers: {
@@ -1040,7 +1089,8 @@
                 });
 
                 clearTimeout(timeoutId);
-                console.log('🔍 Logo response status:', response.status);
+                const loadTime = Date.now() - startTime;
+                console.log(`🔍 Logo API response: ${response.status} (${loadTime}ms)`);
 
                 if (response.ok) {
                     const data = await response.json();
@@ -1053,36 +1103,36 @@
                         img.onload = function() {
                             logoImg.src = data.logoUrl;
                             logoImg.style.opacity = '1';
-                            logoImg.style.filter = 'none';
-                            console.log('✅ Logo image loaded successfully');
+                            logoLoading.style.display = 'none';
+                            console.log(`✅ Logo image loaded successfully (Total: ${Date.now() - startTime}ms)`);
                         };
                         img.onerror = function() {
                             console.error('❌ Failed to load logo image');
                             logoImg.src = originalSrc;
                             logoImg.style.opacity = '1';
-                            logoImg.style.filter = 'none';
+                            logoLoading.style.display = 'none';
                         };
                         // Start loading (no cache-busting on initial load for speed)
                         img.src = data.logoUrl;
                     } else {
                         console.log('ℹ️ No stored logo found - showing placeholder');
                         logoImg.style.opacity = '1';
-                        logoImg.style.filter = 'none';
+                        logoLoading.style.display = 'none';
                     }
                 } else if (response.status === 404) {
                     // No logo found - this is normal for new users
                     console.log('ℹ️ No logo stored yet - showing placeholder');
                     logoImg.style.opacity = '1';
-                    logoImg.style.filter = 'none';
+                    logoLoading.style.display = 'none';
                 } else {
                     const errorText = await response.text();
                     console.log('⚠️ Logo loading failed:', response.status, errorText);
                     logoImg.style.opacity = '1';
-                    logoImg.style.filter = 'none';
+                    logoLoading.style.display = 'none';
                 }
             } catch (error) {
                 if (error.name === 'AbortError') {
-                    console.error('❌ Logo loading timed out after 5 seconds');
+                    console.error('❌ Logo loading timed out after 8 seconds');
                     showStatus('⚠️ Logo loading is slow. Using placeholder.', 'warning');
                 } else {
                     console.error('❌ Error loading logo:', error);
@@ -1091,7 +1141,7 @@
                 // Always restore the UI
                 logoImg.src = originalSrc;
                 logoImg.style.opacity = '1';
-                logoImg.style.filter = 'none';
+                logoLoading.style.display = 'none';
             }
         }
 
