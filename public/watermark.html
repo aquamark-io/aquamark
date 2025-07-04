@@ -813,7 +813,7 @@
                 // Load user's logo and usage data (if trial is not expired)
                 if (!isTrialExpired) {
                     await loadUserLogo();
-                    await loadUsageData();
+                    await loadUsageData(); // This now just shows 0 since we're not tracking
                 }
                 
                 // Set up event listeners
@@ -1133,14 +1133,14 @@
             }
         }
 
-        // Load usage data with cache busting
+        // Load usage data (simplified - backend returns mock data)
         async function loadUsageData() {
             try {
                 console.log('📊 Loading usage data for user:', currentUser.Email);
                 
                 if (!userToken) {
                     console.error('❌ No auth token available for loading usage data');
-                    showStatus('❌ Authentication error. Please refresh the page.', 'error');
+                    document.getElementById('pagesWatermarked').textContent = '0';
                     return;
                 }
 
@@ -1154,22 +1154,16 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('✅ Fresh usage data loaded:', data);
-                    document.getElementById('pagesWatermarked').textContent = data.pages_used || 0;
+                    console.log('✅ Usage data loaded:', data);
+                    // Show 0 since we're not tracking pages anymore - frontend handles trial logic
+                    document.getElementById('pagesWatermarked').textContent = '0';
                 } else {
-                    const errorText = await response.text();
-                    console.error('❌ Failed to load usage data:', response.status, errorText);
-                    
-                    if (response.status === 401) {
-                        console.error('❌ Authentication failed - redirecting to dashboard');
-                        window.location.href = '/dashboard.html';
-                    } else {
-                        showStatus('❌ Could not load usage data. Please refresh the page.', 'warning');
-                    }
+                    console.log('ℹ️ Usage endpoint returned error, setting to 0');
+                    document.getElementById('pagesWatermarked').textContent = '0';
                 }
             } catch (error) {
                 console.error('❌ Error loading usage data:', error);
-                showStatus('❌ Network error loading usage data.', 'warning');
+                document.getElementById('pagesWatermarked').textContent = '0';
             }
         }
 
@@ -1282,10 +1276,8 @@
                         setTimeout(() => URL.revokeObjectURL(url), 100);
                     });
 
-                    // Update page counter immediately
-                    const currentPages = parseInt(document.getElementById('pagesWatermarked').textContent) || 0;
-                    document.getElementById('pagesWatermarked').textContent = currentPages + data.pagesProcessed;
-
+                    // Don't update page counter since we're not tracking usage anymore
+                    // Just show success message
                     showStatus(`✅ ${data.message}`, 'success');
                 } else {
                     const errorText = await response.text();
