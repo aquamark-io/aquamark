@@ -471,6 +471,14 @@
                             <span class="detail-label">Started:</span>
                             <span class="detail-value" id="startDate">Loading...</span>
                         </div>
+                        <div class="detail-item" id="trialEndItem" style="display: none;">
+                            <span class="detail-label">Trial Ends:</span>
+                            <span class="detail-value" id="trialEndDate">Loading...</span>
+                        </div>
+                        <div class="detail-item" id="stateChangeItem" style="display: none;">
+                            <span class="detail-label">State Changed:</span>
+                            <span class="detail-value" id="stateChangeDate">Loading...</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -536,6 +544,7 @@
                 
                 let planName = 'Free Trial';
                 let startDateValue = null;
+                let stateChangeDate = null;
                 
                 // Check if user has Account with Subscriptions
                 if (user && user.Account && user.Account.Subscriptions && user.Account.Subscriptions.length > 0) {
@@ -546,6 +555,13 @@
                         planName = subscription.Plan.Name;
                     }
                     startDateValue = subscription.StartDate || subscription.CreatedDate;
+                    
+                    // Look for state change date
+                    if (subscription.BillingState && subscription.BillingStateChangedDate) {
+                        stateChangeDate = subscription.BillingStateChangedDate;
+                    } else if (subscription.StateChangedDate) {
+                        stateChangeDate = subscription.StateChangedDate;
+                    }
                 } else {
                     console.log('No subscriptions found in user account, checking account created date');
                     
@@ -593,6 +609,13 @@
                                 if (subscription.StartDate) {
                                     startDateValue = subscription.StartDate;
                                 }
+                                
+                                // Look for state change date
+                                if (subscription.BillingState && subscription.BillingStateChangedDate) {
+                                    stateChangeDate = subscription.BillingStateChangedDate;
+                                } else if (subscription.StateChangedDate) {
+                                    stateChangeDate = subscription.StateChangedDate;
+                                }
                             }
                         }
                         
@@ -618,6 +641,13 @@
                                 if (subscription.StartDate) {
                                     startDateValue = subscription.StartDate;
                                 }
+                                
+                                // Look for state change date
+                                if (subscription.BillingState && subscription.BillingStateChangedDate) {
+                                    stateChangeDate = subscription.BillingStateChangedDate;
+                                } else if (subscription.StateChangedDate) {
+                                    stateChangeDate = subscription.StateChangedDate;
+                                }
                             }
                         }
                     } catch (apiError) {
@@ -627,6 +657,7 @@
                 
                 console.log('Final plan name:', planName);
                 console.log('Final start date:', startDateValue);
+                console.log('Final state change date:', stateChangeDate);
                 
                 // Update plan name
                 document.getElementById('planName').textContent = planName;
@@ -648,9 +679,39 @@
                         month: 'short',
                         day: 'numeric'
                     });
+                    
+                    // Show trial end date if on Free Trial
+                    if (planName === 'Free Trial') {
+                        const trialEndDate = new Date(startDate);
+                        trialEndDate.setDate(startDate.getDate() + 7);
+                        
+                        document.getElementById('trialEndDate').textContent = trialEndDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
+                        document.getElementById('trialEndItem').style.display = 'flex';
+                    } else {
+                        document.getElementById('trialEndItem').style.display = 'none';
+                    }
+                    
+                    // Show state change date if available
+                    if (stateChangeDate) {
+                        const stateDate = new Date(stateChangeDate);
+                        document.getElementById('stateChangeDate').textContent = stateDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
+                        document.getElementById('stateChangeItem').style.display = 'flex';
+                    } else {
+                        document.getElementById('stateChangeItem').style.display = 'none';
+                    }
                 } else {
                     document.getElementById('daysCounter').textContent = '0';
                     document.getElementById('startDate').textContent = 'N/A';
+                    document.getElementById('trialEndItem').style.display = 'none';
+                    document.getElementById('stateChangeItem').style.display = 'none';
                 }
                 
             } catch (error) {
