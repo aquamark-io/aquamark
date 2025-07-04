@@ -5,43 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aquamark Dashboard</title>
   <link rel="stylesheet" href="/styles.css">
-  <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-domain="aquamark.outseta.com" defer></script>
 </head>
 <body>
   <header class="header">
     <div class="container">
       <img src="/logo.png" alt="Aquamark Logo" class="logo">
-      <h1>Welcome back, <span id="user-name">User</span> 👋</h1>
     </div>
   </header>
 
   <main class="container dashboard-grid">
     <section class="card">
-      <h2>Your Current Plan</h2>
+      <h2>Your Plan</h2>
       <p><strong id="plan-name">Loading...</strong></p>
     </section>
 
     <section class="card">
-      <h2>Your Account</h2>
-      <div id="outseta-profile"></div>
+      <h2>Account Details</h2>
+      <!-- Outseta Embed Widget -->
+      <div data-o-ui></div>
     </section>
   </main>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      if (typeof Outseta !== "undefined") {
-        Outseta.init({
-          domain: "aquamark.outseta.com",
-          loadProfile: true
-        });
-
-        Outseta.on("userLoaded", function(user) {
-          document.getElementById("user-name").textContent = user.firstName || "User";
-          document.getElementById("plan-name").textContent = user.account.plan.name || "N/A";
-        });
-      } else {
-        console.error("Outseta not loaded");
-      }
+      // Wait for Outseta to auto-init
+      const checkUserLoaded = setInterval(() => {
+        if (window.Outseta && Outseta.nocode && Outseta.nocode.user) {
+          const user = Outseta.nocode.user;
+          document.getElementById("plan-name").textContent = user.account?.plan?.name || "N/A";
+          clearInterval(checkUserLoaded);
+        }
+      }, 300);
     });
   </script>
 </body>
