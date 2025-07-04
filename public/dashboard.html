@@ -680,19 +680,6 @@
             subscriptionStartElement.classList.remove('loading-text');
             subscriptionStartElement.textContent = 'N/A';
         }
-
-        // Load subscription information (comprehensive, replaces fast data)
-        async function loadSubscriptionInfo() {
-            try {
-                console.log('📊 Loading comprehensive subscription data...');
-                const startTime = Date.now();
-                
-                // Get user data which should include subscription info
-                const user = await Outseta.getUser();
-                
-                let planName = 'Free Trial';
-                let startDateValue = null;
-                let subscriptionStartDate = null;
                 
                 // Check if user has Account with Subscriptions
                
