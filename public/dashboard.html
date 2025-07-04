@@ -602,37 +602,55 @@
                 
                 // Get auth token and fetch subscription details
                 const token = await Outseta.getAccessToken();
+                console.log('🔑 Got token:', token ? 'Yes' : 'No');
+                
                 if (token) {
                     try {
+                        console.log('🌐 Fetching subscriptions list...');
                         // Get subscriptions list
                         const subscriptionsResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
                             headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
                         });
                         
+                        console.log('📡 Subscriptions response status:', subscriptionsResponse.status);
+                        
                         if (subscriptionsResponse.ok) {
                             const subscriptionsData = await subscriptionsResponse.json();
+                            console.log('📋 Subscriptions data:', subscriptionsData);
                             
                             if (subscriptionsData.items && subscriptionsData.items.length > 0) {
                                 const subscriptionUid = subscriptionsData.items[0].Uid;
+                                console.log('🎯 Found subscription Uid:', subscriptionUid);
                                 
                                 // Get detailed subscription
                                 const detailedResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions/${subscriptionUid}`, {
                                     headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
                                 });
                                 
+                                console.log('📊 Detailed response status:', detailedResponse.status);
+                                
                                 if (detailedResponse.ok) {
                                     const subscription = await detailedResponse.json();
+                                    console.log('📊 Subscription details:', subscription);
                                     if (subscription.Plan?.Name) planName = subscription.Plan.Name;
                                     if (subscription.StartDate) {
                                         startDateValue = subscription.StartDate;
                                         subscriptionStartDate = subscription.StartDate;
                                     }
+                                } else {
+                                    console.error('❌ Detailed subscription fetch failed:', detailedResponse.statusText);
                                 }
+                            } else {
+                                console.log('ℹ️ No subscriptions found, user likely on free trial');
                             }
+                        } else {
+                            console.error('❌ Subscriptions list fetch failed:', subscriptionsResponse.status, subscriptionsResponse.statusText);
                         }
                     } catch (error) {
-                        console.log('API call failed:', error);
+                        console.error('❌ API call failed:', error);
                     }
+                } else {
+                    console.warn('⚠️ No auth token available');
                 }
                 
                 // Fallback to account created date if no subscription data
