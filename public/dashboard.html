@@ -680,66 +680,43 @@
             subscriptionStartElement.classList.remove('loading-text');
             subscriptionStartElement.textContent = 'N/A';
         }
+
+        // Load subscription information (comprehensive, replaces fast data)
+        async function loadSubscriptionInfo() {
+            try {
+                console.log('📊 Loading comprehensive subscription data...');
+                const startTime = Date.now();
+                
+                // Get user data which should include subscription info
+                const user = await Outseta.getUser();
+                
+                let planName = 'Free Trial';
+                let startDateValue = null;
+                let subscriptionStartDate = null;
                 
                 // Check if user has Account with Subscriptions
-               
-async function loadSubscriptionInfo() {
-  try {
-    const user = await Outseta.getUser();
-    const token = await Outseta.getAccessToken();
-
-    const accountRes = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const accountData = await accountRes.json();
-    const subscription = accountData.Subscriptions?.[0];
-
-    let planName = "Free Trial";
-    let startDateValue = null;
-    let subscriptionStartDate = null;
-
-    if (subscription) {
-      if (subscription.Plan?.Name) planName = subscription.Plan.Name;
-      startDateValue = subscription.StartDate || subscription.CreatedDate;
-      subscriptionStartDate = subscription.SubscriptionStartDate || startDateValue;
-    }
-
-    updatePlanDisplay(planName);
-
-    if (startDateValue) {
-      const startDate = new Date(startDateValue);
-      const today = new Date();
-      const diffDays = Math.max(0, Math.floor((today - startDate) / (1000 * 60 * 60 * 24)));
-
-      updateCounterDisplay(diffDays);
-      updateStartDateDisplay(startDate);
-
-      if (planName === "Free Trial") {
-        const trialEnd = new Date(startDate);
-        trialEnd.setDate(startDate.getDate() + 7);
-
-        document.getElementById("trialEndDate").textContent = trialEnd.toLocaleDateString();
-        document.getElementById("trialEndItem").style.display = "flex";
-      } else {
-        document.getElementById("trialEndItem").style.display = "none";
-      }
-
-      const subStartEl = document.getElementById("subscriptionStartDate");
-      subStartEl.classList.remove("loading-text");
-      subStartEl.textContent = new Date(subscriptionStartDate).toLocaleDateString();
-    }
-  } catch (err) {
-    console.error("❌ Error in loadSubscriptionInfo:", err);
-    showFallbackData();
-  }
-}
-
-
-
+                if (user && user.Account && user.Account.Subscriptions && user.Account.Subscriptions.length > 0) {
+                    const subscription = user.Account.Subscriptions[0];
+                    console.log('📋 Subscription found:', subscription);
+                    
+                    if (subscription.Plan && subscription.Plan.Name) {
+                        planName = subscription.Plan.Name;
+                    }
+                    startDateValue = subscription.StartDate || subscription.CreatedDate;
+                    
+                    // Look for subscription start date
+                    if (subscription.SubscriptionStartDate) {
+                        subscriptionStartDate = subscription.SubscriptionStartDate;
+                    } else if (subscription.StartDate && planName !== 'Free Trial') {
+                        subscriptionStartDate = subscription.StartDate;
+                    }
+                } else {
+                    console.log('🔍 No direct subscriptions found, checking account created date');
+                    
+                    // Use account created date as fallback
+                    if (user && user.Account && user.Account.Created) {
+                        startDateValue = user.Account.Created;
+                    }
                     
                     // Try API calls only if we don't have fast data already
                     try {
