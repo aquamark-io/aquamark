@@ -2,959 +2,673 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Aquamark Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aquamark for Lenders - Pipeline Protection & Compliance</title>
-    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
     <style>
+        :root {
+            --primary-color: #467EFF;
+            --primary-light: #f8fafc;
+            --primary-dark: #1d4ed8;
+            --accent-color: #467EFF;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1a1a1a;
+            --text-secondary: #64748b;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
-            overflow-x: hidden;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-            background: #ffffff;
-            overflow-x: hidden;
-            width: 100%;
-            max-width: 100vw;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        /* Header - Ultra Minimal */
-        header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid #f3f4f6;
-            position: fixed;
+        /* Header */
+        .aqua-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--primary-light);
+            box-shadow: var(--shadow-md);
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
+            z-index: 100;
         }
 
-        nav {
+        .aqua-logo {
+            height: 32px;
+        }
+
+        .aqua-nav {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
             align-items: center;
         }
 
-        .nav-links a {
+        .aqua-nav a {
+            margin-left: 2rem;
             text-decoration: none;
-            color: #6b7280;
-            font-weight: 400;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: #111827;
-        }
-
-        .back-home-btn {
-  background: #000000 !important;
-  color: #ffffff !important;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
-        .back-home-btn:hover {
-  background: #1a1a1a !important;
-  color: #ffffff !important;
-}
-
-
-        /* Mobile menu */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            gap: 3px;
-        }
-
-        .mobile-menu-btn span {
-            width: 20px;
-            height: 2px;
-            background: #6b7280;
+            font-weight: 500;
+            color: var(--text-primary);
             transition: all 0.2s ease;
-        }
-
-        /* Hero Section - Minimal White */
-        .hero {
-            background: #ffffff;
-            padding: 140px 0 40px;
-            text-align: center;
-        }
-
-        .hero-content {
             position: relative;
-            z-index: 2;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            color: #111827;
-            letter-spacing: -0.02em;
+        .aqua-nav a:hover {
+            color: var(--accent-color);
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            color: #6b7280;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 3rem;
+        .aqua-nav a.active {
+            color: var(--accent-color);
         }
 
-        .cta-button {
-            background: #111827;
-            color: #ffffff;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
+        .aqua-nav a.active:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: #467EFF;
+            border-radius: 3px;
         }
 
-        .cta-button:hover {
-            background: #1f2937;
-            transform: translateY(-1px);
-        }
-
-        .test-free-button {
-            background: #22c55e;
-            color: #ffffff;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .test-free-button:hover {
-            background: #16a34a;
-            transform: translateY(-1px);
-        }
-
-        /* Free Test CTA */
-        .free-test-cta {
-            background: #22c55e;
-            padding: 2rem 0;
-            text-align: center;
-            color: white;
-            margin: 0;
-        }
-
-        .free-test-cta h3 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .free-test-cta p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 2rem;
-        }
-
-        .test-params {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            padding: 1.5rem;
+        /* Main Content */
+        .aqua-panel {
+            max-width: 1200px;
+            width: 95%;
             margin: 2rem auto;
-            max-width: 500px;
-            text-align: left;
+            flex: 1;
         }
 
-        .test-params h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .test-params div {
-            margin-bottom: 0.75rem;
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.9rem;
-            color: white;
-        }
-
-        .test-params strong {
-            color: white;
-            font-weight: 600;
-        }
-
-        .contact-button {
-            background: white;
-            color: #22c55e;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s ease;
-        }
-
-        .contact-button:hover {
-            background: #f0fdf4;
-            transform: translateY(-1px);
-        }
-
-        /* API Section */
-        .api-section {
-    padding: 60px 0 1px;
-    background: #ffffff;
-}
-
-        .api-section h2 {
-            font-size: 3rem;
-            color: #111827;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
-
-        .api-section .section-subtitle {
-            font-size: 1.3rem;
-            color: #6b7280;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 4rem auto;
-        }
-
-        .api-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .api-details {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .api-details h3 {
-            font-size: 1.1rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .endpoint {
-            background: #f9fafb;
-            color: #6b7280;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
-            border: 1px solid #e5e7eb;
-            word-break: break-all;
-        }
-
-        .params-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.875rem;
-        }
-
-        .params-table th,
-        .params-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .params-table th {
-            background: #f9fafb;
-            font-weight: 600;
-            color: #111827;
-        }
-
-        .params-table code {
-            background: #f9fafb;
-            color: #111827;
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
-            font-weight: 500;
-        }
-
-        .required {
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        .section-note {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .section-note strong {
-            color: #111827;
-            font-weight: 600;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 80px 0;
-            background: #fafafa;
-        }
-
-        .pricing h2 {
-            font-size: 3rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
-
-        .pricing-subheadline {
-            font-size: 1.3rem;
-            color: #6b7280;
-            line-height: 1.7;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            margin-top: 1rem;
-            margin-bottom: 4.5rem;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .pricing-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-        }
-
-        .pricing-card.featured {
-            border: 2px solid #111827;
-            transform: scale(1.05);
-            position: relative;
-        }
-
-        .pricing-card.featured::before {
-            content: "Most Popular";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #22c55e;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .pricing-card h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 1rem;
-        }
-
-        .price {
+        h1.greeting {
             font-size: 2rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 1rem 0;
-            color: #111827;
-        }
-
-        .price-note {
-            color: #6b7280;
-            font-size: 1.1rem;
             margin-bottom: 2rem;
-        }
-
-        .product-features {
-            list-style: none;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .product-features li {
-            padding: 0.4rem 0;
-            position: relative;
-            padding-left: 1.5rem;
-            font-size: 0.95rem;
-            color: #374151;
-        }
-
-        .product-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #111827;
-            font-weight: bold;
-        }
-
-        .custom-quote {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .custom-quote h3 {
-            font-size: 1.4rem;
-            color: #111827;
-            margin-bottom: 1rem;
             font-weight: 600;
+            color: var(--text-primary);
         }
 
-        .custom-quote p {
-            color: #6b7280;
-            margin-bottom: 1.5rem;
+        /* Cards */
+        .aqua-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 2rem;
         }
 
-        /* Footer */
-        footer {
-            background: #ffffff;
-            color: #6b7280;
-            padding: 40px 0 10px;
-            border-top: 1px solid #f3f4f6;
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: #f8fafc;
         }
 
-        .footer-content {
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Two-column layout for profile section */
+        .profile-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
 
-        .footer-section h3 {
-            margin-bottom: 1.5rem;
-            color: #111827;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #6b7280;
-            text-decoration: none;
-            margin-bottom: 0.5rem;
-            display: block;
-            transition: color 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .footer-section a:hover {
-            color: #111827;
-        }
-
-        .footer-bottom {
-            background: #111827;
-            color: #9ca3af;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-            font-size: 0.9rem;
-            width: 100%;
+        .profile-section {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
             overflow: hidden;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .pricing-card.featured {
-                transform: none;
-            }
+        /* Subscription info styling */
+        .subscription-info {
+            text-align: center;
+            padding: 2rem;
         }
 
+        .subscription-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .days-counter {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--success-color);
+            margin: 1rem 0;
+        }
+
+        .subscription-details {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .plan-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-watermark {
+            background: #467EFF;
+            color: white;
+        }
+
+        .btn-watermark:hover {
+            background: #95cbea;
+        }
+
+        .btn-black {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .btn-black:hover {
+            background: #333333;
+        }
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            color: var(--text-primary);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .announcement-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #467EFF, #1d4ed8);
+        }
+
+        .announcement-content {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        .announcement-icon {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #467EFF;
+            font-size: 1.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .announcement-text h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.025em;
+        }
+
+        .announcement-text p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+
+        .announcement-text .highlight {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .aqua-footer {
+            background: var(--primary-light);
+            padding: 1.5rem 2rem;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            height: 24px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                gap: 1rem;
-                padding: 2rem;
-                border-top: 1px solid #f3f4f6;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
-            }
-
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .nav-links li {
-                width: 100%;
-                text-align: center;
-            }
-
-            .back-home-btn {
-                margin-left: 0;
-                width: 100%;
-                text-align: center;
-                display: block;
-                box-sizing: border-box;
-            }
-
-            .hero {
-                padding: 120px 0 80px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .api-section,
-            .pricing {
-                padding: 80px 0;
-            }
-
-            .api-section h2,
-            .pricing h2 {
-                font-size: 2.2rem;
-                line-height: 1.2;
-            }
-
-            .pricing-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-                align-items: center;
-                width: 100%;
-            }
-
-            .pricing-card {
-                width: 100%;
-                max-width: 350px;
-                padding: 2rem;
-                margin: 0 auto;
-            }
-
-            .pricing-card.featured {
-                transform: none;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-                text-align: center;
-            }
-
-            .footer-section {
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .api-section h2,
-            .pricing h2 {
-                font-size: 1.8rem;
-            }
-
-            .footer-content {
+            .profile-container {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
-            .pricing-card {
-                width: 100%;
-                max-width: none;
+            .announcement-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
                 padding: 1.5rem;
             }
 
-            .pricing-card.featured {
-                transform: none;
+            .announcement-text h3 {
+                font-size: 1.25rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .aqua-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .days-counter {
+                font-size: 2rem;
             }
         }
     </style>
+
+    <!-- Outseta integration -->
+    <script>
+        var o_options = {
+            domain: 'aquamark.outseta.com',
+            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+        };
+    </script>
+    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <a href="https://www.aquamark.io" class="logo">
-                <img src="/logo-full-black-blue.png" alt="Aquamark">
-            </a>
-            <ul class="nav-links">
-                <li><a href="https://www.aquamark.io" class="back-home-btn">← Back Home</a></li>
-            </ul>
-            <div class="mobile-menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+    <header class="aqua-header">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
+        <nav class="aqua-nav">
+            <a href="/dashboard.html" class="active">Dashboard</a>
+            <a href="/watermark.html" id="watermarkLink">Watermark</a>
+            <a href="https://www.aquamark.io/login.html">Log Out</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Aquamark for Lenders</h1>
-                <p>When brokers know you're watermarking, they know they can trust you — and trust leads to stronger relationships, a better reputation, and long-term growth.</p>
-                <a href="#free-test" class="test-free-button">Test for Free</a>
-            </div>
-        </div>
-    </section>
+    <main class="aqua-panel">
+        <h1 class="greeting">My Dashboard</h1>
 
-
-    <!-- API Section -->
-    <section class="api-section" id="api">
-        
-            <div class="api-content">
-                <div class="api-details">
-<h3 style="font-size: 1.9rem;">Simple API Integration</h3>
-<p style="margin-bottom: 2rem; color: #6b7280; line-height: 1.6;">
-  Setup takes minutes.<br>
-  Simply intercept the PDF download event, send files to our API endpoint, and return the watermarked version to the user.
-</p>
-                    
-                    <h3>Endpoint</h3>
-                    <div class="endpoint">POST https://aquamark-lenders.onrender.com/watermark</div>
-                    
-                    <h3>Headers</h3>
-                    <div class="endpoint">Authorization: Bearer YOUR_API_KEY</div>
-                    
-                    <h3>Request Format</h3>
-                    <p style="margin-bottom: 1rem; color: #6b7280;">Use multipart/form-data with the following fields:</p>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>Field</th>
-                                <th>Type</th>
-                                <th>Required</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-    <tr>
-        <td><code>file</code></td>
-        <td>File</td>
-        <td class="required">Required</td>
-        <td>The original PDF to protect</td>
-    </tr>
-    <tr>
-        <td><code>name</code></td>
-        <td>String</td>
-        <td class="required">Required</td>
-        <td>Person signed in and initiating download</td>
-    </tr>
-    <tr>
-        <td><code>company</code></td>
-        <td>String</td>
-        <td class="required">Required</td>
-        <td>Your company name</td>
-    </tr>
-    <tr>
-        <td><code>user_email</code></td>
-        <td>String</td>
-        <td class="required">Required</td>
-        <td>Aquamark account email</td>
-    </tr>
-</tbody>
-
-                    </table>
-                    
-                    
-<h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Response</h3>
-                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; font-size: 0.875rem;">
-                        <li>Returns a <strong>200 OK</strong> with the protected PDF.</li>
-                        <li>Treat it as a file download.</li>
-                    </ul>
-                    
-<h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Common Implementations</h3>
-                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6; font-size: 0.875rem;">
-                        <li><strong>Salesforce</strong> - override the download button or embed a Visualforce page to return the protected file.</li>
-                        <li><strong>Custom or proprietary CRMs</strong> - intercept the click/download event and POST the file via the API.</li>
-                    </ul>
+        <!-- Announcement Banner -->
+        <div class="announcement-banner">
+            <div class="announcement-content">
+                <div class="announcement-icon">
+                    ⚠
+                </div>
+                <div class="announcement-text">
+                    <h3>Join the Fight Against Backdooring</h3>
+                    <p>
+                        One stolen deal is costing brokers <span class="highlight">$4,000*</span> in commission. 
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Free Test CTA -->
-    <section class="free-test-cta" id="free-test">
-        <div class="container">
-            <h3>Test 100 API calls for FREE</h3>
-            <p>One stolen submission is costing you thousands.</p>
-            
-            <div class="test-params">
-                <h4>Testing Parameters</h4>
-                <div><strong>User Email:</strong> test@aquamark.io</div>
-                <div><strong>API Key:</strong> api-aqua-lender-test-4423101813</div>
-            </div>
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn" style="background-color: #10b981; color: white;">Subscribe</a>
+            <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
+            <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
         </div>
-    </section>
-    
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2>Simple, Transparent Pricing</h2>
-            <p class="pricing-subheadline">No hidden fees. No setup costs. Pays for itself.</p>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>5,000 Submissions</h3>
-                    <div class="price">$499</div>
-                    <p class="price-note">3.3¢ per file</p>
-                    
-                    <ul class="product-features">
-                        <li>15,000 files per month</li>
-                        <li>Branded watermarking</li>
-                        <li>Smart QR code</li>
-                        <li>API access</li>
-                    </ul>
-                    
-<a href="https://buy.stripe.com/fZu7sM1w32Xx0vz2GY8ww01" class="cta-button">Subscribe</a>
+
+        <!-- Profile Section with Two Columns -->
+        <div class="profile-container">
+            <!-- Profile Card -->
+            <div class="profile-section">
+                <div class="card-header">
+                    <h2>My Profile</h2>
                 </div>
-                
-                <div class="pricing-card featured">
-                    <h3>10,000 Submissions</h3>
-                    <div class="price">$749</div>
-                    <p class="price-note">2.5¢ per file</p>
-                    
-                    <ul class="product-features">
-                        <li>30,000 files per month</li>
-                        <li>Branded watermarking</li>
-                        <li>Smart QR code</li>
-                        <li>API access</li>
-                    </ul>
-                    
-<a href="https://buy.stripe.com/bJe00kgqW2Xx3HLftK8ww02" class="cta-button">Subscribe</a>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3>25,000 Submissions</h3>
-                    <div class="price">$999</div>
-                    <p class="price-note">1.3¢ per file</p>
-                    
-                    <ul class="product-features">
-                        <li>75,000 files per month</li>
-                        <li>Branded watermarking</li>
-                        <li>Smart QR code</li>
-                        <li>API access</li>
-                    </ul>
-                    
-                    <a href="https://buy.stripe.com/aFa3cw6Qm41B5PTftK8ww03" class="cta-button">Subscribe</a>
+                <div class="card-body">
+                    <div data-o-profile="1" data-mode="embed"></div>
                 </div>
             </div>
-            
-            <div class="custom-quote">
-    <h3>Processing more than 25,000 submissions?</h3>
-    <p>
-        Contact us for unlimited pricing at <a href="mailto:info@aquamark.io" style="color: #2563eb; text-decoration: underline;">info@aquamark.io</a>
-    </p>
-</div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Contact Information</h3>
-                    <p>Phone: (415) 500-1117</p>
-                    <p>Email: info@aquamark.io</p>
-                    <p>490 Post Street<br>Suite 500<br>San Francisco, CA 94102</p>
+            <!-- Subscription Info Card -->
+            <div class="profile-section">
+                <div class="card-header">
+                    <h2>Subscription Status</h2>
                 </div>
-
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#api">API Docs</a>
-                    <a href="https://www.aquamark.io/contact">Contact</a>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Services</h3>
-                    <a href="https://www.aquamark.io#brokers">Broker Solutions</a>
-                    <a href="https://www.aquamark.io#lenders">Lender Solutions</a>
-                    <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Partnerships</h3>
-                    <a href="https://www.aquamark.io/contact">Wholesale Opportunities</a>
-                    <a href="https://www.aquamark.io/contact">Affiliate Opportunities</a>
+                <div class="subscription-info">
+                    <h3>You've been protecting your commissions for</h3>
+                    <div class="days-counter" id="daysCounter">-</div>
+                    <p>days</p>
+                    
+                    <div class="subscription-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Plan:</span>
+                            <span class="detail-value">
+                                <span class="plan-badge" id="planName">Loading...</span>
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Started:</span>
+                            <span class="detail-value" id="startDate">Loading...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </main>
+
+    <footer class="aqua-footer">
+        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
+        <div class="footer-nav">
+            <a href="https://www.aquamark.io/terms.html">Terms of Service</a>
+            <a href="https://www.aquamark.io/privacy.html">Privacy Policy</a>
+            <a href="mailto:hey@aquamark.io">Contact Us</a>
+        </div>
+        <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
     </footer>
 
-    <!-- Footer Bottom - Full Width -->
-    <div class="footer-bottom">
-        <p>&copy; 2025 Aquamark. All rights reserved.</p>
-    </div>
-
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
+        // Configuration - YOUR SECURE BACKEND
+        const API_BASE_URL = 'https://aquamark-backend.onrender.com';
         
-        if (mobileMenuBtn && navLinks) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenuBtn.classList.toggle('active');
-                navLinks.classList.toggle('active');
-            });
+        // Global variables
+        let currentUser = null;
+        let userToken = null;
 
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
-                    mobileMenuBtn.classList.remove('active');
-                    navLinks.classList.remove('active');
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            preserveUrlParameters();
+        });
+
+        // Initialize the page
+        async function initializePage() {
+            try {
+                // Get user from Outseta
+                currentUser = await Outseta.getUser();
+                if (!currentUser) {
+                    window.location.href = '/login.html';
+                    return;
                 }
-            });
 
-            // Close mobile menu when clicking on nav links
-            navLinks.addEventListener('click', () => {
-                mobileMenuBtn.classList.remove('active');
-                navLinks.classList.remove('active');
+                console.log("User loaded:", currentUser.Email);
+
+                // Get auth token for API calls
+                userToken = await getAuthToken();
+                
+                // Load subscription info
+                await loadSubscriptionInfo();
+                
+                // Set up Outseta event listeners for plan changes
+                setupOutsetaEventListeners();
+                
+            } catch (error) {
+                console.error('Initialization error:', error);
+            }
+        }
+
+        // Load subscription information
+        async function loadSubscriptionInfo() {
+            try {
+                // Get subscription data from Outseta
+                const subscriptions = await Outseta.getSubscriptions();
+                
+                if (subscriptions && subscriptions.length > 0) {
+                    const subscription = subscriptions[0];
+                    
+                    // Update plan name
+                    const planName = subscription.Plan ? subscription.Plan.Name : 'Free Trial';
+                    document.getElementById('planName').textContent = planName;
+                    
+                    // Update start date and calculate days
+                    if (subscription.StartDate) {
+                        const startDate = new Date(subscription.StartDate);
+                        const today = new Date();
+                        const diffTime = Math.abs(today - startDate);
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        
+                        document.getElementById('daysCounter').textContent = diffDays;
+                        document.getElementById('startDate').textContent = startDate.toLocaleDateString();
+                    } else {
+                        document.getElementById('daysCounter').textContent = '0';
+                        document.getElementById('startDate').textContent = 'N/A';
+                    }
+                } else {
+                    // No active subscription
+                    document.getElementById('planName').textContent = 'Free Trial';
+                    document.getElementById('daysCounter').textContent = '0';
+                    document.getElementById('startDate').textContent = 'N/A';
+                }
+            } catch (error) {
+                console.error('Error loading subscription info:', error);
+                document.getElementById('planName').textContent = 'Free Trial';
+                document.getElementById('daysCounter').textContent = '0';
+                document.getElementById('startDate').textContent = 'N/A';
+            }
+        }
+
+        // Preserve URL parameters for navigation
+        function preserveUrlParameters() {
+            const urlParams = window.location.search;
+            const hashParams = window.location.hash;
+
+            const pathsToUpdate = ["/watermark.html", "/dashboard.html"];
+
+            document.querySelectorAll("a[href]").forEach(link => {
+                const href = link.getAttribute("href");
+                if (href && pathsToUpdate.some(path => href.startsWith(path))) {
+                    const cleanHref = href.split('?')[0].split('#')[0];
+                    link.href = cleanHref + urlParams + hashParams;
+                }
             });
         }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.style.background = 'rgba(255, 255, 255, 0.98)';
-                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-                } else {
-                    header.style.background = 'rgba(255, 255, 255, 0.95)';
-                    header.style.boxShadow = 'none';
-                }
+        // Get auth token for API calls
+        async function getAuthToken() {
+            try {
+                const token = await Outseta.getAccessToken();
+                return token;
+            } catch (error) {
+                console.error('Error getting auth token:', error);
+                return null;
             }
-        });
+        }
+
+        // Set up Outseta event listeners
+        function setupOutsetaEventListeners() {
+            // Listen for subscription updates
+            Outseta.on("subscription.update", async (params) => {
+                console.log("Subscription update event:", params);
+                await handlePlanChange(params);
+                await loadSubscriptionInfo(); // Refresh subscription info
+            });
+
+            // Listen for subscription reopens
+            Outseta.on("subscription.reopen", async (params) => {
+                console.log("Subscription reopen event:", params);
+                await handlePlanChange(params);
+                await loadSubscriptionInfo(); // Refresh subscription info
+            });
+        }
+
+        // Handle plan changes from Outseta events
+        async function handlePlanChange(params) {
+            try {
+                let planName = "Free Trial";
+
+                if (params) {
+                    if (params.Plan && params.Plan.Name) {
+                        planName = params.Plan.Name;
+                    } else if (params.plan && params.plan.name) {
+                        planName = params.plan.name;
+                    } else if (params.subscription) {
+                        if (params.subscription.Plan && params.subscription.Plan.Name) {
+                            planName = params.subscription.Plan.Name;
+                        } else if (params.subscription.plan && params.subscription.plan.name) {
+                            planName = params.subscription.plan.name;
+                        }
+                    }
+                }
+
+                console.log(`Plan change detected: ${planName}`);
+                
+                // Update plan via API
+                await updateUserPlan(planName);
+
+            } catch (error) {
+                console.error('Error handling plan change:', error);
+            }
+        }
+
+        // Update user plan via API
+        async function updateUserPlan(planName) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/update-plan`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: currentUser.Email,
+                        planName: planName,
+                        webhookSecret: 'aquamark-secure-protection-string-101813'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Plan update failed');
+                }
+
+                console.log('Plan updated successfully');
+            } catch (error) {
+                console.error('Error updating plan:', error);
+            }
+        }
+
+        // Handle logout redirection
+        if (window.location.hash === '#o-logout-link') {
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>
