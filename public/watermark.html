@@ -13,6 +13,7 @@
             --primary-dark: #1d4ed8;
             --accent-color: #467EFF;
             --success-color: #10b981;
+            --success-dark: #059669;
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
             --text-primary: #1a1a1a;
@@ -112,7 +113,7 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow-md);
             overflow: hidden;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .card-header {
@@ -121,6 +122,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: white;
         }
 
         .card-header h2 {
@@ -129,20 +131,31 @@
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
-        .card-header h2::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
+        .section-number {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-color);
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .card-body {
             padding: 1.5rem;
+        }
+
+        .section-subheader {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
         }
 
         /* Instructions */
@@ -174,10 +187,11 @@
             margin-bottom: 1.5rem;
         }
 
-        .upload-group h2 {
-            font-size: 1.1rem;
+        .upload-group h3 {
+            font-size: 1rem;
             margin-bottom: 0.75rem;
             font-weight: 600;
+            color: var(--text-primary);
         }
 
         input[type="file"] {
@@ -193,17 +207,61 @@
 
         /* Logo Preview */
         .logo-preview {
-            margin-top: 1rem;
+            margin: 1.5rem 0;
             text-align: center;
+            padding: 2rem;
+            background: var(--bg-color);
+            border-radius: var(--radius);
+            border: 2px dashed var(--border-color);
         }
 
         .logo-preview img {
-            max-height: 100px;
+            max-height: 120px;
             border-radius: 8px;
             background: white;
             border: 1px solid var(--border-color);
             max-width: 100%;
             object-fit: contain;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Tracking Inputs */
+        .tracking-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .input-group .optional {
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .input-group input {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-color);
+            font-family: inherit;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(70, 126, 255, 0.1);
         }
 
         #pdfInput {
@@ -214,6 +272,13 @@
             border: 4px dashed var(--border-color);
             background-color: var(--bg-color);
             cursor: pointer;
+            border-radius: var(--radius);
+            transition: all 0.2s ease;
+        }
+
+        #pdfInput:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(70, 126, 255, 0.05);
         }
 
         /* Button */
@@ -231,11 +296,13 @@
 
         button:hover {
             background: var(--primary-dark);
+            transform: translateY(-1px);
         }
 
         button:disabled {
             background: #ccc;
             cursor: not-allowed;
+            transform: none;
         }
 
         .change-logo-btn {
@@ -253,6 +320,7 @@
         .change-logo-btn:hover {
             background-color: #e0ecff;
             color: #1d4ed8;
+            transform: translateY(-1px);
         }
 
         /* Status */
@@ -260,6 +328,10 @@
             margin-top: 1.5rem;
             font-weight: 500;
             color: var(--text-primary);
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--accent-color);
         }
 
         /* Pages Used Counter */
@@ -267,10 +339,25 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--primary-light);
+            background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%);
             border-radius: var(--radius);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem;
             margin: 1.5rem 0;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Clean Urgency Text */
+        .urgency-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+
+        .urgency-highlight {
+            color: var(--success-color);
+            font-weight: 600;
         }
 
         .counter-info {
@@ -295,13 +382,13 @@
             color: var(--text-secondary);
         }
 
-        /* Upgrade Button */
-        .upgrade-btn {
+        /* Subscribe Button (formerly Upgrade Button) */
+        .subscribe-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            background: #467EFF;
+            background: var(--success-color);
             color: white;
             border: none;
             padding: 0.75rem 1.25rem;
@@ -312,24 +399,77 @@
             transition: all 0.2s ease;
         }
 
-        .upgrade-btn:hover {
-            background: #1d4ed8;
+        .subscribe-btn:hover {
+            background: var(--success-dark);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .subscribe-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
         }
 
         /* Action Row */
         .action-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-top: 2rem;
+            gap: 1rem;
         }
 
         .logo-actions {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
-            margin-bottom: 4.0rem;
+            justify-content: center;
+        }
+
+        /* API Upgrade Prompt */
+        .api-prompt {
+            background: linear-gradient(135deg, #fffbe6 0%, #ffffff 100%);
+            border: 1px solid #ffe58f;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .api-prompt h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .api-prompt p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .api-btn {
+            background: #ffd666;
+            color: black;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .api-btn:hover {
+            background: #ffcc33;
+            transform: translateY(-1px);
         }
 
         /* Footer */
@@ -370,10 +510,14 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .tracking-inputs {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
             .action-row {
                 flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
+                align-items: stretch;
             }
 
             .aqua-footer {
@@ -391,6 +535,11 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
+            }
+
+            .subscribe-container {
+                align-items: stretch;
+                text-align: center;
             }
 
             .logo-actions {
@@ -428,72 +577,80 @@
                 <h3>Pages Watermarked</h3>
                 <div class="counter-value" id="pagesWatermarked">0</div>
             </div>
-            <a href="/dashboard.html" id="upgradePlanLink" class="upgrade-btn">
-                Upgrade Plan
+            <a href="/dashboard.html" id="subscribeNowLink" class="subscribe-btn">
+                Subscribe
             </a>
         </div>
 
-        <div class="aqua-card">
+        <!-- Section 1: Stored Logo -->
+        <div class="aqua-card logo-section">
             <div class="card-header">
+                <h2>
+                    <div class="section-number">1</div>
+                    Stored Logo
+                </h2>
             </div>
             <div class="card-body">
-                <div class="instructions">
-                    <strong>Tips:</strong>
-                    <ul>
-                        <li>Upload your logo once — change anytime (PNG)</li>
-                        <li>Drag & drop PDFs for fast processing</li>
-                        <li>Upload multiple files at once</li>
-                    </ul>
+                <p class="section-subheader">Upload your company logo once and use it across future sessions.</p>
+                
+                <div class="logo-preview">
+                    <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
                 </div>
 
+                <div class="logo-actions">
+                    <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" style="display: none;" />
+                    <button class="change-logo-btn" onclick="document.getElementById('logoInput').click()">Change Logo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Smart Tracking -->
+        <div class="aqua-card tracking-section">
+            <div class="card-header">
+                <h2>
+                    <div class="section-number">2</div>
+                    (Optional) Smart Tags
+                </h2>
+            </div>
+            <div class="card-body">
+                <p class="section-subheader">Power up your QR codes. These help identify individuals given access to your files.</p>
+                
+                <div class="tracking-inputs">
+                    <div class="input-group">
+                        <label for="lenderTag">Lender</label>
+                        <input type="text" id="lenderTag" placeholder="Lender name" />
+                    </div>
+                    <div class="input-group">
+                        <label for="salespersonTag">Salesperson</label>
+                        <input type="text" id="salespersonTag" placeholder="Salesperson name" />
+                    </div>
+                    <div class="input-group">
+                        <label for="processorTag">Processor</label>
+                        <input type="text" id="processorTag" placeholder="Processor name" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Watermark Processing -->
+        <div class="aqua-card watermark-section">
+            <div class="card-header">
+                <h2>
+                    <div class="section-number">3</div>
+                    Watermark
+                </h2>
+            </div>
+            <div class="card-body">
                 <div class="upload-group">
-                    <h2>Stored Logo</h2>
-                    <div class="logo-preview">
-                        <img id="logoImg" src="/logo-placeholder.png" alt="Stored Logo" />
-                    </div>
-
-                    <div class="logo-actions">
-                        <input type="file" id="logoInput" accept=".png,.jpg,.jpeg,image/png,image/jpeg" style="display: none;" />
-                        <button class="change-logo-btn" onclick="document.getElementById('logoInput').click()">Change Logo</button>
-                    </div>
-                </div>
-
-                <!-- Optional Inputs -->
-                <div class="upload-group" style="display: flex; gap: 2rem;">
-                    <div style="flex: 1;">
-                        <label for="lenderTag" style="font-weight: 600;">Lender <span style="font-weight: 400;">(optional)</span></label>
-                        <input type="text" id="lenderTag" placeholder="Lender name" style="margin-top: 0.15rem; padding: 0.5rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="salespersonTag" style="font-weight: 600;">Salesperson <span style="font-weight: 400;">(optional)</span></label>
-                        <input type="text" id="salespersonTag" placeholder="Salesperson name" style="margin-top: 0.15rem; padding: 0.5rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="processorTag" style="font-weight: 600;">Processor <span style="font-weight: 400;">(optional)</span></label>
-                        <input type="text" id="processorTag" placeholder="Processor name" style="margin-top: 0.15rem; padding: 0.5rem; width: 100%; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); font-family: inherit;" />
-                    </div>
-                </div>
-
-                <div class="upload-group" style="margin-top: 2rem;">
-                    <h2>Drag & Drop File(s) or choose below</h2>
+                    <h3>Drag & Drop or choose below</h3>
                     <input type="file" id="pdfInput" accept="application/pdf" multiple />
                 </div>
                 
                 <div class="action-row">
-                    <button onclick="processFiles()" id="watermarkBtn">Watermark</button>
-                    <div class="status" id="status"></div>
+                    <button onclick="processFiles()" id="watermarkBtn">Watermark Now</button>
                 </div>
 
-                <!-- API Upgrade Prompt -->
-                <div style="background: #fffbe6; border: 1px solid #ffe58f; padding: 1.25rem 1.5rem; border-radius: 12px; margin-top: 1.5rem; box-shadow: var(--shadow-md);">
-                    <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 600;">Want state-compliance alerts? Need faster processing?</h3>
-                    <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem;">
-                        Integrate instantly through our open API.
-                    </p>
-                    <a href="mailto:hey@aquamark.io?subject=API%20Key%20Request" target="_blank" class="upgrade-btn" style="background: #ffd666; color: black;">
-                        🚀 Request API Key
-                    </a>
-                </div>
+                <div class="status" id="status" style="display: none;"></div>
             </div>
         </div>
     </main>
@@ -535,23 +692,22 @@
                 userToken = await getAuthToken();
 
                 // ✅ Smart plan sync: Only update if changed
-if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
-    const livePlanName = currentUser.Subscription.Plan.Name;
-    const cachedPlan = localStorage.getItem('aquaPlanName');
+                if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
+                    const livePlanName = currentUser.Subscription.Plan.Name;
+                    const cachedPlan = localStorage.getItem('aquaPlanName');
 
-    console.log("📦 Live plan from Outseta:", livePlanName);
-    console.log("📦 Cached plan from localStorage:", cachedPlan);
+                    console.log("📦 Live plan from Outseta:", livePlanName);
+                    console.log("📦 Cached plan from localStorage:", cachedPlan);
 
-    if (livePlanName !== cachedPlan) {
-        console.log("🔁 Plan changed — updating Supabase");
-        await updateUserPlan(livePlanName);
-        localStorage.setItem('aquaPlanName', livePlanName);
-    } else {
-        console.log("✅ Plan unchanged — skipping update");
-    }
-}
+                    if (livePlanName !== cachedPlan) {
+                        console.log("🔁 Plan changed — updating Supabase");
+                        await updateUserPlan(livePlanName);
+                        localStorage.setItem('aquaPlanName', livePlanName);
+                    } else {
+                        console.log("✅ Plan unchanged — skipping update");
+                    }
+                }
 
-                
                 // Load user's logo and usage data
                 await loadUserLogo();
                 await loadUsageData();
@@ -560,7 +716,7 @@ if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
                 setupEventListeners();
             } catch (error) {
                 console.error('Initialization error:', error);
-                document.getElementById('status').textContent = '❌ Error loading page. Please refresh.';
+                showStatus('❌ Error loading page. Please refresh.', 'error');
             }
         }
 
@@ -586,7 +742,32 @@ if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
             const hashParams = window.location.hash;
             
             document.getElementById('dashboardLink').href = "/dashboard.html" + urlParams + hashParams;
-            document.getElementById('upgradePlanLink').href = "/dashboard.html" + urlParams + hashParams;
+            document.getElementById('subscribeNowLink').href = "/dashboard.html" + urlParams + hashParams;
+        }
+
+        // Show status with proper styling
+        function showStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.style.display = 'block';
+            
+            // Remove existing type classes
+            status.classList.remove('status-error', 'status-success', 'status-warning');
+            
+            // Add appropriate class
+            if (type === 'error') {
+                status.style.borderLeftColor = 'var(--danger-color)';
+                status.style.background = '#fef2f2';
+            } else if (type === 'success') {
+                status.style.borderLeftColor = 'var(--success-color)';
+                status.style.background = '#f0fdf4';
+            } else if (type === 'warning') {
+                status.style.borderLeftColor = 'var(--warning-color)';
+                status.style.background = '#fffbeb';
+            } else {
+                status.style.borderLeftColor = 'var(--accent-color)';
+                status.style.background = 'var(--bg-color)';
+            }
         }
 
         // Load user's stored logo
@@ -636,14 +817,13 @@ if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
         // Upload logo function
         async function uploadLogo() {
             const fileInput = document.getElementById('logoInput');
-            const status = document.getElementById('status');
 
             if (!fileInput.files[0]) {
-                status.textContent = "Please select an image to upload.";
+                showStatus("Please select an image to upload.", 'warning');
                 return;
             }
 
-            status.textContent = "⏳ Uploading logo...";
+            showStatus("⏳ Uploading logo...", 'info');
 
             try {
                 const formData = new FormData();
@@ -660,31 +840,30 @@ if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
                 if (response.ok) {
                     const data = await response.json();
                     document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
-                    status.textContent = "✅ Logo uploaded successfully!";
+                    showStatus("✅ Logo uploaded successfully!", 'success');
                 } else {
                     const error = await response.json();
-                    status.textContent = `❌ ${error.error || 'Logo upload failed'}`;
+                    showStatus(`❌ ${error.error || 'Logo upload failed'}`, 'error');
                 }
             } catch (error) {
                 console.error('Upload error:', error);
-                status.textContent = "❌ Upload failed. Please try again.";
+                showStatus("❌ Upload failed. Please try again.", 'error');
             }
         }
 
         // Process files function
         async function processFiles() {
-            const status = document.getElementById('status');
             const pdfInput = document.getElementById('pdfInput');
             const watermarkBtn = document.getElementById('watermarkBtn');
 
             if (pdfInput.files.length === 0) {
-                status.textContent = "Please upload at least one PDF.";
+                showStatus("Please upload at least one PDF.", 'warning');
                 return;
             }
 
             watermarkBtn.disabled = true;
             watermarkBtn.textContent = "Processing...";
-            status.textContent = "⏳ Processing files...";
+            showStatus("⏳ Processing files...", 'info');
 
             try {
                 const formData = new FormData();
@@ -728,23 +907,23 @@ if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
                     const currentPages = parseInt(document.getElementById('pagesWatermarked').textContent) || 0;
                     document.getElementById('pagesWatermarked').textContent = currentPages + data.pagesProcessed;
 
-                    status.textContent = `✅ ${data.message}`;
+                    showStatus(`✅ ${data.message}`, 'success');
                 } else {
                     const error = await response.json();
-                    status.textContent = `❌ ${error.error || 'Processing failed'}`;
+                    showStatus(`❌ ${error.error || 'Processing failed'}`, 'error');
                     
                     if (error.error && error.error.includes('Not enough page credits')) {
-                        const upgradeBtn = document.getElementById('upgradePlanLink');
-                        upgradeBtn.style.animation = 'pulse 1.5s infinite';
-                        upgradeBtn.style.boxShadow = '0 0 15px var(--primary-color)';
+                        const subscribeBtn = document.getElementById('subscribeNowLink');
+                        subscribeBtn.style.animation = 'pulse 1.5s infinite';
+                        subscribeBtn.style.boxShadow = '0 0 15px var(--success-color)';
                     }
                 }
             } catch (error) {
                 console.error('Processing error:', error);
-                status.textContent = "❌ Processing failed. Please try again.";
+                showStatus("❌ Processing failed. Please try again.", 'error');
             } finally {
                 watermarkBtn.disabled = false;
-                watermarkBtn.textContent = "Watermark";
+                watermarkBtn.textContent = "Watermark Files";
             }
         }
 
