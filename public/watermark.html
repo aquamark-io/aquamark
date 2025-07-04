@@ -472,6 +472,72 @@
             transform: translateY(-1px);
         }
 
+        /* Trial Expired Gate */
+        .trial-expired-gate {
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+            border: 1px solid #fecaca;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .trial-expired-gate h3 {
+            color: var(--danger-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .trial-expired-gate p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .trial-expired-gate .expired-date {
+            color: var(--danger-color);
+            font-weight: 600;
+        }
+
+        .trial-expired-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .trial-expired-actions .subscribe-btn {
+            background: var(--danger-color);
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .trial-expired-actions .subscribe-btn:hover {
+            background: #dc2626;
+        }
+
+        .trial-expired-actions .contact-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .trial-expired-actions .contact-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* Disabled state for watermark section */
+        .watermark-section.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
         /* Footer */
         .aqua-footer {
             background: var(--primary-light);
@@ -545,6 +611,10 @@
             .logo-actions {
                 flex-direction: column;
             }
+
+            .trial-expired-actions {
+                flex-direction: column;
+            }
         }
     </style>
 
@@ -570,6 +640,23 @@
 
     <main class="aqua-panel">
         <h1 class="page-title">Watermark Console</h1>
+
+        <!-- Trial Expired Gate (hidden by default) -->
+        <div class="trial-expired-gate" id="trialExpiredGate" style="display: none;">
+            <h3>🚫 Free Trial Expired</h3>
+            <p>
+                Your free trial ended on <span class="expired-date" id="trialEndedDate"></span>. 
+                Subscribe to continue watermarking your documents and protecting your commissions.
+            </p>
+            <div class="trial-expired-actions">
+                <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="subscribe-btn">
+                    Subscribe Now
+                </a>
+                <a href="mailto:hey@aquamark.io?subject=Trial Extension Request" class="contact-link">
+                    Contact support for a courtesy trial extension
+                </a>
+            </div>
+        </div>
 
         <!-- Pages Used Counter -->
         <div class="pages-counter">
@@ -633,7 +720,7 @@
         </div>
 
         <!-- Section 3: Watermark Processing -->
-        <div class="aqua-card watermark-section">
+        <div class="aqua-card watermark-section" id="watermarkSection">
             <div class="card-header">
                 <h2>
                     <div class="section-number">3</div>
@@ -672,6 +759,7 @@
         // Global variables
         let currentUser = null;
         let userToken = null;
+        let isTrialExpired = false;
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -691,6 +779,9 @@
                 // Get auth token for API calls
                 userToken = await getAuthToken();
 
+                // Check trial status first
+                await checkTrialStatus();
+
                 // ✅ Smart plan sync: Only update if changed
                 if (currentUser && currentUser.Subscription && currentUser.Subscription.Plan) {
                     const livePlanName = currentUser.Subscription.Plan.Name;
@@ -708,15 +799,155 @@
                     }
                 }
 
-                // Load user's logo and usage data
-                await loadUserLogo();
-                await loadUsageData();
+                // Load user's logo and usage data (if trial is not expired)
+                if (!isTrialExpired) {
+                    await loadUserLogo();
+                    await loadUsageData();
+                }
                 
                 // Set up event listeners
                 setupEventListeners();
             } catch (error) {
                 console.error('Initialization error:', error);
                 showStatus('❌ Error loading page. Please refresh.', 'error');
+            }
+        }
+
+        // Check trial status
+        async function checkTrialStatus() {
+            try {
+                // Get user data which should include subscription info
+                const user = await Outseta.getUser();
+                console.log('Checking trial status for user:', user.Email);
+                
+                let planName = 'Free Trial';
+                let startDateValue = null;
+                
+                // Check if user has Account with Subscriptions
+                if (user && user.Account && user.Account.Subscriptions && user.Account.Subscriptions.length > 0) {
+                    const subscription = user.Account.Subscriptions[0];
+                    console.log('Subscription found:', subscription);
+                    
+                    if (subscription.Plan && subscription.Plan.Name) {
+                        planName = subscription.Plan.Name;
+                    }
+                    startDateValue = subscription.StartDate || subscription.CreatedDate;
+                } else {
+                    console.log('No subscriptions found, checking account created date');
+                    
+                    // Use account created date as fallback
+                    if (user && user.Account && user.Account.Created) {
+                        startDateValue = user.Account.Created;
+                        console.log('Using Account Created date:', startDateValue);
+                    }
+                    
+                    // Try direct API call for current subscription
+                    try {
+                        const token = await Outseta.getAccessToken();
+                        console.log('Trying direct API call with token');
+                        
+                        // Try getting the account details with subscription info
+                        const accountResponse = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        
+                        if (accountResponse.ok) {
+                            const accountData = await accountResponse.json();
+                            console.log('Account API data:', accountData);
+                            
+                            if (accountData.Subscriptions && accountData.Subscriptions.length > 0) {
+                                const subscription = accountData.Subscriptions[0];
+                                console.log('Found subscription via account API:', subscription);
+                                
+                                if (subscription.Plan && subscription.Plan.Name) {
+                                    planName = subscription.Plan.Name;
+                                }
+                                if (subscription.StartDate) {
+                                    startDateValue = subscription.StartDate;
+                                }
+                            }
+                        }
+                        
+                        // Also try the billing subscriptions endpoint
+                        const subResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        
+                        if (subResponse.ok) {
+                            const subscriptionData = await subResponse.json();
+                            console.log('Billing API subscription data:', subscriptionData);
+                            
+                            if (subscriptionData.items && subscriptionData.items.length > 0) {
+                                const subscription = subscriptionData.items[0];
+                                console.log('Found subscription via billing API:', subscription);
+                                
+                                if (subscription.Plan && subscription.Plan.Name && subscription.Plan.Name !== 'Free Trial') {
+                                    planName = subscription.Plan.Name;
+                                }
+                                
+                                if (subscription.StartDate) {
+                                    startDateValue = subscription.StartDate;
+                                }
+                            }
+                        }
+                    } catch (apiError) {
+                        console.error('Direct API call failed:', apiError);
+                    }
+                }
+                
+                console.log('Final plan name:', planName);
+                console.log('Final start date:', startDateValue);
+                
+                // Check if trial is expired
+                if (planName === 'Free Trial' && startDateValue) {
+                    const startDate = new Date(startDateValue);
+                    const trialEndDate = new Date(startDate);
+                    trialEndDate.setDate(startDate.getDate() + 7); // 7-day trial
+                    
+                    const today = new Date();
+                    
+                    console.log('Trial start date:', startDate);
+                    console.log('Trial end date:', trialEndDate);
+                    console.log('Today:', today);
+                    
+                    if (today > trialEndDate) {
+                        console.log('Trial is EXPIRED');
+                        isTrialExpired = true;
+                        
+                        // Show trial expired gate
+                        document.getElementById('trialExpiredGate').style.display = 'block';
+                        document.getElementById('trialEndedDate').textContent = trialEndDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
+                        
+                        // Disable watermark section
+                        document.getElementById('watermarkSection').classList.add('disabled');
+                        
+                        return; // Exit early, don't load other data
+                    } else {
+                        console.log('Trial is still active');
+                        isTrialExpired = false;
+                    }
+                } else if (planName !== 'Free Trial') {
+                    console.log('User has paid plan:', planName);
+                    isTrialExpired = false;
+                } else {
+                    console.log('No start date found, assuming trial is active');
+                    isTrialExpired = false;
+                }
+                
+            } catch (error) {
+                console.error('Error checking trial status:', error);
+                // On error, assume trial is active to not block legitimate users
+                isTrialExpired = false;
             }
         }
 
@@ -816,6 +1047,12 @@
 
         // Upload logo function
         async function uploadLogo() {
+            // Check if trial is expired
+            if (isTrialExpired) {
+                showStatus("❌ Your trial has expired. Please subscribe to continue using Aquamark.", 'error');
+                return;
+            }
+
             const fileInput = document.getElementById('logoInput');
 
             if (!fileInput.files[0]) {
@@ -853,6 +1090,12 @@
 
         // Process files function
         async function processFiles() {
+            // Check if trial is expired
+            if (isTrialExpired) {
+                showStatus("❌ Your trial has expired. Please subscribe to continue watermarking documents.", 'error');
+                return;
+            }
+
             const pdfInput = document.getElementById('pdfInput');
             const watermarkBtn = document.getElementById('watermarkBtn');
 
@@ -924,6 +1167,31 @@
             } finally {
                 watermarkBtn.disabled = false;
                 watermarkBtn.textContent = "Watermark Files";
+            }
+        }
+
+        // Update user plan via API
+        async function updateUserPlan(planName) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/update-plan`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: currentUser.Email,
+                        planName: planName,
+                        webhookSecret: 'aquamark-secure-protection-string-101813'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Plan update failed');
+                }
+
+                console.log('Plan updated successfully');
+            } catch (error) {
+                console.error('Error updating plan:', error);
             }
         }
 
