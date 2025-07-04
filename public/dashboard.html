@@ -605,55 +605,89 @@
                 console.log('🔑 Got token:', token ? 'Yes' : 'No');
                 
                 if (token) {
-                    try {
-                        console.log('🌐 Fetching account data...');
-                        console.log('🏢 User account UID:', currentUser.Account?.Uid);
+                    // First, let's examine what data we already have in the user object
+                    console.log('👤 Full user object:', currentUser);
+                    console.log('🏢 User account object:', currentUser.Account);
+                    
+                    // Check if user object already has subscription data
+                    if (currentUser.Account && currentUser.Account.Subscriptions) {
+                        console.log('📋 Subscriptions in user object:', currentUser.Account.Subscriptions);
                         
-                        // Get account data which should include subscription information
-                        if (currentUser.Account?.Uid) {
-                            const accountResponse = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${currentUser.Account.Uid}`, {
-                                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+                        const userSubscriptions = currentUser.Account.Subscriptions;
+                        if (userSubscriptions.length > 0) {
+                            // Find the active subscription (not Free Trial and not ended)
+                            let activeSubscription = userSubscriptions.find(sub => {
+                                return sub.Plan && sub.Plan.Name !== 'Free Trial' && !sub.EndDate;
                             });
                             
-                            console.log('📡 Account response status:', accountResponse.status);
+                            // If no active paid subscription found, fall back to the most recent one
+                            if (!activeSubscription) {
+                                activeSubscription = userSubscriptions[0];
+                            }
                             
-                            if (accountResponse.ok) {
-                                const accountData = await accountResponse.json();
-                                console.log('🏢 Account data:', accountData);
+                            console.log('🎯 Using subscription from user object:', activeSubscription.Plan?.Name);
+                            
+                            // Extract plan name and start date directly
+                            if (activeSubscription.Plan?.Name) planName = activeSubscription.Plan.Name;
+                            if (activeSubscription.StartDate) {
+                                startDateValue = activeSubscription.StartDate;
+                                subscriptionStartDate = activeSubscription.StartDate;
+                            }
+                        }
+                    } else {
+                        console.log('⚠️ No subscription data in user object, trying API...');
+                        
+                        // Try the account API as fallback
+                        try {
+                            console.log('🌐 Fetching account data...');
+                            console.log('🏢 User account UID:', currentUser.Account?.Uid);
+                            
+                            // Get account data which should include subscription information
+                            if (currentUser.Account?.Uid) {
+                                const accountResponse = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${currentUser.Account.Uid}`, {
+                                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+                                });
                                 
-                                // Check if account has subscriptions
-                                if (accountData.Subscriptions && accountData.Subscriptions.length > 0) {
-                                    console.log('📋 Account subscriptions:', accountData.Subscriptions);
+                                console.log('📡 Account response status:', accountResponse.status);
+                                
+                                if (accountResponse.ok) {
+                                    const accountData = await accountResponse.json();
+                                    console.log('🏢 Account data:', accountData);
                                     
-                                    // Find the active subscription (not Free Trial and not ended)
-                                    let activeSubscription = accountData.Subscriptions.find(sub => {
-                                        return sub.Plan && sub.Plan.Name !== 'Free Trial' && !sub.EndDate;
-                                    });
-                                    
-                                    // If no active paid subscription found, fall back to the most recent one
-                                    if (!activeSubscription) {
-                                        activeSubscription = accountData.Subscriptions[0];
-                                    }
-                                    
-                                    console.log('🎯 Using subscription from account:', activeSubscription.Plan?.Name);
-                                    
-                                    // Extract plan name and start date directly from account subscription
-                                    if (activeSubscription.Plan?.Name) planName = activeSubscription.Plan.Name;
-                                    if (activeSubscription.StartDate) {
-                                        startDateValue = activeSubscription.StartDate;
-                                        subscriptionStartDate = activeSubscription.StartDate;
+                                    // Check if account has subscriptions
+                                    if (accountData.Subscriptions && accountData.Subscriptions.length > 0) {
+                                        console.log('📋 Account subscriptions:', accountData.Subscriptions);
+                                        
+                                        // Find the active subscription (not Free Trial and not ended)
+                                        let activeSubscription = accountData.Subscriptions.find(sub => {
+                                            return sub.Plan && sub.Plan.Name !== 'Free Trial' && !sub.EndDate;
+                                        });
+                                        
+                                        // If no active paid subscription found, fall back to the most recent one
+                                        if (!activeSubscription) {
+                                            activeSubscription = accountData.Subscriptions[0];
+                                        }
+                                        
+                                        console.log('🎯 Using subscription from account:', activeSubscription.Plan?.Name);
+                                        
+                                        // Extract plan name and start date directly from account subscription
+                                        if (activeSubscription.Plan?.Name) planName = activeSubscription.Plan.Name;
+                                        if (activeSubscription.StartDate) {
+                                            startDateValue = activeSubscription.StartDate;
+                                            subscriptionStartDate = activeSubscription.StartDate;
+                                        }
+                                    } else {
+                                        console.log('ℹ️ No subscriptions found in account data');
                                     }
                                 } else {
-                                    console.log('ℹ️ No subscriptions found in account data');
+                                    console.error('❌ Account fetch failed:', accountResponse.status, accountResponse.statusText);
                                 }
                             } else {
-                                console.error('❌ Account fetch failed:', accountResponse.status, accountResponse.statusText);
+                                console.error('❌ No account UID found for user');
                             }
-                        } else {
-                            console.error('❌ No account UID found for user');
+                        } catch (error) {
+                            console.error('❌ API call failed:', error);
                         }
-                    } catch (error) {
-                        console.error('❌ API call failed:', error);
                     }
                 } else {
                     console.warn('⚠️ No auth token available');
