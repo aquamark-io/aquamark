@@ -463,10 +463,11 @@
                     ⚠
                 </div>
                 <div class="announcement-text">
-                    <h3>Join the Fight Against Backdooring</h3>
+                    <h3>Stop Backdooring Today</h3>
                     <p>
-                        One stolen deal is costing brokers <span class="highlight">$4,000*</span> in commission. 
+                        Just ONE stolen deal is costing brokers <span class="highlight">$4,000*</span> in commission. 
                     </p>
+                    <p class="disclaimer">*Industry average</p>
                 </div>
             </div>
         </div>
@@ -538,16 +539,8 @@
 
                 console.log("User loaded:", currentUser.Email);
 
-                
                 // Get auth token for API calls
                 userToken = await getAuthToken();
-
-                // Always sync plan on load in case user changed it outside this session
-                const livePlanName = currentUser?.Subscription?.Plan?.Name;
-                if (livePlanName) {
-                    await updateUserPlan(livePlanName);
-                }
-
                 
                 // Load usage data
                 await loadUsageData();
@@ -568,8 +561,6 @@
                     document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
                     return;
                 }
-                
-
 
                 // Get referral code from Outseta profile - JUST LIKE THE OLD WORKING CODE
                 let referralCode = null;
@@ -713,45 +704,38 @@
 
         // Display usage data in the UI
         function displayUsageData(userData) {
-    const usageStatsElement = document.getElementById('usage-stats');
+            const usageStatsElement = document.getElementById('usage-stats');
 
-    if (userData) {
-        const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
+            if (userData) {
+                const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
 
-        usageStatsElement.innerHTML = `
-            <div class="usage-stats-container">
-                <div class="usage-stat">
-                    <span class="usage-label">Plan:</span>
-                    <span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
-                </div>
-                <div class="usage-stat">
-                    <span class="usage-label">Pages Used:</span>
-                    <span class="usage-value">${userData.pages_used || 0}</span>
-                </div>
-                <div class="usage-stat">
-                    <span class="usage-label">Pages Remaining:</span>
-                    <span class="usage-value">${userData.pages_remaining || 100}</span>
-                </div>
-                <div class="usage-stat">
-                    <span class="usage-label">Total Credits:</span>
-                    <span class="usage-value">${userData.page_credits || 100}</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: ${usagePercentage}%;"></div>
-                </div>
-            </div>
-
-            <!-- Usage tracking message -->
-            <div style="background: #fff8e1; border: 1px solid #fde68a; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; color: #92400e;">
-                <strong>📣 Usage Tracking Delay</strong><br>
-                All watermarking functionality continues to work normally. Our data provider is experiencing temporary issues that are affecting usage tracking. The issue is being resolved on their end and your usage data will be restored shortly.
-            </div>
-        `;
-    } else {
-        usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
-    }
-}
-
+                usageStatsElement.innerHTML = `
+                    <div class="usage-stats-container">
+                        <div class="usage-stat">
+                            <span class="usage-label">Plan:</span>
+                            <span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Pages Used:</span>
+                            <span class="usage-value">${userData.pages_used || 0}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Pages Remaining:</span>
+                            <span class="usage-value">${userData.pages_remaining || 100}</span>
+                        </div>
+                        <div class="usage-stat">
+                            <span class="usage-label">Total Credits:</span>
+                            <span class="usage-value">${userData.page_credits || 100}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${usagePercentage}%;"></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
+            }
+        }
 
         // Handle logout redirection
         if (window.location.hash === '#o-logout-link') {
