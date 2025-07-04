@@ -237,7 +237,7 @@
             font-size: 0.95rem;
             transition: all 0.2s ease;
             cursor: pointer;
-            border: none;
+            border: 2px solid;
             gap: 0.5rem;
             text-decoration: none;
         }
@@ -251,22 +251,34 @@
             background: #1d4ed8;
         }
 
+        .btn-subscribe {
+            background: white;
+            color: #10b981;
+            border-color: #10b981;
+        }
+
+        .btn-subscribe:hover {
+            background: #f0fdf4;
+        }
+
         .btn-watermark {
-            background: #467EFF;
-            color: white;
+            background: white;
+            color: #467EFF;
+            border-color: #467EFF;
         }
 
         .btn-watermark:hover {
-            background: #95cbea;
+            background: #f0f9ff;
         }
 
         .btn-black {
-            background: #000000;
-            color: #ffffff;
+            background: white;
+            color: #000000;
+            border-color: #000000;
         }
 
         .btn-black:hover {
-            background: #333333;
+            background: #f8fafc;
         }
 
         /* Announcement Banner */
@@ -457,7 +469,7 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn" style="background-color: #10b981; color: white;">Subscribe</a>
+            <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn btn-subscribe">Subscribe</a>
             <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
             <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
         </div>
@@ -502,10 +514,6 @@
                         <div class="detail-item" id="trialEndItem" style="display: none;">
                             <span class="detail-label">Trial Ends:</span>
                             <span class="detail-value loading-text" id="trialEndDate">Loading...</span>
-                        </div>
-                        <div class="detail-item" id="subscriptionStartItem">
-                            <span class="detail-label">Subscription Start Date:</span>
-                            <span class="detail-value loading-text" id="subscriptionStartDate">Loading...</span>
                         </div>
                     </div>
                 </div>
@@ -598,7 +606,6 @@
                 
                 let planName = 'Free Trial';
                 let startDateValue = null;
-                let subscriptionStartDate = null;
                 
                 // Get auth token and fetch subscription details
                 const token = await Outseta.getAccessToken();
@@ -621,7 +628,6 @@
                         if (currentSubscription.Plan?.Name) planName = currentSubscription.Plan.Name;
                         if (currentSubscription.StartDate) {
                             startDateValue = currentSubscription.StartDate;
-                            subscriptionStartDate = currentSubscription.StartDate;
                         }
                         
                     } else if (currentUser.Account && currentUser.Account.Subscriptions) {
@@ -645,7 +651,6 @@
                             if (activeSubscription.Plan?.Name) planName = activeSubscription.Plan.Name;
                             if (activeSubscription.StartDate) {
                                 startDateValue = activeSubscription.StartDate;
-                                subscriptionStartDate = activeSubscription.StartDate;
                             }
                         }
                     } else {
@@ -688,7 +693,6 @@
                                         if (activeSubscription.Plan?.Name) planName = activeSubscription.Plan.Name;
                                         if (activeSubscription.StartDate) {
                                             startDateValue = activeSubscription.StartDate;
-                                            subscriptionStartDate = activeSubscription.StartDate;
                                         }
                                     } else {
                                         console.log('ℹ️ No subscriptions found in account data');
@@ -738,20 +742,6 @@
                     } else {
                         document.getElementById('trialEndItem').style.display = 'none';
                     }
-                    
-                    // Update subscription start date
-                    const subscriptionStartElement = document.getElementById('subscriptionStartDate');
-                    subscriptionStartElement.classList.remove('loading-text');
-                    if (subscriptionStartDate) {
-                        const subStartDate = new Date(subscriptionStartDate);
-                        subscriptionStartElement.textContent = subStartDate.toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
-                        });
-                    } else {
-                        subscriptionStartElement.textContent = 'N/A';
-                    }
                 } else {
                     showFallbackData();
                 }
@@ -795,10 +785,6 @@
             const startDateElement = document.getElementById('startDate');
             startDateElement.classList.remove('loading-text');
             startDateElement.textContent = 'N/A';
-            
-            const subscriptionStartElement = document.getElementById('subscriptionStartDate');
-            subscriptionStartElement.classList.remove('loading-text');
-            subscriptionStartElement.textContent = 'N/A';
         }
 
         // Preserve URL parameters for navigation
