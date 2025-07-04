@@ -559,10 +559,23 @@
                     // Look for subscription start date (different from account created date)
                     if (subscription.SubscriptionStartDate) {
                         subscriptionStartDate = subscription.SubscriptionStartDate;
+                    } else if (subscription.SubscriptionStart) {
+                        subscriptionStartDate = subscription.SubscriptionStart;
+                    } else if (subscription.BillingStartDate) {
+                        subscriptionStartDate = subscription.BillingStartDate;
                     } else if (subscription.StartDate && planName !== 'Free Trial') {
                         // If not on free trial and has StartDate, use it as subscription start
                         subscriptionStartDate = subscription.StartDate;
                     }
+                    
+                    console.log('Subscription object details:', {
+                        SubscriptionStartDate: subscription.SubscriptionStartDate,
+                        SubscriptionStart: subscription.SubscriptionStart,
+                        BillingStartDate: subscription.BillingStartDate,
+                        StartDate: subscription.StartDate,
+                        CreatedDate: subscription.CreatedDate,
+                        Plan: subscription.Plan
+                    });
                 } else {
                     console.log('No subscriptions found in user account, checking account created date');
                     
@@ -614,9 +627,21 @@
                                 // Look for subscription start date
                                 if (subscription.SubscriptionStartDate) {
                                     subscriptionStartDate = subscription.SubscriptionStartDate;
+                                } else if (subscription.SubscriptionStart) {
+                                    subscriptionStartDate = subscription.SubscriptionStart;
+                                } else if (subscription.BillingStartDate) {
+                                    subscriptionStartDate = subscription.BillingStartDate;
                                 } else if (subscription.StartDate && planName !== 'Free Trial') {
                                     subscriptionStartDate = subscription.StartDate;
                                 }
+                                
+                                console.log('Account API subscription details:', {
+                                    SubscriptionStartDate: subscription.SubscriptionStartDate,
+                                    SubscriptionStart: subscription.SubscriptionStart,
+                                    BillingStartDate: subscription.BillingStartDate,
+                                    StartDate: subscription.StartDate,
+                                    Plan: subscription.Plan
+                                });
                             }
                         }
                         
@@ -646,9 +671,22 @@
                                 // Look for subscription start date
                                 if (subscription.SubscriptionStartDate) {
                                     subscriptionStartDate = subscription.SubscriptionStartDate;
+                                } else if (subscription.SubscriptionStart) {
+                                    subscriptionStartDate = subscription.SubscriptionStart;
+                                } else if (subscription.BillingStartDate) {
+                                    subscriptionStartDate = subscription.BillingStartDate;
                                 } else if (subscription.StartDate && planName !== 'Free Trial') {
                                     subscriptionStartDate = subscription.StartDate;
                                 }
+                                
+                                console.log('Billing API subscription details:', {
+                                    SubscriptionStartDate: subscription.SubscriptionStartDate,
+                                    SubscriptionStart: subscription.SubscriptionStart,
+                                    BillingStartDate: subscription.BillingStartDate,
+                                    StartDate: subscription.StartDate,
+                                    Plan: subscription.Plan,
+                                    fullSubscription: subscription
+                                });
                             }
                         }
                     } catch (apiError) {
