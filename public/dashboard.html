@@ -23,18 +23,31 @@
     <section class="card">
       <h2>Account Details</h2>
       <!-- Outseta Embed Widget -->
-      <div data-o-ui></div>
+      <div data-o-auth="1"
+           data-widget-mode="profile"
+           data-mode="embed">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>API Access</h2>
+      <p>You can integrate Aquamark into your own platform using our simple API.</p>
+      <p><a href="/api.html">View API Instructions</a></p>
+    </section>
+
+    <section class="card">
+      <h2>Need Help?</h2>
+      <p>Email us any time: <a href="mailto:info@aquamark.io">info@aquamark.io</a></p>
     </section>
   </main>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Wait for Outseta to auto-init
-      const checkUserLoaded = setInterval(() => {
+      const checkLoaded = setInterval(() => {
         if (window.Outseta && Outseta.nocode && Outseta.nocode.user) {
           const user = Outseta.nocode.user;
           document.getElementById("plan-name").textContent = user.account?.plan?.name || "N/A";
-          clearInterval(checkUserLoaded);
+          clearInterval(checkLoaded);
         }
       }, 300);
     });
