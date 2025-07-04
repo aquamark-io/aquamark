@@ -684,19 +684,26 @@
                                     startDateValue = subscription.StartDate;
                                 }
                                 
-                                // Look for subscription start date
-                                if (subscription.SubscriptionStartDate) {
+                                // Look for subscription start date - prioritize subscription StartDate over account created
+                                if (subscription.StartDate && subscription.Plan && subscription.Plan.Name !== 'Free Trial') {
+                                    // Use subscription StartDate if it's a paid plan
+                                    subscriptionStartDate = subscription.StartDate;
+                                } else if (subscription.SubscriptionStartDate) {
                                     subscriptionStartDate = subscription.SubscriptionStartDate;
                                 } else if (subscription.SubscriptionStart) {
                                     subscriptionStartDate = subscription.SubscriptionStart;
                                 } else if (subscription.BillingStartDate) {
                                     subscriptionStartDate = subscription.BillingStartDate;
-                                } else if (subscription.StartDate && subscription.Plan && subscription.Plan.Name !== 'Free Trial') {
-                                    subscriptionStartDate = subscription.StartDate;
                                 } else if (subscription.ActivatedDate) {
                                     subscriptionStartDate = subscription.ActivatedDate;
                                 } else if (subscription.FirstBillDate) {
                                     subscriptionStartDate = subscription.FirstBillDate;
+                                }
+                                
+                                // Override plan if we find a non-Free Trial plan in the subscription
+                                if (subscription.Plan && subscription.Plan.Name && subscription.Plan.Name !== 'Free Trial') {
+                                    planName = subscription.Plan.Name;
+                                    console.log('Found paid plan in subscription:', planName);
                                 }
                                 
                                 console.log('Billing API subscription details:', {
@@ -708,7 +715,11 @@
                                     FirstBillDate: subscription.FirstBillDate,
                                     Plan: subscription.Plan,
                                     BillingState: subscription.BillingState,
-                                    Status: subscription.Status
+                                    Status: subscription.Status,
+                                    EndDate: subscription.EndDate,
+                                    ExpirationDate: subscription.ExpirationDate,
+                                    finalPlanName: planName,
+                                    finalSubscriptionStartDate: subscriptionStartDate
                                 });
                             }
                         }
