@@ -3,37 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aquamark Watermarking</title>
+  <title>Aquamark Watermark</title>
   <link rel="stylesheet" href="/styles.css" />
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 </head>
 <body>
-  <header>
-    <div class="container header">
+  <header class="header">
+    <div class="container">
       <img src="/logo.png" alt="Aquamark Logo" class="logo" />
-      <h1>Watermark Your PDFs</h1>
+      <h1>Watermark Documents</h1>
     </div>
   </header>
 
-  <main class="container">
-    <!-- Stored Logo -->
+  <main class="container watermark-grid">
     <section class="card">
-      <h2>Stored Logo</h2>
-      <img id="stored-logo" src="" alt="Stored logo preview" style="max-height: 100px; display: none;" />
-      <p id="logo-status">Loading stored logo...</p>
+      <h2>Upload Logo</h2>
+      <input type="file" id="logo-upload" accept="image/*" />
+      <button id="upload-logo-btn">Upload Logo</button>
+      <p id="logo-upload-status"></p>
     </section>
 
-    <!-- Upload PDFs -->
     <section class="card">
-      <h2>Upload PDFs</h2>
+      <h2>Stored Logo</h2>
+      <img id="stored-logo" src="" alt="Stored Logo" style="max-width: 100%; display: none;" />
+      <p id="logo-status">Loading logo...</p>
+    </section>
+
+    <section class="card">
+      <h2>Sample Preview</h2>
+      <div id="sample-preview" class="preview-box">
+        <img src="/sample-bank.png" alt="Sample Bank Statement" class="sample-img" />
+        <canvas id="watermark-canvas"></canvas>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Watermark PDFs</h2>
       <input type="file" id="pdf-input" multiple accept="application/pdf" />
-      <button id="start-button">Start Watermarking</button>
+      <button id="start-watermark">Start Watermarking</button>
       <p id="status"></p>
     </section>
 
-    <!-- Output download links -->
     <section class="card">
-      <h2>Downloads</h2>
+      <h2>Download Console</h2>
       <ul id="download-list"></ul>
     </section>
   </main>
@@ -48,29 +60,29 @@
         const now = new Date();
         const daysSinceSignup = (now - signupDate) / (1000 * 60 * 60 * 24);
 
+        const token = Outseta.getAccessToken();
+
         // Load stored logo
         try {
-          const token = Outseta.getAccessToken();
-          const logoRes = await fetch("https://aquamark-api.onrender.com/api/logo", {
-            headers: { Authorization: `Bearer ${token}` }
+          const res = await fetch("https://aquamark-api.onrender.com/api/logo", {
+            headers: { Authorization: `Bearer ${token}` },
           });
-          const logoData = await logoRes.json();
-
-          if (logoData.logoUrl) {
+          const data = await res.json();
+          if (data.logoUrl) {
             const logoImg = document.getElementById("stored-logo");
-            logoImg.src = logoData.logoUrl;
+            logoImg.src = data.logoUrl;
             logoImg.style.display = "block";
             document.getElementById("logo-status").textContent = "";
+            renderWatermarkOverlay(data.logoUrl);
           } else {
-            document.getElementById("logo-status").textContent = "No logo found. Please upload one on your dashboard.";
+            document.getElementById("logo-status").textContent = "No logo found.";
           }
         } catch (e) {
           document.getElementById("logo-status").textContent = "Failed to load logo.";
         }
 
-        // Handle watermarking
-        const button = document.getElementById("start-button");
-        button.addEventListener("click", async () => {
+        // Watermark PDFs
+        document.getElementById("start-watermark").addEventListener("click", async () => {
           if (plan === "Free Trial" && daysSinceSignup > 7) {
             alert("Your free trial has expired. Please upgrade to continue using watermarking.");
             return;
@@ -78,38 +90,38 @@
 
           const files = document.getElementById("pdf-input").files;
           if (!files.length) {
-            alert("Please upload at least one PDF.");
+            alert("Please select PDF files.");
             return;
           }
 
-          document.getElementById("status").textContent = `Processing ${files.length} file(s)...`;
+          document.getElementById("status").textContent = `Processing ${files.length} files...`;
+
           const formData = new FormData();
           for (const file of files) {
             formData.append("pdfs", file);
           }
 
           try {
-            const token = Outseta.getAccessToken();
             const response = await fetch("https://aquamark-api.onrender.com/api/watermark", {
               method: "POST",
               headers: { Authorization: `Bearer ${token}` },
-              body: formData
+              body: formData,
             });
-
             const result = await response.json();
+
             if (!result.success) throw new Error(result.error || "Unknown error");
 
             document.getElementById("status").textContent = result.message;
             const downloadList = document.getElementById("download-list");
             downloadList.innerHTML = "";
-
             result.files.forEach(file => {
+              const li = document.createElement("li");
               const link = document.createElement("a");
               link.href = `data:application/pdf;base64,${file.data}`;
               link.download = file.fileName;
               link.textContent = `Download ${file.fileName}`;
-              link.style.display = "block";
-              downloadList.appendChild(link);
+              li.appendChild(link);
+              downloadList.appendChild(li);
             });
           } catch (err) {
             console.error(err);
@@ -117,6 +129,36 @@
           }
         });
       });
+
+      function renderWatermarkOverlay(logoUrl) {
+        const canvas = document.getElementById("watermark-canvas");
+        const img = document.querySelector(".sample-img");
+        const ctx = canvas.getContext("2d");
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const logo = new Image();
+          logo.src = logoUrl;
+          logo.onload = () => {
+            const rows = 5, cols = 5;
+            const spacingX = canvas.width / cols;
+            const spacingY = canvas.height / rows;
+            for (let i = 0; i < rows; i++) {
+              for (let j = 0; j < cols; j++) {
+                const x = j * spacingX;
+                const y = i * spacingY;
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(45 * Math.PI / 180);
+                ctx.globalAlpha = 0.25;
+                ctx.drawImage(logo, -logo.width / 4, -logo.height / 4, logo.width / 2, logo.height / 2);
+                ctx.restore();
+              }
+            }
+          };
+        };
+      }
     });
   </script>
 </body>
