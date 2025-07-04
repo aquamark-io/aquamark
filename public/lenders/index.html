@@ -81,22 +81,22 @@
         }
 
         .back-home-btn {
-  background: #000000 !important;
-  color: #ffffff !important;
-  padding: 0.4rem 0.75rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.8rem;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  margin-left: auto;
-  white-space: nowrap;
-}
+            background: #000000 !important;
+            color: #ffffff !important;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            margin-left: auto;
+            white-space: nowrap;
+        }
         .back-home-btn:hover {
-  background: #1a1a1a !important;
-  color: #ffffff !important;
-}
+            background: #1a1a1a !important;
+            color: #ffffff !important;
+        }
 
 
         /* Mobile menu */
@@ -146,6 +146,19 @@
             margin-bottom: 3rem;
         }
 
+        .free-test-text {
+            color: #008000;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .down-arrow {
+            color: #008000;
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
         .cta-button {
             background: #111827;
             color: #ffffff;
@@ -186,32 +199,39 @@
 
         /* Free Test CTA */
         .free-test-cta {
-            background: #008000;
-            padding: 2rem 0;
+            background: #ffffff;
+            padding: 4rem 0;
             text-align: center;
-            color: white;
             margin: 0;
         }
 
-        .free-test-cta h3 {
+        .free-test-card {
+            background: #f0fdf4;
+            border: 1px solid #22c55e;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 0 auto;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.15);
+        }
+
+        .free-test-card h3 {
             font-size: 2.2rem;
             margin-bottom: 1rem;
             font-weight: 600;
+            color: #16a34a;
         }
 
-        .free-test-cta p {
+        .free-test-card p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
+            color: #16a34a;
             opacity: 0.9;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 2rem;
         }
 
         .test-params {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 8px;
             padding: 1.5rem;
             margin: 2rem auto;
@@ -223,18 +243,18 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: white;
+            color: #16a34a;
         }
 
         .test-params div {
             margin-bottom: 0.75rem;
             font-family: 'SF Mono', Monaco, monospace;
             font-size: 0.9rem;
-            color: white;
+            color: #16a34a;
         }
 
         .test-params strong {
-            color: white;
+            color: #16a34a;
             font-weight: 600;
         }
 
@@ -582,18 +602,18 @@
             }
 
             .back-home-btn {
-  background: #000000 !important;
-  color: #ffffff !important;
-  padding: 0.4rem 0.75rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.8rem;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  margin-left: auto;
-  white-space: nowrap;
-}
+                background: #000000 !important;
+                color: #ffffff !important;
+                padding: 0.8rem 1.5rem;
+                border: none;
+                border-radius: 6px;
+                font-weight: 500;
+                font-size: 1rem;
+                transition: all 0.2s ease;
+                text-decoration: none;
+                margin-left: auto;
+                white-space: nowrap;
+            }
 
             .hero {
                 padding: 120px 0 80px;
@@ -705,7 +725,8 @@
             <div class="hero-content">
                 <h1>Aquamark for Lenders</h1>
                 <p>When brokers know you're watermarking, they know they can trust you — and trust leads to stronger relationships, a better reputation, and long-term growth.</p>
-                <a href="#free-test" class="test-free-button">Test for Free</a>
+                <div class="free-test-text">Test for Free</div>
+                <div class="down-arrow">↓</div>
             </div>
         </div>
     </section>
@@ -788,13 +809,15 @@
     <!-- Free Test CTA -->
     <section class="free-test-cta" id="free-test">
         <div class="container">
-            <h3>Test 100 API calls for FREE</h3>
-            <p>One stolen submission is costing you thousands.</p>
-            
-            <div class="test-params">
-                <h4>Testing Parameters</h4>
-                <div><strong>User Email:</strong> test@aquamark.io</div>
-                <div><strong>API Key:</strong> api-aqua-lender-test-4423101813</div>
+            <div class="free-test-card">
+                <h3>Test 100 API calls for FREE</h3>
+                <p>One stolen submission is costing you thousands.</p>
+                
+                <div class="test-params">
+                    <h4>Testing Parameters</h4>
+                    <div><strong>User Email:</strong> test@aquamark.io</div>
+                    <div><strong>API Key:</strong> api-aqua-lender-test-4423101813</div>
+                </div>
             </div>
         </div>
     </section>
@@ -931,3 +954,6 @@
                 }
             }
         });
+    </script>
+</body>
+</html>
