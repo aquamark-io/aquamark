@@ -163,6 +163,11 @@
             font-weight: 700;
             color: var(--success-color);
             margin: 1rem 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .days-counter.loading {
+            opacity: 0.5;
         }
 
         .subscription-details {
@@ -197,6 +202,27 @@
             border-radius: 20px;
             font-size: 0.875rem;
             font-weight: 500;
+        }
+
+        /* Loading states */
+        .loading-spinner-small {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Action Buttons */
@@ -455,27 +481,31 @@
                 </div>
                 <div class="subscription-info">
                     <h3>Protecting your commissions for</h3>
-                    <div class="days-counter" id="daysCounter">-</div>
+                    <div class="days-counter loading" id="daysCounter">
+                        <div class="loading-spinner-small"></div>
+                    </div>
                     <p>days</p>
                     
                     <div class="subscription-details">
                         <div class="detail-item">
                             <span class="detail-label">Plan:</span>
                             <span class="detail-value">
-                                <span class="plan-badge" id="planName">Loading...</span>
+                                <span class="plan-badge" id="planName">
+                                    <span class="loading-spinner-small"></span>
+                                </span>
                             </span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Started:</span>
-                            <span class="detail-value" id="startDate">Loading...</span>
+                            <span class="detail-value loading-text" id="startDate">Loading...</span>
                         </div>
                         <div class="detail-item" id="trialEndItem" style="display: none;">
                             <span class="detail-label">Trial Ends:</span>
-                            <span class="detail-value" id="trialEndDate">Loading...</span>
+                            <span class="detail-value loading-text" id="trialEndDate">Loading...</span>
                         </div>
                         <div class="detail-item" id="subscriptionStartItem">
                             <span class="detail-label">Subscription Start Date:</span>
-                            <span class="detail-value" id="subscriptionStartDate">N/A</span>
+                            <span class="detail-value loading-text" id="subscriptionStartDate">Loading...</span>
                         </div>
                     </div>
                 </div>
@@ -503,42 +533,162 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Start loading immediately with fast path
             initializePage();
             preserveUrlParameters();
         });
 
-        // Initialize the page
+        // Fast initialization with early data show
         async function initializePage() {
             try {
-                // Get user from Outseta
+                console.log('🚀 Starting dashboard initialization...');
+                
+                // Wait for Outseta to load
+                await waitForOutseta();
+                
+                // Get user from Outseta quickly
                 currentUser = await Outseta.getUser();
                 if (!currentUser) {
                     window.location.href = '/login.html';
                     return;
                 }
 
-                console.log("User loaded:", currentUser.Email);
+                console.log("✅ User loaded:", currentUser.Email);
 
+                // 🚀 FAST PATH: Try to get basic info immediately from cache/direct access
+                tryFastDataLoad();
+                
                 // Get auth token for API calls
                 userToken = await getAuthToken();
                 
-                // Load subscription info
+                // Load full subscription info (this replaces the fast data)
                 await loadSubscriptionInfo();
                 
                 // Set up Outseta event listeners for plan changes
                 setupOutsetaEventListeners();
                 
             } catch (error) {
-                console.error('Initialization error:', error);
+                console.error('❌ Initialization error:', error);
+                // Show fallback data
+                showFallbackData();
             }
         }
 
-        // Load subscription information
+        // Wait for Outseta to fully load
+        function waitForOutseta() {
+            return new Promise((resolve) => {
+                if (window.Outseta && typeof Outseta.getUser === 'function') {
+                    resolve();
+                } else {
+                    const checkOutseta = setInterval(() => {
+                        if (window.Outseta && typeof Outseta.getUser === 'function') {
+                            clearInterval(checkOutseta);
+                            resolve();
+                        }
+                    }, 100);
+                    
+                    // Timeout after 10 seconds
+                    setTimeout(() => {
+                        clearInterval(checkOutseta);
+                        resolve();
+                    }, 10000);
+                }
+            });
+        }
+
+        // Try to get data immediately for fast display
+        function tryFastDataLoad() {
+            try {
+                console.log('⚡ Attempting fast data load...');
+                
+                // Check if user object has immediate subscription data
+                if (currentUser && currentUser.Account) {
+                    let quickStartDate = null;
+                    let quickPlanName = 'Free Trial';
+                    
+                    // Try to get quick plan info
+                    if (currentUser.Account.Subscriptions && currentUser.Account.Subscriptions.length > 0) {
+                        const subscription = currentUser.Account.Subscriptions[0];
+                        if (subscription.Plan && subscription.Plan.Name) {
+                            quickPlanName = subscription.Plan.Name;
+                        }
+                        quickStartDate = subscription.StartDate || subscription.CreatedDate;
+                    } else if (currentUser.Account.Created) {
+                        quickStartDate = currentUser.Account.Created;
+                    }
+                    
+                    // Show quick data if we have it
+                    if (quickStartDate) {
+                        const startDate = new Date(quickStartDate);
+                        const today = new Date();
+                        const diffTime = today.getTime() - startDate.getTime();
+                        const diffDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+                        
+                        console.log(`⚡ Fast data: ${diffDays} days, plan: ${quickPlanName}`);
+                        
+                        // Update UI immediately
+                        updateCounterDisplay(diffDays);
+                        updatePlanDisplay(quickPlanName);
+                        updateStartDateDisplay(startDate);
+                        
+                        console.log('✅ Fast data displayed!');
+                        return true;
+                    }
+                }
+            } catch (error) {
+                console.log('⚠️ Fast data load failed:', error);
+            }
+            
+            return false;
+        }
+
+        // Update counter with smooth transition
+        function updateCounterDisplay(days) {
+            const counter = document.getElementById('daysCounter');
+            counter.classList.remove('loading');
+            counter.innerHTML = days.toString();
+        }
+
+        // Update plan display
+        function updatePlanDisplay(planName) {
+            const planElement = document.getElementById('planName');
+            planElement.innerHTML = planName;
+        }
+
+        // Update start date display
+        function updateStartDateDisplay(startDate) {
+            const startDateElement = document.getElementById('startDate');
+            startDateElement.classList.remove('loading-text');
+            startDateElement.textContent = startDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Show fallback data if everything fails
+        function showFallbackData() {
+            console.log('🔄 Showing fallback data...');
+            updateCounterDisplay(0);
+            updatePlanDisplay('Free Trial');
+            
+            const startDateElement = document.getElementById('startDate');
+            startDateElement.classList.remove('loading-text');
+            startDateElement.textContent = 'N/A';
+            
+            const subscriptionStartElement = document.getElementById('subscriptionStartDate');
+            subscriptionStartElement.classList.remove('loading-text');
+            subscriptionStartElement.textContent = 'N/A';
+        }
+
+        // Load subscription information (comprehensive, replaces fast data)
         async function loadSubscriptionInfo() {
             try {
+                console.log('📊 Loading comprehensive subscription data...');
+                const startTime = Date.now();
+                
                 // Get user data which should include subscription info
                 const user = await Outseta.getUser();
-                console.log('Full user data:', user);
                 
                 let planName = 'Free Trial';
                 let startDateValue = null;
@@ -547,209 +697,102 @@
                 // Check if user has Account with Subscriptions
                 if (user && user.Account && user.Account.Subscriptions && user.Account.Subscriptions.length > 0) {
                     const subscription = user.Account.Subscriptions[0];
-                    console.log('Subscription found:', subscription);
+                    console.log('📋 Subscription found:', subscription);
                     
                     if (subscription.Plan && subscription.Plan.Name) {
                         planName = subscription.Plan.Name;
                     }
                     startDateValue = subscription.StartDate || subscription.CreatedDate;
                     
-                    // Look for subscription start date (different from account created date)
+                    // Look for subscription start date
                     if (subscription.SubscriptionStartDate) {
                         subscriptionStartDate = subscription.SubscriptionStartDate;
-                    } else if (subscription.SubscriptionStart) {
-                        subscriptionStartDate = subscription.SubscriptionStart;
-                    } else if (subscription.BillingStartDate) {
-                        subscriptionStartDate = subscription.BillingStartDate;
                     } else if (subscription.StartDate && planName !== 'Free Trial') {
-                        // If not on free trial and has StartDate, use it as subscription start
                         subscriptionStartDate = subscription.StartDate;
                     }
-                    
-                    console.log('Subscription object details:', {
-                        SubscriptionStartDate: subscription.SubscriptionStartDate,
-                        SubscriptionStart: subscription.SubscriptionStart,
-                        BillingStartDate: subscription.BillingStartDate,
-                        StartDate: subscription.StartDate,
-                        CreatedDate: subscription.CreatedDate,
-                        Plan: subscription.Plan
-                    });
                 } else {
-                    console.log('No subscriptions found in user account, checking account created date');
+                    console.log('🔍 No direct subscriptions found, checking account created date');
                     
                     // Use account created date as fallback
                     if (user && user.Account && user.Account.Created) {
                         startDateValue = user.Account.Created;
-                        console.log('Using Account Created date:', startDateValue);
                     }
                     
-                    // Try to get plan info from user's subscription status or other fields
-                    if (user && user.Account) {
-                        // Check various possible fields for plan information
-                        if (user.Account.BillingState) {
-                            console.log('Billing State:', user.Account.BillingState);
-                        }
-                        if (user.Account.AccountStage) {
-                            console.log('Account Stage:', user.Account.AccountStage);
-                        }
-                    }
-                    
-                    // Try direct API call for current subscription
+                    // Try API calls only if we don't have fast data already
                     try {
                         const token = await Outseta.getAccessToken();
-                        console.log('Trying direct API call with token');
                         
-                        // Try getting the account details with subscription info
-                        const accountResponse = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Content-Type': 'application/json'
-                            }
-                        });
+                        // Quick parallel API calls with timeout
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
                         
-                        if (accountResponse.ok) {
-                            const accountData = await accountResponse.json();
-                            console.log('Account API data:', accountData);
-                            
+                        const [accountResponse, billingResponse] = await Promise.allSettled([
+                            fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${user.Account.Uid}?fields=*`, {
+                                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                                signal: controller.signal
+                            }),
+                            fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
+                                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+                                signal: controller.signal
+                            })
+                        ]);
+                        
+                        clearTimeout(timeoutId);
+                        
+                        // Process account data
+                        if (accountResponse.status === 'fulfilled' && accountResponse.value.ok) {
+                            const accountData = await accountResponse.value.json();
                             if (accountData.Subscriptions && accountData.Subscriptions.length > 0) {
                                 const subscription = accountData.Subscriptions[0];
-                                console.log('Found subscription via account API:', subscription);
-                                
                                 if (subscription.Plan && subscription.Plan.Name) {
                                     planName = subscription.Plan.Name;
                                 }
                                 if (subscription.StartDate) {
                                     startDateValue = subscription.StartDate;
                                 }
-                                
-                                // Look for subscription start date
                                 if (subscription.SubscriptionStartDate) {
                                     subscriptionStartDate = subscription.SubscriptionStartDate;
-                                } else if (subscription.SubscriptionStart) {
-                                    subscriptionStartDate = subscription.SubscriptionStart;
-                                } else if (subscription.BillingStartDate) {
-                                    subscriptionStartDate = subscription.BillingStartDate;
-                                } else if (subscription.StartDate && planName !== 'Free Trial') {
-                                    subscriptionStartDate = subscription.StartDate;
                                 }
-                                
-                                console.log('Account API subscription details:', {
-                                    SubscriptionStartDate: subscription.SubscriptionStartDate,
-                                    SubscriptionStart: subscription.SubscriptionStart,
-                                    BillingStartDate: subscription.BillingStartDate,
-                                    StartDate: subscription.StartDate,
-                                    Plan: subscription.Plan
-                                });
                             }
                         }
                         
-                        // Also try the billing subscriptions endpoint
-                        const subResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=*`, {
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Content-Type': 'application/json'
-                            }
-                        });
-                        
-                        if (subResponse.ok) {
-                            const subscriptionData = await subResponse.json();
-                            console.log('Billing API subscription data:', subscriptionData);
-                            
+                        // Process billing data
+                        if (billingResponse.status === 'fulfilled' && billingResponse.value.ok) {
+                            const subscriptionData = await billingResponse.value.json();
                             if (subscriptionData.items && subscriptionData.items.length > 0) {
                                 const subscription = subscriptionData.items[0];
-                                console.log('Found subscription via billing API:', subscription);
-                                console.log('Full subscription object keys:', Object.keys(subscription));
-                                
-                                // Check for original plan before cancellation
                                 if (subscription.Plan && subscription.Plan.Name && subscription.Plan.Name !== 'Free Trial') {
                                     planName = subscription.Plan.Name;
                                 }
-                                
-                                // Look for various start date fields
-                                const possibleStartDates = {
-                                    StartDate: subscription.StartDate,
-                                    SubscriptionStartDate: subscription.SubscriptionStartDate,
-                                    SubscriptionStart: subscription.SubscriptionStart,
-                                    BillingStartDate: subscription.BillingStartDate,
-                                    CreatedDate: subscription.CreatedDate,
-                                    ActivatedDate: subscription.ActivatedDate,
-                                    FirstBillDate: subscription.FirstBillDate
-                                };
-                                
-                                console.log('All possible start date fields:', possibleStartDates);
-                                
                                 if (subscription.StartDate) {
                                     startDateValue = subscription.StartDate;
                                 }
-                                
-                                // Look for subscription start date - prioritize subscription StartDate over account created
-                                if (subscription.StartDate && subscription.Plan && subscription.Plan.Name !== 'Free Trial') {
-                                    // Use subscription StartDate if it's a paid plan
+                                if (subscription.StartDate && planName !== 'Free Trial') {
                                     subscriptionStartDate = subscription.StartDate;
-                                } else if (subscription.SubscriptionStartDate) {
-                                    subscriptionStartDate = subscription.SubscriptionStartDate;
-                                } else if (subscription.SubscriptionStart) {
-                                    subscriptionStartDate = subscription.SubscriptionStart;
-                                } else if (subscription.BillingStartDate) {
-                                    subscriptionStartDate = subscription.BillingStartDate;
-                                } else if (subscription.ActivatedDate) {
-                                    subscriptionStartDate = subscription.ActivatedDate;
-                                } else if (subscription.FirstBillDate) {
-                                    subscriptionStartDate = subscription.FirstBillDate;
                                 }
-                                
-                                // Override plan if we find a non-Free Trial plan in the subscription
-                                if (subscription.Plan && subscription.Plan.Name && subscription.Plan.Name !== 'Free Trial') {
-                                    planName = subscription.Plan.Name;
-                                    console.log('Found paid plan in subscription:', planName);
-                                }
-                                
-                                console.log('Billing API subscription details:', {
-                                    SubscriptionStartDate: subscription.SubscriptionStartDate,
-                                    SubscriptionStart: subscription.SubscriptionStart,
-                                    BillingStartDate: subscription.BillingStartDate,
-                                    StartDate: subscription.StartDate,
-                                    ActivatedDate: subscription.ActivatedDate,
-                                    FirstBillDate: subscription.FirstBillDate,
-                                    Plan: subscription.Plan,
-                                    BillingState: subscription.BillingState,
-                                    Status: subscription.Status,
-                                    EndDate: subscription.EndDate,
-                                    ExpirationDate: subscription.ExpirationDate,
-                                    finalPlanName: planName,
-                                    finalSubscriptionStartDate: subscriptionStartDate
-                                });
                             }
                         }
+                        
                     } catch (apiError) {
-                        console.error('Direct API call failed:', apiError);
+                        console.log('⚠️ API calls failed or timed out:', apiError.message);
+                        // Continue with fallback data
                     }
                 }
                 
-                console.log('Final plan name:', planName);
-                console.log('Final start date:', startDateValue);
-                console.log('Final subscription start date:', subscriptionStartDate);
+                console.log(`📊 Final data: Plan: ${planName}, Start: ${startDateValue} (${Date.now() - startTime}ms)`);
                 
-                // Update plan name
-                document.getElementById('planName').textContent = planName;
+                // Update all UI elements
+                updatePlanDisplay(planName);
                 
                 // Update start date and calculate days
                 if (startDateValue) {
                     const startDate = new Date(startDateValue);
                     const today = new Date();
-                    
-                    // Calculate difference in days
                     const diffTime = today.getTime() - startDate.getTime();
                     const diffDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
                     
-                    console.log('Days calculated:', diffDays);
-                    
-                    document.getElementById('daysCounter').textContent = diffDays;
-                    document.getElementById('startDate').textContent = startDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    });
+                    updateCounterDisplay(diffDays);
+                    updateStartDateDisplay(startDate);
                     
                     // Show trial end date if on Free Trial
                     if (planName === 'Free Trial') {
@@ -766,29 +809,28 @@
                         document.getElementById('trialEndItem').style.display = 'none';
                     }
                     
-                    // Always show subscription start date field (even if blank)
+                    // Update subscription start date
+                    const subscriptionStartElement = document.getElementById('subscriptionStartDate');
+                    subscriptionStartElement.classList.remove('loading-text');
                     if (subscriptionStartDate) {
                         const subStartDate = new Date(subscriptionStartDate);
-                        document.getElementById('subscriptionStartDate').textContent = subStartDate.toLocaleDateString('en-US', {
+                        subscriptionStartElement.textContent = subStartDate.toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'short',
                             day: 'numeric'
                         });
                     } else {
-                        document.getElementById('subscriptionStartDate').textContent = 'N/A';
+                        subscriptionStartElement.textContent = 'N/A';
                     }
                 } else {
-                    document.getElementById('daysCounter').textContent = '0';
-                    document.getElementById('startDate').textContent = 'N/A';
-                    document.getElementById('trialEndItem').style.display = 'none';
-                    document.getElementById('subscriptionStartDate').textContent = 'N/A';
+                    showFallbackData();
                 }
                 
+                console.log(`✅ Comprehensive data loaded in ${Date.now() - startTime}ms`);
+                
             } catch (error) {
-                console.error('Error loading subscription info:', error);
-                document.getElementById('planName').textContent = 'Free Trial';
-                document.getElementById('daysCounter').textContent = '0';
-                document.getElementById('startDate').textContent = 'N/A';
+                console.error('❌ Error loading subscription info:', error);
+                showFallbackData();
             }
         }
 
