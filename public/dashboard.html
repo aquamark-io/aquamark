@@ -91,23 +91,9 @@
             border-radius: 3px;
         }
 
-        .action-buttons a {
-            text-decoration: none;
-        }
-
-        .btn-demo {
-            background: linear-gradient(90deg, #a855f7, #ec4899);
-            color: white;
-            border: none;
-        }
-
-        .btn-demo:hover {
-            opacity: 0.9;
-        }
-
         /* Main Content */
         .aqua-panel {
-            max-width: 1400px;
+            max-width: 800px;
             width: 95%;
             margin: 2rem auto;
             flex: 1;
@@ -120,34 +106,18 @@
             color: var(--text-primary);
         }
 
-        /* Main Layout */
-        .aqua-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
         /* Cards */
         .aqua-card {
             background: var(--card-bg);
             border-radius: var(--radius);
             box-shadow: var(--shadow-md);
             overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            height: 100%;
-        }
-
-        .aqua-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
         }
 
         .card-header {
             padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             background: #f8fafc;
         }
 
@@ -155,18 +125,6 @@
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-header h2::before {
-            content: '';
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
         }
 
         .card-body {
@@ -187,6 +145,7 @@
             cursor: pointer;
             border: none;
             gap: 0.5rem;
+            text-decoration: none;
         }
 
         .btn-primary {
@@ -198,20 +157,6 @@
             background: #1d4ed8;
         }
 
-        .btn-accent {
-            background: #467EFF;
-            color: white;
-        }
-
-        .btn-danger {
-            background: var(--danger-color);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
         .btn-watermark {
             background: #467EFF;
             color: white;
@@ -219,27 +164,6 @@
 
         .btn-watermark:hover {
             background: #95cbea;
-        }
-
-        .btn-success {
-            background: white;
-            color: #467EFF;
-            border: 2px solid #467EFF;
-        }
-
-        .btn-accent:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary-light);
-            border-color: var(--primary-color);
         }
 
         .btn-black {
@@ -251,7 +175,7 @@
             background: #333333;
         }
 
-        /* Announcement Banner - Clean & Minimal with Urgency */
+        /* Announcement Banner */
         .announcement-banner {
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border: 1px solid #e2e8f0;
@@ -318,43 +242,6 @@
             font-weight: 600;
         }
 
-        .announcement-text .disclaimer {
-            font-size: 0.875rem;
-            color: #94a3b8;
-            font-style: italic;
-            margin-top: 0.25rem;
-        }
-
-        /* Usage Stats */
-        .usage-stat {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-        }
-
-        .usage-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .usage-value {
-            font-weight: 600;
-        }
-
-        .progress-bar {
-            background: #f3f4f6;
-            border-radius: 8px;
-            height: 8px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-
-        .progress-fill {
-            background: #467EFF;
-            height: 100%;
-            width: 0%;
-        }
-
         /* Action Buttons */
         .action-buttons {
             display: flex;
@@ -401,10 +288,6 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .aqua-layout {
-                grid-template-columns: 1fr;
-            }
-
             .announcement-banner {
                 flex-direction: column;
                 align-items: flex-start;
@@ -456,7 +339,7 @@
     <main class="aqua-panel">
         <h1 class="greeting">My Dashboard</h1>
 
-        <!-- Updated Announcement Banner -->
+        <!-- Announcement Banner -->
         <div class="announcement-banner">
             <div class="announcement-content">
                 <div class="announcement-icon">
@@ -478,26 +361,13 @@
             <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
         </div>
 
-        <!-- Main Layout -->
-        <div class="aqua-layout">
-            <!-- Profile Card -->
-            <div class="aqua-card">
-                <div class="card-header">
-                    <h2>My Profile</h2>
-                </div>
-                <div class="card-body">
-                    <div data-o-profile="1" data-mode="embed"></div>
-                </div>
+        <!-- Profile Card -->
+        <div class="aqua-card">
+            <div class="card-header">
+                <h2>My Profile</h2>
             </div>
-
-            <!-- Usage Card -->
-            <div class="aqua-card">
-                <div class="card-header">
-                    <h2>Your Usage</h2>
-                </div>
-                <div class="card-body" id="usage-stats">
-                    <p>Loading your usage data...</p>
-                </div>
+            <div class="card-body">
+                <div data-o-profile="1" data-mode="embed"></div>
             </div>
         </div>
     </main>
@@ -541,64 +411,11 @@
                 // Get auth token for API calls
                 userToken = await getAuthToken();
                 
-                // Load usage data
-                await loadUsageData();
-                
                 // Set up Outseta event listeners for plan changes
                 setupOutsetaEventListeners();
                 
             } catch (error) {
                 console.error('Initialization error:', error);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading dashboard. Please refresh the page.</p>';
-            }
-        }
-
-        // Replace your loadUsageData function with this version that gets referral code from Outseta profile
-        async function loadUsageData() {
-            try {
-                if (!userToken) {
-                    document.getElementById('usage-stats').innerHTML = '<p>Unable to load usage data - no auth token</p>';
-                    return;
-                }
-
-                // Get referral code from Outseta profile - JUST LIKE THE OLD WORKING CODE
-                let referralCode = null;
-                try {
-                    const profile = await Outseta.getUser();
-                    if (profile && profile.ref_code) {
-                        referralCode = profile.ref_code;
-                        console.log('🎯 Got referral code from Outseta profile:', referralCode);
-                    }
-                } catch (error) {
-                    console.error('Error getting Outseta profile:', error);
-                }
-
-                // Send to your existing /api/usage endpoint
-                const requestBody = {};
-                if (referralCode) {
-                    requestBody.referralCode = referralCode;
-                    console.log('✅ Sending referral code to backend:', referralCode);
-                }
-
-                const response = await fetch(`${API_BASE_URL}/api/usage`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-
-                if (response.ok) {
-                    const userData = await response.json();
-                    displayUsageData(userData);
-                } else {
-                    const error = await response.json();
-                    document.getElementById('usage-stats').innerHTML = `<p>Error loading usage: ${error.error}</p>`;
-                }
-            } catch (error) {
-                console.error('Error loading usage data:', error);
-                document.getElementById('usage-stats').innerHTML = '<p>Error loading usage data. Please refresh the page.</p>';
             }
         }
 
@@ -667,9 +484,6 @@
                 
                 // Update plan via API
                 await updateUserPlan(planName);
-                
-                // Refresh usage data
-                await loadUsageData();
 
             } catch (error) {
                 console.error('Error handling plan change:', error);
@@ -698,41 +512,6 @@
                 console.log('Plan updated successfully');
             } catch (error) {
                 console.error('Error updating plan:', error);
-            }
-        }
-
-        // Display usage data in the UI
-        function displayUsageData(userData) {
-            const usageStatsElement = document.getElementById('usage-stats');
-
-            if (userData) {
-                const usagePercentage = Math.min(100, ((userData.pages_used || 0) / (userData.page_credits || 100)) * 100);
-
-                usageStatsElement.innerHTML = `
-                    <div class="usage-stats-container">
-                        <div class="usage-stat">
-                            <span class="usage-label">Plan:</span>
-                            <span class="usage-value">${userData.plan_name || 'Free Trial'}</span>
-                        </div>
-                        <div class="usage-stat">
-                            <span class="usage-label">Pages Used:</span>
-                            <span class="usage-value">${userData.pages_used || 0}</span>
-                        </div>
-                        <div class="usage-stat">
-                            <span class="usage-label">Pages Remaining:</span>
-                            <span class="usage-value">${userData.pages_remaining || 100}</span>
-                        </div>
-                        <div class="usage-stat">
-                            <span class="usage-label">Total Credits:</span>
-                            <span class="usage-value">${userData.page_credits || 100}</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${usagePercentage}%;"></div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                usageStatsElement.innerHTML = '<p>No usage data available yet.</p>';
             }
         }
 
