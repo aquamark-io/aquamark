@@ -620,14 +620,20 @@
                             console.log('👤 Current user email:', currentUser.Email);
                             
                             if (subscriptionsData.items && subscriptionsData.items.length > 0) {
+                                console.log('📋 Raw subscription items:', subscriptionsData.items);
+                                
                                 // Filter subscriptions for the current user's email
                                 const userSubscriptions = subscriptionsData.items.filter(sub => {
-                                    return sub.Account && 
-                                           sub.Account.PrimaryContact && 
-                                           sub.Account.PrimaryContact.Email === currentUser.Email;
+                                    // Check if the subscription's account has the current user in PersonAccount array
+                                    if (sub.Account && sub.Account.PersonAccount && Array.isArray(sub.Account.PersonAccount)) {
+                                        return sub.Account.PersonAccount.some(person => 
+                                            person.Email === currentUser.Email
+                                        );
+                                    }
+                                    return false;
                                 });
                                 
-                                console.log('🔍 User subscriptions:', userSubscriptions);
+                                console.log('🔍 User subscriptions filtered by email:', userSubscriptions);
                                 
                                 if (userSubscriptions.length > 0) {
                                     // Find the active subscription (not Free Trial and not ended)
@@ -662,7 +668,7 @@
                                         console.error('❌ Detailed subscription fetch failed:', detailedResponse.statusText);
                                     }
                                 } else {
-                                    console.log('ℹ️ No subscriptions found for current user email');
+                                    console.log('ℹ️ No subscriptions in items array');
                                 }
                             } else {
                                 console.log('ℹ️ No subscriptions found in response');
