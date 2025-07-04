@@ -683,7 +683,7 @@
                 
                 // Check if user has Account with Subscriptions
                
- async function loadSubscriptionInfo() {
+async function loadSubscriptionInfo() {
   try {
     const user = await Outseta.getUser();
     const token = await Outseta.getAccessToken();
@@ -708,7 +708,6 @@
       subscriptionStartDate = subscription.SubscriptionStartDate || startDateValue;
     }
 
-    // Update UI
     updatePlanDisplay(planName);
 
     if (startDateValue) {
@@ -733,12 +732,12 @@
       subStartEl.classList.remove("loading-text");
       subStartEl.textContent = new Date(subscriptionStartDate).toLocaleDateString();
     }
-
   } catch (err) {
     console.error("❌ Error in loadSubscriptionInfo:", err);
     showFallbackData();
   }
 }
+
 
 
                     
