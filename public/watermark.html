@@ -1101,7 +1101,7 @@
         // Load user's stored logo
         async function loadUserLogo() {
             try {
-                console.log('🎨 Loading user logo...');
+                console.log('🎨 Loading stored logo for user:', currentUser.Email);
                 
                 if (!userToken) {
                     console.error('❌ No auth token available for loading logo');
@@ -1118,11 +1118,14 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data.logoUrl) {
+                        console.log('✅ Found stored logo:', data.logoUrl);
                         document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
-                        console.log('✅ Logo loaded successfully');
+                    } else {
+                        console.log('ℹ️ No stored logo found - showing placeholder');
+                        // Keep the default placeholder image
                     }
                 } else {
-                    console.error('❌ Failed to load logo:', response.status);
+                    console.log('ℹ️ Could not load logo (likely new user)');
                     if (response.status === 401) {
                         console.error('❌ Authentication failed for logo loading');
                         window.location.href = '/dashboard.html';
@@ -1130,6 +1133,7 @@
                 }
             } catch (error) {
                 console.error('❌ Error loading logo:', error);
+                console.log('ℹ️ Will use placeholder logo');
             }
         }
 
@@ -1188,6 +1192,8 @@
                 const formData = new FormData();
                 formData.append('logo', fileInput.files[0]);
 
+                console.log('🎨 Uploading logo for user:', currentUser.Email);
+
                 const response = await fetch(`${API_BASE_URL}/api/logo`, {
                     method: 'POST',
                     headers: {
@@ -1198,14 +1204,24 @@
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log('✅ Logo uploaded successfully:', data.logoUrl);
                     document.getElementById('logoImg').src = data.logoUrl + '?t=' + new Date().getTime();
                     showStatus("✅ Logo uploaded successfully!", 'success');
                 } else {
-                    const error = await response.json();
-                    showStatus(`❌ ${error.error || 'Logo upload failed'}`, 'error');
+                    const errorText = await response.text();
+                    console.error('❌ Logo upload failed:', response.status, errorText);
+                    
+                    let errorObj;
+                    try {
+                        errorObj = JSON.parse(errorText);
+                    } catch (e) {
+                        errorObj = { error: 'Logo upload failed' };
+                    }
+                    
+                    showStatus(`❌ ${errorObj.error || 'Logo upload failed'}`, 'error');
                 }
             } catch (error) {
-                console.error('Upload error:', error);
+                console.error('❌ Upload error:', error);
                 showStatus("❌ Upload failed. Please try again.", 'error');
             }
         }
