@@ -606,75 +606,51 @@
                 
                 if (token) {
                     try {
-                        console.log('🌐 Fetching subscriptions list...');
-                        // Get subscriptions list with Account data included
-                        const subscriptionsResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions?fields=Account.PersonAccount,Plan,StartDate,EndDate,Uid`, {
-                            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
-                        });
+                        console.log('🌐 Fetching account data...');
+                        console.log('🏢 User account UID:', currentUser.Account?.Uid);
                         
-                        console.log('📡 Subscriptions response status:', subscriptionsResponse.status);
-                        
-                        if (subscriptionsResponse.ok) {
-                            const subscriptionsData = await subscriptionsResponse.json();
-                            console.log('📋 All subscriptions data:', subscriptionsData);
-                            console.log('👤 Current user email:', currentUser.Email);
+                        // Get account data which should include subscription information
+                        if (currentUser.Account?.Uid) {
+                            const accountResponse = await fetch(`https://aquamark.outseta.com/api/v1/crm/accounts/${currentUser.Account.Uid}`, {
+                                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+                            });
                             
-                            if (subscriptionsData.items && subscriptionsData.items.length > 0) {
-                                console.log('📋 Raw subscription items:', subscriptionsData.items);
+                            console.log('📡 Account response status:', accountResponse.status);
+                            
+                            if (accountResponse.ok) {
+                                const accountData = await accountResponse.json();
+                                console.log('🏢 Account data:', accountData);
                                 
-                                // Filter subscriptions for the current user's email
-                                const userSubscriptions = subscriptionsData.items.filter(sub => {
-                                    // Check if the subscription's account has the current user in PersonAccount array
-                                    if (sub.Account && sub.Account.PersonAccount && Array.isArray(sub.Account.PersonAccount)) {
-                                        return sub.Account.PersonAccount.some(person => 
-                                            person.Email === currentUser.Email
-                                        );
-                                    }
-                                    return false;
-                                });
-                                
-                                console.log('🔍 User subscriptions filtered by email:', userSubscriptions);
-                                
-                                if (userSubscriptions.length > 0) {
+                                // Check if account has subscriptions
+                                if (accountData.Subscriptions && accountData.Subscriptions.length > 0) {
+                                    console.log('📋 Account subscriptions:', accountData.Subscriptions);
+                                    
                                     // Find the active subscription (not Free Trial and not ended)
-                                    let activeSubscription = userSubscriptions.find(sub => {
+                                    let activeSubscription = accountData.Subscriptions.find(sub => {
                                         return sub.Plan && sub.Plan.Name !== 'Free Trial' && !sub.EndDate;
                                     });
                                     
                                     // If no active paid subscription found, fall back to the most recent one
                                     if (!activeSubscription) {
-                                        activeSubscription = userSubscriptions[0];
+                                        activeSubscription = accountData.Subscriptions[0];
                                     }
                                     
-                                    const subscriptionUid = activeSubscription.Uid;
-                                    console.log('🎯 Using subscription:', activeSubscription.Plan?.Name, 'Uid:', subscriptionUid);
+                                    console.log('🎯 Using subscription from account:', activeSubscription.Plan?.Name);
                                     
-                                    // Get detailed subscription
-                                    const detailedResponse = await fetch(`https://aquamark.outseta.com/api/v1/billing/subscriptions/${subscriptionUid}`, {
-                                        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
-                                    });
-                                    
-                                    console.log('📊 Detailed response status:', detailedResponse.status);
-                                    
-                                    if (detailedResponse.ok) {
-                                        const subscription = await detailedResponse.json();
-                                        console.log('📊 Subscription details:', subscription);
-                                        if (subscription.Plan?.Name) planName = subscription.Plan.Name;
-                                        if (subscription.StartDate) {
-                                            startDateValue = subscription.StartDate;
-                                            subscriptionStartDate = subscription.StartDate;
-                                        }
-                                    } else {
-                                        console.error('❌ Detailed subscription fetch failed:', detailedResponse.statusText);
+                                    // Extract plan name and start date directly from account subscription
+                                    if (activeSubscription.Plan?.Name) planName = activeSubscription.Plan.Name;
+                                    if (activeSubscription.StartDate) {
+                                        startDateValue = activeSubscription.StartDate;
+                                        subscriptionStartDate = activeSubscription.StartDate;
                                     }
                                 } else {
-                                    console.log('ℹ️ No subscriptions in items array');
+                                    console.log('ℹ️ No subscriptions found in account data');
                                 }
                             } else {
-                                console.log('ℹ️ No subscriptions found in response');
+                                console.error('❌ Account fetch failed:', accountResponse.status, accountResponse.statusText);
                             }
                         } else {
-                            console.error('❌ Subscriptions list fetch failed:', subscriptionsResponse.status, subscriptionsResponse.statusText);
+                            console.error('❌ No account UID found for user');
                         }
                     } catch (error) {
                         console.error('❌ API call failed:', error);
