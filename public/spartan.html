@@ -3,270 +3,877 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aquamark for Lenders</title>
+    <title>Fintech Consultant - Strategic Financial Technology Solutions</title>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        .infographic {
-            background: white;
-            border-radius: 16px;
-            padding: 50px;
-            max-width: 900px;
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a365d;
+            background: linear-gradient(135deg, #f7fafc 0%, #e2e8f0 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
             width: 100%;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-            border: 1px solid #e8eaed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(59, 130, 246, 0.1);
         }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
         }
-        
+
         .logo {
-            font-size: 42px;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #1a365d;
-            margin-bottom: 8px;
-            letter-spacing: -1px;
+            color: #1e40af;
         }
-        
-        .tagline {
-            font-size: 28px;
-            color: #1a365d;
-            font-weight: 600;
-            background: #f0f9ff;
-            padding: 12px 24px;
-            border-radius: 25px;
-            border: 2px solid #0ea5e9;
-            display: inline-block;
-            margin-top: 10px;
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
         }
-        
-        .main-content {
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1e40af;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 40px;
+            gap: 4rem;
+            align-items: center;
         }
-        
-        .section {
-            background: #fafbfc;
-            padding: 40px 35px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
         }
-        
-        .section-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a365d;
-            margin-bottom: 30px;
-            text-align: center;
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
-        
-        .step {
+
+        .cta-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Partner Logos Carousel */
+        .partners-carousel {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 30px;
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.1) 0%, 
+                rgba(147, 197, 253, 0.15) 25%,
+                rgba(219, 234, 254, 0.2) 50%,
+                rgba(99, 102, 241, 0.1) 75%,
+                rgba(129, 140, 248, 0.15) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 0 40px rgba(59, 130, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .partners-carousel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                rgba(59, 130, 246, 0.1),
+                rgba(147, 197, 253, 0.2),
+                rgba(219, 234, 254, 0.1),
+                rgba(99, 102, 241, 0.15),
+                rgba(129, 140, 248, 0.1),
+                rgba(59, 130, 246, 0.1)
+            );
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .partners-carousel::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logos-row {
+            display: flex;
+            position: absolute;
+            animation: scrollHorizontal 40s linear infinite;
+        }
+
+        .logos-row:nth-child(1) {
+            top: 10px;
+            animation-direction: normal;
+        }
+
+        .logos-row:nth-child(2) {
+            top: 80px;
+            animation-direction: reverse;
+            animation-duration: 35s;
+        }
+
+        .logos-row:nth-child(3) {
+            top: 150px;
+            animation-direction: normal;
+            animation-duration: 45s;
+        }
+
+        .logos-row:nth-child(4) {
+            top: 220px;
+            animation-direction: reverse;
+            animation-duration: 38s;
+        }
+
+        .logo-item {
+            flex: 0 0 120px;
+            height: 50px;
             display: flex;
             align-items: center;
-            margin-bottom: 24px;
-            padding: 20px;
+            justify-content: center;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(248, 250, 252, 0.9) 100%);
+            margin: 0 8px;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #1e40af;
+            box-shadow: 
+                0 4px 15px rgba(59, 130, 246, 0.15),
+                0 1px 3px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding: 0 10px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .logo-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(59, 130, 246, 0.25),
+                0 2px 6px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes scrollHorizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
             background: white;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
         }
-        
-        .step:last-child {
-            margin-bottom: 0;
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #1e40af;
         }
-        
-        .step-bullet {
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e40af;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            overflow: hidden;
+        }
+
+        .reviews-carousel {
+            position: relative;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            overflow: hidden;
+        }
+
+        .reviews-container {
+            display: flex;
+            animation: scrollReviews 60s linear infinite;
+            width: calc(400px * 24); /* 12 reviews × 2 for seamless loop */
+        }
+
+        .review-card {
+            flex: 0 0 400px;
+            background: white;
+            padding: 2rem;
+            margin: 0 1rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-stars {
+            color: #fbbf24;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #475569;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        @keyframes scrollReviews {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured .pricing-features li {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .pricing-button {
+            display: inline-block;
             background: #3b82f6;
             color: white;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-        
-        .step-text {
-            font-size: 18px;
-            color: #334155;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-        
-        .benefit {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .benefit:last-child {
-            margin-bottom: 0;
-        }
-        
-        .benefit-check {
-            color: #059669;
-            font-size: 24px;
-            font-weight: bold;
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-        
-        .benefit-text {
-            font-size: 18px;
-            color: #334155;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-        
-        .watermark-example {
-            background: #f0f9ff;
-            border: 2px solid #0ea5e9;
-            padding: 25px;
-            border-radius: 8px;
-            margin-top: 30px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            color: #0c4a6e;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
             font-weight: 600;
-            line-height: 1.6;
+            transition: all 0.3s ease;
         }
-        
-        .watermark-features {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #0ea5e9;
-            font-weight: 500;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .cta {
-            text-align: center;
-            margin-top: 50px;
-            padding: 30px;
+
+        .pricing-button:hover {
             background: #1e40af;
-            border-radius: 12px;
+            transform: translateY(-2px);
+        }
+
+        .pricing-card.featured .pricing-button {
+            background: white;
+            color: #1e40af;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
             color: white;
         }
-        
-        .cta-text {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 12px;
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
         }
-        
-        .website {
-            font-size: 20px;
-            font-weight: 500;
-            opacity: 0.95;
-        }
-        
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .main-content {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                text-align: center;
             }
-            
-            .infographic {
-                padding: 30px 25px;
+
+            .hero-text h1 {
+                font-size: 2.5rem;
             }
-            
-            .logo {
-                font-size: 36px;
+
+            .services-grid {
+                grid-template-columns: 1fr;
             }
-            
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-item {
+                flex: 0 0 80px;
+            }
+
+            .review-card {
+                flex: 0 0 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
             .section-title {
-                font-size: 24px;
-            }
-            
-            .step-text, .benefit-text {
-                font-size: 16px;
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="infographic">
-        <div class="header">
-            <div class="logo">AQUAMARK</div>
-            <div class="tagline">for Lenders</div>
-        </div>
-        
-        <div class="main-content">
-            <div class="section">
-                <div class="section-title">How It Works</div>
-                
-                <div class="step">
-                    <div class="step-bullet"></div>
-                    <div class="step-text">Intercepts PDF downloads</div>
+    <header>
+        <nav class="container">
+            <div class="logo">FinTech Consultant</div>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Strategic Financial Technology Solutions</h1>
+                    <p>Empowering fintech companies to scale, optimize, and innovate with expert consulting in leadership, operations, and strategic partnerships.</p>
+                    <a href="#contact" class="cta-button">Get Started Today</a>
                 </div>
-                
-                <div class="step">
-                    <div class="step-bullet"></div>
-                    <div class="step-text">Watermarks every page</div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-bullet"></div>
-                    <div class="step-text">Adds tracking information</div>
-                </div>
-                
-                <div class="watermark-example">
-                    For Internal Use Only<br>
-                    Underwriter Name<br>
-                    Date Downloaded
-                    <div class="watermark-features">
-                        Tamper-resistant • OCR-safe
+                <div class="partners-carousel">
+                    <div class="logos-row">
+                        <div class="logo-item">Stripe</div>
+                        <div class="logo-item">PayPal</div>
+                        <div class="logo-item">Square</div>
+                        <div class="logo-item">Coinbase</div>
+                        <div class="logo-item">Robinhood</div>
+                        <div class="logo-item">Plaid</div>
+                        <div class="logo-item">Affirm</div>
+                        <div class="logo-item">Chime</div>
+                        <div class="logo-item">Stripe</div>
+                        <div class="logo-item">PayPal</div>
+                        <div class="logo-item">Square</div>
+                        <div class="logo-item">Coinbase</div>
+                    </div>
+                    <div class="logos-row">
+                        <div class="logo-item">Goldman Sachs</div>
+                        <div class="logo-item">JPMorgan</div>
+                        <div class="logo-item">Visa</div>
+                        <div class="logo-item">Mastercard</div>
+                        <div class="logo-item">American Express</div>
+                        <div class="logo-item">Klarna</div>
+                        <div class="logo-item">SoFi</div>
+                        <div class="logo-item">Credit Karma</div>
+                        <div class="logo-item">Goldman Sachs</div>
+                        <div class="logo-item">JPMorgan</div>
+                        <div class="logo-item">Visa</div>
+                        <div class="logo-item">Mastercard</div>
+                    </div>
+                    <div class="logos-row">
+                        <div class="logo-item">Zelle</div>
+                        <div class="logo-item">Venmo</div>
+                        <div class="logo-item">Cash App</div>
+                        <div class="logo-item">Revolut</div>
+                        <div class="logo-item">N26</div>
+                        <div class="logo-item">Monzo</div>
+                        <div class="logo-item">Starling Bank</div>
+                        <div class="logo-item">Wise</div>
+                        <div class="logo-item">Zelle</div>
+                        <div class="logo-item">Venmo</div>
+                        <div class="logo-item">Cash App</div>
+                        <div class="logo-item">Revolut</div>
+                    </div>
+                    <div class="logos-row">
+                        <div class="logo-item">Brex</div>
+                        <div class="logo-item">Ramp</div>
+                        <div class="logo-item">Mercury</div>
+                        <div class="logo-item">Navan</div>
+                        <div class="logo-item">Deel</div>
+                        <div class="logo-item">Ripple</div>
+                        <div class="logo-item">Chainlink</div>
+                        <div class="logo-item">Polygon</div>
+                        <div class="logo-item">Avalanche</div>
+                        <div class="logo-item">Brex</div>
+                        <div class="logo-item">Ramp</div>
+                        <div class="logo-item">Mercury</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="section">
-                <div class="section-title">What It Does</div>
-                
-                <div class="benefit">
-                    <div class="benefit-check">✓</div>
-                    <div class="benefit-text">Stop access to clean, sellable files</div>
-                </div>
+        </div>
+    </section>
 
-                                <div class="benefit">
-                    <div class="benefit-check">✓</div>
-                    <div class="benefit-text">Build trust with your ISOs</div>
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">👑</div>
+                    <h3>Leadership Training</h3>
+                    <p>Develop exceptional leaders who drive fintech innovation and team excellence.</p>
                 </div>
-                
-                <div class="benefit">
-                    <div class="benefit-check">✓</div>
-                    <div class="benefit-text">Protect your reputation</div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Operational Efficiency</h3>
+                    <p>Streamline processes and optimize workflows for maximum productivity and growth.</p>
                 </div>
-
-                                <div class="benefit">
-                    <div class="benefit-check">✓</div>
-                    <div class="benefit-text">Reduce legal liability and risk</div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Portfolio Management</h3>
+                    <p>Strategic investment guidance and portfolio optimization for fintech ventures.</p>
                 </div>
-                
-
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3>Strategic Partnerships</h3>
+                    <p>Build valuable alliances that accelerate growth and market expansion.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛠️</div>
+                    <h3>Tech Stack Solutions</h3>
+                    <p>Architect robust, scalable technology infrastructure for fintech success.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
+                    <h3>Lending & Revenue Growth</h3>
+                    <p>Optimize lending strategies and unlock new revenue streams for sustainable growth.</p>
+                </div>
             </div>
         </div>
-        
-        <div class="cta">
-            <div class="cta-text">Ready to protect your business?</div>
-            <div class="website">www.aquamark.io</div>
+    </section>
+
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Client Reviews</h2>
+            <div class="reviews-carousel">
+                <div class="reviews-container">
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Exceptional strategic guidance that transformed our fintech startup into a market leader. The operational efficiency improvements alone saved us 40% in costs."</div>
+                        <div class="review-author">Sarah Chen, CEO of PayFlow</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"The leadership training program was game-changing. Our team's productivity increased by 60% and employee satisfaction reached all-time highs."</div>
+                        <div class="review-author">Michael Rodriguez, CTO of LendTech</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Strategic partnerships identified through their network resulted in $2M in new revenue within 6 months. Incredible ROI on our investment."</div>
+                        <div class="review-author">Jennifer Park, Founder of CryptoVault</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Their tech stack recommendations modernized our entire platform. We now process 10x more transactions with better security and reliability."</div>
+                        <div class="review-author">David Thompson, VP of Engineering</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Portfolio management expertise helped us optimize our investment strategy, resulting in 25% better returns year-over-year."</div>
+                        <div class="review-author">Lisa Wang, Investment Director</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"The lending optimization strategies increased our approval rates by 35% while reducing default risk. Outstanding risk management insights."</div>
+                        <div class="review-author">Robert Kim, Head of Risk at FastLend</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Revenue growth consulting helped us scale from $1M to $10M ARR in 18 months. The strategies were practical and highly effective."</div>
+                        <div class="review-author">Amanda Foster, CEO of WealthTech</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Their fintech expertise in regulatory compliance saved us months of legal headaches. Invaluable guidance for our Series B fundraising."</div>
+                        <div class="review-author">Carlos Martinez, COO of RegTech Solutions</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"The operational efficiency audit identified $500K in annual savings. Process optimization recommendations were implemented seamlessly."</div>
+                        <div class="review-author">Emily Johnson, Operations Director</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Partnership introductions led to strategic alliances worth $5M in business value. Their network is unparalleled in fintech."</div>
+                        <div class="review-author">Thomas Lee, Business Development VP</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Digital transformation roadmap accelerated our time-to-market by 6 months. The technology architecture recommendations were spot-on."</div>
+                        <div class="review-author">Nina Patel, Chief Technology Officer</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Customer acquisition cost dropped 45% after implementing their growth strategies. The data-driven approach delivered exceptional results."</div>
+                        <div class="review-author">Mark Williams, Head of Growth</div>
+                    </div>
+                    <!-- Duplicate set for seamless looping -->
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Exceptional strategic guidance that transformed our fintech startup into a market leader. The operational efficiency improvements alone saved us 40% in costs."</div>
+                        <div class="review-author">Sarah Chen, CEO of PayFlow</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"The leadership training program was game-changing. Our team's productivity increased by 60% and employee satisfaction reached all-time highs."</div>
+                        <div class="review-author">Michael Rodriguez, CTO of LendTech</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Strategic partnerships identified through their network resulted in $2M in new revenue within 6 months. Incredible ROI on our investment."</div>
+                        <div class="review-author">Jennifer Park, Founder of CryptoVault</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Their tech stack recommendations modernized our entire platform. We now process 10x more transactions with better security and reliability."</div>
+                        <div class="review-author">David Thompson, VP of Engineering</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Portfolio management expertise helped us optimize our investment strategy, resulting in 25% better returns year-over-year."</div>
+                        <div class="review-author">Lisa Wang, Investment Director</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"The lending optimization strategies increased our approval rates by 35% while reducing default risk. Outstanding risk management insights."</div>
+                        <div class="review-author">Robert Kim, Head of Risk at FastLend</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Revenue growth consulting helped us scale from $1M to $10M ARR in 18 months. The strategies were practical and highly effective."</div>
+                        <div class="review-author">Amanda Foster, CEO of WealthTech</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Their fintech expertise in regulatory compliance saved us months of legal headaches. Invaluable guidance for our Series B fundraising."</div>
+                        <div class="review-author">Carlos Martinez, COO of RegTech Solutions</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"The operational efficiency audit identified $500K in annual savings. Process optimization recommendations were implemented seamlessly."</div>
+                        <div class="review-author">Emily Johnson, Operations Director</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Partnership introductions led to strategic alliances worth $5M in business value. Their network is unparalleled in fintech."</div>
+                        <div class="review-author">Thomas Lee, Business Development VP</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Digital transformation roadmap accelerated our time-to-market by 6 months. The technology architecture recommendations were spot-on."</div>
+                        <div class="review-author">Nina Patel, Chief Technology Officer</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Customer acquisition cost dropped 45% after implementing their growth strategies. The data-driven approach delivered exceptional results."</div>
+                        <div class="review-author">Mark Williams, Head of Growth</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Pricing Models</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Part-Time Consulting</h3>
+                    <div class="pricing-price">$5,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>20 hours per month</li>
+                        <li>Strategic guidance & planning</li>
+                        <li>Monthly progress reviews</li>
+                        <li>Email & phone support</li>
+                        <li>Access to partner network</li>
+                        <li>Quarterly strategy sessions</li>
+                    </ul>
+                    <a href="#contact" class="pricing-button">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Full-Time Consulting</h3>
+                    <div class="pricing-price">$15,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>160 hours per month</li>
+                        <li>Complete strategic oversight</li>
+                        <li>Weekly leadership meetings</li>
+                        <li>24/7 priority support</li>
+                        <li>Full partner network access</li>
+                        <li>Custom implementation plans</li>
+                        <li>Team training included</li>
+                    </ul>
+                    <a href="#contact" class="pricing-button">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>Email: hello@fintechconsultant.com</li>
+                        <li>Phone: (555) 123-4567</li>
+                        <li>Address: 123 Financial District, NY 10004</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Leadership Training</a></li>
+                        <li><a href="#services">Operational Efficiency</a></li>
+                        <li><a href="#services">Portfolio Management</a></li>
+                        <li><a href="#services">Strategic Partnerships</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#reviews">Client Reviews</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Medium</a></li>
+                        <li><a href="#">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FinTech Consultant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
 </body>
 </html>
