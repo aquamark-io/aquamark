@@ -494,6 +494,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .pricing-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
             .logo-item {
                 flex: 0 0 80px;
             }
@@ -776,7 +781,12 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3>Part-Time Consulting</h3>
-                    <div class="pricing-price">$5,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                    <div class="pricing-info">
+                        <div class="pricing-price">$5,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                        <div class="pricing-button-container">
+                            <a href="#contact" class="pricing-button">Get Started</a>
+                        </div>
+                    </div>
                     <ul class="pricing-features">
                         <li>20 hours per month</li>
                         <li>Strategic guidance & planning</li>
@@ -785,11 +795,15 @@
                         <li>Access to partner network</li>
                         <li>Quarterly strategy sessions</li>
                     </ul>
-                    <a href="#contact" class="pricing-button">Get Started</a>
                 </div>
                 <div class="pricing-card featured">
                     <h3>Full-Time Consulting</h3>
-                    <div class="pricing-price">$15,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                    <div class="pricing-info">
+                        <div class="pricing-price">$15,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                        <div class="pricing-button-container">
+                            <a href="#contact" class="pricing-button">Get Started</a>
+                        </div>
+                    </div>
                     <ul class="pricing-features">
                         <li>160 hours per month</li>
                         <li>Complete strategic oversight</li>
@@ -799,7 +813,6 @@
                         <li>Custom implementation plans</li>
                         <li>Team training included</li>
                     </ul>
-                    <a href="#contact" class="pricing-button">Get Started</a>
                 </div>
             </div>
         </div>
