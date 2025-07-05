@@ -117,9 +117,58 @@
             position: relative;
             height: 300px;
             overflow: hidden;
+            border-radius: 30px;
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.1) 0%, 
+                rgba(147, 197, 253, 0.15) 25%,
+                rgba(219, 234, 254, 0.2) 50%,
+                rgba(99, 102, 241, 0.1) 75%,
+                rgba(129, 140, 248, 0.15) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 0 40px rgba(59, 130, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .partners-carousel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                rgba(59, 130, 246, 0.1),
+                rgba(147, 197, 253, 0.2),
+                rgba(219, 234, 254, 0.1),
+                rgba(99, 102, 241, 0.15),
+                rgba(129, 140, 248, 0.1),
+                rgba(59, 130, 246, 0.1)
+            );
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .partners-carousel::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .logos-row {
@@ -157,17 +206,32 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.9);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(248, 250, 252, 0.9) 100%);
             margin: 0 8px;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 500;
             color: #1e40af;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 4px 15px rgba(59, 130, 246, 0.15),
+                0 1px 3px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
             font-size: 0.8rem;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             padding: 0 10px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .logo-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(59, 130, 246, 0.25),
+                0 2px 6px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
         @keyframes scrollHorizontal {
