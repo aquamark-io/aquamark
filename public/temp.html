@@ -2,30 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Aquamark Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg">
+    <title>Fintech Consultant - Strategic Financial Technology Solutions</title>
     <style>
-        :root {
-            --primary-color: #467EFF;
-            --primary-light: #f8fafc;
-            --primary-dark: #1d4ed8;
-            --accent-color: #467EFF;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #1a1a1a;
-            --text-secondary: #64748b;
-            --bg-color: #ffffff;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius: 12px;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -33,642 +12,635 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-color);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a365d;
+            background: linear-gradient(135deg, #f7fafc 0%, #e2e8f0 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         /* Header */
-        .aqua-header {
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
-            background: var(--primary-light);
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 1rem 0;
         }
 
-        .aqua-logo {
-            height: 32px;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e40af;
         }
 
-        .aqua-nav {
+        .nav-links {
             display: flex;
-            align-items: center;
-        }
-
-        .aqua-nav a {
-            margin-left: 2rem;
-            text-decoration: none;
-            font-weight: 500;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .aqua-nav a:hover {
-            color: var(--accent-color);
-        }
-
-        .aqua-nav a.active {
-            color: var(--accent-color);
-        }
-
-        .aqua-nav a.active:after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            height: 3px;
-            width: 100%;
-            background: #467EFF;
-            border-radius: 3px;
-        }
-
-        /* Main Content */
-        .aqua-panel {
-            max-width: 1200px;
-            width: 95%;
-            margin: 2rem auto;
-            flex: 1;
-        }
-
-        h1.greeting {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* Cards */
-        .aqua-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        .card-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            background: #f8fafc;
-        }
-
-        .card-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        /* Two-column layout for profile section */
-        .profile-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            list-style: none;
             gap: 2rem;
         }
 
-        .profile-section {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1e40af;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            color: white;
             overflow: hidden;
         }
 
-        /* Subscription info styling */
-        .subscription-info {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .subscription-info h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .days-counter {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--success-color);
-            margin: 1rem 0;
-        }
-
-        .subscription-details {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .detail-item {
-            display: flex;
-            justify-content: space-between;
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
             align-items: center;
-            margin-bottom: 0.75rem;
-            padding: 0.5rem 0;
         }
 
-        .detail-label {
-            font-weight: 500;
-            color: var(--text-secondary);
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
-        .detail-value {
-            font-weight: 600;
-            color: var(--text-primary);
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
 
-        .plan-badge {
+        .cta-button {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--primary-color);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
-        /* Action Buttons */
-        .btn {
-            display: inline-flex;
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Partner Logos Carousel */
+        .partners-carousel {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .logos-container {
+            display: flex;
+            animation: scroll 20s linear infinite;
+            height: 100%;
+        }
+
+        .logo-item {
+            flex: 0 0 200px;
+            height: 100%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            height: 40px;
-            padding: 0 1.25rem;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 20px 10px;
+            border-radius: 15px;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-            gap: 0.5rem;
-            text-decoration: none;
+            color: #1e40af;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
         }
 
-        .btn-primary:hover {
-            background: #1d4ed8;
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: white;
         }
 
-        .btn-watermark {
-            background: #467EFF;
-            color: white;
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #1e40af;
         }
 
-        .btn-watermark:hover {
-            background: #95cbea;
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
-        .btn-black {
-            background: #000000;
-            color: #ffffff;
-        }
-
-        .btn-black:hover {
-            background: #333333;
-        }
-
-        /* Announcement Banner */
-        .announcement-banner {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
-            color: var(--text-primary);
-            border-radius: var(--radius);
+        .service-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             padding: 2rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: var(--shadow-sm);
-            position: relative;
-            overflow: hidden;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.1);
         }
 
-        .announcement-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #467EFF, #1d4ed8);
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
         }
 
-        .announcement-content {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex: 1;
-        }
-
-        .announcement-icon {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            width: 50px;
-            height: 50px;
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #467EFF;
-            font-size: 1.75rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .announcement-text h3 {
-            font-weight: 700;
+            margin: 0 auto 1rem;
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            letter-spacing: -0.025em;
+            color: white;
         }
 
-        .announcement-text p {
-            color: var(--text-secondary);
-            line-height: 1.5;
-            font-size: 1rem;
-        }
-
-        .announcement-text .highlight {
-            color: #10b981;
+        .service-card h3 {
+            font-size: 1.25rem;
             font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e40af;
         }
 
-        /* Action Buttons */
-        .action-buttons {
+        /* Reviews Section */
+        .reviews {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        }
+
+        .reviews-carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .reviews-container {
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            animation: scrollReviews 25s linear infinite;
+        }
+
+        .review-card {
+            flex: 0 0 400px;
+            background: white;
+            padding: 2rem;
+            margin: 0 1rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-stars {
+            color: #fbbf24;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #475569;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        @keyframes scrollReviews {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
             margin-bottom: 2rem;
         }
 
-        /* Footer */
-        .aqua-footer {
-            background: var(--primary-light);
-            padding: 1.5rem 2rem;
-            margin-top: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        .footer-logo {
-            height: 24px;
+        .pricing-card.featured .pricing-features li {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
         }
 
-        .footer-nav {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-nav a {
-            color: var(--text-primary);
+        .pricing-button {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        .footer-nav a:hover {
-            color: var(--accent-color);
+        .pricing-button:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
         }
 
-        .footer-copyright {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        .pricing-card.featured .pricing-button {
+            background: white;
+            color: #1e40af;
         }
 
-        /* Responsive adjustments */
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .profile-container {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
                 grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .announcement-banner {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-                padding: 1.5rem;
-            }
-
-            .announcement-text h3 {
-                font-size: 1.25rem;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .aqua-footer {
-                flex-direction: column;
-                gap: 1rem;
                 text-align: center;
             }
 
-            .footer-nav {
-                flex-direction: column;
-                gap: 0.5rem;
+            .hero-text h1 {
+                font-size: 2.5rem;
             }
 
-            .days-counter {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-item {
+                flex: 0 0 150px;
+            }
+
+            .review-card {
+                flex: 0 0 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .section-title {
                 font-size: 2rem;
             }
         }
     </style>
-
-    <!-- Outseta integration -->
-    <script>
-        var o_options = {
-            domain: 'aquamark.outseta.com',
-            load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-        };
-    </script>
-    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
-
 <body>
-    <header class="aqua-header">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="aqua-logo">
-        <nav class="aqua-nav">
-            <a href="/dashboard.html" class="active">Dashboard</a>
-            <a href="/watermark.html" id="watermarkLink">Watermark</a>
-            <a href="https://www.aquamark.io/login.html">Log Out</a>
+    <header>
+        <nav class="container">
+            <div class="logo">FinTech Consultant</div>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </nav>
     </header>
 
-    <main class="aqua-panel">
-        <h1 class="greeting">My Dashboard</h1>
-
-        <!-- Announcement Banner -->
-        <div class="announcement-banner">
-            <div class="announcement-content">
-                <div class="announcement-icon">
-                    ⚠
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Strategic Financial Technology Solutions</h1>
+                    <p>Empowering fintech companies to scale, optimize, and innovate with expert consulting in leadership, operations, and strategic partnerships.</p>
+                    <a href="#contact" class="cta-button">Get Started Today</a>
                 </div>
-                <div class="announcement-text">
-                    <h3>Join the Fight Against Backdooring</h3>
-                    <p>
-                        One stolen deal is costing brokers <span class="highlight">$4,000*</span> in commission. 
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <a href="https://aquamark.outseta.com/profile?tab=planChange#o-authenticated" class="btn" style="background-color: #10b981; color: white;">Subscribe</a>
-            <a href="/watermark.html" id="startWatermarkBtn" class="btn btn-watermark">Watermark</a>
-            <a href="https://www.aquamark.io/api" target="_blank" class="btn btn-black">API Docs</a>
-        </div>
-
-        <!-- Profile Section with Two Columns -->
-        <div class="profile-container">
-            <!-- Profile Card -->
-            <div class="profile-section">
-                <div class="card-header">
-                    <h2>My Profile</h2>
-                </div>
-                <div class="card-body">
-                    <div data-o-profile="1" data-mode="embed"></div>
-                </div>
-            </div>
-
-            <!-- Subscription Info Card -->
-            <div class="profile-section">
-                <div class="card-header">
-                    <h2>Subscription Status</h2>
-                </div>
-                <div class="subscription-info">
-                    <h3>You've been protecting your commissions for</h3>
-                    <div class="days-counter" id="daysCounter">-</div>
-                    <p>days</p>
-                    
-                    <div class="subscription-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Plan:</span>
-                            <span class="detail-value">
-                                <span class="plan-badge" id="planName">Loading...</span>
-                            </span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Started:</span>
-                            <span class="detail-value" id="startDate">Loading...</span>
-                        </div>
+                <div class="partners-carousel">
+                    <div class="logos-container">
+                        <div class="logo-item">Goldman Sachs</div>
+                        <div class="logo-item">JPMorgan Chase</div>
+                        <div class="logo-item">Stripe</div>
+                        <div class="logo-item">PayPal</div>
+                        <div class="logo-item">Square</div>
+                        <div class="logo-item">Robinhood</div>
+                        <div class="logo-item">Coinbase</div>
+                        <div class="logo-item">Plaid</div>
+                        <div class="logo-item">Goldman Sachs</div>
+                        <div class="logo-item">JPMorgan Chase</div>
+                        <div class="logo-item">Stripe</div>
+                        <div class="logo-item">PayPal</div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer class="aqua-footer">
-        <img src="/logo-full-black-blue.png" alt="Aquamark Logo" class="footer-logo">
-        <div class="footer-nav">
-            <a href="https://www.aquamark.io/terms.html">Terms of Service</a>
-            <a href="https://www.aquamark.io/privacy.html">Privacy Policy</a>
-            <a href="mailto:hey@aquamark.io">Contact Us</a>
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">👑</div>
+                    <h3>Leadership Training</h3>
+                    <p>Develop exceptional leaders who drive fintech innovation and team excellence.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Operational Efficiency</h3>
+                    <p>Streamline processes and optimize workflows for maximum productivity and growth.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Portfolio Management</h3>
+                    <p>Strategic investment guidance and portfolio optimization for fintech ventures.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3>Strategic Partnerships</h3>
+                    <p>Build valuable alliances that accelerate growth and market expansion.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛠️</div>
+                    <h3>Tech Stack Solutions</h3>
+                    <p>Architect robust, scalable technology infrastructure for fintech success.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
+                    <h3>Lending & Revenue Growth</h3>
+                    <p>Optimize lending strategies and unlock new revenue streams for sustainable growth.</p>
+                </div>
+            </div>
         </div>
-        <div class="footer-copyright">© 2025 Aquamark. All rights reserved.</div>
+    </section>
+
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Client Reviews</h2>
+            <div class="reviews-carousel">
+                <div class="reviews-container">
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Exceptional strategic guidance that transformed our fintech startup into a market leader. The operational efficiency improvements alone saved us 40% in costs."</div>
+                        <div class="review-author">Sarah Chen, CEO of PayFlow</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"The leadership training program was game-changing. Our team's productivity increased by 60% and employee satisfaction reached all-time highs."</div>
+                        <div class="review-author">Michael Rodriguez, CTO of LendTech</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Strategic partnerships identified through their network resulted in $2M in new revenue within 6 months. Incredible ROI on our investment."</div>
+                        <div class="review-author">Jennifer Park, Founder of CryptoVault</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Their tech stack recommendations modernized our entire platform. We now process 10x more transactions with better security and reliability."</div>
+                        <div class="review-author">David Thompson, VP of Engineering</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"Portfolio management expertise helped us optimize our investment strategy, resulting in 25% better returns year-over-year."</div>
+                        <div class="review-author">Lisa Wang, Investment Director</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Pricing Models</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Part-Time Consulting</h3>
+                    <div class="pricing-price">$5,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>20 hours per month</li>
+                        <li>Strategic guidance & planning</li>
+                        <li>Monthly progress reviews</li>
+                        <li>Email & phone support</li>
+                        <li>Access to partner network</li>
+                        <li>Quarterly strategy sessions</li>
+                    </ul>
+                    <a href="#contact" class="pricing-button">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Full-Time Consulting</h3>
+                    <div class="pricing-price">$15,000<span style="font-size: 1rem; font-weight: 400;">/month</span></div>
+                    <ul class="pricing-features">
+                        <li>160 hours per month</li>
+                        <li>Complete strategic oversight</li>
+                        <li>Weekly leadership meetings</li>
+                        <li>24/7 priority support</li>
+                        <li>Full partner network access</li>
+                        <li>Custom implementation plans</li>
+                        <li>Team training included</li>
+                    </ul>
+                    <a href="#contact" class="pricing-button">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>Email: hello@fintechconsultant.com</li>
+                        <li>Phone: (555) 123-4567</li>
+                        <li>Address: 123 Financial District, NY 10004</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Leadership Training</a></li>
+                        <li><a href="#services">Operational Efficiency</a></li>
+                        <li><a href="#services">Portfolio Management</a></li>
+                        <li><a href="#services">Strategic Partnerships</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#reviews">Client Reviews</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Medium</a></li>
+                        <li><a href="#">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FinTech Consultant. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Configuration - YOUR SECURE BACKEND
-        const API_BASE_URL = 'https://aquamark-backend.onrender.com';
-        
-        // Global variables
-        let currentUser = null;
-        let userToken = null;
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initializePage();
-            preserveUrlParameters();
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
 
-        // Initialize the page
-        async function initializePage() {
-            try {
-                // Get user from Outseta
-                currentUser = await Outseta.getUser();
-                if (!currentUser) {
-                    window.location.href = '/login.html';
-                    return;
-                }
-
-                console.log("User loaded:", currentUser.Email);
-
-                // Get auth token for API calls
-                userToken = await getAuthToken();
-                
-                // Load subscription info
-                await loadSubscriptionInfo();
-                
-                // Set up Outseta event listeners for plan changes
-                setupOutsetaEventListeners();
-                
-            } catch (error) {
-                console.error('Initialization error:', error);
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
             }
-        }
-
-        // Load subscription information
-        async function loadSubscriptionInfo() {
-            try {
-                // Get subscription data from Outseta
-                const subscriptions = await Outseta.getSubscriptions();
-                
-                if (subscriptions && subscriptions.length > 0) {
-                    const subscription = subscriptions[0];
-                    
-                    // Update plan name
-                    const planName = subscription.Plan ? subscription.Plan.Name : 'Free Trial';
-                    document.getElementById('planName').textContent = planName;
-                    
-                    // Update start date and calculate days
-                    if (subscription.StartDate) {
-                        const startDate = new Date(subscription.StartDate);
-                        const today = new Date();
-                        const diffTime = Math.abs(today - startDate);
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                        
-                        document.getElementById('daysCounter').textContent = diffDays;
-                        document.getElementById('startDate').textContent = startDate.toLocaleDateString();
-                    } else {
-                        document.getElementById('daysCounter').textContent = '0';
-                        document.getElementById('startDate').textContent = 'N/A';
-                    }
-                } else {
-                    // No active subscription
-                    document.getElementById('planName').textContent = 'Free Trial';
-                    document.getElementById('daysCounter').textContent = '0';
-                    document.getElementById('startDate').textContent = 'N/A';
-                }
-            } catch (error) {
-                console.error('Error loading subscription info:', error);
-                document.getElementById('planName').textContent = 'Free Trial';
-                document.getElementById('daysCounter').textContent = '0';
-                document.getElementById('startDate').textContent = 'N/A';
-            }
-        }
-
-        // Preserve URL parameters for navigation
-        function preserveUrlParameters() {
-            const urlParams = window.location.search;
-            const hashParams = window.location.hash;
-
-            const pathsToUpdate = ["/watermark.html", "/dashboard.html"];
-
-            document.querySelectorAll("a[href]").forEach(link => {
-                const href = link.getAttribute("href");
-                if (href && pathsToUpdate.some(path => href.startsWith(path))) {
-                    const cleanHref = href.split('?')[0].split('#')[0];
-                    link.href = cleanHref + urlParams + hashParams;
-                }
-            });
-        }
-
-        // Get auth token for API calls
-        async function getAuthToken() {
-            try {
-                const token = await Outseta.getAccessToken();
-                return token;
-            } catch (error) {
-                console.error('Error getting auth token:', error);
-                return null;
-            }
-        }
-
-        // Set up Outseta event listeners
-        function setupOutsetaEventListeners() {
-            // Listen for subscription updates
-            Outseta.on("subscription.update", async (params) => {
-                console.log("Subscription update event:", params);
-                await handlePlanChange(params);
-                await loadSubscriptionInfo(); // Refresh subscription info
-            });
-
-            // Listen for subscription reopens
-            Outseta.on("subscription.reopen", async (params) => {
-                console.log("Subscription reopen event:", params);
-                await handlePlanChange(params);
-                await loadSubscriptionInfo(); // Refresh subscription info
-            });
-        }
-
-        // Handle plan changes from Outseta events
-        async function handlePlanChange(params) {
-            try {
-                let planName = "Free Trial";
-
-                if (params) {
-                    if (params.Plan && params.Plan.Name) {
-                        planName = params.Plan.Name;
-                    } else if (params.plan && params.plan.name) {
-                        planName = params.plan.name;
-                    } else if (params.subscription) {
-                        if (params.subscription.Plan && params.subscription.Plan.Name) {
-                            planName = params.subscription.Plan.Name;
-                        } else if (params.subscription.plan && params.subscription.plan.name) {
-                            planName = params.subscription.plan.name;
-                        }
-                    }
-                }
-
-                console.log(`Plan change detected: ${planName}`);
-                
-                // Update plan via API
-                await updateUserPlan(planName);
-
-            } catch (error) {
-                console.error('Error handling plan change:', error);
-            }
-        }
-
-        // Update user plan via API
-        async function updateUserPlan(planName) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/update-plan`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: currentUser.Email,
-                        planName: planName,
-                        webhookSecret: 'aquamark-secure-protection-string-101813'
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Plan update failed');
-                }
-
-                console.log('Plan updated successfully');
-            } catch (error) {
-                console.error('Error updating plan:', error);
-            }
-        }
-
-        // Handle logout redirection
-        if (window.location.hash === '#o-logout-link') {
-            window.location.href = '/login.html';
-        }
+        });
     </script>
 </body>
 </html>
