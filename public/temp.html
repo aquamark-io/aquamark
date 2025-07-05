@@ -115,34 +115,62 @@
         /* Partner Logos Carousel */
         .partners-carousel {
             position: relative;
-            height: 200px;
+            height: 300px;
             overflow: hidden;
             border-radius: 20px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
         }
 
-        .logos-container {
+        .logos-row {
             display: flex;
-            animation: scroll 20s linear infinite;
-            height: 100%;
+            position: absolute;
+            animation: scrollHorizontal 40s linear infinite;
+        }
+
+        .logos-row:nth-child(1) {
+            top: 10px;
+            animation-direction: normal;
+        }
+
+        .logos-row:nth-child(2) {
+            top: 80px;
+            animation-direction: reverse;
+            animation-duration: 35s;
+        }
+
+        .logos-row:nth-child(3) {
+            top: 150px;
+            animation-direction: normal;
+            animation-duration: 45s;
+        }
+
+        .logos-row:nth-child(4) {
+            top: 220px;
+            animation-direction: reverse;
+            animation-duration: 38s;
         }
 
         .logo-item {
-            flex: 0 0 200px;
-            height: 100%;
+            flex: 0 0 120px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(255, 255, 255, 0.9);
-            margin: 20px 10px;
-            border-radius: 15px;
-            font-weight: 600;
+            margin: 0 8px;
+            border-radius: 8px;
+            font-weight: 500;
             color: #1e40af;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding: 0 10px;
         }
 
-        @keyframes scroll {
+        @keyframes scrollHorizontal {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
@@ -400,11 +428,11 @@
             }
 
             .logo-item {
-                flex: 0 0 150px;
+                flex: 0 0 80px;
             }
 
             .review-card {
-                flex: 0 0 300px;
+                flex: 0 0 280px;
             }
         }
 
@@ -445,19 +473,61 @@
                     <a href="#contact" class="cta-button">Get Started Today</a>
                 </div>
                 <div class="partners-carousel">
-                    <div class="logos-container">
-                        <div class="logo-item">Goldman Sachs</div>
-                        <div class="logo-item">JPMorgan Chase</div>
+                    <div class="logos-row">
                         <div class="logo-item">Stripe</div>
                         <div class="logo-item">PayPal</div>
                         <div class="logo-item">Square</div>
-                        <div class="logo-item">Robinhood</div>
                         <div class="logo-item">Coinbase</div>
+                        <div class="logo-item">Robinhood</div>
                         <div class="logo-item">Plaid</div>
-                        <div class="logo-item">Goldman Sachs</div>
-                        <div class="logo-item">JPMorgan Chase</div>
+                        <div class="logo-item">Affirm</div>
+                        <div class="logo-item">Chime</div>
                         <div class="logo-item">Stripe</div>
                         <div class="logo-item">PayPal</div>
+                        <div class="logo-item">Square</div>
+                        <div class="logo-item">Coinbase</div>
+                    </div>
+                    <div class="logos-row">
+                        <div class="logo-item">Goldman Sachs</div>
+                        <div class="logo-item">JPMorgan</div>
+                        <div class="logo-item">Visa</div>
+                        <div class="logo-item">Mastercard</div>
+                        <div class="logo-item">American Express</div>
+                        <div class="logo-item">Klarna</div>
+                        <div class="logo-item">SoFi</div>
+                        <div class="logo-item">Credit Karma</div>
+                        <div class="logo-item">Goldman Sachs</div>
+                        <div class="logo-item">JPMorgan</div>
+                        <div class="logo-item">Visa</div>
+                        <div class="logo-item">Mastercard</div>
+                    </div>
+                    <div class="logos-row">
+                        <div class="logo-item">Zelle</div>
+                        <div class="logo-item">Venmo</div>
+                        <div class="logo-item">Cash App</div>
+                        <div class="logo-item">Revolut</div>
+                        <div class="logo-item">N26</div>
+                        <div class="logo-item">Monzo</div>
+                        <div class="logo-item">Starling Bank</div>
+                        <div class="logo-item">Wise</div>
+                        <div class="logo-item">Zelle</div>
+                        <div class="logo-item">Venmo</div>
+                        <div class="logo-item">Cash App</div>
+                        <div class="logo-item">Revolut</div>
+                    </div>
+                    <div class="logos-row">
+                        <div class="logo-item">Brex</div>
+                        <div class="logo-item">Ramp</div>
+                        <div class="logo-item">Mercury</div>
+                        <div class="logo-item">Navan</div>
+                        <div class="logo-item">Deel</div>
+                        <div class="logo-item">Ripple</div>
+                        <div class="logo-item">Chainlink</div>
+                        <div class="logo-item">Polygon</div>
+                        <div class="logo-item">Avalanche</div>
+                        <div class="logo-item">Brex</div>
+                        <div class="logo-item">Ramp</div>
+                        <div class="logo-item">Mercury</div>
                     </div>
                 </div>
             </div>
