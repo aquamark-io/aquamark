@@ -98,7 +98,6 @@
             color: #ffffff !important;
         }
 
-
         /* Mobile menu */
         .mobile-menu-btn {
             display: none;
@@ -284,9 +283,9 @@
 
         /* API Section */
         .api-section {
-    padding: 60px 0 10px;
-    background: #ffffff;
-}
+            padding: 60px 0 10px;
+            background: #ffffff;
+        }
 
         .api-section h2 {
             font-size: 3rem;
@@ -619,7 +618,7 @@
             }
 
             .hero {
-                padding: 120px 0 80px;
+                padding: 120px 0 60px;
             }
 
             .hero h1 {
@@ -632,19 +631,53 @@
             }
 
             .green-banner {
-                font-size: 1.1rem;
-                padding: 1.2rem 1.5rem;
+                font-size: 1.2rem;
+                padding: 1.3rem 1.8rem;
             }
 
-            .api-section,
-            .pricing {
-                padding: 80px 0;
+            /* Free test section mobile adjustments */
+            .free-test-cta {
+                padding: 1rem 0 2rem 0;
+            }
+
+            .free-test-card {
+                padding: 2rem;
+            }
+
+            .free-test-card h3 {
+                font-size: 1.8rem;
+            }
+
+            .free-test-card p {
+                font-size: 1.2rem;
+            }
+
+            .test-params {
+                padding: 1.2rem;
+                margin: 1.5rem auto;
+            }
+
+            .test-params h4 {
+                font-size: 1rem;
+            }
+
+            .test-params div {
+                font-size: 0.85rem;
+            }
+
+            /* Reduce spacing between sections */
+            .api-section {
+                padding: 30px 0 10px;
             }
 
             .api-section h2,
             .pricing h2 {
                 font-size: 2.2rem;
                 line-height: 1.2;
+            }
+
+            .pricing {
+                padding: 60px 0;
             }
 
             .pricing-grid {
@@ -695,6 +728,10 @@
                 font-size: 0.8rem;
             }
 
+            .hero {
+                padding: 100px 0 40px;
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
@@ -704,8 +741,44 @@
             }
 
             .green-banner {
-                font-size: 1rem;
-                padding: 1rem 1.2rem;
+                font-size: 1.1rem;
+                padding: 1.2rem 1.5rem;
+            }
+
+            /* Free test adjustments for small screens */
+            .free-test-cta {
+                padding: 0.5rem 0 1.5rem 0;
+            }
+
+            .free-test-card {
+                padding: 1.5rem;
+            }
+
+            .free-test-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .free-test-card p {
+                font-size: 1.1rem;
+            }
+
+            .test-params {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+
+            .test-params h4 {
+                font-size: 0.95rem;
+            }
+
+            .test-params div {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            /* Further reduce gap to API section */
+            .api-section {
+                padding: 20px 0 10px;
             }
 
             .api-section h2,
@@ -728,10 +801,7 @@
                 transform: none;
             }
         }
-    
-
-
-</style>
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -744,7 +814,8 @@
                 <li><a href="#free-test">Free Test</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="https://www.aquamark.io" class="back-home-btn">Home</a></li>
-            </ul></nav>
+            </ul>
+        </nav>
     </header>
 
     <!-- Hero Section -->
@@ -761,17 +832,16 @@
         </div>
     </section>
 
-
     <!-- API Section -->
     <section class="api-section" id="api">
-        
+        <div class="container">
             <div class="api-content">
                 <div class="api-details">
-<h3 style="font-size: 1.9rem;">Simple API Integration</h3>
-<p style="margin-bottom: 2rem; color: #6b7280; line-height: 1.6;">
-  Setup takes minutes.<br>
-  Simply intercept the PDF download event, send files to our API endpoint, and return the watermarked version to the user.
-</p>
+                    <h3 style="font-size: 1.9rem;">Simple API Integration</h3>
+                    <p style="margin-bottom: 2rem; color: #6b7280; line-height: 1.6;">
+                        Setup takes minutes.<br>
+                        Simply intercept the PDF download event, send files to our API endpoint, and return the watermarked version to the user.
+                    </p>
                     
                     <h3>Endpoint</h3>
                     <div class="endpoint">POST https://aquamark-lenders.onrender.com/watermark</div>
@@ -791,42 +861,40 @@
                             </tr>
                         </thead>
                         <tbody>
-    <tr>
-        <td><code>file</code></td>
-        <td>File</td>
-        <td class="required">Required</td>
-        <td>The original PDF to protect</td>
-    </tr>
-    <tr>
-        <td><code>name</code></td>
-        <td>String</td>
-        <td class="required">Required</td>
-        <td>Person signed in and initiating download</td>
-    </tr>
-    <tr>
-        <td><code>company</code></td>
-        <td>String</td>
-        <td class="required">Required</td>
-        <td>Your company name</td>
-    </tr>
-    <tr>
-        <td><code>user_email</code></td>
-        <td>String</td>
-        <td class="required">Required</td>
-        <td>Aquamark account email</td>
-    </tr>
-</tbody>
-
+                            <tr>
+                                <td><code>file</code></td>
+                                <td>File</td>
+                                <td class="required">Required</td>
+                                <td>The original PDF to protect</td>
+                            </tr>
+                            <tr>
+                                <td><code>name</code></td>
+                                <td>String</td>
+                                <td class="required">Required</td>
+                                <td>Person signed in and initiating download</td>
+                            </tr>
+                            <tr>
+                                <td><code>company</code></td>
+                                <td>String</td>
+                                <td class="required">Required</td>
+                                <td>Your company name</td>
+                            </tr>
+                            <tr>
+                                <td><code>user_email</code></td>
+                                <td>String</td>
+                                <td class="required">Required</td>
+                                <td>Aquamark account email</td>
+                            </tr>
+                        </tbody>
                     </table>
                     
-                    
-<h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Response</h3>
+                    <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Response</h3>
                     <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; font-size: 0.875rem;">
                         <li>Returns a <strong>200 OK</strong> with the protected PDF.</li>
                         <li>Treat it as a file download.</li>
                     </ul>
                     
-<h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Common Implementations</h3>
+                    <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Common Implementations</h3>
                     <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6; font-size: 0.875rem;">
                         <li><strong>Salesforce</strong> - override the download button or embed a Visualforce page to return the protected file.</li>
                         <li><strong>Custom or proprietary CRMs</strong> - intercept the click/download event and POST the file via the API.</li>
@@ -871,7 +939,7 @@
                         <li>API access</li>
                     </ul>
                     
-<a href="https://buy.stripe.com/fZu7sM1w22Xx0vz2GY8ww01" class="cta-button">Subscribe</a>
+                    <a href="https://buy.stripe.com/fZu7sM1w22Xx0vz2GY8ww01" class="cta-button">Subscribe</a>
                 </div>
                 
                 <div class="pricing-card featured">
@@ -886,7 +954,7 @@
                         <li>API access</li>
                     </ul>
                     
-<a href="https://buy.stripe.com/bJe00kgqW2Xx3HLftK8ww02" class="cta-button">Subscribe</a>
+                    <a href="https://buy.stripe.com/bJe00kgqW2Xx3HLftK8ww02" class="cta-button">Subscribe</a>
                 </div>
                 
                 <div class="pricing-card">
@@ -906,11 +974,11 @@
             </div>
             
             <div class="custom-quote">
-    <h3>Processing more than 25,000 submissions?</h3>
-    <p>
-        Contact us for unlimited pricing at <a href="mailto:info@aquamark.io" style="color: #2563eb; text-decoration: underline;">info@aquamark.io</a>
-    </p>
-</div>
+                <h3>Processing more than 25,000 submissions?</h3>
+                <p>
+                    Contact us for unlimited pricing at <a href="mailto:info@aquamark.io" style="color: #2563eb; text-decoration: underline;">info@aquamark.io</a>
+                </p>
+            </div>
         </div>
     </section>
 
@@ -954,7 +1022,7 @@
     </div>
 
     <script>
-        // Mobile menu toggle// Smooth scrolling for navigation links
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
