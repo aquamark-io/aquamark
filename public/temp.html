@@ -866,107 +866,6 @@
                 </div>
             </div>
 
-            <!-- Examples -->
-            <div class="section">
-                <h2 class="section-title">Postman Example</h2>
-                
-                <div class="card">
-                    <h3 style="margin-bottom: 1rem; color: #111827; font-size: 1rem; font-weight: 600;">Postman Setup</h3>
-                    <div class="code-block">POST {{endpoint}}
-
-Headers:
-Authorization: Bearer YOUR_API_KEY
-Content-Type: multipart/form-data
-
-Body (form-data):
-user_email: john@example.com
-file: [Select File] statement1.pdf
-state: CA
-salesperson: Jack Dawson
-processor: Rose DeWitt
-lender: OnDeck Capital
-
-Endpoints:
-Retail: https://aquamark-decrypt.onrender.com/watermark
-CRM: https://aquamark-crm.onrender.com/watermark
-OCR: https://aquamark-ocr.onrender.com/watermark</div>
-                </div>
-            </div>
-
-            <!-- Response -->
-            <div class="section">
-                <h2 class="section-title">Response</h2>
-                <div class="card">
-                    <p>All endpoints return a protected PDF file with optional compliance header:</p>
-                    <div class="code-block">Content-Type: application/pdf
-X-State-Disclaimer: CFL license and Disclosure required.</div>
-                </div>
-            </div>
-
-            <!-- Workflow -->
-            <div class="section">
-                <h2 class="section-title">Workflow</h2>
-                <div class="card">
-                    <ol class="steps">
-                        <li>Choose the appropriate endpoint for your use case</li>
-                        <li>Send a POST request with your PDF and metadata</li>
-                        <li>Receive a protected PDF + optional state disclaimer header</li>
-                        <li>Save the PDF and push state disclaimers to your system</li>
-                    </ol>
-                </div>
-            </div>
-
-            <!-- Notes -->
-            <div class="section">
-                <h2 class="section-title">Important Notes</h2>
-                <div class="card">
-                    <ul class="feature-list">
-                        <li>PDF only. One file per request across all endpoints</li>
-                        <li>Retail users must upload logo in portal before using the API</li>
-                        <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="mailto:info@aquamark.io">info@aquamark.io</a>
-                <a href="tel:+14155001117">(415) 500-1117</a>
-                <a href="/privacy.html">Privacy</a>
-                <a href="/terms.html">Terms</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Footer Bottom - Full Width -->
-    <div class="footer-bottom">
-        <p>&copy; 2025 Aquamark. All rights reserved.</p>
-    </div>
-
-    <script>
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.style.background = 'rgba(255, 255, 255, 0.98)';
-                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-                } else {
-                    header.style.background = 'rgba(255, 255, 255, 0.95)';
-                    header.style.boxShadow = 'none';
-                }
-            }
-        });
-    </script>
-</body>
-</html>>
-            </div>
-
             <!-- Parameters -->
             <div class="section">
                 <h2 class="section-title">Parameters</h2>
@@ -1069,4 +968,105 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
                             <div class="param-description">Users submit a separate version of the file for each lender, then delete them after submission to reduce storage costs. Most set up a simple automated deletion—using tools like timed scripts, CRM schedulers (e.g. Apex Scheduler in Salesforce), or external automation platforms like Zapier or Make.</div>
                         </div>
                     </div>
-                </div
+                </div>
+            </div>
+
+            <!-- Examples -->
+            <div class="section">
+                <h2 class="section-title">Postman Example</h2>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 1rem; color: #111827; font-size: 1rem; font-weight: 600;">Postman Setup</h3>
+                    <div class="code-block">POST {{endpoint}}
+
+Headers:
+Authorization: Bearer YOUR_API_KEY
+Content-Type: multipart/form-data
+
+Body (form-data):
+user_email: john@example.com
+file: [Select File] statement1.pdf
+state: CA
+salesperson: Jack Dawson
+processor: Rose DeWitt
+lender: OnDeck Capital
+
+Endpoints:
+Retail: https://aquamark-decrypt.onrender.com/watermark
+CRM: https://aquamark-crm.onrender.com/watermark
+OCR: https://aquamark-ocr.onrender.com/watermark</div>
+                </div>
+            </div>
+
+            <!-- Response -->
+            <div class="section">
+                <h2 class="section-title">Response</h2>
+                <div class="card">
+                    <p>All endpoints return a protected PDF file with optional compliance header:</p>
+                    <div class="code-block">Content-Type: application/pdf
+X-State-Disclaimer: CFL license and Disclosure required.</div>
+                </div>
+            </div>
+
+            <!-- Workflow -->
+            <div class="section">
+                <h2 class="section-title">Workflow</h2>
+                <div class="card">
+                    <ol class="steps">
+                        <li>Choose the appropriate endpoint for your use case</li>
+                        <li>Send a POST request with your PDF and metadata</li>
+                        <li>Receive a protected PDF + optional state disclaimer header</li>
+                        <li>Save the PDF and push state disclaimers to your system</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="section">
+                <h2 class="section-title">Important Notes</h2>
+                <div class="card">
+                    <ul class="feature-list">
+                        <li>PDF only. One file per request across all endpoints</li>
+                        <li>Retail users must upload logo in portal before using the API</li>
+                        <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="mailto:info@aquamark.io">info@aquamark.io</a>
+                <a href="tel:+14155001117">(415) 500-1117</a>
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer Bottom - Full Width -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
