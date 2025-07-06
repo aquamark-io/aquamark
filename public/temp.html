@@ -33,7 +33,7 @@
             width: 100%;
         }
 
-        /* Header */
+        /* Header - Matching home page style */
         header {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
@@ -58,14 +58,28 @@
             width: auto;
         }
 
-        .nav-buttons {
+        .nav-links {
             display: flex;
-            gap: 1rem;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
         }
 
-        .nav-home {
-            background: #111827;
-            color: #ffffff;
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #111827;
+        }
+
+        .get-started-btn {
+            background: #111827 !important;
+            color: #ffffff !important;
             padding: 0.5rem 1rem;
             border: none;
             border-radius: 8px;
@@ -73,35 +87,62 @@
             font-size: 0.9rem;
             transition: all 0.2s ease;
             text-decoration: none;
-            display: inline-block;
-            white-space: nowrap;
         }
 
-        .nav-home:hover {
-            background: #1f2937;
+        .get-started-btn:hover {
+            background: #1f2937 !important;
             transform: translateY(-1px);
         }
 
-        .nav-lender {
-            background-color: #008000;
-            color: white;
+        .lender-btn {
+            background: #008000 !important;
+            color: #ffffff !important;
             padding: 0.5rem 1rem;
+            border: none;
             border-radius: 8px;
+            font-weight: 400;
             font-size: 0.9rem;
+            transition: all 0.2s ease;
             text-decoration: none;
-            white-space: nowrap;
+        }
+
+        .lender-btn:hover {
+            background: #006600 !important;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 3px;
+        }
+
+        .mobile-menu-btn span {
+            width: 20px;
+            height: 2px;
+            background: #6b7280;
             transition: all 0.2s ease;
         }
 
-        .nav-lender:hover {
-            background-color: #006600;
-            transform: translateY(-1px);
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
         }
 
-        /* Hero Section */
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* Hero Section - Matching home page style */
         .hero {
             background: #ffffff;
-            padding: 140px 0 80px;
+            padding: 140px 0 120px;
             text-align: center;
         }
 
@@ -134,146 +175,139 @@
         .hero h1 {
             font-size: 3.5rem;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1.1;
             color: #111827;
             letter-spacing: -0.02em;
         }
 
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: #6b7280;
+        .hero p {
+            font-size: 1.6rem;
             margin-bottom: 3rem;
-            font-weight: 400;
+            color: #6b7280;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 3rem;
         }
 
-        /* Main Content */
+        /* Main Content - Matching home page style */
         .main-content {
-            padding: 80px 0;
+            padding: 120px 0;
             background: #fafafa;
         }
 
-        .main-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
         .section {
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
         }
 
         .section-title {
-            font-size: 1.75rem;
+            font-size: 3rem;
             font-weight: 600;
             color: #111827;
             margin-bottom: 1rem;
             letter-spacing: -0.02em;
+            text-align: center;
         }
 
         .section-subtitle {
             color: #6b7280;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-size: 1.3rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
         }
 
-        /* Quick Setup Banner */
+        /* Quick Setup Banner - More prominent */
         .quick-setup-banner {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1.5rem 3rem;
             border-radius: 12px;
-            margin: 1rem 0 2rem 0;
+            margin: 2rem auto 3rem;
             text-align: center;
-            font-size: 1.1rem;
-            font-weight: 500;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+            font-size: 1.3rem;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
+            max-width: 600px;
         }
 
-        /* Cards */
-        .card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-        }
-
-        /* Authentication Section */
+        /* Authentication Section - Card style like home page */
         .auth-section {
             background: #ffffff;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 3rem;
             margin-bottom: 3rem;
             border: 1px solid #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .auth-steps {
             display: grid;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .auth-step {
             display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1rem;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem 2rem;
             background: #f9fafb;
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px solid #e5e7eb;
         }
 
         .step-number {
             background: #111827;
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             flex-shrink: 0;
         }
 
         .step-content h4 {
-            margin: 0 0 0.25rem 0;
+            margin: 0 0 0.5rem 0;
             color: #111827;
-            font-size: 0.875rem;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
         .step-content p {
             margin: 0;
             color: #6b7280;
-            font-size: 0.875rem;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
-        /* Endpoint Cards */
+        /* Endpoint Cards - Home page style */
         .endpoint-grid {
             display: grid;
-            gap: 1.5rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem auto;
+            max-width: 1200px;
         }
 
         .endpoint-card {
             background: white;
             border: 1px solid #f3f4f6;
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2.5rem;
             transition: all 0.2s ease;
+            text-align: center;
         }
 
         .endpoint-card:hover {
@@ -281,20 +315,15 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         }
 
-        .endpoint-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
         .endpoint-badge {
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 1rem;
         }
 
         .endpoint-badge.retail {
@@ -310,53 +339,72 @@
         }
 
         .endpoint-title {
-            font-size: 1rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #111827;
-            margin: 0;
+            margin-bottom: 1rem;
         }
 
         .endpoint-url {
             font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
+            font-size: 0.8rem;
             color: #6b7280;
             background: #f9fafb;
-            padding: 0.5rem;
+            padding: 0.75rem;
             border-radius: 8px;
-            margin: 0.5rem 0;
+            margin: 1rem 0;
             word-break: break-all;
         }
 
         .endpoint-description {
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: #6b7280;
-            margin: 0;
+            line-height: 1.6;
         }
 
-        /* Parameters */
+        /* Required Parameters - Prominent */
+        .required-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem auto;
+            border: 1px solid #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            max-width: 800px;
+        }
+
+        .required-section .section-header {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Parameter Cards */
         .param-grid {
             display: grid;
-            gap: 0.75rem;
-            margin: 1.5rem 0;
+            gap: 1rem;
+            margin: 2rem 0;
         }
 
         .param-card {
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
-            padding: 1rem;
+            padding: 1.5rem;
         }
 
         .param-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .param-name {
             font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
+            font-size: 1rem;
             font-weight: 600;
             color: #111827;
         }
@@ -371,14 +419,14 @@
             font-size: 0.75rem;
             color: #6b7280;
             background: #f9fafb;
-            padding: 0.125rem 0.375rem;
+            padding: 0.25rem 0.5rem;
             border-radius: 4px;
         }
 
         .status {
             display: inline-flex;
             align-items: center;
-            padding: 0.125rem 0.5rem;
+            padding: 0.25rem 0.75rem;
             border-radius: 4px;
             font-size: 0.75rem;
             font-weight: 500;
@@ -391,99 +439,151 @@
             color: #dc2626;
         }
 
-        .status-recommended {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-        }
-
-        .status-optional {
-            background: rgba(253, 224, 71, 0.2);
-            color: #ca8a04;
-        }
-
         .param-description {
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: #6b7280;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        /* Optional sections - De-emphasized */
+        .optional-section {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            border: 1px solid #f3f4f6;
+        }
+
+        .optional-section:hover {
+            opacity: 1;
+        }
+
+        .optional-section .section-header {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+            text-align: left;
+        }
+
+        .optional-section .section-header-note {
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        .optional-section .param-card {
+            border-color: #f3f4f6;
+            background: #ffffff;
+        }
+
+        .status-optional, .status-recommended {
+            background: rgba(156, 163, 175, 0.1);
+            color: #9ca3af;
+        }
+
+        /* Examples and other sections */
+        .card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            transition: all 0.2s ease;
+            max-width: 1000px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin-bottom: 1.5rem;
+            color: #111827;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
         /* Code Blocks */
         .code-block {
-            background: white;
-            color: #6b7280;
-            padding: 1.5rem;
+            background: #111827;
+            color: #e5e7eb;
+            padding: 2rem;
             border-radius: 8px;
             overflow-x: auto;
             font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             line-height: 1.6;
             margin: 1rem 0;
-            position: relative;
             white-space: pre-wrap;
             word-wrap: break-word;
-            border: 1px solid #e5e7eb;
         }
 
         .inline-code {
             background: #f9fafb;
             color: #111827;
-            padding: 0.125rem 0.375rem;
+            padding: 0.25rem 0.5rem;
             border-radius: 4px;
             font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             font-weight: 500;
         }
 
-        /* QR Section */
+        /* QR Section - De-emphasized */
         .qr-section {
             text-align: center;
-            margin: 2rem 0;
-            padding: 2rem;
-            background: #f9fafb;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
+            margin: 1rem 0;
+            padding: 1.5rem;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #f3f4f6;
         }
 
         .qr-preview {
             display: inline-block;
-            padding: 1rem;
-            background: white;
+            padding: 0.75rem;
+            background: #f9fafb;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .qr-img {
-            max-width: 120px;
+            max-width: 80px;
             height: auto;
             border-radius: 4px;
+            opacity: 0.7;
         }
 
         .qr-caption {
-            font-size: 0.875rem;
-            color: #6b7280;
+            font-size: 0.8rem;
+            color: #9ca3af;
             font-style: italic;
         }
 
-        /* Info Boxes */
+        /* Info Boxes - De-emphasized for optional sections */
         .info-box {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            border: 1px solid #f3f4f6;
             border-radius: 8px;
-            padding: 1rem;
-            margin: 1.5rem 0;
+            padding: 1.25rem;
+            margin: 1rem 0;
         }
 
         .info-box-title {
-            font-weight: 600;
-            color: #111827;
+            font-weight: 500;
+            color: #9ca3af;
             margin-bottom: 0.5rem;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
         }
 
         .info-box p {
             font-size: 0.875rem;
-            color: #6b7280;
+            color: #9ca3af;
             margin: 0 0 0.5rem 0;
             line-height: 1.5;
         }
@@ -501,9 +601,9 @@
         .feature-list li {
             display: flex;
             align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.875rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
             color: #6b7280;
         }
 
@@ -511,13 +611,13 @@
             content: '✓';
             background: #10b981;
             color: white;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.625rem;
+            font-size: 0.75rem;
             font-weight: bold;
             flex-shrink: 0;
             margin-top: 0.125rem;
@@ -533,9 +633,9 @@
         .steps li {
             counter-increment: step;
             position: relative;
-            padding-left: 2.5rem;
+            padding-left: 3rem;
             margin-bottom: 1.5rem;
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: #6b7280;
         }
 
@@ -546,51 +646,191 @@
             top: 0;
             background: #111827;
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
         }
 
-        /* Section Headers */
-        .section-header {
-            margin: 2rem 0 1rem;
+        /* Footer - Matching home page */
+        footer {
+            background: #ffffff;
+            color: #6b7280;
+            padding: 40px 0 10px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
             color: #111827;
-            font-size: 1.1rem;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        /* Updated styles for de-emphasizing optional sections */
-        .section-header-optional {
-            margin: 2rem 0 1rem;
+        .footer-section p, .footer-section a {
+            color: #6b7280;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: #111827;
+        }
+
+        .footer-bottom {
+            background: #111827;
             color: #9ca3af;
-            font-size: 1rem;
-            font-weight: 500;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+            overflow: hidden;
         }
 
-        .section-header-optional-note {
-            font-weight: 400;
-            font-size: 0.875rem;
-            color: #9ca3af;
-            margin-left: 0.5rem;
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem;
+                border-top: 1px solid #f3f4f6;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .get-started-btn,
+            .lender-btn {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+                display: block;
+                box-sizing: border-box;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .main-content {
+                padding: 80px 0;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+
+            .endpoint-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .auth-section,
+            .required-section,
+            .card {
+                padding: 2rem;
+            }
+
+            .auth-step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .param-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
         }
 
-        /* Optional sections styling */
-        .optional-section {
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
-        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
 
-        .optional-section:hover {
-            opacity: 1;
-        }
+            .hero h1 {
+                font-size: 2rem;
+            }
 
-        .optional-section .param-card {
-            border-color: #f3f4f6;
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .quick-setup-banner {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         /* Links */
@@ -608,167 +848,6 @@
             font-weight: 600;
             color: #111827;
         }
-
-        /* Footer */
-        footer {
-            background: #ffffff;
-            color: #6b7280;
-            padding: 40px 0 10px;
-            border-top: 1px solid #f3f4f6;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #6b7280;
-            text-decoration: none;
-            transition: color 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .footer-links a:hover {
-            color: #111827;
-        }
-
-        .footer-bottom {
-            background: #111827;
-            color: #9ca3af;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-            font-size: 0.9rem;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 120px 0 60px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .main-content {
-                padding: 60px 0;
-            }
-
-            .main-container {
-                padding: 0 1rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .endpoint-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .param-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            /* Mobile navigation fixes */
-            .nav-buttons {
-                flex-direction: column;
-                gap: 0.5rem;
-                align-items: flex-end;
-            }
-
-            .nav-home, .nav-lender {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .quick-setup-banner {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 580px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            /* Stack navigation vertically on very small screens */
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: center;
-            }
-
-            .nav-buttons {
-                flex-direction: row;
-                justify-content: center;
-                gap: 0.75rem;
-            }
-
-            .nav-home, .nav-lender {
-                font-size: 0.75rem;
-                padding: 0.35rem 0.7rem;
-            }
-
-            .hero {
-                padding: 160px 0 60px; /* Extra padding for stacked nav */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .nav-home, .nav-lender {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.6rem;
-            }
-
-            .quick-setup-banner {
-                font-size: 0.9rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -778,9 +857,14 @@
             <a href="/" class="logo">
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
-            <div class="nav-buttons">
-                <a class="nav-home" href="/">Home</a>
-                <a href="https://www.aquamark.io/lenders" class="nav-lender">Lender API</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="https://www.aquamark.io/lenders" class="lender-btn">Lender API</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
     </header>
@@ -794,14 +878,14 @@
                     API Documentation
                 </div>
                 <h1>Simple Open API</h1>
-                <p class="hero-subtitle">Your System, Your Logic - How We Plug In</p>
+                <p>Your System, Your Logic - How We Plug In</p>
             </div>
         </div>
     </section>
 
     <!-- Main Content -->
     <section class="main-content">
-        <div class="main-container">
+        <div class="container">
             
             <!-- Authentication -->
             <div class="section">
@@ -838,28 +922,22 @@
                 
                 <div class="endpoint-grid">
                     <div class="endpoint-card">
-                        <div class="endpoint-header">
-                            <span class="endpoint-badge retail">Retail</span>
-                            <h3 class="endpoint-title">Direct Customer Access</h3>
-                        </div>
+                        <span class="endpoint-badge retail">Retail</span>
+                        <h3 class="endpoint-title">Direct Customer Access</h3>
                         <div class="endpoint-url">POST https://aquamark-decrypt.onrender.com/watermark</div>
                         <p class="endpoint-description">For broker shops accessing Aquamark directly</p>
                     </div>
 
                     <div class="endpoint-card">
-                        <div class="endpoint-header">
-                            <span class="endpoint-badge crm">CRM</span>
-                            <h3 class="endpoint-title">CRM Integration</h3>
-                        </div>
+                        <span class="endpoint-badge crm">CRM</span>
+                        <h3 class="endpoint-title">CRM Integration</h3>
                         <div class="endpoint-url">POST https://aquamark-crm.onrender.com/watermark</div>
                         <p class="endpoint-description">For CRM platforms like Salesforce, Zoho, Close</p>
                     </div>
 
                     <div class="endpoint-card">
-                        <div class="endpoint-header">
-                            <span class="endpoint-badge ocr">OCR</span>
-                            <h3 class="endpoint-title">OCR Integration</h3>
-                        </div>
+                        <span class="endpoint-badge ocr">OCR</span>
+                        <h3 class="endpoint-title">OCR Integration</h3>
                         <div class="endpoint-url">POST https://aquamark-ocr.onrender.com/watermark</div>
                         <p class="endpoint-description">For document processing companies providing OCR services</p>
                     </div>
@@ -875,40 +953,42 @@
                     ⚡ Watermark setup takes less than 5 minutes
                 </div>
 
-                <h3 class="section-header">Required <span class="section-header-optional-note">(Watermarking Only)</span></h3>
-                <div class="param-grid">
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">user_email</span>
-                            <div class="param-meta">
-                                <span class="param-type">string</span>
-                                <span class="status status-required">Required</span>
+                <div class="required-section">
+                    <h3 class="section-header">Required (Watermarking Only)</h3>
+                    <div class="param-grid">
+                        <div class="param-card">
+                            <div class="param-header">
+                                <span class="param-name">user_email</span>
+                                <div class="param-meta">
+                                    <span class="param-type">string</span>
+                                    <span class="status status-required">Required</span>
+                                </div>
                             </div>
+                            <div class="param-description">Email address - your Aquamark account email (retail) or end user's email (wholesale)</div>
                         </div>
-                        <div class="param-description">Email address - your Aquamark account email (retail) or end user's email (wholesale)</div>
-                    </div>
-                    
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">file</span>
-                            <div class="param-meta">
-                                <span class="param-type">file</span>
-                                <span class="status status-required">Required</span>
+                        
+                        <div class="param-card">
+                            <div class="param-header">
+                                <span class="param-name">file</span>
+                                <div class="param-meta">
+                                    <span class="param-type">file</span>
+                                    <span class="status status-required">Required</span>
+                                </div>
                             </div>
+                            <div class="param-description">One PDF file (max 25MB)</div>
                         </div>
-                        <div class="param-description">One PDF file (max 25MB)</div>
                     </div>
                 </div>
 
                 <div class="optional-section">
-                    <h3 class="section-header-optional">Not Required <span class="section-header-optional-note">(Compliance Disclaimers)</span></h3>
+                    <h3 class="section-header">Not Required <span class="section-header-note">(Compliance Disclaimers)</span></h3>
                     <div class="param-grid">
                         <div class="param-card">
                             <div class="param-header">
                                 <span class="param-name">state</span>
                                 <div class="param-meta">
                                     <span class="param-type">string</span>
-                                    <span class="status status-recommended">Optional</span>
+                                    <span class="status status-optional">Optional</span>
                                 </div>
                             </div>
                             <div class="param-description">
@@ -919,7 +999,7 @@
                 </div>
 
                 <div class="optional-section">
-                    <h3 class="section-header-optional">Not Required <span class="section-header-optional-note">(Smart QR Code)</span></h3>
+                    <h3 class="section-header">Not Required <span class="section-header-note">(Smart QR Code)</span></h3>
                     
                     <div class="qr-section">
                         <div class="qr-preview">
@@ -976,7 +1056,7 @@
                 <h2 class="section-title">Postman Example</h2>
                 
                 <div class="card">
-                    <h3 style="margin-bottom: 1rem; color: #111827; font-size: 1rem; font-weight: 600;">Postman Setup</h3>
+                    <h3>Postman Setup</h3>
                     <div class="code-block">POST {{endpoint}}
 
 Headers:
@@ -1037,12 +1117,34 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="mailto:info@aquamark.io">info@aquamark.io</a>
-                <a href="tel:+14155001117">(415) 500-1117</a>
-                <a href="/privacy.html">Privacy</a>
-                <a href="/terms.html">Terms</a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Phone: (415) 500-1117</p>
+                    <p>Email: info@aquamark.io</p>
+                    <p>490 Post Street<br>Suite 500<br>San Francisco, CA 94102</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#reviews">Reviews</a>
+                    <a href="https://www.aquamark.io/contact">Contact</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="#brokers">Broker Solutions</a>
+                    <a href="#lenders">Lender Solutions</a>
+                    <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Partnerships</h3>
+                    <a href="https://www.aquamark.io/contact">Wholesale Opportunities</a>
+                    <a href="https://www.aquamark.io/contact">Affiliate Opportunities</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -1053,6 +1155,31 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
     </div>
 
     <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            navLinks.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        }
+
         // Add scroll effect to header
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
