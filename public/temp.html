@@ -1,19 +1,4 @@
-.nav-home {
-            background: #111;
-            color: white !important;
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-
-        .nav-home:hover {
-            background: #333;
-            color: white !important;
-            text-decoration: none;
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,6 +53,25 @@
         .nav-buttons {
             display: flex;
             gap: 1rem;
+        }
+
+        .nav-home {
+            background: #fff;
+            color: #666 !important;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-home:hover {
+            background: #f8f8f8;
+            color: #333 !important;
+            text-decoration: none;
+            border-color: #bbb;
         }
 
         .nav-lender {
@@ -706,7 +710,8 @@ file: [Select File] statement.pdf</div>
                 <h2>Response</h2>
                 <div class="card">
                     <div class="card-title">What you get back</div>
-                    <div class="code">Content-Type: application/pdf
+                    <div class="code">200 OK
+Content-Type: application/pdf
 X-State-Disclaimer: CFL license and Disclosure required.</div>
                     <p>Watermarked PDF + optional state disclaimer header</p>
                 </div>
