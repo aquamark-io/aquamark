@@ -570,8 +570,8 @@
             <!-- Hero -->
             <section class="hero">
                 <div class="simple-badge">✓ 5 minute setup</div>
-                <h1>Watermark PDFs with 2 fields</h1>
-                <p class="subtitle">Send us a PDF and email. Get back a watermarked PDF.</p>
+                <h1>Automated Watermarking</h1>
+                <p class="subtitle">Protect documents from unauthorized misuse.</p>
             </section>
 
             <!-- Quick Demo -->
@@ -603,6 +603,10 @@
             <section class="section">
                 <h2>Get started</h2>
                 <p>Request your API key and start testing</p>
+                
+                <div class="simple-badge" style="background: #e6f7ff; color: #1890ff; margin-bottom: 20px;">
+                    Free testing available - email us for a test API key
+                </div>
                 
                 <div class="auth-steps">
                     <div class="auth-step">
@@ -665,15 +669,7 @@
                 <h2>Test it</h2>
                 <div class="card">
                     <div class="card-title">Postman example</div>
-                    <div class="code">POST https://aquamark-decrypt.onrender.com/watermark
-
-Headers:
-Authorization: Bearer YOUR_API_KEY
-Content-Type: multipart/form-data
-
-Body (form-data):
-user_email: john@example.com
-file: [Select File] statement.pdf</div>
+                    <div class="code">POST https://aquamark-decrypt.onrender.com/watermark<br><br>Headers:<br>Authorization: Bearer YOUR_API_KEY<br>Content-Type: multipart/form-data<br><br>Body (form-data):<br>user_email: john@example.com<br>file: [Select File] statement.pdf</div>
                 </div>
             </section>
 
@@ -683,7 +679,7 @@ file: [Select File] statement.pdf</div>
                     <span class="optional-icon">+</span>
                     <span class="optional-title">Optional features</span>
                 </div>
-                <p class="optional-subtitle">Add these when you need extra functionality</p>
+                <p class="optional-subtitle">Send as <span class="inline-code">form-data</span>)</p>
                 
                 <ul class="optional-list">
                     <li>
@@ -692,15 +688,15 @@ file: [Select File] statement.pdf</div>
                     </li>
                     <li>
                         <span class="param-name">salesperson</span>
-                        <span class="param-desc">Track document access in QR code</span>
+                        <span class="param-desc">Smart QR code - embed who was given access</span>
                     </li>
                     <li>
                         <span class="param-name">processor</span>
-                        <span class="param-desc">Track who processed the file</span>
+                        <span class="param-desc">Smart QR code - embed who was given access</span>
                     </li>
                     <li>
                         <span class="param-name">lender</span>
-                        <span class="param-desc">Track which lender received it</span>
+                        <span class="param-desc">Smart QR code - embed who was given access</span>
                     </li>
                 </ul>
             </div>
