@@ -55,8 +55,28 @@
             gap: 1rem;
         }
 
-        .nav-home, .nav-lender {
-            color: #666;
+        .nav-home {
+            background: #fff;
+            color: #666 !important;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-home:hover {
+            background: #f8f8f8;
+            color: #333 !important;
+            text-decoration: none;
+            border-color: #bbb;
+        }
+
+        .nav-lender {
+            background: #10b981;
+            color: white;
             text-decoration: none;
             font-size: 14px;
             padding: 8px 16px;
@@ -64,9 +84,9 @@
             transition: all 0.2s;
         }
 
-        .nav-home:hover, .nav-lender:hover {
-            background: #f5f5f5;
-            color: #333;
+        .nav-lender:hover {
+            background: #059669;
+            color: white;
         }
 
         /* Main Content */
@@ -127,6 +147,17 @@
             font-size: 14px;
             font-weight: 500;
             margin-bottom: 24px;
+        }
+
+        .response-badge {
+            display: inline-block;
+            background: #f0f9f0;
+            color: #2d5a2d;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
         }
 
         /* Quick Demo */
@@ -550,8 +581,8 @@
             <!-- Hero -->
             <section class="hero">
                 <div class="simple-badge">✓ 5 minute setup</div>
-                <h1>Watermark PDFs with 2 fields</h1>
-                <p class="subtitle">Send us a PDF and email. Get back a watermarked PDF.</p>
+                <h1>Automated Watermarking</h1>
+                <p class="subtitle">Protect documents from unauthorized misuse.</p>
             </section>
 
             <!-- Quick Demo -->
@@ -575,7 +606,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="result">→ Watermarked PDF returned</div>
+                    <div class="result">Watermarked PDF returned</div>
                 </div>
             </section>
 
@@ -583,6 +614,10 @@
             <section class="section">
                 <h2>Get started</h2>
                 <p>Request your API key and start testing</p>
+                
+                <div class="simple-badge" style="background: #e6f7ff; color: #1890ff; margin-bottom: 20px;">
+                    Free testing available - email us for a test API key
+                </div>
                 
                 <div class="auth-steps">
                     <div class="auth-step">
@@ -626,7 +661,7 @@
                             <span class="endpoint-name">CRM integration</span>
                         </div>
                         <div class="endpoint-url">POST https://aquamark-crm.onrender.com/watermark</div>
-                        <div class="endpoint-desc">For Salesforce, Zoho, Close</div>
+                        <div class="endpoint-desc">For Salesforce, proprietary CRMs, Zoho, Close, etc.</div>
                     </div>
 
                     <div class="endpoint">
@@ -644,16 +679,8 @@
             <section class="section">
                 <h2>Test it</h2>
                 <div class="card">
-                    <div class="card-title">Basic example</div>
-                    <div class="code">POST https://aquamark-decrypt.onrender.com/watermark
-
-Headers:
-Authorization: Bearer YOUR_API_KEY
-Content-Type: multipart/form-data
-
-Body (form-data):
-user_email: john@example.com
-file: [Select File] statement.pdf</div>
+                    <div class="card-title">Postman example</div>
+                    <div class="code">POST https://aquamark-decrypt.onrender.com/watermark<br><br>Headers:<br>Authorization: Bearer YOUR_API_KEY<br>Content-Type: multipart/form-data<br><br>Body (form-data):<br>user_email: john@example.com<br>file: [Select File] statement.pdf</div>
                 </div>
             </section>
 
@@ -663,7 +690,7 @@ file: [Select File] statement.pdf</div>
                     <span class="optional-icon">+</span>
                     <span class="optional-title">Optional features</span>
                 </div>
-                <p class="optional-subtitle">Add these when you need extra functionality</p>
+                <p class="optional-subtitle">Send as <span class="inline-code">form-data</span>)</p>
                 
                 <ul class="optional-list">
                     <li>
@@ -672,15 +699,15 @@ file: [Select File] statement.pdf</div>
                     </li>
                     <li>
                         <span class="param-name">salesperson</span>
-                        <span class="param-desc">Track document access in QR code</span>
+                        <span class="param-desc">Smart QR code - embed who was given access</span>
                     </li>
                     <li>
                         <span class="param-name">processor</span>
-                        <span class="param-desc">Track who processed the file</span>
+                        <span class="param-desc">Smart QR code - embed who was given access</span>
                     </li>
                     <li>
                         <span class="param-name">lender</span>
-                        <span class="param-desc">Track which lender received it</span>
+                        <span class="param-desc">Smart QR code - embed who was given access</span>
                     </li>
                 </ul>
             </div>
@@ -690,6 +717,7 @@ file: [Select File] statement.pdf</div>
                 <h2>Response</h2>
                 <div class="card">
                     <div class="card-title">What you get back</div>
+                    <div class="response-badge">200 OK</div>
                     <div class="code">Content-Type: application/pdf
 X-State-Disclaimer: CFL license and Disclosure required.</div>
                     <p>Watermarked PDF + optional state disclaimer header</p>
@@ -699,21 +727,27 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
             <!-- Process -->
             <section class="section">
                 <h2>That's it</h2>
-                <ol class="steps">
-                    <li>Send PDF + email to any endpoint</li>
-                    <li>Get watermarked PDF back</li>
-                    <li>Add optional features when ready</li>
-                </ol>
+                <div class="card">
+                    <div class="card-title">Simple process</div>
+                    <ol class="steps">
+                        <li>Send PDF + email to any endpoint</li>
+                        <li>Get watermarked PDF back</li>
+                        <li>Add optional features when ready</li>
+                    </ol>
+                </div>
             </section>
 
             <!-- Notes -->
             <section class="section">
-                <h2>Notes</h2>
-                <ul class="simple-list">
-                    <li>PDF only, one file per request</li>
-                    <li>Retail users: Upload logo in portal first</li>
-                    <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
-                </ul>
+                <h2>Important notes</h2>
+                <div class="card">
+                    <div class="card-title">Keep in mind</div>
+                    <ul class="simple-list">
+                        <li>PDF only, one file per request</li>
+                        <li>Retail users: Upload logo in portal first</li>
+                        <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
+                    </ul>
+                </div>
             </section>
 
         </div>
