@@ -301,6 +301,30 @@
             box-shadow: 0 0 0 3px rgba(70, 126, 255, 0.1);
         }
 
+        /* Lender Parameter Note */
+        .lender-note {
+            background: #e8f4fd;
+            border: 1px solid #bde0ff;
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lender-note h4 {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .lender-note p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
         #pdfInput {
             height: 150px;
             padding: 1rem;
@@ -664,6 +688,12 @@
                         <label for="processorTag">Processor</label>
                         <input type="text" id="processorTag" placeholder="Processor name" />
                     </div>
+                </div>
+
+                <!-- Lender Parameter Note -->
+                <div class="lender-note">
+                    <h4>Lender Parameter Note</h4>
+                    <p>If using, generate a separate file for each lender. While this creates multiple versions, it's intentional — if documents are ever misused, you'll know exactly which lender received it. Most brokers delete the unwatermarked versions from their CRM after submission to keep things clean, keeping only the original set on file. This can be automated using tools like Apex Scheduler (Salesforce), Zapier, Make, and others. It's a small extra step with a major advantage.</p>
                 </div>
             </div>
         </div>
@@ -1361,6 +1391,3 @@
         if (window.location.hash === '#o-logout-link') {
             window.location.href = '/login.html';
         }
-    </script>
-</body>
-</html>
