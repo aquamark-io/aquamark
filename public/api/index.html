@@ -100,9 +100,10 @@
 
         /* Hero Section */
         .hero {
-            background: #ffffff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 140px 0 80px;
             text-align: center;
+            color: white;
         }
 
         .hero-content {
@@ -114,13 +115,14 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: #f9fafb;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
             padding: 0.5rem 1rem;
             border-radius: 50px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             font-size: 0.875rem;
             font-weight: 500;
-            color: #6b7280;
+            color: white;
             margin-bottom: 2rem;
         }
 
@@ -133,28 +135,169 @@
 
         .hero h1 {
             font-size: 3.5rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 1rem;
             line-height: 1.1;
-            color: #111827;
             letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
-            font-size: 1.3rem;
-            color: #6b7280;
-            margin-bottom: 3rem;
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
             font-weight: 400;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-cta {
+            background: #10b981;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Quick Start Section */
+        .quick-start {
+            background: #f8fafc;
+            padding: 80px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .quick-start-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .quick-start-header {
+            text-align: center;
             margin-bottom: 3rem;
+        }
+
+        .quick-start-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .quick-start-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .simple-demo {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .demo-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .demo-fields {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .demo-field {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .demo-field:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .field-label {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .field-icon {
+            width: 16px;
+            height: 16px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .field-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .demo-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Time Badge */
+        .time-badge {
+            background: #10b981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 2rem;
         }
 
         /* Main Content */
         .main-content {
             padding: 80px 0;
-            background: #fafafa;
+            background: #ffffff;
         }
 
         .main-container {
@@ -168,8 +311,8 @@
         }
 
         .section-title {
-            font-size: 1.75rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             color: #111827;
             margin-bottom: 1rem;
             letter-spacing: -0.02em;
@@ -185,24 +328,26 @@
         .card {
             background: white;
             border: 1px solid #f3f4f6;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 2rem;
             margin-bottom: 1.5rem;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
         }
 
         /* Authentication Section */
         .auth-section {
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 2rem;
             margin-bottom: 3rem;
             border: 1px solid #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .auth-steps {
@@ -215,37 +360,37 @@
             display: flex;
             align-items: flex-start;
             gap: 1rem;
-            padding: 1rem;
-            background: #f9fafb;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
         }
 
         .step-number {
-            background: #111827;
+            background: #667eea;
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 0.75rem;
+            font-weight: 700;
+            font-size: 0.875rem;
             flex-shrink: 0;
         }
 
         .step-content h4 {
             margin: 0 0 0.25rem 0;
             color: #111827;
-            font-size: 0.875rem;
+            font-size: 1rem;
             font-weight: 600;
         }
 
         .step-content p {
             margin: 0;
             color: #6b7280;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
         }
 
         /* Endpoint Cards */
@@ -258,14 +403,15 @@
         .endpoint-card {
             background: white;
             border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .endpoint-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
         }
 
         .endpoint-header {
@@ -277,15 +423,15 @@
 
         .endpoint-badge {
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
         }
 
         .endpoint-badge.retail {
-            background: #111827;
+            background: #667eea;
         }
 
         .endpoint-badge.crm {
@@ -293,11 +439,11 @@
         }
 
         .endpoint-badge.ocr {
-            background: #2563eb;
+            background: #f59e0b;
         }
 
         .endpoint-title {
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #111827;
             margin: 0;
@@ -305,178 +451,112 @@
 
         .endpoint-url {
             font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             color: #6b7280;
-            background: #f9fafb;
-            padding: 0.5rem;
+            background: #f8fafc;
+            padding: 1rem;
             border-radius: 8px;
-            margin: 0.5rem 0;
+            margin: 1rem 0;
             word-break: break-all;
+            border: 1px solid #e2e8f0;
         }
 
         .endpoint-description {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: #6b7280;
             margin: 0;
         }
 
-        /* Parameters */
-        .param-grid {
-            display: grid;
-            gap: 0.75rem;
-            margin: 1.5rem 0;
+        /* Advanced Features */
+        .advanced-section {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 1px solid #e2e8f0;
         }
 
-        .param-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .param-header {
+        .advanced-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .advanced-icon {
+            width: 32px;
+            height: 32px;
+            background: #667eea;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .advanced-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
+
+        .advanced-subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: #111827;
             margin-bottom: 0.5rem;
         }
 
-        .param-name {
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: #111827;
-        }
-
-        .param-meta {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .param-type {
-            font-size: 0.75rem;
+        .feature-description {
             color: #6b7280;
-            background: #f9fafb;
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
-        }
-
-        .status {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.125rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
-        }
-
-        .status-required {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-        }
-
-        .status-recommended {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-        }
-
-        .status-optional {
-            background: rgba(253, 224, 71, 0.2);
-            color: #ca8a04;
-        }
-
-        .param-description {
-            font-size: 0.875rem;
-            color: #6b7280;
+            font-size: 0.9rem;
             line-height: 1.5;
         }
 
         /* Code Blocks */
         .code-block {
-            background: white;
-            color: #6b7280;
+            background: #1f2937;
+            color: #e5e7eb;
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow-x: auto;
             font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             line-height: 1.6;
             margin: 1rem 0;
             position: relative;
             white-space: pre-wrap;
             word-wrap: break-word;
-            border: 1px solid #e5e7eb;
         }
 
         .inline-code {
-            background: #f9fafb;
+            background: #f3f4f6;
             color: #111827;
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
             font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             font-weight: 500;
-        }
-
-        /* QR Section */
-        .qr-section {
-            text-align: center;
-            margin: 2rem 0;
-            padding: 2rem;
-            background: #f9fafb;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .qr-preview {
-            display: inline-block;
-            padding: 1rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
-        }
-
-        .qr-img {
-            max-width: 120px;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        .qr-caption {
-            font-size: 0.875rem;
-            color: #6b7280;
-            font-style: italic;
-        }
-
-        /* Info Boxes */
-        .info-box {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .info-box-title {
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .info-box p {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin: 0 0 0.5rem 0;
-            line-height: 1.5;
-        }
-
-        .info-box p:last-child {
-            margin-bottom: 0;
         }
 
         /* Lists */
@@ -489,8 +569,8 @@
             display: flex;
             align-items: flex-start;
             gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
             color: #6b7280;
         }
 
@@ -498,13 +578,13 @@
             content: '✓';
             background: #10b981;
             color: white;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.625rem;
+            font-size: 0.75rem;
             font-weight: bold;
             flex-shrink: 0;
             margin-top: 0.125rem;
@@ -520,9 +600,9 @@
         .steps li {
             counter-increment: step;
             position: relative;
-            padding-left: 2.5rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.875rem;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
             color: #6b7280;
         }
 
@@ -531,40 +611,16 @@
             position: absolute;
             left: 0;
             top: 0;
-            background: #111827;
+            background: #667eea;
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 0.75rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            margin: 2rem 0 1rem;
-            color: #111827;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        /* Links */
-        a {
-            color: #111827;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Emphasis */
-        strong {
-            font-weight: 600;
-            color: #111827;
+            font-weight: 700;
+            font-size: 0.875rem;
         }
 
         /* Footer */
@@ -630,25 +686,23 @@
                 font-size: 1.1rem;
             }
 
+            .quick-start-title {
+                font-size: 2rem;
+            }
+
             .main-content {
                 padding: 60px 0;
             }
 
-            .main-container {
+            .main-container, .quick-start-container {
                 padding: 0 1rem;
             }
 
-            .card {
+            .card, .simple-demo {
                 padding: 1.5rem;
             }
 
             .endpoint-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .param-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 0.5rem;
@@ -659,7 +713,6 @@
                 gap: 1rem;
             }
 
-            /* Mobile navigation fixes */
             .nav-buttons {
                 flex-direction: column;
                 gap: 0.5rem;
@@ -677,7 +730,6 @@
                 padding: 0 15px;
             }
 
-            /* Stack navigation vertically on very small screens */
             nav {
                 flex-direction: column;
                 gap: 1rem;
@@ -696,7 +748,7 @@
             }
 
             .hero {
-                padding: 160px 0 60px; /* Extra padding for stacked nav */
+                padding: 160px 0 60px;
             }
         }
 
@@ -740,10 +792,62 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <div class="status-dot"></div>
-                    API Documentation
+                    Simple API Documentation
                 </div>
-                <h1>Simple Open API</h1>
-                <p class="hero-subtitle">Your System, Your Logic - How We Plug In</p>
+                <h1>Watermark PDFs in <span class="highlight">Under 5 Minutes</span></h1>
+                <p class="hero-subtitle">Just 2 fields required. Your system, your logic — we just add the watermark.</p>
+                <a href="#quick-start" class="hero-cta">Get Started Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quick-start" class="quick-start">
+        <div class="quick-start-container">
+            <div class="quick-start-header">
+                <h2 class="quick-start-title">It's Really This Simple</h2>
+                <p class="quick-start-subtitle">Send us a PDF and email — get back a watermarked PDF. That's it.</p>
+            </div>
+
+            <div class="time-badge">⚡ Setup Time: Under 5 Minutes</div>
+
+            <div class="simple-demo">
+                <h3 class="demo-title">All You Need to Get Started</h3>
+                <div class="demo-fields">
+                    <div class="demo-field">
+                        <div class="field-label">
+                            <span class="field-icon">1</span>
+                            user_email
+                        </div>
+                        <div class="field-description">Your email address (retail) or end user's email (wholesale)</div>
+                    </div>
+                    <div class="demo-field">
+                        <div class="field-label">
+                            <span class="field-icon">2</span>
+                            file
+                        </div>
+                        <div class="field-description">One PDF file (max 25MB)</div>
+                    </div>
+                </div>
+                <div class="demo-result">
+                    → Send → Get Watermarked PDF Back
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 1rem; color: #111827; font-size: 1.2rem; font-weight: 600;">Ready to Test?</h3>
+                <div class="code-block">POST https://aquamark-decrypt.onrender.com/watermark
+
+Headers:
+Authorization: Bearer YOUR_API_KEY
+Content-Type: multipart/form-data
+
+Body (form-data):
+user_email: john@example.com
+file: [Select File] statement.pdf</div>
+                <p style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">
+                    <strong>That's it!</strong> You'll get a watermarked PDF back in seconds.
+                </p>
             </div>
         </div>
     </section>
@@ -755,7 +859,7 @@
             <!-- Authentication -->
             <div class="section">
                 <h2 class="section-title">Authentication</h2>
-                <p class="section-subtitle">Secure API access with Bearer tokens</p>
+                <p class="section-subtitle">Get your API key and start testing immediately</p>
                 
                 <div class="auth-section">
                     <div class="auth-steps">
@@ -763,7 +867,7 @@
                             <div class="step-number">1</div>
                             <div class="step-content">
                                 <h4>Request API Key</h4>
-                                <p>Contact <a href="mailto:info@aquamark.io">info@aquamark.io</a> for endpoints and keys</p>
+                                <p>Email <a href="mailto:info@aquamark.io">info@aquamark.io</a> for your API key — we'll send it right over</p>
                             </div>
                         </div>
                         
@@ -771,7 +875,7 @@
                             <div class="step-number">2</div>
                             <div class="step-content">
                                 <h4>Add to Headers</h4>
-                                <p>Include your API key in the Authorization header for all requests</p>
+                                <p>Include your API key in the Authorization header</p>
                             </div>
                         </div>
                     </div>
@@ -782,8 +886,8 @@
 
             <!-- Endpoints -->
             <div class="section">
-                <h2 class="section-title">Endpoints</h2>
-                <p class="section-subtitle">Choose the endpoint that fits your integration needs</p>
+                <h2 class="section-title">Choose Your Endpoint</h2>
+                <p class="section-subtitle">All endpoints work the same way — just pick the one that fits your use case</p>
                 
                 <div class="endpoint-grid">
                     <div class="endpoint-card">
@@ -815,110 +919,35 @@
                 </div>
             </div>
 
-            <!-- Parameters -->
-            <div class="section">
-                <h2 class="section-title">Parameters</h2>
-                <p class="section-subtitle">All endpoints use the same parameter structure</p>
-
-                <h3 class="section-header">Required (Watermarking Only)</h3>
-                <div class="param-grid">
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">user_email</span>
-                            <div class="param-meta">
-                                <span class="param-type">string</span>
-                                <span class="status status-required">Required</span>
-                            </div>
-                        </div>
-                        <div class="param-description">Email address - your Aquamark account email (retail) or end user's email (wholesale)</div>
-                    </div>
-                    
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">file</span>
-                            <div class="param-meta">
-                                <span class="param-type">file</span>
-                                <span class="status status-required">Required</span>
-                            </div>
-                        </div>
-                        <div class="param-description">One PDF file (max 25MB)</div>
+            <!-- Advanced Features -->
+            <div class="advanced-section">
+                <div class="advanced-header">
+                    <div class="advanced-icon">+</div>
+                    <div>
+                        <h3 class="advanced-title">Want More Features?</h3>
+                        <p class="advanced-subtitle">These optional parameters add extra functionality when you're ready</p>
                     </div>
                 </div>
 
-                <h3 class="section-header">Not Required (Compliance Disclaimers)</h3>
-                <div class="param-grid">
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">state</span>
-                            <div class="param-meta">
-                                <span class="param-type">string</span>
-                                <span class="status status-recommended">Optional</span>
-                            </div>
-                        </div>
-                        <div class="param-description">
-                            For state compliance disclaimers – accepts state names or abbreviations (e.g. "CA", "California"). Returned in response header. To store or display this value, create a custom field in your CRM called <code class="inline-code">Compliance</code> and push the value there automatically.
-                        </div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4 class="feature-title">State Compliance</h4>
+                        <p class="feature-description">Add <code class="inline-code">state: "CA"</code> to get compliance disclaimers in the response header</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4 class="feature-title">Smart QR Codes</h4>
+                        <p class="feature-description">Add <code class="inline-code">salesperson</code>, <code class="inline-code">processor</code>, or <code class="inline-code">lender</code> to track document access</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4 class="feature-title">CRM Integration</h4>
+                        <p class="feature-description">Perfect for systems with curtaining — track exactly who accessed each file</p>
                     </div>
                 </div>
 
-                <h3 class="section-header">Not Required (Smart QR Code)</h3>
-                
-                <div class="qr-section">
-                    <div class="qr-preview">
-                        <img src="/qr.png" alt="QR Preview" class="qr-img"/>
-                    </div>
-                    <div class="qr-caption">Tamper-resistant QR code on every page with embedded access information</div>
-                </div>
-
-                <div class="info-box">
-                    <div class="info-box-title">Power up your QR codes</div>
-                    <p>These fields act as digital breadcrumbs that show exactly who had access to each file — lender, salesperson, processor.</p>
-                    <p>They only apply if your CRM enforces <strong>curtaining</strong>, where users can only access records assigned to them. Curtaining is strongly recommended as a best practice.</p>
-                </div>
-
-                <div class="param-grid">
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">salesperson</span>
-                            <div class="param-meta">
-                                <span class="param-type">string</span>
-                                <span class="status status-optional">Optional</span>
-                            </div>
-                        </div>
-                        <div class="param-description">Internal salesperson associated with the deal. Typically your CRM account owner or assigned rep.</div>
-                    </div>
-
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">processor</span>
-                            <div class="param-meta">
-                                <span class="param-type">string</span>
-                                <span class="status status-optional">Optional</span>
-                            </div>
-                        </div>
-                        <div class="param-description">Team member responsible for preparing and submitting files. Only useful if you assign dedicated processors.</div>
-                    </div>
-
-                    <div class="param-card">
-                        <div class="param-header">
-                            <span class="param-name">lender</span>
-                            <div class="param-meta">
-                                <span class="param-type">string</span>
-                                <span class="status status-optional">Optional</span>
-                            </div>
-                        </div>
-                        <div class="param-description">Users submit a separate version of the file for each lender, then delete them after submission to reduce storage costs. Most set up a simple automated deletion—using tools like timed scripts, CRM schedulers (e.g. Apex Scheduler in Salesforce), or external automation platforms like Zapier or Make.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Examples -->
-            <div class="section">
-                <h2 class="section-title">Postman Example</h2>
-                
-                <div class="card">
-                    <h3 style="margin-bottom: 1rem; color: #111827; font-size: 1rem; font-weight: 600;">Postman Setup</h3>
-                    <div class="code-block">POST {{endpoint}}
+                <div class="code-block">// Example with optional features
+POST https://aquamark-decrypt.onrender.com/watermark
 
 Headers:
 Authorization: Bearer YOUR_API_KEY
@@ -926,24 +955,18 @@ Content-Type: multipart/form-data
 
 Body (form-data):
 user_email: john@example.com
-file: [Select File] statement1.pdf
-state: CA
-salesperson: Jack Dawson
-processor: Rose DeWitt
-lender: OnDeck Capital
-
-Endpoints:
-Retail: https://aquamark-decrypt.onrender.com/watermark
-CRM: https://aquamark-crm.onrender.com/watermark
-OCR: https://aquamark-ocr.onrender.com/watermark</div>
-                </div>
+file: [Select File] statement.pdf
+state: CA                    // Optional: compliance disclaimers
+salesperson: Jack Dawson     // Optional: QR code tracking
+processor: Rose DeWitt       // Optional: QR code tracking
+lender: OnDeck Capital       // Optional: QR code tracking</div>
             </div>
 
             <!-- Response -->
             <div class="section">
                 <h2 class="section-title">Response</h2>
                 <div class="card">
-                    <p>All endpoints return a protected PDF file with optional compliance header:</p>
+                    <p>You'll get back a watermarked PDF with optional compliance header:</p>
                     <div class="code-block">Content-Type: application/pdf
 X-State-Disclaimer: CFL license and Disclosure required.</div>
                 </div>
@@ -951,24 +974,24 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
 
             <!-- Workflow -->
             <div class="section">
-                <h2 class="section-title">Workflow</h2>
+                <h2 class="section-title">That's It!</h2>
                 <div class="card">
                     <ol class="steps">
-                        <li>Choose the appropriate endpoint for your use case</li>
-                        <li>Send a POST request with your PDF and metadata</li>
-                        <li>Receive a protected PDF + optional state disclaimer header</li>
-                        <li>Save the PDF and push state disclaimers to your system</li>
+                        <li>Choose your endpoint</li>
+                        <li>Send PDF + email</li>
+                        <li>Get watermarked PDF back</li>
+                        <li>Add optional features when ready</li>
                     </ol>
                 </div>
             </div>
 
-            <!-- Notes -->
+            <!-- Important Notes -->
             <div class="section">
-                <h2 class="section-title">Important Notes</h2>
+                <h2 class="section-title">Quick Notes</h2>
                 <div class="card">
                     <ul class="feature-list">
-                        <li>PDF only. One file per request across all endpoints</li>
-                        <li>Retail users must upload logo in portal before using the API</li>
+                        <li>PDF only, one file per request</li>
+                        <li>Retail users: Upload your logo in the portal first</li>
                         <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
                     </ul>
                 </div>
@@ -989,7 +1012,7 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
         </div>
     </footer>
 
-    <!-- Footer Bottom - Full Width -->
+    <!-- Footer Bottom -->
     <div class="footer-bottom">
         <p>&copy; 2025 Aquamark. All rights reserved.</p>
     </div>
@@ -1007,6 +1030,14 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
                     header.style.boxShadow = 'none';
                 }
             }
+        });
+
+        // Smooth scroll for CTA button
+        document.querySelector('.hero-cta').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#quick-start').scrollIntoView({
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
