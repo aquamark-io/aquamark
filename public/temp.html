@@ -149,6 +149,17 @@
             margin-bottom: 24px;
         }
 
+        .response-badge {
+            display: inline-block;
+            background: #f0f9f0;
+            color: #2d5a2d;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
         /* Quick Demo */
         .demo-box {
             background: #fafafa;
@@ -706,8 +717,8 @@
                 <h2>Response</h2>
                 <div class="card">
                     <div class="card-title">What you get back</div>
-                    <div class="code">200 OK
-Content-Type: application/pdf
+                    <div class="response-badge">200 OK</div>
+                    <div class="code">Content-Type: application/pdf
 X-State-Disclaimer: CFL license and Disclosure required.</div>
                     <p>Watermarked PDF + optional state disclaimer header</p>
                 </div>
@@ -716,21 +727,27 @@ X-State-Disclaimer: CFL license and Disclosure required.</div>
             <!-- Process -->
             <section class="section">
                 <h2>That's it</h2>
-                <ol class="steps">
-                    <li>Send PDF + email to any endpoint</li>
-                    <li>Get watermarked PDF back</li>
-                    <li>Add optional features when ready</li>
-                </ol>
+                <div class="card">
+                    <div class="card-title">Simple process</div>
+                    <ol class="steps">
+                        <li>Send PDF + email to any endpoint</li>
+                        <li>Get watermarked PDF back</li>
+                        <li>Add optional features when ready</li>
+                    </ol>
+                </div>
             </section>
 
             <!-- Notes -->
             <section class="section">
-                <h2>Notes</h2>
-                <ul class="simple-list">
-                    <li>PDF only, one file per request</li>
-                    <li>Retail users: Upload logo in portal first</li>
-                    <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
-                </ul>
+                <h2>Important notes</h2>
+                <div class="card">
+                    <div class="card-title">Keep in mind</div>
+                    <ul class="simple-list">
+                        <li>PDF only, one file per request</li>
+                        <li>Retail users: Upload logo in portal first</li>
+                        <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
+                    </ul>
+                </div>
             </section>
 
         </div>
