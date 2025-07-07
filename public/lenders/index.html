@@ -458,6 +458,20 @@
         }
 
         @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+
+            .back-home-btn {
+                padding: 0.6rem 1rem !important;
+                font-size: 0.85rem !important;
+            }
+
             .hero {
                 padding: 120px 0 40px;
             }
@@ -524,7 +538,27 @@
 
         @media (max-width: 480px) {
             .container {
-                padding: 0 15px;
+                padding: 0 10px;
+            }
+
+            nav {
+                padding: 0 5px;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+                flex-wrap: nowrap;
+            }
+
+            .nav-links a {
+                font-size: 0.75rem;
+                padding: 0.25rem;
+            }
+
+            .back-home-btn {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.75rem !important;
+                min-width: auto !important;
             }
 
             .hero {
@@ -608,6 +642,9 @@
                     <h4>Testing Parameters</h4>
                     <div><strong>User Email:</strong> test@aquamark.io</div>
                     <div><strong>API Key:</strong> api-aqua-lender-test-4423101813</div>
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(63, 0, 255, 0.2); font-size: 0.8rem; line-height: 1.4; opacity: 0.8;">
+                        <strong>Note:</strong> Test watermarks display Aquamark branding. Subscribe to use your custom company branding.
+                    </div>
                 </div>
             </div>
         </div>
