@@ -117,10 +117,75 @@
             margin-right: auto;
         }
 
+        /* How it Works Section */
+        .how-it-works {
+            background: #fafafa;
+            padding: 80px 0;
+        }
+
+        .how-it-works h2 {
+            font-size: 2.5rem;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .step-number {
+            background: #3F00FF;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .step-card p {
+            color: #6b7280;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
         /* Free Test CTA */
         .free-test-cta {
             background: #ffffff;
-            padding: 0 0 60px 0;
+            padding: 80px 0 60px 0;
             text-align: center;
         }
 
@@ -455,6 +520,11 @@
             .pricing-card.featured {
                 transform: none;
             }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -485,8 +555,16 @@
                 font-size: 1.2rem;
             }
 
+            .how-it-works {
+                padding: 60px 0;
+            }
+
+            .how-it-works h2 {
+                font-size: 2rem;
+            }
+
             .free-test-cta {
-                padding: 0 0 40px 0;
+                padding: 60px 0 40px 0;
             }
 
             .free-test-card {
@@ -573,8 +651,20 @@
                 font-size: 1.1rem;
             }
 
+            .how-it-works {
+                padding: 50px 0;
+            }
+
+            .how-it-works h2 {
+                font-size: 1.8rem;
+            }
+
+            .step-card {
+                padding: 1.5rem;
+            }
+
             .free-test-cta {
-                padding: 0 0 30px 0;
+                padding: 50px 0 30px 0;
             }
 
             .free-test-card {
@@ -614,6 +704,7 @@
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
             <ul class="nav-links">
+                <li><a href="#how-it-works">How it Works</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="https://www.aquamark.io" class="back-home-btn">Home</a></li>
             </ul>
@@ -627,6 +718,33 @@
                 <h1>Aquamark for Lenders</h1>
                 <p>Trust leads to strong relationships, a better reputation, and long-term growth.<br>
                 Built trust, grow your portfolio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2>How it Works</h2>
+        
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>PDF Interception</h3>
+                    <p>Aquamark intercepts PDF downloads from your CRM</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Watermark & Attribute</h3>
+                    <p>Tamper-resistant and OCR-safe watermarks applied to every page, along with QR code attributing the downloader.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Protection</h3>
+                    <p>Marked files deter theft and push for accountabiliy and trust.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -796,6 +914,7 @@
 
             <div class="footer-section">
                 <h3>Quick Links</h3>
+                <a href="#how-it-works">How it Works</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#api">API Docs</a>
                 <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
