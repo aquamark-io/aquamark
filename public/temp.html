@@ -339,132 +339,38 @@
             margin: 0 auto 4.5rem auto;
         }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1300px;
+        .pricing-cta {
+            text-align: center;
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        .pricing-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-        }
-
-        .pricing-card.featured {
-            border: 2px solid #111827;
-            transform: scale(1.05);
-            position: relative;
-        }
-
-        .pricing-card.featured::before {
-            content: "Most Popular";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #3F00FF;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .pricing-card h3 {
+        .pricing-cta p {
             font-size: 1.2rem;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 1rem;
-        }
-
-        .price {
-            font-size: 2rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 1rem 0;
-            color: #111827;
-        }
-
-        .price-note {
             color: #6b7280;
-            font-size: 1.1rem;
             margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
-        .product-features {
-            list-style: none;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .product-features li {
-            padding: 0.4rem 0;
-            position: relative;
-            padding-left: 1.5rem;
-            font-size: 0.95rem;
-            color: #374151;
-        }
-
-        .product-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #111827;
-            font-weight: bold;
-        }
-
-        .cta-button {
-            background: #111827;
+        .register-button {
+            background: #3F00FF;
             color: #ffffff;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 4px 20px rgba(63, 0, 255, 0.3);
         }
 
-        .cta-button:hover {
-            background: #1f2937;
-            transform: translateY(-1px);
-        }
-
-        .custom-quote {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .custom-quote h3 {
-            font-size: 1.4rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .custom-quote p {
-            color: #6b7280;
-            margin-bottom: 1.5rem;
+        .register-button:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(63, 0, 255, 0.4);
         }
 
         /* Footer */
@@ -512,15 +418,6 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .pricing-card.featured {
-                transform: none;
-            }
-
             .steps-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -590,21 +487,6 @@
 
             .pricing {
                 padding: 60px 0;
-            }
-
-            .pricing-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-                align-items: center;
-                width: 100%;
-            }
-
-            .pricing-card {
-                width: 100%;
-                max-width: 350px;
-                padding: 2rem;
-                margin: 0 auto;
             }
 
             .footer-content {
@@ -687,12 +569,6 @@
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-
-            .pricing-card {
-                width: 100%;
-                max-width: none;
-                padding: 1.5rem;
-            }
         }
     </style>
 </head>
@@ -704,7 +580,6 @@
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
             <ul class="nav-links">
-                <li><a href="#how-it-works">How it Works</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="https://www.aquamark.io" class="back-home-btn">Home</a></li>
             </ul>
@@ -726,6 +601,10 @@
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <h2>How it Works</h2>
+            <p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+    Underwriters misuse files too — arguably more than brokers because of their access. It's not the lenders fault, but it becomes the lenders fault if they choose to ignore it.
+</p>
+
         
             <div class="steps-grid">
                 <div class="step-card">
@@ -743,7 +622,7 @@
                 <div class="step-card">
                     <div class="step-number">3</div>
                     <h3>Protection</h3>
-                    <p>Marked files deter theft and push for accountabiliy and trust.</p>
+                    <p>Marked file returned to downloader. No more access to "clean", sellable files.</p>
                 </div>
             </div>
         </div>
@@ -843,61 +722,26 @@
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
         <div class="container">
-            <h2>Simple, Transparent Pricing</h2>
-            <p class="pricing-subheadline">No hidden fees. No setup costs. Pays for itself.</p>
+            <h2>Simple and Transparent Pricing</h2>
+            <p class="pricing-subheadline">No payments for the first 30 days. No hidden fees. No setup costs.</p>
             
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>5,000 Submissions</h3>
-                    <div class="price">$499</div>
-                    <p class="price-note">3.3¢ per file</p>
-                    
-                    <ul class="product-features">
-                        <li>15,000 files per month</li>
-                        <li>Branded watermarking</li>
-                        <li>Smart QR code</li>
-                        <li>API access</li>
-                    </ul>
-                    
-                    <a href="https://buy.stripe.com/fZu7sM1w22Xx0vz2GY8ww01" class="cta-button">Subscribe</a>
+            <div class="pricing-cta">
+                <p>Our pricing is tier-based and we bill you at the end of the month based on your usage:</p>
+                
+                <div class="pricing-tiers" style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 2rem; margin: 2rem auto; max-width: 500px; text-align: left;">
+                    <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f3f4f6;">
+                        <strong style="color: #111827;">5,000 submissions</strong> / 15,000 PDF files = <strong style="color: #3F00FF;">$499</strong>
+                    </div>
+                    <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f3f4f6;">
+                        <strong style="color: #111827;">10,000 submissions</strong> / 30,000 PDF files = <strong style="color: #3F00FF;">$749</strong>
+                    </div>
+                    <div style="margin-bottom: 0;">
+                        <strong style="color: #111827;">25,000 submissions</strong> / 75,000 PDF files = <strong style="color: #3F00FF;">$999</strong>
+                    </div>
                 </div>
                 
-                <div class="pricing-card featured">
-                    <h3>10,000 Submissions</h3>
-                    <div class="price">$749</div>
-                    <p class="price-note">2.5¢ per file</p>
-                    
-                    <ul class="product-features">
-                        <li>30,000 files per month</li>
-                        <li>Branded watermarking</li>
-                        <li>Smart QR code</li>
-                        <li>API access</li>
-                    </ul>
-                    
-                    <a href="https://buy.stripe.com/bJe00kgqW2Xx3HLftK8ww02" class="cta-button">Subscribe</a>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3>25,000 Submissions</h3>
-                    <div class="price">$999</div>
-                    <p class="price-note">1.3¢ per file</p>
-                    
-                    <ul class="product-features">
-                        <li>75,000 files per month</li>
-                        <li>Branded watermarking</li>
-                        <li>Smart QR code</li>
-                        <li>API access</li>
-                    </ul>
-                    
-                    <a href="https://buy.stripe.com/aFa3cw6Qm41B5PTftK8ww03" class="cta-button">Subscribe</a>
-                </div>
-            </div>
-            
-            <div class="custom-quote">
-                <h3>Processing more than 25,000 submissions?</h3>
-                <p>
-                    Contact us for unlimited pricing at <a href="mailto:info@aquamark.io" style="color: #2563eb; text-decoration: underline;">info@aquamark.io</a>
-                </p>
+                <p style="margin-bottom: 2rem;">Ready to protect your loan documents and build trust with your clients? Register today to get started.</p>
+                <a href="https://aquamark.fillout.com/lenders" class="register-button">Register & Get Started</a>
             </div>
         </div>
     </section>
