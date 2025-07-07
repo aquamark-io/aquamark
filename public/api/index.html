@@ -791,4 +791,111 @@
                             <span class="endpoint-name">OCR integration</span>
                         </div>
                         <div class="endpoint-url">POST https://aquamark-ocr.onrender.com/watermark</div>
-              
+                        <div class="endpoint-desc">For document processing</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Example -->
+            <section class="section">
+                <h2>Test it</h2>
+                <div class="card">
+                    <div class="card-title">Postman example</div>
+                    <div class="code">POST https://aquamark-decrypt.onrender.com/watermark<br><br>Headers:<br>Authorization: Bearer YOUR_API_KEY<br>Content-Type: multipart/form-data<br><br>Body (form-data):<br>user_email: john@example.com<br>file: [Select File] statement.pdf</div>
+                </div>
+            </section>
+
+            <!-- Optional Features -->
+            <div class="optional-section">
+                <div class="optional-header">
+                    <span class="optional-icon">+</span>
+                    <span class="optional-title">Optional Smart QR Code</span>
+                </div>
+                <p class="optional-subtitle">Send as (<span class="inline-code">form-data</span>)</p>
+                
+                <ul class="optional-list">
+                    <li>
+                        <span class="param-name">state</span>
+                        <span class="param-desc">string - (e.g. "CA") Get compliance disclaimers pushed to your CRM (add custom field)</span>
+                    </li>
+                    <li>
+                        <span class="param-name">salesperson</span>
+                        <span class="param-desc">string - (e.g. "John Doe") Smart QR code - embed who was given access</span>
+                    </li>
+                    <li>
+                        <span class="param-name">processor</span>
+                        <span class="param-desc">string - (e.g. "John Doe") Smart QR code - embed who was given access</span>
+                    </li>
+                    <li>
+                        <span class="param-name">lender</span>
+                        <span class="param-desc">string - (e.g. "John Doe") Smart QR code - embed who was given access</span>
+                    </li>
+                </ul>
+                
+                <div style="margin-top: 20px; padding: 16px; background: #f0f9ff; border: 1px solid #e6f3ff; border-radius: 6px;">
+                    <h4 style="font-size: 14px; font-weight: 600; color: #1890ff; margin-bottom: 8px;">Note</h4>
+                    <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.5;">
+                    You can use one, two, or all three optional inputs — it's flexible, including not using them at all.<br><br>
+                        When using the lender parameter, create separate versions for each lender to ensure traceability. Most brokers delete these watermarked versions after submission.  
+                        This can be automated using tools like Apex Scheduler (Salesforce), Zapier, Make, and others.<br><br> It's a small extra step with a major advantage.<br><br>
+                        These are not required, watermarking alone is a powerful deterrent against document misuse.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Response -->
+            <section class="section">
+                <h2>Response</h2>
+                <div class="card">
+                    <div class="card-title">What you get back</div>
+                    <div class="response-badge">200 OK</div>
+                    <div class="code">Content-Type: application/pdf
+X-State-Disclaimer: CFL license and Disclosure required.</div>
+                    <div class="result">Watermarked PDF + optional state disclaimer header</div>
+                </div>
+            </section>
+
+            <!-- Process -->
+            <section class="section">
+                <h2>That's it</h2>
+                <div class="card">
+                    <div class="card-title">Simple process</div>
+                    <ol class="steps">
+                        <li>Send PDF + email to any endpoint</li>
+                        <li>Get watermarked PDF back</li>
+                        <li>Add optional features if desired</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Notes -->
+            <section class="section">
+                <h2>Important notes</h2>
+                <div class="card">
+                    <div class="card-title">Keep in mind</div>
+                    <ul class="simple-list">
+                        <li>PDF only, one file per request</li>
+                        <li>Retail users: Upload logo in portal first</li>
+                        <li>Questions? Email <a href="mailto:info@aquamark.io">info@aquamark.io</a></li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="mailto:info@aquamark.io">info@aquamark.io</a>
+                <a href="tel:+14155001117">(415) 500-1117</a>
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Aquamark. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
