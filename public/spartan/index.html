@@ -190,8 +190,19 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
+            justify-items: center;
+        }
+
+        .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+1) {
+            grid-column: 1 / -1;
+            width: calc(33.333% + 1rem);
+        }
+
+        .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+2) {
+            grid-column: 2 / -1;
+            width: calc(33.333% + 1rem);
         }
 
         .service-card {
@@ -201,6 +212,8 @@
             border: 1px solid #e5e7eb;
             transition: all 0.3s;
             position: relative;
+            width: 100%;
+            max-width: 350px;
         }
 
         .service-card:hover {
@@ -318,12 +331,14 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: #6b7280;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .reviewer-info h4 {
@@ -573,11 +588,31 @@
 
             .services-grid {
                 grid-template-columns: 1fr;
+                justify-items: center;
+            }
+
+            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+1),
+            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+2) {
+                grid-column: auto;
+                width: 100%;
             }
 
             .partner-logo {
                 flex: 0 0 150px;
                 height: 60px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                justify-items: center;
+            }
+
+            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+1),
+            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+2) {
+                grid-column: auto;
+                width: 100%;
             }
         }
     </style>
@@ -787,7 +822,9 @@
                     </div>
                     <p class="review-text">"Spartan Projects transformed our revenue strategy and helped us scale from $2M to $15M ARR in just 18 months. Their fintech expertise is unmatched."</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar">SM</div>
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b829?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" alt="Sarah Mitchell">
+                        </div>
                         <div class="reviewer-info">
                             <h4>Sarah Mitchell</h4>
                             <p>CEO, FinanceFlow</p>
@@ -804,7 +841,9 @@
                     </div>
                     <p class="review-text">"The compliance framework they implemented saved us months of regulatory headaches. Their team understands fintech challenges better than anyone."</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar">DJ</div>
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="David Johnson">
+                        </div>
                         <div class="reviewer-info">
                             <h4>David Johnson</h4>
                             <p>CTO, LendingPro</p>
@@ -821,7 +860,9 @@
                     </div>
                     <p class="review-text">"Their sales training program increased our conversion rates by 340%. The ROI was immediate and continues to compound every quarter."</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar">MC</div>
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Maria Chen">
+                        </div>
                         <div class="reviewer-info">
                             <h4>Maria Chen</h4>
                             <p>VP Sales, PaymentTech</p>
