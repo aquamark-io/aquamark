@@ -195,19 +195,6 @@
             justify-items: center;
         }
 
-        /* Center the last 2 cards when there are 8 total cards */
-        .services-grid .service-card:nth-child(7) {
-            grid-column: 1;
-            justify-self: end;
-            margin-right: 1rem;
-        }
-
-        .services-grid .service-card:nth-child(8) {
-            grid-column: 3;
-            justify-self: start;
-            margin-left: 1rem;
-        }
-
         .service-card {
             background: #ffffff;
             padding: 2rem;
@@ -304,6 +291,12 @@
             border-radius: 12px;
             border: 1px solid #e5e7eb;
             position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .review-content {
+            flex-grow: 1;
         }
 
         .review-stars {
@@ -594,13 +587,6 @@
                 justify-items: center;
             }
 
-            .services-grid .service-card:nth-child(7),
-            .services-grid .service-card:nth-child(8) {
-                grid-column: auto;
-                justify-self: center;
-                margin: 0;
-            }
-
             .partner-logo {
                 flex: 0 0 150px;
                 height: 60px;
@@ -611,13 +597,6 @@
             .services-grid {
                 grid-template-columns: repeat(2, 1fr);
                 justify-items: center;
-            }
-
-            .services-grid .service-card:nth-child(7),
-            .services-grid .service-card:nth-child(8) {
-                grid-column: auto;
-                justify-self: center;
-                margin: 0;
             }
         }
     </style>
@@ -633,7 +612,6 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="contact-info">
-                <span class="phone">(555) 123-4567</span>
                 <a href="#contact" class="cta-button">Get Started</a>
             </div>
         </nav>
@@ -645,7 +623,7 @@
                 <h1>You built your business, we help it grow.</h1>
                 <h2>Your Partners In Strategic Growth</h2>
                 <p>Our streamlined consulting process and flexible strategic solutions make it easy to scale your fintech business with confidence.</p>
-                <a href="#contact" class="hero-button">Start Growing Now</a>
+                <a href="#contact" class="hero-button">Start Growing</a>
             </div>
             <div class="hero-image">
                 <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Professional team collaborating">
@@ -751,8 +729,17 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
                         </svg>
                     </div>
-                    <h3>Lending & Portfolio Management</h3>
-                    <p>Streamline your lending operations and optimize portfolio performance with proven methodologies.</p>
+                    <h3>Lending Operations</h3>
+                    <p>Streamline your lending operations with proven methodologies for origination, underwriting, and servicing.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3>Portfolio Management</h3>
+                    <p>Optimize portfolio performance through advanced analytics, risk management, and strategic diversification.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -818,17 +805,19 @@
             <h2>What Our Clients Say</h2>
             <div class="reviews-grid">
                 <div class="review-card">
-                    <div class="review-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
+                    <div class="review-content">
+                        <div class="review-stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="review-text">"Spartan Projects transformed our revenue strategy and helped us scale from $2M to $15M ARR in just 18 months. Their fintech expertise is unmatched."</p>
                     </div>
-                    <p class="review-text">"Spartan Projects transformed our revenue strategy and helped us scale from $2M to $15M ARR in just 18 months. Their fintech expertise is unmatched."</p>
                     <div class="reviewer">
                         <div class="reviewer-avatar">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b829?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" alt="Sarah Mitchell">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80" alt="Sarah Mitchell">
                         </div>
                         <div class="reviewer-info">
                             <h4>Sarah Mitchell</h4>
@@ -837,14 +826,16 @@
                     </div>
                 </div>
                 <div class="review-card">
-                    <div class="review-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
+                    <div class="review-content">
+                        <div class="review-stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="review-text">"The compliance framework they implemented saved us months of regulatory headaches. Their team understands fintech challenges better than anyone."</p>
                     </div>
-                    <p class="review-text">"The compliance framework they implemented saved us months of regulatory headaches. Their team understands fintech challenges better than anyone."</p>
                     <div class="reviewer">
                         <div class="reviewer-avatar">
                             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="David Johnson">
@@ -856,14 +847,16 @@
                     </div>
                 </div>
                 <div class="review-card">
-                    <div class="review-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
+                    <div class="review-content">
+                        <div class="review-stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="review-text">"Their sales training program increased our conversion rates by 340%. The ROI was immediate and continues to compound every quarter."</p>
                     </div>
-                    <p class="review-text">"Their sales training program increased our conversion rates by 340%. The ROI was immediate and continues to compound every quarter."</p>
                     <div class="reviewer">
                         <div class="reviewer-avatar">
                             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Maria Chen">
@@ -925,12 +918,12 @@
             <div class="footer-section">
                 <h3>SPARTAN PROJECTS</h3>
                 <p>Your Partners In Strategic Growth</p>
-                <p>Empowering fintech companies to achieve exceptional growth through strategic consulting and operational excellence.</p>
             </div>
             <div class="footer-section">
                 <h3>Services</h3>
                 <p><a href="#services">Revenue Growth Strategies</a></p>
-                <p><a href="#services">Lending & Portfolio Management</a></p>
+                <p><a href="#services">Lending Operations</a></p>
+                <p><a href="#services">Portfolio Management</a></p>
                 <p><a href="#services">Leadership Training</a></p>
                 <p><a href="#services">Sales Training</a></p>
             </div>
