@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use - Aquamark</title>
+    <!-- Web preview -->
+    <meta property="og:title" content="Terms of Use - Aquamark">
+    <meta property="og:description" content="Terms of Use and End User License Agreement for Aquamark document protection services.">
+    <meta property="og:image" content="https://www.aquamark.io/preview.png">
+    <meta property="og:url" content="https://www.aquamark.io/terms">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header - Ultra Minimal */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f3f4f6;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #111827;
+        }
+
+        .sign-in-btn {
+            background: #eff6ff !important;
+            color: #1d4ed8 !important;
+            padding: 0.65rem 1.25rem;
+            border: 1px solid #1d4ed8;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .get-started-btn {
+            background: #111827 !important;
+            color: #ffffff !important;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .get-started-btn:hover {
+            background: #1f2937 !important;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 3px;
+        }
+
+        .mobile-menu-btn span {
+            width: 20px;
+            height: 2px;
+            background: #6b7280;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* Terms Content */
+        .terms-section {
+            background: #ffffff;
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .terms-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .terms-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .terms-header h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .terms-header p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .effective-date {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .effective-date p {
+            color: #374151;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .terms-content {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .terms-intro {
+            background: #f0f4ff;
+            border: 1px solid #c7d2fe;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        .terms-section-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .terms-section-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .terms-section-item h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-number {
+            background: #111827;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .terms-section-item p {
+            font-size: 1rem;
+            color: #374151;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .terms-section-item p:last-child {
+            margin-bottom: 0;
+        }
+
+        .terms-list {
+            list-style: none;
+            margin: 1rem 0;
+            padding-left: 0;
+        }
+
+        .terms-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .terms-list li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #111827;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            color: #92400e;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .contact-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .contact-info p {
+            color: #374151;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .contact-info .founder-name {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .contact-info .phone {
+            color: #3F00FF;
+            font-weight: 600;
+        }
+
+        .contact-info .email {
+            color: #3F00FF;
+            text-decoration: none;
+        }
+
+        .contact-info .email:hover {
+            text-decoration: underline;
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-btn {
+            background: #111827;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-home-btn:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 0;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem;
+                border-top: 1px solid #f3f4f6;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .sign-in-btn,
+            .get-started-btn {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+                display: block;
+                box-sizing: border-box;
+            }
+
+            .terms-section {
+                padding: 120px 0 60px;
+            }
+
+            .terms-container {
+                padding: 0 15px;
+            }
+
+            .terms-header h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+
+            .terms-header p {
+                font-size: 1.1rem;
+            }
+
+            .terms-content {
+                padding: 2rem;
+            }
+
+            .terms-section-item h2 {
+                font-size: 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .contact-info {
+                gap: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .terms-container {
+                padding: 0 10px;
+            }
+
+            .terms-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .terms-content {
+                padding: 1.5rem;
+            }
+
+            .terms-section-item h2 {
+                font-size: 1.1rem;
+            }
+
+            .section-number {
+                width: 24px;
+                height: 24px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="https://www.aquamark.io" class="logo">
+                <img src="/logo-full-black-blue.png" alt="Aquamark">
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://www.aquamark.io/api">API</a></li>
+                <li><a href="https://www.aquamark.io#brokers">Brokers</a></li>
+                <li><a href="https://www.aquamark.io/lenders">Lenders</a></li>
+                <li><a href="https://www.aquamark.io#pricing">Pricing</a></li>
+                <li><a href="https://www.aquamark.io/compliance">Compliance</a></li>
+                <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign In</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Terms Content -->
+    <section class="terms-section">
+        <div class="terms-container">
+            <div class="terms-header">
+                <h1>Terms of Use</h1>
+                <p>End User License Agreement (EULA) for Aquamark Services</p>
+            </div>
+
+            <div class="effective-date">
+                <p><strong>Effective Date:</strong> January 1, 2025</p>
+            </div>
+
+            <div class="terms-content">
+                <div class="terms-intro">
+                    <strong>By creating an account or using Aquamark, you agree to the following terms:</strong>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">1</span>
+                        License and Acceptable Use
+                    </h2>
+                    <p>We grant you a limited, non-exclusive license to use Aquamark for document watermarking and tracking purposes. You may not:</p>
+                    <ul class="terms-list">
+                        <li>Reverse-engineer, decompile, or tamper with the service.</li>
+                        <li>Resell or sublicense access without written permission.</li>
+                        <li>Use the platform for illegal, fraudulent, or unauthorized activities.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">2</span>
+                        Document Handling and Storage
+                    </h2>
+                    <div class="highlight-box">
+                        <p>Aquamark processes documents in real time. We do <strong>not store your uploaded PDFs</strong> or any resulting watermarked files. Once processing is complete, your files are immediately deleted from our system.</p>
+                    </div>
+                    <p>You are solely responsible for the handling and distribution of your watermarked files after download.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">3</span>
+                        API and Automation Access
+                    </h2>
+                    <p>API access is available to eligible subscribers. You are responsible for securing your API key. Usage may be monitored to ensure fair access. Misuse or abuse may result in termination of access.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">4</span>
+                        Free Trial
+                    </h2>
+                    <p>Free trials include limited usage (e.g., 100 pages or 7 days) and may be suspended, extended, or revoked at our discretion. No payment is required during the trial period.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">5</span>
+                        Ownership and Intellectual Property
+                    </h2>
+                    <p>Aquamark, its technology, branding, and all related materials are owned by Aquamark and may not be copied, modified, or distributed without permission.</p>
+                    <p>Watermarked documents remain your property; however, you acknowledge that the watermarking system may embed logos, QR codes, and other traceable metadata as part of the output.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">6</span>
+                        Disclaimer of Warranties
+                    </h2>
+                    <p>Aquamark is provided "as-is." We do not guarantee that watermarking will prevent misuse, nor do we assume responsibility for how your documents are shared, stored, or accessed after processing.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">7</span>
+                        Limitation of Liability
+                    </h2>
+                    <p>We are not liable for damages related to loss of data, reputation, or business resulting from the use or misuse of the platform. Your use of Aquamark is at your own risk.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">8</span>
+                        Termination
+                    </h2>
+                    <p>We reserve the right to suspend or terminate accounts at any time for violation of these terms or abuse of the platform.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">9</span>
+                        Governing Law
+                    </h2>
+                    <p>These terms are governed by the laws of the State of California, without regard to conflict-of-law principles.</p>
+                </div>
+
+                <div class="terms-section-item">
+                    <h2>
+                        <span class="section-number">10</span>
+                        Contact
+                    </h2>
+                    <p>Questions? Contact us at:</p>
+                    <div class="contact-section">
+                        <h3>Contact Information</h3>
+                        <div class="contact-info">
+                            <p class="founder-name">Christina Duncan</p>
+                            <p>Founder, Aquamark</p>
+                            <p class="phone">(415) 500-1117</p>
+                            <a href="mailto:info@aquamark.io" class="email">info@aquamark.io</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="back-home">
+                <a href="https://www.aquamark.io" class="back-home-btn">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            navLinks.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        }
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
