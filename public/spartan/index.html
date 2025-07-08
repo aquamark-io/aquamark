@@ -195,14 +195,17 @@
             justify-items: center;
         }
 
-        .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+1) {
-            grid-column: 1 / -1;
-            width: calc(33.333% + 1rem);
+        /* Center the last 2 cards when there are 8 total cards */
+        .services-grid .service-card:nth-child(7) {
+            grid-column: 1;
+            justify-self: end;
+            margin-right: 1rem;
         }
 
-        .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+2) {
-            grid-column: 2 / -1;
-            width: calc(33.333% + 1rem);
+        .services-grid .service-card:nth-child(8) {
+            grid-column: 3;
+            justify-self: start;
+            margin-left: 1rem;
         }
 
         .service-card {
@@ -591,10 +594,11 @@
                 justify-items: center;
             }
 
-            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+1),
-            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+2) {
+            .services-grid .service-card:nth-child(7),
+            .services-grid .service-card:nth-child(8) {
                 grid-column: auto;
-                width: 100%;
+                justify-self: center;
+                margin: 0;
             }
 
             .partner-logo {
@@ -609,10 +613,11 @@
                 justify-items: center;
             }
 
-            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+1),
-            .services-grid .service-card:nth-last-child(-n+2):nth-child(3n+2) {
+            .services-grid .service-card:nth-child(7),
+            .services-grid .service-card:nth-child(8) {
                 grid-column: auto;
-                width: 100%;
+                justify-self: center;
+                margin: 0;
             }
         }
     </style>
@@ -920,6 +925,7 @@
             <div class="footer-section">
                 <h3>SPARTAN PROJECTS</h3>
                 <p>Your Partners In Strategic Growth</p>
+                <p>Empowering fintech companies to achieve exceptional growth through strategic consulting and operational excellence.</p>
             </div>
             <div class="footer-section">
                 <h3>Services</h3>
