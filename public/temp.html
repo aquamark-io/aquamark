@@ -1,818 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aquamark for Lenders</title>
-    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-            background: #ffffff;
-            overflow-x: hidden;
-            width: 100%;
-            max-width: 100vw;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid #f3f4f6;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #6b7280;
-            font-weight: 400;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: #111827;
-        }
-
-        .back-home-btn {
-            background: #3F00FF !important;
-            color: #ffffff !important;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: all 0.2s ease;
-            text-decoration: none;
-        }
-
-        .back-home-btn:hover {
-            background: #1a1a1a !important;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: #ffffff;
-            padding: 140px 0 40px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            color: #111827;
-            letter-spacing: -0.02em;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            color: #6b7280;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* How it Works Section */
-        .how-it-works {
-            background: #fafafa;
-            padding: 80px 0;
-        }
-
-        .how-it-works h2 {
-            font-size: 2.5rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
-
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .step-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-
-        .step-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-        }
-
-        .step-number {
-            background: #3F00FF;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin: 0 auto 1.5rem auto;
-        }
-
-        .step-card h3 {
-            font-size: 1.3rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .step-card p {
-            color: #6b7280;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* Free Test CTA */
-        .free-test-cta {
-            background: #ffffff;
-            padding: 80px 0 60px 0;
-            text-align: center;
-        }
-
-        .free-test-card {
-            background: #f0f4ff;
-            border: 1px solid #3F00FF;
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin: 0 auto;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(63, 0, 255, 0.15);
-        }
-
-        .free-test-card h3 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: #3F00FF;
-        }
-
-        .free-test-card p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #3F00FF;
-            opacity: 0.9;
-        }
-
-        .test-params {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(63, 0, 255, 0.3);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 500px;
-            text-align: left;
-        }
-
-        .test-params h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #3F00FF;
-        }
-
-        .test-params div {
-            margin-bottom: 0.75rem;
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.9rem;
-            color: #3F00FF;
-        }
-
-        .test-params strong {
-            color: #3F00FF;
-            font-weight: 600;
-        }
-
-        /* API Section */
-        .api-section {
-            padding: 60px 0 10px;
-            background: #ffffff;
-        }
-
-        .api-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .api-details {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .api-details h3 {
-            font-size: 1.1rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .endpoint {
-            background: #f9fafb;
-            color: #6b7280;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
-            border: 1px solid #e5e7eb;
-            word-break: break-all;
-        }
-
-        .params-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.875rem;
-        }
-
-        .params-table th,
-        .params-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .params-table th {
-            background: #f9fafb;
-            font-weight: 600;
-            color: #111827;
-        }
-
-        .params-table code {
-            background: #f9fafb;
-            color: #111827;
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
-            font-family: 'SF Mono', Monaco, monospace;
-            font-size: 0.8125rem;
-            font-weight: 500;
-        }
-
-        .required {
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 80px 0;
-            background: #fafafa;
-        }
-
-        .pricing h2 {
-            font-size: 3rem;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
-
-        .pricing-subheadline {
-            font-size: 1.3rem;
-            color: #6b7280;
-            line-height: 1.7;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4.5rem auto;
-        }
-
-        .pricing-cta {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .pricing-cta p {
-            font-size: 1.2rem;
-            color: #6b7280;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .register-button {
-            background: #3F00FF;
-            color: #ffffff;
-            padding: 1.2rem 2.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 4px 20px rgba(63, 0, 255, 0.3);
-        }
-
-        .register-button:hover {
-            background: #1a1a1a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(63, 0, 255, 0.4);
-        }
-
-        /* Footer */
-        .footer-wrapper {
-            background: #ffffff;
-            border-top: 1px solid #f3f4f6;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1.5rem;
-            color: #111827;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #6b7280;
-            text-decoration: none;
-            margin-bottom: 0.5rem;
-            display: block;
-            transition: color 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .footer-section a:hover {
-            color: #111827;
-        }
-
-        .footer-bottom {
-            background: #111827;
-            color: #9ca3af;
-            text-align: center;
-            padding: 2rem 0;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .nav-links a {
-                font-size: 0.85rem;
-                white-space: nowrap;
-            }
-
-            .back-home-btn {
-                padding: 0.6rem 1rem !important;
-                font-size: 0.85rem !important;
-            }
-
-            .hero {
-                padding: 120px 0 40px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .how-it-works {
-                padding: 60px 0;
-            }
-
-            .how-it-works h2 {
-                font-size: 2rem;
-            }
-
-            .free-test-cta {
-                padding: 60px 0 40px 0;
-            }
-
-            .free-test-card {
-                padding: 2rem;
-            }
-
-            .free-test-card h3 {
-                font-size: 1.8rem;
-            }
-
-            .free-test-card p {
-                font-size: 1.2rem;
-            }
-
-            .api-section {
-                padding: 40px 0 10px;
-            }
-
-            .pricing h2 {
-                font-size: 2.2rem;
-                line-height: 1.2;
-            }
-
-            .pricing {
-                padding: 60px 0;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 10px;
-            }
-
-            nav {
-                padding: 0 5px;
-            }
-
-            .nav-links {
-                gap: 0.5rem;
-                flex-wrap: nowrap;
-            }
-
-            .nav-links a {
-                font-size: 0.75rem;
-                padding: 0.25rem;
-            }
-
-            .back-home-btn {
-                padding: 0.5rem 0.75rem !important;
-                font-size: 0.75rem !important;
-                min-width: auto !important;
-            }
-
-            .hero {
-                padding: 100px 0 30px;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .how-it-works {
-                padding: 50px 0;
-            }
-
-            .how-it-works h2 {
-                font-size: 1.8rem;
-            }
-
-            .step-card {
-                padding: 1.5rem;
-            }
-
-            .free-test-cta {
-                padding: 50px 0 30px 0;
-            }
-
-            .free-test-card {
-                padding: 1.5rem;
-            }
-
-            .free-test-card h3 {
-                font-size: 1.5rem;
-            }
-
-            .api-section {
-                padding: 30px 0 10px;
-            }
-
-            .pricing h2 {
-                font-size: 1.8rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - Aquamark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-align: center;
+    }
+    .referral-info {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #0369a1;
+    }
+    .terms-notice {
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+    .terms-notice a {
+      color: #0ea5e9;
+      text-decoration: none;
+    }
+    .terms-notice a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <a href="https://www.aquamark.io" class="logo">
-                <img src="/logo-full-black-blue.png" alt="Aquamark">
-            </a>
-            <ul class="nav-links">
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="https://www.aquamark.io" class="back-home-btn">Home</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Aquamark for Lenders</h1>
-                <p>Trust leads to strong relationships, a better reputation, and long-term growth.<br>
-                Built trust, grow your portfolio.</p>
-            </div>
-        </div>
-    </section>
+<div class="container">
+  <div style="text-align: center; margin-bottom: 1rem;">
+    <a href="/">
+      <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
+    </a>
+  </div>
 
-    <!-- How it Works Section -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <h2>How it Works</h2>
-            <p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-    Underwriters misuse files too — arguably more than brokers because of their access. It's not the lenders fault, but it becomes the lenders fault if they choose to ignore it.
-</p>
+  <!-- Show referral info if present -->
+  <div id="referralInfo" style="display: none;" class="referral-info">
+    <strong>🎉 Referral Code Applied!</strong><br>
+    <span id="referralCode"></span>
+  </div>
 
+  <!-- Terms and Privacy Policy notice -->
+  <div class="terms-notice">
+    By signing up, you agree to our <a href="https://www.aquamark.io/terms-of-use" target="_blank">Terms of Use</a> and <a href="https://www.aquamark.io/privacy" target="_blank">Privacy Policy</a>.
+  </div>
+
+  <div id="outsetaAuth"
+       data-o-auth="1"
+       data-widget-mode="register"
+       data-plan-uid="aWxLDdWV"
+       data-skip-plan-options="true"
+       data-mode="embed">
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Aquamark. All rights reserved.
+</footer>
+
+<!-- Outseta Embed -->
+<script>
+  // Extract referral code from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const referralCode = urlParams.get('ref') || urlParams.get('referral');
+  
+  console.log('Detected referral code:', referralCode);
+  
+  // Show referral info if present
+  if (referralCode) {
+    document.getElementById('referralInfo').style.display = 'block';
+    document.getElementById('referralCode').textContent = referralCode;
+  }
+  
+  var o_options = {
+    domain: 'aquamark.outseta.com',
+    load: 'auth'
+  };
+</script>
+<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+<script>
+  // Handle successful registration
+  document.addEventListener('DOMContentLoaded', function() {
+    // Listen for successful registration
+    if (window.Outseta) {
+      Outseta.on('user.register', function(user) {
+        console.log('User registered:', user);
         
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>PDF Interception</h3>
-                    <p>Aquamark intercepts PDF downloads from your CRM</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Watermark & Attribute</h3>
-                    <p>Tamper-resistant and OCR-safe watermarks applied to every page, along with QR code attributing the downloader.</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Protection</h3>
-                    <p>Marked file returned to downloader. No more access to "clean", sellable files.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        // If there's a referral code, we need to store it
+        if (referralCode) {
+          console.log('Storing referral code for user:', referralCode);
+          // The referral code will be handled when they first visit the dashboard
+          sessionStorage.setItem('pendingReferralCode', referralCode);
+        }
+      });
+    }
+  });
+</script>
 
-    <!-- Free Test CTA -->
-    <section class="free-test-cta" id="free-test">
-        <div class="container">
-            <div class="free-test-card">
-                <h3>Test 100 API calls for FREE</h3>
-                <p>One stolen submission can cost you thousands.</p>
-                
-                <div class="test-params">
-                    <h4>Testing Parameters</h4>
-                    <div><strong>User Email:</strong> test@aquamark.io</div>
-                    <div><strong>API Key:</strong> api-aqua-lender-test-4423101813</div>
-                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(63, 0, 255, 0.2); font-size: 0.8rem; line-height: 1.4; opacity: 0.8;">
-                        <strong>Note:</strong> Test watermarks display Aquamark branding. Subscribe to use your custom company branding.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- API Section -->
-    <section class="api-section" id="api">
-        <div class="container">
-            <div class="api-content">
-                <div class="api-details">
-                    <h3 style="font-size: 1.9rem;">Simple API Integration</h3>
-                    <p style="margin-bottom: 2rem; color: #6b7280; line-height: 1.6;">
-                        Setup takes minutes.<br>
-                        Simply intercept the PDF download event, send files to our API endpoint, and return the watermarked version to the user.
-                    </p>
-                    
-                    <h3>Endpoint</h3>
-                    <div class="endpoint">POST https://aquamark-lenders.onrender.com/watermark</div>
-                    
-                    <h3>Authorization</h3>
-                    <div class="endpoint">Bearer Token YOUR_API_KEY</div>
-                    
-                    <h3>Request Format</h3>
-                    <p style="margin-bottom: 1rem; color: #6b7280;">Use multipart/form-data with the following fields:</p>
-                    <table class="params-table">
-                        <thead>
-                            <tr>
-                                <th>Field</th>
-                                <th>Type</th>
-                                <th>Required</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>file</code></td>
-                                <td>File</td>
-                                <td class="required">Required</td>
-                                <td>The original PDF to protect</td>
-                            </tr>
-                            <tr>
-                                <td><code>name</code></td>
-                                <td>String</td>
-                                <td class="required">Required</td>
-                                <td>Person signed in and initiating download</td>
-                            </tr>
-                            <tr>
-                                <td><code>company</code></td>
-                                <td>String</td>
-                                <td class="required">Required</td>
-                                <td>Your company name</td>
-                            </tr>
-                            <tr>
-                                <td><code>user_email</code></td>
-                                <td>String</td>
-                                <td class="required">Required</td>
-                                <td>Aquamark account email</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Response</h3>
-                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; font-size: 0.875rem;">
-                        <li>Returns a <strong>200 OK</strong> with the protected PDF.</li>
-                        <li>Treat it as a file download.</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Common Implementations</h3>
-                    <ul style="color: #6b7280; margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6; font-size: 0.875rem;">
-                        <li><strong>Salesforce</strong> - override the download button or embed a Visualforce page to return the protected file.</li>
-                        <li><strong>Custom or proprietary CRMs</strong> - intercept the click/download event and POST the file via the API.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2>Simple and Transparent Pricing</h2>
-            <p class="pricing-subheadline">No payments for the first 30 days. No hidden fees. No setup costs.</p>
-            
-            <div class="pricing-cta">
-                <p>Our pricing is tier-based and we bill you at the end of the month based on your usage:</p>
-                
-                <div class="pricing-tiers" style="background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 2rem; margin: 2rem auto; max-width: 500px; text-align: left;">
-                    <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f3f4f6;">
-                        <strong style="color: #111827;">5,000 submissions</strong> / 15,000 PDF files = <strong style="color: #3F00FF;">$499</strong>
-                    </div>
-                    <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f3f4f6;">
-                        <strong style="color: #111827;">10,000 submissions</strong> / 30,000 PDF files = <strong style="color: #3F00FF;">$749</strong>
-                    </div>
-                    <div style="margin-bottom: 0;">
-                        <strong style="color: #111827;">25,000 submissions</strong> / 75,000 PDF files = <strong style="color: #3F00FF;">$999</strong>
-                    </div>
-                </div>
-                
-                <a href="https://aquamark.fillout.com/lenders" class="register-button">Register & Get Started</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <div class="footer-wrapper" id="contact">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contact Information</h3>
-                <p>Phone: (415) 500-1117</p>
-                <p>Email: info@aquamark.io</p>
-                <p>490 Post Street<br>Suite 500<br>San Francisco, CA 94102</p>
-            </div>
-
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <a href="#how-it-works">How it Works</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#api">API Docs</a>
-                <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
-            </div>
-
-            <div class="footer-section">
-                <h3>Services</h3>
-                <a href="https://www.aquamark.io#brokers">Broker Solutions</a>
-                <a href="https://www.aquamark.io#lenders">Lender Solutions</a>
-                <a href="https://www.aquamark.io/contact">Contact</a>
-            </div>
-
-            <div class="footer-section">
-                <h3>Partnerships</h3>
-                <a href="https://www.aquamark.io/contact">Wholesale Opportunities</a>
-                <a href="https://www.aquamark.io/contact">Affiliate Opportunities</a>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 Aquamark. All rights reserved.</p>
-        </div>
-    </div>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.style.background = 'rgba(255, 255, 255, 0.98)';
-                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-                } else {
-                    header.style.background = 'rgba(255, 255, 255, 0.95)';
-                    header.style.boxShadow = 'none';
-                }
-            }
-        });
-    </script>
 </body>
 </html>
