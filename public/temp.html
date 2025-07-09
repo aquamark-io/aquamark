@@ -1,135 +1,2103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up - Aquamark</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
-  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
-      color: #111827;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    .container {
-      width: 100%;
-      max-width: 400px;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.875rem;
-      color: #6b7280;
-      text-align: center;
-    }
-    .referral-info {
-      background: #f0f9ff;
-      border: 1px solid #0ea5e9;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      font-size: 0.875rem;
-      color: #0369a1;
-    }
-    .terms-notice {
-      font-size: 0.75rem;
-      color: #6b7280;
-      text-align: center;
-      margin-top: 1.5rem;
-      line-height: 1.4;
-    }
-    .terms-notice a {
-      color: #0ea5e9;
-      text-decoration: none;
-    }
-    .terms-notice a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquamark</title>
+    <!-- Web preview -->
+<meta property="og:title" content="Aquamark – Document Protection for FinTech">
+<meta property="og:description" content="Watermarking that prevents backdooring and builds trust.">
+<meta property="og:image" content="https://www.aquamark.io/preview.png">
+<meta property="og:url" content="https://www.aquamark.io">
+<meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .protection-section .container {
+            max-width: 1400px;
+        }
+
+        /* Header - Ultra Minimal */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f3f4f6;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #111827;
+        }
+
+   .sign-in-btn {
+    background: #eff6ff !important;     /* soft blue background */
+    color: #1d4ed8 !important;          /* medium blue text */
+    padding: 0.65rem 1.25rem;           /* slightly larger padding */
+    border: 1px solid #1d4ed8;          /* same blue border */
+    border-radius: 8px;
+    font-weight: 600;                   /* slightly bolder text */
+    font-size: 1rem;                    /* slightly larger text */
+    text-decoration: none;
+}
+
+
+
+        .get-started-btn {
+            background: #111827 !important;
+            color: #ffffff !important;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .get-started-btn:hover {
+            background: #1f2937 !important;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 3px;
+        }
+
+        .mobile-menu-btn span {
+            width: 20px;
+            height: 2px;
+            background: #6b7280;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* Hero Section - Minimal White */
+        .hero {
+            background: #ffffff;
+            padding: 140px 0 120px;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.6rem;
+            margin-bottom: 3rem;
+            color: #6b7280;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
+
+        .hero-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+
+        .cta-button {
+            background: #111827;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        .api-docs-button {
+            background: white;
+            color: #111827;
+            padding: 1rem 2rem;
+            border: 1px solid #111827;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .api-docs-button:hover {
+            background: #f9fafb;
+            transform: translateY(-1px);
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 80px 0;
+            background: #fafafa;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .partners h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #6b7280;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .partner-carousel {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin: 0;
+            width: 100%;
+        }
+
+        .partner-track {
+            display: inline-flex;
+            align-items: center;
+            gap: 6rem;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+        }
+
+        .partner-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-100% + 100vw));
+            }
+        }
+
+        .partner-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .partner-logo img {
+            height: 160px;
+            width: auto;
+            max-width: 600px;
+            object-fit: contain;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+
+        .partner-logo:hover img {
+            opacity: 1;
+        }
+
+        /* Problem Section - Minimal */
+        .problem-section {
+            padding: 120px 0;
+            background: #ffffff;
+        }
+
+        .problem-content {
+            text-align: center;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .problem-section h2 {
+            font-size: 3.0rem;
+            margin-bottom: 2rem;
+            color: #111827;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .problem-section p {
+            font-size: 1.3rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 120px 0;
+            background: #fafafa;
+        }
+
+        .products-hero {
+            text-align: center;
+        }
+
+        .products-content h2 {
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-benefits {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .hero-benefits li {
+            font-size: 1.3rem;
+            color: #6b7280;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        /* Aquamark for Brokers Section */
+       
+        .red-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            margin: 1.25rem auto 2rem;
+            animation: pulseDot 2s ease-in-out infinite;
+            opacity: 0.9;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .green-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #00e600;
+            border-radius: 50%;
+            margin: 1.25rem auto 2rem;
+            animation: pulseDot 2s ease-in-out infinite;
+            opacity: 0.9;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        
+        .brokers-section {
+            padding: 120px 0;
+            background: #ffffff;
+        }
+
+        .brokers-content h2 {
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .brokers-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .brokers-problem,
+        .brokers-solution {
+            text-align: center;
+            width: 100%;
+        }
+
+        .brokers-problem h3,
+        .brokers-solution h3 {
+            font-size: 1.8rem;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .brokers-problem p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .solution-features {
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .feature {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .feature-number {
+            background: #111827;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .feature p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .watermark-sample {
+            background: #f9fafb;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem 3rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .sample-box {
+            position: relative;
+        }
+
+        .sample-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .sample-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .brokers-benefits {
+            border-top: 1px solid #939799;
+            padding-top: 4rem;
+        }
+
+        .brokers-benefits h3 {
+            font-size: 2.2rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+        }
+
+        .benefit-item h4 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .benefit-item p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Aquamark for Lenders Section */
+        .lenders-section {
+            padding: 120px 0;
+            background: #fafafa;
+        }
+
+        .lenders-content h2 {
+            font-size: 3rem;
+            color: #111827;
+            margin-bottom: 4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        .lenders-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .lenders-problem,
+        .lenders-solution {
+            text-align: center;
+            width: 100%;
+        }
+
+        .lenders-problem h3,
+        .lenders-solution h3 {
+            font-size: 1.8rem;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .lenders-problem p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        .solution-steps {
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .step {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .step-number {
+            background: #111827;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .step p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .watermark-example {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem 3rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .example-box {
+            position: relative;
+        }
+
+        .watermark-text {
+            font-size: 1rem;
+            color: #374151;
+            font-family: 'Courier New', monospace;
+            background: rgba(219, 234, 254, 0.4);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0;
+            border: 1px solid rgba(147, 197, 253, 0.4);
+        }
+
+        .example-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .lenders-benefits {
+            border-top: 1px solid #939799;
+            padding-top: 4rem;
+        }
+
+        .lenders-benefits h3 {
+            font-size: 2.2rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        /* Founder Quote */
+        .founder-quote {
+            text-align: center;
+            margin: 4rem 0;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .founder-quote blockquote {
+            margin: 0;
+        }
+
+        .founder-quote p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .founder-quote cite {
+            font-size: 1rem;
+            color: #6b7280;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+
+.quote-banner {
+  text-align: center;
+  margin: 3rem 0;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.quote-banner p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+}
+
+        
+
+        /* This is the key fix - ensure lenders benefits also use the grid layout */
+        .lenders-benefits .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 120px 0;
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #111827;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .review-grid {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin: 0;
+            width: 100%;
+            margin-top: 3rem;
+        }
+
+        .review-track {
+            display: inline-flex;
+            align-items: stretch;
+            gap: 2rem;
+            animation: scrollReviews 60s linear infinite;
+            width: max-content;
+        }
+
+        .review-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollReviews {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-50%));
+            }
+        }
+
+        .review-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 350px;
+            max-width: 350px;
+            white-space: normal;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .review-content {
+            flex-grow: 1;
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-card p {
+            color: #374151;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .reviewer {
+            font-weight: 500;
+            color: #111827;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 120px 0;
+            background: #fafafa;
+        }
+
+        .pricing .container {
+            max-width: 100%;
+            padding: 0 40px;
+        }
+
+        .pricing-subheadline {
+            font-size: 1.3rem;
+            color: #6b7280;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 1rem;
+            margin-bottom: 4.5rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .pricing-card.featured {
+            border: 1px solid #111827;
+        }
+
+        .pricing-card.dark {
+            background: #111827;
+            color: white;
+            border: 1px solid #1f2937;
+        }
+
+        .pricing-card.dark h3,
+        .pricing-card.dark .price,
+        .pricing-card.dark .price-note,
+        .pricing-card.dark .partnership-description,
+        .pricing-card.dark .product-features li {
+            color: white;
+        }
+
+        .pricing-card.dark .product-features li::before {
+            color: white;
+        }
+
+        .pricing-card.dark .cta-button {
+            background: white;
+            color: #111827;
+        }
+
+        .pricing-card.dark .cta-button:hover {
+            background: #e5e7eb;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 1rem 0;
+        }
+
+        .price-note {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .product-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 1.1rem;
+            color: #374151;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #111827;
+            font-weight: bold;
+        }
+
+        .partnership-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+        }
+
+        .partnership-card h3 {
+            color: #475569;
+        }
+
+        .partnership-description {
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .contact-button {
+            background: #475569;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .contact-button:hover {
+            background: #334155;
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            color: #6b7280;
+            padding: 40px 0 10px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #6b7280;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: #111827;
+        }
+
+        .footer-bottom {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .partner-logo img {
+                height: 140px;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem;
+                border-top: 1px solid #f3f4f6;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .sign-in-btn,
+            .get-started-btn {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+                display: block;
+                box-sizing: border-box;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .hero-benefits {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero-benefits li {
+                white-space: normal;
+                font-size: 1.1rem;
+            }
+
+            .partners {
+                padding: 60px 0;
+            }
+
+            .partner-carousel {
+                margin-top: 2rem;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .partner-track {
+                gap: 3rem;
+                animation: scroll 30s linear infinite;
+                display: flex;
+                width: max-content;
+            }
+
+            .partner-logo img {
+                height: 100px;
+                max-width: 300px;
+            }
+
+            .problem-section,
+            .products,
+            .brokers-section,
+            .lenders-section,
+            .reviews,
+            .pricing {
+                padding: 80px 0;
+            }
+
+            .section-title,
+            .problem-section h2,
+            .products-content h2,
+            .brokers-content h2,
+            .lenders-content h2 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+
+            .problem-section p {
+                font-size: 1.1rem;
+            }
+
+            .brokers-grid,
+            .lenders-grid {
+                gap: 3rem;
+                margin-bottom: 3rem;
+            }
+
+            .brokers-problem h3,
+            .brokers-solution h3,
+            .lenders-problem h3,
+            .lenders-solution h3 {
+                font-size: 1.5rem;
+            }
+
+            .feature,
+            .step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+                max-width: 100%;
+            }
+
+            .feature p,
+            .step p {
+                text-align: center;
+            }
+
+            .watermark-sample,
+            .watermark-example {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .brokers-benefits h3,
+            .lenders-benefits h3 {
+                font-size: 1.8rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .review-grid {
+                overflow: hidden;
+                width: 100%;
+                margin-top: 2rem;
+                white-space: nowrap;
+            }
+
+            .review-track {
+                gap: 1rem;
+                animation: scrollReviews 40s linear infinite !important;
+                display: inline-flex !important;
+                width: max-content !important;
+                align-items: stretch;
+            }
+
+            .review-card {
+                min-width: 280px;
+                max-width: 300px;
+                padding: 1.5rem;
+                flex-shrink: 0;
+            }
+
+            .review-card p {
+                font-size: 1rem;
+            }
+
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: center;
+                width: 100%;
+            }
+
+            .pricing-card {
+                width: 100%;
+                max-width: 350px;
+                padding: 2rem;
+            }
+
+            .pricing .container {
+                padding: 0 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section h3 {
+                text-align: center;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                text-align: center;
+            }
+
+            /* Force animation restart on mobile */
+            @keyframes scrollReviews {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-50%));
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title,
+            .problem-section h2,
+            .products-content h2,
+            .brokers-content h2,
+            .lenders-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .brokers-problem h3,
+            .brokers-solution h3,
+            .lenders-problem h3,
+            .lenders-solution h3 {
+                font-size: 1.3rem;
+            }
+
+            .brokers-benefits h3,
+            .lenders-benefits h3 {
+                font-size: 1.5rem;
+            }
+
+            .benefit-item h4 {
+                font-size: 1.1rem;
+            }
+
+            .benefit-item p {
+                font-size: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section h3 {
+                text-align: center;
+            }
+
+            .footer-section p,
+            .footer-section a {
+                text-align: center;
+            }
+
+            .pricing-subheadline {
+                font-size: 1.1rem;
+            }
+
+            .price {
+                font-size: 2.5rem;
+            }
+
+            .pricing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                width: 100%;
+            }
+
+            .pricing-card {
+                width: 100%;
+                max-width: none;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Fix for seamless carousel scrolling */
+        .partner-track {
+            will-change: transform;
+        }
+
+        .review-track {
+            will-change: transform;
+        }
+
+        /* Ensure smooth scrolling performance */
+        @media (prefers-reduced-motion: no-preference) {
+            .partner-track,
+            .review-track {
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .partner-track,
+            .review-track {
+                animation: none;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <img src="/logo-full-black-blue.png" alt="Aquamark">
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://www.aquamark.io/api">API</a></li>
+                <li><a href="#brokers">Brokers</a></li>
+                <li><a href="https://www.aquamark.io/lenders">Lenders</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="https://www.aquamark.io/compliance">Compliance</a></li>
+                <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign In</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
 
-<div class="container">
-  <div style="text-align: center; margin-bottom: 1rem;">
-    <a href="/">
-      <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
-    </a>
-  </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Bringing Transparency and Accountability to FinTech — One File at a Time</h1>
+                <p>We protect your documents so they stay your documents.</p>
+                <div class="hero-buttons">
+  <a href="https://www.aquamark.io/signup" class="cta-button">Free Trial Broker</a>
+  <a href="https://www.aquamark.io/lenders" class="cta-button" style="background-color: #3F00FF; color: white;">Free Trial Lender</a>
+  <a href="https://www.aquamark.io/api" class="api-docs-button">API Docs</a>
+</div>
 
-  <!-- Show referral info if present -->
-  <div id="referralInfo" style="display: none;" class="referral-info">
-    <strong>🎉 Referral Code Applied!</strong><br>
-    <span id="referralCode"></span>
-  </div>
+            </div>
+        </div>
+    </section>
 
-  <div id="outsetaAuth"
-       data-o-auth="1"
-       data-widget-mode="register"
-       data-plan-uid="aWxLDdWV"
-       data-skip-plan-options="true"
-       data-mode="embed">
-  </div>
+    <!-- Partners Section -->
+    <section class="partners">
+        <div class="container">
+            <h2>Compatible with Leading Platforms</h2>
+        </div>
+        <div class="partner-carousel">
+            <div class="partner-track">
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
+                </div>
+                <!-- Third set for extra smoothness -->
+                <div class="partner-logo">
+                    <img src="ocro.png" alt="Ocrolus" />
+                </div>
+                <div class="partner-logo">
+                    <img src="text.png" alt="Textract" />
+                </div>
+                <div class="partner-logo">
+                    <img src="heronn.png" alt="Heron" />
+                </div>
+                <div class="partner-logo">
+                    <img src="cloud.png" alt="Cloudsquare" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docpipe.png" alt="Docupipe" />
+                </div>
+                <div class="partner-logo">
+                    <img src="docs.png" alt="Docsumo" />
+                </div>
+                <div class="partner-logo">
+                    <img src="mt.png" alt="MoneyThumb" />
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Terms and Privacy Policy notice -->
-  <div class="terms-notice">
-    By signing up, you agree to our <a href="https://www.aquamark.io/terms-of-use" target="_blank">Terms of Use</a> and <a href="https://www.aquamark.io/privacy" target="_blank">Privacy Policy</a>.
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="problem-content">
+                <h2>Impact of Unauthorized Document Sharing </h2>
+                <p>Unauthorized document sharing is triggering regulatory attention, breaking trust between Brokers and Lenders, and pushing merchants to back out of deals or fall into dangerous stacking cycles.</p>
+                
+                <!-- Founder Quote -->
+                <div class="founder-quote">
+                    <blockquote>
+                        <p>"People backdoor, not companies."</p>
+                        <cite>— Founder of Aquamark</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="products-hero">
+                <div class="products-content">
+                    <h2>Watermarking That Works</h2>
+                    <ul class="hero-benefits">
+                        <li> For Brokers and Lenders</li>
+                        <li> Tamper-resistant</li>
+                        <li> OCR-safe</li>
+                        <li> Built for accountability</li>
+                    </ul>
+                </div>
+            </div>
+            
+
+<!-- Security Assurance -->
+<div class="founder-quote">
+  <blockquote>
+    <p>"Are my documents safe with Aquamark?"</p>
+    <cite>We never store files. Once watermarking is done, we send them right back.</cite>
+  </blockquote>
+</div>
+
+<!-- Centered API Callout -->
+<div style="display: flex; justify-content: center; margin-top: 1.5rem;">
+  <div style="
+    color: #3F00FF;
+    font-size: 1.1rem;
+    background: #f0f4ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    text-align: center;
+  ">
+    <div>Automate watermarking in minutes</div>
+    <a href="https://www.aquamark.io/api" style="
+      display: inline-block;
+      margin-top: 0.9rem;
+      background-color: #3F00FF;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: background 0.2s ease;
+    ">New API</a>
   </div>
 </div>
 
-<footer>
-  &copy; 2025 Aquamark. All rights reserved.
-</footer>
+            
+</section> <!-- closes .products section -->
 
-<!-- Outseta Embed -->
-<script>
-  // Extract referral code from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const referralCode = urlParams.get('ref') || urlParams.get('referral');
-  
-  console.log('Detected referral code:', referralCode);
-  
-  // Show referral info if present
-  if (referralCode) {
-    document.getElementById('referralInfo').style.display = 'block';
-    document.getElementById('referralCode').textContent = referralCode;
-  }
-  
-  var o_options = {
-    domain: 'aquamark.outseta.com',
-    load: 'auth'
-  };
-</script>
-<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-<script>
-  // Handle successful registration
-  document.addEventListener('DOMContentLoaded', function() {
-    // Listen for successful registration
-    if (window.Outseta) {
-      Outseta.on('user.register', function(user) {
-        console.log('User registered:', user);
+    <!-- Aquamark for Brokers Section -->
+    <section class="brokers-section" id="brokers">
+        <div class="container">
+            <div class="brokers-content">
+                <h2>Aquamark for Brokers</h2>
+                <div class="red-dot"></div>
+                <div class="brokers-grid">
+                    <div class="brokers-problem">
+                        <h3>The Problem</h3>
+                        <p>Lead generation is expensive and challenging, pushing many to cut corners. As a result, unauthorized document sharing has quietly become standard practice—and worse, it's completely unchecked.</p>
+                    </div>
+                    <div class="brokers-solution">
+                        <div class="green-dot"></div>
+                        <h3>The Solution</h3>
+                        <div class="solution-features">
+                            <div class="feature">
+                                <span class="feature-number">1</span>
+                                <p>Branded watermarks, tamper-resistant, OCR-safe</p>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-number">2</span>
+                                <p>Smart QR codes — log who was given access </p>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-number">3</span>
+                                <p>Protect your commissions</p>
+                            </div>
+                        </div>
+                        <div class="watermark-sample">
+                            <div class="sample-box">
+                                <img src="/watermark-sample.png" alt="Watermark Sample" class="sample-image" />
+                                <span class="sample-label">Broker Sample</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <p style="text-align: center; color: #6b7280; font-size: 1.1rem; margin: 2.5rem 0 2.5rem;">
+  One stolen deal can cost you up to <span style="color: #3F00FF; font-weight: 600; font-size: 1.4rem;">$4,000</span> in commission.
+</p>
+
+                
+                <div class="brokers-benefits">
+                    <h3>Prevent Unauthorized Document Sharing At Scale</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <h4>Deter Silent Theft</h4>
+                            <p>Backdooring is quiet, constant, and costly</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Create Friction</h4>
+                            <p>Bad actors will think twice when it's marked</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Protect Commissions</h4>
+                            <p>Unmarked files are easy targets — practically a giveaway</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Stop the Cycle</h4>
+                            <p>Backdooring fuels stacking and kills deals</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    
+    <!-- Aquamark for Lenders Section -->
+    <section class="lenders-section" id="lenders">
+        <div class="container">
+            <div class="lenders-content">
+                <h2>Aquamark for Lenders</h2>
+                <div class="red-dot"></div>
+
+                <div class="lenders-grid">
+                    <div class="lenders-problem">
+                        <h3>The Problem</h3>
+                        <p>Underwriters misuse files too — arguably more than brokers because of their access. It's not the lenders fault, but it becomes the lenders fault if they choose to ignore it.</p>
+                    </div>
+
+<div class="quote-banner">
+  <blockquote>
+    <p>"Prevention builds trust. Reaction breaks it."</p>
+  </blockquote>
+</div>
+
+                    
+                    <div class="lenders-solution">
+                        <div class="green-dot"></div>
+                        <h3>The Solution</h3>
+                        <div class="solution-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <p>Aquamark intercepts PDF downloads from your CRM</p>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <p>Branded watermarks, tamper-resistant, OCR-safe</p>
+                            </div>
+
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <p>Smart QR code - log those given access</p>
+                            </div>
+
+                            <!-- NEW: Inserted image preview -->
+                            <div class="watermark-example">
+                              <div class="sample-box">
+                                <img src="/lender-example.png" alt="Lender Sample Watermark" class="sample-image" />
+                                <span class="sample-label">Lender Sample</span>
+                              </div>
+                            </div>
+
+                           
+                                <p style="margin-top: 1.5rem; font-size: 1.2rem; color: #3F00FF; font-style: bold;">Independent Protection by a Trusted Brand</p>
+                                <a href="https://www.aquamark.io/lenders" class="cta-button" style="background-color: #3F00FF; color: white; margin-top: 1rem; display: inline-block;">Free Testing</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lenders-benefits">
+                    <h3>Build Trust with Your ISOs</h3>
+                    <div class="benefits-grid">
+                       <div class="benefit-item">
+                            <h4>Stop Backdooring</h4>
+                            <p>Eliminate access to "clean," sellable documents</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Send a Clear Message</h4>
+                            <p>Show your ISOs you take document security seriously</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Beyond Words</h4>
+                            <p>Don't tell your ISOs "trust us" — tell them you use Aquamark</p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>Protect Your Reputation</h4>
+                            <p>Theft ruins trust — and exposes you to legal risk</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Trusted by Brokers and Lenders Nationwide</h2>
+        </div>
+        <div class="review-grid">
+            <div class="review-track">
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Can't stop everyone, but this is a great start."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anthony, Ops Manager, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">K</div>
+                        <strong>Kelly, CEO, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anonymous, Processor, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more join."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">E</div>
+                        <strong>Eric, Team Leader, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We need a public database of everyone caught stealing files. It's time for big-box lenders to lead by example — a push from them could reshape the entire industry."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">P</div>
+                        <strong>Peter, President, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We were one of Aquamark's first customers and within the first couple weeks, we noticed less merchants calling us upset about getting a bunch of random calls."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">M</div>
+                        <strong>Matt, Sales Manager, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Exactly what the industry needs. As a lender, we now have a way to show our ISOs their documents are safe with us."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>Daniel, CEO, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Unfortunately and fortunately we caught the person stealing."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">C</div>
+                        <strong>Chris, COO, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"I hate to think our own employees would steal, but this is so necessary to repair the damage that's been done over the years."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">Z</div>
+                        <strong>Zack, Founder, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">D</div>
+                        <strong>Diana, Underwriter, Lender</strong>
+                    </div>
+                </div>
+
+                <!-- Duplicate set for seamless loop -->
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"Can't stop everyone, but this is a great start."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anthony, Ops Manager, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">K</div>
+                        <strong>Kelly, CEO, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">A</div>
+                        <strong>Anonymous, Processor, Lender</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more join."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">E</div>
+                        <strong>Eric, Team Leader, Broker</strong>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-content">
+                        <div class="stars">★★★★★</div>
+                        <p>"We need a public database of everyone caught stealing files. It's time for big-box lenders to lead by example — a push from them could reshape the entire industry."</p>
+                    </div>
+                    <div class="reviewer">
+                        <div class="avatar">P</div>
+                        <strong>Peter, President, Lender</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Join the Fight Against Unauthorized Document Sharing</h2>
+            <p class="pricing-subheadline">No hidden fees. No setup costs. Built to be affordable for everyone.</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <h3>Brokers</h3>
+                    <div class="price">$299*</div>
+                    <p class="price-note">per month</p>
+                    
+                    <ul class="product-features">
+                        <li>Unlimited watermarking</li>
+                        <li>Branded overlays</li>
+                        <li>Smart QR codes</li>
+                        <li>Basic support</li>
+                    </ul>
+                    
+<a href="https://www.aquamark.io/signup" class="cta-button" style="background-color: #3F00FF; color: white;">Start Free</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Lenders</h3>
+                    <div class="price">$399*</div>
+                    <p class="price-note">per month</p>
+                    
+                    <ul class="product-features">
+                        <li>Simple integration</li>
+                        <li>Dedicated server</li>
+                        <li>Independent protection</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    
+<a href="https://www.aquamark.io/lenders" class="cta-button" style="background-color: #3F00FF; color: white;">Start Free</a>
+                </div>
+
+               <div class="pricing-card dark">
+                  <h3>Opportunities</h3>
+                  <div class="price">Earn</div>
+                  <p class="price-note">Revenue share</p>
+
+                  <ul class="product-features">
+                    <li>Wholesale program</li>
+                    <li>Affiliate program</li>
+                    <li>Recurring monthly revenue</li>
+                  </ul>
+
+                 <a href="https://www.aquamark.io/contact" class="cta-button">Request Info</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Phone: (415) 500-1117</p>
+                    <p>Email: info@aquamark.io</p>
+                    <p>490 Post Street<br>Suite 500<br>San Francisco, CA 94102</p>
+                </div>
+
+<div class="footer-section">
+  <h3>Quick Links</h3>
+  <a href="#pricing">Pricing</a>
+  <a href="#reviews">Reviews</a>
+  <a href="https://www.aquamark.io/contact">Contact</a>
+  <a href="https://www.aquamark.io/terms-of-use">Terms of Use</a>
+  <a href="https://www.aquamark.io/privacy">Privacy Policy</a>
+</div>
+
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="#brokers">Broker Solutions</a>
+                    <a href="#lenders">Lender Solutions</a>
+                    <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Partnerships</h3>
+                    <a href="https://www.aquamark.io/contact">Wholesale Opportunities</a>
+                    <a href="https://www.aquamark.io/contact">Affiliate Opportunities</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer Bottom - Full Width -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
         
-        // If there's a referral code, we need to store it
-        if (referralCode) {
-          console.log('Storing referral code for user:', referralCode);
-          // The referral code will be handled when they first visit the dashboard
-          sessionStorage.setItem('pendingReferralCode', referralCode);
-        }
-      });
-    }
-  });
-</script>
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
 
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            navLinks.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
+
+        // Pause animations when tab is not visible for performance
+        document.addEventListener('visibilitychange', function() {
+            const tracks = document.querySelectorAll('.partner-track, .review-track');
+            tracks.forEach(track => {
+                if (document.visibilityState === 'hidden') {
+                    track.style.animationPlayState = 'paused';
+                } else {
+                    track.style.animationPlayState = 'running';
+                }
+            });
+        });
+
+        // Intersection Observer for performance optimization
+        const observerOptions = {
+            root: null,
+            rootMargin: '50px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                } else {
+                    entry.target.style.animationPlayState = 'paused';
+                }
+            });
+        }, observerOptions);
+
+        // Observe carousel tracks
+        document.querySelectorAll('.partner-track, .review-track').forEach(track => {
+            observer.observe(track);
+        });
+    </script>
 </body>
 </html>
