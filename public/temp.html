@@ -835,160 +835,71 @@
             color: #6b7280;
         }
 
-        /* Pricing Section */
-        .pricing {
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
             padding: 80px 0;
-            background: #fafafa;
-        }
-
-        .pricing .container {
-            max-width: 100%;
-            padding: 0 40px;
-        }
-
-        .pricing-subheadline {
-            font-size: 1.1rem;
-            color: #6b7280;
-            line-height: 1.6;
             text-align: center;
-            max-width: 700px;
-            margin: 0 auto;
-            margin-top: 0.5rem;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: #b8c5d1;
             margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 2rem;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .pricing-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.2s ease;
+        .cta-buttons {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        .pricing-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-        }
-
-        .pricing-card.featured {
-            border: 1px solid #111827;
-        }
-
-        .pricing-card.dark {
-            background: #111827;
-            color: white;
-            border: 1px solid #1f2937;
-        }
-
-        .pricing-card.dark h3,
-        .pricing-card.dark .price,
-        .pricing-card.dark .price-note,
-        .pricing-card.dark .partnership-description,
-        .pricing-card.dark .product-features li {
-            color: white;
-        }
-
-        .pricing-card.dark .product-features li::before {
-            color: white;
-        }
-
-        .pricing-card.dark .cta-button {
-            background: white;
-            color: #111827;
-        }
-
-        .pricing-card.dark .cta-button:hover {
-            background: #e5e7eb;
-        }
-
-        .pricing-card h3 {
-            font-size: 1.4rem;
+        .cta-large-button {
+            display: block;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #111827;
-            margin-bottom: 1rem;
-        }
-
-        .price {
-            font-size: 2.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 1rem 0;
-        }
-
-        .price-note {
-            color: #6b7280;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        .product-features {
-            list-style: none;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .product-features li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 1.5rem;
-            font-size: 1.1rem;
-            color: #374151;
-        }
-
-        .product-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #111827;
-            font-weight: bold;
-        }
-
-        .partnership-card {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            border: 1px solid #cbd5e1;
-        }
-
-        .partnership-card h3 {
-            color: #475569;
-        }
-
-        .partnership-description {
-            color: #64748b;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .contact-button {
-            background: #475569;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
             text-decoration: none;
-            display: inline-block;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-align: center;
         }
 
-        .contact-button:hover {
-            background: #334155;
-            transform: translateY(-1px);
+        .broker-btn {
+            background: #3F00FF;
+            color: white;
+            border: 2px solid #3F00FF;
+        }
+
+        .broker-btn:hover {
+            background: #3200cc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(63, 0, 255, 0.3);
+        }
+
+        .lender-btn {
+            background: #3F00FF;
+            color: white;
+            border: 2px solid #3F00FF;
+        }
+
+        .lender-btn:hover {
+            background: #3200cc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(63, 0, 255, 0.3);
         }
 
         /* Footer */
@@ -1145,8 +1056,8 @@
             .brokers-section,
             .lenders-section,
             .reviews,
-            .pricing {
-                padding: 80px 0;
+            .cta-section {
+                padding: 60px 0;
             }
 
             .section-title,
@@ -1154,7 +1065,7 @@
             .products-content h2,
             .brokers-content h2,
             .lenders-content h2 {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
                 line-height: 1.2;
             }
 
@@ -1231,22 +1142,23 @@
                 font-size: 1rem;
             }
 
-            .pricing-grid {
-                display: flex;
+            .cta-buttons {
                 flex-direction: column;
-                gap: 1.5rem;
-                align-items: center;
-                width: 100%;
+                gap: 0.8rem;
             }
 
-            .pricing-card {
-                width: 100%;
-                max-width: 350px;
-                padding: 2rem;
+            .cta-large-button {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
             }
 
-            .pricing .container {
-                padding: 0 20px;
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+
+            .cta-content p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
             }
 
             .footer-content {
@@ -1399,7 +1311,6 @@
                 <li><a href="https://www.aquamark.io/api">API</a></li>
                 <li><a href="#brokers">Brokers</a></li>
                 <li><a href="https://www.aquamark.io/lenders">Lenders</a></li>
-                <li><a href="#pricing">Pricing</a></li>
                 <li><a href="https://www.aquamark.io/compliance">Compliance</a></li>
                 <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign In</a></li>
             </ul>
@@ -1900,55 +1811,15 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
+    <!-- CTA Section -->
+    <section class="cta-section">
         <div class="container">
-            <h2 class="section-title">Join the Fight Against Unauthorized Document Sharing</h2>
-            <p class="pricing-subheadline">No hidden fees. No setup costs. Built to be affordable for everyone.</p>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card featured">
-                    <h3>Brokers</h3>
-                    <div class="price">$299*</div>
-                    <p class="price-note">per month</p>
-                    
-                    <ul class="product-features">
-                        <li>Unlimited watermarking</li>
-                        <li>Branded overlays</li>
-                        <li>Smart QR codes</li>
-                        <li>Basic support</li>
-                    </ul>
-                    
-<a href="https://www.aquamark.io/signup" class="cta-button" style="background-color: #3F00FF; color: white;">Start Free</a>
-                </div>
-
-                <div class="pricing-card featured">
-                    <h3>Lenders</h3>
-                    <div class="price">$399*</div>
-                    <p class="price-note">per month</p>
-                    
-                    <ul class="product-features">
-                        <li>Simple integration</li>
-                        <li>Dedicated server</li>
-                        <li>Independent protection</li>
-                        <li>Priority Support</li>
-                    </ul>
-                    
-<a href="https://www.aquamark.io/lenders" class="cta-button" style="background-color: #3F00FF; color: white;">Start Free</a>
-                </div>
-
-               <div class="pricing-card dark">
-                  <h3>Opportunities</h3>
-                  <div class="price">Earn</div>
-                  <p class="price-note">Revenue share</p>
-
-                  <ul class="product-features">
-                    <li>Wholesale program</li>
-                    <li>Affiliate program</li>
-                    <li>Recurring monthly revenue</li>
-                  </ul>
-
-                 <a href="https://www.aquamark.io/contact" class="cta-button">Request Info</a>
+            <div class="cta-content">
+                <h2>Ready to Stop Document Theft?</h2>
+                <p>Join hundreds of professionals protecting their documents and building trust with clients</p>
+                <div class="cta-buttons">
+                    <a href="https://www.aquamark.io/signup" class="cta-large-button broker-btn">Broker Solutions</a>
+                    <a href="https://www.aquamark.io/lenders" class="cta-large-button lender-btn">Lender Solutions</a>
                 </div>
             </div>
         </div>
