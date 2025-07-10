@@ -1,4 +1,14 @@
-.problem-section p {
+.products-cta {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .products-cta-button {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }            .problem-section p {
                 font-size: 1.1rem;
             }            .problem-section,<!DOCTYPE html>
 <html lang="en">
@@ -435,6 +445,50 @@
             color: #6b7280;
             line-height: 1.5;
             margin: 0;
+        }
+
+        /* Products CTA Section */
+        .products-cta {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .products-cta-button {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+
+        .products-cta-button.broker-btn {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .products-cta-button.broker-btn:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .products-cta-button.lender-btn {
+            background: #111827;
+            color: white;
+            border-color: #111827;
+        }
+
+        .products-cta-button.lender-btn:hover {
+            background: #1f2937;
+            border-color: #1f2937;
+            transform: translateY(-1px);
         }
 
         /* Founder Quote */
@@ -1339,6 +1393,12 @@
                     <h3>Track & Trace</h3>
                     <p>Identify the source of leaked documents instantly with detailed tracking</p>
                 </div>
+            </div>
+
+            <!-- Product CTAs -->
+            <div class="products-cta">
+                <a href="https://www.aquamark.io/signup" class="products-cta-button broker-btn">Brokers</a>
+                <a href="https://www.aquamark.io/lenders" class="products-cta-button lender-btn">Lenders</a>
             </div>
         </div>
     </section>
