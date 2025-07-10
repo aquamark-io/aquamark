@@ -934,13 +934,23 @@
     font-size: 0.85rem;
   }
 
-                @media (max-width: 768px) {
+@media (max-width: 768px) {
   .nav-right {
+    display: flex;
     justify-content: center !important;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
     gap: 8px;
+    width: 100%;
+  }
+
+  .broker-portal-btn,
+  .green-nav-btn {
+    width: auto;
+    margin: 0 auto;
   }
 }
+
 
 
             .hero {
