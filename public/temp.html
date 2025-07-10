@@ -347,6 +347,68 @@
             white-space: nowrap;
         }
 
+        /* Feature Cards Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border-color: #e5e7eb;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #3F00FF;
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: #f0f4ff;
+            border-color: #e0e7ff;
+            transform: scale(1.05);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin: 0;
+        }
+
         /* Founder Quote */
         .founder-quote {
             text-align: center;
@@ -732,6 +794,24 @@
                 padding: 60px 0;
             }
 
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .feature-card p {
+                font-size: 0.95rem;
+            }
+
             .section-title,
             .problem-section h2,
             .products-content h2 {
@@ -835,6 +915,30 @@
             .problem-section h2,
             .products-content h2 {
                 font-size: 1.8rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+                margin: 1.5rem 0;
+            }
+
+            .feature-card {
+                padding: 1.25rem;
+            }
+
+            .feature-icon {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 1rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .feature-card p {
+                font-size: 0.9rem;
             }
 
             .footer-content {
@@ -1038,15 +1142,75 @@
             <div class="products-hero">
                 <div class="products-content">
                     <h2>Watermarking That Works</h2>
-                    <ul class="hero-benefits">
-                        <li> For Brokers and Lenders</li>
-                        <li> Tamper-resistant</li>
-                        <li> OCR-safe</li>
-                        <li> Built for accountability</li>
-                    </ul>
                 </div>
             </div>
-            
+
+            <!-- Feature Cards Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Invisible Watermarks</h3>
+                    <p>Tamper-resistant watermarks that don't interfere with OCR processing or document readability</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <rect x="7" y="7" width="10" height="10" rx="1" ry="1" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Smart QR Codes</h3>
+                    <p>Track who was given access to each document with embedded QR codes</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>5-Minute Setup</h3>
+                    <p>Simple API integration or web interface - start protecting documents immediately</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22S8 18 8 13C8 10.7909 9.79086 9 12 9C14.2091 9 16 10.7909 16 13C16 18 12 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="13" r="3" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Zero Storage</h3>
+                    <p>We never store your files - documents are watermarked and returned instantly</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <rect x="7" y="9" width="10" height="7" rx="1" ry="1" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>CRM Integration</h3>
+                    <p>Works with Salesforce, proprietary CRMs, Zoho, Close, and more</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Track & Trace</h3>
+                    <p>Identify the source of leaked documents instantly with detailed tracking</p>
+                </div>
+            </div>
 
 <!-- Security Assurance -->
 <div class="founder-quote">
