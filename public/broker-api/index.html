@@ -490,6 +490,27 @@ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
             margin: 0;
         }
 
+        /* Common Setups Button */
+        .common-setups-btn {
+            background: #dc2626;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .common-setups-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
         /* CTA Section */
         .cta-section {
             background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
@@ -755,6 +776,10 @@ file: [Select File] statement.pdf</pre>
                 <p style="text-align: center; color: #6b7280; margin-top: 1rem;">
                     If you'd like to use your optional Smart QR code, see the documentation below.
                 </p>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="https://drive.google.com/file/d/1r4NXnmvgZSzi1dbiDDSUN9uEamyX1D2Y/view?usp=sharing" class="common-setups-btn" target="_blank">See Common Setups</a>
+                </div>
             </div>
 
             <!-- Smart QR Code Documentation -->
@@ -783,11 +808,6 @@ file: [Select File] statement.pdf</pre>
                         </div>
                     </div>
                     
-                    <div class="qr-note">
-                        <h4>Note</h4>
-                        <p>Use any combination of the three optional inputs — or none.
-For the lender input, create separate versions per lender for traceability. Most brokers auto-delete them post-submission (via Zapier, Make, Apex Scheduler, etc.).</p>                    </div>
-                </div>
             </div>
 
 
@@ -938,6 +958,3 @@ For the lender input, create separate versions per lender for traceability. Most
                 }
             });
         });
-    </script>
-</body>
-</html>
