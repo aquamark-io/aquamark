@@ -765,12 +765,17 @@
 }
 
 .sign-in-btn.lender-btn-blue {
-  background-color: rgba(59, 130, 246, 0.1); /* soft blue with opacity */
-  color: #1d4ed8; /* Tailwind blue-700 */
+  background-color: rgba(59, 130, 246, 0.1); /* soft blue */
+  color: #1d4ed8; /* bold blue */
   font-weight: 600;
-  border: 1px solid #1d4ed8;
+  border: 2px solid #1d4ed8;
   border-radius: 8px;
+
+  /* Override inherited large padding and font-size */
   padding: 12px 24px;
+  font-size: 1rem;
+  line-height: 1.25rem;
+
   display: inline-block;
   transition: all 0.3s ease;
 }
