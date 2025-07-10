@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Aquamark</title>
+    <!-- Web preview -->
+    <meta property="og:title" content="Aquamark API – Document Protection for Brokers">
+    <meta property="og:description" content="Simple API integration for watermarking and document protection.">
+    <meta property="og:image" content="https://www.aquamark.io/preview.png">
+    <meta property="og:url" content="https://www.aquamark.io/api">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header - Ultra Minimal */
+        header {
+            background: #fafafa;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f3f4f6;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #111827;
+        }
+
+        .sign-in-btn {
+            background: #eff6ff !important;
+            color: #1d4ed8 !important;
+            padding: 0.65rem 1.25rem;
+            border: 1px solid #1d4ed8;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .get-started-btn {
+            background: #111827 !important;
+            color: #ffffff !important;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .get-started-btn:hover {
+            background: #1f2937 !important;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            gap: 3px;
+        }
+
+        .mobile-menu-btn span {
+            width: 20px;
+            height: 2px;
+            background: #6b7280;
+            transition: all 0.2s ease;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 120px;
+            padding-bottom: 80px;
+            background: #ffffff;
+        }
+
+        .api-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .api-hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .api-hero p {
+            font-size: 1.3rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .quick-start-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        /* API Testing Section */
+        .api-testing {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .testing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .testing-header h2 {
+            font-size: 2rem;
+            color: #111827;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .testing-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            text-align: center;
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 0.8rem;
+            line-height: 24px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* API Credentials */
+        .api-credentials {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .credential-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .credential-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .credential-value {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            color: #1f2937;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .code-title {
+            color: #9ca3af;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .code-copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #374151;
+            color: #d1d5db;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .code-copy-btn:hover {
+            background: #4b5563;
+            color: #f9fafb;
+        }
+
+        /* Features Grid */
+        .features-section {
+            margin: 4rem 0;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #111827;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
+            border-color: #e5e7eb;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #2563eb;
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: #f0f4ff;
+            border-color: #e0e7ff;
+            transform: scale(1.05);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        /* Smart QR Code Section */
+        .smart-qr-section {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .qr-header h2 {
+            font-size: 1.5rem;
+            color: #111827;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .qr-intro {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .code-inline {
+            background: #f1f5f9;
+            color: #e11d48;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+        }
+
+        .qr-parameters {
+            margin: 2rem 0;
+        }
+
+        .parameter-item {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .parameter-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .parameter-item h4 {
+            font-size: 1.1rem;
+            color: #111827;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+
+        .parameter-item p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .qr-note {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            border-left: 4px solid #3b82f6;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .qr-note h4 {
+            color: #1e40af;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .qr-note p {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .qr-note p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Note Section */
+        .note-section {
+            background: #eff6ff;
+            border: 1px solid #3b82f6;
+            border-left: 4px solid #3b82f6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .note-section h4 {
+            color: #1e40af;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-section p {
+            color: #1e40af;
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            padding: 80px 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: #b8c5d1;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: #2563eb;
+            color: white;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            color: #6b7280;
+            padding: 30px 0 5px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #6b7280;
+            text-decoration: none;
+            margin-bottom: 0.4rem;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: #111827;
+        }
+
+        .footer-bottom {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem;
+                border-top: 1px solid #f3f4f6;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .api-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .api-hero p {
+                font-size: 1.2rem;
+            }
+
+            .api-testing {
+                padding: 2rem 1rem;
+            }
+
+            .credential-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .credential-label {
+                font-size: 0.9rem;
+            }
+
+            .code-block {
+                padding: 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .api-hero h1 {
+                font-size: 2rem;
+            }
+
+            .testing-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <img src="/logo-full-black-blue.png" alt="Aquamark">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/compliance">Compliance</a></li>
+                <li><a href="/login.html" class="sign-in-btn">Sign In</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="api-hero">
+                <div class="quick-start-badge">API Documentation for Brokers</div>
+                <h1>Setup in <span style="color: #2563eb;">Minutes</span></h1>
+                <p>Simple API integration for watermarking and document protection. Test for free, deploy with confidence.</p>
+            </div>
+
+            <!-- API Testing Section -->
+            <div class="api-testing">
+                <div class="testing-header">
+                    <h2>API Testing for ISOs</h2>
+                    <div class="testing-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>Setup in minutes</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>Test for free</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>Deploy to production</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note-section">
+                    <h4>Testing Environment</h4>
+                    <p>During testing, your files will display Aquamark's branding. Once you subscribe, we'll collect your logo and transition you to a production environment.</p>
+                </div>
+
+                <!-- API Credentials -->
+                <div class="api-credentials">
+                    <div class="credential-row">
+                        <div class="credential-label">API Key</div>
+                        <div class="credential-value">
+                            aqua-api-watermark-10182013040420111015
+                            <button class="copy-btn" onclick="copyToClipboard('aqua-api-watermark-10182013040420111015')">Copy</button>
+                        </div>
+                    </div>
+                    <div class="credential-row">
+                        <div class="credential-label">Test Parameter</div>
+                        <div class="credential-value">
+                            user_email = 1christinaduncan@gmail.com
+                            <button class="copy-btn" onclick="copyToClipboard('user_email = 1christinaduncan@gmail.com')">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Example -->
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-title">API Request Example</div>
+                    </div>
+                    <button class="code-copy-btn" onclick="copyCodeBlock()">Copy</button>
+                    <pre id="codeExample">POST https://aquamark-decrypt.onrender.com/watermark
+
+Headers:
+Authorization: Bearer YOUR_API_KEY
+Content-Type: multipart/form-data
+
+Body (form-data):
+user_email: john@example.com
+file: [Select File] statement.pdf</pre>
+                </div>
+
+                <p style="text-align: center; color: #1e40af; font-size: 1.4rem; font-weight: 700; margin: 3rem 0 2rem; line-height: 1.4;">
+                    Watermarking alone is a powerful deterrent against document misuse.
+                </p>
+
+                <p style="text-align: center; color: #6b7280; margin-top: 1rem;">
+                    If you'd like to use your optional Smart QR code, see the documentation below.
+                </p>
+            </div>
+
+            <!-- Smart QR Code Documentation -->
+            <div class="smart-qr-section">
+                <div class="qr-header">
+                    <h2>+ Optional Smart QR Code</h2>
+                </div>
+                
+                <div class="qr-content">
+                    <p class="qr-intro">Send as <span class="code-inline">form-data</span></p>
+                    
+                    <div class="qr-parameters">
+                        <div class="parameter-item">
+                            <h4>state</h4>
+                            <p>string - (e.g. "CA") Get compliance disclaimers pushed to your CRM (add custom field)</p>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <h4>salesperson</h4>
+                            <p>string - (e.g. "John Doe") Smart QR code - embed who was given access</p>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <h4>processor</h4>
+                            <p>string - (e.g. "John Doe") Smart QR code - embed who was given access</p>
+                        </div>
+                        
+                        <div class="parameter-item">
+                            <h4>lender</h4>
+                            <p>string - (e.g. "John Doe") Smart QR code - embed who was given access</p>
+                        </div>
+                    </div>
+                    
+                    <div class="qr-note">
+                        <h4>Note</h4>
+                        <p>You can use one, two, or all three optional inputs — it's flexible, including not using them at all.</p>
+                        
+                        <p>When using the lender parameter, create separate versions for each lender to ensure traceability. Most brokers delete these watermarked versions after submission. This can be automated using tools like Apex Scheduler (Salesforce), Zapier, Make, and others.</p>
+                        
+                        <p><strong>It's a small extra step with a major advantage.</strong></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Get Started?</h2>
+                <p>Join hundreds of brokers protecting their documents with Aquamark.</p>
+                <a href="/signup" class="cta-button">Start Free Trial</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Phone: (415) 500-1117</p>
+                    <p>Email: info@aquamark.io</p>
+                    <p>490 Post Street<br>Suite 500<br>San Francisco, CA 94102</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="/">Home</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/terms-of-use">Terms of Use</a>
+                    <a href="/privacy">Privacy Policy</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="/signup">Broker Solutions</a>
+                    <a href="/lenders">Lender Solutions</a>
+                    <a href="/compliance">Free Compliance Hub</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Documentation</h3>
+                    <a href="/api">API Documentation</a>
+                    <a href="/contact">Integration Support</a>
+                    <a href="/contact">Technical Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Close mobile menu when clicking on nav links
+            navLinks.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        }
+
+        // Copy to clipboard functionality
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Show feedback
+                const event = new Event('copied');
+                document.dispatchEvent(event);
+                
+                // Temporary visual feedback
+                const copyBtns = document.querySelectorAll('.copy-btn');
+                copyBtns.forEach(btn => {
+                    if (btn.onclick.toString().includes(text)) {
+                        const originalText = btn.textContent;
+                        btn.textContent = 'Copied!';
+                        btn.style.background = '#10b981';
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.style.background = '#2563eb';
+                        }, 2000);
+                    }
+                });
+            });
+        }
+
+        function copyCodeBlock() {
+            const codeExample = document.getElementById('codeExample');
+            const text = codeExample.textContent;
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const btn = document.querySelector('.code-copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#374151';
+                }, 2000);
+            });
+        }
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = '#fafafa';
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>'0 2px 20px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = '#fafafa';
+                    header.style.boxShadow =
