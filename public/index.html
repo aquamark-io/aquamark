@@ -765,19 +765,22 @@
 }
 
 .lender-hero-btn {
-  background-color: rgba(59, 130, 246, 0.1); /* soft blue */
-  color: #1d4ed8; /* Tailwind blue-700 */
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
   font-weight: 600;
   border: 2px solid #1d4ed8;
   border-radius: 8px;
   padding: 10px 20px;
   font-size: 1rem;
-  line-height: 1.25rem;
-  display: inline-block;
-  transition: all 0.3s ease;
+  line-height: 1.5; /* Slightly taller to center better */
+  display: inline-flex; /* change from inline-block */
+  align-items: center; /* center vertically */
+  justify-content: center;
   text-align: center;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
+
 
 .lender-hero-btn:hover {
   background-color: rgba(59, 130, 246, 0.2);
