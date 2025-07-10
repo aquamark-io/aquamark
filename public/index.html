@@ -927,29 +927,23 @@
                 box-sizing: border-box;
             }
 
-            @media (max-width: 480px) {
-  .sign-in-btn {
-    max-width: 150px;
-    padding: 8px 12px;
-    font-size: 0.85rem;
-  }
-
-@media (max-width: 768px) {
-  .nav-right {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    margin-top: 1rem;
-    gap: 10px;
-  }
-
-  .nav-right a {
-    width: auto;
-    margin: 0 auto;
-  }
-
+            /* Fix for mobile button centering */
+            .nav-links .sign-in-btn {
+                width: 100% !important;
+                max-width: none !important;
+                text-align: center !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+            
+            /* Also ensure the broker nav button is properly centered */
+            .nav-links .broker-nav-btn {
+                width: 100% !important;
+                max-width: none !important;
+                text-align: center !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
 
             .hero {
                 padding: 120px 0 80px;
