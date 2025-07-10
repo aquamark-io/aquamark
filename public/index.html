@@ -751,7 +751,7 @@
   background-color: rgba(34, 197, 94, 0.1); /* light green with opacity */
   color: #15803d; /* Tailwind green-700 */
   font-weight: 600;
-  border: 1px solid #15803d;
+  border: 2px solid #15803d;
   border-radius: 8px;
   padding: 12px 24px;
   display: inline-block;
@@ -764,27 +764,27 @@
   border-color: #166534;
 }
 
-.sign-in-btn.lender-btn-blue {
+.lender-hero-btn {
   background-color: rgba(59, 130, 246, 0.1); /* soft blue */
-  color: #1d4ed8; /* bold blue */
+  color: #1d4ed8; /* Tailwind blue-700 */
   font-weight: 600;
   border: 2px solid #1d4ed8;
   border-radius: 8px;
-
-  /* Override inherited large padding and font-size */
-  padding: 12px 24px;
+  padding: 10px 20px;
   font-size: 1rem;
   line-height: 1.25rem;
-
   display: inline-block;
   transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
 }
 
-.sign-in-btn.lender-btn-blue:hover {
-  background-color: rgba(59, 130, 246, 0.2); /* slightly darker on hover */
-  color: #1e40af; /* Tailwind blue-800 */
+.lender-hero-btn:hover {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: #1e40af;
   border-color: #1e40af;
 }
+
 
 
 
@@ -1432,7 +1432,7 @@
             <!-- Product CTAs -->
             <div class="products-cta">
                 <a href="https://www.aquamark.io/brokers" class="products-cta-button broker-btn broker-btn-green">Brokers</a>
-<a href="https://www.aquamark.io/lenders" class="sign-in-btn lender-btn-blue">Lenders</a>
+<a href="https://www.aquamark.io/lenders" class="lender-hero-btn">Lenders</a>
             </div>
         </div>
     </section>
