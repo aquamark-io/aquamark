@@ -423,6 +423,27 @@
             margin: 0;
         }
 
+        /* Common Setups Button */
+        .common-setups-btn {
+            background: #dc2626;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .common-setups-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
         /* CTA Section */
         .cta-section {
             background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
@@ -684,9 +705,9 @@ file: [Select File] statement.pdf</pre>
                     If you'd like to use your optional Smart QR code, see the documentation below.
                 </p>
 
-                <p style="text-align: center; color: #6b7280; margin-top: 1rem; font-style: italic;">
-                    Some of our users set it up so Aquamark intercepts the PDF download event, sends files to our API endpoint, and returns the watermarked version to the user.
-                </p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="https://drive.google.com/file/d/1r4NXnmvgZSzi1dbiDDSUN9uEamyX1D2Y/view?usp=sharing" class="common-setups-btn" target="_blank">See Common Setups</a>
+                </div>
             </div>
 
             <!-- Smart QR Code Documentation -->
