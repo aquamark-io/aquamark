@@ -409,6 +409,33 @@
             margin: 0;
         }
 
+        /* Products CTA Buttons */
+        .products-cta {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .products-cta-btn {
+            background: #3F00FF;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .products-cta-btn:hover {
+            background: #3200cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(63, 0, 255, 0.3);
+        }
+
         /* Founder Quote */
         .founder-quote {
             text-align: center;
@@ -867,6 +894,21 @@
                 font-size: 0.95rem;
             }
 
+            .products-cta {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+
+            .products-cta-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
             .section-title,
             .problem-section h2,
             .products-content h2 {
@@ -1094,6 +1136,12 @@
                     <a href="https://www.aquamark.io/lenders" class="cta-button" style="background-color: #3F00FF; color: white;">Lender Sign Up</a>
                 </div>
             </div>
+
+            <!-- CTA Buttons -->
+            <div class="products-cta">
+                <a href="https://www.aquamark.io/signup" class="products-cta-btn broker-cta">Brokers</a>
+                <a href="https://www.aquamark.io/lenders" class="products-cta-btn lender-cta">Lenders</a>
+            </div>
         </div>
     </section>
 
@@ -1266,6 +1314,12 @@
                     <p>Identify the source of leaked documents instantly with detailed tracking</p>
                 </div>
             </div>
+
+            <!-- CTA Buttons -->
+            <div class="products-cta">
+                <a href="https://www.aquamark.io/signup" class="products-cta-btn broker-cta">Brokers</a>
+                <a href="https://www.aquamark.io/lenders" class="products-cta-btn lender-cta">Lenders</a>
+            </div>
         </div>
     </section>
 
@@ -1286,8 +1340,8 @@
                     <div class="stat-label">Uptime</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">Costs of Backdooring</div>
-                    <div class="stat-label">Thousands per month</div>
+                    <div class="stat-number">$1000s</div>
+                    <div class="stat-label">Lost Monthly to Backdooring</div>
                 </div>
             </div>
         </div>
