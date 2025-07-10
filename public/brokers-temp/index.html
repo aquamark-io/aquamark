@@ -133,7 +133,27 @@
             font-size: 1.4rem;
             color: #6b7280;
             margin-top: 1rem;
+            margin-bottom: 2rem;
             font-weight: 400;
+        }
+
+        .api-docs-btn {
+            display: inline-block;
+            background: #f8fafc;
+            color: #374151;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .api-docs-btn:hover {
+            background: #f1f5f9;
+            border-color: #d1d5db;
+            transform: translateY(-1px);
         }
 
         /* Sample Section */
@@ -437,6 +457,7 @@
         <div class="container">
             <h1>Aquamark for <span style="color: #2563eb;">Brokers</span></h1>
             <p class="hero-subtitle">Protect your pipeline. Protect your commissions.</p>
+            <a href="/api" class="api-docs-btn">API Documentation</a>
         </div>
     </section>
 
