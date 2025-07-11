@@ -1,27 +1,15 @@
-.products-cta {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .products-cta-button {
-                width: 100%;
-                max-width: 300px;
-                text-align: center;
-            }            .problem-section p {
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aquamark</title>
+    <title>Aquamark for Lenders</title>
     <!-- Web preview -->
-<meta property="og:title" content="Aquamark – Document Protection for FinTech">
-<meta property="og:description" content="Watermarking that prevents backdooring and builds trust.">
-<meta property="og:image" content="https://www.aquamark.io/preview.png">
-<meta property="og:url" content="https://www.aquamark.io">
-<meta property="og:type" content="website">
+    <meta property="og:title" content="Aquamark for Lenders – Document Protection & Trust Building">
+    <meta property="og:description" content="Build trust with ISOs through independent document protection by a trusted brand.">
+    <meta property="og:image" content="https://www.aquamark.io/preview.png">
+    <meta property="og:url" content="https://www.aquamark.io/lenders">
+    <meta property="og:type" content="website">
 
     <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
 
@@ -53,11 +41,7 @@
             width: 100%;
         }
 
-        .protection-section .container {
-            max-width: 1400px;
-        }
-
-        /* Header - Ultra Minimal */
+        /* Header */
         header {
             background: #fafafa;
             backdrop-filter: blur(20px);
@@ -101,34 +85,15 @@
             color: #111827;
         }
 
-   .sign-in-btn {
-    background: #eff6ff !important;     /* soft blue background */
-    color: #1d4ed8 !important;          /* medium blue text */
-    padding: 0.65rem 1.25rem;           /* slightly larger padding */
-    border: 1px solid #1d4ed8;          /* same blue border */
-    border-radius: 8px;
-    font-weight: 600;                   /* slightly bolder text */
-    font-size: 1rem;                    /* slightly larger text */
-    text-decoration: none;
-}
-
-
-
-        .get-started-btn {
-            background: #111827 !important;
-            color: #ffffff !important;
-            padding: 0.5rem 1rem;
-            border: none;
+        .sign-in-btn {
+            background: #eff6ff !important;
+            color: #1d4ed8 !important;
+            padding: 0.65rem 1.25rem;
+            border: 1px solid #1d4ed8;
             border-radius: 8px;
-            font-weight: 400;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: 1rem;
             text-decoration: none;
-        }
-
-        .get-started-btn:hover {
-            background: #1f2937 !important;
-            transform: translateY(-1px);
         }
 
         /* Mobile menu */
@@ -147,616 +112,286 @@
             transition: all 0.2s ease;
         }
 
-        .mobile-menu-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(4px, 4px);
-        }
-
-        .mobile-menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(4px, -4px);
-        }
-
-        /* Hero Section - Split Layout */
+        /* Hero Section */
         .hero {
-            background: #ffffff;
-            padding: 120px 0 60px;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-text h1 {
-            font-size: 4rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            color: #111827;
-            letter-spacing: -0.02em;
-        }
-
-        .hero-text p {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
-            color: #6b7280;
-            line-height: 1.5;
-        }
-
-        .hero-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .hero-graphic {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        .hero-graphic svg {
-            width: 100%;
-            max-width: 420px;
-            height: auto;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
-            transition: transform 0.3s ease;
-        }
-
-        .hero-graphic svg:hover {
-            transform: scale(1.02);
-        }
-
-        .hero-image img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .hero-image img:hover {
-            transform: translateY(-5px);
-        }
-
-        .cta-button {
-            background: #111827;
-            color: #ffffff;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin-right: 1rem;
-        }
-
-        .cta-button:hover {
-            background: #1f2937;
-            transform: translateY(-1px);
-        }
-
-        .api-docs-button {
-            background: white;
-            color: #111827;
-            padding: 1rem 2rem;
-            border: 1px solid #111827;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 800;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s ease;
-        }
-
-        .api-docs-button:hover {
-            background: #f9fafb;
-            transform: translateY(-1px);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        /* Partners Section */
-        .partners {
-            padding: 60px 0;
-            background: #fafafa;
-            border-top: 1px solid #f3f4f6;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .partners h2 {
+            padding-top: 120px;
+            padding-bottom: 10px;
             text-align: center;
+            background: #ffffff;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: #111827;
             margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
             color: #6b7280;
-            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .api-docs-btn {
+            display: inline-block;
+            background: #f8fafc;
+            color: #374151;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
             font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .partner-carousel {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            margin: 0;
-            width: 100%;
-        }
-
-        .partner-track {
-            display: inline-flex;
-            align-items: center;
-            gap: 6rem;
-            animation: scroll 40s linear infinite;
-            width: max-content;
-        }
-
-        .partner-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(calc(-100% + 100vw));
-            }
-        }
-
-        .partner-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-decoration: none;
             transition: all 0.2s ease;
-            flex-shrink: 0;
         }
 
-        .partner-logo:hover {
-            transform: translateY(-2px);
+        .api-docs-btn:hover {
+            background: #f1f5f9;
+            border-color: #d1d5db;
+            transform: translateY(-1px);
         }
 
-        .partner-logo img {
-            height: 160px;
-            width: auto;
-            max-width: 600px;
-            object-fit: contain;
-            opacity: 0.8;
-            transition: opacity 0.2s ease;
+        /* Why Lenders Banner */
+        .why-lenders-banner {
+            padding: 40px 0;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-top: 1px solid #e0e7ff;
+            border-bottom: 1px solid #e0e7ff;
         }
 
-        .partner-logo:hover img {
-            opacity: 1;
+        .banner-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        /* Products Section */
-        .products {
+        .banner-content h3 {
+            font-size: 1.5rem;
+            color: #1d4ed8;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .banner-content p {
+            font-size: 1.1rem;
+            color: #1e40af;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+
+        /* Sample Section */
+        .sample-section {
             padding: 80px 0;
             background: #ffffff;
-        }
-
-        .products-hero {
             text-align: center;
         }
 
-        .products-content h2 {
-            font-size: 2.2rem;
-            color: #111827;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-        }
-
-        .hero-benefits li {
-            font-size: 1.1rem;
-            color: #6b7280;
-            font-weight: 400;
-            white-space: nowrap;
-        }
-
-        /* Feature Cards Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .feature-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
-            border-color: #e5e7eb;
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: #f8fafc;
-            border: 1px solid #f1f5f9;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: #2563eb;
-            transition: all 0.2s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            background: #f0f4ff;
-            border-color: #e0e7ff;
-            transform: scale(1.05);
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 0.75rem;
-            line-height: 1.3;
-        }
-
-        .feature-card p {
-            font-size: 1rem;
-            color: #6b7280;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        /* Products CTA Section */
-        .products-cta {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
-        .products-cta-button {
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            display: inline-block;
-            border: 2px solid;
-            min-width: 120px;
-            text-align: center;
-        }
-
-        .products-cta-button.broker-btn {
-            background: #2563eb;
-            color: white;
-            border-color: #2563eb;
-        }
-
-        .products-cta-button.broker-btn:hover {
-            background: #1d4ed8;
-            border-color: #1d4ed8;
-            transform: translateY(-1px);
-        }
-
-        .products-cta-button.lender-btn {
-            background: #111827;
-            color: white;
-            border-color: #111827;
-        }
-
-        .products-cta-button.lender-btn:hover {
-            background: #1f2937;
-            border-color: #1f2937;
-            transform: translateY(-1px);
-        }
-
-        /* Founder Quote */
-        .founder-quote {
-            text-align: center;
-            margin: 4rem 0;
-            padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .founder-quote blockquote {
-            margin: 0;
-        }
-
-        .founder-quote p {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 1rem;
-            font-style: italic;
-            line-height: 1.4;
-        }
-
-        .founder-quote cite {
-            font-size: 1rem;
-            color: #6b7280;
-            font-weight: 500;
-            font-style: normal;
-        }
-
-
-.quote-banner {
-  text-align: center;
-  margin: 3rem 0;
-  padding: 2rem 1.5rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        .sample-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    margin-bottom: 3rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.quote-banner p {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #111827;
-  font-style: italic;
-  line-height: 1.5;
-  margin: 0;
+        .independent-protection {
+            font-size: 1.5rem;
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 2rem;
         }
 
-        /* Social Proof Section */
-        .social-proof {
-            padding: 60px 0;
-            background: #2563eb;
-            border-top: 1px solid #f3f4f6;
-            border-bottom: 1px solid #f3f4f6;
+        .free-testing-btn {
+            background: #6366f1;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
+        .free-testing-btn:hover {
+            background: #5855eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(99, 102, 241, 0.4);
         }
 
-        .stat-item {
+        /* Solutions Section */
+        .solutions-section {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+
+        .solutions-title {
             text-align: center;
-            padding: 1.5rem 1rem;
-        }
-
-        .stat-number {
             font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            line-height: 1;
+            color: #111827;
+            margin-bottom: 4rem;
+            font-weight: 600;
         }
 
-        .stat-label {
-            font-size: 1rem;
-            color: #e0e7ff;
-            font-weight: 500;
-            line-height: 1.3;
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Reviews Section */
-        .reviews {
+        .solution-card {
+            text-align: center;
+            background: #ffffff;
+            padding: 3rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .solution-card h3 {
+            font-size: 1.4rem;
+            color: #111827;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .solution-card p {
+            color: #6b7280;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
             padding: 80px 0;
             background: #ffffff;
-        }
-
-        .section-title {
             text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
+        }
+
+        .pricing-title {
+            font-size: 2.5rem;
             color: #111827;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-        }
-
-        .review-grid {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            margin: 0;
-            width: 100%;
-            margin-top: 3rem;
-        }
-
-        .review-track {
-            display: inline-flex;
-            align-items: stretch;
-            gap: 2rem;
-            animation: scrollReviews 60s linear infinite;
-            width: max-content;
-        }
-
-        .review-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scrollReviews {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(calc(-50%));
-            }
-        }
-
-        .review-card {
-            background: white;
-            border: 1px solid #f3f4f6;
-            border-radius: 12px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-width: 350px;
-            max-width: 350px;
-            white-space: normal;
-            flex-shrink: 0;
-            transition: all 0.2s ease;
-        }
-
-        .review-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-        }
-
-        .review-content {
-            flex-grow: 1;
-        }
-
-        .stars {
-            color: #fbbf24;
-            font-size: 1rem;
             margin-bottom: 1rem;
-        }
-
-        .review-card p {
-            color: #374151;
-            font-size: 1rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .reviewer {
-            font-weight: 500;
-            color: #111827;
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
             font-weight: 600;
+        }
+
+        .pricing-subtitle {
+            font-size: 1.3rem;
             color: #6b7280;
+            margin-bottom: 3rem;
         }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+        }
+
+        .pricing-card {
+            background: #ffffff;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: #6366f1;
+            box-shadow: 0 8px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: #6366f1;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: #6b7280;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-details {
+            color: #6b7280;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
 
         /* CTA Section */
         .cta-section {
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
             padding: 80px 0;
+            background: linear-gradient(135deg, #6366f1 0%, #5855eb 100%);
             text-align: center;
+            color: white;
         }
 
         .cta-content h2 {
             font-size: 2.5rem;
-            color: #ffffff;
             margin-bottom: 1rem;
             font-weight: 600;
-            letter-spacing: -0.02em;
         }
 
         .cta-content p {
-            font-size: 1.2rem;
-            color: #b8c5d1;
+            font-size: 1.3rem;
             margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            opacity: 0.9;
         }
 
-        .cta-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .cta-large-button {
-            display: block;
-            padding: 1.2rem 2rem;
-            font-size: 1.1rem;
+        .cta-button {
+            background: #ffffff;
+            color: #6366f1;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
             font-weight: 600;
             text-decoration: none;
-            border-radius: 12px;
+            display: inline-block;
             transition: all 0.3s ease;
-            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .broker-btn {
-            background: #3F00FF;
-            color: white;
-            border: 2px solid #3F00FF;
-        }
-
-        .broker-btn:hover {
-            background: #3200cc;
+        .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(63, 0, 255, 0.3);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .lender-btn {
-            background: #3F00FF;
-            color: white;
-            border: 2px solid #3F00FF;
-        }
-
-        .lender-btn:hover {
-            background: #3200cc;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(63, 0, 255, 0.3);
+        .trial-note {
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            opacity: 0.8;
         }
 
         /* Footer */
@@ -806,25 +441,6 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-content {
-                gap: 3rem;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-text p {
-                font-size: 1.2rem;
-            }
-
-            .partner-logo img {
-                height: 140px;
-                max-width: 500px;
-            }
-        }
-
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: flex;
@@ -845,9 +461,6 @@
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
             }
 
             .nav-links.active {
@@ -856,303 +469,48 @@
                 visibility: visible;
             }
 
-            .nav-links li {
-                width: 100%;
-                text-align: center;
-            }
-
-            .sign-in-btn,
-            .get-started-btn {
-                margin-left: 0;
-                width: 100%;
-                text-align: center;
-                display: block;
-                box-sizing: border-box;
-            }
-
-            .hero {
-                padding: 120px 0 80px;
-                min-height: auto;
-            }
-
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
-            }
-
-            .hero-text {
-                order: 1;
-            }
-
-            .hero-image {
-                order: 2;
-            }
-
-            .hero-text h1 {
+            .hero h1 {
                 font-size: 2.5rem;
-                line-height: 1.2;
             }
 
-            .hero-text p {
-                font-size: 1.2rem;
+            .trust-quote {
+                font-size: 1.5rem;
+                padding: 1.5rem 2rem;
             }
 
-            .hero-buttons {
-                justify-content: center;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .partners {
-                padding: 60px 0;
-            }
-
-            .partner-carousel {
-                margin-top: 2rem;
-                width: 100%;
-                overflow: hidden;
-            }
-
-            .partner-track {
-                gap: 3rem;
-                animation: scroll 30s linear infinite;
-                display: flex;
-                width: max-content;
-            }
-
-            .partner-logo img {
-                height: 100px;
-                max-width: 300px;
-            }
-
-            .products,
-            .social-proof,
-            .reviews,
-            .cta-section {
-                padding: 60px 0;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-                margin: 0 auto;
-            }
-
-            .stat-item {
-                padding: 1rem 0.5rem;
-            }
-
-            .stat-number {
-                font-size: 1.8rem;
-            }
-
-            .stat-label {
-                font-size: 0.85rem;
-            }
-
-            .features-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1.5rem;
-                margin: 2rem 0;
-            }
-
-            .feature-card {
-                padding: 1.5rem;
-            }
-
-            .feature-card h3 {
-                font-size: 1.1rem;
-            }
-
-            .feature-card p {
-                font-size: 0.95rem;
-            }
-
-            .section-title,
-            .products-content h2 {
-                font-size: 1.8rem;
-                line-height: 1.2;
-            }
-
-            .problem-section p {
-                font-size: 1.1rem;
-            }
-
-            .review-grid {
-                overflow: hidden;
-                width: 100%;
-                margin-top: 2rem;
-                white-space: nowrap;
-            }
-
-            .review-track {
-                gap: 1rem;
-                animation: scrollReviews 40s linear infinite !important;
-                display: inline-flex !important;
-                width: max-content !important;
-                align-items: stretch;
-            }
-
-            .review-card {
-                min-width: 280px;
-                max-width: 300px;
-                padding: 1.5rem;
-                flex-shrink: 0;
-            }
-
-            .review-card p {
-                font-size: 1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-
-            .cta-large-button {
-                padding: 1rem 1.5rem;
-                font-size: 1rem;
-            }
-
+            .solutions-title,
+            .pricing-title,
             .cta-content h2 {
                 font-size: 2rem;
             }
 
-            .cta-content p {
-                font-size: 1.1rem;
-                margin-bottom: 2rem;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+            .solutions-grid {
+                grid-template-columns: 1fr;
                 gap: 2rem;
-                text-align: center;
+                max-width: 400px;
             }
 
-            .footer-section {
-                text-align: center;
-            }
-
-            .footer-section h3 {
-                text-align: center;
-            }
-
-            .footer-section p,
-            .footer-section a {
-                text-align: center;
-            }
-
-            /* Force animation restart on mobile */
-            @keyframes scrollReviews {
-                0% {
-                    transform: translateX(0);
-                }
-                100% {
-                    transform: translateX(calc(-50%));
-                }
+            .pricing-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 480px) {
-            .container, .hero-container {
+            .container {
                 padding: 0 15px;
             }
 
-            .hero-text h1 {
+            .hero h1 {
                 font-size: 2rem;
             }
 
-            .hero-text p {
-                font-size: 1.1rem;
+            .solution-card {
+                padding: 2rem 1.5rem;
             }
 
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .cta-button,
-            .api-docs-button {
-                width: 100%;
-                text-align: center;
-                margin-right: 0;
-                margin-bottom: 0.5rem;
-            }
-
-            .section-title,
-            .problem-section h2,
-            .products-content h2 {
-                font-size: 1.8rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 1.25rem;
-                margin: 1.5rem 0;
-            }
-
-            .feature-card {
-                padding: 1.25rem;
-            }
-
-            .feature-icon {
-                width: 40px;
-                height: 40px;
-                margin-bottom: 1rem;
-            }
-
-            .feature-card h3 {
-                font-size: 1.1rem;
-            }
-
-            .feature-card p {
-                font-size: 0.9rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            .footer-section {
-                text-align: center;
-            }
-
-            .footer-section h3 {
-                text-align: center;
-            }
-
-            .footer-section p,
-            .footer-section a {
-                text-align: center;
-            }
-        }
-
-        /* Fix for seamless carousel scrolling */
-        .partner-track {
-            will-change: transform;
-        }
-
-        .review-track {
-            will-change: transform;
-        }
-
-        /* Ensure smooth scrolling performance */
-        @media (prefers-reduced-motion: no-preference) {
-            .partner-track,
-            .review-track {
-                animation-timing-function: linear;
-                animation-iteration-count: infinite;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .partner-track,
-            .review-track {
-                animation: none;
+            .trust-quote {
+                font-size: 1.3rem;
+                padding: 1.5rem;
             }
         }
     </style>
@@ -1161,12 +519,14 @@
     <!-- Header -->
     <header>
         <nav class="container">
-            <a href="#" class="logo">
+            <a href="/" class="logo">
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
             <ul class="nav-links">
-                <li><a href="https://www.aquamark.io/compliance">Compliance</a></li>
-                <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Sign In</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/brokers">Brokers</a></li>
+                <li><a href="/lender-api">Test Free API</a></li>
+                <li><a href="https://aquamark.fillout.com/lenders" class="sign-in-btn">Sign Up</a></li>
             </ul>
             <div class="mobile-menu-btn">
                 <span></span>
@@ -1178,450 +538,102 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Automated <span style="color: #2563eb;">Watermarking</span> for FinTech</h1>
-                    <p>We protect your documents so they stay your documents.</p>
+        <div class="container">
+            <h1>Aquamark for <span style="color: #6366f1;">Lenders</span></h1>
+            <p class="hero-subtitle">People backdoor, not companies. We're empowering CEOs to stop them.</p>
+            <a href="/lender-api" class="api-docs-btn">API Documentation</a>
+        </div>
+    </section>
+
+    <!-- Why Lenders Use Aquamark Banner -->
+    <section class="why-lenders-banner">
+        <div class="container">
+            <div class="banner-content">
+                <h3>Why Lenders Use Aquamark</h3>
+                <p>Underwriters and processors download bank statements daily. There's a real market for these files. Aquamark instantly watermarks downloads so files aren't clean or sellable — because backdooring is silent.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Section -->
+    <section class="sample-section">
+        <div class="container">
+            <img src="/sample-lenders.png" alt="Lender Sample Watermark" class="sample-image" />
+            <p class="independent-protection">Independent Protection by a Trusted Brand</p>
+            <a href="/lender-api" class="free-testing-btn">Free Testing</a>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="solutions-section">
+        <div class="container">
+            <h2 class="solutions-title">Build Trust and Reduce Your Risk</h2>
+            
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3>Stop Backdooring</h3>
+                    <p>Eliminate access to "clean," sellable documents</p>
                 </div>
-                <div class="hero-image">
-                    <div class="hero-graphic">
-                        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Background circle -->
-                            <circle cx="200" cy="200" r="180" fill="#f8fafc" stroke="#e5e7eb" stroke-width="2"/>
-                            
-                            <!-- Document layers -->
-                            <rect x="120" y="140" width="160" height="200" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                            <rect x="110" y="130" width="160" height="200" rx="8" fill="white" stroke="#d1d5db" stroke-width="2"/>
-                            <rect x="100" y="120" width="160" height="200" rx="8" fill="white" stroke="#2563eb" stroke-width="3"/>
-                            
-                            <!-- Document lines -->
-                            <line x1="120" y1="150" x2="220" y2="150" stroke="#d1d5db" stroke-width="2"/>
-                            <line x1="120" y1="170" x2="240" y2="170" stroke="#d1d5db" stroke-width="2"/>
-                            <line x1="120" y1="190" x2="200" y2="190" stroke="#d1d5db" stroke-width="2"/>
-                            <line x1="120" y1="210" x2="230" y2="210" stroke="#d1d5db" stroke-width="2"/>
-                            <line x1="120" y1="230" x2="180" y2="230" stroke="#d1d5db" stroke-width="2"/>
-                            
-                            <!-- Watermark overlay -->
-                            <circle cx="180" cy="200" r="40" fill="rgba(37, 99, 235, 0.1)" stroke="#2563eb" stroke-width="2" stroke-dasharray="5,5"/>
-                            
-                            <!-- Shield icon in watermark -->
-                            <path d="M180 170L165 175V195C165 205 172 213 180 215C188 213 195 205 195 195V175L180 170Z" fill="#2563eb" opacity="0.8"/>
-                            <path d="M172 190L178 196L188 180" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            
-                            <!-- Floating protection elements -->
-                            <circle cx="320" cy="120" r="25" fill="rgba(37, 99, 235, 0.1)" stroke="#2563eb" stroke-width="2"/>
-                            <path d="M320 105L310 108V120C310 125 315 129 320 130C325 129 330 125 330 120V108L320 105Z" fill="#2563eb"/>
-                            
-                            <circle cx="80" cy="280" r="20" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="2"/>
-                            <path d="M73 280L78 285L87 273" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            
-                            <!-- QR code representation -->
-                            <rect x="300" y="250" width="60" height="60" rx="4" fill="white" stroke="#2563eb" stroke-width="2"/>
-                            <rect x="305" y="255" width="8" height="8" fill="#2563eb"/>
-                            <rect x="315" y="255" width="8" height="8" fill="#2563eb"/>
-                            <rect x="325" y="255" width="8" height="8" fill="#2563eb"/>
-                            <rect x="345" y="255" width="8" height="8" fill="#2563eb"/>
-                            <rect x="305" y="265" width="8" height="8" fill="#2563eb"/>
-                            <rect x="325" y="265" width="8" height="8" fill="#2563eb"/>
-                            <rect x="335" y="265" width="8" height="8" fill="#2563eb"/>
-                            <rect x="315" y="275" width="8" height="8" fill="#2563eb"/>
-                            <rect x="335" y="275" width="8" height="8" fill="#2563eb"/>
-                            <rect x="345" y="275" width="8" height="8" fill="#2563eb"/>
-                            <rect x="305" y="285" width="8" height="8" fill="#2563eb"/>
-                            <rect x="315" y="285" width="8" height="8" fill="#2563eb"/>
-                            <rect x="335" y="285" width="8" height="8" fill="#2563eb"/>
-                            <rect x="305" y="295" width="8" height="8" fill="#2563eb"/>
-                            <rect x="325" y="295" width="8" height="8" fill="#2563eb"/>
-                            <rect x="345" y="295" width="8" height="8" fill="#2563eb"/>
-                            
-                            <!-- Connection lines -->
-                            <line x1="260" y1="160" x2="295" y2="135" stroke="#2563eb" stroke-width="2" stroke-dasharray="3,3" opacity="0.6"/>
-                            <line x1="140" y1="240" x2="100" y2="270" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3" opacity="0.6"/>
-                            <line x1="240" y1="280" x2="300" y2="280" stroke="#2563eb" stroke-width="2" stroke-dasharray="3,3" opacity="0.6"/>
-                        </svg>
-                    </div>
+                
+                <div class="solution-card">
+                    <h3>Send a Clear Message</h3>
+                    <p>Show your ISOs you take document security seriously</p>
+                </div>
+                
+                <div class="solution-card">
+                    <h3>Beyond Words</h3>
+                    <p>Don't tell your ISOs "trust us" — tell them you use Aquamark</p>
+                </div>
+                
+                <div class="solution-card">
+                    <h3>Protect Your Reputation</h3>
+                    <p>Theft ruins trust — and exposes you to legal risk</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Partners Section -->
-    <section class="partners">
+    <!-- Pricing Section -->
+    <section class="pricing-section">
         <div class="container">
-            <h2>Compatible with Leading Platforms</h2>
-        </div>
-        <div class="partner-carousel">
-            <div class="partner-track">
-                <div class="partner-logo">
-                    <img src="ocro.png" alt="Ocrolus" />
+            <h2 class="pricing-title">Affordable and Usage-Based Pricing</h2>
+            <p class="pricing-subtitle">Flat fees, no payment for first 30 days.</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="price">$399</div>
+                    <div class="price-period">per month</div>
+                    <div class="price-details">Up to 5,000 submissions<br>(15,000 files)</div>
                 </div>
-                <div class="partner-logo">
-                    <img src="text.png" alt="Textract" />
+                
+                <div class="pricing-card featured">
+                    <div class="price">$599</div>
+                    <div class="price-period">per month</div>
+                    <div class="price-details">Up to 10,000 submissions<br>(30,000 files)</div>
                 </div>
-                <div class="partner-logo">
-                    <img src="heronn.png" alt="Heron" />
-                </div>
-                <div class="partner-logo">
-                    <img src="cloud.png" alt="Cloudsquare" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docpipe.png" alt="Docupipe" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docs.png" alt="Docsumo" />
-                </div>
-                <div class="partner-logo">
-                    <img src="mt.png" alt="MoneyThumb" />
-                </div>
-                <!-- Duplicate set for seamless loop -->
-                <div class="partner-logo">
-                    <img src="ocro.png" alt="Ocrolus" />
-                </div>
-                <div class="partner-logo">
-                    <img src="text.png" alt="Textract" />
-                </div>
-                <div class="partner-logo">
-                    <img src="heronn.png" alt="Heron" />
-                </div>
-                <div class="partner-logo">
-                    <img src="cloud.png" alt="Cloudsquare" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docpipe.png" alt="Docupipe" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docs.png" alt="Docsumo" />
-                </div>
-                <div class="partner-logo">
-                    <img src="mt.png" alt="MoneyThumb" />
-                </div>
-                <!-- Third set for extra smoothness -->
-                <div class="partner-logo">
-                    <img src="ocro.png" alt="Ocrolus" />
-                </div>
-                <div class="partner-logo">
-                    <img src="text.png" alt="Textract" />
-                </div>
-                <div class="partner-logo">
-                    <img src="heronn.png" alt="Heron" />
-                </div>
-                <div class="partner-logo">
-                    <img src="cloud.png" alt="Cloudsquare" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docpipe.png" alt="Docupipe" />
-                </div>
-                <div class="partner-logo">
-                    <img src="docs.png" alt="Docsumo" />
-                </div>
-                <div class="partner-logo">
-                    <img src="mt.png" alt="MoneyThumb" />
+                
+                <div class="pricing-card">
+                    <div class="price">$749</div>
+                    <div class="price-period">per month</div>
+                    <div class="price-details">Up to 25,000 submissions<br>(75,000 files)</div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section class="products" id="products">
-        <div class="container">
-            <div class="products-hero">
-                <div class="products-content">
-                    <h2>Watermarking That Works</h2>
-                </div>
-            </div>
-
-            <!-- Feature Cards Grid -->
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
                     </div>
-                    <h3>Watermarks</h3>
-                    <p>Tamper-resistant and OCR-safe.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                            <rect x="7" y="7" width="10" height="10" rx="1" ry="1" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h3>Smart QR Codes</h3>
-                    <p>Optional embedded metadata.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>5-Minute Setup</h3>
-                    <p>Simple API integration or user portal.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22S8 18 8 13C8 10.7909 9.79086 9 12 9C14.2091 9 16 10.7909 16 13C16 18 12 22 12 22Z" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="12" cy="13" r="3" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h3>Zero Storage</h3>
-                    <p>We never store your files.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                            <rect x="7" y="9" width="10" height="7" rx="1" ry="1" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h3>CRM Friendly</h3>
-                    <p>Open API compatible with all CRMs.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3>Trace</h3>
-                    <p>Identify the source of leaked files.</p>
-                </div>
-            </div>
-
-            <!-- Product CTAs -->
-            <div class="products-cta">
-                <a href="https://www.aquamark.io/signup" class="products-cta-button broker-btn">Brokers</a>
-                <a href="https://www.aquamark.io/lenders" class="products-cta-button lender-btn">Lenders</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof Bar -->
-    <section class="social-proof">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">1M+</div>
-                    <div class="stat-label">Files Protected</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">300+</div>
-                    <div class="stat-label">Active Users & Growing</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">99%</div>
-                    <div class="stat-label">Uptime</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">$1000s</div>
-                    <div class="stat-label">Lost To Theft</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section class="reviews" id="reviews">
-        <div class="container">
-            <h2 class="section-title">Trusted by Brokers and Lenders Nationwide</h2>
-        </div>
-        <div class="review-grid">
-            <div class="review-track">
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Can't stop everyone, but this is a great start."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">A</div>
-                        <strong>Anthony, Ops Manager, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">K</div>
-                        <strong>Kelly, CEO, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">A</div>
-                        <strong>Anonymous, Processor, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more join."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">E</div>
-                        <strong>Eric, Team Leader, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We need a public database of everyone caught stealing files. It's time for big-box lenders to lead by example — a push from them could reshape the entire industry."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">P</div>
-                        <strong>Peter, President, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We were one of Aquamark's first customers and within the first couple weeks, we noticed less merchants calling us upset about getting a bunch of random calls."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">M</div>
-                        <strong>Matt, Sales Manager, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Exactly what the industry needs. As a lender, we now have a way to show our ISOs their documents are safe with us."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Daniel, CEO, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Unfortunately and fortunately we caught the person stealing."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">C</div>
-                        <strong>Chris, COO, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"I hate to think our own employees would steal, but this is so necessary to repair the damage that's been done over the years."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">Z</div>
-                        <strong>Zack, Founder, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"The OCR compatibility was crucial for us. Literally have had 0 issues so far."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">D</div>
-                        <strong>Diana, Underwriter, Lender</strong>
-                    </div>
-                </div>
-
-                <!-- Duplicate set for seamless loop -->
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"Can't stop everyone, but this is a great start."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">A</div>
-                        <strong>Anthony, Ops Manager, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We use Salesforce and we were able to plug in pretty easily. Something so simple is going to make a big impact and we're here for it!"</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">K</div>
-                        <strong>Kelly, CEO, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"I have always had my suspicions about one of my co-workers and I can tell they are not happy about this LoL"</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">A</div>
-                        <strong>Anonymous, Processor, Lender</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We joined last month. I am really curious what the space will look and feel like in the next year or two after more join."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">E</div>
-                        <strong>Eric, Team Leader, Broker</strong>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-content">
-                        <div class="stars">★★★★★</div>
-                        <p>"We need a public database of everyone caught stealing files. It's time for big-box lenders to lead by example — a push from them could reshape the entire industry."</p>
-                    </div>
-                    <div class="reviewer">
-                        <div class="avatar">P</div>
-                        <strong>Peter, President, Lender</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Tired of Backdooring?</h2>
-                <p>Join hundreds of companies taking control.</p>
-                <div class="cta-buttons">
-                    <a href="https://www.aquamark.io/signup" class="cta-large-button broker-btn">Brokers</a>
-                    <a href="https://www.aquamark.io/lenders" class="cta-large-button lender-btn">Lenders</a>
-                </div>
+                <h2>Get Set Up Today</h2>
+                <p>Start protecting your reputation and relationships today.</p>
+                <a href="https://aquamark.fillout.com/lenders" class="cta-button">Sign Up</a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact">
+    <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -1633,29 +645,30 @@
 
                 <div class="footer-section">
                     <h3>Quick Links</h3>
-                    <a href="#reviews">Reviews</a>
-                    <a href="https://www.aquamark.io/contact">Contact</a>
-                    <a href="https://www.aquamark.io/terms-of-use">Terms of Use</a>
-                    <a href="https://www.aquamark.io/privacy">Privacy Policy</a>
+                    <a href="/">Home</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/terms-of-use">Terms of Use</a>
+                    <a href="/privacy">Privacy Policy</a>
                 </div>
 
                 <div class="footer-section">
                     <h3>Services</h3>
-                    <a href="https://www.aquamark.io/signup">Broker Solutions</a>
-                    <a href="https://www.aquamark.io/lenders">Lender Solutions</a>
-                    <a href="https://www.aquamark.io/compliance">Free Compliance Hub</a>
+                    <a href="/brokers">Broker Solutions</a>
+                    <a href="/lenders">Lender Solutions</a>
+                    <a href="/compliance">Free Compliance Hub</a>
                 </div>
 
                 <div class="footer-section">
-                    <h3>Partnerships</h3>
-                    <a href="https://www.aquamark.io/contact">Wholesale Opportunities</a>
-                    <a href="https://www.aquamark.io/contact">Affiliate Opportunities</a>
+                    <h3>Documentation</h3>
+                    <a href="/lender-api">API Documentation</a>
+                    <a href="/contact">Integration Support</a>
+                    <a href="/contact">Technical Support</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Footer Bottom - Full Width -->
+    <!-- Footer Bottom -->
     <div class="footer-bottom">
         <p>&copy; 2025 Aquamark. All rights reserved.</p>
     </div>
@@ -1686,6 +699,17 @@
             });
         }
 
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = '#fafafa';
+                    header.style.boxShadow = 'none';
+                }
+            }
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1701,54 +725,6 @@
                     });
                 }
             });
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.style.background = '#fafafa';
-                    header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-                } else {
-                    header.style.background = '#fafafa';
-                    header.style.boxShadow = 'none';
-                }
-            }
-        });
-
-        // Pause animations when tab is not visible for performance
-        document.addEventListener('visibilitychange', function() {
-            const tracks = document.querySelectorAll('.partner-track, .review-track');
-            tracks.forEach(track => {
-                if (document.visibilityState === 'hidden') {
-                    track.style.animationPlayState = 'paused';
-                } else {
-                    track.style.animationPlayState = 'running';
-                }
-            });
-        });
-
-        // Intersection Observer for performance optimization
-        const observerOptions = {
-            root: null,
-            rootMargin: '50px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                } else {
-                    entry.target.style.animationPlayState = 'paused';
-                }
-            });
-        }, observerOptions);
-
-        // Observe carousel tracks
-        document.querySelectorAll('.partner-track, .review-track').forEach(track => {
-            observer.observe(track);
         });
     </script>
 </body>
