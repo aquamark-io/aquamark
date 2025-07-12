@@ -182,6 +182,32 @@
             color: var(--text-secondary);
         }
 
+        /* Instructions Section - styled differently */
+        .instructions-section {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .instructions-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .instructions-section p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .instructions-section strong {
+            color: var(--text-primary);
+        }
+
         /* Upload Group */
         .upload-group {
             margin-bottom: 1.5rem;
@@ -649,9 +675,7 @@
                 </h2>
             </div>
             <div class="card-body">
-                <p class="section-subheader">You can use one, two, or all three optional inputs — it's flexible, including not using them at all.<br><br>
-When using the <strong>lender</strong> parameter, create separate versions for each <strong>lender</strong> to ensure traceability. Most brokers delete these watermarked versions after submission. For efficiency, consider using our API if working with the <strong>lender</strong> parameter.<br><br>
-                  These are not required, watermarking alone is a powerful deterrent against document misuse.</p><br><br>
+                <p class="section-subheader">Add optional tracking parameters to help trace document usage. <a href="#qr-instructions" style="color: var(--accent-color); text-decoration: none;">See below for instructions</a>.</p>
 
                 <div class="tracking-inputs">
                     <div class="input-group">
@@ -670,8 +694,6 @@ When using the <strong>lender</strong> parameter, create separate versions for e
             </div>
         </div>
 
-
-        
         <!-- Section 3: Watermark Processing -->
         <div class="aqua-card watermark-section" id="watermarkSection">
             <div class="card-header">
@@ -692,6 +714,16 @@ When using the <strong>lender</strong> parameter, create separate versions for e
 
                 <div class="status" id="status" style="display: none;"></div>
             </div>
+        </div>
+
+        <!-- QR Code Instructions Section -->
+        <div class="instructions-section" id="qr-instructions">
+            <h3>Smart QR Code Instructions</h3>
+            <p>You can use one, two, or all three optional inputs — it's flexible, including not using them at all.</p>
+            
+            <p>When using the <strong>lender</strong> parameter, create separate versions for each <strong>lender</strong> to ensure traceability. Most brokers delete these watermarked versions after submission. For efficiency, consider using our API if working with the <strong>lender</strong> parameter.</p>
+            
+            <p>These are not required, watermarking alone is a powerful deterrent against document misuse.</p>
         </div>
     </main>
 
