@@ -663,22 +663,23 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
         }
 
+        /* FLIPPED COLORS: Brokers now use blue, Lenders now use green */
         .broker-card {
-            border-color: #10b981;
-        }
-
-        .broker-card:hover {
-            border-color: #059669;
-            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
-        }
-
-        .lender-card {
             border-color: #3b82f6;
         }
 
-        .lender-card:hover {
+        .broker-card:hover {
             border-color: #2563eb;
             box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .lender-card {
+            border-color: #10b981;
+        }
+
+        .lender-card:hover {
+            border-color: #059669;
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
         }
 
         .use-case-header {
@@ -698,14 +699,15 @@
             flex-shrink: 0;
         }
 
+        /* FLIPPED COLORS: Brokers now use blue, Lenders now use green */
         .broker-icon {
-            background: rgba(16, 185, 129, 0.1);
-            color: #059669;
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
         }
 
         .lender-icon {
-            background: rgba(59, 130, 246, 0.1);
-            color: #2563eb;
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
         }
 
         .use-case-header h3 {
@@ -750,30 +752,31 @@
             text-align: center;
         }
 
+        /* FLIPPED COLORS: Brokers now use blue, Lenders now use green */
         .use-case-btn.broker-btn {
-            background: #10b981;
-            color: white;
-            border-color: #10b981;
-        }
-
-        .use-case-btn.broker-btn:hover {
-            background: #059669;
-            border-color: #059669;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-        }
-
-        .use-case-btn.lender-btn {
             background: #3b82f6;
             color: white;
             border-color: #3b82f6;
         }
 
-        .use-case-btn.lender-btn:hover {
+        .use-case-btn.broker-btn:hover {
             background: #2563eb;
             border-color: #2563eb;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .use-case-btn.lender-btn {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .use-case-btn.lender-btn:hover {
+            background: #059669;
+            border-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         }
 
         /* Social Proof Section */
@@ -961,27 +964,27 @@
         }
 
         .broker-btn {
-            background: #3F00FF;
+            background: #3b82f6;
             color: white;
-            border: 2px solid #3F00FF;
+            border: 2px solid #3b82f6;
         }
 
         .broker-btn:hover {
-            background: #3200cc;
+            background: #2563eb;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(63, 0, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
         }
 
         .lender-btn {
-            background: #3F00FF;
+            background: #10b981;
             color: white;
-            border: 2px solid #3F00FF;
+            border: 2px solid #10b981;
         }
 
         .lender-btn:hover {
-            background: #3200cc;
+            background: #059669;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(63, 0, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         }
 
 .products-cta-button.broker-btn-green {
@@ -1791,7 +1794,7 @@
                         <h3>Brokers</h3>
                     </div>
                     <div class="use-case-content">
-<p>Brokers use Aquamark to protect the files they send to lenders and safeguard their merchants’ sensitive financial information. Before submission, we apply a full-page, tamper-resistant watermark to every page of the bank statements using your logo. It makes people think twice before trying to pass the file off as their own. Some will risk it — most won’t. It’s how brokers protect their commissions and stop the quiet losses that add up fast.                
+<p>Brokers use Aquamark to protect the files they send to lenders and safeguard their merchants' sensitive financial information. Before submission, we apply a full-page, tamper-resistant watermark to every page of the bank statements using your logo. It makes people think twice before trying to pass the file off as their own. Some will risk it — most won't. It's how brokers protect their commissions and stop the quiet losses that add up fast.                
                         </p>
                     </div>
                     <div class="use-case-individual-cta">
