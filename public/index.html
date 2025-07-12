@@ -408,8 +408,8 @@
     text-align: center;
     color: #6b7280;
     font-size: 1.4rem;
-    margin-top: -1.5rem;
-    margin-bottom: -3rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -509,7 +509,7 @@
     justify-content: center;
     gap: 1.5rem;
     margin-top: 3rem;
-    margin-bottom: 4rem; /* 👈 add this line */
+    margin-bottom: 2rem; /* Reduced from 4rem to 2rem */
     flex-wrap: wrap;
     width: 100%;
 }
@@ -610,7 +610,7 @@
 
         /* Use Cases Section */
         .use-cases-section {
-            padding: 80px 0;
+            padding: 40px 0 60px 0; /* Reduced top padding from 60px to 40px */
             background: #f8fafc;
             border-top: 1px solid #e5e7eb;
             border-bottom: 1px solid #e5e7eb;
@@ -630,7 +630,7 @@
         }
 
         .use-cases-header .section-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #6b7280;
             max-width: 700px;
             margin: 0 auto;
@@ -654,6 +654,8 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
         }
 
         .use-case-card:hover {
@@ -713,6 +715,11 @@
             margin: 0;
         }
 
+        .use-case-content {
+            flex-grow: 1;
+            margin-bottom: 2rem;
+        }
+
         .use-case-content p {
             font-size: 1.1rem;
             line-height: 1.7;
@@ -720,11 +727,14 @@
             margin: 0;
         }
 
-        .use-cases-cta {
+        .use-case-individual-cta {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            margin-top: auto;
+        }
+
+        .use-cases-cta {
+            display: none; /* Hide the original centered buttons */
         }
 
         .use-case-btn {
@@ -1764,7 +1774,7 @@
     <section class="use-cases-section">
         <div class="container">
             <div class="use-cases-header">
-                <h2 class="section-title">How Our Customers Use Aquamark</h2>
+                <h2 class="section-title">Which one are you?</h2>
                 <p class="section-subtitle">Our users sign up not to fix everyone else, but to protect themselves and stand apart as companies that do things the right way.</p>
             </div>
             
@@ -1778,10 +1788,13 @@
                                 <polyline points="17,11 19,13 23,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3>Broker Use Case</h3>
+                        <h3>Brokers</h3>
                     </div>
                     <div class="use-case-content">
                         <p>Brokers use Aquamark to protect the files they send to lenders. Before submission, we apply a full-page, tamper-resistant watermark to every page of the bank statements using your logo. It makes people think twice before trying to pass them off as their own. Some will risk it — most won't. It's how brokers protect their commissions and stop the quiet losses that add up fast.</p>
+                    </div>
+                    <div class="use-case-individual-cta">
+                        <a href="https://www.aquamark.io/brokers" class="use-case-btn broker-btn">Learn More: Brokers</a>
                     </div>
                 </div>
                 
@@ -1794,17 +1807,20 @@
                                 <path d="M8 6L16 6M8 18L16 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <h3>Lender Use Case</h3>
+                        <h3>Lenders</h3>
                     </div>
                     <div class="use-case-content">
                         <p>Lenders use Aquamark to protect the files they receive from brokers. When someone on your team downloads a PDF, we intercept the event and instantly apply tamper-resistant watermarks to every page — including your logo and their name — then complete the download with marked files only. Staff no longer have access to "clean," sellable files. It's how CEOs build trust with ISOs, and protect their resources and reputation.</p>
+                    </div>
+                    <div class="use-case-individual-cta">
+                        <a href="https://www.aquamark.io/lenders" class="use-case-btn lender-btn">Learn More: Lenders</a>
                     </div>
                 </div>
             </div>
             
             <div class="use-cases-cta">
-                <a href="https://www.aquamark.io/brokers" class="use-case-btn broker-btn">Learn More: Brokers</a>
-                <a href="https://www.aquamark.io/lenders" class="use-case-btn lender-btn">Learn More: Lenders</a>
+                <a href="https://www.aquamark.io/brokers" class="use-case-btn broker-btn">Learn More</a>
+                <a href="https://www.aquamark.io/lenders" class="use-case-btn lender-btn">Learn More</a>
             </div>
         </div>
     </section>
