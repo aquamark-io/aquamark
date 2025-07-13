@@ -427,72 +427,80 @@
             letter-spacing: -0.02em;
         }
 
-        .backdooring-intro {
-            font-size: 1.2rem;
-            color: #6b7280;
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-
-        .response-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #2563eb;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .response-content p {
-            font-size: 1.1rem;
-            line-height: 1.7;
+        .backdooring-description {
+            font-size: 1.3rem;
             color: #374151;
             margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-weight: 500;
         }
 
-        .response-content p:last-child {
-            margin-bottom: 0;
+        .backdooring-explanation {
+            font-size: 1.1rem;
+            color: #6b7280;
+            line-height: 1.7;
+            margin: 0;
         }
 
-        .response-content strong {
-            color: #111827;
-            font-weight: 600;
-        }
-
-        .response-cta {
-            font-weight: 600;
-            color: #2563eb;
-            font-size: 1.2rem;
-        }
-
-        .backdooring-image {
+        .backdooring-points {
             display: flex;
             justify-content: center;
             align-items: flex-start;
         }
 
-        .linkedin-message {
+        .points-container {
             background: white;
+            padding: 2rem;
             border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             border: 1px solid #e5e7eb;
-            max-width: 100%;
-        }
-
-        .message-screenshot {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
         }
 
-        .image-caption {
-            font-size: 0.9rem;
-            color: #6b7280;
+        .points-container h3 {
+            font-size: 1.5rem;
+            color: #111827;
+            margin-bottom: 2rem;
+            font-weight: 600;
             text-align: center;
-            margin-top: 1rem;
-            font-style: italic;
+        }
+
+        .point-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .point-item:last-child {
             margin-bottom: 0;
+        }
+
+        .point-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .point-content h4 {
+            font-size: 1.1rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .point-content p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin: 0;
         }
 
         /* Products Section */
@@ -1310,7 +1318,7 @@
                 order: 1;
             }
 
-            .backdooring-image {
+            .backdooring-points {
                 order: 2;
                 justify-content: center;
             }
@@ -1320,22 +1328,35 @@
                 text-align: center;
             }
 
-            .backdooring-intro {
+            .backdooring-description {
                 text-align: center;
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
 
-            .response-content {
-                padding: 1.5rem;
-            }
-
-            .response-content p {
+            .backdooring-explanation {
+                text-align: center;
                 font-size: 1rem;
             }
 
-            .linkedin-message {
-                padding: 1rem;
+            .points-container {
+                padding: 1.5rem;
                 max-width: 90%;
+            }
+
+            .points-container h3 {
+                font-size: 1.3rem;
+            }
+
+            .point-item {
+                margin-bottom: 1.5rem;
+            }
+
+            .point-content h4 {
+                font-size: 1rem;
+            }
+
+            .point-content p {
+                font-size: 0.9rem;
             }
 
             .partners {
@@ -1564,30 +1585,40 @@
                 font-size: 1.8rem;
             }
 
-            .backdooring-intro {
-                font-size: 1rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .response-content {
-                padding: 1.25rem;
-            }
-
-            .response-content p {
-                font-size: 0.95rem;
+            .backdooring-description {
+                font-size: 1.1rem;
                 margin-bottom: 1.25rem;
             }
 
-            .response-cta {
-                font-size: 1.1rem;
+            .backdooring-explanation {
+                font-size: 1rem;
             }
 
-            .linkedin-message {
-                padding: 0.75rem;
+            .points-container {
+                padding: 1.25rem;
                 max-width: 95%;
             }
 
-            .image-caption {
+            .points-container h3 {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .point-item {
+                gap: 0.75rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .point-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .point-content h4 {
+                font-size: 0.95rem;
+            }
+
+            .point-content p {
                 font-size: 0.85rem;
             }
 
@@ -1861,25 +1892,49 @@
             <div class="backdooring-content">
                 <div class="backdooring-text">
                     <h2>What is Backdooring?</h2>
-                    <p class="backdooring-intro">Backdooring, also known as document theft, occurs when someone steals confidential financial documents from their originating source and uses them for unauthorized purposes.</p>
+                    <p class="backdooring-description">Backdooring, also known as document theft, occurs when someone steals confidential financial documents from their originating source and uses them for unauthorized purposes.</p>
                     
-                    <div class="response-content">
-                        <p><strong>How it happens:</strong> Employees, contractors, or business partners gain access to sensitive documents through their legitimate roles, then copy and redistribute them without permission.</p>
-                        
-                        <p><strong>Common targets include:</strong> Bank statements, tax returns, profit & loss statements, and other financial documents used in lending and financing decisions.</p>
-                        
-                        <p><strong>The impact:</strong> Document theft costs businesses thousands in lost commissions, damages client relationships, and undermines trust between partners. It's become an accepted "cost of doing business" — but it doesn't have to be.</p>
-                        
-                        <p><strong>The solution:</strong> Watermarking creates a deterrent by making documents traceable to their source. While it won't stop everyone, it significantly reduces theft by making perpetrators think twice.</p>
-                        
-                        <p class="response-cta">Ready to protect your documents? Join the companies taking action.</p>
-                    </div>
+                    <p class="backdooring-explanation">Employees, contractors, or business partners gain access to sensitive documents through their legitimate roles, then copy and redistribute them without permission. This practice has become an accepted "cost of doing business" in many industries — but it doesn't have to be.</p>
                 </div>
                 
-                <div class="backdooring-image">
-                    <div class="linkedin-message">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" alt="LinkedIn message from prospect about watermarking and backdooring" class="message-screenshot" />
-                        <p class="image-caption">Real message from a prospect highlighting the industry's attitude toward backdooring</p>
+                <div class="backdooring-points">
+                    <div class="points-container">
+                        <h3>Key Issues</h3>
+                        <div class="point-item">
+                            <div class="point-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="point-content">
+                                <h4>Common Targets</h4>
+                                <p>Bank statements, tax returns, profit & loss statements, and other financial documents</p>
+                            </div>
+                        </div>
+                        
+                        <div class="point-item">
+                            <div class="point-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="point-content">
+                                <h4>Financial Impact</h4>
+                                <p>Lost commissions, damaged client relationships, and undermined partner trust</p>
+                            </div>
+                        </div>
+                        
+                        <div class="point-item">
+                            <div class="point-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="point-content">
+                                <h4>The Solution</h4>
+                                <p>Watermarking creates deterrence by making documents traceable to their source</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
