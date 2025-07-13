@@ -630,6 +630,11 @@ It's deceptive. It's costly. And while many have accepted it as just "part of th
     </div>
 
     <script>
+        // Prevent FOUC by showing content only when fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+        });
+
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
@@ -735,6 +740,17 @@ It's deceptive. It's costly. And while many have accepted it as just "part of th
 <meta property="og:type" content="website">
 
     <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+
+    <!-- Critical CSS to prevent FOUC -->
+    <style>
+        body { 
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+        }
+        body.loaded { 
+            opacity: 1; 
+        }
+    </style>
 
     <style>
         * {
