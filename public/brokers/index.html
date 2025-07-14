@@ -137,13 +137,6 @@
             font-weight: 400;
         }
 
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
         .api-docs-btn {
             display: inline-block;
             background: #f8fafc;
@@ -163,24 +156,7 @@
             transform: translateY(-1px);
         }
 
-        .salesforce-btn {
-            display: inline-block;
-            background: #2563eb;
-            color: #ffffff;
-            padding: 0.75rem 1.5rem;
-            border: 1px solid #2563eb;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
 
-        .salesforce-btn:hover {
-            background: #1d4ed8;
-            border-color: #1d4ed8;
-            transform: translateY(-1px);
-        }
 
         /* Sample Section */
         .sample-section {
@@ -467,17 +443,6 @@
                 font-size: 2.5rem;
             }
 
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .api-docs-btn,
-            .salesforce-btn {
-                width: 100%;
-                max-width: 300px;
-            }
-
             .problem-section h2,
             .solutions-title,
             .pricing-title,
@@ -552,10 +517,7 @@
         <div class="container">
             <h1>Aquamark for <span style="color: #2563eb;">Brokers</span></h1>
             <p class="hero-subtitle">Protect your pipeline. Protect your commissions.</p>
-            <div class="hero-buttons">
-                <a href="/broker-api" class="api-docs-btn">Open API</a>
-                <a href="https://www.aquamark.io/salesforce-setup" class="salesforce-btn">Salesforce Setup</a>
-            </div>
+            <a href="/broker-api" class="api-docs-btn">API Documentation</a>
         </div>
     </section>
 
