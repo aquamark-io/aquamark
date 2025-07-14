@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce Integration Setup - Aquamark</title>
+    <meta property="og:title" content="Salesforce Integration Setup - Aquamark">
+    <meta property="og:description" content="Complete guide to integrate Aquamark watermarking with your Salesforce CRM">
+    <meta property="og:image" content="https://www.aquamark.io/screenshot.png">
+    <meta property="og:url" content="https://www.aquamark.io/salesforce-setup">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
+            color: #7c3aed;
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-bottom: 1px solid #e0e7ff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            width: 100%;
+        }
+
+        .top-banner p {
+            margin: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: #fafafa;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #f3f4f6;
+            position: fixed;
+            top: 44px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #111827;
+        }
+
+        .sign-in-btn {
+            background: #eff6ff !important;
+            color: #1d4ed8 !important;
+            padding: 0.65rem 1.25rem;
+            border: 2px solid #1d4ed8;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 164px 0 60px;
+            background: #ffffff;
+        }
+
+        .setup-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .setup-header h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .setup-header p {
+            font-size: 1.3rem;
+            color: #6b7280;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Content Section */
+        .setup-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f3f4f6;
+        }
+
+        .overview-box {
+            background: rgba(37, 99, 235, 0.05);
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .overview-box h2 {
+            color: #1d4ed8;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .overview-box p {
+            color: #374151;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .prerequisites {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .prerequisites h3 {
+            color: #111827;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .prerequisites ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .prerequisites li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .prerequisites li:before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .step-section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .step-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            color: #111827;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .step-content h3 {
+            color: #1f2937;
+            font-size: 1.2rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .step-content h4 {
+            color: #374151;
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: #4b5563;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .step-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-content ol li {
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .step-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-content ul li {
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .warning-box p {
+            color: #92400e;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .info-box p {
+            color: #1e40af;
+            margin: 0;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .success-box p {
+            color: #047857;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            color: #6b7280;
+            padding: 30px 0 5px;
+            border-top: 1px solid #f3f4f6;
+            margin-top: 4rem;
+        }
+
+        .footer-bottom {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 154px 0 60px;
+            }
+
+            .setup-header h1 {
+                font-size: 2rem;
+            }
+
+            .setup-header p {
+                font-size: 1.1rem;
+            }
+
+            .setup-content {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .step-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .step-number {
+                margin-right: 0;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 1rem;
+            }
+
+            .overview-box {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .setup-content {
+                margin: 0 0.5rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .step-title {
+                font-size: 1.2rem;
+            }
+
+            .step-content h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>Complete Salesforce integration guide - protect your documents with automated watermarking</p>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">
+                <img src="/logo-full-black-blue.png" alt="Aquamark">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/brokers">For Brokers</a></li>
+                <li><a href="/lenders">For Lenders</a></li>
+                <li><a href="/login.html" class="sign-in-btn">Portal Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="setup-header">
+                <h1>Salesforce <span style="color: #2563eb;">Integration</span> Setup</h1>
+                <p>Complete guide to add automated Aquamark watermarking to your Salesforce CRM</p>
+            </div>
+
+            <div class="setup-content">
+                <div class="overview-box">
+                    <h2>Overview</h2>
+                    <p>This guide will help you add a watermark button to your Salesforce Opportunity records that allows users to select PDF files, send them to Aquamark for watermarking, and automatically attach the protected files back to the opportunity.</p>
+                    
+                    <div class="prerequisites">
+                        <h3>Prerequisites</h3>
+                        <ul>
+                            <li>Salesforce Administrator access</li>
+                            <li>Aquamark API key: <code>aqua-api-watermark-1018201304042011015</code></li>
+                            <li>Test user email: <code>1christinaduncan@gmail.com</code></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h2 class="step-title">Create the Apex Class</h2>
+                    </div>
+                    <div class="step-content">
+                        <ol>
+                            <li>Go to <strong>Setup</strong> → <strong>Apex Classes</strong></li>
+                            <li>Click <strong>New</strong> and create a new Apex class named <code>AquamarkWatermarkService</code></li>
+                        </ol>
+
+                        <div class="code-block">
+public class AquamarkWatermarkService {
+    
+    private static final String API_ENDPOINT = 'https://aquamark-decrypt.onrender.com/watermark';
+    private static final String API_KEY = 'aqua-api-watermark-1018201304042011015';
+    private static final String USER_EMAIL = '1christinaduncan@gmail.com';
+    
+    @AuraEnabled
+    public static String watermarkFiles(String opportunityId, List&lt;String&gt; attachmentIds) {
+        try {
+            List&lt;ContentVersion&gt; attachments = [
+                SELECT Id, Title, FileExtension, VersionData 
+                FROM ContentVersion 
+                WHERE Id IN :attachmentIds AND FileExtension = 'pdf'
+            ];
+            
+            if (attachments.isEmpty()) {
+                return 'No PDF files found to watermark.';
+            }
+            
+            Integer processedCount = 0;
+            List&lt;String&gt; errors = new List&lt;String&gt;();
+            
+            for (ContentVersion attachment : attachments) {
+                try {
+                    Blob watermarkedPdf = callWatermarkAPI(attachment.VersionData, attachment.Title);
+                    attachWatermarkedFile(opportunityId, attachment.Title, watermarkedPdf);
+                    processedCount++;
+                } catch (Exception e) {
+                    errors.add(attachment.Title + ': ' + e.getMessage());
+                }
+            }
+            
+            String result = processedCount + ' file(s) successfully watermarked.';
+            if (!errors.isEmpty()) {
+                result += ' Errors: ' + String.join(errors, '; ');
+            }
+            
+            return result;
+            
+        } catch (Exception e) {
+            return 'Error processing files: ' + e.getMessage();
+        }
+    }
+    
+    private static Blob callWatermarkAPI(Blob pdfData, String fileName) {
+        String boundary = '----WebKitFormBoundary' + String.valueOf(Crypto.getRandomLong());
+        
+        String body = '--' + boundary + '\r\n';
+        body += 'Content-Disposition: form-data; name="user_email"\r\n\r\n';
+        body += USER_EMAIL + '\r\n';
+        body += '--' + boundary + '\r\n';
+        body += 'Content-Disposition: form-data; name="file"; filename="' + fileName + '"\r\n';
+        body += 'Content-Type: application/pdf\r\n\r\n';
+        
+        String footerBoundary = '\r\n--' + boundary + '--';
+        
+        Blob bodyBlob = Blob.valueOf(body);
+        Blob footerBlob = Blob.valueOf(footerBoundary);
+        
+        // Combine header, PDF data, and footer
+        List&lt;Integer&gt; bodyInts = new List&lt;Integer&gt;();
+        
+        // Add header
+        for (Integer i = 0; i &lt; bodyBlob.size(); i++) {
+            bodyInts.add(bodyBlob[i] & 0xFF);
+        }
+        
+        // Add PDF data
+        for (Integer i = 0; i &lt; pdfData.size(); i++) {
+            bodyInts.add(pdfData[i] & 0xFF);
+        }
+        
+        // Add footer
+        for (Integer i = 0; i &lt; footerBlob.size(); i++) {
+            bodyInts.add(footerBlob[i] & 0xFF);
+        }
+        
+        Blob finalBody = Blob.valueOf(String.fromCharArray(bodyInts));
+        
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(API_ENDPOINT);
+        req.setMethod('POST');
+        req.setHeader('Authorization', 'Bearer ' + API_KEY);
+        req.setHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+        req.setBodyAsBlob(finalBody);
+        req.setTimeout(120000); // 2 minutes timeout
+        
+        Http http = new Http();
+        HttpResponse res = http.send(req);
+        
+        if (res.getStatusCode() != 200) {
+            throw new CalloutException('API call failed: ' + res.getStatus() + ' - ' + res.getBody());
+        }
+        
+        return res.getBodyAsBlob();
+    }
+    
+    private static void attachWatermarkedFile(String opportunityId, String originalFileName, Blob watermarkedData) {
+        String newFileName = originalFileName.replace('.pdf', '-protected.pdf');
+        
+        ContentVersion cv = new ContentVersion();
+        cv.Title = newFileName;
+        cv.PathOnClient = newFileName;
+        cv.VersionData = watermarkedData;
+        cv.IsMajorVersion = true;
+        insert cv;
+        
+        // Link to opportunity
+        ContentDocumentLink cdl = new ContentDocumentLink();
+        cdl.LinkedEntityId = opportunityId;
+        cdl.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId;
+        cdl.ShareType = 'V';
+        insert cdl;
+    }
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h2 class="step-title">Create the Lightning Web Component</h2>
+                    </div>
+                    <div class="step-content">
+                        <ol>
+                            <li>Go to <strong>Setup</strong> → <strong>Lightning Components</strong></li>
+                            <li>Create a new Lightning Web Component named <code>aquamarkWatermarkButton</code></li>
+                        </ol>
+
+                        <h3>JavaScript File (aquamarkWatermarkButton.js):</h3>
+                        <div class="code-block">
+import { LightningElement, api, wire, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
+import watermarkFiles from '@salesforce/apex/AquamarkWatermarkService.watermarkFiles';
+import { getRecord } from 'lightning/uiRecordApi';
+
+export default class AquamarkWatermarkButton extends LightningElement {
+    @api recordId;
+    @track selectedFiles = [];
+    @track isLoading = false;
+    @track showFileSelection = false;
+    @track attachments = [];
+
+    @wire(getRecord, { recordId: '$recordId', fields: ['Opportunity.Name'] })
+    opportunity;
+
+    connectedCallback() {
+        this.loadAttachments();
+    }
+
+    loadAttachments() {
+        // You'll need to create a method to load PDF attachments
+        // This is a simplified version - you may need to adjust based on your file storage method
+    }
+
+    handleFileSelection(event) {
+        const selectedRows = event.detail.selectedRows;
+        this.selectedFiles = selectedRows.map(row =&gt; row.Id);
+    }
+
+    handleWatermarkClick() {
+        this.showFileSelection = true;
+        this.loadAttachments();
+    }
+
+    handleWatermarkFiles() {
+        if (this.selectedFiles.length === 0) {
+            this.showToast('Warning', 'Please select at least one PDF file to watermark.', 'warning');
+            return;
+        }
+
+        this.isLoading = true;
+        
+        watermarkFiles({ 
+            opportunityId: this.recordId, 
+            attachmentIds: this.selectedFiles 
+        })
+        .then(result =&gt; {
+            this.showToast('Success', result, 'success');
+            this.showFileSelection = false;
+            this.selectedFiles = [];
+            this.loadAttachments();
+        })
+        .catch(error =&gt; {
+            this.showToast('Error', error.body.message, 'error');
+        })
+        .finally(() =&gt; {
+            this.isLoading = false;
+        });
+    }
+
+    handleCancel() {
+        this.showFileSelection = false;
+        this.selectedFiles = [];
+    }
+
+    showToast(title, message, variant) {
+        const evt = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant
+        });
+        this.dispatchEvent(evt);
+    }
+}
+                        </div>
+
+                        <h3>HTML File (aquamarkWatermarkButton.html):</h3>
+                        <div class="code-block">
+&lt;template&gt;
+    &lt;lightning-card title="Aquamark Watermark" icon-name="custom:custom14"&gt;
+        &lt;div class="slds-m-around_medium"&gt;
+            &lt;template if:false={showFileSelection}&gt;
+                &lt;lightning-button 
+                    variant="brand" 
+                    label="Watermark PDFs" 
+                    title="Watermark PDF Files"
+                    onclick={handleWatermarkClick}
+                    disabled={isLoading}&gt;
+                &lt;/lightning-button&gt;
+            &lt;/template&gt;
+            
+            &lt;template if:true={showFileSelection}&gt;
+                &lt;lightning-spinner if:true={isLoading} alternative-text="Processing..."&gt;&lt;/lightning-spinner&gt;
+                
+                &lt;div class="slds-m-bottom_small"&gt;
+                    &lt;p&gt;Select PDF files to watermark:&lt;/p&gt;
+                &lt;/div&gt;
+                
+                &lt;!-- File selection table would go here --&gt;
+                &lt;!-- You'll need to implement file loading based on your attachment storage method --&gt;
+                
+                &lt;div class="slds-m-top_medium"&gt;
+                    &lt;lightning-button 
+                        variant="brand" 
+                        label="Watermark Selected Files" 
+                        onclick={handleWatermarkFiles}
+                        disabled={isLoading}&gt;
+                    &lt;/lightning-button&gt;
+                    &lt;lightning-button 
+                        variant="neutral" 
+                        label="Cancel" 
+                        onclick={handleCancel}
+                        class="slds-m-left_small"&gt;
+                    &lt;/lightning-button&gt;
+                &lt;/div&gt;
+            &lt;/template&gt;
+        &lt;/div&gt;
+    &lt;/lightning-card&gt;
+&lt;/template&gt;
+                        </div>
+
+                        <h3>Meta File (aquamarkWatermarkButton.js-meta.xml):</h3>
+                        <div class="code-block">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata"&gt;
+    &lt;apiVersion&gt;58.0&lt;/apiVersion&gt;
+    &lt;isExposed&gt;true&lt;/isExposed&gt;
+    &lt;targets&gt;
+        &lt;target&gt;lightning__RecordPage&lt;/target&gt;
+    &lt;/targets&gt;
+    &lt;targetConfigs&gt;
+        &lt;targetConfig targets="lightning__RecordPage"&gt;
+            &lt;objects&gt;
+                &lt;object&gt;Opportunity&lt;/object&gt;
+            &lt;/objects&gt;
+        &lt;/targetConfig&gt;
+    &lt;/targetConfigs&gt;
+&lt;/LightningComponentBundle&gt;
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h2 class="step-title">Add Remote Site Settings</h2>
+                    </div>
+                    <div class="step-content">
+                        <ol>
+                            <li>Go to <strong>Setup</strong> → <strong>Remote Site Settings</strong></li>
+                            <li>Click <strong>New Remote Site</strong></li>
+                            <li>Configure:
+                                <ul>
+                                    <li><strong>Remote Site Name</strong>: <code>Aquamark_API</code></li>
+                                    <li><strong>Remote Site URL</strong>: <code>https://aquamark-decrypt.onrender.com</code></li>
+                                    <li><strong>Active</strong>: Checked</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h2 class="step-title">Add Component to Opportunity Page</h2>
+                    </div>
+                    <div class="step-content">
+                        <ol>
+                            <li>Go to <strong>Setup</strong> → <strong>Object Manager</strong> → <strong>Opportunity</strong></li>
+                            <li>Click <strong>Lightning Record Pages</strong></li>
+                            <li>Edit your Opportunity record page or create a new one</li>
+                            <li>Drag the <strong>aquamarkWatermarkButton</strong> component onto the page</li>
+                            <li>Save and activate the page</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="step-section">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h2 class="step-title">Set Up File Permissions</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Ensure your Salesforce users have the necessary permissions:</p>
+                        <ul>
+                            <li><strong>Read</strong> access to ContentVersion and ContentDocument objects</li>
+                            <li><strong>Create</strong> access to ContentVersion and ContentDocumentLink objects</li>
+                            <li><strong>Execute</strong> access to the AquamarkWatermarkService Apex class</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <p><strong>Usage Instructions:</strong> Navigate to an Opportunity record → Click "Watermark PDFs" → Select files → Click "Watermark Selected Files" → Protected files will be attached with "-protected" suffix</p>
+                </div>
+
+                <div class="info-box">
+                    <p><strong>Customization Notes:</strong> Update the user email in the Apex class as needed, adjust file storage methods if not using ContentVersion, and customize the UI to match your org's design.</p>
+                </div>
+
+                <div class="warning-box">
+                    <p><strong>Important:</strong> Test with sample files first. Salesforce has a 6MB limit for HTTP callouts. Ensure proper permissions are set for all users.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p style="text-align: center; color: #6b7280;">
+                Need help with setup? Contact us at <a href="mailto:info@aquamark.io" style="color: #2563eb;">info@aquamark.io</a> or call (415) 500-1117
+            </p>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Aquamark. All rights reserved.</p>
+    </div>
+</body>
+</html>
