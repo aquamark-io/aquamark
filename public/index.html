@@ -267,31 +267,6 @@
             color: #6b7280;
             line-height: 1.5;
         }
-        
-.hero-cta-btn {
-  background-color: #2563eb;
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
-  transition: all 0.3s ease;
-  width: auto !important;
-  display: inline-block !important;
-    }
-
-.hero-cta-btn:hover {
-  background-color: #1d4ed8;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25);
-}
-
-
 
         .hero-image {
             display: flex;
@@ -372,7 +347,11 @@
             transform: translateY(-1px);
         }
 
-
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
         /* Partners Section */
         .partners {
@@ -1347,6 +1326,12 @@
                 font-size: 1.2rem;
             }
 
+            .hero-buttons {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
 
             .backdooring-section {
                 padding: 60px 0;
@@ -1614,10 +1599,10 @@
                 font-size: 1.1rem;
             }
 
-
-
-
-
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
 
             .cta-button,
             .api-docs-button {
@@ -1767,7 +1752,6 @@
             .review-track {
                 animation: none;
             }
-
         }
     </style>
 </head>
@@ -1784,8 +1768,10 @@
                 <img src="/logo-full-black-blue.png" alt="Aquamark">
             </a>
 <ul class="nav-links">
-      <li><a href="https://www.aquamark.io/signup">Free Trial</a></li>
-  <li><a href="https://www.aquamark.io/brokers">How It Works</a></li>
+      <li><a href="https://www.aquamark.io/lenders">How It Works Lenders</a></li>
+  <li><a href="https://www.aquamark.io/brokers">How It Works Brokers</a></li>
+    <a href="https://www.aquamark.io/lenders" class="broker-nav-btn">Lender Signup</a>
+      <a href="https://www.aquamark.io/signup" class="broker-signup-btn">Broker Signup</a>
   <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Broker Portal</a></li>
 </ul>
 
@@ -1805,8 +1791,6 @@
                 <div class="hero-text">
                     <h1>Automated <span style="color: #2563eb;">Watermarking</span> for FinTech</h1>
                     <p>For brokers and lenders. We protect your documents so they stay your documents.</p>
-                                    <a href="https://www.aquamark.io/signup" class="hero-cta-btn">Start Free Trial</a>
-
                 </div>
                 <div class="hero-image">
                     <div class="hero-graphic">
@@ -1994,7 +1978,7 @@ Many have accepted it as just "part of the game," but it doesn't have to be.
                             </div>
                             <div class="point-content">
                                 <h4>The Solution</h4>
-                                <p>Watermarking adds friction. It deters theft. And it makes people think twice before stealing a file.</p>
+                                <p>Watermarking adds friction. It deters theft. And it makes people think twice before misusing a file.</p>
                             </div>
                         </div>
                     </div>
