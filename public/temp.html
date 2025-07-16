@@ -793,6 +793,208 @@
   margin: 0;
         }
 
+        /* Broker-Focused Use Cases Section */
+        .broker-focus-grid {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .broker-main-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.12);
+            border: 2px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+
+        .broker-main-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(37, 99, 235, 0.18);
+        }
+
+        .broker-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            justify-content: center;
+        }
+
+        .broker-main-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+        }
+
+        .broker-card-header h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
+
+        .broker-steps {
+            margin-bottom: 2.5rem;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(59, 130, 246, 0.03);
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .broker-benefits {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .benefit-highlight {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .benefit-highlight:last-child {
+            margin-bottom: 0;
+        }
+
+        .benefit-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #059669;
+            flex-shrink: 0;
+        }
+
+        .benefit-highlight span {
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .broker-main-cta {
+            text-align: center;
+        }
+
+        .broker-main-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
+
+        .broker-main-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .simple-value-prop {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .value-left,
+        .value-right {
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .value-left {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .value-right {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .value-left h3 {
+            color: #dc2626;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .value-right h3 {
+            color: #059669;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .value-left p,
+        .value-right p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #374151;
+            margin: 0;
+        }
+
         /* Use Cases Section */
         .use-cases-section {
             padding: 40px 0 60px 0; /* Reduced top padding from 60px to 40px */
@@ -1473,6 +1675,49 @@
             .use-cases-header .section-subtitle {
                 font-size: 1.1rem;
             }
+
+            .broker-main-card {
+                padding: 2rem;
+            }
+
+            .broker-card-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .broker-card-header h3 {
+                font-size: 1.5rem;
+            }
+
+            .step-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                padding: 1.25rem;
+            }
+
+            .step-content h4 {
+                font-size: 1.1rem;
+            }
+
+            .benefit-highlight {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+
+            .simple-value-prop {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .value-left,
+            .value-right {
+                padding: 1.5rem;
+            }
             
             .use-cases-grid {
                 grid-template-columns: 1fr;
@@ -2138,56 +2383,92 @@ Many have accepted it as just "part of the game," but it doesn't have to be.
     <section class="use-cases-section">
         <div class="container">
             <div class="use-cases-header">
-                <h2 class="section-title">Which one are you?</h2>
-                <p class="section-subtitle">Our users sign up not to fix everyone else, but to protect themselves and stand apart as companies that do things the right way.</p>
+                <h2 class="section-title">Stop Backdooring in 5 Minutes</h2>
+                <p class="section-subtitle">The simplest way to protect your deals and keep your commissions where they belong — with you.</p>
             </div>
             
-            <div class="use-cases-grid">
-                <div class="use-case-card broker-card">
-                    <div class="use-case-header">
-                        <div class="use-case-icon broker-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <polyline points="17,11 19,13 23,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="broker-focus-grid">
+                <div class="broker-main-card">
+                    <div class="broker-card-header">
+                        <div class="broker-main-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h3>Brokers</h3>
+                        <h3>How It Works for Brokers</h3>
                     </div>
-                    <div class="use-case-content">
-<p>Brokers use Aquamark to protect the files they send to lenders and safeguard their merchants' sensitive financial information. Before submission, we apply a full-page, tamper-resistant watermark to every page of the bank statements using your logo. It makes people think twice before trying to pass the file off as their own. Some will risk it — most won't. It's how brokers protect their commissions and stop the quiet losses that add up fast.                
-                        </p>
-                    </div>
-                    <div class="use-case-individual-cta">
-                        <a href="https://www.aquamark.io/brokers" class="use-case-btn broker-btn">Learn More</a>
-                    </div>
-                </div>
-                
-                <div class="use-case-card lender-card">
-                    <div class="use-case-header">
-                        <div class="use-case-icon lender-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 21L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M5 21V7L12 2L19 7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9 9V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M15 9V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                    
+                    <div class="broker-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Upload Your Logo</h4>
+                                <p>One-time setup. Upload your company logo to our portal.</p>
+                            </div>
                         </div>
-                        <h3>Lenders</h3>
+                        
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Send Your Files</h4>
+                                <p>Upload bank statements like normal. We automatically watermark every page.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Protect Your Deals</h4>
+                                <p>Lenders receive files with your tamper-resistant watermark. No more stolen deals.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="use-case-content">
-                        <p>Lenders use Aquamark to protect the files they receive from brokers. When someone on your team downloads a PDF, we intercept the event and instantly apply tamper-resistant watermarks to every page — including your logo and their name — then complete the download with marked files only. Staff no longer have access to "clean," sellable files. It's how CEOs build trust with ISOs, and protect their resources and reputation.</p>
+                    
+                    <div class="broker-benefits">
+                        <div class="benefit-highlight">
+                            <div class="benefit-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span><strong>5-minute setup</strong> — No IT team needed</span>
+                        </div>
+                        
+                        <div class="benefit-highlight">
+                            <div class="benefit-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span><strong>Instant protection</strong> — Every file automatically watermarked</span>
+                        </div>
+                        
+                        <div class="benefit-highlight">
+                            <div class="benefit-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span><strong>OCR compatible</strong> — Lenders can still process files normally</span>
+                        </div>
                     </div>
-                    <div class="use-case-individual-cta">
-                        <a href="https://www.aquamark.io/lenders" class="use-case-btn lender-btn">Learn More</a>
+                    
+                    <div class="broker-main-cta">
+                        <a href="https://www.aquamark.io/brokers" class="broker-main-btn">Start Protecting Your Deals</a>
                     </div>
                 </div>
             </div>
             
-            <div class="use-cases-cta">
-                <a href="https://www.aquamark.io/brokers" class="use-case-btn broker-btn">Learn More</a>
-                <a href="https://www.aquamark.io/lenders" class="use-case-btn lender-btn">Learn More</a>
+            <div class="simple-value-prop">
+                <div class="value-left">
+                    <h3>The Problem</h3>
+                    <p>Your bank statements get stolen. Deals get backdoored. Commissions disappear. You lose time, money, and trust with your merchants.</p>
+                </div>
+                <div class="value-right">
+                    <h3>The Solution</h3>
+                    <p>Upload once. Protect forever. Every file automatically gets your watermark. Thieves move on to easier targets. Your deals stay yours.</p>
+                </div>
             </div>
         </div>
     </section>
