@@ -67,11 +67,7 @@
     </a>
   </div>
 
-  <!-- Always show AQUA20 referral code -->
-  <div class="referral-info">
-    <strong>🎉 Partner Code Applied!</strong><br>
-    <span>AQUA20</span>
-  </div>
+  <!-- Banner removed - Partner ID will be pre-filled instead -->
 
   <div id="outsetaAuth"
        data-o-auth="1"
@@ -106,8 +102,29 @@
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
 <script>
-  // Handle successful registration
+  // Handle successful registration and pre-fill Partner ID
   document.addEventListener('DOMContentLoaded', function() {
+    // Wait for Outseta form to load, then pre-fill Partner ID
+    setTimeout(function() {
+      // Try to find the Partner ID input field and pre-fill it
+      const partnerIdInput = document.querySelector('input[name*="partner"], input[name*="referral"], input[id*="partner"], input[id*="referral"]');
+      if (partnerIdInput) {
+        partnerIdInput.value = referralCode;
+        console.log('Pre-filled Partner ID with:', referralCode);
+      } else {
+        console.log('Partner ID input not found, trying alternative selectors...');
+        // Try more generic approach - look for input fields and find the one that might be partner ID
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+          const label = input.previousElementSibling || input.nextElementSibling;
+          if (label && label.textContent && label.textContent.toLowerCase().includes('partner')) {
+            input.value = referralCode;
+            console.log('Found and filled Partner ID field');
+          }
+        });
+      }
+    }, 1000); // Wait 1 second for form to load
+    
     // Listen for successful registration
     if (window.Outseta) {
       Outseta.on('user.register', function(user) {
