@@ -46,13 +46,13 @@
         }
 
        .top-banner {
-    background-color: #2563eb;
-    color: #ffffff;
+    background-color: #6b7280;
+    color: #000000;
     text-align: center;
     padding: 12px 20px;
     font-size: 0.9rem;
     font-weight: 500;
-    border-bottom: 1px solid #1e40af; /* Optional: deeper blue border */
+    border-bottom: 1px solid #4b5563;
     position: fixed;
     top: 0;
     left: 0;
@@ -61,10 +61,19 @@
     width: 100%;
 }
 
-.top-banner p {
+.top-banner .banner-content {
     margin: 0;
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.top-banner .banner-content img {
+    height: 20px;
+    width: auto;
 }
 
 
@@ -1868,7 +1877,10 @@
 <body>
     <!-- Top Banner -->
     <div class="top-banner">
-        <p>Watermarking prevents <strong>internal</strong> and <strong>external</strong> theft.</p>
+        <div class="banner-content">
+            <span>In partnership with</span>
+            <img src="alc.png" alt="Partner Logo" />
+        </div>
     </div>
 
     <!-- Header -->
