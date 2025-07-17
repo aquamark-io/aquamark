@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - Aquamark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="/logo-icon-black-blue.jpg" type="image/jpg" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      text-align: center;
+    }
+    .referral-info {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #0369a1;
+    }
+    .terms-notice {
+      font-size: 0.75rem;
+      color: #6b7280;
+      text-align: center;
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+    .terms-notice a {
+      color: #0ea5e9;
+      text-decoration: none;
+    }
+    .terms-notice a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div style="text-align: center; margin-bottom: 1rem;">
+    <a href="/">
+      <img src="/logo-full-black-blue.png" alt="Aquamark logo" style="height: 48px;" />
+    </a>
+  </div>
+
+  <!-- Banner removed - Partner ID will be pre-filled instead -->
+
+  <div id="outsetaAuth"
+       data-o-auth="1"
+       data-widget-mode="register"
+       data-plan-uid="aWxLDdWV"
+       data-skip-plan-options="true"
+       data-mode="embed">
+  </div>
+
+  <!-- Terms and Privacy Policy notice -->
+  <div class="terms-notice">
+    By signing up, you agree to our <a href="https://www.aquamark.io/terms-of-use" target="_blank">Terms of Use</a> and <a href="https://www.aquamark.io/privacy" target="_blank">Privacy Policy</a>.
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Aquamark. All rights reserved.
+</footer>
+
+<!-- Outseta Embed -->
+<script>
+  // Hardcoded referral code (mimicking URL parameter behavior)
+  const referralCode = 'AQUATK20';
+  
+  console.log('Using hardcoded referral code:', referralCode);
+  
+  // Simulate URL parameter by actually setting it in the URL temporarily
+  // This ensures Outseta picks it up the same way as the original
+  const currentUrl = new URL(window.location);
+  currentUrl.searchParams.set('ref', referralCode);
+  // Update the URL without reloading the page
+  window.history.replaceState(null, '', currentUrl);
+  
+  var o_options = {
+    domain: 'aquamark.outseta.com',
+    load: 'auth'
+  };
+</script>
+<script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+<script>
+  // Handle successful registration and pre-fill Partner ID
+  document.addEventListener('DOMContentLoaded', function() {
+    // Function to try filling the referral/partner ID field
+    function fillPartnerIdField() {
+      // Prioritize the exact system name first
+      let partnerIdInput = document.querySelector('input[name="ref_code"]') || 
+                          document.querySelector('input[id="ref_code"]');
+      
+      if (partnerIdInput) {
+        partnerIdInput.value = referralCode;
+        // Trigger change event to ensure Outseta recognizes the value
+        partnerIdInput.dispatchEvent(new Event('input', { bubbles: true }));
+        partnerIdInput.dispatchEvent(new Event('change', { bubbles: true }));
+        console.log('✅ Pre-filled ref_code field with:', referralCode);
+        return true; // Success
+      } else {
+        // Fallback to other variations just in case
+        partnerIdInput = document.querySelector('input[name="refcode"]') ||
+                        document.querySelector('input[name="referral_code"]') ||
+                        document.querySelector('input[name="referralcode"]') ||
+                        document.querySelector('input[id="refcode"]') ||
+                        document.querySelector('input[id="referral_code"]') ||
+                        document.querySelector('input[id="referralcode"]') ||
+                        document.querySelector('input[name*="ref"]') ||
+                        document.querySelector('input[name*="referral"]') ||
+                        document.querySelector('input[name*="partner"]');
+        
+        if (partnerIdInput) {
+          partnerIdInput.value = referralCode;
+          partnerIdInput.dispatchEvent(new Event('input', { bubbles: true }));
+          partnerIdInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('✅ Pre-filled referral field (fallback) with:', referralCode, 'Field name:', partnerIdInput.name || partnerIdInput.id);
+          return true;
+        } else {
+          console.log('❌ ref_code field not found');
+          // Debug: log all input fields
+          const allInputs = document.querySelectorAll('input');
+          console.log('All input fields found:', allInputs);
+          if (allInputs.length > 0) {
+            allInputs.forEach((input, index) => {
+              console.log(`Input ${index}:`, {
+                name: input.name,
+                id: input.id,
+                type: input.type,
+                placeholder: input.placeholder,
+                className: input.className
+              });
+            });
+          }
+          return false; // Failed
+        }
+      }
+    }
+    
+    // Try multiple times with increasing delays
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    function tryFillField() {
+      attempts++;
+      console.log(`Attempt ${attempts} to fill referral field...`);
+      
+      if (fillPartnerIdField()) {
+        console.log('✅ Successfully filled referral field');
+        return;
+      }
+      
+      if (attempts < maxAttempts) {
+        setTimeout(tryFillField, 1000); // Try again in 1 second
+      } else {
+        console.log('❌ Failed to fill referral field after', maxAttempts, 'attempts');
+      }
+    }
+    
+    // Start trying after initial delay
+    setTimeout(tryFillField, 1000);
+    
+    // Listen for successful registration
+    if (window.Outseta) {
+      Outseta.on('user.register', function(user) {
+        console.log('User registered:', user);
+        
+        // Always store the hardcoded referral code
+        console.log('Storing hardcoded referral code for user:', referralCode);
+        sessionStorage.setItem('pendingReferralCode', referralCode);
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
