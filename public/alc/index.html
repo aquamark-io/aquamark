@@ -32,6 +32,16 @@
       color: #6b7280;
       text-align: center;
     }
+    .referral-info {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #0369a1;
+    }
     .terms-notice {
       font-size: 0.75rem;
       color: #6b7280;
@@ -57,6 +67,12 @@
     </a>
   </div>
 
+  <!-- Always show AQUA20 referral code -->
+  <div class="referral-info">
+    <strong>🎉 Partner Code Applied!</strong><br>
+    <span>AQUA20</span>
+  </div>
+
   <div id="outsetaAuth"
        data-o-auth="1"
        data-widget-mode="register"
@@ -65,6 +81,7 @@
        data-mode="embed">
   </div>
 
+  <!-- Terms and Privacy Policy notice -->
   <div class="terms-notice">
     By signing up, you agree to our <a href="https://www.aquamark.io/terms-of-use" target="_blank">Terms of Use</a> and <a href="https://www.aquamark.io/privacy" target="_blank">Privacy Policy</a>.
   </div>
@@ -76,6 +93,11 @@
 
 <!-- Outseta Embed -->
 <script>
+  // Hardcoded referral code
+  const referralCode = 'AQUA20';
+  
+  console.log('Using hardcoded referral code:', referralCode);
+  
   var o_options = {
     domain: 'aquamark.outseta.com',
     load: 'auth'
@@ -83,24 +105,20 @@
 </script>
 <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-<!-- Inject Partner ID -->
 <script>
-  const partnerIdValue = "AQUA20ALC";
-
-  function injectPartnerId() {
-    const field = document.querySelector('input[name="ref_code"]');
-    if (field) {
-      if (!field.value) {
-        field.value = partnerIdValue;
-        field.dispatchEvent(new Event('input', { bubbles: true })); // trigger UI update
-      }
-    } else {
-      setTimeout(injectPartnerId, 200);
+  // Handle successful registration
+  document.addEventListener('DOMContentLoaded', function() {
+    // Listen for successful registration
+    if (window.Outseta) {
+      Outseta.on('user.register', function(user) {
+        console.log('User registered:', user);
+        
+        // Always store the hardcoded referral code
+        console.log('Storing hardcoded referral code for user:', referralCode);
+        sessionStorage.setItem('pendingReferralCode', referralCode);
+      });
     }
-  }
-
-  // Start checking when DOM is ready
-  document.addEventListener('DOMContentLoaded', injectPartnerId);
+  });
 </script>
 
 </body>
