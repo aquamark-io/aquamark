@@ -89,10 +89,17 @@
 
 <!-- Outseta Embed -->
 <script>
-  // Hardcoded referral code
+  // Hardcoded referral code (mimicking URL parameter behavior)
   const referralCode = 'AQUA20';
   
   console.log('Using hardcoded referral code:', referralCode);
+  
+  // Simulate URL parameter by actually setting it in the URL temporarily
+  // This ensures Outseta picks it up the same way as the original
+  const currentUrl = new URL(window.location);
+  currentUrl.searchParams.set('ref', referralCode);
+  // Update the URL without reloading the page
+  window.history.replaceState(null, '', currentUrl);
   
   var o_options = {
     domain: 'aquamark.outseta.com',
@@ -104,32 +111,39 @@
 <script>
   // Handle successful registration and pre-fill Partner ID
   document.addEventListener('DOMContentLoaded', function() {
-    // Function to try filling the Partner ID field
+    // Function to try filling the referral/partner ID field
     function fillPartnerIdField() {
-      // Try to find the Partner ID input field using ref_code
+      // Prioritize the exact system name first
       let partnerIdInput = document.querySelector('input[name="ref_code"]') || 
-                          document.querySelector('input[id="ref_code"]') ||
-                          document.querySelector('input[name*="ref_code"]') ||
-                          document.querySelector('input[id*="ref_code"]');
+                          document.querySelector('input[id="ref_code"]');
       
       if (partnerIdInput) {
         partnerIdInput.value = referralCode;
-        console.log('✅ Pre-filled Partner ID (ref_code) with:', referralCode);
+        // Trigger change event to ensure Outseta recognizes the value
+        partnerIdInput.dispatchEvent(new Event('input', { bubbles: true }));
+        partnerIdInput.dispatchEvent(new Event('change', { bubbles: true }));
+        console.log('✅ Pre-filled ref_code field with:', referralCode);
         return true; // Success
       } else {
-        console.log('ref_code input not found, trying alternative selectors...');
-        // Try other common patterns
-        partnerIdInput = document.querySelector('input[name*="partner"]') || 
+        // Fallback to other variations just in case
+        partnerIdInput = document.querySelector('input[name="refcode"]') ||
+                        document.querySelector('input[name="referral_code"]') ||
+                        document.querySelector('input[name="referralcode"]') ||
+                        document.querySelector('input[id="refcode"]') ||
+                        document.querySelector('input[id="referral_code"]') ||
+                        document.querySelector('input[id="referralcode"]') ||
+                        document.querySelector('input[name*="ref"]') ||
                         document.querySelector('input[name*="referral"]') ||
-                        document.querySelector('input[id*="partner"]') ||
-                        document.querySelector('input[id*="referral"]');
+                        document.querySelector('input[name*="partner"]');
         
         if (partnerIdInput) {
           partnerIdInput.value = referralCode;
-          console.log('✅ Found and filled Partner ID field with alternative selector');
-          return true; // Success
+          partnerIdInput.dispatchEvent(new Event('input', { bubbles: true }));
+          partnerIdInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('✅ Pre-filled referral field (fallback) with:', referralCode, 'Field name:', partnerIdInput.name || partnerIdInput.id);
+          return true;
         } else {
-          console.log('❌ Partner ID field not found');
+          console.log('❌ ref_code field not found');
           // Debug: log all input fields
           const allInputs = document.querySelectorAll('input');
           console.log('All input fields found:', allInputs);
@@ -155,17 +169,17 @@
     
     function tryFillField() {
       attempts++;
-      console.log(`Attempt ${attempts} to fill Partner ID field...`);
+      console.log(`Attempt ${attempts} to fill referral field...`);
       
       if (fillPartnerIdField()) {
-        console.log('✅ Successfully filled Partner ID field');
+        console.log('✅ Successfully filled referral field');
         return;
       }
       
       if (attempts < maxAttempts) {
         setTimeout(tryFillField, 1000); // Try again in 1 second
       } else {
-        console.log('❌ Failed to fill Partner ID field after', maxAttempts, 'attempts');
+        console.log('❌ Failed to fill referral field after', maxAttempts, 'attempts');
       }
     }
     
