@@ -90,13 +90,17 @@
   function injectPartnerId() {
     const field = document.querySelector('input[name="ref_code"]');
     if (field) {
-      field.value = partnerIdValue;
+      if (!field.value) {
+        field.value = partnerIdValue;
+        field.dispatchEvent(new Event('input', { bubbles: true })); // trigger UI update
+      }
     } else {
-      setTimeout(injectPartnerId, 200); // Retry until form is loaded
+      setTimeout(injectPartnerId, 200);
     }
   }
 
-  injectPartnerId();
+  // Start checking when DOM is ready
+  document.addEventListener('DOMContentLoaded', injectPartnerId);
 </script>
 
 </body>
