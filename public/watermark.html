@@ -1144,7 +1144,7 @@
 
                 // Fast fetch with timeout and optimized headers
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+                const timeoutId = setTimeout(() => controller.abort(), 12000); // 8 second timeout
 
                 const startTime = Date.now();
                 const response = await fetch(`${API_BASE_URL}/api/logo`, {
