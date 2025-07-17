@@ -87,11 +87,18 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid #f3f4f6;
             position: fixed;
-            top: 60px; /* Adjust for banner height */
+            top: 60px; /* Default for desktop */
             left: 0;
             right: 0;
             z-index: 1000;
             padding: 1rem 0;
+        }
+
+        /* Mobile header positioning - automatically adjusts based on banner */
+        @media (max-width: 768px) {
+            header {
+                top: calc(var(--banner-height, 120px) + 10px); /* Auto-adjust based on banner height */
+            }
         }
 
         nav {
@@ -240,9 +247,16 @@
         /* Hero Section - Split Layout */
         .hero {
             background: #ffffff;
-            padding: 164px 0 60px; /* Increased from 120px to 164px */
+            padding: 164px 0 60px; /* Default for desktop */
             display: flex;
             align-items: center;
+        }
+
+        /* Mobile hero positioning - automatically adjusts */
+        @media (max-width: 768px) {
+            .hero {
+                padding: calc(var(--banner-height, 120px) + 100px) 0 60px; /* Auto-adjust based on banner + header */
+            }
         }
 
         .hero-container {
@@ -1322,11 +1336,6 @@
   .top-banner {
     padding: 8px 15px;
   }
-  
-  /* Fix for mobile header positioning */
-  header {
-    top: 220px; /* Doubled from 110px */
-  }
 }
 
         
@@ -1350,15 +1359,6 @@
             .top-banner {
                 padding: 10px 15px;
                 font-size: 0.85rem;
-            }
-
-            /* Updated mobile header positioning */
-            header {
-                top: 220px; /* Doubled from 110px */
-            }
-
-            .hero {
-                padding: 320px 0 80px; /* Increased padding to account for much higher header position */
             }
 
             .mobile-menu-btn {
@@ -1732,15 +1732,6 @@
                 padding: 8px 15px;
                 font-size: 0.8rem;
                 line-height: 1.4;
-            }
-
-            /* Further adjustment for very small mobile screens */
-            header {
-                top: 230px; /* Doubled from 115px */
-            }
-
-            .hero {
-                padding: 330px 0 80px; /* Increased to account for much higher header */
             }
 
             .container, .hero-container {
@@ -2564,6 +2555,21 @@ Many have accepted it as just "part of the game," but it doesn't have to be.
     </div>
 
     <script>
+        // Auto-calculate banner height for mobile positioning
+        function updateMobileLayout() {
+            if (window.innerWidth <= 768) {
+                const banner = document.querySelector('.top-banner');
+                if (banner) {
+                    const bannerHeight = banner.offsetHeight;
+                    document.documentElement.style.setProperty('--banner-height', bannerHeight + 'px');
+                }
+            }
+        }
+
+        // Run on load and resize
+        window.addEventListener('load', updateMobileLayout);
+        window.addEventListener('resize', updateMobileLayout);
+
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
