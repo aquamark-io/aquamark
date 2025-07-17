@@ -46,12 +46,13 @@
         }
 
        .top-banner {
-    background-color: #E5E4E2;
-    color: #000000;
+    background-color: #2563eb;
+    color: #ffffff;
     text-align: center;
-    padding: 10px 20px;
+    padding: 12px 20px;
     font-size: 0.9rem;
     font-weight: 500;
+    border-bottom: 1px solid #1e40af; /* Optional: deeper blue border */
     position: fixed;
     top: 0;
     left: 0;
@@ -60,19 +61,10 @@
     width: 100%;
 }
 
-.top-banner .banner-content {
+.top-banner p {
     margin: 0;
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.top-banner .banner-content img {
-    height: 60px;
-    width: auto;
 }
 
 
@@ -82,7 +74,7 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid #f3f4f6;
             position: fixed;
-            top: 75px; /* Adjust for banner height */
+            top: 44px; /* Adjust for banner height */
             left: 0;
             right: 0;
             z-index: 1000;
@@ -886,16 +878,6 @@
             text-align: center;
         }
 
-                .sample-image {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            margin: 0 auto 2rem;
-            display: block;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
         /* FLIPPED COLORS: Brokers now use blue, Lenders now use green */
         .use-case-btn.broker-btn {
             background: #3b82f6;
@@ -921,34 +903,6 @@
             border-color: #059669;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-        }
-
-        /* FIXED: Improved watermark economics section */
-        .watermark-econ-section {
-            display: flex;
-            flex-direction: row;
-            gap: 3rem;
-            align-items: flex-start;
-            justify-content: center;
-            margin-top: 80px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 20px;
-        }
-
-        /* Ensure the broker card doesn't exceed half width */
-        .watermark-econ-section .use-case-card {
-            flex: 1;
-            max-width: 500px;
-            min-width: 400px;
-        }
-
-        /* Ensure the image container has proper sizing */
-        .watermark-econ-section > div:last-child {
-            flex: 0 0 auto;
-            max-width: 380px;
-            min-width: 300px;
         }
 
         /* Social Proof Section */
@@ -1302,22 +1256,6 @@
             }
         }
 
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .watermark-econ-section {
-                gap: 2rem;
-                padding: 0 15px;
-            }
-            
-            .watermark-econ-section .use-case-card {
-                min-width: 350px;
-            }
-            
-            .watermark-econ-section > div:last-child {
-                max-width: 320px;
-                min-width: 280px;
-            }
-        }
-
         @media (max-width: 768px) {
             .top-banner {
                 padding: 10px 15px;
@@ -1325,7 +1263,7 @@
             }
 
             .hero {
-                padding: 170px 0 80px; /* Adjusted for mobile */
+                padding: 154px 0 80px; /* Adjusted for mobile */
             }
 
             .mobile-menu-btn {
@@ -1550,29 +1488,6 @@
                 max-width: 300px;
             }
 
-            .watermark-econ-section {
-                flex-direction: column;
-                align-items: center;
-                gap: 2rem;
-                margin-top: 60px;
-                padding: 0 15px;
-            }
-
-            .watermark-econ-section .use-case-card {
-                max-width: 100%;
-                min-width: auto;
-            }
-
-            .watermark-econ-section > div:last-child {
-                max-width: 100%;
-                min-width: auto;
-            }
-
-            .watermark-econ-section img {
-                width: 100%;
-                height: auto;
-            }
-
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
@@ -1702,7 +1617,7 @@
             }
 
             .hero {
-                padding: 175px 0 80px; /* Further adjusted for small mobile */
+                padding: 144px 0 80px; /* Further adjusted for small mobile */
             }
 
             .container, .hero-container {
@@ -1876,10 +1791,7 @@
 <body>
     <!-- Top Banner -->
     <div class="top-banner">
-        <div class="banner-content">
-            <span>In partnership with</span>
-            <img src="/alc-logo.png" alt="Partner Logo" />
-        </div>
+        <p>Watermarking prevents <strong>internal</strong> and <strong>external</strong> theft.</p>
     </div>
 
     <!-- Header -->
@@ -1890,6 +1802,7 @@
             </a>
 <ul class="nav-links">
     <li><a href="https://www.aquamark.io/signup">Free Trial</a></li>
+  <li><a href="https://www.aquamark.io/brokers">How It Works</a></li>
   <li><a href="https://www.aquamark.io/login.html" class="sign-in-btn">Log In</a></li>
 </ul>
 
@@ -2210,7 +2123,6 @@ Many have accepted it as just "part of the game," but it doesn't have to be.
         </div>
     </section>
 
-    
 <!-- Use Cases Section -->
 <section class="use-cases-section">
   <div class="container">
@@ -2263,8 +2175,6 @@ Many have accepted it as just "part of the game," but it doesn't have to be.
     </div>
   </div>
 </section>
-
-
 
 
     
@@ -2476,7 +2386,8 @@ Many have accepted it as just "part of the game," but it doesn't have to be.
                 <h2>Tired of Backdooring?</h2>
                 <p>Join hundreds of companies taking control.</p>
                 <div class="cta-buttons">
-                    <a href="https://www.aquamark.io/signup" class="cta-large-button broker-btn">Try for Free</a>
+                    <a href="https://www.aquamark.io/brokers" class="cta-large-button broker-btn">Brokers</a>
+                    <a href="https://www.aquamark.io/lenders" class="cta-large-button lender-btn">Lenders</a>
                 </div>
             </div>
         </div>
