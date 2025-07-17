@@ -104,8 +104,8 @@
 <script>
   // Handle successful registration and pre-fill Partner ID
   document.addEventListener('DOMContentLoaded', function() {
-    // Wait for Outseta form to load, then pre-fill Partner ID
-    setTimeout(function() {
+    // Function to try filling the Partner ID field
+    function fillPartnerIdField() {
       // Try to find the Partner ID input field using ref_code
       let partnerIdInput = document.querySelector('input[name="ref_code"]') || 
                           document.querySelector('input[id="ref_code"]') ||
@@ -114,7 +114,8 @@
       
       if (partnerIdInput) {
         partnerIdInput.value = referralCode;
-        console.log('Pre-filled Partner ID (ref_code) with:', referralCode);
+        console.log('✅ Pre-filled Partner ID (ref_code) with:', referralCode);
+        return true; // Success
       } else {
         console.log('ref_code input not found, trying alternative selectors...');
         // Try other common patterns
@@ -125,32 +126,51 @@
         
         if (partnerIdInput) {
           partnerIdInput.value = referralCode;
-          console.log('Found and filled Partner ID field with alternative selector');
+          console.log('✅ Found and filled Partner ID field with alternative selector');
+          return true; // Success
         } else {
-          console.log('Partner ID field not found with any selector');
+          console.log('❌ Partner ID field not found');
           // Debug: log all input fields
           const allInputs = document.querySelectorAll('input');
           console.log('All input fields found:', allInputs);
-          allInputs.forEach((input, index) => {
-            console.log(`Input ${index}:`, {
-              name: input.name,
-              id: input.id,
-              type: input.type,
-              placeholder: input.placeholder
+          if (allInputs.length > 0) {
+            allInputs.forEach((input, index) => {
+              console.log(`Input ${index}:`, {
+                name: input.name,
+                id: input.id,
+                type: input.type,
+                placeholder: input.placeholder,
+                className: input.className
+              });
             });
-          });
+          }
+          return false; // Failed
         }
       }
-    }, 1000); // Wait 1 second for form to load
+    }
     
-    // Try again after 3 seconds in case the form takes longer to load
-    setTimeout(function() {
-      const partnerIdInput = document.querySelector('input[name="ref_code"]') || document.querySelector('input[id="ref_code"]');
-      if (partnerIdInput && !partnerIdInput.value) {
-        partnerIdInput.value = referralCode;
-        console.log('Pre-filled Partner ID (ref_code) on second attempt with:', referralCode);
+    // Try multiple times with increasing delays
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    function tryFillField() {
+      attempts++;
+      console.log(`Attempt ${attempts} to fill Partner ID field...`);
+      
+      if (fillPartnerIdField()) {
+        console.log('✅ Successfully filled Partner ID field');
+        return;
       }
-    }, 3000);
+      
+      if (attempts < maxAttempts) {
+        setTimeout(tryFillField, 1000); // Try again in 1 second
+      } else {
+        console.log('❌ Failed to fill Partner ID field after', maxAttempts, 'attempts');
+      }
+    }
+    
+    // Start trying after initial delay
+    setTimeout(tryFillField, 1000);
     
     // Listen for successful registration
     if (window.Outseta) {
