@@ -1786,7 +1786,30 @@
                 animation: none;
             }
         }
-    </style>
+    
+.watermark-econ-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.watermark-sample-image img {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .watermark-econ-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+</style>
 </head>
 <body>
     <!-- Top Banner -->
