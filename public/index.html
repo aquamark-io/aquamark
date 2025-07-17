@@ -45,28 +45,28 @@
             max-width: 1400px;
         }
 
-        /* Top Banner */
-        .top-banner {
-            background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%);
-            color: #7c3aed;
-            text-align: center;
-            padding: 12px 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border-bottom: 1px solid #e0e7ff;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1001;
-            width: 100%;
-        }
+       .top-banner {
+    background-color: #2563eb;
+    color: #ffffff;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-bottom: 1px solid #1e40af; /* Optional: deeper blue border */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    width: 100%;
+}
 
-        .top-banner p {
-            margin: 0;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.top-banner p {
+    margin: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 
         /* Header - Ultra Minimal */
         header {
@@ -1153,6 +1153,39 @@
   color: #1e40af;
   border-color: #1e40af;
 }
+        .hero-buttons a {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-right: 1rem;
+  text-align: center;
+  min-width: 140px;
+  transition: background 0.2s ease;
+              text-decoration: none;
+}
+
+/* Free Trial - dark */
+.hero-buttons .black-button {
+  background-color: #111827;
+  color: white;
+  border: none;
+}
+.hero-buttons .black-button:hover {
+  background-color: #1f2937;
+}
+
+/* Sign In - blue */
+.hero-buttons .blue-button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+}
+.hero-buttons .blue-button:hover {
+  background-color: #1d4ed8;
+}
+
 
 
 
@@ -1788,7 +1821,12 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>Automated <span style="color: #2563eb;">Watermarking</span> for FinTech</h1>
-                    <p>For brokers and lenders. We protect your documents so they stay your documents.</p>
+                    <p>We protect your documents so they stay your documents.</p>
+                    <div class="hero-buttons">
+  <a href="https://www.aquamark.io/signup" class="black-button">Free Trial</a>
+  <a href="https://www.aquamark.io/login.html" class="blue-button">Sign In</a>
+</div>
+
                 </div>
                 <div class="hero-image">
                     <div class="hero-graphic">
@@ -1938,7 +1976,10 @@
 Backdooring happens when someone takes documents from their original source and uses them without permission. In fintech, bad actors are stealing submissions from brokers and lenders — either to work the deal themselves or to sell them multiple times over.
 Many have accepted it as just "part of the game," but it doesn't have to be.
                     </p>
-                    
+                    <div class="hero-buttons" style="justify-content: left; margin-top: 3rem;">
+  <a href="https://www.aquamark.io/signup" class="blue-button">Start Free</a>
+</div>
+
                 </div>
                 
                 <div class="backdooring-points">
@@ -2069,6 +2110,11 @@ Many have accepted it as just "part of the game," but it doesn't have to be.
                 </div>
             </div>
 
+<div class="hero-buttons" style="justify-content: center; margin-top: 3rem;">
+  <a href="https://www.aquamark.io/signup" class="blue-button">Start Free Trial</a>
+</div>
+
+    
             <!-- Product CTAs -->
             <div class="products-cta" style="display: none;">
                 <a href="https://www.aquamark.io/brokers" class="products-cta-button broker-btn broker-btn-green">Brokers</a>
