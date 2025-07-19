@@ -62,7 +62,7 @@
         .nav-links a {
             text-decoration: none;
             color: #666;
-            font-weight: 500;
+            font-weight: 450;
             transition: color 0.3s;
             font-size: 1rem;
         }
@@ -206,7 +206,14 @@
             width: 100% !important;
             max-width: 100% !important;
             height: auto !important;
-            min-height: 400px !important;
+            min-height: 600px !important;
+        }
+
+        .form-embed {
+            width: 100%;
+            height: auto;
+            min-height: 600px;
+            overflow: visible;
         }
 
         /* Desktop styles */
@@ -238,8 +245,9 @@
             }
 
             .form-container [data-fillout-id] {
-                width: 500px !important;
-                height: 500px !important;
+                width: 100% !important;
+                height: auto !important;
+                min-height: 650px !important;
             }
 
             .nav {
@@ -263,7 +271,7 @@
             }
 
             .form-container [data-fillout-id] {
-                min-height: 450px !important;
+                min-height: 650px !important;
             }
         }
 
@@ -330,7 +338,7 @@
             }
 
             .form-container [data-fillout-id] {
-                min-height: 500px !important;
+                min-height: 700px !important;
             }
         }
 
@@ -440,7 +448,7 @@
                     </div>
 
                     <div class="form-container">
-                        <div style="width:100%;height:auto;" data-fillout-id="9inxfRbznaus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
+                        <div class="form-embed" data-fillout-id="9inxfRbznaus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
                     </div>
                 </div>
             </div>
