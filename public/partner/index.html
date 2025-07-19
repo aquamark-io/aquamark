@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Partner with Us - Aquamark.io</title>
-    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
     <script src="https://server.fillout.com/embed/v1/"></script>
     <style>
         * {
@@ -37,7 +36,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
 
         .logo {
@@ -63,8 +62,9 @@
         .nav-links a {
             text-decoration: none;
             color: #666;
-            font-weight: 300;
+            font-weight: 500;
             transition: color 0.3s;
+            font-size: 1rem;
         }
 
         .nav-links a:hover {
@@ -74,27 +74,28 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
 
         .hero {
-            padding: 4rem 0;
+            padding: 3rem 0;
             text-align: center;
             color: white;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
             font-weight: bold;
             margin-bottom: 1rem;
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .hero .subtitle {
-            font-size: 1.3rem;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
             opacity: 0.9;
             max-width: 600px;
             margin: 0 auto 2rem;
+            padding: 0 1rem;
         }
 
         .main-content {
@@ -106,21 +107,22 @@
         }
 
         .content-inner {
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
         }
 
         .two-column {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            grid-template-columns: 1fr;
+            gap: 2rem;
             align-items: start;
         }
 
         .left-content h2 {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 6vw, 2.5rem);
             color: #1a1a1a;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            text-align: center;
         }
 
         .highlight {
@@ -135,15 +137,15 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 1.5rem;
-            padding: 1rem;
+            padding: 1.25rem;
             background: #f8fafc;
             border-radius: 12px;
             border-left: 4px solid #4285F4;
         }
 
         .value-prop-icon {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             background: #4285F4;
             border-radius: 50%;
             display: flex;
@@ -159,25 +161,28 @@
         .value-prop-content h3 {
             color: #1a1a1a;
             margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .value-prop-content p {
             color: #666;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            line-height: 1.5;
         }
 
         .cta-text {
             font-size: 1.1rem;
             color: #666;
             margin-top: 2rem;
+            text-align: center;
         }
 
         .form-container {
             background: #f8fafc;
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-top: 2rem;
         }
 
         .form-header {
@@ -188,33 +193,186 @@
         .form-header h3 {
             color: #1a1a1a;
             margin-bottom: 0.5rem;
+            font-size: 1.5rem;
         }
 
         .form-header p {
             color: #666;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
-        @media (max-width: 768px) {
-            .two-column {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+        /* Responsive form container */
+        .form-container [data-fillout-id] {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            min-height: 400px !important;
+        }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .left-content h2 {
-                font-size: 2rem;
-            }
-
-            .nav {
-                padding: 0 1rem;
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .container {
+                padding: 0 2rem;
             }
 
             .content-inner {
-                padding: 2rem 1rem;
+                padding: 4rem 2rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+
+            .left-content h2 {
+                text-align: left;
+            }
+
+            .cta-text {
+                text-align: left;
+            }
+
+            .form-container {
+                margin-top: 0;
+                padding: 2rem;
+            }
+
+            .form-container [data-fillout-id] {
+                width: 500px !important;
+                height: 500px !important;
+            }
+
+            .nav {
+                padding: 0 2rem;
+            }
+        }
+
+        /* Large mobile and small tablet */
+        @media (max-width: 768px) and (min-width: 481px) {
+            .hero {
+                padding: 2.5rem 0;
+            }
+
+            .value-prop {
+                padding: 1.5rem;
+            }
+
+            .value-prop-icon {
+                width: 52px;
+                height: 52px;
+            }
+
+            .form-container [data-fillout-id] {
+                min-height: 450px !important;
+            }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .nav {
+                padding: 0 0.75rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            .content-inner {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .value-prop {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 1.5rem 1rem;
+            }
+
+            .value-prop-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+                width: 56px;
+                height: 56px;
+            }
+
+            .value-prop-content h3 {
+                font-size: 1.3rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .value-prop-content p {
+                font-size: 1rem;
+            }
+
+            .form-container {
+                padding: 1.25rem;
+                border-radius: 12px;
+            }
+
+            .form-header h3 {
+                font-size: 1.3rem;
+            }
+
+            .form-header p {
+                font-size: 1rem;
+            }
+
+            .form-container [data-fillout-id] {
+                min-height: 500px !important;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 360px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            .value-prop {
+                padding: 1.25rem 0.75rem;
+            }
+
+            .form-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Ensure touch targets are accessible */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-links a {
+                padding: 0.5rem;
+                margin: -0.5rem;
+            }
+        }
+
+        /* Handle landscape orientation on phones */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                padding: 1.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: clamp(2rem, 6vw, 2.5rem);
+            }
+
+            .hero .subtitle {
+                font-size: clamp(1rem, 3vw, 1.2rem);
             }
         }
     </style>
@@ -255,7 +413,7 @@
                                 </div>
                             </div>
 
-                                                        <div class="value-prop">
+                            <div class="value-prop">
                                 <div class="value-prop-icon">✓</div>
                                 <div class="value-prop-content">
                                     <h3>Protect Your Network</h3>
@@ -271,7 +429,6 @@
                                 </div>
                             </div>
 
-
                             <div class="value-prop">
                                 <div class="value-prop-icon">↗</div>
                                 <div class="value-prop-content">
@@ -283,7 +440,7 @@
                     </div>
 
                     <div class="form-container">
-                        <div style="width:500px;height:500px;" data-fillout-id="9inxfRbznaus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
+                        <div style="width:100%;height:auto;" data-fillout-id="9inxfRbznaus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
                     </div>
                 </div>
             </div>
