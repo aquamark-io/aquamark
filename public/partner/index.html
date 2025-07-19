@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/logo-icon-black-blue.png">
+    <link rel="shortcut icon" type="image/png" href="/logo-icon-black-blue.png">
     <title>Partner with Us - Aquamark.io</title>
     <script src="https://server.fillout.com/embed/v1/"></script>
     <style>
@@ -62,7 +64,7 @@
         .nav-links a {
             text-decoration: none;
             color: #666;
-            font-weight: 450;
+            font-weight: 500;
             transition: color 0.3s;
             font-size: 1rem;
         }
@@ -183,6 +185,23 @@
             padding: 1.5rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             margin-top: 2rem;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-embed {
+            flex: 1;
+            width: 100%;
+            min-height: 500px;
+        }
+
+        /* Let the form take its natural size */
+        .form-container iframe {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 500px !important;
+            border: none;
         }
 
         .form-header {
@@ -202,18 +221,16 @@
         }
 
         /* Responsive form container */
-        .form-container [data-fillout-id] {
-            width: 100% !important;
-            max-width: 100% !important;
-            height: auto !important;
-            min-height: 600px !important;
-        }
-
         .form-embed {
             width: 100%;
-            height: auto;
-            min-height: 600px;
-            overflow: visible;
+            height: 500px;
+            min-height: 500px;
+        }
+
+        /* Override any fillout styles that might be causing issues */
+        [data-fillout-id] {
+            width: 100% !important;
+            height: 100% !important;
         }
 
         /* Desktop styles */
@@ -242,12 +259,12 @@
             .form-container {
                 margin-top: 0;
                 padding: 2rem;
+                min-height: 650px;
             }
 
-            .form-container [data-fillout-id] {
-                width: 100% !important;
-                height: auto !important;
-                min-height: 650px !important;
+            .form-embed {
+                height: 600px;
+                min-height: 600px;
             }
 
             .nav {
@@ -270,8 +287,9 @@
                 height: 52px;
             }
 
-            .form-container [data-fillout-id] {
-                min-height: 650px !important;
+            .form-embed {
+                height: 550px;
+                min-height: 550px;
             }
         }
 
@@ -337,8 +355,9 @@
                 font-size: 1rem;
             }
 
-            .form-container [data-fillout-id] {
-                min-height: 700px !important;
+            .form-embed {
+                height: 650px;
+                min-height: 650px;
             }
         }
 
